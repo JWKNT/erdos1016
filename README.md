@@ -4,6 +4,8 @@
 
 A Lean formalization of the minimum number of edges in a pancyclic simple graph. A graph on `n` vertices is **pancyclic** when it contains a cycle of every length from `3` through `n`.
 
+Read the [paper (PDF)](paper/erdos1016.pdf) or its [LaTeX source](paper/erdos1016.tex).
+
 Let `m(n)` be the minimum number of edges in such a graph and let `h(n) = m(n) − n`. The result is
 
 $$h(n)=\log_2 n+\log^* n+O(1).$$
@@ -48,6 +50,6 @@ Keep the committed `lake-manifest.json`; do not run `lake update`. The cache com
 
 The lower-bound assembly passes through [uniform core decay](Erdos1016/Probability/Avoidance/UniformCoreDecay.lean) and its [extremal reduction](Erdos1016/Extremal/Recurrence/UniformDecayReduction.lean). The upper bound is exposed in [UpperBound.lean](Erdos1016/Extremal/UpperBound.lean).
 
-This repository contains the verification source and tools; it does not include the manuscript or development history. File paths are organized by mathematical topic. Some proof comments retain references to the exposition's numbered sections.
+This repository contains the manuscript and the Lean verification source and tools. Lean file paths are organized by mathematical topic. Some proof comments refer to the manuscript's numbered sections.
 
 No new license is granted for the project sources. Dependencies retain their upstream licenses; see [NOTICE.md](NOTICE.md).
