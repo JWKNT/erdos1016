@@ -1,5 +1,4 @@
 import Erdos1016.Cleanup.Corridors.PhysicalPartition
-import Erdos1016.Graph.Multigraph.Basic
 
 set_option autoImplicit false
 
@@ -8,7 +7,6 @@ noncomputable section
 namespace Erdos1016.Proof.CorridorTerminalEdges
 
 open Erdos1016
-open Erdos1016.FiniteMultiGraph
 open Erdos1016.Proof.PhysicalPartition
 
 variable {G : PhysicalGraph}

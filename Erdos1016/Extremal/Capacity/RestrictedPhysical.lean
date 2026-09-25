@@ -1,4 +1,4 @@
-import Erdos1016.Extremal.Capacity.EdgePartitionRank
+import Erdos1016.Extremal.Capacity.LinearForestRestriction
 
 set_option autoImplicit false
 

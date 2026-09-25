@@ -1,5 +1,6 @@
 import Erdos1016.Nonbacktracking.Girth.CollisionGeometry
 import Erdos1016.Nonbacktracking.Girth.CollisionMassBound
+import Erdos1016.Nonbacktracking.Trace.ClosedTailTraceBound
 
 set_option autoImplicit false
 

@@ -1,5 +1,5 @@
 import Erdos1016.Graph.Reindex
-import Erdos1016.Boundary.EvenBoundaryAverage
+import Erdos1016.Boundary.OwnerAndApex
 
 set_option autoImplicit false
 

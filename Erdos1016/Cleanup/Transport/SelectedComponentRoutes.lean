@@ -1,5 +1,4 @@
 import Erdos1016.CycleSpace.Support.ActiveRestriction
-import Erdos1016.Graph.PathExpansion.RouteConstancy
 import Erdos1016.Graph.PathExpansion.CycleEquivalence
 
 set_option autoImplicit false

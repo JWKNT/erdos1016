@@ -1,5 +1,4 @@
-import Erdos1016.Cleanup.Paths.DegreeTwoCorridorRoutes
-import Erdos1016.Cleanup.Corridors.CoreComponentAssembly
+import Erdos1016.Cleanup.Corridors.EndpointBoundary
 
 set_option autoImplicit false
 
@@ -12,11 +11,7 @@ open Erdos1016.FiniteMultiGraph
 open Erdos1016.Proof.PhysicalPartition
 open Erdos1016.Proof.SingleCorridorRoute
 open Erdos1016.Proof.EndpointBoundary
-open Erdos1016.Proof.DegreeTwoCorridorRoutes
 
-open Erdos1016.Proof.CoreComponentAssembly
-open Erdos1016.Proof.PhysicalDegreeTwoCoreComponents
-open Erdos1016.Proof.EdgeSeedConstruction
 
 variable {G : PhysicalGraph} {P₀ : Finset G.Vertex} {W : Finset G.Edge}
 

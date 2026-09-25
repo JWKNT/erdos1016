@@ -1,5 +1,4 @@
 import Erdos1016.Nonbacktracking.Girth.CollisionGeometry
-import Erdos1016.Nonbacktracking.Walks.PathRunEncoding
 import Erdos1016.Nonbacktracking.Walks.SplitRunCoordinates
 import Erdos1016.Cycles.Counting.CollisionSplitCodes
 

@@ -1,6 +1,6 @@
 import Erdos1016.Cycles.Counting.CycleWordRunCount
-import Erdos1016.Cycles.Filtering.ThetaSupportArcs
 import Erdos1016.Nonbacktracking.Trace.SimpleRunMass
+import Erdos1016.Nonbacktracking.Walks.CyclePathUniqueness
 
 set_option autoImplicit false
 
@@ -10,8 +10,6 @@ noncomputable section
 open SimpleGraph
 open Erdos1016.Nonbacktracking
 open Erdos1016.Proof.CyclePathUniqueness
-open Erdos1016.Proof.ThetaSupportArcUniqueness
-open Erdos1016.Proof.ThetaArcUniqueness
 open Erdos1016.Proof.SimpleRunMass
 open Erdos1016.Proof.RootedCyclicRunInjection
 open Erdos1016.Proof.CyclicRunCollisionSlice

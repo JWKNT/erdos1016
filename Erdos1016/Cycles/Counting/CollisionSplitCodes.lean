@@ -1,4 +1,5 @@
 import Erdos1016.Nonbacktracking.Girth.CollisionSlices
+import Erdos1016.Nonbacktracking.Walks.PrefixCounts
 
 set_option autoImplicit false
 
@@ -29,9 +30,9 @@ abbrev SplitCodeFiber (G : PhysicalGraph) (ell s : ℕ)
 /-- The subcubic prefix estimate bounds each split-code fiber by the number
 of choices for its closed first arc times the number of complementary
 prefixes. This is the fiber-counting part of the collision injection. -/
-theorem splitCodeFiber_card_le
+theorem splitCodeFiber_card_le_of_max_degree
     (G : PhysicalGraph) (ell s : ℕ)
-    (hmin : ∀ v, 2 ≤ G.degree v) (hmax : ∀ v, G.degree v ≤ 3)
+    (hmax : ∀ v, G.degree v ≤ 3)
     (a : SplitLength ell s) :
     Fintype.card (SplitCodeFiber G ell s a) ≤
       Fintype.card (ClosedEndpointRuns (G := G) (a.val - 1)) *
@@ -45,8 +46,8 @@ theorem splitCodeFiber_card_le
         3 * 2 ^ (ell - a.val - s - 1) := by
           apply Finset.sum_le_sum
           intro u hu
-          exact startingRuns_card_le_suffix_budget G hmin hmax
-            (ell - a.val) s (tail G u.1.1)
+          exact startingRuns_card_le_of_max_degree G hmax
+            (ell - a.val - s - 1) (tail G u.1.1)
     _ = Fintype.card (ClosedEndpointRuns (G := G) (a.val - 1)) *
           (3 * 2 ^ (ell - a.val - s - 1)) := by simp
 
@@ -59,9 +60,9 @@ abbrev PositionedSplitCodeFiber (G : PhysicalGraph) (ell s : ℕ)
 
 /-- Including the choice of cyclic split position contributes the required
 factor `ell` to the preceding fiber estimate. -/
-theorem positionedSplitCodeFiber_card_le
+theorem positionedSplitCodeFiber_card_le_of_max_degree
     (G : PhysicalGraph) (ell s : ℕ)
-    (hmin : ∀ v, 2 ≤ G.degree v) (hmax : ∀ v, G.degree v ≤ 3)
+    (hmax : ∀ v, G.degree v ≤ 3)
     (a : SplitLength ell s) :
     Fintype.card (PositionedSplitCodeFiber G ell s a) ≤
       ell * Fintype.card (ClosedEndpointRuns (G := G) (a.val - 1)) *
@@ -71,7 +72,7 @@ theorem positionedSplitCodeFiber_card_le
     ell * Fintype.card (SplitCodeFiber G ell s a) ≤
         ell * (Fintype.card (ClosedEndpointRuns (G := G) (a.val - 1)) *
           (3 * 2 ^ (ell - a.val - s - 1))) :=
-      Nat.mul_le_mul_left ell (splitCodeFiber_card_le G ell s hmin hmax a)
+      Nat.mul_le_mul_left ell (splitCodeFiber_card_le_of_max_degree G ell s hmax a)
     _ = ell * Fintype.card (ClosedEndpointRuns (G := G) (a.val - 1)) *
         (3 * 2 ^ (ell - a.val - s - 1)) := by ring
 
@@ -108,6 +109,27 @@ theorem card_bad_runs_le_of_positioned_split_code
       intro a ha
       exact hfiber a
     _ ≤ target := hsum
+
+
+/-- Compatibility form of the stronger maximum-degree-only bound. -/
+theorem splitCodeFiber_card_le
+    (G : PhysicalGraph) (ell s : ℕ)
+    (_hmin : ∀ v, 2 ≤ G.degree v) (hmax : ∀ v, G.degree v ≤ 3)
+    (a : SplitLength ell s) :
+    Fintype.card (SplitCodeFiber G ell s a) ≤
+      Fintype.card (ClosedEndpointRuns (G := G) (a.val - 1)) *
+        (3 * 2 ^ (ell - a.val - s - 1))  := by
+  exact splitCodeFiber_card_le_of_max_degree G ell s hmax a
+
+/-- Compatibility form of the stronger maximum-degree-only bound. -/
+theorem positionedSplitCodeFiber_card_le
+    (G : PhysicalGraph) (ell s : ℕ)
+    (_hmin : ∀ v, 2 ≤ G.degree v) (hmax : ∀ v, G.degree v ≤ 3)
+    (a : SplitLength ell s) :
+    Fintype.card (PositionedSplitCodeFiber G ell s a) ≤
+      ell * Fintype.card (ClosedEndpointRuns (G := G) (a.val - 1)) *
+        (3 * 2 ^ (ell - a.val - s - 1))  := by
+  exact positionedSplitCodeFiber_card_le_of_max_degree G ell s hmax a
 
 end Erdos1016.Proof.CollisionSplitCodes
 

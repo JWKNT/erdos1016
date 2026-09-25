@@ -106,60 +106,55 @@ theorem card_starting_darts (v : G.Vertex) :
     simp
   exact_mod_cast hcard.trans hout
 
-/-- From a fixed initial dart, at most `2^k` runs of `k` transitions are
-possible when the graph has maximum degree three. -/
-theorem branching_walkCount_le (hmin : ∀ v, 2 ≤ G.degree v)
-    (hmax : ∀ v, G.degree v ≤ 3) (k : ℕ) (d : Dart G) :
-    (branchingSystem G hmin).walkCount k d ≤ 2 ^ k := by
+/-- Direct counting works even when some successor sets are empty. -/
+theorem runCount_le_of_max_degree (hmax : ∀ v, G.degree v ≤ 3)
+    (k : ℕ) (d : Dart G) :
+    (∑ e : Dart G, Fintype.card (Run G k d e)) ≤ 2 ^ k := by
   induction k generalizing d with
-  | zero => simp [UniformBranching.walkCount_zero]
+  | zero =>
+      simp_rw [card_run]
+      simp [pow_zero, Matrix.one_apply]
   | succ k ih =>
-      rw [UniformBranching.walkCount_succ]
+      have hrec : (∑ e : Dart G, Fintype.card (Run G (k + 1) d e)) =
+          ∑ j ∈ successors G d, ∑ e : Dart G, Fintype.card (Run G k j e) := by
+        simp_rw [card_run, pow_succ', Matrix.mul_apply]
+        rw [Finset.sum_comm]
+        simp [matrix, successors, Finset.sum_filter, ite_mul]
+      rw [hrec]
       calc
-        (∑ e ∈ successors G d, (branchingSystem G hmin).walkCount k e) ≤
-            ∑ _e ∈ successors G d, 2 ^ k := by
-              apply Finset.sum_le_sum
-              intro e he
-              exact ih e
+        _ ≤ ∑ _j ∈ successors G d, 2 ^ k := by
+          apply Finset.sum_le_sum
+          intro j hj
+          exact ih j
         _ = (successors G d).card * 2 ^ k := by simp
         _ ≤ 2 * 2 ^ k := by
-              apply Nat.mul_le_mul_right
-              rw [successors_card]
-              have hd := hmax (head G d)
-              omega
+          apply Nat.mul_le_mul_right
+          rw [successors_card]
+          have h := hmax (head G d)
+          omega
         _ = 2 ^ (k + 1) := by rw [pow_succ]; ring
 
-/-- The total number of continuations of `k` transitions after a prescribed
-initial dart is the branching walk count. -/
-theorem runCount_eq_branching_walkCount (hmin : ∀ v, 2 ≤ G.degree v)
-    (k : ℕ) (d : Dart G) :
-    (∑ e : Dart G, Fintype.card (Run G k d e)) =
-      (branchingSystem G hmin).walkCount k d := by
-  exact (branching_walkCount G hmin k d).symm
+/-- No minimum degree is required for the subcubic prefix bound. -/
+theorem startingRuns_card_le_of_max_degree (hmax : ∀ v, G.degree v ≤ 3)
+    (k : ℕ) (v : G.Vertex) :
+    Fintype.card (StartingRuns G k v) ≤ 3 * 2 ^ k := by
+  simp only [StartingRuns, Fintype.card_sigma]
+  calc
+    _ ≤ ∑ _d : {d : Dart G // tail G d = v}, 2 ^ k := by
+      apply Finset.sum_le_sum
+      intro d hd
+      exact runCount_le_of_max_degree G hmax k d.1
+    _ = Fintype.card {d : Dart G // tail G d = v} * 2 ^ k := by simp
+    _ = G.degree v * 2 ^ k := by rw [card_starting_darts]
+    _ ≤ 3 * 2 ^ k := Nat.mul_le_mul_right _ (hmax v)
 
 /-- Exact subcubic prefix budget. For `r ≥ 1`, the number of dart walks of
 `r` edges starting at `v` is at most `3 * 2^(r-1)`. The unrestricted final
 dart means this counts every possible length-`r` prefix. -/
-theorem startingRuns_card_le (hmin : ∀ v, 2 ≤ G.degree v)
+theorem startingRuns_card_le (_hmin : ∀ v, 2 ≤ G.degree v)
     (hmax : ∀ v, G.degree v ≤ 3) (r : ℕ) (v : G.Vertex) :
-    Fintype.card (StartingRuns G (r - 1) v) ≤ 3 * 2 ^ (r - 1) := by
-  have hcard :
-      Fintype.card (StartingRuns G (r - 1) v) =
-        ∑ d : {d : Dart G // tail G d = v},
-          (branchingSystem G hmin).walkCount (r - 1) d.1 := by
-    simp only [StartingRuns, Fintype.card_sigma]
-    apply Finset.sum_congr rfl
-    intro d hd
-    exact runCount_eq_branching_walkCount G hmin (r - 1) d.1
-  rw [hcard]
-  calc
-    _ ≤ ∑ _d : {d : Dart G // tail G d = v}, 2 ^ (r - 1) := by
-      apply Finset.sum_le_sum
-      intro d hd
-      exact branching_walkCount_le G hmin hmax (r - 1) d.1
-    _ = Fintype.card {d : Dart G // tail G d = v} * 2 ^ (r - 1) := by simp
-    _ = G.degree v * 2 ^ (r - 1) := by rw [card_starting_darts]
-    _ ≤ 3 * 2 ^ (r - 1) := Nat.mul_le_mul_right _ (hmax v)
+    Fintype.card (StartingRuns G (r - 1) v) ≤ 3 * 2 ^ (r - 1) :=
+  startingRuns_card_le_of_max_degree G hmax (r - 1) v
 
 /-- Prefix budget in the paper's `a,s` parameters. -/
 theorem startingRuns_card_le_suffix_budget (hmin : ∀ v, 2 ≤ G.degree v)

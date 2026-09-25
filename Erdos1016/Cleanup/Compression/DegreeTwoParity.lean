@@ -1,5 +1,4 @@
-import Erdos1016.Graph.Multigraph.Basic
-import Erdos1016.CycleSpace.Graphical.VertexStarSpaces
+import Erdos1016.Graph.Basic
 
 set_option autoImplicit false
 
@@ -16,7 +15,6 @@ degree-two vertex, a cycle word gives them equal values.
 namespace Erdos1016.Proof.DegreeTwoParity
 
 open Erdos1016
-open Erdos1016.Proof.GraphicalCommonInformation
 
 
 

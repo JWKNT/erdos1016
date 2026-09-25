@@ -1,4 +1,4 @@
-import Erdos1016.Graph.PathExpansion.CycleEquivalence
+import Erdos1016.Graph.Multigraph.Basic
 
 set_option autoImplicit false
 

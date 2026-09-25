@@ -1,4 +1,3 @@
-import Erdos1016.Cleanup.Corridors.PhysicalPartition
 import Erdos1016.CycleSpace.Graphical.LinkPairWitnesses
 
 set_option autoImplicit false
@@ -8,7 +7,6 @@ noncomputable section
 namespace Erdos1016.Proof.WalkEdgeLift
 
 open Erdos1016
-open Erdos1016.Proof.PhysicalPartition
 open Erdos1016.Proof.GraphicalLinkPairWitnesses
 
 /-- The physical edge labels selected step-by-step along a simple-graph walk. -/

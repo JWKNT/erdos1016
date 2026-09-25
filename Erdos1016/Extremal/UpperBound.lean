@@ -1,5 +1,6 @@
 import Erdos1016.Extremal.Construction.RecursiveShortcutGraph
 import Erdos1016.Extremal.CompleteGraphWitness
+import Erdos1016.Extremal.LogarithmComparison
 
 set_option autoImplicit false
 

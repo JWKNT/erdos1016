@@ -1,4 +1,5 @@
 import Erdos1016.CycleSpace.NetworkRank
+import Erdos1016.Boundary.Shore
 
 set_option autoImplicit false
 

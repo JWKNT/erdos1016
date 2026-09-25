@@ -1,43 +1,24 @@
-# Verification
+# Theorem verification
 
-Run the commands in the [README](../README.md) from the repository root. Use the committed `lean-toolchain`, `lakefile.lean`, and `lake-manifest.json` without updating dependency revisions.
+Install the pinned Lean 4.19.0 toolchain and Mathlib dependency artifacts, then run:
 
-## What the verifier checks
+```sh
+python3 -m unittest discover -s scripts -p 'test_*.py'
+python3 scripts/verify.py --fresh --jobs 2
+```
 
-`python3 scripts/verify.py --fresh --jobs 2` performs these checks in order:
+The verifier rebuilds every active library module from source with at most two concurrent local builds. It requires the library to equal the umbrella's import closure, screens source files for proof admissions and unsafe evaluation, and checks the pinned dependency environment before compiling. Dependency artifacts are reused; the project's previous build is moved aside for a fresh run.
 
-1. **Source inventory.** Every library module must belong to the final theorem's import closure. The inventory rejects missing imports, import cycles, duplicate imports, identical source files, and prohibited proof shortcuts. It also checks descriptive module names.
-2. **Pinned environment.** Dependency checkouts must match the revisions in `lake-manifest.json` and have no changes to tracked files. The mathlib pin must agree with `lakefile.lean`, and the selected Lean toolchain must be installed. Missing or stale dependency caches cause failure; verification does not update pins.
-3. **Fresh project build.** `--fresh` moves the previous project build aside and rebuilds all project modules in dependency order. `--jobs 2` bounds concurrent builds. The pinned dependency cache is reused.
-4. **Statement and axiom audit.** [MainTheoremAudit.lean](../audits/MainTheoremAudit.lean) checks both public theorems against their expanded inequalities. It independently checks that `Erdos1016.mainTheorem` has exactly type `Erdos1016.Problem1016.MainTheorem`, with no additional hypotheses. Nine axiom reports cover the two public statements and key intermediate results. Only `propext`, `Classical.choice`, and `Quot.sound` are permitted; admissions and compiler-trust axioms are rejected.
-5. **Stable verification inputs.** The proof sources, audit, dependency configuration, verification scripts, and workflow must not change during verification.
+`audits/TheoremAudit.lean` verifies more than an axiom list. It independently spells out the conclusion for every natural number `n ≥ 3`, both with the natural excess and with the integer minimum-edge count minus `n`. Lean metaprogramming requires `Erdos1016.mainTheorem` to have exactly the type `Problem1016.MainTheorem`, requires the integer theorem to have the independently expanded type, and requires `ShortProof.fewComponentForestEstimate` to have exactly its unconditional target type. A theorem with an additional mathematical premise cannot pass these checks.
 
-Source screening is a lexical and import-graph check; it cannot establish mathematical correctness. The fresh Lean build checks the elaborated proof terms, while the separate statement audit checks what was proved and the axioms on which it depends. The allowed axioms are Lean's standard propositional extensionality, classical choice, and quotient soundness axioms.
+The audit reports kernel axioms for the public endpoints and the principal ingredients of the shorter proof, including the actual retained-cycle supply, link bound, weighted forest estimate, contraction law, small-cut bound, and descent. Only `propext`, `Classical.choice`, and `Quot.sound` are accepted. The log checker requires every named report and all three checked statement markers, and rejects conditional development logs, Lean errors, proof admissions, and compiler-trust axioms.
 
-The public natural-number formulation minimizes `|E| − n` over pancyclic simple graphs on `Fin n`. The integer formulation first minimizes `|E|` and then subtracts `n` in the integers. Their equality for `n ≥ 3` is proved in [MinimumEdgesStatement.lean](../Erdos1016/Extremal/MinimumEdgesStatement.lean). The binary iterated logarithm is defined in [LogStarTowers.lean](../Erdos1016/Extremal/Recurrence/LogStarTowers.lean).
+The schema-version-3 report is `.verification/verification.json`; detailed rebuild logs and `theorem-audit.log` are alongside it. The report binds the result to hashes of the library source set and the verification inputs: source, audits, scripts, toolchain, dependency manifest, and workflow. A change during checking fails verification.
 
-## Verification record
+- `status: passed`, `kernel_checks_status: passed`, `formalization_status: complete`, and `unconditional_main_theorem_proved: true` appear together only after every required check succeeds and the input hash is unchanged.
+- Running or failed checks use `formalization_status: unverified` and `unconditional_main_theorem_proved: false`. They provide no completed certificate. This does not assert that the mathematics is false or that a particular premise remains open.
+- `fresh_project_build` records whether project artifacts were rebuilt from scratch. Use `--fresh` for release evidence.
 
-The main result is `.verification/verification.json`. It records:
+The GitHub workflow runs these same commands on Ubuntu with pinned action revisions and a checksum-verified Elan download. It uploads only `.verification/` as an artifact retained for 90 days. Its summary claims success only if the theorem-verification step succeeds. It neither publishes the manuscript nor deploys a site.
 
-- `status` and any errors, the check list, and whether a fresh build was requested;
-- the Git commit, working-tree cleanliness, and CI run URL when available;
-- the Lean version, pinned dependency revisions, and source counts;
-- a source-set hash and a hash of the verification inputs;
-- the reported axiom dependencies of the audited declarations.
-
-Supporting files include `inventory.json`, `main-theorem-audit.log`, and the build status and per-module logs under `build/`. A failed run can also produce a report: check `status`, the command's exit status, and the logs. A report left by an earlier run is not evidence for changed sources.
-
-The hashes bind the record to the checked source and verification configuration. They do not replace Lean verification or establish that the definitions express the intended mathematical problem; the statement files and audit remain available for inspection.
-
-## GitHub Actions evidence
-
-[The verification workflow](https://github.com/JWKNT/erdos1016/actions/workflows/verify.yml) runs on pushes to `main`, pull requests, and manual dispatches. It installs the pinned Lean toolchain, retrieves the pinned dependency cache, tests the verification tools, and runs the same fresh verification command. Setup rejects changes to the dependency manifest.
-
-For a specific result, use the workflow run's permalink, of the form `https://github.com/JWKNT/erdos1016/actions/runs/<run-id>`, and inspect its commit and job outcome. The README badge follows the workflow's current status; it is not a permanent reference to a particular checked revision.
-
-Each run uploads the available `.verification/` directory as an artifact named `verification-<run-id>-<attempt>`, including when verification fails. Download it to inspect the JSON record and logs alongside the run's commit and source. Artifacts are retained for 90 days; save them separately when a durable copy is needed. A successful run and its matching record provide reproducible evidence for that revision, not for later edits.
-
-## Re-running after changes
-
-Use the fresh verification command before relying on a changed proof. If the verifier reports missing dependency caches, repeat `lake exe cache get` with the committed manifest intact. Do not use `lake update` as a repair step. For build failures, inspect `.verification/build/status.json` and the corresponding module log; for statement or axiom failures, inspect `.verification/main-theorem-audit.log`.
+Local evidence certifies only the exact checked local inputs. Archived reports and older workflow runs do not certify this revision; a remote certificate exists only after the relevant revision is published and its own workflow succeeds.

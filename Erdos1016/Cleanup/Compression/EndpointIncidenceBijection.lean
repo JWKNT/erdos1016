@@ -1,6 +1,7 @@
 import Erdos1016.Cleanup.CleanupSpecification
 import Erdos1016.Cleanup.Compression.CompressedRouteDecomposition
 import Erdos1016.Cleanup.Paths.CorridorTerminalEdges
+import Erdos1016.Graph.PhysicalDegree
 
 set_option autoImplicit false
 
@@ -18,7 +19,6 @@ open Erdos1016.Proof.CompressedRouteDecomposition
 open Erdos1016.Proof.PartitionRouteDecomposition
 open Erdos1016.Proof.PhysicalDegreeTwoCoreComponents
 open Erdos1016.Proof.CorridorTerminalEdges
-open Erdos1016.Proof.CoreComponentAssembly
 
 /-- The labelled endpoint incidences at one auxiliary vertex. A loop has two
 distinct slots, one for each of its endpoint maps. -/

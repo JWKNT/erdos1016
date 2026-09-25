@@ -1,6 +1,4 @@
 import Erdos1016.Cleanup.Paths.DegreeTwoComponents
-import Erdos1016.Cleanup.Paths.ComponentBoundaryEndpoints
-import Erdos1016.Decomposition.Regions.CutIncidences
 
 set_option autoImplicit false
 set_option maxHeartbeats 600000
@@ -13,9 +11,6 @@ open Erdos1016
 open SimpleGraph
 
 open Erdos1016.Proof.PhysicalDegreeTwoCoreComponents
-open Erdos1016.Proof.DegreeTwoComponentCut
-open Erdos1016.Proof.ComponentBoundaryCount
-open Erdos1016.Proof.PhysicalCutBoundaryCount
 
 local instance {V : Type*} (H : SimpleGraph V) : DecidableRel H.Adj := Classical.decRel _
 local instance {V : Type*} [Finite V] (H : SimpleGraph V)

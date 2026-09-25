@@ -94,8 +94,7 @@ theorem nonsimpleTraceTerm_eq_collisionMass (L : ℕ) :
 
 /-- The collision estimate therefore leaves at least its relative complement
 of the trace mass among simple cyclic runs. -/
-theorem simpleCyclicRunMass_ge_one_sub_collisionError (L s D : ℕ)
-    (hmin : ∀ v : G.Vertex, 2 ≤ G.degree v)
+theorem simpleCyclicRunMass_ge_one_sub_collisionError_of_max_degree (L s D : ℕ)
     (hmax : ∀ v : G.Vertex, G.degree v ≤ 3)
     (hg : ShortWalks.GirthGreater G.toSimpleGraph D)
     (hshort : 2 * s ≤ D) (hs : 0 < s) :
@@ -106,9 +105,23 @@ theorem simpleCyclicRunMass_ge_one_sub_collisionError (L s D : ℕ)
           ((2 * (ell : ℝ)) * (2 : ℝ) ^ ell) := by
   have hsplit := traceMass_le_simplePlusBad (G := G) L
   rw [nonsimpleTraceTerm_eq_collisionMass (G := G) L] at hsplit
-  have hcollision := normalizedCollisionMass_le_trace (G := G) L s D
-    hmin hmax hg hshort hs
+  have hcollision := normalizedCollisionMass_le_trace_of_max_degree (G := G) L s D
+    hmax hg hshort hs
   linarith
+
+
+/-- Compatibility form of the stronger maximum-degree-only bound. -/
+theorem simpleCyclicRunMass_ge_one_sub_collisionError (L s D : ℕ)
+    (_hmin : ∀ v : G.Vertex, 2 ≤ G.degree v)
+    (hmax : ∀ v : G.Vertex, G.degree v ≤ 3)
+    (hg : ShortWalks.GirthGreater G.toSimpleGraph D)
+    (hshort : 2 * s ≤ D) (hs : 0 < s) :
+    (1 - (9 / 4 : ℝ) * (L : ℝ) ^ 2 * (1 / 2 : ℝ) ^ s) *
+        nonbacktrackingTraceMass (G := G) L ≤
+      ∑ ell ∈ Finset.Icc 1 L,
+        (Fintype.card (simpleCyclicRuns G ell) : ℝ) /
+          ((2 * (ell : ℝ)) * (2 : ℝ) ^ ell)  := by
+  exact simpleCyclicRunMass_ge_one_sub_collisionError_of_max_degree G L s D hmax hg hshort hs
 
 end Erdos1016.Proof.SimpleRunMass
 end

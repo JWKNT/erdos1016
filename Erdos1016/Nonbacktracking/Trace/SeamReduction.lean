@@ -1,5 +1,4 @@
 import Erdos1016.Cycles.Counting.RootedRunEncoding
-import Erdos1016.Nonbacktracking.Walks.PrefixCounts
 
 set_option autoImplicit false
 

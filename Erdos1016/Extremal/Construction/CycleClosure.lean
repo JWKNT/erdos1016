@@ -1,4 +1,4 @@
-import Erdos1016.Extremal.Construction.BinarySubsetSums
+import Erdos1016.Extremal.Statement
 
 set_option autoImplicit false
 

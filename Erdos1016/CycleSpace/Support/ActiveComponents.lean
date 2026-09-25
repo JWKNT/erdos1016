@@ -1,3 +1,4 @@
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.WalkCounting
 import Erdos1016.Probability.Cylinders.ActiveCoordinateUniformity
 import Erdos1016.Extremal.Capacity.RestrictedPhysical
 

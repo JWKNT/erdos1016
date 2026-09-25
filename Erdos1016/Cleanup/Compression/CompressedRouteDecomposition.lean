@@ -1,5 +1,7 @@
 import Erdos1016.Cleanup.Compression.PartitionRouteDecomposition
 import Erdos1016.Cleanup.Transport.SelectedComponentRoutes
+import Erdos1016.Cleanup.Paths.DegreeTwoComponents
+import Erdos1016.Cleanup.Paths.DegreeTwoCorridorRoutes
 
 set_option autoImplicit false
 

@@ -1,5 +1,5 @@
-import Erdos1016.CycleSpace.RegionRankLoss
-import Erdos1016.Decomposition.Regions.Cyclicity
+import Erdos1016.CycleSpace.ForcedRegionCylinder
+import Erdos1016.Decomposition.Regions.Basic
 
 set_option autoImplicit false
 

@@ -1,4 +1,7 @@
-import Mathlib
+import Mathlib.FieldTheory.Finiteness
+import Mathlib.Data.ZMod.Basic
+import Mathlib.LinearAlgebra.Dimension.Finrank
+import Mathlib.Tactic
 
 set_option autoImplicit false
 

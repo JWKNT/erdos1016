@@ -1,3 +1,4 @@
+import Mathlib.Analysis.SpecialFunctions.Log.Base
 import Erdos1016.Extremal.Recurrence.LogStarTowers
 import Mathlib.Combinatorics.SimpleGraph.Path
 

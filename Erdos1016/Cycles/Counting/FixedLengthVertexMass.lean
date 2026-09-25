@@ -1,5 +1,5 @@
 import Erdos1016.Nonbacktracking.Walks.RootedCyclePrefixes
-import Erdos1016.Cycles.Filtering.ReturnRunCounts
+import Erdos1016.Cycles.Counting.CycleRootChoice
 
 set_option autoImplicit false
 set_option maxHeartbeats 600000

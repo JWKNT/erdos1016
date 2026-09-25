@@ -1,5 +1,6 @@
 import Erdos1016.Cleanup.Paths.SingleCorridorRoute
 import Erdos1016.Cleanup.Compression.SingleSeriesRouteCompression
+import Erdos1016.Cleanup.Paths.PathBoundaryTelescoping
 
 set_option autoImplicit false
 

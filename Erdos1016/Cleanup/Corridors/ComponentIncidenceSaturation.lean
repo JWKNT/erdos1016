@@ -1,4 +1,6 @@
-import Erdos1016.Cleanup.Corridors.ComponentCorridorConstruction
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.WalkCounting
+import Erdos1016.Cleanup.Corridors.PhysicalPartition
+import Erdos1016.Graph.PhysicalDegree
 
 set_option autoImplicit false
 
@@ -8,9 +10,7 @@ namespace Erdos1016.Proof.ComponentIncidenceSaturation
 
 open Erdos1016
 open SimpleGraph
-open Erdos1016.Proof.GraphicalLinkPairWitnesses
 open Erdos1016.Proof.PhysicalSimpleGraphDegreeBridge
-open Erdos1016.Proof.WalkEdgeLift
 open Erdos1016.Proof.PhysicalPartition
 
 local instance {V : Type*} (H : SimpleGraph V) : DecidableRel H.Adj := Classical.decRel _

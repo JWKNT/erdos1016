@@ -1,5 +1,5 @@
-import Erdos1016.Nonbacktracking.Girth.MooreBounds
-import Erdos1016.Cycles.Selection.PackingTransversalDichotomy
+import Erdos1016.Cycles.Selection.ShortCycleFamilies
+import Erdos1016.Nonbacktracking.Walks.ShortPathUniqueness
 
 set_option autoImplicit false
 
@@ -12,9 +12,8 @@ from every ordinary simple cycle, proves equality of its physical length and
 vertex support, and transfers the former exclusion to the latter. No
 representation-equivalence hypothesis is left in that transfer.
 
-The adapter is one-way, which is all the girth/entropy argument needs. It
-makes no assertion about identifying rooted walks with unrooted cycles in
-trace counts: that multiplicity is still a separate Section 6 obligation.
+Rooted-walk multiplicities are handled by the cycle-counting modules; this
+module supplies the underlying support and length correspondence.
 -/
 
 noncomputable section

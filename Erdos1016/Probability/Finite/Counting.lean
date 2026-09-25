@@ -1,4 +1,7 @@
-import Mathlib
+import Mathlib.Data.Real.Basic
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Data.Fintype.Card
+import Mathlib.Tactic
 
 set_option autoImplicit false
 

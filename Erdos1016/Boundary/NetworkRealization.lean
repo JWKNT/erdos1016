@@ -1,4 +1,4 @@
-import Erdos1016.Cycles.Geometry.Supports
+import Erdos1016.Boundary.PhysicalGraph
 
 set_option autoImplicit false
 

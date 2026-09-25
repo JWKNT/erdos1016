@@ -1,3 +1,5 @@
+import Mathlib.Combinatorics.SimpleGraph.Acyclic
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.WalkCounting
 import Erdos1016.Linear.Pushforward
 
 set_option autoImplicit false

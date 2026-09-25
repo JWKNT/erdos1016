@@ -1,3 +1,5 @@
+import Mathlib.Combinatorics.SimpleGraph.Acyclic
+import Mathlib.Combinatorics.SimpleGraph.Finite
 import Erdos1016.CycleSpace.Parity
 
 set_option autoImplicit false

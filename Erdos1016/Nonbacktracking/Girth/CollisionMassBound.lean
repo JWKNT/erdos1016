@@ -1,4 +1,7 @@
-import Mathlib
+import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+import Mathlib.Data.Real.Basic
+import Mathlib.Data.Finset.Interval
+import Mathlib.Tactic
 
 /-!
 # Summing the high-girth collision slices

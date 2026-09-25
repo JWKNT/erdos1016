@@ -1,6 +1,6 @@
 import Erdos1016.Extremal.Capacity.CycleLengths
-import Mathlib.Analysis.SpecialFunctions.Log.Base
 import Erdos1016.CycleSpace.RegionRankLoss
+import Mathlib.Analysis.SpecialFunctions.Log.Base
 
 set_option autoImplicit false
 

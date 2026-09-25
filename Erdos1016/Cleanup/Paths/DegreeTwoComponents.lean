@@ -1,7 +1,5 @@
-import Erdos1016.Probability.Conditional.VertexLoads
+import Erdos1016.Graph.Basic
 import Mathlib.Combinatorics.SimpleGraph.Matching
-import Erdos1016.Cleanup.Corridors.DegreeTwoComponentCut
-import Erdos1016.Cycles.Geometry.DegreeTwoTreePaths
 
 set_option autoImplicit false
 

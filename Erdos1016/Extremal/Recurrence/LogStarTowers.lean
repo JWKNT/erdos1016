@@ -1,4 +1,6 @@
-import Mathlib
+import Mathlib.Data.Nat.Log
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic
 
 set_option autoImplicit false
 

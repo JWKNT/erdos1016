@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build every proof module and record the checked final statements and axioms."""
+"""Build and audit the unconditional shorter proof, with hash-bound evidence."""
 from __future__ import annotations
 
 import argparse
@@ -12,8 +12,44 @@ import re
 import subprocess
 import sys
 
-from check_axiom_log import axiom_reports, check
+from check_axiom_log import TARGET, FOREST_TARGET, axiom_reports, check
 from project_inventory import ROOT, inventory
+
+
+REQUIRED_CHECKS = frozenset({
+    'source_inventory', 'pinned_dependencies', 'all_library_modules_built',
+    'expanded_mathematical_statements', 'unconditional_endpoint_type',
+    'unconditional_integer_endpoint_type', 'unconditional_forest_estimate_type',
+    'kernel_axiom_reports', 'verification_inputs_unchanged',
+})
+
+
+def initial_status() -> dict:
+    """A started or interrupted run provides no completed theorem certificate."""
+    return {'status': 'running', 'kernel_checks_status': 'running',
+            'formalization_status': 'unverified', 'unconditional_main_theorem_proved': False,
+            'remaining_mathematical_premises': None}
+
+
+def record_completion(result: dict, errors: list[str], inputs_unchanged: bool) -> int:
+    """Only the complete, unchanged successful check set may report a proof."""
+    errors = list(errors)
+    if inputs_unchanged:
+        if 'verification_inputs_unchanged' not in result['checks']:
+            result['checks'].append('verification_inputs_unchanged')
+    else:
+        errors.append('Verification inputs changed while checking')
+    if not errors:
+        for missing in sorted(REQUIRED_CHECKS - set(result['checks'])):
+            errors.append('Required verification check did not finish: ' + missing)
+    passed = not errors
+    result.update(status='passed' if passed else 'failed',
+                  kernel_checks_status='passed' if passed else 'failed',
+                  formalization_status='complete' if passed else 'unverified',
+                  unconditional_main_theorem_proved=passed,
+                  remaining_mathematical_premises=[] if passed else None,
+                  errors=errors, completed_at=datetime.now(timezone.utc).isoformat())
+    return 0 if passed else 1
 
 
 def fingerprint(root: Path) -> str:
@@ -34,7 +70,7 @@ def structural_errors(report: dict) -> list[str]:
     if not report['all_sources_structural_checks_passed']:
         errors.append('Source screening failed; see inventory.json')
     if report['outside_umbrella_modules']:
-        errors.append('Library modules outside the final theorem import closure')
+        errors.append('Library modules outside the theorem umbrella import closure')
     if report['duplicate_imports']:
         errors.append('Duplicate direct imports')
     if report['identical_source_groups']:
@@ -50,8 +86,8 @@ def main() -> int:
     parser.add_argument('--fresh', action='store_true', help='rebuild all project modules from source')
     parser.add_argument('--jobs', type=int, default=2)
     args = parser.parse_args()
-    if args.jobs < 1:
-        parser.error('--jobs must be positive')
+    if not 1 <= args.jobs <= 2:
+        parser.error('--jobs must be 1 or 2 (bounded local compilation)')
     env = dict(os.environ, ELAN_TOOLCHAIN=(ROOT / 'lean-toolchain').read_text().strip())
     output = ROOT / '.verification'
     output.mkdir(exist_ok=True)
@@ -65,7 +101,8 @@ def main() -> int:
         run_url = (f"{os.environ.get('GITHUB_SERVER_URL', 'https://github.com')}/"
                    f"{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}")
     manifest = json.loads((ROOT / 'lake-manifest.json').read_text())
-    result = {'schema_version': 1, 'status': 'running', 'fresh_project_build': args.fresh,
+    result = {'schema_version': 3, **initial_status(),
+              'target': TARGET, 'forest_target': FOREST_TARGET, 'fresh_project_build': args.fresh,
               'started_at': datetime.now(timezone.utc).isoformat(),
               'commit': commit.stdout.strip() if commit.returncode == 0 else None,
               'working_tree_clean': dirty.returncode == 0 and not dirty.stdout.strip(),
@@ -81,13 +118,11 @@ def main() -> int:
         destination.write_text(json.dumps(result, indent=2) + '\n')
 
     def finish(errors: list[str]) -> int:
-        if fingerprint(ROOT) != initial_hash:
-            errors.append('Verification inputs changed while checking')
-        result.update(status='failed' if errors else 'passed', errors=errors,
-                      completed_at=datetime.now(timezone.utc).isoformat())
+        code = record_completion(result, errors, fingerprint(ROOT) == initial_hash)
         save()
-        print('\n'.join(errors) if errors else f'Verification passed: {destination}', flush=True)
-        return 1 if errors else 0
+        print('\n'.join(result['errors']) if code else
+              f'Unconditional theorem verification passed: {destination}', flush=True)
+        return code
 
     save()
     errors = structural_errors(source)
@@ -103,9 +138,9 @@ def main() -> int:
         return finish(['Lean rebuild or pinned environment preflight failed'])
     result['checks'].extend(['pinned_dependencies', 'all_library_modules_built'])
     save()
-    log_path = output / 'main-theorem-audit.log'
+    log_path = output / 'theorem-audit.log'
     with log_path.open('w') as log:
-        code = subprocess.run(['lake', 'env', 'lean', 'audits/MainTheoremAudit.lean'],
+        code = subprocess.run(['lake', 'env', 'lean', 'audits/TheoremAudit.lean'],
                               cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT).returncode
     text = log_path.read_text()
     errors = check(text)
@@ -115,7 +150,8 @@ def main() -> int:
         return finish(errors)
     result['axioms'] = axiom_reports(text)
     result['checks'].extend(['expanded_mathematical_statements', 'unconditional_endpoint_type',
-                             'kernel_axiom_reports', 'verification_inputs_unchanged'])
+                             'unconditional_integer_endpoint_type', 'unconditional_forest_estimate_type',
+                             'kernel_axiom_reports'])
     return finish([])
 
 

@@ -1,6 +1,7 @@
 import Erdos1016.Cleanup.Corridors.EdgeSeedConstruction
 import Erdos1016.Cleanup.Corridors.CoreIncidenceCoverage
 import Erdos1016.Cleanup.Paths.SingleCorridorRoute
+import Erdos1016.Cleanup.Corridors.ComponentCorridorConstruction
 
 set_option autoImplicit false
 

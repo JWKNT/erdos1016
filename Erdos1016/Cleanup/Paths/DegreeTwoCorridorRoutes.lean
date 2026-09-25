@@ -1,5 +1,5 @@
-import Erdos1016.Cleanup.Corridors.EndpointBoundary
 import Erdos1016.Cleanup.Compression.DegreeTwoParity
+import Erdos1016.Cleanup.Paths.SingleCorridorRoute
 import Mathlib.Data.List.ChainOfFn
 
 set_option autoImplicit false
@@ -12,7 +12,6 @@ open Erdos1016
 open Erdos1016.FiniteMultiGraph
 open Erdos1016.Proof.PhysicalPartition
 open Erdos1016.Proof.SingleCorridorRoute
-open Erdos1016.Proof.EndpointBoundary
 open Erdos1016.Proof.DegreeTwoParity
 
 variable {G : PhysicalGraph}

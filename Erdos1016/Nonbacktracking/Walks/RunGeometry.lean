@@ -1,4 +1,4 @@
-import Erdos1016.Nonbacktracking.Entropy.EntropyGrowth
+import Erdos1016.Nonbacktracking.Walks.RunCountBasics
 import Erdos1016.Nonbacktracking.Walks.ShortPathUniqueness
 
 set_option autoImplicit false

@@ -1,6 +1,7 @@
 import Erdos1016.Decomposition.TwoCore.MaximalCore
-import Erdos1016.Nonbacktracking.Girth.MooreBounds
 import Erdos1016.Boundary.NetworkRealization
+import Erdos1016.Nonbacktracking.Entropy.Stationarity
+import Erdos1016.Nonbacktracking.Walks.ShortPathUniqueness
 
 set_option autoImplicit false
 

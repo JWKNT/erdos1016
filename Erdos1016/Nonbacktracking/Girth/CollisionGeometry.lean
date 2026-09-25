@@ -1,4 +1,3 @@
-import Erdos1016.Nonbacktracking.Trace.ClosedTailTraceBound
 import Erdos1016.Nonbacktracking.Girth.CollisionSlices
 
 set_option autoImplicit false

@@ -1,6 +1,6 @@
+import Mathlib.Combinatorics.SimpleGraph.DegreeSum
 import Erdos1016.Extremal.Construction.RecursiveCycleIntervals
 import Erdos1016.Extremal.Construction.ShortcutCycleEmbedding
-import Erdos1016.Extremal.LogarithmComparison
 import Mathlib.Combinatorics.SimpleGraph.Finite
 
 set_option autoImplicit false

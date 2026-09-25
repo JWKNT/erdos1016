@@ -1,4 +1,5 @@
 import Erdos1016.Nonbacktracking.Trace.SeamReduction
+import Erdos1016.Nonbacktracking.Walks.PrefixCounts
 
 set_option autoImplicit false
 

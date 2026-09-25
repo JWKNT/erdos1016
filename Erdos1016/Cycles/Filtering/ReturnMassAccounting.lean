@@ -1,4 +1,5 @@
-import Mathlib
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic
 import Erdos1016.Nonbacktracking.Walks.ShortPathUniqueness
 
 /-!

@@ -5,9 +5,9 @@ set_option autoImplicit false
 
 noncomputable section
 
-local instance {V : Type*} (H : SimpleGraph V) : DecidableRel H.Adj :=
+local instance coreIncidenceCoverageAdjDecidable {V : Type*} (H : SimpleGraph V) : DecidableRel H.Adj :=
   Classical.decRel _
-local instance {V : Type*} [Finite V] (H : SimpleGraph V)
+local instance coreIncidenceCoverageComponentFintype {V : Type*} [Finite V] (H : SimpleGraph V)
     (c : H.ConnectedComponent) : Fintype c.supp := Fintype.ofFinite _
 
 namespace Erdos1016.Proof.CoreIncidenceCoverage

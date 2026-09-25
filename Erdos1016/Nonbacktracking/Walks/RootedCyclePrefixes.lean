@@ -1,5 +1,6 @@
-import Erdos1016.Cycles.Counting.CycleRootChoice
 import Erdos1016.Nonbacktracking.Walks.SplitRunCoordinates
+import Erdos1016.Cycles.Counting.ClosedRunCounting
+import Erdos1016.Cycles.Counting.RootedRunEncoding
 
 set_option autoImplicit false
 
@@ -10,7 +11,6 @@ namespace Erdos1016.Proof.RootedCyclePrefixes
 open Erdos1016.Nonbacktracking
 open Erdos1016.Proof.WalkPrefix
 open Erdos1016.Proof.CollisionSliceInstantiation
-open Erdos1016.Proof.CycleRootChoice
 
 variable (G : PhysicalGraph)
 

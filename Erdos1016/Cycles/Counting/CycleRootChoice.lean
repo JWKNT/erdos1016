@@ -1,4 +1,5 @@
 import Erdos1016.Cycles.Counting.CycleWordRunCount
+import Erdos1016.Cycles.Counting.RootedRunEncoding
 
 set_option autoImplicit false
 

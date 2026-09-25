@@ -1,4 +1,5 @@
 import Erdos1016.Cleanup.Paths.WalkEdgeLift
+import Erdos1016.Cleanup.Corridors.PhysicalPartition
 
 set_option autoImplicit false
 

@@ -1,4 +1,4 @@
-import Erdos1016.Graph.PancyclicRank
+import Erdos1016.CycleSpace.RegionRankLoss
 
 set_option autoImplicit false
 

@@ -1,4 +1,4 @@
-import Erdos1016.Cycles.Geometry.Supports
+import Erdos1016.Graph.Basic
 import Mathlib.Combinatorics.SimpleGraph.Connectivity.Subgraph
 
 set_option autoImplicit false
@@ -13,7 +13,6 @@ an endpoint of the marked edge. No forest-restriction oracle is an input.
 
 noncomputable section
 namespace Erdos1016.Extremal
-open BoundaryDecay
 local instance (p : Prop) : Decidable p := Classical.propDecidable p
 
 /-- The edge-labelled degree bounds the number of distinct selected neighbours.

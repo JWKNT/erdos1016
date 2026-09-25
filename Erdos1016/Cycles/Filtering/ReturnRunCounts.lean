@@ -99,8 +99,8 @@ theorem fixedEndpointPrefix_injective_of_girth
 /-- Fixed-endpoint nonbacktracking runs of `a` edges inject into their
 `a-s`-edge prefixes when `2s` is below the girth. This is the graph-specific
 unique-suffix input to the path-mass arithmetic. -/
-theorem endpointRuns_card_le_suffix_budget
-    (hmin : ∀ v, 2 ≤ G.degree v) (hmax : ∀ v, G.degree v ≤ 3)
+theorem endpointRuns_card_le_suffix_budget_of_max_degree
+    (hmax : ∀ v, G.degree v ≤ 3)
     (D a s : ℕ) (u v : G.Vertex)
     (hg : ShortWalks.GirthGreater G.toSimpleGraph D)
     (hs : 0 < s) (hsa : s < a) (hshort : 2 * s ≤ D) :
@@ -113,7 +113,18 @@ theorem endpointRuns_card_le_suffix_budget
     Fintype.card (EndpointRuns G (a - 1) u v) ≤
         Fintype.card (StartingRuns G j u) := Fintype.card_le_of_injective _ hinj
     _ ≤ 3 * 2 ^ (a - s - 1) := by
-      simpa [j] using startingRuns_card_le_suffix_budget G hmin hmax a s u
+      simpa [j] using startingRuns_card_le_of_max_degree G hmax (a - s - 1) u
+
+
+/-- Compatibility form of the stronger maximum-degree-only bound. -/
+theorem endpointRuns_card_le_suffix_budget
+    (_hmin : ∀ v, 2 ≤ G.degree v) (hmax : ∀ v, G.degree v ≤ 3)
+    (D a s : ℕ) (u v : G.Vertex)
+    (hg : ShortWalks.GirthGreater G.toSimpleGraph D)
+    (hs : 0 < s) (hsa : s < a) (hshort : 2 * s ≤ D) :
+    Fintype.card (EndpointRuns G (a - 1) u v) ≤
+      3 * 2 ^ (a - s - 1)  := by
+  exact endpointRuns_card_le_suffix_budget_of_max_degree G hmax D a s u v hg hs hsa hshort
 
 end Erdos1016.Proof.ExternalReturnFilter
 end

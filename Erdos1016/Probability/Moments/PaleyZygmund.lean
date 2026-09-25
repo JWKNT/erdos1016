@@ -1,4 +1,6 @@
-import Mathlib
+import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+import Mathlib.Data.Real.Basic
+import Mathlib.Tactic
 
 set_option autoImplicit false
 

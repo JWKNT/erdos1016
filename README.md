@@ -1,31 +1,39 @@
-# Erdős problem 1016
+# Erdős problem 1016 — Lean verification
 
-[![Verify Lean proof](https://github.com/JWKNT/erdos1016/actions/workflows/verify.yml/badge.svg)](https://github.com/JWKNT/erdos1016/actions/workflows/verify.yml)
+[![Verify Lean theorem](https://github.com/JWKNT/erdos1016/actions/workflows/verify.yml/badge.svg)](https://github.com/JWKNT/erdos1016/actions/workflows/verify.yml)
 
-A Lean formalization of the minimum number of edges in a pancyclic simple graph. A graph on `n` vertices is **pancyclic** when it contains a cycle of every length from `3` through `n`.
+A Lean formalization of the shorter proof based on a union of few witness cycles. The main theorem is unconditional:
 
-Read the [paper (PDF)](paper/erdos1016.pdf) or its [LaTeX source](paper/erdos1016.tex).
+```lean
+Erdos1016.mainTheorem : Erdos1016.Problem1016.MainTheorem
+```
 
-Let `m(n)` be the minimum number of edges in such a graph and let `h(n) = m(n) − n`. The result is
+It proves
 
-$$h(n)=\log_2 n+\log^* n+O(1).$$
+$$h(n)=\log_2 n+\log_* n+O(1),$$
 
-Precisely, there are real constants `Aminus` and `Aplus`, independent of `n`, such that for every integer `n ≥ 3`,
+where `h(n)` is the minimum excess of edges over vertices in a simple graph on `n` vertices containing every cycle length from 3 through `n`. The bounds hold uniformly for every `n ≥ 3`. Here `log* n` is the least `k` with `n ≤ T(k)`, where `T(0) = 1` and `T(k + 1) = 2 ^ T(k)`.
 
-$$\log_2 n+\log^* n-A_{\mathrm{minus}}\le h(n)\le\log_2 n+\log^* n+A_{\mathrm{plus}}.$$
+The public declarations are in [Main.lean](Erdos1016/Main.lean). `Erdos1016.mainTheorem_integer_excess` gives the equivalent statement using integer subtraction for the excess.
 
-Here `log* n` is the least `k` with `n ≤ T(k)`, where `T(0) = 1` and `T(k + 1) = 2 ^ T(k)`.
+An updated paper accompanying this formalization is not yet available. The previous formalization, published paper, and a working draft are preserved under [`old/`](old/ARCHIVE.md). They are excluded from the active Lean build and current CI certificate. The website is archived separately.
 
-The public declarations in [Main.lean](Erdos1016/Main.lean) are:
+## Proof structure
 
-- `Erdos1016.mainTheorem`: the minimum of the natural-number excesses `|E| − n`.
-- `Erdos1016.mainTheorem_integer_excess`: the equivalent minimum edge count minus `n`, computed in the integers.
+1. Extract a union of witness cycles using least missing lengths, with simultaneous edge, rank, and component budgets.
+2. Expand, prune, and suppress the graph while preserving its cycle space and controlling the marked region.
+3. Apply the small-cut probability bound to delete a small packing of short cyclic regions.
+4. Use the nonbacktracking trace and degree deficit of the retained graph to obtain enough weighted cycles.
+5. Bound their actual pair correlations by the marked components and exterior links, and apply the weighted second moment to prove the forest estimate.
+6. Deduce the linear exponential recurrence, iterate to the log-star lower bound, and combine it with the reused constructive upper bound.
 
-Both declarations have no unproved mathematical hypotheses. The definitions and their equivalence are in [Statement.lean](Erdos1016/Extremal/Statement.lean) and [MinimumEdgesStatement.lean](Erdos1016/Extremal/MinimumEdgesStatement.lean).
+The complete forest estimate is `ShortProof.fewComponentForestEstimate`. The earlier conditional deduction remains a reusable lemma; `mainTheorem` supplies its now-proved premise. See the [proof map](docs/proof-map.md) for the corresponding modules.
 
-## Verify locally
+## Verification
 
-Install [elan](https://github.com/leanprover/elan), Git, and Python 3. The repository selects Lean **4.19.0** through `lean-toolchain`.
+The project is pinned to Lean 4.19.0 and the Mathlib revision in `lake-manifest.json`. Mathlib is the only direct package dependency; the other locked packages are its transitive dependencies. Keep the committed lockfile unchanged.
+
+Install [elan](https://github.com/leanprover/elan), Git, and Python 3, then run:
 
 ```sh
 git clone https://github.com/JWKNT/erdos1016.git
@@ -36,20 +44,8 @@ python3 -m unittest discover -s scripts -p 'test_*.py'
 python3 scripts/verify.py --fresh --jobs 2
 ```
 
-Keep the committed `lake-manifest.json`; do not run `lake update`. The cache command downloads the pinned dependencies and their compiled artifacts. Verification then rebuilds every project module from source with at most two concurrent builds, checks the expanded theorem statements and axiom dependencies, and writes `.verification/verification.json` and logs. See [the verification guide](docs/verification.md) for the checks and how to inspect CI evidence.
+The verifier rebuilds every active module with bounded parallelism, checks the unconditional endpoint and expanded mathematical statements, audits theorem axioms, and binds its evidence to source hashes. A successful run permits only `propext`, `Classical.choice`, and `Quot.sound`; it rejects admissions and extra axioms. Details are in [verification.md](docs/verification.md).
 
-## Source guide
-
-| Directory | Contents |
-| --- | --- |
-| [Graph](Erdos1016/Graph), [CycleSpace](Erdos1016/CycleSpace), [Boundary](Erdos1016/Boundary) | Graph models, parity and rank, boundary laws. |
-| [Nonbacktracking](Erdos1016/Nonbacktracking) | Walks, entropy, spectrum, girth, and trace estimates. |
-| [Cycles](Erdos1016/Cycles), [Probability](Erdos1016/Probability) | Cycle counting, filtering and selection; conditional laws, moments, and avoidance. |
-| [Expansion](Erdos1016/Expansion), [Decomposition](Erdos1016/Decomposition), [Cleanup](Erdos1016/Cleanup) | Expanding regions, cores, graph cleanup, and descent. |
-| [Extremal](Erdos1016/Extremal) | The statement, upper-bound construction, capacities, and log-star recurrence. |
-
-The lower-bound assembly passes through [uniform core decay](Erdos1016/Probability/Avoidance/UniformCoreDecay.lean) and its [extremal reduction](Erdos1016/Extremal/Recurrence/UniformDecayReduction.lean). The upper bound is exposed in [UpperBound.lean](Erdos1016/Extremal/UpperBound.lean).
-
-This repository contains the manuscript and the Lean verification source and tools. Lean file paths are organized by mathematical topic. Some proof comments refer to the manuscript's numbered sections.
+The active library contains only the import closure of `Erdos1016.lean`. Local verification records are written under `.verification/`. [GitHub Actions](https://github.com/JWKNT/erdos1016/actions/workflows/verify.yml) repeats the fresh verification for each pushed revision and uploads the report and logs. A passing run certifies its recorded commit; inspect that commit when sharing a verification link.
 
 No new license is granted for the project sources. Dependencies retain their upstream licenses; see [NOTICE.md](NOTICE.md).

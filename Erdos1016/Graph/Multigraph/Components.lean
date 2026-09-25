@@ -1,3 +1,4 @@
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.WalkCounting
 import Erdos1016.Graph.Multigraph.Basic
 
 set_option autoImplicit false

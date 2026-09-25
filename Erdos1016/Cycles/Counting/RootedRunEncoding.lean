@@ -1,4 +1,5 @@
 import Erdos1016.Nonbacktracking.Walks.CycleWords
+import Erdos1016.Nonbacktracking.Walks.RunGeometry
 
 set_option autoImplicit false
 

@@ -46,11 +46,11 @@ private def splitCodeWeightAt (G : PhysicalGraph) (ell s a : ℕ) : ℝ :=
     (3 : ℝ) * (2 : ℝ) ^ (ell - a - s - 1)
 
 private theorem splitCodeWeight_fiber_bound (G : PhysicalGraph)
-    (ell s : ℕ) (hmin : ∀ v, 2 ≤ G.degree v) (hmax : ∀ v, G.degree v ≤ 3)
+    (ell s : ℕ) (hmax : ∀ v, G.degree v ≤ 3)
     (a : SplitLength ell s) :
     (Fintype.card (PositionedSplitCodeFiber G ell s a) : ℝ) ≤
       splitCodeWeight G ell s a := by
-  have hnat := positionedSplitCodeFiber_card_le G ell s hmin hmax a
+  have hnat := positionedSplitCodeFiber_card_le_of_max_degree G ell s hmax a
   have hcast :
       (Fintype.card (PositionedSplitCodeFiber G ell s a) : ℝ) ≤
         ((ell * Fintype.card (ClosedEndpointRuns (G := G) (a.val.val - 1)) *
@@ -145,9 +145,9 @@ private theorem splitCodeWeight_sum_le (G : PhysicalGraph) (ell s : ℕ) :
 
 /-- The positioned split code's finite-fiber estimate yields exactly the raw
 collision cardinal bound used by the normalized collision slice. -/
-theorem bad_runs_card_le_of_positioned_split_code
+theorem bad_runs_card_le_of_positioned_split_code_of_max_degree
     (G : PhysicalGraph) (ell s : ℕ)
-    (hmin : ∀ v, 2 ≤ G.degree v) (hmax : ∀ v, G.degree v ≤ 3)
+    (hmax : ∀ v, G.degree v ≤ 3)
     (code : NonsimpleCyclicRuns G ell →
       Σ a : SplitLength ell s, PositionedSplitCodeFiber G ell s a)
     (hcode : Function.Injective code) :
@@ -158,11 +158,24 @@ theorem bad_runs_card_le_of_positioned_split_code
   have hfiber : ∀ a, (Fintype.card (PositionedSplitCodeFiber G ell s a) : ℝ) ≤
       weight a := by
     intro a
-    exact splitCodeWeight_fiber_bound G ell s hmin hmax a
+    exact splitCodeWeight_fiber_bound G ell s hmax a
   simpa [weight] using card_bad_runs_le_of_positioned_split_code
     G ell s code hcode weight hfiber _ (splitCodeWeight_sum_le G ell s)
 
 
+
+
+/-- Compatibility form of the stronger maximum-degree-only bound. -/
+theorem bad_runs_card_le_of_positioned_split_code
+    (G : PhysicalGraph) (ell s : ℕ)
+    (_hmin : ∀ v, 2 ≤ G.degree v) (hmax : ∀ v, G.degree v ≤ 3)
+    (code : NonsimpleCyclicRuns G ell →
+      Σ a : SplitLength ell s, PositionedSplitCodeFiber G ell s a)
+    (hcode : Function.Injective code) :
+    (Fintype.card (NonsimpleCyclicRuns G ell) : ℝ) ≤
+      (3 / 2 : ℝ) * (ell : ℝ) * (2 : ℝ) ^ (ell - s) *
+        (∑ a ∈ Finset.Icc 1 (ell - 1), V G a)  := by
+  exact bad_runs_card_le_of_positioned_split_code_of_max_degree G ell s hmax code hcode
 
 end Erdos1016.Proof.CyclicRunSplitCodeArithmetic
 

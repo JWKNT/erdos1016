@@ -1,4 +1,4 @@
-import Erdos1016.Cleanup.Paths.PathBoundaryTelescoping
+import Erdos1016.Graph.PathExpansion.Basic
 
 set_option autoImplicit false
 
