@@ -1,0 +1,445 @@
+\documentclass[11pt,a4paper]{article}
+% Latin Modern with T1 encoding when available; otherwise Computer Modern.
+\IfFileExists{lmodern.sty}{\usepackage[T1]{fontenc}\usepackage{lmodern}}{}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=27mm,headheight=14pt]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{array,booktabs,tabularx,xltabular,needspace,float}
+\usepackage{fancyhdr,extramarks}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds}
+\usepackage{url}
+\usepackage[unicode]{hyperref}
+\hypersetup{colorlinks=true,
+  linkcolor=NavyBlue!75!black,citecolor=ForestGreen!70!black,urlcolor=NavyBlue!75!black}
+\usepackage{bookmark}
+% Lean identifiers: typewriter, breakable at dots, slashes and underscores.
+\DeclareUrlCommand\lean{\urlstyle{tt}}
+% A slightly more compact table of contents, with room for two-digit numbers.
+\makeatletter
+\renewcommand*\l@section[2]{%
+  \ifnum \c@tocdepth >\z@
+    \addpenalty\@secpenalty
+    \addvspace{0.4em \@plus\p@}%
+    \setlength\@tempdima{1.9em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode \bfseries
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      #1\nobreak\hfil
+      \nobreak\hb@xt@\@pnumwidth{\hss #2}%
+      \kern-\p@\kern\p@
+      \par
+    \endgroup
+  \fi}
+\makeatother
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\F}{\mathbb F_2}
+\newcommand{\Fav}{\mathsf F}
+\newcommand{\cZ}{\mathcal Z}
+\newcommand{\Om}{\Omega}
+\newcommand{\E}{\mathbb E}
+\newcommand{\Prob}{\mathbb P}
+\newcommand{\cc}{\operatorname{comp}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\lstar}{\log_*}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\secsign}{\ensuremath{\S}}
+\renewcommand{\labelitemi}{$\bullet$}
+% Run-in headings for the steps of long proofs.
+\newcommand{\proofstep}[1]{\par\addvspace{\medskipamount}\noindent\textbf{#1}\enspace\ignorespaces}
+\newcommand{\ee}{\mathrm e}
+% Visible placeholder for material to be filled in before submission.
+\newcommand{\tbd}[1]{\textcolor{BrickRed}{[#1]}}
+\newcommand{\ind}{\mathbf 1}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\floor}[1]{\left\lfloor#1\right\rfloor}
+\DeclareMathOperator{\Var}{Var}
+\setlength{\emergencystretch}{2em}
+\widowpenalty=10000 \clubpenalty=10000 \displaywidowpenalty=10000
+\linespread{1.035}
+\allowdisplaybreaks[2]
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize The minimum number of edges in a pancyclic graph}
+\fancyhead[R]{\footnotesize\itshape\nouppercase{\firstleftmark}}
+\renewcommand{\sectionmark}[1]{\markboth{\thesection\enspace #1}{}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\hypersetup{pdftitle={The minimum number of edges in a pancyclic graph},pdfauthor={KNT},pdfsubject={Erdos Problem 1016: h(n) = log2 n + log* n + O(1)}}
+\title{\LARGE\bfseries The minimum number of edges\\[4pt] in a pancyclic graph}
+\newcommand{\paperauthors}{KNT}
+\author{\paperauthors}
+\date{September 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+For $n\ge3$, let $n+h(n)$ be the least number of edges in a graph on $n$ vertices that contains a cycle of every length from $3$ to $n$. Bondy stated in 1971 that $\log_2(n-1)-1\le h(n)\le\log_2n+\log_*n+O(1)$, and whether the lower bound can be raised to match is Erd\H{o}s Problem \#1016. We prove that $h(n)=\log_2 n+\log_*n+O(1)$. The key estimate says that in a connected graph of large cycle rank, after removing a union of cycles with few edges and few components, a uniformly random even edge set restricted to the rest is a forest with probability at most $1/2+o(1)$. This yields a near-halving recurrence for the normalized cycle-length capacity, whose iteration gives the $\log_*n$ term. The proof has been formalized in Lean~4.
+
+\medskip
+\noindent\textit{MSC 2020:} 05C38 (primary); 05C35, 05C50, 60C05 (secondary).\\
+\textit{Keywords:} pancyclic graphs, cycle space, nonbacktracking matrix, second moment method, Erd\H{o}s problems.
+\end{abstract}
+
+{\linespread{1}\selectfont\setcounter{tocdepth}{2}\tableofcontents}
+\newpage
+
+%======================================================================
+\section{Introduction}\label{sec:intro}
+%======================================================================
+A graph on $n$ vertices is \emph{pancyclic} if it contains a cycle of every length $3,4,\ldots,n$. Let $n+h(n)$ be the least number of edges of a pancyclic simple graph on $n$ vertices, and let $\lstar x$ be the least $j\ge0$ such that $j$ applications of $\log_2$ take $x$ to a value at most one.
+
+\begin{theorem}\label{thm:main}
+There is an absolute constant $A$ such that, for every $n\ge3$,
+\[
+ \log_2n+\lstar n-A\le h(n)\le\floor{\log_2n}+\lstar n+1.
+\]
+In particular, $h(n)=\log_2n+\lstar n+O(1)$.
+\end{theorem}
+
+Bondy \cite{Bondy} stated without proof that $\log_2(n-1)-1\le h(n)\le\log_2n+\lstar n+O(1)$. The lower bound is cycle counting: a connected graph with $n+h$ edges has at most $2^{h+1}-1$ cycles, and a pancyclic graph needs $n-2$ of them. Griffin \cite{Griffin} gave a written proof and computed small values; constructions appear in Sridharan \cite{Sridharan}, George, Khodkar and Wallis \cite{GKW}, and, for random graphs, Alon and Krivelevich \cite{AK}. Whether the lower bound can be raised to $\log_2n+\lstar n-O(1)$, or even whether $h(n)-\log_2n\to\infty$, is Erd\H{o}s Problem \#1016 \cite{ErdosProblems}. Theorem~\ref{thm:main} answers both questions.
+
+\subsection{The main estimate and an outline}\label{sec:outline}
+Cycle counting ignores that the lengths must fill an interval. That extra rigidity comes from the following estimate. For a graph $G$, let $\cZ(G)$ be its binary cycle space, the even edge sets of $G$, of dimension $\beta(G)=|E(G)|-|V(G)|+\cc(G)$. Let $\xi$ be uniform on $\cZ(G)$, and for an edge set $M$ put
+\[
+ P_G(M)=\Prob(\xi\cap M\text{ is a forest}).
+\]
+
+\begin{theorem}[Forest estimate]\label{thm:forest}
+There is $r_0$ such that the following holds for all $r\ge r_0$. Let $G$ be a connected simple graph with $\beta(G)=r$, and let $W\subseteq G$ be a nonempty union of cycles with $m=|E(W)|\le\sqrt r$ edges and $c=\cc(W)\le(\log_2r)/100$ components. Then
+\begin{equation}\label{eq:forest-main}
+ P_G\bigl(E(G)\setminus E(W)\bigr)\le\frac12+\frac{20}{\log^{(3)}r}.
+\end{equation}
+\end{theorem}
+
+A single parity bit shared by many parts of the graph can make them all acyclic with probability $1/2$, so the threshold is natural. Section~\ref{sec:cuts} shows that zero-cut events of two regions have correlation $2^{\ell-1}$, where $\ell$ counts the links between them, and that many disjoint small cyclic regions push the forest probability down to about $1/2$.
+
+Section~\ref{sec:forest} proves Theorem~\ref{thm:forest}: we reduce to maximum degree three while keeping $W$ as a marked set with few components, delete short cycles, obtain many moderately long cycles from the nonbacktracking spectrum, and apply the second moment method to the events that such a cycle is a component of $\xi$. The key point, \eqref{eq:links}, is that two short cycles are linked through at most $c+o(\log r)$ components, so the witness components control all correlations and no expansion is needed.
+
+Section~\ref{sec:recurrence} turns Theorem~\ref{thm:forest} into the recurrence
+\[
+ \Phi\bigl(2^{256R}\bigr)\le\Bigl(\frac12+\frac{20}{\log^{(2)}R}\Bigr)\Phi(R)+2^{2-R}
+\]
+for the normalized cycle-length capacity $\Phi$. Each step costs one exponential level of rank and nearly halves $\Phi$, with summable errors, so $\Phi(r)=O(2^{-\lstar r})$, which is the lower bound. Section~\ref{sec:upper} gives the construction.
+
+\subsection{Formal verification}\label{sec:lean}
+The proof has been formalized in Lean~4 \cite{Lean4} with Mathlib \cite{Mathlib}, at \url{https://github.com/JWKNT/erdos1016}. The version described here is commit \texttt{a38913e}: $40{,}923$ lines in $247$ active modules, including the entry point, built with Lean v4.19.0 and a pinned Mathlib revision. This commit passed a fresh verification in the repository's continuous integration, which rebuilds every active project module from source and audits the statements and axioms (GitHub Actions run \href{https://github.com/JWKNT/erdos1016/actions/runs/36197260250}{36197260250}).
+
+In the \lean{Erdos1016} namespace, \lean{mainTheorem} proves the two-sided asymptotic assertion in Theorem~\ref{thm:main}, with unspecified additive constants; the explicit upper bound is proved by \lean{Problem1016.upper_bound_integer}. Here $h(n)$ is the minimum of $|E(G)|-n$ over pancyclic simple graphs $G$ on the vertex type \texttt{Fin n}, and $\lstar n$ is the least $k$ with $n\le T(k)$, where $T(0)=1$ and $T(k+1)=2^{T(k)}$. Theorem~\ref{thm:forest} is \lean{ShortProof.fewComponentForestEstimate}, with the same hypotheses and bound. These theorems depend only on the axioms \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}. Appendix~\ref{app:lean} lists the Lean counterparts of the main steps.
+
+\subsection{Conventions}\label{sec:notation}
+All graphs are finite. Every feasible prescribed-boundary class of edge sets has $2^{\beta(G)}$ members. Regions are induced, $P_G(H)=P_G(E(H))$, and a region is \emph{cyclic} if it contains a cycle. For a region $A$, $\delta A$ is its cut, and ``$\delta A=0$'' is the event that $\xi$ avoids it. Auxiliary graphs may have loops and parallel edges, with loops counted twice in degrees. All logs are binary except $\ln$; $\log^{(j)}t$ means $j$ successive binary logarithms, and $\lstar$ stops at one.
+
+%======================================================================
+\section{Cut correlations}\label{sec:cuts}
+%======================================================================
+For a nonnegative random variable $Z$ with $\mu=\E Z>0$ and a constant $K\ge0$, Cauchy--Schwarz gives
+\begin{equation}\label{eq:second-moment}
+ \E Z^2\le2\mu^2+K\mu\quad\Longrightarrow\quad\Prob(Z=0)\le1-\frac{\mu^2}{\E Z^2}\le\frac12+\frac K{4\mu+2K}.
+\end{equation}
+
+\begin{lemma}[Exceptional cuts]\label{lem:exceptional}
+In a connected graph, let $A$ be a connected region with cut size $d$. Among connected regions $B$ disjoint from $A$ whose zero-cut events satisfy
+\[
+ \Prob(\delta A=\delta B=0)>2\,\Prob(\delta A=0)\,\Prob(\delta B=0),
+\]
+no vertex-disjoint subfamily has more than $d$ members.
+\end{lemma}
+
+\begin{proof}
+Contract $A$ and a disjoint subfamily of the $B$'s to vertices. The cycle-space projection is onto, so it preserves their joint cut law. For two vertices $v,w$, count as \emph{links} the $vw$ edges and the components of $G-\{v,w\}$ attached to both. If there are $\ell$ links, rank subtraction gives
+\begin{equation}\label{eq:ratio}
+ \Prob(\delta v=\delta w=0)=2^{\ell-1}\,\Prob(\delta v=0)\,\Prob(\delta w=0).
+\end{equation}
+
+Fix $v$. Append its $d$ incidences as terminal leaves to a spanning forest of $G-v$, and prune nonterminal leaves. Each link to $w$ gives a terminal-containing branch at $w$. Thus a vertex with at least three links is a branch vertex of this pruned forest, and there are at most $d$ branch vertices.
+\end{proof}
+
+\begin{corollary}[Small cuts]\label{cor:small-cuts}
+For $k\ge1$ vertex-disjoint connected cyclic regions $H_1,\ldots,H_k$ with cuts at most $d$ in a connected graph $G$,
+\begin{equation}\label{eq:small-cuts}
+ P_G\Bigl(\,\bigcup_iE(H_i)\Bigr)\le\frac12+\frac{(d+1)2^d}{2k}.
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+Let $E_i$ say that the $i$th cut is zero and its inner even set is nonempty. Its probability $p_i$ is at least $2^{-d-1}$. Given zero cuts, the inner even sets are independent, so the pairwise correlation ratio is exactly the zero-cut ratio. By Lemma~\ref{lem:exceptional}, each event has at most $d$ exceptional partners in this disjoint family. For the other pairs use $\Prob(E_iE_j)\le2p_ip_j$, and for exceptional partners use $\Prob(E_iE_j)\le p_i$. Thus $Z=\sum_i\ind_{E_i}$ has
+\[
+ \mu\ge k2^{-d-1},\qquad\E Z^2\le2\mu^2+(d+1)\mu.
+\]
+Each $E_i$ precludes a forest, so \eqref{eq:second-moment} proves the claim.
+\end{proof}
+
+%======================================================================
+\section{Proof of the forest estimate}\label{sec:forest}
+%======================================================================
+Let $G$ and $W$ be as in Theorem~\ref{thm:forest}, with $r$ large. Put
+\[
+ x=\log r,\qquad y=\log x,\qquad z=\log y,\qquad D=\floor{x/10},\qquad L=\floor{x\sqrt y},
+\]
+and suppose the probability in \eqref{eq:forest-main} exceeds $\frac12+\eps$, where $\eps=20/z$. We derive a contradiction. All estimates below are uniform under the two witness bounds.
+
+\subsection{Cubicize without disconnecting the witness}\label{sec:cubic}
+Replace a vertex of degree $d>3$ by a path of $d-2$ cubic vertices, with two old incidences at each end and one at every internal vertex. If $k\ge2$ incidences belong to $W$, put them first along the path and mark the initial segment meeting them. This segment is connected and has at most $k$ vertices. Mark unchanged witness vertices too. In the expanded graph $G'$, the witness lifts to a subgraph on a marked set $P$ with
+\[
+ |P|\le2m,\qquad\cc(G'[P])\le c.
+\]
+Contracting the splitting trees is a cycle-space bijection. An original forest, lifted and augmented by all tree edges, is still a forest; hence restricting to the complement of $P$ can only increase its probability. Prune unmarked leaves and suppress unmarked degree-two vertices. Their even coordinates are respectively zero or equal along a path, so the cycle-space law and the forest event off $P$ are preserved. No marked vertex is removed; suppression may join marked components but cannot split them.
+
+Call the resulting connected multigraph $\Gamma$. It has rank $r$ and maximum degree three, every unmarked vertex is cubic, and
+\begin{equation}\label{eq:cubic}
+ |P|\le2\sqrt r,\qquad\cc(\Gamma[P])\le c,\qquad|\Gamma|=2r+O(\sqrt r),\qquad P_\Gamma(\Gamma-P)>\tfrac12+\eps.
+\end{equation}
+The order identity follows from $|\Gamma|=2r-2+\sum_v(3-\deg_\Gamma v)$, where only marked vertices contribute to the sum.
+
+\subsection{Delete short cycles, without connecting them}\label{sec:short}
+If $\Gamma-P$ contains $\ceil{\sqrt r}$ disjoint cycles of length at most $D$, including loops and digons, their induced regions have cuts at most $D$, and \eqref{eq:small-cuts} gives $P_\Gamma(\Gamma-P)\le\frac12+O(xr^{-2/5})$, a contradiction. Otherwise choose a maximal such packing and let $S$ be the union of its vertex sets. Then $|S|\le D\sqrt r$, and
+\[
+ J=\Gamma-(P\cup S)
+\]
+is simple with girth greater than $D$, order $v=(2+o(1))r$, and deficit
+\begin{equation}\label{eq:deficit}
+ d_J:=\sum_{u\in J}(3-\deg_Ju)\le3(|P|+|S|)=O(\sqrt r\log r).
+\end{equation}
+Neither $P$ nor $P\cup S$ is required to be connected.
+
+\subsection{Supply cycle weight}\label{sec:supply}
+For the directed-edge nonbacktracking matrix $B$, adjacency matrix $A_0$ and degree matrix $\Delta$ of $J$, put $M(t)=t^2I-tA_0+\Delta-I$ (compare the Ihara--Bass identity \cite{Bass,KS}). Then
+\[
+ M(2)=2(\Delta-A_0)+3I-\Delta\succeq0,\qquad\mathbf 1^TM(2-d_J/v)\,\mathbf 1=0.
+\]
+The least eigenvalue of the real symmetric matrix $M(t)$ is continuous, nonpositive at $2-d_J/v$, and nonnegative at $2$. Hence $M(t)$ is singular for some $t\in[2-d_J/v,2]$, with $t>1$. A null vector $u$ gives the nonzero $B$-eigenvector $f(i,j)=tu_j-u_i$. Conversely, a nonreal eigenvalue $t$ of $B$ gives $M(t)u=0$ with $u\ne0$; multiplication by $u^*$ gives a real quadratic with constant-to-leading ratio at most two, so $|t|\le\sqrt2$. Even powers of real eigenvalues are nonnegative. Therefore
+\[
+ 2^{-\ell}\tr B^\ell\ge\bigl(1-d_J/(2v)\bigr)^\ell-3v\,2^{-\ell/2}\qquad(\ell\text{ even}).
+\]
+By \eqref{eq:deficit}, summing over even $6x\le\ell\le L$ gives
+\[
+ T:=\sum_{\ell\le L}\frac{\tr B^\ell}{2\ell\,2^\ell}\ge\bigl(\tfrac14+o(1)\bigr)\ln\frac L{6x}=\bigl(\tfrac18+o(1)\bigr)\ln y.
+\]
+
+Put $s=\floor{(D-1)/2}$. Girth makes an $s$-step nonbacktracking path between fixed endpoints unique. Writing $N_t(u,w)$ for the number of ordinary nonbacktracking walks of length $t$ from $u$ to $w$, we obtain
+\begin{equation}\label{eq:walks}
+ 2^{-t}N_t(u,w)\le\tfrac32\,2^{-s}\qquad(t>s).
+\end{equation}
+Let $V=\sum_{C\subset J,\,|C|\le L}2^{-|C|}$, over simple cycles. A nonsimple cyclically nonbacktracking walk contains a proper simple cycle; its complementary ordinary closed nonbacktracking walk has length greater than $D$. Encode by the cycle, an oriented start, the complement and the original root. The factor $1/(2\ell)$ cancels orientations and root positions; the start vertex and complementary length contribute at most $L^2$. Consequently
+\begin{equation}\label{eq:collisions}
+ 0\le T-V\le\tfrac32L^22^{-s}V,\qquad V\ge\bigl(\tfrac18+o(1)\bigr)\ln y.
+\end{equation}
+
+\subsection{Normalize cycle indicators}\label{sec:indicators}
+For each cycle $C\subset J$ of length at most $L$, let $I_C$ say that $C$ is a component of the random even set. Put
+\[
+ a_C=2^{-|C|},\qquad p_C=\Prob(I_C),\qquad X_C=(a_C/p_C)\ind_{I_C},\qquad Z=\sum_CX_C.
+\]
+Cubic ambient degree makes $I_C$ exactly the event that all cycle edges are selected. These are feasible binary linear conditions, so $p_C\ge a_C$, $0\le X_C\le1$ and $\E X_C=a_C$.
+
+For disjoint cycles $C,C'$, let $\ell(C,C')$ count their direct joining edges and the components of $\Gamma-(V(C)\cup V(C'))$ attached to both. Prescribing the inner cycle words multiplies zero-cut probabilities by separate inner factors. They cancel in the ratio \eqref{eq:ratio}, giving
+\begin{equation}\label{eq:pair}
+ \E(X_CX_{C'})=a_Ca_{C'}\,2^{\ell(C,C')-1}.
+\end{equation}
+
+\subsection{The deleted cycles count as cyclic components}\label{sec:links}
+At most $c$ components of $\Gamma-(V(C)\cup V(C'))$ meet $P$, by \eqref{eq:cubic}. Every other component $F_i$ lies in $\Gamma-P$ and has cut $d_i$ ending on the two cycles, with $\sum_id_i\le2L$. Set $t_0=\floor{y/2}$. At most $2L/t_0$ components have $d_i>t_0$. Among the remaining components, at most $O(t_02^{t_0}/\eps)$ are cyclic, by \eqref{eq:small-cuts} and \eqref{eq:cubic}.
+
+If $F_i$ is a tree, it cannot meet $S$: any packed cycle meeting $F_i$ is wholly contained in it, since it is disjoint from $C,C'$. Thus every such tree lies in the high-girth graph $J$. Cubic ambient degree gives $|F_i|=d_i-2$. When it meets both cycles and $d_i\le t_0$, choose a joining path through it of length at most $t_0$; include direct joining edges as paths of length one. These paths have disjoint interiors and distinct endpoints. Partition each cycle into consecutive vertex blocks of size at most $\floor{D/4}$. Two paths joining the same block pair would form a cycle of length at most $2t_0+D/2<D$. Hence there are only $O((L/D)^2)$ such paths. Uniformly in the pair,
+\begin{equation}\label{eq:links}
+ \ell(C,C')\le c+O\Bigl(\bigl(L/D\bigr)^2+L/t_0+t_02^{t_0}/\eps\Bigr)=c+o(x).
+\end{equation}
+
+\subsection{Finish the second moment}\label{sec:second}
+Call a disjoint pair exceptional when $\ell(C,C')\ge3$. By Lemma~\ref{lem:exceptional}, a disjoint packing of exceptional partners of $C$ has at most $|\delta C|\le L$ members. A maximal packing has union $U_C$ of size at most $L^2$, meeting every exceptional partner. Equation \eqref{eq:walks} bounds cycle weight through a fixed vertex by $O(L2^{-s})$. Thus \eqref{eq:pair} and \eqref{eq:links} give
+\begin{equation}\label{eq:exceptional-sum}
+ \sum_{C'\text{ exceptional to }C}\E(X_CX_{C'})\le a_C\,2^{c+o(x)}\,O\bigl(L^32^{-s}\bigr)=o(1)\,a_C,
+\end{equation}
+since $c\le x/100$ and $s=x/20+O(1)$. Intersecting distinct cycles are incompatible, nonexceptional disjoint pairs contribute at most $2a_Ca_{C'}$, and $\E X_C^2\le a_C$. Therefore, with $\mu=\E Z=V$,
+\[
+ \E Z^2\le2\mu^2+(1+o(1))\mu.
+\]
+Since every $C$ lies in $\Gamma-P$, equations \eqref{eq:second-moment} and \eqref{eq:collisions} yield
+\[
+ P_\Gamma(\Gamma-P)\le\Prob(Z=0)\le\frac12+\frac{2+o(1)}{\ln y}<\frac12+\frac{20}z,
+\]
+contradicting \eqref{eq:cubic}. This proves Theorem~\ref{thm:forest}.\qed
+
+%======================================================================
+\section{Cycle lengths and the lower bound}\label{sec:recurrence}
+%======================================================================
+Let $\Phi(R)$ be the supremum of $(L-2)2^{-\beta(G)}$ over simple graphs of rank at least $R$ containing every cycle length $3,\ldots,L$. Cycle counting gives $\Phi\le1$, and vertex identifications make realizers connected.
+
+\begin{theorem}[Near-halving]\label{thm:recurrence}
+For every sufficiently large integer $R$,
+\begin{equation}\label{eq:recurrence}
+ \Phi\bigl(2^{256R}\bigr)\le\Bigl(\frac12+\frac{20}{\log^{(2)}R}\Bigr)\Phi(R)+2^{2-R}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Consider a connected graph of rank $r\ge2^{256R}$ containing every cycle length $3,\ldots,L$; if $L<2^{2R}+1$, then $(L-2)2^{-r}$ is below the error. Otherwise greedily adjoin a cycle of the least missing length until the union $W$ has rank $t\ge2R$. At preceding rank $s<2R$ the added length is at most $2^s+2$, and at most $\phi2^s+3$ when $s\ge R$, where $\phi=\Phi(R)$. Each step increases rank, so at most $2R$ cycles are used and $\cc(W)\le2R$. With $m=|E(W)|$,
+\[
+ m\le2^{2R}+4R-1\le2^{3R},\qquad m+1\le\phi2^{2R}+2^R+5R,\qquad(m+1)2^{-t}\le\phi+2^{1-R}.
+\]
+Restriction to $M=E\setminus W$ has $2^{r-t}$ equally likely words. A mixed cycle requires a forest outside word and has at most $m+1$ lengths per word. Pure outside cycles contribute at most one length per word, and inside cycles at most $m$ lengths. Hence
+\[
+ (L-2)2^{-r}\le(m+1)2^{-t}P_G(M)+2^{-t}+m2^{-r}.
+\]
+Theorem~\ref{thm:forest} applies, since $m\le\sqrt r$ and $\cc(W)\le2R\le(\log r)/100$. As $\log^{(3)}r\ge\log^{(2)}R$, the coefficient of $\phi$ is at most that in \eqref{eq:recurrence}. Using also $P_G(M)\le1$, the remaining terms are at most
+\[
+ 2^{1-R}+2^{-2R}+2^{3R-r}\le2^{2-R}
+\]
+for large $R$, proving \eqref{eq:recurrence}.
+\end{proof}
+
+\Needspace{8\baselineskip}
+\begin{corollary}[Lower bound]\label{cor:lower}
+Every pancyclic graph on $n$ vertices has at least $n+\log n+\lstar n-O(1)$ edges.
+\end{corollary}
+
+\begin{proof}
+Choose an integer $R_0$ large enough for Theorem~\ref{thm:recurrence}, and iterate $R_{j+1}=2^{256R_j}$. For $j\ge2$, $\log^{(2)}R_j=8+256R_{j-2}$, so
+\[
+ \sum_j\frac1{\log^{(2)}R_j}<\infty\qquad\text{and}\qquad\sum_j2^{j-R_j}<\infty,
+\]
+and \eqref{eq:recurrence} yields $\Phi(R_j)=O(2^{-j})$.
+
+Also $\lstar R_j=j+O(1)$: compare with $U_{j+1}=2^{U_j}$ and induct on $R_j\le\sqrt{U_j}$, starting with a large fixed $U_0$; the reverse bound follows from $R_{j+1}\ge2^{R_j}$. Monotonicity then gives
+\[
+ \Phi(r)=O\bigl(2^{-\lstar r}\bigr).
+\]
+
+A pancyclic $n$-vertex graph with $n+h$ edges has rank $r=h+1$. Hence $n-2=O(2^{r-\lstar r})$ and $n\le2^{r+1}$, and thus $\lstar n\le\lstar r+2$. These inequalities imply $h\ge\log n+\lstar n-O(1)$.
+\end{proof}
+
+%======================================================================
+\Needspace{12\baselineskip}
+\section{The matching construction}\label{sec:upper}
+%======================================================================
+\begin{proposition}\label{prop:upper}
+For every $n\ge3$ there is a pancyclic graph on $n$ vertices with at most $n+\floor{\log n}+\lstar n+1$ edges.
+\end{proposition}
+
+\begin{proof}
+For $3\le n\le6$, an $n$-cycle $v_0\cdots v_{n-1}$ with the chord $v_0v_2$ (for $n\ge4$) and also $v_0v_3$ (for $n=6$) suffices.
+
+For $n\ge7$, choose the largest $k$ with $2^k+k+1\le n$. On an $n$-cycle, an arc with successive segment lengths $2^i+1$, $0\le i<k$, has endpoints $v_0,\ldots,v_k$. Add the $k$ segment shortcuts and $v_0v_k$. Binary subset sums give the cycle lengths
+\[
+ [k+1,\,2^k+k]\qquad\text{and}\qquad[n-2^k+1,\,n].
+\]
+Maximality of $k$ gives $n\le2^{k+1}+k+1$, so at most one intermediate length is missing; one additional chord supplies it if needed.
+
+Starting at $t=k$, while $t>2$ add $v_0v_j$ for $j=\ceil{\log t}<t$. Its shortcuts give $[j+1,2^j+j]$; since $2^j\ge t$, this extends coverage down to $j+1$. Replace $t$ by $j$. This takes $\lstar k-1$ further chords, so altogether at most
+\[
+ k+\lstar k+1\le\floor{\log n}+\lstar n+1
+\]
+edges are added.
+\end{proof}
+
+Corollary~\ref{cor:lower} and Proposition~\ref{prop:upper} prove Theorem~\ref{thm:main}.
+
+%======================================================================
+\appendix
+\section{Lean correspondence}\label{app:lean}
+%======================================================================
+Module paths are relative to \lean{Erdos1016/} at commit \texttt{a38913e}; declaration names below omit namespace prefixes. The formal proof follows the same argument, with explicit constants in place of some $O$-terms and minor differences in auxiliary rounding and intermediate estimates. The stated forest bound and final upper bound agree exactly.
+
+{\small
+\renewcommand{\arraystretch}{1.12}
+\begin{xltabular}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.1cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Paper & Module & Declaration \\
+\midrule
+\endhead
+\bottomrule
+\endlastfoot
+Thm~\ref{thm:main} & \lean{Main.lean} & \lean{mainTheorem} \\
+Lemma~\ref{lem:exceptional} & \lean{CycleSpace/Graphical/MultigraphCutCorrelation.lean}, \lean{CycleSpace/Graphical/DisjointRegionCuts.lean} & \lean{multigraph_zeroCut_pair}, \lean{exceptional_partner_card_le} \\
+Cor.~\ref{cor:small-cuts} & \lean{Probability/Moments/SmallCutRegionBound.lean} & \lean{smallCut_forest_bound} \\
+\secsign\ref{sec:cubic} & \lean{Graph/Cubicization/MarkedReduction.lean} & \lean{exists_marked_subcubic_reduction} \\
+\secsign\ref{sec:short} & \lean{Cycles/Selection/ShortRegionPacking.lean}, \lean{Cycles/Selection/RetainedHighGirth.lean} & \lean{retained_girth} \\
+\secsign\ref{sec:supply} & \lean{Nonbacktracking/Spectrum/DeficitTrace.lean}, \lean{Cycles/Counting/LowDegreeTraceCycles.lean} & \lean{normalized_even_trace_lower}, \lean{cycleWordMass_ge_log_ratio} \\
+\secsign\ref{sec:indicators} & \lean{Probability/Moments/SeedPairCorrelation.lean} & \lean{normalizedSelectedSeed_pair} \\
+\secsign\ref{sec:links} & \lean{Cycles/Geometry/ActualCycleLinkBound.lean} & \lean{actual_cycle_links_le} \\
+\secsign\ref{sec:second} & \lean{Probability/Moments/SeedFamilyAvoidance.lean}, \lean{Probability/Moments/InducedCycleAvoidance.lean} & \lean{second_moment_le}, \lean{forest_le_half_add_twenty} \\
+Thm~\ref{thm:forest} & \lean{Probability/Avoidance/FewComponentForest.lean} & \lean{fewComponentForestEstimate} \\
+Thm~\ref{thm:recurrence} & \lean{Extremal/Witness/CapacityBudget.lean}, \lean{Extremal/Recurrence/WitnessReduction.lean} & \lean{exists_budgeted_witness}, \lean{recurrence_of_few_component_forest_estimate} \\
+Cor.~\ref{cor:lower} & \lean{Extremal/Recurrence/LinearExponentialDecay.lean} & \lean{recurrence_logStar_bound} \\
+Prop.~\ref{prop:upper} & \lean{Extremal/UpperBound.lean} & \lean{upper_bound_integer} \\
+\end{xltabular}}
+
+\Needspace{14\baselineskip}
+\begin{thebibliography}{99}
+\addcontentsline{toc}{section}{References}
+\small
+
+\bibitem{AK}
+Y. Alon and M. Krivelevich,
+\emph{Sparse pancyclic subgraphs of random graphs},
+SIAM J. Discrete Math. \textbf{39} (2025), 562--574.
+\href{https://arxiv.org/abs/2308.01564}{arXiv:2308.01564}.
+
+\bibitem{Bass}
+H. Bass,
+\emph{The Ihara--Selberg zeta function of a tree lattice},
+Internat. J. Math. \textbf{3} (1992), 717--797.
+\href{https://doi.org/10.1142/S0129167X92000357}{doi:10.1142/S0129167X92000357}.
+
+\bibitem{ErdosProblems}
+T. F. Bloom,
+\emph{Erd\H{o}s Problems}, Problem \#1016,
+\url{https://www.erdosproblems.com/1016}, accessed September 2026.
+
+\bibitem{Bondy}
+J. A. Bondy,
+\emph{Pancyclic graphs I},
+J. Combin. Theory Ser. B \textbf{11} (1971), 80--84.
+\href{https://doi.org/10.1016/0095-8956(71)90016-5}{doi:10.1016/0095-8956(71)90016-5}.
+
+\bibitem{Lean4}
+L. de Moura and S. Ullrich,
+\emph{The Lean~4 theorem prover and programming language},
+in: CADE 28, Lecture Notes in Comput. Sci. \textbf{12699}, Springer, 2021, 625--635.
+\href{https://doi.org/10.1007/978-3-030-79876-5_37}{doi:10.1007/978-3-030-79876-5\_37}.
+
+\bibitem{GKW}
+J. C. George, A. Khodkar and W. D. Wallis,
+\emph{Pancyclic and Bipancyclic Graphs},
+SpringerBriefs in Mathematics, Springer, 2016.
+\href{https://doi.org/10.1007/978-3-319-31951-3}{doi:10.1007/978-3-319-31951-3}.
+
+\bibitem{Griffin}
+S. Griffin,
+\emph{Minimal pancyclicity},
+\href{https://arxiv.org/abs/1312.0274}{arXiv:1312.0274} (2013).
+
+\bibitem{KS}
+M. Kotani and T. Sunada,
+\emph{Zeta functions of finite graphs},
+J. Math. Sci. Univ. Tokyo \textbf{7} (2000), 7--25.
+
+\bibitem{Mathlib}
+The mathlib Community,
+\emph{The Lean mathematical library},
+in: CPP 2020, ACM, 2020, 367--381.
+\href{https://doi.org/10.1145/3372885.3373824}{doi:10.1145/3372885.3373824}.
+
+\bibitem{Sridharan}
+M. R. Sridharan,
+\emph{On an extremal problem concerning pancyclic graphs},
+J. Math. Phys. Sci. \textbf{12} (1978), 297--306.
+
+\end{thebibliography}
+\end{document}

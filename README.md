@@ -16,7 +16,7 @@ where `h(n)` is the minimum excess of edges over vertices in a simple graph on `
 
 The public declarations are in [Main.lean](Erdos1016/Main.lean). `Erdos1016.mainTheorem_integer_excess` gives the equivalent statement using integer subtraction for the excess.
 
-An updated paper accompanying this formalization is not yet available. The previous formalization, published paper, and a working draft are preserved under [`old/`](old/ARCHIVE.md). They are excluded from the active Lean build and current CI certificate. The website is archived separately.
+Read the [paper (PDF)](paper/erdos1016.pdf) or its [LaTeX source](paper/erdos1016.tex). The previous formalization, published paper, and an earlier working draft are preserved under [`old/`](old/ARCHIVE.md). The archived material is excluded from the active Lean build and current CI certificate. The website is archived separately.
 
 ## Proof structure
 
