@@ -11,3 +11,5 @@ Dependency-free static guide, published from this `site/` directory through GitH
 - All enumerations are exact and deliberately bounded. The asymptotic demonstrations are identified as illustrations, not graph evidence.
 
 The publication workflow tests the examples and uploads only `site/`. It does not modify the Lean source, pinned dependencies, or verification workflow.
+
+The Paper navigation link serves `paper.pdf` directly. The publication workflow copies the current repository manuscript into this path before testing and deploying, and manuscript PDF updates trigger publication. For local verification after a manuscript update, run `cp paper/erdos1016.pdf site/paper.pdf` first.

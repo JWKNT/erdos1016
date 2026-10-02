@@ -31,15 +31,29 @@ test('selected demo controls retain contrast on hover and 44-pixel minimum width
 
 test('restrained structure removes redundant and provenance-only sections',()=>{
  assert.doesNotMatch(html,/id="sources"|href="#sources"|<footer|class="introduction"|class="eyebrow"/);
- assert.match(html,/<h1 class="site-title">Erdős problem 1016<\/h1>/);
+ assert.match(html,/<h1 class="site-title">Erdős 1016<\/h1>/);
  assert.doesNotMatch(html,/How few edges can hold|One graph\. Every possible loop length|Experiment ·/);
 });
 test('display mathematics uses native fractions, scripts and locally licensed math font',async()=>{
- assert.equal((html.match(/class="equation(?: conclusion)?"/g)||[]).length,20);
+ assert.equal((html.match(/class="equation(?: conclusion)?"/g)||[]).length,32);
  assert.ok((html.match(/<math /g)||[]).length>=50);
  assert.ok(html.includes('<mfrac>'));assert.ok(html.includes('<msup>'));assert.ok(html.includes('<msub>'));
  const css=await readFile(resolve(site,'assets/guide.css'),'utf8');
  assert.match(css,/font-family: "Guide Math"/);
  await access(resolve(site,'assets/fonts/latinmodern-math.otf'));
  await access(resolve(site,'assets/fonts/LICENSE-Latin-Modern.txt'));
+});
+
+test('paper is served directly and byte-identical to the repository manuscript',async()=>{
+ assert.match(html,/href="paper.pdf">Paper<\/a>/);
+ const pdf=await readFile(resolve(site,'paper.pdf'));
+ assert.equal(pdf.subarray(0,5).toString(),'%PDF-');
+ assert.deepEqual(pdf,await readFile(resolve(site,'../paper/erdos1016.pdf')));
+});
+
+test('mathematics uses prose ink with neutral display shading',async()=>{
+ const css=await readFile(resolve(site,'assets/guide.css'),'utf8');
+ assert.match(css,/--math-ink: var\(--ink\)/);
+ assert.match(css,/background:var\(--surface\); color:var\(--ink\)/);
+ assert.doesNotMatch(css,/#315f68|#aacdd1/);
 });

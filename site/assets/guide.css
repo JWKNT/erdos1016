@@ -6,13 +6,13 @@
   font-display: swap;
 }
 :root {
-  --math-ink: #315f68;
-  --math-rule: #cbd9d9;
+  --math-ink: var(--ink);
+  --math-rule: var(--line);
   --math-face: "Guide Math", "Latin Modern Math", "Cambria Math", "STIX Two Math", serif;
 }
 :root[data-theme="dark"] {
-  --math-ink: #aacdd1;
-  --math-rule: #354c4c;
+  --math-ink: var(--ink);
+  --math-rule: var(--line);
 }
 .site-identity { display:flex; align-items:center; gap:.75rem; }
 .site-header--identity .site-title { font-size:1.7rem; letter-spacing:-.015em; }
@@ -34,7 +34,7 @@ var { font-style:italic; }
 .math-inline var, .math-inline .math-inline { font-size:inherit; }
 math { font-family:var(--math-face); font-size:1.06em; color:var(--math-ink); }
 p math, li math { margin-inline:.08em; }
-.equation { margin:1.6rem 0; padding:.7rem 1rem; border-left:1px solid var(--math-rule); color:var(--math-ink); overflow-x:auto; overflow-y:hidden; overscroll-behavior-inline:contain; }
+.equation { margin:1.6rem 0; padding:1rem 1.1rem; border:0; background:var(--surface); color:var(--ink); overflow-x:auto; overflow-y:hidden; overscroll-behavior-inline:contain; }
 .equation math { display:block; width:max-content; min-width:100%; margin:.6rem 0; font-size:1.16rem; line-height:1.6; math-style:normal; }
 .equation:focus-visible { outline:2px solid var(--blue); outline-offset:4px; }
 .conclusion { margin-top:1.8rem; padding-block:1rem; }
@@ -77,7 +77,7 @@ details p { font-size:1.03rem; }
 .proof-flow { display:grid; text-align:center; gap:.3rem; font-size:1rem; padding:1rem 0; }
 .proof-flow span:nth-child(2n) { color:var(--muted); }
 .theorem { border-left:2px solid var(--math-rule); padding:.15rem 0 .15rem 1.15rem; margin:1.5rem 0; }
-.theorem .equation { border-left:0; padding-inline:0; }
+.theorem .equation { margin-block:1rem; }
 .steps { padding-left:1.5rem; }
 .steps li { padding-left:.3rem; margin:1rem 0; }
 .static-diagram { margin:1.5rem 0; }
