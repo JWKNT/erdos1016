@@ -49,6 +49,7 @@ details p { font-size:1.03rem; }
 .demo-controls button, .demo-controls input, .demo-controls select, .demo-button { font-size:.94rem; min-height:44px; }
 .demo-controls button,.demo-button{min-width:44px;border:1px solid var(--line-strong);background:var(--paper);padding:.45rem .75rem;border-radius:0}
 .demo-controls button[aria-pressed=true],.demo-button[aria-pressed=true],.demo-controls button[aria-pressed=true]:hover:not(:disabled),.demo-button[aria-pressed=true]:hover:not(:disabled){background:var(--ink);color:var(--paper)}
+.demo-button:disabled { color:var(--muted); border-color:var(--line); cursor:default; }
 .demo-controls input[type=number] { width:11rem; max-width:100%; padding:.4rem; }
 .demo-controls input[type=range] { max-width:100%; accent-color:var(--ink); }
 .demo-output { font-size:.98rem; line-height:1.65; min-height:3rem; padding:.5rem 0; font-variant-numeric:tabular-nums; }
@@ -112,7 +113,7 @@ noscript { font-size:.95rem; }
 }
 @media(max-width:380px) { .contents ol { columns:1; } .demo-controls label { width:100%; } }
 @media print {
-  .contents,.demo-controls,.site-header nav { display:none; }
+  .contents,.demo-controls,.demo-button-row,.site-header nav { display:none; }
   .reading-layout { display:block; max-width:45rem; padding:0; }
   .experiment,details { break-inside:avoid; }
   .demo-svg { max-height:230px; }

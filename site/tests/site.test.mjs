@@ -29,6 +29,12 @@ test('selected demo controls retain contrast on hover and 44-pixel minimum width
  assert.match(css,/\.demo-controls button,\.demo-button\{min-width:44px/);
 });
 
+test('disabled demo buttons are distinct and all control rows are hidden in print',async()=>{
+ const css=await readFile(resolve(site,'assets/guide.css'),'utf8');
+ assert.match(css,/\.demo-button:disabled\s*\{[^}]*color:var\(--muted\);[^}]*border-color:var\(--line\);[^}]*cursor:default;/);
+ assert.match(css,/@media print\s*\{\s*\.contents,\.demo-controls,\.demo-button-row,\.site-header nav\s*\{\s*display:none;/);
+});
+
 test('restrained structure removes redundant and provenance-only sections',()=>{
  assert.doesNotMatch(html,/id="sources"|href="#sources"|<footer|class="introduction"|class="eyebrow"/);
  assert.match(html,/<h1 class="site-title">Erdős 1016<\/h1>/);

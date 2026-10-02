@@ -62,6 +62,13 @@ function numberText(value) {
     ? value.toExponential(4).replace(/\.0+(?=e)/, '')
     : Number(value.toPrecision(6)).toLocaleString('en-US', { maximumFractionDigits: 6 });
 }
+// Preserve the represented input: rounding across a tower threshold can make
+// a correct log-star result appear to contradict its displayed argument.
+function inputNumberText(value) {
+  return value >= 1e8 || value < 0.0001
+    ? value.toExponential()
+    : value.toLocaleString('en-US', { maximumSignificantDigits: 21 });
+}
 function circlePoints(n, cx = 270, cy = 155, radius = 110) {
   return Array.from({ length: n }, (_, i) => {
     const a = -Math.PI / 2 + i * 2 * Math.PI / n;
@@ -302,8 +309,9 @@ function mountLogStar(container) {
     }
     input.removeAttribute('aria-invalid');
     const { count, values, roundedBoundary } = logStarSteps(n);
+    const displayedInput = inputNumberText(n);
     const thresholds = ['1', '2', '4', '16', '65,536', '2^65,536'];
-    const svg = svgFrame(620, 275, `Log-star threshold staircase. log-star of ${numberText(n)} equals ${count}. Thresholds: 1, 2, 4, 16, 65536, and 2 to the 65536.`);
+    const svg = svgFrame(620, 275, `Log-star threshold staircase. log-star of ${displayedInput} equals ${count}. Thresholds: 1, 2, 4, 16, 65536, and 2 to the 65536.`);
     for (let i = 0; i <= 5; i++) {
       const x = 55 + i * 102, y = 215 - i * 30;
       if (i < 5) svg.append(svgElement('path', { d: `M${x} ${y} H${x + 102} V${y - 30}`, fill: 'none', class: 'plot-line' }));
@@ -312,8 +320,8 @@ function mountLogStar(container) {
       svg.append(svgElement('text', { x, y: 253, 'text-anchor': 'middle', class: 'graph-label' }, `${i} logs`));
     }
     diagram.replaceChildren(svg);
-    result.textContent = `log*₂(${numberText(n)}) = ${count}. ${count ? `${count} repeated base-2 logarithm${count === 1 ? '' : 's'} bring n to at most 1.` : 'n is already at most 1; no logarithms are needed.'}`;
-    steps.textContent = `${values.map(numberText).join(' → ')}${roundedBoundary ? '. Rounding at a boundary can alter the displayed iteration; the exact threshold determines the answer.' : ''}${count === 5 ? '. The next threshold, 2^65,536, is far larger than any finite JavaScript number.' : ''}`;
+    result.textContent = `log*₂(${displayedInput}) = ${count}. ${count ? `${count} repeated base-2 logarithm${count === 1 ? '' : 's'} bring n to at most 1.` : 'n is already at most 1; no logarithms are needed.'}`;
+    steps.textContent = `${count ? `Successive values (logarithms rounded): ${displayedInput} → ${values.slice(1).map(numberText).join(' → ')}` : `Starting value: ${displayedInput}`}${roundedBoundary ? '. Rounding at a boundary can alter the displayed iteration; the exact threshold determines the answer.' : ''}${count === 5 ? '. The next threshold, 2^65,536, is far larger than any finite JavaScript number.' : ''}`;
   }
   input.addEventListener('input', refresh);
   refresh();
