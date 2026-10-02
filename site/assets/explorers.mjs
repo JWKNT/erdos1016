@@ -320,7 +320,7 @@ function mountLogStar(container) {
       svg.append(svgElement('text', { x, y: 253, 'text-anchor': 'middle', class: 'graph-label' }, `${i} logs`));
     }
     diagram.replaceChildren(svg);
-    result.textContent = `log*₂(${displayedInput}) = ${count}. ${count ? `${count} repeated base-2 logarithm${count === 1 ? '' : 's'} bring n to at most 1.` : 'n is already at most 1; no logarithms are needed.'}`;
+    result.textContent = `log*₂(${displayedInput}) = ${count}. ${count ? `${count} repeated base-2 logarithm${count === 1 ? '' : 's'} ${count === 1 ? 'brings' : 'bring'} n to at most 1.` : 'n is already at most 1; no logarithms are needed.'}`;
     steps.textContent = `${count ? `Successive values (logarithms rounded): ${displayedInput} → ${values.slice(1).map(numberText).join(' → ')}` : `Starting value: ${displayedInput}`}${roundedBoundary ? '. Rounding at a boundary can alter the displayed iteration; the exact threshold determines the answer.' : ''}${count === 5 ? '. The next threshold, 2^65,536, is far larger than any finite JavaScript number.' : ''}`;
   }
   input.addEventListener('input', refresh);
