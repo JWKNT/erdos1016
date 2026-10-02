@@ -22,3 +22,9 @@ test('local linked resources exist; no external runtime dependencies',async()=>{
  }
  for(const [,src] of html.matchAll(/<script[^>]*src="([^"]+)"/g))assert.ok(!src.startsWith('http'));
 });
+
+test('selected demo controls retain contrast on hover and 44-pixel minimum width',async()=>{
+ const css=await readFile(resolve(site,'assets/guide.css'),'utf8');
+ assert.match(css,/\.demo-button\[aria-pressed=true\]:hover:not\(:disabled\)\{background:var\(--ink\);color:var\(--paper\)\}/);
+ assert.match(css,/\.demo-controls button,\.demo-button\{min-width:44px/);
+});
