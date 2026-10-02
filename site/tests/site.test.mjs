@@ -42,7 +42,9 @@ test('restrained structure removes redundant and provenance-only sections',()=>{
 });
 test('display mathematics uses native fractions, scripts and locally licensed math font',async()=>{
  assert.equal((html.match(/class="equation(?: conclusion)?"/g)||[]).length,32);
- assert.ok((html.match(/<math /g)||[]).length>=50);
+ assert.ok((html.match(/<math[\s>]/g)||[]).length>=300);
+ // Inline formulas are MathML too, not hand-built spans or Unicode subscripts.
+ assert.doesNotMatch(html,/class="math-inline"|<var>|log₂|[₀-₉]/);
  assert.ok(html.includes('<mfrac>'));assert.ok(html.includes('<msup>'));assert.ok(html.includes('<msub>'));
  const css=await readFile(resolve(site,'assets/guide.css'),'utf8');
  assert.match(css,/font-family: "Guide Math"/);

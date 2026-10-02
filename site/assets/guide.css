@@ -27,13 +27,17 @@ main p { margin:1rem 0; }
 section { scroll-margin-top:1.5rem; padding:2rem 0; border-top:1px solid var(--line); }
 section:first-child { border-top:0; padding-top:0; }
 h2 { font-size:1.45rem; line-height:1.3; letter-spacing:-.012em; margin:0 0 1.25rem; }
+.chapter-number { display:inline-block; min-width:1.75em; color:var(--muted); font-weight:400; font-variant-numeric:lining-nums tabular-nums; }
 h3 { font-size:1.08rem; line-height:1.4; }
 dfn { font-style:normal; font-weight:bold; }
-var, .math-inline, .math { font-family:var(--math-face); color:var(--math-ink); font-size:1.06em; }
+var { font-family:var(--math-face); color:var(--math-ink); font-size:1.06em; }
 var { font-style:italic; }
-.math-inline var, .math-inline .math-inline { font-size:inherit; }
 math { font-family:var(--math-face); font-size:1.06em; color:var(--math-ink); }
-p math, li math { margin-inline:.08em; }
+p math, li math, figcaption math, summary math, span math { margin-inline:0; }
+/* Temml multi-line layouts: column alignment and row spacing. */
+.tml-right { text-align:right; text-align:-webkit-right; }
+.tml-left { text-align:left; text-align:-webkit-left; }
+mtable.tml-jot mtd { padding-block:.45ex; }
 .equation { margin:1.6rem 0; padding:1rem 1.1rem; border:0; background:var(--surface); color:var(--ink); overflow-x:auto; overflow-y:hidden; overscroll-behavior-inline:contain; }
 .equation math { display:block; width:max-content; min-width:100%; margin:.6rem 0; font-size:1.16rem; line-height:1.6; math-style:normal; }
 .equation:focus-visible { outline:2px solid var(--blue); outline-offset:4px; }
@@ -119,7 +123,7 @@ noscript { font-size:.95rem; }
   .demo-svg { max-height:230px; }
   section { padding:1rem 0; }
   main { font-size:10pt; }
-  math,var,.math-inline,.math { color:#222; }
+  math,var { color:#222; }
   .equation { overflow:visible; }
   .equation math { font-size:11pt; }
 }

@@ -11,9 +11,14 @@ class Node {
     this.children = [];
     this.dataset = {};
     this.listeners = new Map();
-    this.textContent = '';
+    this.text = '';
     this.value = '';
   }
+  // Like the DOM: text is the concatenation of child text; setting it removes children.
+  get textContent() {
+    return this.children.length ? this.children.map((child) => typeof child === 'string' ? child : child.textContent).join('') : this.text;
+  }
+  set textContent(value) { this.text = String(value); this.children = []; }
   setAttribute(name, value) {
     this.attributes.set(name, String(value));
     if (name === 'value') this.value = String(value);
@@ -29,6 +34,7 @@ class Node {
   find(predicate) {
     if (predicate(this)) return this;
     for (const child of this.children) {
+      if (typeof child === 'string') continue;
       const found = child.find(predicate);
       if (found) return found;
     }
@@ -65,7 +71,9 @@ test('log-star output preserves the represented input at both sides of every fin
     for (const n of cases) {
       fixture.input.value = String(n);
       fixture.input.listeners.get('input')();
-      const [, displayed, count] = fixture.output.textContent.match(/^log\*₂\(([^)]+)\) = (\d+)\./);
+      const [, shown, count] = fixture.output.textContent.match(/^log\*\(([^)]+)\) = (\d+)\./);
+      // Scientific values read as "a × 10" followed by the superscript exponent.
+      const displayed = shown.replace(/ × 10(−?\d+)$/, (_, exponent) => (exponent.startsWith('−') ? `e-${exponent.slice(1)}` : `e+${exponent}`));
       assert.equal(Number(displayed.replaceAll(',', '')), n, `Input rounded in output for ${n}`);
       const threshold = thresholds.findIndex((limit) => n <= limit);
       assert.equal(Number(count), threshold < 0 ? 5 : threshold);
@@ -75,7 +83,7 @@ test('log-star output preserves the represented input at both sides of every fin
         assert.ok(fixture.output.textContent.includes(Number(count) === 1 ? '1 repeated base-2 logarithm reduces n' : `${count} repeated base-2 logarithms reduce n`));
         const steps = fixture.root.find((node) => node.textContent.startsWith('Successive values'));
         assert.ok(steps, 'Rounded logarithm steps must be identified as rounded');
-        assert.ok(steps.textContent.startsWith(`Successive values (logarithms rounded): ${displayed} → `));
+        assert.ok(steps.textContent.startsWith(`Successive values (logarithms rounded): ${shown} → `));
       }
     }
   } finally { fixture.restore(); }
@@ -93,7 +101,7 @@ test('log-star invalid input clears the diagram and a threshold preset recovers 
     }
     fixture.root.find((node) => node.tag === 'button' && node.textContent === '65,536').listeners.get('click')();
     assert.equal(fixture.input.getAttribute('aria-invalid'), null);
-    assert.match(fixture.output.textContent, /^log\*₂\(65,536\) = 4\./);
+    assert.match(fixture.output.textContent, /^log\*\(65,536\) = 4\./);
     assert.ok(fixture.root.find((node) => node.tag === 'svg'));
   } finally { fixture.restore(); }
 });

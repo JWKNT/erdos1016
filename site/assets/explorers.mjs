@@ -32,6 +32,32 @@ function svgFrame(width, height, title) {
   return svg;
 }
 function paragraph(className, text) { return element('p', { class: className }, text); }
+// Readout markup: @x sets one italic variable; ^{…} and _{…} set scripts.
+function richNodes(text) {
+  const nodes = [];
+  let plain = '';
+  const flush = () => { if (plain) nodes.push(plain); plain = ''; };
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (ch === '@' && i + 1 < text.length) { flush(); nodes.push(element('var', {}, text[++i])); continue; }
+    if ((ch === '^' || ch === '_') && text[i + 1] === '{') {
+      let depth = 1, j = i + 2;
+      for (; j < text.length && depth; j++) depth += text[j] === '{' ? 1 : text[j] === '}' ? -1 : 0;
+      flush();
+      const script = element(ch === '^' ? 'sup' : 'sub');
+      script.append(...richNodes(text.slice(i + 2, j - 1)));
+      nodes.push(script);
+      i = j - 1;
+      continue;
+    }
+    plain += ch;
+  }
+  flush();
+  return nodes;
+}
+function rich(node, text) { node.replaceChildren(...richNodes(text)); }
+// 1e+9 becomes 1 × 10^{9}; the digits are unchanged.
+function scientific(text) { return text.replace(/e([+-])(\d+)$/, (_, sign, digits) => ` × 10^{${sign === '-' ? '−' : ''}${digits}}`); }
 function output(id) { return element('p', { class: 'demo-output', id, 'aria-live': 'polite', 'aria-atomic': 'true' }); }
 function button(text, onClick, attributes = {}) {
   const node = element('button', { type: 'button', class: 'demo-button', ...attributes }, text);
@@ -156,7 +182,7 @@ function mountGraph(container) {
     lengthSelect.value = String(lengths.includes(previousLength) ? previousLength : lengths[0]);
     const missing = [3, 4, 5, 6].filter((length) => !lengths.includes(length));
     const { edges: m, rank, excess } = graphStats(6, edges);
-    stats.textContent = `${m} edges · excess m − n = ${excess}. Cycle-space dimension r = ${rank} (see chapter 3). ${cycles.length} simple cycles; ${lengths.length} distinct cycle lengths: ${lengths.join(', ')}. Missing lengths from 3–6: ${missing.length ? missing.join(', ') : 'none'}. ${lengths.length === 4 ? 'This graph is pancyclic.' : 'This graph is not pancyclic.'}`;
+    rich(stats, `${m} edges · excess @m − @n = ${excess}. Cycle-space dimension @r = ${rank} (see chapter 3). ${cycles.length} simple cycles; ${lengths.length} distinct cycle lengths: ${lengths.join(', ')}. Missing lengths from 3–6: ${missing.length ? missing.join(', ') : 'none'}. ${lengths.length === 4 ? 'This graph is pancyclic.' : 'This graph is not pancyclic.'}`);
     chooseLength();
   }
   lengthSelect.addEventListener('change', chooseLength);
@@ -189,7 +215,7 @@ function mountSpace(container) {
       : isSimpleCycle(5, word) ? 'This even edge set is one simple cycle.'
       : 'This even edge set is not one simple cycle. Vertex 0 has degree 4.';
     result.textContent = `Basis bits ${bits}: ${name}. ${word.length} selected edges. ${kind}`;
-    degrees.textContent = `Degrees at vertices 0–4: ${edgeDegrees(5, word).join(', ')}. Every degree is even. Here r = 6 − 5 + 1 = 2. Thus, there are 2² = 4 even edge sets.`;
+    rich(degrees, `Degrees at vertices 0–4: ${edgeDegrees(5, word).join(', ')}. Every degree is even. Here @r = 6 − 5 + 1 = 2. Thus, there are 2^{2} = 4 even edge sets.`);
   }
   inputs[0].checked = true;
   inputs[1].checked = true;
@@ -277,7 +303,8 @@ function mountBinary(container) {
     svg.append(svgElement('text', { x: 295, y: 292, 'text-anchor': 'middle', class: 'graph-label' }, 'One closing edge'));
     diagram.replaceChildren(svg);
     const savings = construction.segments.filter((segment) => segment.shortcut).map((segment) => segment.saving);
-    result.textContent = `Cycle length = 20 − (${savings.length ? savings.join(' + ') : '0'}) = ${construction.length}. ${construction.saving} edges saved. Available lengths: ${construction.min}–${construction.max}.`;
+    const total = savings.length ? `20 − (${savings.join(' + ')}) = ${construction.length}` : '20';
+    result.textContent = `Cycle length ${total}. ${construction.saving ? `${construction.saving} edge${construction.saving === 1 ? '' : 's'} saved` : 'No edges saved'}. Available lengths: ${construction.min}–${construction.max}.`;
     markCurrent(lengthButtons, construction.length);
   }
   refresh();
@@ -288,8 +315,10 @@ function mountLogStar(container) {
   const controls = element('div', { class: 'demo-controls' });
   controls.append(control('Positive number n (decimal or scientific notation)', input));
   const presets = element('div', { class: 'demo-button-row', role: 'group', 'aria-label': 'Log-star threshold examples' });
-  [['1', '1'], ['2', '2'], ['4', '4'], ['16', '16'], ['65536', '65,536'], ['65537', '65,537'], ['1e100', '10¹⁰⁰']].forEach(([value, label]) => {
-    presets.append(button(label, () => { input.value = value; refresh(); }));
+  [['1', '1'], ['2', '2'], ['4', '4'], ['16', '16'], ['65536', '65,536'], ['65537', '65,537'], ['1e100', '10^{100}']].forEach(([value, label]) => {
+    const preset = button('', () => { input.value = value; refresh(); });
+    rich(preset, label);
+    presets.append(preset);
   });
   controls.append(presets);
   const diagram = element('div', { class: 'demo-diagram' });
@@ -310,18 +339,22 @@ function mountLogStar(container) {
     input.removeAttribute('aria-invalid');
     const { count, values, roundedBoundary } = logStarSteps(n);
     const displayedInput = inputNumberText(n);
-    const thresholds = ['1', '2', '4', '16', '65,536', '2^65,536'];
+    const thresholds = ['1', '2', '4', '16', '65,536', null];
     const svg = svgFrame(620, 275, `Log-star threshold staircase. log-star of ${displayedInput} equals ${count}. Thresholds: 1, 2, 4, 16, 65536, and 2 to the 65536.`);
     for (let i = 0; i <= 5; i++) {
       const x = 55 + i * 102, y = 215 - i * 30;
       if (i < 5) svg.append(svgElement('path', { d: `M${x} ${y} H${x + 102} V${y - 30}`, fill: 'none', class: 'plot-line' }));
       svg.append(svgElement('circle', { cx: x, cy: y, r: i === count ? 10 : 5, class: i === count ? 'plot-point' : 'graph-node' }));
-      svg.append(svgElement('text', { x, y: y - 17, 'text-anchor': 'middle', class: 'graph-label' }, `T${i} = ${thresholds[i]}`));
-      svg.append(svgElement('text', { x, y: 253, 'text-anchor': 'middle', class: 'graph-label' }, `${i} logs`));
+      const label = svgElement('text', { x, y: y - 17, 'text-anchor': 'middle', class: 'graph-label' });
+      label.append(svgElement('tspan', { 'font-style': 'italic' }, 'T'), svgElement('tspan', { dy: 5, 'font-size': '12' }, String(i)), svgElement('tspan', { dy: -5 }, ' = '));
+      if (thresholds[i]) label.append(svgElement('tspan', {}, thresholds[i]));
+      else label.append(svgElement('tspan', {}, '2'), svgElement('tspan', { dy: -8, 'font-size': '12' }, '65,536'));
+      svg.append(label);
+      svg.append(svgElement('text', { x, y: 253, 'text-anchor': 'middle', class: 'graph-label' }, `${i} log${i === 1 ? '' : 's'}`));
     }
     diagram.replaceChildren(svg);
-    result.textContent = `log*₂(${displayedInput}) = ${count}. ${count ? `${count} repeated base-2 logarithm${count === 1 ? '' : 's'} ${count === 1 ? 'reduces' : 'reduce'} n to at most 1.` : 'n is at most 1. The calculation needs no logarithms.'}`;
-    steps.textContent = `${count ? `Successive values (logarithms rounded): ${displayedInput} → ${values.slice(1).map(numberText).join(' → ')}` : `Starting value: ${displayedInput}`}${roundedBoundary ? '. At a boundary, rounding can change the displayed iteration. The exact threshold determines the answer' : ''}${count === 5 ? '. The next threshold, 2^65,536, is larger than every finite JavaScript number' : ''}.`;
+    rich(result, `log*(${scientific(displayedInput)}) = ${count}. ${count ? `${count} repeated base-2 logarithm${count === 1 ? '' : 's'} ${count === 1 ? 'reduces' : 'reduce'} @n to at most 1.` : '@n is at most 1. The calculation needs no logarithms.'}`);
+    rich(steps, `${count ? `Successive values (logarithms rounded): ${scientific(displayedInput)} → ${values.slice(1).map((v) => scientific(numberText(v))).join(' → ')}` : `Starting value: ${scientific(displayedInput)}`}${roundedBoundary ? '. At a boundary, rounding can change the displayed iteration. The exact threshold determines the answer' : ''}${count === 5 ? '. The next threshold, 2^{65,536}, is larger than every finite JavaScript number' : ''}.`);
   }
   input.addEventListener('input', refresh);
   refresh();
@@ -333,7 +366,9 @@ function mountMoment(container) {
   controls.append(control('Mean μ (1–100), with K = 1', input));
   const diagram = element('div', { class: 'demo-diagram' });
   const result = output('moment-output');
-  container.append(controls, diagram, result, paragraph('demo-note', 'If E[Z²] ≤ 2μ² + μ, this formula gives an upper bound on P(Z = 0). This bound is not an empirical probability. This example does not establish the hypothesis for every graph.'));
+  const momentNote = paragraph('demo-note');
+  rich(momentNote, 'If E[@Z^{2}] ≤ 2@μ^{2} + @μ, this formula gives an upper bound on P(@Z = 0). This bound is not an empirical probability. This example does not establish the hypothesis for every graph.');
+  container.append(controls, diagram, result, momentNote);
   function refresh() {
     const mu = Number(input.value), bound = secondMomentBound(mu);
     input.setAttribute('aria-valuetext', `Mean ${mu}, probability upper bound ${(100 * bound).toFixed(2)} percent`);
@@ -358,7 +393,7 @@ function mountMoment(container) {
     svg.append(svgElement('text', { x: 66, y: 18, class: 'graph-label' }, 'Upper bound on P(Z = 0)'));
     svg.append(svgElement('text', { x: 325, y: 289, 'text-anchor': 'middle', class: 'graph-label' }, 'Mean μ'));
     diagram.replaceChildren(svg);
-    result.textContent = `μ = ${mu}: P(Z = 0) ≤ 1/2 + 1/${4 * mu + 2} = ${bound.toFixed(6)} (${(100 * bound).toFixed(2)}%). The excess above 1/2 is ${(bound - 0.5).toFixed(6)}.`;
+    rich(result, `@μ = ${mu}: P(@Z = 0) ≤ 1/2 + 1/${4 * mu + 2} = ${bound.toFixed(6)} (${(100 * bound).toFixed(2)}%). The excess above 1/2 is ${(bound - 0.5).toFixed(6)}.`);
   }
   input.addEventListener('input', refresh);
   refresh();
@@ -370,7 +405,9 @@ function mountRecurrence(container) {
   controls.append(control('Number of idealized halving steps j (0–8)', input));
   const diagram = element('div', { class: 'demo-diagram' });
   const result = output('recurrence-output');
-  container.append(controls, diagram, result, paragraph('demo-note', 'This idealized model starts at Φmodel = 1. Each step halves this value exactly and adds one level to a tower-height proxy. The theorem includes error terms and requires a sufficiently large initial rank. This diagram does not give a numerical bound for finite n.'));
+  const recurrenceNote = paragraph('demo-note');
+  rich(recurrenceNote, 'This idealized model starts at Φ_{model} = 1. Each step halves this value exactly and adds one level to a tower-height proxy. The theorem includes error terms and requires a sufficiently large initial rank. This diagram does not give a numerical bound for finite @n.');
+  container.append(controls, diagram, result, recurrenceNote);
   function refresh() {
     const model = idealizedRecurrence(Number(input.value));
     input.setAttribute('aria-valuetext', `${model.steps} steps, idealized density ${fraction(model.denominator)}, tower-height increment ${model.steps}`);
@@ -390,7 +427,7 @@ function mountRecurrence(container) {
     svg.append(svgElement('text', { x: 85, y: 18, class: 'graph-label' }, 'Idealized density (logarithmic spacing)'));
     svg.append(svgElement('text', { x: 335, y: 290, 'text-anchor': 'middle', class: 'graph-label' }, 'Halving steps = added tower levels'));
     diagram.replaceChildren(svg);
-    result.textContent = `j = ${model.steps}: Φmodel = 2^−${model.steps} = ${fraction(model.denominator)} = ${numberText(model.phi)}. Tower-height proxy: +${model.towerLevelIncrement} level${model.towerLevelIncrement === 1 ? '' : 's'}. In this idealized model, each extra factor 1/2 requires another exponentiation step.`;
+    rich(result, `@j = ${model.steps}: Φ_{model} = 2^{−${model.steps}} = ${fraction(model.denominator)} = ${numberText(model.phi)}. Tower-height proxy: +${model.towerLevelIncrement} level${model.towerLevelIncrement === 1 ? '' : 's'}. In this idealized model, each extra factor 1/2 requires another exponentiation step.`);
   }
   input.addEventListener('input', refresh);
   refresh();
@@ -452,8 +489,8 @@ function mountCut(container) {
     svg.append(svgElement('text', { x: 310, y: 312, 'text-anchor': 'middle', class: 'graph-label' }, `${total} equally likely even edge set${total === 1 ? '' : 's'}`));
     diagram.replaceChildren(svg);
     const paths = chosen.selectedPaths.length ? chosen.selectedPaths.map((p) => p + 1).join(' + ') : 'none';
-    result.textContent = `Selected paths: ${paths}. δA = 0: ${chosen.zeroA ? 'yes' : 'no'}. δB = 0: ${chosen.zeroB ? 'yes' : 'no'}. Selected edges: ${edgeList(chosen.word)}.`;
-    probabilities.textContent = `Exact enumeration: P(δA = 0) = ${distribution.countA}/${total}. P(δB = 0) = ${distribution.countB}/${total}. P(both) = ${distribution.countBoth}/${total}. Joint probability ÷ product of marginals = ${distribution.correlationRatio} = 2^(${links} − 1).`;
+    rich(result, `Selected paths: ${paths}. Cut δ@A is ${chosen.zeroA ? 'zero' : 'nonzero'}. Cut δ@B is ${chosen.zeroB ? 'zero' : 'nonzero'}. Selected edges: ${edgeList(chosen.word)}.`);
+    rich(probabilities, `Exact enumeration: P(δ@A = 0) = ${distribution.countA}/${total}. P(δ@B = 0) = ${distribution.countB}/${total}. P(both) = ${distribution.countBoth}/${total}. Joint probability ÷ product of marginals = ${distribution.correlationRatio} = 2^{${links} − 1}.`);
     markCurrent(buttons, selected);
   }
   function refresh() {
@@ -524,7 +561,7 @@ function mountWalk(container) {
     const arrival = step === model.length ? 'The walk has returned to its initial vertex.'
       : step && prefix.slice(0, -1).includes(current) ? `The walk has visited vertex ${current} before.` : `Current vertex: ${current}.`;
     result.textContent = `Step ${step}/${model.length}: ${prefix.join(' → ')}. ${arrival}${reversal ? ' This step immediately reverses the previous edge.' : ''}${step === model.length && model.closureBacktracks ? ' At closure, the final edge and the first edge reverse one another.' : ''}`;
-    verdict.textContent = `Complete walk: closed = ${model.closed ? 'yes' : 'no'}. No immediate reversal inside the written sequence = ${model.nonbacktracking ? 'yes' : 'no'}. No reversal at closure = ${model.closureBacktracks ? 'no' : 'yes'}. Cyclically nonbacktracking = ${model.cyclicallyNonbacktracking ? 'yes' : 'no'}. Simple cycle = ${model.simpleCycle ? 'yes' : 'no'}.${model.repeatedVertices.length ? ` Interior repeated vertices: ${model.repeatedVertices.join(', ')}.` : ' No interior vertex repeats.'}`;
+    verdict.textContent = `Complete walk: ${model.closed ? 'closed' : 'not closed'}. ${model.nonbacktracking ? 'No step' : 'A step'} inside the written sequence immediately reverses the previous edge. ${model.closureBacktracks ? 'The closure reverses an edge' : 'The closure does not reverse an edge'}. ${model.cyclicallyNonbacktracking ? 'Cyclically nonbacktracking' : 'Not cyclically nonbacktracking'}. ${model.simpleCycle ? 'A simple cycle' : 'Not a simple cycle'}.${model.repeatedVertices.length ? ` Interior repeated vertices: ${model.repeatedVertices.join(', ')}.` : ' No interior vertex repeats.'}`;
   }
   select.addEventListener('change', () => {
     example = examples.find(({ id }) => id === select.value);
@@ -566,7 +603,7 @@ function mountRestriction(container) {
     rightSvg.append(svgElement('text', { x: 180, y: 301, 'text-anchor': 'middle', class: 'graph-label' }, isForest(4, restricted) ? 'A forest' : 'Contains a cycle'));
     diagram.replaceChildren(leftSvg, rightSvg);
     const even = isEvenEdgeSet(4, restricted), forest = isForest(4, restricted);
-    result.textContent = `Ambient selected edges: ${edgeList(word)}. ${removeControl.input.checked ? 'Outside W' : 'Unrestricted selected edges'}: ${edgeList(restricted)}. Right-hand edge set: even = ${even ? 'yes' : 'no'}; forest = ${forest ? 'yes' : 'no'}.`;
+    result.textContent = `Ambient selected edges: ${edgeList(word)}. ${removeControl.input.checked ? 'Outside W' : 'Unrestricted selected edges'}: ${edgeList(restricted)}. The right-hand edge set ${even ? 'is even' : 'is not even'} and ${forest ? 'is a forest' : 'is not a forest'}.`;
     details.textContent = `Right-hand degrees at vertices 0–3: ${edgeDegrees(4, restricted).join(', ')}. ${removeControl.input.checked && restricted.length === 2 ? 'The nonempty path 2–3–0 is a forest. Its endpoints have odd degree. Restriction of an ambient even edge set can give an edge set that is not even.' : !restricted.length ? 'The empty edge set is even and is a forest.' : 'Before restriction, XOR preserves even degree at every vertex.'}`;
   }
   refresh();
