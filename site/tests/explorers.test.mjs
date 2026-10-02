@@ -72,7 +72,7 @@ test('log-star output preserves the represented input at both sides of every fin
       const svg = fixture.root.find((node) => node.tag === 'svg');
       assert.ok(svg.getAttribute('aria-label').includes(`log-star of ${displayed} equals ${count}`));
       if (Number(count) > 0) {
-        assert.ok(fixture.output.textContent.includes(Number(count) === 1 ? '1 repeated base-2 logarithm brings n' : `${count} repeated base-2 logarithms bring n`));
+        assert.ok(fixture.output.textContent.includes(Number(count) === 1 ? '1 repeated base-2 logarithm reduces n' : `${count} repeated base-2 logarithms reduce n`));
         const steps = fixture.root.find((node) => node.textContent.startsWith('Successive values'));
         assert.ok(steps, 'Rounded logarithm steps must be identified as rounded');
         assert.ok(steps.textContent.startsWith(`Successive values (logarithms rounded): ${displayed} → `));

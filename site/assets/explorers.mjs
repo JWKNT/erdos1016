@@ -106,7 +106,7 @@ function mountGraph(container) {
   const selected = new Set(['0-2', '0-3']);
   const toggles = new Map();
   const controls = element('fieldset', { class: 'demo-controls' });
-  controls.append(element('legend', {}, 'Toggle chords of the fixed six-cycle'));
+  controls.append(element('legend', {}, 'Choose chords for the fixed six-cycle'));
   const chordRow = element('div', { class: 'demo-button-row' });
   for (const edge of chords) {
     const key = edgeKey(edge);
@@ -139,7 +139,7 @@ function mountGraph(container) {
     const svg = svgFrame(540, 310, `Six-vertex graph. Highlighted ${length}-cycle: ${route}.`);
     drawGraph(svg, circlePoints(6), edges, { active: cycle.length ? cycleEdges(cycle) : [] });
     diagram.replaceChildren(svg);
-    description.textContent = `Highlighted cycle: ${route}. ${visibleCycles.length} distinct cycle${visibleCycles.length === 1 ? '' : 's'} have length ${length}. The six outer edges always stay in the graph.`;
+    description.textContent = `Highlighted cycle: ${route}. The graph has ${visibleCycles.length} distinct cycle${visibleCycles.length === 1 ? '' : 's'} with length ${length}. The six outer edges always remain in the graph.`;
   }
   function chooseLength() {
     visibleCycles = cycles.filter((cycle) => cycle.length === Number(lengthSelect.value));
@@ -156,7 +156,7 @@ function mountGraph(container) {
     lengthSelect.value = String(lengths.includes(previousLength) ? previousLength : lengths[0]);
     const missing = [3, 4, 5, 6].filter((length) => !lengths.includes(length));
     const { edges: m, rank, excess } = graphStats(6, edges);
-    stats.textContent = `${m} edges · excess m − n = ${excess} · cycle-space dimension r = ${rank} (explained in chapter 3). ${cycles.length} simple cycles; ${lengths.length} distinct cycle lengths: ${lengths.join(', ')}. Missing lengths from 3–6: ${missing.length ? missing.join(', ') : 'none'}. ${lengths.length === 4 ? 'This graph is pancyclic.' : 'This graph is not pancyclic.'}`;
+    stats.textContent = `${m} edges · excess m − n = ${excess}. Cycle-space dimension r = ${rank} (see chapter 3). ${cycles.length} simple cycles; ${lengths.length} distinct cycle lengths: ${lengths.join(', ')}. Missing lengths from 3–6: ${missing.length ? missing.join(', ') : 'none'}. ${lengths.length === 4 ? 'This graph is pancyclic.' : 'This graph is not pancyclic.'}`;
     chooseLength();
   }
   lengthSelect.addEventListener('change', chooseLength);
@@ -167,7 +167,7 @@ function mountGraph(container) {
 function mountSpace(container) {
   const basis = cycleBasis(5, BOW_TIE);
   const controls = element('fieldset', { class: 'demo-controls' });
-  controls.append(element('legend', {}, 'Choose basis cycles to combine by XOR'));
+  controls.append(element('legend', {}, 'Choose basis cycles for XOR'));
   const inputs = basis.map((_, i) => {
     const checkbox = checkControl(`space-bit-${i}`, `C${i + 1}: triangle ${i === 0 ? '0–1–2' : '0–3–4'}`, refresh);
     controls.append(checkbox.label);
@@ -185,11 +185,11 @@ function mountSpace(container) {
     const svg = svgFrame(540, 290, `Basis choice ${bits}: ${name}. Selected edges: ${edgeList(word)}.`);
     drawGraph(svg, [[270, 145], [90, 55], [90, 235], [450, 55], [450, 235]], BOW_TIE, { active: word });
     diagram.replaceChildren(svg);
-    const kind = !word.length ? 'The empty edge set is even, but is not a simple cycle.'
+    const kind = !word.length ? 'The empty edge set is even. It is not a simple cycle.'
       : isSimpleCycle(5, word) ? 'This even edge set is one simple cycle.'
-      : 'This even edge set is not one simple cycle: vertex 0 has degree 4.';
+      : 'This even edge set is not one simple cycle. Vertex 0 has degree 4.';
     result.textContent = `Basis bits ${bits}: ${name}. ${word.length} selected edges. ${kind}`;
-    degrees.textContent = `Degrees at vertices 0–4: ${edgeDegrees(5, word).join(', ')}. Every degree is even. Here r = 6 − 5 + 1 = 2, so there are 2² = 4 even edge sets.`;
+    degrees.textContent = `Degrees at vertices 0–4: ${edgeDegrees(5, word).join(', ')}. Every degree is even. Here r = 6 − 5 + 1 = 2. Thus, there are 2² = 4 even edge sets.`;
   }
   inputs[0].checked = true;
   inputs[1].checked = true;
@@ -208,13 +208,13 @@ function mountForest(container) {
   controls.append(control('Choose one of the four equally likely even edge sets', select), nav);
   const diagram = element('div', { class: 'demo-diagram' });
   const result = output('forest-output');
-  const summary = paragraph('demo-note', `Exactly ${distribution.favorable} of ${distribution.total} ambient even edge sets leave a forest outside W: probability 2/4 = 1/2. The bridge 2–3 never appears in an even edge set.`);
+  const summary = paragraph('demo-note', `Exactly ${distribution.favorable} of ${distribution.total} ambient even edge sets give a forest outside W. The probability is 2/4 = 1/2. The bridge 2–3 never appears in an even edge set.`);
   container.append(controls, diagram, result, summary);
   function refresh() {
     const index = Number(select.value);
     const { word, outside, forest } = distribution.words[index];
-    const svg = svgFrame(720, 235, `${names[index]}. After removing W, ${outside.length ? 'the right triangle remains, which is not a forest' : 'the empty edge set remains, which is a forest'}.`);
-    svg.append(svgElement('text', { x: 180, y: 26, 'text-anchor': 'middle', class: 'graph-label' }, 'Selected even set'));
+    const svg = svgFrame(720, 235, `${names[index]}. Outside W, ${outside.length ? 'the right triangle remains. It is not a forest' : 'the empty edge set remains. It is a forest'}.`);
+    svg.append(svgElement('text', { x: 180, y: 26, 'text-anchor': 'middle', class: 'graph-label' }, 'Selected even edge set'));
     svg.append(svgElement('text', { x: 540, y: 26, 'text-anchor': 'middle', class: 'graph-label' }, 'Outside W: remove its edges'));
     const points = [[48, 156], [103, 68], [158, 156], [203, 156], [258, 68], [313, 156]];
     drawGraph(svg, points, BRIDGE_GRAPH, { active: word, witness: LEFT_CYCLE, outside });
@@ -222,7 +222,7 @@ function mountForest(container) {
     svg.append(svgElement('text', { x: 180, y: 210, 'text-anchor': 'middle', class: 'graph-label' }, 'Dashed outline = fixed witness W'));
     svg.append(svgElement('text', { x: 540, y: 210, 'text-anchor': 'middle', class: 'graph-label' }, forest ? 'FOREST (empty edge set)' : 'NOT A FOREST (cycle D)'));
     diagram.replaceChildren(svg);
-    result.textContent = `Set ${index + 1} of 4: ${names[index]}. Outside edges: ${edgeList(outside)}. ${forest ? 'A forest remains.' : 'A cycle remains, so this is not a forest.'}`;
+    result.textContent = `Set ${index + 1} of 4: ${names[index]}. Outside edges: ${edgeList(outside)}. ${forest ? 'A forest remains.' : 'A cycle remains. The remaining edges do not form a forest.'}`;
   }
   select.addEventListener('change', refresh);
   refresh();
@@ -241,7 +241,7 @@ function mountBinary(container) {
     button('Use all shortcuts', () => { inputs.forEach((input) => { input.checked = true; }); refresh(); }));
   const diagram = element('div', { class: 'demo-diagram' });
   const result = output('binary-output');
-  const lengths = element('div', { class: 'demo-button-row demo-length-strip', role: 'group', 'aria-label': 'Choose any resulting cycle length from 5 to 20' });
+  const lengths = element('div', { class: 'demo-button-row demo-length-strip', role: 'group', 'aria-label': 'Choose a cycle length from 5 to 20' });
   const lengthButtons = new Map();
   for (let length = 5; length <= 20; length++) {
     const choose = button(String(length), () => {
@@ -252,7 +252,7 @@ function mountBinary(container) {
     lengthButtons.set(length, choose);
     lengths.append(choose);
   }
-  container.append(controls, presets, diagram, result, paragraph('demo-note', 'Try a target length. The binary savings give every integer from 0 to 15 exactly once.'), lengths);
+  container.append(controls, presets, diagram, result, paragraph('demo-note', 'Choose a cycle length. The sums of binary savings give each integer from 0 to 15 exactly once.'), lengths);
   function refresh() {
     const mask = inputs.reduce((sum, input, i) => sum + (input.checked ? 2 ** i : 0), 0);
     const construction = binaryConstruction(4, mask);
@@ -286,7 +286,7 @@ function mountBinary(container) {
 function mountLogStar(container) {
   const input = element('input', { type: 'number', id: 'logstar-number', min: '0', step: 'any', value: '1000000000', inputmode: 'decimal', 'aria-describedby': 'logstar-note' });
   const controls = element('div', { class: 'demo-controls' });
-  controls.append(control('Positive number n (scientific notation is allowed)', input));
+  controls.append(control('Positive number n (decimal or scientific notation)', input));
   const presets = element('div', { class: 'demo-button-row', role: 'group', 'aria-label': 'Log-star threshold examples' });
   [['1', '1'], ['2', '2'], ['4', '4'], ['16', '16'], ['65536', '65,536'], ['65537', '65,537'], ['1e100', '10¹⁰⁰']].forEach(([value, label]) => {
     presets.append(button(label, () => { input.value = value; refresh(); }));
@@ -295,7 +295,7 @@ function mountLogStar(container) {
   const diagram = element('div', { class: 'demo-diagram' });
   const result = output('logstar-output');
   const steps = paragraph('demo-note', '');
-  const note = paragraph('demo-note', 'Base 2; stop as soon as the value is at most 1. Threshold classification is exact for the finite number represented by the input; the displayed logarithms are rounded.');
+  const note = paragraph('demo-note', 'Use base 2. If the value is at most 1, stop. Threshold classification is exact for the finite number that the input represents. The display rounds the logarithms.');
   note.id = 'logstar-note';
   container.append(controls, diagram, result, steps, note);
   function refresh() {
@@ -320,8 +320,8 @@ function mountLogStar(container) {
       svg.append(svgElement('text', { x, y: 253, 'text-anchor': 'middle', class: 'graph-label' }, `${i} logs`));
     }
     diagram.replaceChildren(svg);
-    result.textContent = `log*₂(${displayedInput}) = ${count}. ${count ? `${count} repeated base-2 logarithm${count === 1 ? '' : 's'} ${count === 1 ? 'brings' : 'bring'} n to at most 1.` : 'n is already at most 1; no logarithms are needed.'}`;
-    steps.textContent = `${count ? `Successive values (logarithms rounded): ${displayedInput} → ${values.slice(1).map(numberText).join(' → ')}` : `Starting value: ${displayedInput}`}${roundedBoundary ? '. Rounding at a boundary can alter the displayed iteration; the exact threshold determines the answer.' : ''}${count === 5 ? '. The next threshold, 2^65,536, is far larger than any finite JavaScript number.' : ''}`;
+    result.textContent = `log*₂(${displayedInput}) = ${count}. ${count ? `${count} repeated base-2 logarithm${count === 1 ? '' : 's'} ${count === 1 ? 'reduces' : 'reduce'} n to at most 1.` : 'n is at most 1. The calculation needs no logarithms.'}`;
+    steps.textContent = `${count ? `Successive values (logarithms rounded): ${displayedInput} → ${values.slice(1).map(numberText).join(' → ')}` : `Starting value: ${displayedInput}`}${roundedBoundary ? '. At a boundary, rounding can change the displayed iteration. The exact threshold determines the answer' : ''}${count === 5 ? '. The next threshold, 2^65,536, is larger than every finite JavaScript number' : ''}.`;
   }
   input.addEventListener('input', refresh);
   refresh();
@@ -333,7 +333,7 @@ function mountMoment(container) {
   controls.append(control('Mean μ (1–100), with K = 1', input));
   const diagram = element('div', { class: 'demo-diagram' });
   const result = output('moment-output');
-  container.append(controls, diagram, result, paragraph('demo-note', 'This is a conditional upper bound on P(Z = 0), assuming E[Z²] ≤ 2μ² + μ. It is not an empirical probability or an assertion that the hypothesis holds for every graph.'));
+  container.append(controls, diagram, result, paragraph('demo-note', 'If E[Z²] ≤ 2μ² + μ, this formula gives an upper bound on P(Z = 0). This bound is not an empirical probability. This example does not establish the hypothesis for every graph.'));
   function refresh() {
     const mu = Number(input.value), bound = secondMomentBound(mu);
     input.setAttribute('aria-valuetext', `Mean ${mu}, probability upper bound ${(100 * bound).toFixed(2)} percent`);
@@ -370,11 +370,11 @@ function mountRecurrence(container) {
   controls.append(control('Number of idealized halving steps j (0–8)', input));
   const diagram = element('div', { class: 'demo-diagram' });
   const result = output('recurrence-output');
-  container.append(controls, diagram, result, paragraph('demo-note', 'Idealized model only: start at Φmodel = 1 and halve exactly at each step. One step adds one level to a tower-height proxy. The theorem has error terms and a sufficiently large starting rank; this diagram does not give a finite-n numerical bound.'));
+  container.append(controls, diagram, result, paragraph('demo-note', 'This idealized model starts at Φmodel = 1. Each step halves this value exactly and adds one level to a tower-height proxy. The theorem includes error terms and requires a sufficiently large initial rank. This diagram does not give a numerical bound for finite n.'));
   function refresh() {
     const model = idealizedRecurrence(Number(input.value));
     input.setAttribute('aria-valuetext', `${model.steps} steps, idealized density ${fraction(model.denominator)}, tower-height increment ${model.steps}`);
-    const svg = svgFrame(620, 300, `Idealized near-halving illustration. At step ${model.steps}, model density is ${fraction(model.denominator)} and the tower-height proxy has increased by ${model.steps}.`);
+    const svg = svgFrame(620, 300, `Idealized near-halving illustration. At step ${model.steps}, model density is ${fraction(model.denominator)}. The tower-height proxy has increased by ${model.steps}.`);
     const x = (j) => 85 + j * 61;
     const y = (j) => 42 + j * 23;
     svg.append(svgElement('path', { d: 'M85 30 V241 H590', fill: 'none', class: 'plot-axis' }));
@@ -390,7 +390,7 @@ function mountRecurrence(container) {
     svg.append(svgElement('text', { x: 85, y: 18, class: 'graph-label' }, 'Idealized density (logarithmic spacing)'));
     svg.append(svgElement('text', { x: 335, y: 290, 'text-anchor': 'middle', class: 'graph-label' }, 'Halving steps = added tower levels'));
     diagram.replaceChildren(svg);
-    result.textContent = `j = ${model.steps}: Φmodel = 2^−${model.steps} = ${fraction(model.denominator)} = ${numberText(model.phi)}. Tower-height proxy: +${model.towerLevelIncrement} level${model.towerLevelIncrement === 1 ? '' : 's'}. Each extra factor 1/2 costs another exponentiation step in the idealized picture.`;
+    result.textContent = `j = ${model.steps}: Φmodel = 2^−${model.steps} = ${fraction(model.denominator)} = ${numberText(model.phi)}. Tower-height proxy: +${model.towerLevelIncrement} level${model.towerLevelIncrement === 1 ? '' : 's'}. In this idealized model, each extra factor 1/2 requires another exponentiation step.`;
   }
   input.addEventListener('input', refresh);
   refresh();
@@ -435,14 +435,14 @@ function mountCut(container) {
   const probabilities = paragraph('demo-note', '');
   probabilities.id = 'cut-probabilities';
   container.append(controls, choices, diagram, result, probabilities,
-    paragraph('demo-note', 'Each path has two edges. Removing A and B leaves ℓ separate link vertices. Evenness selects an even number of whole paths. In this particular family, either zero-cut event forces the empty set, so the two events coincide.'));
+    paragraph('demo-note', 'Each path has two edges. Without A and B, ℓ separate link vertices remain. An even edge set contains an even number of complete paths. In this family, either zero-cut event requires the empty edge set. Thus, the two events coincide.'));
   let distribution, selected = 0;
   const buttons = new Map();
   function draw() {
     const { links, total } = distribution;
     const chosen = distribution.words[selected];
     const points = [[80, 155], [540, 155], ...Array.from({ length: links }, (_, i) => [310, links === 1 ? 155 : 50 + i * 210 / (links - 1)])];
-    const svg = svgFrame(620, 325, `${links} links from region A, vertex 0, to region B, vertex 1. Selected paths: ${chosen.selectedPaths.length ? chosen.selectedPaths.map((p) => p + 1).join(', ') : 'none'}. Cut A is ${chosen.zeroA ? 'zero' : 'nonzero'}; cut B is ${chosen.zeroB ? 'zero' : 'nonzero'}.`);
+    const svg = svgFrame(620, 325, `${links} links connect region A (vertex 0) to region B (vertex 1). Selected paths: ${chosen.selectedPaths.length ? chosen.selectedPaths.map((p) => p + 1).join(', ') : 'none'}. Cut A is ${chosen.zeroA ? 'zero' : 'nonzero'}. Cut B is ${chosen.zeroB ? 'zero' : 'nonzero'}.`);
     svg.append(svgElement('circle', { cx: 80, cy: 155, r: 34, fill: 'none', class: 'graph-region', 'stroke-dasharray': '6 5' }));
     svg.append(svgElement('circle', { cx: 540, cy: 155, r: 34, fill: 'none', class: 'graph-region', 'stroke-dasharray': '6 5' }));
     drawGraph(svg, points, distribution.edges, { active: chosen.word });
@@ -453,7 +453,7 @@ function mountCut(container) {
     diagram.replaceChildren(svg);
     const paths = chosen.selectedPaths.length ? chosen.selectedPaths.map((p) => p + 1).join(' + ') : 'none';
     result.textContent = `Selected paths: ${paths}. δA = 0: ${chosen.zeroA ? 'yes' : 'no'}. δB = 0: ${chosen.zeroB ? 'yes' : 'no'}. Selected edges: ${edgeList(chosen.word)}.`;
-    probabilities.textContent = `Exact enumeration: P(δA = 0) = ${distribution.countA}/${total}; P(δB = 0) = ${distribution.countB}/${total}; P(both) = ${distribution.countBoth}/${total}. Joint probability ÷ product of marginals = ${distribution.correlationRatio} = 2^(${links} − 1).`;
+    probabilities.textContent = `Exact enumeration: P(δA = 0) = ${distribution.countA}/${total}. P(δB = 0) = ${distribution.countB}/${total}. P(both) = ${distribution.countBoth}/${total}. Joint probability ÷ product of marginals = ${distribution.correlationRatio} = 2^(${links} − 1).`;
     markCurrent(buttons, selected);
   }
   function refresh() {
@@ -478,7 +478,7 @@ function mountWalk(container) {
     { id: 'figure-eight', label: 'Figure-eight: repeated vertex, no reversal', vertices: [0, 1, 2, 0, 3, 4, 0] },
     { id: 'triangle', label: 'Triangle: a simple cycle', vertices: [0, 1, 2, 0] },
     { id: 'backtracking', label: 'Immediate backtracking: 0 → 1 → 0', vertices: [0, 1, 0, 3, 4, 0] },
-    { id: 'seam', label: 'Reversal only at the closing seam', vertices: [1, 0, 3, 4, 0, 1] },
+    { id: 'seam', label: 'Reversal only at closure', vertices: [1, 0, 3, 4, 0, 1] },
   ];
   const select = element('select', { id: 'walk-example' });
   select.append(...examples.map(({ id, label }) => option(id, label)));
@@ -495,14 +495,14 @@ function mountWalk(container) {
   const verdict = paragraph('demo-note', '');
   verdict.id = 'walk-verdict';
   container.append(controls, diagram, result, verdict,
-    paragraph('demo-note', 'Manual steps only. A solid outer ring marks the current vertex; a dashed ring marks an interior revisit. This illustrative graph has a degree-4 center and is not the retained cubic graph J from the proof. A trace counts closed nonbacktracking walks, so further work is needed to isolate simple cycles.'));
+    paragraph('demo-note', 'Use the buttons to advance the walk. A solid outer ring marks the current vertex. A dashed ring marks an interior revisit. This example has a degree-4 center and differs from the retained cubic graph J in the proof. A trace counts closed nonbacktracking walks. Further analysis must identify the simple cycles.'));
   let example = examples[0], model = analyzeWalk(5, BOW_TIE, example.vertices);
   function draw() {
     const prefix = example.vertices.slice(0, step + 1);
     const visitedEdges = prefix.slice(1).map((v, i) => [prefix[i], v]);
     const points = [[270, 145], [90, 55], [90, 235], [450, 55], [450, 235]];
     const current = prefix[prefix.length - 1];
-    const svg = svgFrame(540, 290, `Walk step ${step} of ${model.length}: ${prefix.join(' to ')}. Current vertex ${current}. Full walk is ${model.cyclicallyNonbacktracking ? '' : 'not '}cyclically nonbacktracking and is ${model.simpleCycle ? '' : 'not '}a simple cycle.`);
+    const svg = svgFrame(540, 290, `Walk step ${step} of ${model.length}: ${prefix.join(' to ')}. Current vertex ${current}. The complete walk is ${model.cyclicallyNonbacktracking ? '' : 'not '}cyclically nonbacktracking. It is ${model.simpleCycle ? '' : 'not '}a simple cycle.`);
     drawGraph(svg, points, BOW_TIE, { active: visitedEdges });
     const interiorPrefix = step === model.length ? prefix.slice(0, -1) : prefix;
     const repeated = [...new Set(interiorPrefix)].filter((v) => interiorPrefix.filter((candidate) => candidate === v).length > 1);
@@ -521,10 +521,10 @@ function mountWalk(container) {
     previous.disabled = step === 0;
     next.disabled = step === model.length;
     const reversal = step >= 2 && prefix[step] === prefix[step - 2];
-    const arrival = step === model.length ? 'Returned to the starting vertex.'
-      : step && prefix.slice(0, -1).includes(current) ? `Vertex ${current} has been visited before.` : `Current vertex: ${current}.`;
-    result.textContent = `Step ${step}/${model.length}: ${prefix.join(' → ')}. ${arrival}${reversal ? ' This step immediately reverses the previous edge.' : ''}${step === model.length && model.closureBacktracks ? ' The final edge and the first edge reverse one another at the closing seam.' : ''}`;
-    verdict.textContent = `Whole-walk checks: closed = ${model.closed ? 'yes' : 'no'}; no immediate reversal inside the written sequence = ${model.nonbacktracking ? 'yes' : 'no'}; no reversal at the closing seam = ${model.closureBacktracks ? 'no' : 'yes'}; cyclically nonbacktracking = ${model.cyclicallyNonbacktracking ? 'yes' : 'no'}; simple cycle = ${model.simpleCycle ? 'yes' : 'no'}.${model.repeatedVertices.length ? ` Interior repeated vertices: ${model.repeatedVertices.join(', ')}.` : ' No interior vertex repeats.'}`;
+    const arrival = step === model.length ? 'The walk has returned to its initial vertex.'
+      : step && prefix.slice(0, -1).includes(current) ? `The walk has visited vertex ${current} before.` : `Current vertex: ${current}.`;
+    result.textContent = `Step ${step}/${model.length}: ${prefix.join(' → ')}. ${arrival}${reversal ? ' This step immediately reverses the previous edge.' : ''}${step === model.length && model.closureBacktracks ? ' At closure, the final edge and the first edge reverse one another.' : ''}`;
+    verdict.textContent = `Complete walk: closed = ${model.closed ? 'yes' : 'no'}. No immediate reversal inside the written sequence = ${model.nonbacktracking ? 'yes' : 'no'}. No reversal at closure = ${model.closureBacktracks ? 'no' : 'yes'}. Cyclically nonbacktracking = ${model.cyclicallyNonbacktracking ? 'yes' : 'no'}. Simple cycle = ${model.simpleCycle ? 'yes' : 'no'}.${model.repeatedVertices.length ? ` Interior repeated vertices: ${model.repeatedVertices.join(', ')}.` : ' No interior vertex repeats.'}`;
   }
   select.addEventListener('change', () => {
     example = examples.find(({ id }) => id === select.value);
@@ -541,7 +541,7 @@ function mountRestriction(container) {
   const ambient = [[0, 1], [1, 2], [2, 3], [3, 0], [0, 2]];
   const witnessKeys = new Set(first.map(edgeKey));
   const controls = element('fieldset', { class: 'demo-controls' });
-  controls.append(element('legend', {}, 'Combine two cycles, then restrict the edge set'));
+  controls.append(element('legend', {}, 'Combine two cycles. Then restrict the edge set.'));
   const firstControl = checkControl('restriction-first', 'Triangle 0–1–2', refresh);
   const secondControl = checkControl('restriction-second', 'Triangle 0–2–3', refresh);
   const removeControl = checkControl('restriction-remove', 'Remove witness W = triangle 0–1–2', refresh);
@@ -560,14 +560,14 @@ function mountRestriction(container) {
     leftSvg.append(svgElement('text', { x: 180, y: 25, 'text-anchor': 'middle', class: 'graph-label' }, 'Ambient XOR (always even)'));
     drawGraph(leftSvg, points, ambient, { active: word, witness: first });
     leftSvg.append(svgElement('text', { x: 180, y: 301, 'text-anchor': 'middle', class: 'graph-label' }, firstControl.input.checked && secondControl.input.checked ? 'Shared edge 0–2 cancels' : 'Dashed outline = witness W'));
-    const rightSvg = svgFrame(360, 315, `${removeControl.input.checked ? 'After removing witness W' : 'No edges removed'}. Selected edges: ${edgeList(restricted)}. Even: ${isEvenEdgeSet(4, restricted)}. Forest: ${isForest(4, restricted)}.`);
+    const rightSvg = svgFrame(360, 315, `${removeControl.input.checked ? 'Outside witness W' : 'No edges removed'}. Selected edges: ${edgeList(restricted)}. Even: ${isEvenEdgeSet(4, restricted)}. Forest: ${isForest(4, restricted)}.`);
     rightSvg.append(svgElement('text', { x: 180, y: 25, 'text-anchor': 'middle', class: 'graph-label' }, removeControl.input.checked ? 'Restriction outside W' : 'Same set (no restriction)'));
     drawGraph(rightSvg, points, restricted, { active: restricted, outside: restricted, mutedNodes: true });
     rightSvg.append(svgElement('text', { x: 180, y: 301, 'text-anchor': 'middle', class: 'graph-label' }, isForest(4, restricted) ? 'A forest' : 'Contains a cycle'));
     diagram.replaceChildren(leftSvg, rightSvg);
     const even = isEvenEdgeSet(4, restricted), forest = isForest(4, restricted);
-    result.textContent = `Ambient selected edges: ${edgeList(word)}. ${removeControl.input.checked ? 'Outside W' : 'Unrestricted selected edges'}: ${edgeList(restricted)}. Right-hand set: even = ${even ? 'yes' : 'no'}; forest = ${forest ? 'yes' : 'no'}.`;
-    details.textContent = `Right-hand degrees at vertices 0–3: ${edgeDegrees(4, restricted).join(', ')}. ${removeControl.input.checked && restricted.length === 2 ? 'The nonempty path 2–3–0 is a forest, but its endpoints have odd degree. Restricting an ambient even set need not leave an even set.' : !restricted.length ? 'The empty set is both even and a forest.' : 'Before restriction, XOR preserves even degree at every vertex.'}`;
+    result.textContent = `Ambient selected edges: ${edgeList(word)}. ${removeControl.input.checked ? 'Outside W' : 'Unrestricted selected edges'}: ${edgeList(restricted)}. Right-hand edge set: even = ${even ? 'yes' : 'no'}; forest = ${forest ? 'yes' : 'no'}.`;
+    details.textContent = `Right-hand degrees at vertices 0–3: ${edgeDegrees(4, restricted).join(', ')}. ${removeControl.input.checked && restricted.length === 2 ? 'The nonempty path 2–3–0 is a forest. Its endpoints have odd degree. Restriction of an ambient even edge set can give an edge set that is not even.' : !restricted.length ? 'The empty edge set is even and is a forest.' : 'Before restriction, XOR preserves even degree at every vertex.'}`;
   }
   refresh();
 }
