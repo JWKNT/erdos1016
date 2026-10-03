@@ -18,7 +18,7 @@ test('ten progressive experiments and precise exposition remain present',()=>{
 test('local linked resources exist; no external runtime dependencies',async()=>{
  for(const [,url] of html.matchAll(/(?:src|href)="([^"]+)"/g)){
   if(url.startsWith('#')||url.startsWith('https://'))continue;
-  await access(resolve(site,url));
+  await access(resolve(site,url.split(/[?#]/)[0]));
  }
  for(const [,src] of html.matchAll(/<script[^>]*src="([^"]+)"/g))assert.ok(!src.startsWith('http'));
 });

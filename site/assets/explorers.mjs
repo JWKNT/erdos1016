@@ -13,6 +13,7 @@ const LEFT_CYCLE = [[0, 1], [1, 2], [2, 0]];
 
 function element(tag, attributes = {}, text) {
   const node = document.createElement(tag);
+  if (tag === 'select') node.setAttribute('data-ui-select', '');
   for (const [key, value] of Object.entries(attributes)) node.setAttribute(key, String(value));
   if (text !== undefined) node.textContent = text;
   return node;
@@ -171,6 +172,7 @@ function mountGraph(container) {
     visibleCycles = cycles.filter((cycle) => cycle.length === Number(lengthSelect.value));
     witnessSelect.replaceChildren(...visibleCycles.map((cycle, index) => option(index, `${index + 1}: ${[...cycle, cycle[0]].join(' → ')}`)));
     draw();
+    globalThis.JehlpUI?.enhance(witnessSelect);
   }
   function refresh() {
     for (const [key, toggle] of toggles) toggle.setAttribute('aria-pressed', String(selected.has(key)));
@@ -180,6 +182,7 @@ function mountGraph(container) {
     const previousLength = Number(lengthSelect.value);
     lengthSelect.replaceChildren(...lengths.map((length) => option(length, `${length} edges`)));
     lengthSelect.value = String(lengths.includes(previousLength) ? previousLength : lengths[0]);
+    globalThis.JehlpUI?.enhance(lengthSelect);
     const missing = [3, 4, 5, 6].filter((length) => !lengths.includes(length));
     const { edges: m, rank, excess } = graphStats(6, edges);
     rich(stats, `${m} edges · excess @m − @n = ${excess}. Cycle-space dimension @r = ${rank} (see chapter 3). ${cycles.length} simple cycles; ${lengths.length} distinct cycle lengths: ${lengths.join(', ')}. Missing lengths from 3–6: ${missing.length ? missing.join(', ') : 'none'}. ${lengths.length === 4 ? 'This graph is pancyclic.' : 'This graph is not pancyclic.'}`);
@@ -237,6 +240,7 @@ function mountForest(container) {
   const summary = paragraph('demo-note', `Exactly ${distribution.favorable} of ${distribution.total} ambient even edge sets give a forest outside W. The probability is 2/4 = 1/2. The bridge 2–3 never appears in an even edge set.`);
   container.append(controls, diagram, result, summary);
   function refresh() {
+    globalThis.JehlpUI?.enhance(select);
     const index = Number(select.value);
     const { word, outside, forest } = distribution.words[index];
     const svg = svgFrame(720, 235, `${names[index]}. Outside W, ${outside.length ? 'the right triangle remains. It is not a forest' : 'the empty edge set remains. It is a forest'}.`);
@@ -452,6 +456,7 @@ export function mountExplorers() {
     if (!container || container.dataset.mounted === 'true') continue;
     mount(container);
     container.dataset.mounted = 'true';
+    globalThis.JehlpUI?.enhance(container);
   }
 }
 
