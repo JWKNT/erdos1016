@@ -19,9 +19,10 @@
 .reading-layout { max-width:72rem; margin:0 auto; display:grid; grid-template-columns:13rem minmax(0,42rem); gap:3rem; padding:2rem var(--gutter) 4rem; }
 .contents { position:sticky; top:1.5rem; align-self:start; font-size:.9rem; line-height:1.55; max-height:calc(100vh - 3rem); overflow:auto; }
 .contents-title { font-weight:bold; margin:0 0 .65rem; }
-.contents ol { padding-left:1.3rem; margin:0; }
+.contents ol { padding-left:1.5em; margin:0; }
 .contents li { margin:.4rem 0; }
 .contents a { text-decoration-color:var(--line-strong); }
+.contents li { overflow-wrap:anywhere; }
 main { min-width:0; max-width:68ch; font-size:1.1rem; line-height:1.82; }
 main p { margin:1rem 0; }
 section { scroll-margin-top:1.5rem; padding:2rem 0; border-top:1px solid var(--line); }
@@ -34,6 +35,9 @@ var { font-family:var(--math-face); color:var(--math-ink); font-size:1.06em; }
 var { font-style:italic; }
 math { font-family:var(--math-face); font-size:1.06em; color:var(--math-ink); }
 p math, li math, figcaption math, summary math, span math { margin-inline:0; }
+/* Keep long inline formulas intact within a keyboard-scrollable text measure. */
+.formula-scroll { display:inline-block; max-width:100%; overflow-x:auto; overflow-y:hidden; vertical-align:middle; padding-block:.2em; margin-block:-.2em; }
+.formula-scroll:focus-visible { outline:2px solid var(--blue); outline-offset:2px; }
 /* Temml multi-line layouts: column alignment and row spacing. */
 .tml-right { text-align:right; text-align:-webkit-right; }
 .tml-left { text-align:left; text-align:-webkit-left; }
@@ -99,7 +103,7 @@ noscript { font-size:.95rem; }
 @media(max-width:720px) {
   .reading-layout { display:block; padding-top:1.3rem; }
   .contents { position:static; max-height:none; margin-bottom:2rem; padding-bottom:1.1rem; border-bottom:1px solid var(--line); }
-  .contents ol { columns:2; column-gap:1.5rem; }
+  .contents ol { columns:2 12em; column-gap:1.5rem; }
   .contents li { break-inside:avoid; margin:.25rem 0; }
   main { font-size:1.04rem; line-height:1.8; }
   h2 { font-size:1.35rem; }
@@ -125,5 +129,6 @@ noscript { font-size:.95rem; }
   main { font-size:10pt; }
   math,var { color:#222; }
   .equation { overflow:visible; }
+  .formula-scroll { display:inline; overflow:visible; padding:0; margin:0; }
   .equation math { font-size:11pt; }
 }
