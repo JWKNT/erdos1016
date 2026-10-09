@@ -81,11 +81,15 @@ test('vendored theme includes the exact folio and Wrenfold assets with math kept
   assert.equal(await hash(`assets/theme/icons/${name}`),'ff757b439e901db80d320d5fd1422edb63525b0ff46e235ab2dd5c52b2dad55f');
  }
  const css=await readFile(resolve(site,'assets/theme/base.css'),'utf8');
- assert.match(css,/--serif: "Wrenfold Text"/);
- assert.match(css,/--display: var\(--serif\)/);
+ assert.match(css,/--serif: Georgia, "Times New Roman", serif/);
+ assert.match(css,/--reading: "Wrenfold Text"/);
+ assert.match(css,/--display: "Palatino Linotype"/);
  assert.match(css,/icons\/home-folio-scroll\.svg/);
  for(const name of ['OFL-1.1.txt','Noto-Debian-copyright.txt','Wrenfold-README.txt'])await access(resolve(site,`assets/theme/fonts/${name}`));
  const guide=await readFile(resolve(site,'assets/guide.css'),'utf8');
  assert.match(guide,/math \{ font-family:var\(--math-face\)/);
- assert.match(guide,/\.graph-label \{[^}]*font-family:var\(--ui, var\(--serif\)\)/);
+ assert.match(guide,/\.graph-label \{[^}]*font-family:var\(--sans\)/);
+ assert.match(guide,/main \{ font-family:var\(--reading, var\(--serif\)\)/);
+ assert.match(guide,/main :is\(h2, h3\) \{ font-family:var\(--reading, var\(--serif\)\)/);
+ assert.match(guide,/main :is\(button, input, select, textarea, summary, legend\), \.demo-controls, \.demo-output \{ font-family:var\(--ui, var\(--serif\)\)/);
 });
