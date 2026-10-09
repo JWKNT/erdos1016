@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Wrenfold Text";
+  src: url("fonts/WrenfoldText-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 :root {
   --paper: #fbfaf7;
   --surface: #f4f2ed;
@@ -16,8 +24,8 @@
   --bad: #8a3f3f;
   --shadow: rgb(28 25 20 / 14%);
   --shadow-soft: rgb(28 25 20 / 8%);
-  --serif: Georgia, "Times New Roman", serif;
-  --display: "Palatino Linotype", Palatino, "Book Antiqua", "P052", Georgia, serif;
+  --serif: "Wrenfold Text", Georgia, "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif CJK JP", serif;
+  --display: var(--serif);
   --ui: var(--serif);
   --sans: "Avenir Next", Avenir, Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
@@ -73,6 +81,13 @@ body { min-width: 320px; margin: 0; background: var(--paper); color: var(--ink);
 button, input, select, textarea { color: inherit; font: inherit; }
 button, select { cursor: pointer; }
 a { color: var(--ink); text-decoration-thickness: 1px; text-underline-offset: .18em; }
+
+/* Draw the homepage direction mark without a font or emoji fallback. */
+.ui-link-arrow { display: inline-block; position: relative; width: 1rem; height: 1rem; flex: none; vertical-align: -.15em; }
+.ui-link-arrow::before, .ui-link-arrow::after { content: ""; position: absolute; }
+.ui-link-arrow::before { inset: .25rem .25rem auto auto; width: .5rem; height: .5rem; border-top: 1px solid currentColor; border-right: 1px solid currentColor; }
+.ui-link-arrow::after { top: .25rem; right: .25rem; width: .7071rem; height: 1px; background: currentColor; transform: rotate(-45deg); transform-origin: right center; }
+
 a:hover { color: var(--ink); }
 [hidden] { display: none !important; }
 img { max-width: 100%; height: auto; }
@@ -190,11 +205,12 @@ button.site-search {
   box-shadow: none;
   transition: color .15s ease, border-color .15s ease;
 }
-/* Subpage headers have empty or text fallback labels. Keep every mask in one
-   full-height track; zero-height fallback tracks cannot shift its visual center.
-   The homepage utilities live outside a header and keep their approved layout. */
-header a.site-home,
-header [data-theme-toggle].theme-toggle {
+/* Fallback labels can be empty or text. Keep every mask in one full-height
+   track on every page, homepage included, so the utilities hold the same
+   position across navigation; zero-height fallback tracks cannot shift it. */
+a.site-home,
+[data-theme-toggle].theme-toggle,
+button.site-search {
   grid-template-rows: minmax(0, 1fr);
   grid-auto-rows: 0;
 }
@@ -212,8 +228,8 @@ button.site-search::before {
   mask: url("icons/theme-dial-dark.svg") center / contain no-repeat;
 }
 a.site-home::before {
-  -webkit-mask-image: url("icons/home-compass.svg");
-  mask-image: url("icons/home-compass.svg");
+  -webkit-mask-image: url("icons/home-folio-scroll.svg");
+  mask-image: url("icons/home-folio-scroll.svg");
 }
 button.site-search::before {
   -webkit-mask-image: url("icons/search-slash.svg");
