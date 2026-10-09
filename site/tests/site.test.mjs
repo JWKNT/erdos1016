@@ -65,3 +65,10 @@ test('mathematics uses prose ink with neutral display shading',async()=>{
  assert.match(css,/background:var\(--surface\); color:var\(--ink\)/);
  assert.doesNotMatch(css,/#315f68|#aacdd1/);
 });
+
+ test('masthead omits the redundant contents jump and keeps the paper link', () => {
+ const header=html.match(/<header\b[\s\S]*?<\/header>/)[0];
+ assert.doesNotMatch(header,/href="#contents"/);
+ assert.match(header,/href="paper.pdf"/);
+ assert.match(html,/<aside id="contents"/);
+ });
