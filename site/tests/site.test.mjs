@@ -73,18 +73,18 @@ test('mathematics uses prose ink with neutral display shading',async()=>{
  assert.match(html,/<aside id="contents"/);
  });
 
-test('vendored theme includes the exact folio and Wrenfold assets with math kept separate', async () => {
+test('vendored theme includes the exact Home door and Wrenfold assets with math kept separate', async () => {
  const {createHash}=await import('node:crypto');
  const hash=async(path)=>createHash('sha256').update(await readFile(resolve(site,path))).digest('hex');
  assert.equal(await hash('assets/theme/fonts/WrenfoldText-Regular.woff2'),'826f6c238521bfbf98d897a8f81810a78ed2d6571fec0ef86d0d51edba0212be');
- for(const name of ['home-folio-scroll.svg','home-compass.svg','home-emblem.svg','home.svg']){
-  assert.equal(await hash(`assets/theme/icons/${name}`),'ff757b439e901db80d320d5fd1422edb63525b0ff46e235ab2dd5c52b2dad55f');
+ for(const name of ['home-doorway.svg','home-folio-scroll.svg','home-compass.svg','home-emblem.svg','home.svg']){
+  assert.equal(await hash(`assets/theme/icons/${name}`),'2baa87caf29834e155af108d7743c410e2a3b1775edf6c7671ec24918a7810db');
  }
  const css=await readFile(resolve(site,'assets/theme/base.css'),'utf8');
  assert.match(css,/--serif: Georgia, "Times New Roman", serif/);
  assert.match(css,/--reading: "Wrenfold Text"/);
  assert.match(css,/--display: "Palatino Linotype"/);
- assert.match(css,/icons\/home-folio-scroll\.svg/);
+ assert.match(css,/icons\/home-doorway\.svg/);
  for(const name of ['OFL-1.1.txt','Noto-Debian-copyright.txt','Wrenfold-README.txt'])await access(resolve(site,`assets/theme/fonts/${name}`));
  const guide=await readFile(resolve(site,'assets/guide.css'),'utf8');
  assert.match(guide,/math \{ font-family:var\(--math-face\)/);

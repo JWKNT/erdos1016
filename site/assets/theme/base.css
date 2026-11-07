@@ -231,8 +231,8 @@ button.site-search::before {
   mask: url("icons/theme-dial-dark.svg") center / contain no-repeat;
 }
 a.site-home::before {
-  -webkit-mask-image: url("icons/home-folio-scroll.svg");
-  mask-image: url("icons/home-folio-scroll.svg");
+  -webkit-mask-image: url("icons/home-doorway.svg");
+  mask-image: url("icons/home-doorway.svg");
 }
 button.site-search::before {
   -webkit-mask-image: url("icons/search-slash.svg");
