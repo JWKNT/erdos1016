@@ -30,6 +30,22 @@ The public endpoint is `Erdos1016.mainTheorem : Problem1016.MainTheorem`. It has
 - `Graph/Multigraph/InducedCycleSeeds` lifts physical cycles of the retained graph into the ambient cycle space. `LengthIndexedFamily` proves exact weight and vertex-load identities. These identities count each physical cycle once, regardless of its root or orientation.
 - `Probability/Moments/SeedPairCorrelation`, `SeedFamilyAvoidance`, and `InducedCycleAvoidance` prove the exact normalized pair law and exceptional packing bound. They then prove the actual forest bound `1/2 + 20/z`. Every probability uses the ambient multigraph cycle space.
 
+## Cycle-count theorems
+
+The public endpoints are `Erdos1016.cycleCountTheorem` and `Erdos1016.cycleCountAsymptotic`. The forest estimate is their only deep input.
+
+- `CycleCount/ChordExtension` adds distinct non-edges to a physical graph. The vertex set does not change. Words, cycle words, and connectivity lift. The cycle rank increases by at most the number of chords.
+- `CycleCount/IndependentEdges` selects `t` edges by a direct count. Exactly `2^(r-t)` even subgraphs avoid all selected edges. Each selected edge has a third vertex adjacent to its head.
+- `CycleCount/TriangleFamily` adds the missing third sides as chords. Each selected edge then lies on a triangle. Each new chord lies on a triangle whose other two sides are old edges.
+- `CycleCount/ConnectedBound` counts the cycles of a connected graph. A cycle through a selected edge meets the triangle family. Its lift, and each translate by new triangles, has a forest outside the family. Thus at most `p * 2^r` cycles pass through a selected edge, where `p` is the outside-forest probability of the extension.
+- `CycleCount/Bound` applies `ShortProof.FewComponentForestEstimate` to an extension with about `log₂ log₂ r` triangles. `connectByHub` removes the connectivity assumption.
+- `CycleCount/Statement` states the bound for Mathlib simple graphs on `Fin n`. It counts cycles by the edge sets of cycle walks. It transfers the bound through `physicalOfSimpleGraph` and Euler's formula.
+- `CycleCount/LowerBound` proves that the closed shortcut chain with `j` shortcuts has cyclomatic number `j + 1` and at least `2^j` cycles.
+- `CycleCount/Asymptotic` defines the maximum number of cycles at each cyclomatic number. It proves that this maximum, divided by `2^r`, tends to `1/2`.
+- `CycleCount/FiniteTypes` transfers the bound through a graph isomorphism to every finite vertex type.
+
+The proof does not suppress vertices and does not search for short cycles. The added chords supply the triangles. Each chord doubles the forest-bearing words, so the count loses nothing.
+
 ## Final assembly
 
 `Probability/Avoidance/FewComponentForest` selects uniform thresholds. It uses the same retained graph for mass and correlations. It proves the marked multigraph forest bound. `MarkedForestReduction` transfers this bound to the original simple graph and witness union. The result is the unconditional `ShortProof.fewComponentForestEstimate`.

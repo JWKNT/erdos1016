@@ -18,6 +18,25 @@ The public declarations are in [Main.lean](Erdos1016/Main.lean). `Erdos1016.main
 
 Read the [paper (PDF)](paper/erdos1016.pdf) or its [LaTeX source](paper/erdos1016.tex). The [`old/`](old/ARCHIVE.md) directory preserves the previous formalization, published paper, and earlier working draft. The active Lean build and current CI certificate exclude this archived material. The website has a separate archive.
 
+## Cycle-count theorems
+
+The same forest estimate bounds the number of cycles of a graph. Two further endpoints are unconditional:
+
+```lean
+Erdos1016.cycleCountTheorem : Erdos1016.CycleCount.CycleCountStatement
+Erdos1016.cycleCountAsymptotic : Erdos1016.CycleCount.AsymptoticCycleCount
+```
+
+The first endpoint proves that a simple graph with large cyclomatic number `r` has at most
+
+$$\Bigl(\tfrac12+\frac{21}{\log_2\log_2\log_2 r}\Bigr)2^{r}$$
+
+cycles. The second endpoint proves that the largest number of cycles at cyclomatic number `r`, divided by `2^r`, tends to `1/2`. This is the asymptotic form of a question of Entringer and Slater.
+
+Cycles are Mathlib `SimpleGraph.Walk.IsCycle` objects. The count uses their edge sets, so each cycle is counted once. The cyclomatic number is `edges - vertices + components`. The statements use graphs on `Fin n`. `Erdos1016.cycleCountTheorem_general` gives the same bound on every finite vertex type.
+
+The bound is asymptotic and its threshold is not explicit. The bound is below the elementary bound `2^r` only if `log₂ log₂ log₂ r > 42`. See the [proof map](docs/proof-map.md#cycle-count-theorems) for the modules.
+
 ## Proof structure
 
 1. Extract a union of witness cycles using least missing lengths, with simultaneous edge, rank, and component budgets.

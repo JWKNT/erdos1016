@@ -12,7 +12,8 @@ import re
 import subprocess
 import sys
 
-from check_axiom_log import TARGET, FOREST_TARGET, axiom_reports, check
+from check_axiom_log import (ASYMPTOTIC_TARGET, CYCLE_TARGET, FOREST_TARGET, TARGET,
+                             axiom_reports, check)
 from project_inventory import ROOT, inventory
 
 
@@ -20,6 +21,7 @@ REQUIRED_CHECKS = frozenset({
     'source_inventory', 'pinned_dependencies', 'all_library_modules_built',
     'expanded_mathematical_statements', 'unconditional_endpoint_type',
     'unconditional_integer_endpoint_type', 'unconditional_forest_estimate_type',
+    'unconditional_cycle_count_endpoint_type', 'unconditional_cycle_asymptotic_endpoint_type',
     'kernel_axiom_reports', 'verification_inputs_unchanged',
 })
 
@@ -28,6 +30,7 @@ def initial_status() -> dict:
     """A started or interrupted run provides no completed theorem certificate."""
     return {'status': 'running', 'kernel_checks_status': 'running',
             'formalization_status': 'unverified', 'unconditional_main_theorem_proved': False,
+            'unconditional_cycle_count_theorems_proved': False,
             'remaining_mathematical_premises': None}
 
 
@@ -47,6 +50,7 @@ def record_completion(result: dict, errors: list[str], inputs_unchanged: bool) -
                   kernel_checks_status='passed' if passed else 'failed',
                   formalization_status='complete' if passed else 'unverified',
                   unconditional_main_theorem_proved=passed,
+                  unconditional_cycle_count_theorems_proved=passed,
                   remaining_mathematical_premises=[] if passed else None,
                   errors=errors, completed_at=datetime.now(timezone.utc).isoformat())
     return 0 if passed else 1
@@ -101,8 +105,10 @@ def main() -> int:
         run_url = (f"{os.environ.get('GITHUB_SERVER_URL', 'https://github.com')}/"
                    f"{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}")
     manifest = json.loads((ROOT / 'lake-manifest.json').read_text())
-    result = {'schema_version': 3, **initial_status(),
-              'target': TARGET, 'forest_target': FOREST_TARGET, 'fresh_project_build': args.fresh,
+    result = {'schema_version': 4, **initial_status(),
+              'target': TARGET, 'forest_target': FOREST_TARGET,
+              'cycle_count_target': CYCLE_TARGET, 'cycle_asymptotic_target': ASYMPTOTIC_TARGET,
+              'fresh_project_build': args.fresh,
               'started_at': datetime.now(timezone.utc).isoformat(),
               'commit': commit.stdout.strip() if commit.returncode == 0 else None,
               'working_tree_clean': dirty.returncode == 0 and not dirty.stdout.strip(),
@@ -151,6 +157,8 @@ def main() -> int:
     result['axioms'] = axiom_reports(text)
     result['checks'].extend(['expanded_mathematical_statements', 'unconditional_endpoint_type',
                              'unconditional_integer_endpoint_type', 'unconditional_forest_estimate_type',
+                             'unconditional_cycle_count_endpoint_type',
+                             'unconditional_cycle_asymptotic_endpoint_type',
                              'kernel_axiom_reports'])
     return finish([])
 

@@ -11,14 +11,16 @@ The verifier rebuilds every active library module from source with at most two c
 
 `audits/TheoremAudit.lean` verifies more than an axiom list. It independently states the conclusion for every natural number `n ≥ 3`. This check covers natural excess and the integer minimum-edge count minus `n`. Lean metaprogramming requires `Erdos1016.mainTheorem` to have exactly the type `Problem1016.MainTheorem`. It requires the integer theorem to have the independently expanded type. It requires `ShortProof.fewComponentForestEstimate` to have exactly its unconditional target type.
 
+The audit also states the two cycle-count theorems in expanded form. It requires `Erdos1016.cycleCountTheorem` to have exactly the type `CycleCount.CycleCountStatement`. It requires `Erdos1016.cycleCountAsymptotic` to have exactly the type `CycleCount.AsymptoticCycleCount`. It checks that each type equals its expanded statement.
+
 A theorem with an additional mathematical premise cannot pass these checks.
 
 The audit reports kernel axioms for the public endpoints and the main steps of the shorter proof. These steps include actual retained-cycle supply, the link bound, and the weighted forest estimate. They also include the contraction law, the small-cut bound, and descent. Only `propext`, `Classical.choice`, and `Quot.sound` are accepted. The log checker requires every named report and all three checked statement markers. It rejects conditional development logs, Lean errors, proof admissions, and compiler-trust axioms.
 
-The schema-version-3 report is `.verification/verification.json`. The same directory contains detailed rebuild logs and `theorem-audit.log`. The report binds the result to hashes of the library source set and verification inputs. These inputs are source, audits, scripts, toolchain, dependency manifest, and workflow. If an input changes during the check, verification fails.
+The schema-version-4 report is `.verification/verification.json`. The same directory contains detailed rebuild logs and `theorem-audit.log`. The report binds the result to hashes of the library source set and verification inputs. These inputs are source, audits, scripts, toolchain, dependency manifest, and workflow. If an input changes during the check, verification fails.
 
-- `status: passed`, `kernel_checks_status: passed`, `formalization_status: complete`, and `unconditional_main_theorem_proved: true` appear together only if all required checks pass. The input hash must also remain unchanged.
-- Running or failed checks use `formalization_status: unverified` and `unconditional_main_theorem_proved: false`. They provide no completed certificate. This does not assert that the mathematics is false or that a particular premise remains open.
+- `status: passed`, `kernel_checks_status: passed`, `formalization_status: complete`, `unconditional_main_theorem_proved: true`, and `unconditional_cycle_count_theorems_proved: true` appear together only if all required checks pass. The input hash must also remain unchanged.
+- Running or failed checks use `formalization_status: unverified`, `unconditional_main_theorem_proved: false`, and `unconditional_cycle_count_theorems_proved: false`. They provide no completed certificate. This does not assert that the mathematics is false or that a particular premise remains open.
 - `fresh_project_build` records whether project artifacts were rebuilt from scratch. Use `--fresh` for release evidence.
 
 The GitHub workflow runs these same commands on Ubuntu with pinned action revisions and a checksum-verified Elan download. It uploads only `.verification/` as an artifact retained for 90 days. Its summary reports success only if the theorem-verification step succeeds. The workflow does not publish the manuscript or deploy a site.

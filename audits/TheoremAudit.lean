@@ -9,6 +9,16 @@ set_option pp.proofs false
 #print Erdos1016.ShortProof.FewComponentForestEstimate
 #check Erdos1016.mainTheorem
 #check Erdos1016.mainTheorem_integer_excess
+#print Erdos1016.CycleCount.cycleEdgeSets
+#print Erdos1016.CycleCount.numCycles
+#print Erdos1016.CycleCount.CycleCountStatement
+#print Erdos1016.CycleCount.GeneralCycleCountStatement
+#print Erdos1016.CycleCount.cycleCounts
+#print Erdos1016.CycleCount.maxCycles
+#print Erdos1016.CycleCount.AsymptoticCycleCount
+#check Erdos1016.cycleCountTheorem
+#check Erdos1016.cycleCountTheorem_general
+#check Erdos1016.cycleCountAsymptotic
 
 example : ∃ Aminus Aplus : ℝ, ∀ n : ℕ, 3 ≤ n →
     Real.logb 2 (n : ℝ) + (Erdos1016.Extremal.logStar n : ℝ) - Aminus ≤
@@ -29,6 +39,40 @@ def IntegerStatement : Prop :=
 
 example : IntegerStatement := Erdos1016.mainTheorem_integer_excess
 
+/-- Independent spelling of the cycle-count bound. A cycle is counted once,
+by the edge set of a Mathlib cycle walk. The number `r` is the cyclomatic
+number `edges - vertices + components`. -/
+def CycleStatement : Prop :=
+  ∃ r₁ : ℕ, ∀ (n : ℕ) (G : SimpleGraph (Fin n)) (r : ℕ),
+    r + n = Nat.card G.edgeSet + Nat.card G.ConnectedComponent → r₁ ≤ r →
+    ((({s : Set (Sym2 (Fin n)) | ∃ (v : Fin n) (p : G.Walk v v),
+        p.IsCycle ∧ s = {a | a ∈ p.edges}}).ncard : ℕ) : ℝ) ≤
+      (1 / 2 + 21 / Real.logb 2 (Real.logb 2 (Real.logb 2 (r : ℝ)))) * 2 ^ r
+
+example : CycleStatement := Erdos1016.cycleCountTheorem
+
+/-- The same bound on every finite vertex type. -/
+def GeneralCycleStatement : Prop :=
+  ∃ r₁ : ℕ, ∀ (V : Type) [Fintype V] (G : SimpleGraph V) (r : ℕ),
+    r + Fintype.card V = Nat.card G.edgeSet + Nat.card G.ConnectedComponent → r₁ ≤ r →
+    ((({s : Set (Sym2 V) | ∃ (v : V) (p : G.Walk v v),
+        p.IsCycle ∧ s = {a | a ∈ p.edges}}).ncard : ℕ) : ℝ) ≤
+      (1 / 2 + 21 / Real.logb 2 (Real.logb 2 (Real.logb 2 (r : ℝ)))) * 2 ^ r
+
+example : GeneralCycleStatement := Erdos1016.cycleCountTheorem_general
+
+/-- Independent spelling of the asymptotic statement: the largest number of
+cycles at cyclomatic number `r`, divided by `2^r`, tends to `1/2`. -/
+def AsymptoticStatement : Prop :=
+  Filter.Tendsto (fun r : ℕ =>
+    ((sSup {c : ℕ | ∃ (n : ℕ) (G : SimpleGraph (Fin n)),
+        r + n = Nat.card G.edgeSet + Nat.card G.ConnectedComponent ∧
+        ({s : Set (Sym2 (Fin n)) | ∃ (v : Fin n) (p : G.Walk v v),
+          p.IsCycle ∧ s = {a | a ∈ p.edges}}).ncard = c} : ℕ) : ℝ) / 2 ^ r)
+    Filter.atTop (nhds (1 / 2))
+
+example : AsymptoticStatement := Erdos1016.cycleCountAsymptotic
+
 open Lean Elab Command in
 run_cmd do
   let decl ← getConstInfo ``Erdos1016.mainTheorem
@@ -41,9 +85,27 @@ run_cmd do
   liftTermElabM do
     unless ← Lean.Meta.isDefEq integer.type (mkConst ``IntegerStatement) do
       throwError "The integer theorem has unexpected hypotheses or conclusion"
+  let cycles ← getConstInfo ``Erdos1016.cycleCountTheorem
+  unless cycles.type.isConstOf ``Erdos1016.CycleCount.CycleCountStatement do
+    throwError "The cycle-count theorem has unexpected hypotheses or conclusion"
+  let asymptotic ← getConstInfo ``Erdos1016.cycleCountAsymptotic
+  unless asymptotic.type.isConstOf ``Erdos1016.CycleCount.AsymptoticCycleCount do
+    throwError "The asymptotic cycle-count theorem has unexpected hypotheses or conclusion"
+  let general ← getConstInfo ``Erdos1016.cycleCountTheorem_general
+  unless general.type.isConstOf ``Erdos1016.CycleCount.GeneralCycleCountStatement do
+    throwError "The general cycle-count theorem has unexpected hypotheses or conclusion"
+  liftTermElabM do
+    unless ← Lean.Meta.isDefEq general.type (mkConst ``GeneralCycleStatement) do
+      throwError "The general cycle-count theorem differs from its expanded statement"
+    unless ← Lean.Meta.isDefEq cycles.type (mkConst ``CycleStatement) do
+      throwError "The cycle-count theorem differs from its expanded statement"
+    unless ← Lean.Meta.isDefEq asymptotic.type (mkConst ``AsymptoticStatement) do
+      throwError "The asymptotic cycle-count theorem differs from its expanded statement"
   logInfo "ENDPOINT_STATUS: UNCONDITIONAL; TARGET: Erdos1016.Problem1016.MainTheorem"
   logInfo "INTEGER_ENDPOINT_STATUS: UNCONDITIONAL; TARGET: expanded_integer_excess"
   logInfo "FOREST_ENDPOINT_STATUS: UNCONDITIONAL; TARGET: Erdos1016.ShortProof.FewComponentForestEstimate"
+  logInfo "CYCLE_COUNT_ENDPOINT_STATUS: UNCONDITIONAL; TARGET: Erdos1016.CycleCount.CycleCountStatement"
+  logInfo "CYCLE_ASYMPTOTIC_ENDPOINT_STATUS: UNCONDITIONAL; TARGET: Erdos1016.CycleCount.AsymptoticCycleCount"
 
 end Erdos1016.TheoremAudit
 
@@ -96,3 +158,16 @@ end Erdos1016.TheoremAudit
 #print axioms Erdos1016.Proof.ForestCutoffParameters.eventually_geometry_cutoffs
 #print axioms Erdos1016.Proof.ForestCutoffParameters.link_error_le_envelope
 #print axioms Erdos1016.FiniteMultiGraph.ExteriorComponents.smallCyclicPart_card_le
+
+#print axioms Erdos1016.cycleCountTheorem
+#print axioms Erdos1016.cycleCountTheorem_general
+#print axioms Erdos1016.cycleCountAsymptotic
+#print axioms Erdos1016.CycleCount.cycleCountBound_of_forestEstimate
+#print axioms Erdos1016.CycleCount.cycleCountStatement_of_bound
+#print axioms Erdos1016.CycleCount.asymptoticCycleCount_of_statement
+#print axioms Erdos1016.CycleCount.generalCycleCountStatement_of_statement
+#print axioms Erdos1016.CycleCount.card_cycleWord_le
+#print axioms Erdos1016.CycleCount.exists_triangle_family
+#print axioms Erdos1016.CycleCount.exists_independent_edges
+#print axioms Erdos1016.CycleCount.cycleRank_addChords_le
+#print axioms Erdos1016.CycleCount.exists_graph_many_cycles

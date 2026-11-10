@@ -10,8 +10,22 @@ FOREST_TARGET = "Erdos1016.ShortProof.FewComponentForestEstimate"
 STATUS = f"ENDPOINT_STATUS: UNCONDITIONAL; TARGET: {TARGET}"
 INTEGER_STATUS = "INTEGER_ENDPOINT_STATUS: UNCONDITIONAL; TARGET: expanded_integer_excess"
 FOREST_STATUS = f"FOREST_ENDPOINT_STATUS: UNCONDITIONAL; TARGET: {FOREST_TARGET}"
+CYCLE_TARGET = "Erdos1016.CycleCount.CycleCountStatement"
+ASYMPTOTIC_TARGET = "Erdos1016.CycleCount.AsymptoticCycleCount"
+CYCLE_STATUS = f"CYCLE_COUNT_ENDPOINT_STATUS: UNCONDITIONAL; TARGET: {CYCLE_TARGET}"
+ASYMPTOTIC_STATUS = f"CYCLE_ASYMPTOTIC_ENDPOINT_STATUS: UNCONDITIONAL; TARGET: {ASYMPTOTIC_TARGET}"
+MARKERS = (STATUS, INTEGER_STATUS, FOREST_STATUS, CYCLE_STATUS, ASYMPTOTIC_STATUS)
 REQUIRED = {
     'Erdos1016.BoundaryDecay.exceptional_row_le_of_packing',
+    'Erdos1016.CycleCount.asymptoticCycleCount_of_statement',
+    'Erdos1016.CycleCount.card_cycleWord_le',
+    'Erdos1016.CycleCount.cycleCountBound_of_forestEstimate',
+    'Erdos1016.CycleCount.cycleCountStatement_of_bound',
+    'Erdos1016.CycleCount.cycleRank_addChords_le',
+    'Erdos1016.CycleCount.exists_graph_many_cycles',
+    'Erdos1016.CycleCount.exists_independent_edges',
+    'Erdos1016.CycleCount.exists_triangle_family',
+    'Erdos1016.CycleCount.generalCycleCountStatement_of_statement',
     'Erdos1016.BoundaryDecay.small_cut_event_bound',
     'Erdos1016.ExceptionalPartners.multigraph_three_links_card_le_cut',
     'Erdos1016.Extremal.LinearExponentialDecay.recurrence_logStar_bound',
@@ -56,6 +70,9 @@ REQUIRED = {
     'Erdos1016.ShortProof.fewComponentForestEstimate',
     'Erdos1016.ShortProof.fewComponentForestEstimate_of_marked_bound',
     'Erdos1016.ShortProof.mainTheorem_of_few_component_forest_estimate',
+    'Erdos1016.cycleCountAsymptotic',
+    'Erdos1016.cycleCountTheorem',
+    'Erdos1016.cycleCountTheorem_general',
     'Erdos1016.mainTheorem',
     'Erdos1016.mainTheorem_integer_excess',
 }
@@ -84,7 +101,7 @@ def check(text: str) -> list[str]:
         unexpected = {a.strip() for a in axioms.split(",") if a.strip()} - ALLOWED
         if unexpected:
             problems.append(f"{name}: unexpected axioms {sorted(unexpected)}")
-    for marker in (STATUS, INTEGER_STATUS, FOREST_STATUS):
+    for marker in MARKERS:
         if text.splitlines().count(marker) != 1:
             problems.append("Missing or repeated checked statement marker: " + marker)
     if "ENDPOINT_STATUS: CONDITIONAL" in text:
@@ -93,6 +110,10 @@ def check(text: str) -> list[str]:
         problems.append("Missing forest-estimate target definition")
     if not re.search(r"\bdef\s+" + re.escape(TARGET) + r"\s*:\s*Prop\s*:=", text):
         problems.append("Missing mathematical target definition")
+    if not re.search(r"\bdef\s+" + re.escape(CYCLE_TARGET) + r"\s*:\s*Prop\s*:=", text):
+        problems.append("Missing cycle-count target definition")
+    if not re.search(r"\bdef\s+" + re.escape(ASYMPTOTIC_TARGET) + r"\s*:\s*Prop\s*:=", text):
+        problems.append("Missing asymptotic cycle-count target definition")
     if re.search(r"(^|\n).*\berror:", text):
         problems.append("Lean error in audit output")
     return problems
@@ -103,4 +124,5 @@ if __name__ == "__main__":
     if errors:
         print("\n".join(errors))
         raise SystemExit(1)
-    print("Unconditional theorem and forest estimate checked; only standard logical axioms occur.")
+    print("Unconditional theorem, forest estimate, and cycle-count theorems checked; "
+          "only standard logical axioms occur.")

@@ -4,13 +4,17 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from check_axiom_log import ALLOWED, FOREST_TARGET, FOREST_STATUS, INTEGER_STATUS, REQUIRED, STATUS, TARGET, check
+from check_axiom_log import (ALLOWED, ASYMPTOTIC_STATUS, ASYMPTOTIC_TARGET, CYCLE_STATUS, CYCLE_TARGET,
+                             FOREST_TARGET, FOREST_STATUS, INTEGER_STATUS, MARKERS, REQUIRED, STATUS,
+                             TARGET, check)
 from verify import REQUIRED_CHECKS, fingerprint, initial_status, record_completion, structural_errors
 
 
 class AxiomAuditTests(unittest.TestCase):
     def valid_log(self):
-        return f'def {TARGET} : Prop := True\ndef {FOREST_TARGET} : Prop := True\n{STATUS}\n{INTEGER_STATUS}\n{FOREST_STATUS}\n' + '\n'.join(
+        targets = ''.join(f'def {name} : Prop := True\n'
+                          for name in [TARGET, FOREST_TARGET, CYCLE_TARGET, ASYMPTOTIC_TARGET])
+        return targets + ''.join(marker + '\n' for marker in MARKERS) + '\n'.join(
             f"'{name}' depends on axioms: [{', '.join(sorted(ALLOWED))}]" for name in sorted(REQUIRED))
 
     def test_complete_log(self):
@@ -38,11 +42,21 @@ class AxiomAuditTests(unittest.TestCase):
             f'ENDPOINT_STATUS: CONDITIONAL; INPUT: {FOREST_TARGET}; TARGET: {TARGET}')
         self.assertTrue(check(conditional))
         self.assertTrue(check(self.valid_log() + '\n' + conditional))
-        for marker in [STATUS, INTEGER_STATUS, FOREST_STATUS]:
+        for marker in MARKERS:
             with self.subTest(marker=marker):
                 self.assertTrue(check(self.valid_log().replace(marker, '')))
                 self.assertTrue(check(self.valid_log() + '\n' + marker))
         self.assertTrue(check(self.valid_log().replace(f'def {FOREST_TARGET}', 'def OtherInput')))
+
+    def test_cycle_count_endpoints_are_required(self):
+        self.assertEqual(set(MARKERS), {STATUS, INTEGER_STATUS, FOREST_STATUS, CYCLE_STATUS, ASYMPTOTIC_STATUS})
+        for target in [CYCLE_TARGET, ASYMPTOTIC_TARGET]:
+            with self.subTest(target=target):
+                self.assertTrue(check(self.valid_log().replace(f'def {target}', 'def OtherTarget')))
+        for name in ['Erdos1016.cycleCountTheorem', 'Erdos1016.cycleCountAsymptotic']:
+            with self.subTest(name=name):
+                self.assertIn(name, REQUIRED)
+                self.assertTrue(check(self.valid_log() + f"\n'{name}' depends on axioms: [UnprovedInput]"))
 
     def test_nonstandard_axiom_cannot_be_hidden_by_later_clean_report(self):
         name = 'Erdos1016.mainTheorem'
@@ -84,6 +98,7 @@ class VerificationTests(unittest.TestCase):
         self.assertEqual(report['status'], 'running')
         self.assertEqual(report['formalization_status'], 'unverified')
         self.assertFalse(report['unconditional_main_theorem_proved'])
+        self.assertFalse(report['unconditional_cycle_count_theorems_proved'])
         self.assertIsNone(report['remaining_mathematical_premises'])
 
     def test_only_all_successful_checks_can_claim_completion(self):
@@ -91,12 +106,14 @@ class VerificationTests(unittest.TestCase):
         self.assertEqual(record_completion(report, [], True), 0)
         self.assertEqual(report['formalization_status'], 'complete')
         self.assertTrue(report['unconditional_main_theorem_proved'])
+        self.assertTrue(report['unconditional_cycle_count_theorems_proved'])
         self.assertEqual(report['remaining_mathematical_premises'], [])
         for missing in REQUIRED_CHECKS - {'verification_inputs_unchanged'}:
             with self.subTest(missing=missing):
                 report = {**initial_status(), 'checks': sorted(REQUIRED_CHECKS - {missing})}
                 self.assertEqual(record_completion(report, [], True), 1)
                 self.assertFalse(report['unconditional_main_theorem_proved'])
+                self.assertFalse(report['unconditional_cycle_count_theorems_proved'])
                 self.assertEqual(report['formalization_status'], 'unverified')
 
     def test_failure_and_changed_inputs_revoke_any_completion_claim(self):
