@@ -1236,15 +1236,15 @@ above. In the last step it finds both even sets by a pigeonhole count.
 \section{Problems}\label{sec:problems}
 
 \paragraph{Error terms.}
-The error terms in Theorems~\ref{thm:forest} and~\ref{thm:cycles} are of order $1/\lgk3r$. The
+The error terms in Theorems~\ref{thm:cycles} and~\ref{thm:forest} are of order $1/\lgk3r$. The
 truth may be much smaller. By Example~\ref{rem:twoports} the left side of~\eqref{eq:forest} can be
 as large as $\half+2^{1-r}$, and Horak and Kim~\cite{HK} proved that
 $\psi(r)\ge2^{r-1}+c\,r\,2^{r/2}$. We know no examples with larger error terms.
 
 The weak error term has a definite cause in the proof. The gain $\mu$ comes from cycles with between
 $6\log r$ and $\log r\sqrt{\log\log r}$ edges. Each length $\ell$ in this range contributes about
-$1/(2\ell)$ to $\mu$. Lemma~\ref{lem:links} dictates the upper end of the range. So $\mu$ is only of
-order $\lgk3r$.
+$1/(2\ell)$ to $\mu$. Lemma~\ref{lem:links} dictates the upper end of the range. So the lower bound for $\mu$
+that the proof gives is only of order $\lgk3r$.
 
 \begin{problem}
 Is the error term in~\eqref{eq:forest} at most $r^{-c}$ for some $c>0$? Is
@@ -1426,8 +1426,12 @@ python3 scripts/verify.py --fresh --jobs 2
 \end{verbatim}}
 
 On 10 November 2026 this check passed for the commit above on a machine of the authors, with a
-clean working tree. \tbd{The commit has not been pushed yet. Push it, and cite the public CI run
-here, before this paper is circulated.}
+clean working tree. The repository's continuous integration repeated the check on the same day for
+commit \texttt{e45a40b}. That commit differs from \texttt{9de7271} only in the folder
+\lean{paper/cycle-count}, so the Lean sources, the audit and the scripts are the same. GitHub
+Actions run
+\href{https://github.com/JWKNT/erdos1016/actions/runs/42896694067}{42896694067} records the
+result.
 
 \subsection{Steps of the proofs}
 
@@ -1445,12 +1449,14 @@ end of Sections~\ref{sec:exact}.1 and~\ref{sec:exact}.2.
 The rows for Sections~\ref{sec:lower} to~\ref{sec:forest} are taken from~\cite[Appendix~A]{KNT}. We
 checked that these declarations exist at the commit above. We did not compare each of them with our
 wording. In these parts the formal proof replaces $O$-terms by explicit constants, and intermediate
-estimates differ in detail from the text. The statements of Theorems~\ref{thm:main}
-and~\ref{thm:forest}, of Proposition~\ref{prop:halving} and of Corollary~\ref{cor:phi} agree with
+estimates differ in detail from the text. The statements of Theorems~\ref{thm:forest}
+and~\ref{thm:main}, of Proposition~\ref{prop:halving} and of Corollary~\ref{cor:phi} agree with
 the Lean statements.
 
-\begin{center}\small
-\renewcommand{\arraystretch}{1.12}
+\begin{center}\begin{minipage}{\linewidth}\centering\small
+\captionof{table}{Steps of the proofs and the corresponding Lean declarations.}\label{tab:steps}
+\smallskip
+\renewcommand{\arraystretch}{1.0}
 \begin{tabular}{@{}L{3.7cm}L{6.3cm}L{5.6cm}@{}}
 \toprule
 In this paper & Declaration & File \\
@@ -1501,8 +1507,7 @@ Lemma~\ref{lem:EP} & \lean{exists_even_subset}, \lean{intersecting_suppress},
 Proposition~\ref{prop:nowaste} & \lean{noWasteStatement} & \lean{ExactCounting/NoWaste} \\
 \bottomrule
 \end{tabular}
-\captionof{table}{Steps of the proofs and the corresponding Lean declarations.}\label{tab:steps}
-\end{center}
+\end{minipage}\end{center}
 
 \section{Tests on small graphs}\label{app:checks}
 

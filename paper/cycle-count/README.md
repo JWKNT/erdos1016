@@ -10,6 +10,7 @@ The manuscript is not the paper in `paper/erdos1016.tex`.
 - `notes/erdos1016-book-notes.md` contains research notes from the search for a shorter proof.
 
 The draft refers to the Lean code at commit `9de7271`.
+GitHub Actions run 42896694067 verified commit `e45a40b`, which has the same Lean sources.
 Section 1.5 of the draft states which results are formalised.
 Appendix A of the draft prints the Lean statements and the commands that repeat the check.
 
