@@ -41,57 +41,43 @@
 \numberwithin{equation}{section}
 \setlength{\emergencystretch}{2em}
 
-\hypersetup{pdftitle={The minimum number of edges in a pancyclic graph and the number of cycles in a graph},pdfauthor={KNT, Astra, Fable 5.2}}
-\title{The minimum number of edges in a pancyclic graph\\ and the number of cycles in a graph}
+\hypersetup{pdftitle={The number of cycles in a graph and the minimum number of edges in a pancyclic graph},pdfauthor={KNT, Astra, Fable 5.2}}
+\title{The number of cycles in a graph\\ and the minimum number of edges in a pancyclic graph}
 \author{KNT \and Astra \and Fable 5.2%
 \thanks{Astra and Fable~5.2 are language models: GPT-6 Astra and Claude Fable~5.2.
-Section~\ref{sec:status} says who did what, and which statements a machine has checked.}}
+Section~\ref{sec:status} says who did what, and what a machine has checked.}}
 \date{Draft of 10 November 2026}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-A graph on $n$ vertices is pancyclic if it has a cycle of every length from $3$ to $n$. Let $n+h(n)$
-be the least number of edges of such a graph. A recent theorem of KNT states that
-$h(n)=\log_2 n+\lgs n+O(1)$, which settles Erd\H{o}s Problem \#1016. The proof rests on one estimate. Remove a small union of cycles
-from a connected graph of large cyclomatic number. Then a uniformly random even subgraph, restricted
-to the remaining edges, is a forest with probability at most $\half+o(1)$.
+Let $\psi(r)$ be the largest number of cycles in a graph of cyclomatic number $r$. We prove that
+$\psi(r)\sim2^{r-1}$, as Entringer and Slater conjectured in 1981. More precisely, a graph of large
+cyclomatic number $r$ has at most $(\half+21/\log_2\log_2\log_2 r)\,2^{r}$ cycles. The best earlier
+bound for cubic graphs was $\frac{15}{16}2^{r}$. The new bound determines the leading coefficient.
+It gives no numerical improvement for graphs of any practical size.
 
-We show that the same estimate bounds the number of cycles: a graph of cyclomatic number $r$ has at
-most $(\half+o(1))\,2^{r}$ cycles. This answers, asymptotically, a question of Entringer and Slater
-from 1981. The best earlier bound for cubic graphs was $\frac{15}{16}2^{r}$. Our bound is asymptotic
-only. It is below the trivial bound $2^{r}$ only when $\log_2\log_2\log_2 r>42$.
+The proof has two parts. The first is an estimate from KNT's proof that a pancyclic graph on $n$
+vertices needs $n+\log_2n+\lgs n+O(1)$ edges, which settled Erd\H{o}s Problem \#1016. Remove a small
+union of cycles from a connected graph of large cyclomatic number. Then a uniformly random even
+subgraph, restricted to the remaining edges, is a forest with probability at most $\half+o(1)$. The
+second part is new. We add chords to the graph, so that a few triangles carry the count, and we
+show that the added chords cost nothing.
 
-We also give a short account of the pancyclic theorem, and some elementary results on the regime in
-which the underlying count is exact. The pancyclic theorem, the estimate and the bound on the number
-of cycles are formalised in Lean~4. The elementary results are not.
+We also give a short account of the pancyclic theorem and of the estimate, and we prove two
+elementary theorems on paths and cycles in graphs of small cyclomatic number. All four theorems of
+the paper are formalised in Lean~4.
 \end{abstract}
+
 
 \section{Introduction}\label{sec:intro}
 
-\subsection{Pancyclic graphs}
+\subsection{The number of cycles}
 
-A graph on $n$ vertices is \emph{pancyclic} if it contains a cycle of every length $3,4,\dots,n$.
-Let $n+h(n)$ be the least number of edges of a pancyclic graph on $n$ vertices. In this paper $\log$
-is the binary logarithm, $\lgk{j}$ is its $j$-fold iterate, and $\lgs x$ is the least $j\ge0$ with
-$\lgk{j}x\le1$. Graphs are finite and simple unless we say otherwise.
-
-\begin{theorem}[KNT~\cite{KNT}]\label{thm:main}
-There is an absolute constant $A$ such that, for every $n\ge3$,
-\[
-  \log n+\lgs n-A\;\le\;h(n)\;\le\;\lfloor\log n\rfloor+\lgs n+1 .
-\]
-\end{theorem}
-
-Bondy~\cite{Bondy} stated without proof that $\log(n-1)-1\le h(n)\le\log n+\lgs n+O(1)$. His lower
-bound is a count. A connected graph with $n+h$ edges has at most $2^{h+1}-1$ cycles, and a pancyclic
-graph needs $n-2$ of them. Griffin~\cite{Griffin} wrote this count out and determined $h(n)$ for
-$n\le37$. Problem~\#1016 in Bloom's collection of Erd\H{o}s problems~\cite{Bloom}
-asks whether the upper bound is the truth, and whether even $h(n)-\log n\to\infty$.
-Theorem~\ref{thm:main} answers both questions. The paper~\cite{KNT} gives more of the history.
-
-\subsection{The cycle space and the forest estimate}
+Graphs in this paper are finite and simple unless we say otherwise. Throughout, $\log$ is the
+binary logarithm, $\lgk{j}$ is its $j$-fold iterate, and $\lgs x$ is the least $j\ge0$ with
+$\lgk{j}x\le1$.
 
 For a graph $G$, an \emph{even subgraph} is a set of edges that meets every vertex an even number of
 times. With symmetric difference as addition, the even subgraphs form a vector space $\Z(G)$ over
@@ -104,10 +90,41 @@ are cyclomatic number and cycle rank. A \emph{cycle} is a connected $2$-regular 
 identify a subgraph that has no isolated vertices with its edge set. Then a cycle is a nonzero
 element of $\Z(G)$, so a graph of rank $r$ has at most $2^{r}-1$ cycles.
 
-Bondy's count uses nothing else. To go further, fix a subgraph $W$ of $G$. For an even subgraph
-$\xi$ of $G$ we call $\xi\sm E(W)$ its \emph{outside part}. If a cycle uses an edge of $W$, then its
-outside part is a proper subset of a cycle, so it is a forest. The estimate behind
-Theorem~\ref{thm:main} says that at most about half of all outside parts are forests.
+Let $\psi(r)$ be the largest number of cycles in a graph of rank $r$. Entringer and
+Slater~\cite{ES} proved that $2^{r-1}<\psi(r)<2^{r}$, and they conjectured that
+$\psi(r)\sim2^{r-1}$. They also proved that the maximum is attained by a cubic graph for every
+$r\ge3$. Aldred and Thomassen~\cite{AT} proved that $\psi(r)\le\frac{15}{16}2^{r}$, and that a
+planar graph of rank $r$ has at most $2^{r-1}+o(2^{r-1})$ cycles. Alahmadi, Aldred, dela Cruz,
+Sol\'e and Thomassen~\cite{AACST} proved that a graph with $p$ vertices and $q>2p+3\log(3p)$ edges
+has at most $2^{q-p}$ cycles. For a connected graph, $2^{q-p}=2^{r-1}$.
+
+This left the sparse graphs, and in particular the cubic ones. For those, $\frac{15}{16}2^{r}$ was
+the best bound when~\cite{HK} was written, and we have found nothing newer. Our main result proves
+the conjecture.
+
+\begin{theorem}\label{thm:cycles}
+There is $r_1$ such that every graph of rank $r\ge r_1$ has at most
+\[
+  \Bigl(\frac12+\frac{21}{\lgk{3}r}\Bigr)2^{r}
+\]
+cycles. Consequently $\psi(r)\sim2^{r-1}$.
+\end{theorem}
+
+The theorem determines the leading coefficient of $\psi(r)$. It is not a useful numerical bound.
+The bound is below $2^{r}$ only if $\lgk3r>42$, that is, only if $r$ has more than $2^{2^{42}}$
+binary digits. It is below $\frac{15}{16}2^{r}$ only if $\lgk3r>48$, and the threshold $r_1$ is not
+explicit. Below these thresholds, $\frac{15}{16}2^{r}$ remains the best bound known. The
+second-order term of $\psi(r)$ is open as well. The lower bounds are
+$\psi(r)\ge2^{r-1}+r^{2}-3r+3$ from~\cite{ES}, and $\psi(r)\ge2^{r-1}+c\,r\,2^{r/2}$ for some $c>0$
+and all large $r$ from~\cite{HK}.
+
+\subsection{The forest estimate and the new step}
+
+The proof of Theorem~\ref{thm:cycles} has two parts. The first part is an estimate of
+KNT~\cite{KNT}. Fix a subgraph $W$ of $G$. For an even subgraph $\xi$ of $G$ we call
+$\xi\sm E(W)$ its \emph{outside part}. If a cycle uses an edge of $W$, then its outside part is a
+proper subset of a cycle, so it is a forest. The estimate says that at most about half of all
+outside parts are forests.
 
 \begin{theorem}[Forest estimate, KNT~\cite{KNT}]\label{thm:forest}
 There is $r_0$ such that the following holds for all $r\ge r_0$. Let $G$ be a connected simple graph
@@ -124,61 +141,53 @@ $u$ and $v$. There are equally many outside parts of each kind, and one of the f
 forest unless it is empty (Example~\ref{rem:twoports}). Theorem~\ref{thm:forest} says that no other
 way to attach $W$ leaves a larger proportion of forests, up to the error term.
 
-Here is how the estimate enters the proof of Theorem~\ref{thm:main}. Sort the cycles of $G$ by their
-outside parts. Two cycles with the same outside part differ only inside $W$, so the cycles with a
-given outside part have at most $|E(W)|$ different lengths. If $W$ has rank $t$, there are $2^{r-t}$
-outside parts. Hence
+The second part is new. To count the cycles of $G$, we choose a few edges such that only a small
+part of the cycle space avoids them all. Every other cycle uses a chosen edge. We want to apply Theorem~\ref{thm:forest} to a union of cycles $W$ that
+contains the chosen edges. But the cycles of $G$ through the chosen edges may all be long, and the
+theorem needs $W$ to be small. So we add chords to $G$ until every chosen edge lies on a triangle,
+and we let $W$ be the union of these triangles. Each chord raises the rank by one, which could cost
+a factor of two in the count. It does not: each chord also doubles the set of even subgraphs that
+we count (Lemma~\ref{lem:through}), so the added rank cancels exactly.
+Section~\ref{sec:cycles} gives this argument, and Section~\ref{sec:forest} proves
+Theorem~\ref{thm:forest}.
+
+\subsection{Pancyclic graphs}
+
+Theorem~\ref{thm:forest} was found for another problem. A graph on $n$ vertices is
+\emph{pancyclic} if it contains a cycle of every length $3,4,\dots,n$. Let $n+h(n)$ be the least
+number of edges of a pancyclic graph on $n$ vertices.
+
+\begin{theorem}[KNT~\cite{KNT}]\label{thm:main}
+There is an absolute constant $A$ such that, for every $n\ge3$,
+\[
+  \log n+\lgs n-A\;\le\;h(n)\;\le\;\lfloor\log n\rfloor+\lgs n+1 .
+\]
+\end{theorem}
+
+Bondy~\cite{Bondy} stated without proof that $\log(n-1)-1\le h(n)\le\log n+\lgs n+O(1)$. His lower
+bound is a count. A connected graph with $n+h$ edges has at most $2^{h+1}-1$ cycles, and a pancyclic
+graph needs $n-2$ of them. Griffin~\cite{Griffin} wrote this count out and determined $h(n)$ for
+$n\le37$. Problem~\#1016 in Bloom's collection of Erd\H{o}s problems~\cite{Bloom}
+asks whether the upper bound is the truth, and whether even $h(n)-\log n\to\infty$.
+Theorem~\ref{thm:main} answers both questions. The paper~\cite{KNT} gives more of the history.
+
+Here is how the estimate enters the proof of Theorem~\ref{thm:main}. Let $W$ have rank $t$ and at
+least one edge, and sort the cycles of $G$ by their outside parts. Two cycles with the same outside
+part differ only inside $W$, so the cycles with a given outside part have at most $|E(W)|$
+different lengths. There are $2^{r-t}$ outside parts. Hence
 \begin{equation}\label{eq:trivial}
   \text{the cycles of $G$ have at most }|E(W)|\,2^{r-t}\text{ different lengths.}
 \end{equation}
 Theorem~\ref{thm:forest} improves this by a factor of almost two when $r$ is large.
-Section~\ref{sec:lower} applies the improved bound at ranks that grow like a tower of exponentials. Each level halves the number of
-lengths that a given rank can supply, so each level costs one more edge. This gives the term
-$\lgs n$. Section~\ref{sec:upper} gives the construction for the upper bound, and
-Section~\ref{sec:forest} proves Theorem~\ref{thm:forest}.
+Section~\ref{sec:lower} applies the improved bound at ranks that grow like a tower of exponentials.
+Each level halves the number of lengths that a given rank can supply, so each level costs one more
+edge. This gives the term $\lgs n$. Section~\ref{sec:upper} gives the construction for the upper
+bound.
 
-\subsection{The number of cycles}
+\subsection{Two elementary theorems}
 
-Theorem~\ref{thm:forest} does not mention pancyclic graphs. It also answers an older question. Let
-$\psi(r)$ be the largest number of cycles in a graph of rank $r$. We have seen that
-$\psi(r)\le2^{r}-1$. Entringer and Slater~\cite{ES} showed that the maximum is attained by cubic
-graphs. They found graphs with slightly more than $2^{r-1}$ cycles, and they asked whether this is
-essentially the maximum. Later papers quote this as the conjecture $\psi(r)\sim2^{r-1}$; see for
-instance~\cite{HK}. Aldred and Thomassen~\cite{AT} proved that $\psi(r)\le\frac{15}{16}2^{r}$, and
-that a planar graph of rank $r$ has at most $2^{r-1}+o(2^{r-1})$ cycles. Alahmadi, Aldred, dela
-Cruz, Sol\'e and Thomassen~\cite{AACST} proved that a graph with $p$ vertices and
-$q>2p+3\log(3p)$ edges has at most $2^{q-p}$ cycles. For a connected graph, $2^{q-p}=2^{r-1}$.
-
-This left the sparse graphs, and in particular the cubic ones. For those, $\frac{15}{16}2^{r}$ was
-the best bound when~\cite{HK} was written, and we have found nothing newer.
-
-\begin{theorem}\label{thm:cycles}
-There is $r_1$ such that every graph of rank $r\ge r_1$ has at most
-\[
-  \Bigl(\frac12+\frac{21}{\lgk{3}r}\Bigr)2^{r}
-\]
-cycles. Consequently $\psi(r)\sim2^{r-1}$.
-\end{theorem}
-
-This is an asymptotic statement and nothing more. The bound is below the trivial bound $2^{r}$ only
-if $\lgk3r>42$, that is, only if $r$ has more than $2^{2^{42}}$ binary digits. It is below
-$\frac{15}{16}2^{r}$ only if
-$\lgk3r>48$. The thresholds $r_0$ and $r_1$ are not explicit. So for every rank that one can write
-down, $\frac{15}{16}2^{r}$ is still the best bound known. The theorem also says nothing about the
-second-order term. Horak and Kim~\cite{HK} proved that $\psi(r)\ge2^{r-1}+c\,r\,2^{r/2}$ for some
-$c>0$ and all large $r$.
-
-The proof takes one page (Section~\ref{sec:cycles}). Choose about $\log\log r$ edges of $G$ so that
-only a small part of the cycle space avoids all of them. Every other cycle uses a chosen edge. We
-want to apply Theorem~\ref{thm:forest} to a small union of cycles $W$ that contains the chosen
-edges, but $G$ need not have short cycles through them. So we add chords to $G$ until every chosen
-edge lies on a triangle, and we let $W$ be the union of these triangles. A chord doubles the cycle
-space. It also doubles the set that we count, so nothing is lost.
-
-\subsection{Exact counting}
-
-Theorem~\ref{thm:forest} forces a loss of one half when the rank is large. Our last result describes
-the opposite regime, in which nothing is lost.
+The last two results concern graphs of small rank. Their proofs are elementary and do not use
+Theorem~\ref{thm:forest}.
 
 \begin{theorem}\label{thm:exact}
 \textup{(a)} Let $N$ be a connected graph and let $u\ne v$ be two of its vertices. Then $N$ has at
@@ -190,24 +199,24 @@ Suppose that every outside part is the outside part of some cycle of $G$. Then $
 edge-disjoint cycles, and $\beta(G)\le\beta(W)+|V(W)|+3$.
 \end{theorem}
 
-Part~(b) concerns the bound~\eqref{eq:trivial}. It can be exact only while the rank of $G$ exceeds
-the rank of $W$ by at most $|V(W)|+3$. Part~(a) explains the shape of the construction in
-Section~\ref{sec:upper}, and with it the term $\lgs n$ (Section~\ref{sec:exact}).
+Part~(a) is about graphs that attain the largest possible number of paths between two vertices. It
+explains the shape of the construction in Section~\ref{sec:upper}. A gadget that turns $k$ units of
+rank into $2^{k}$ path lengths has only long paths, so the short cycles must come from a second,
+much smaller gadget, and so on. This is the source of the term $\lgs n$ in the construction.
 
-\subsection{Who did what, and what has been checked}\label{sec:status}
+Part~(b) is about the count of cycles by their outside parts. Call an outside part \emph{wasted} if
+no cycle has it as its outside part. Part~(b) says that a graph can avoid all waste only while its
+rank exceeds the rank of $W$ by at most $|V(W)|+3$. Section~\ref{sec:exact} proves both parts.
 
-KNT is a person. Astra and Fable~5.2 are language models. Theorems~\ref{thm:main}
-and~\ref{thm:forest}, their proofs, and the Lean formalisation of these proofs come
+\subsection{Authorship and verification}\label{sec:status}
+
+KNT is a person. Astra and Fable~5.2 are language models. Theorems~\ref{thm:forest}
+and~\ref{thm:main}, their proofs, and the Lean formalisation of these proofs come
 from~\cite{KNT}. KNT obtained them in September 2026 with Astra, and has described that process in
-public~\cite{Claim}. In November 2026 KNT asked Fable~5.2 to look for a simpler proof. That search
-did not find a new proof of Theorem~\ref{thm:forest}. It found Theorem~\ref{thm:cycles}, the results
-of Section~\ref{sec:exact}, and some changes of presentation. Fable~5.2 then wrote the Lean proof of
-Theorem~\ref{thm:cycles} and drafted this paper. KNT directed the work at each step.
-
-Papers written with language models have earned some distrust. Readers complain that the proofs
-read well but hide gaps, and that the formal statement, when there is one, is not the statement in
-the paper. They complain that references are invented or unread, that small results are oversold,
-and that nobody says what was checked. We answer these points one by one.
+public~\cite{Claim}. In November 2026 KNT asked Fable~5.2 to look for a simpler proof of
+Theorem~\ref{thm:forest}. That search did not find one. It found Theorems~\ref{thm:cycles}
+and~\ref{thm:exact}. Fable~5.2 wrote the Lean proofs of these two theorems and drafted this paper.
+Astra reviewed a draft. KNT directed the work at each step.
 
 \begin{table}[ht]
 \centering\small
@@ -216,56 +225,32 @@ and that nobody says what was checked. We answer these points one by one.
 \toprule
 Statement & Source & Lean declaration (namespace \lean{Erdos1016}) \\
 \midrule
-Theorem~\ref{thm:main} & \cite{KNT} & \lean{mainTheorem}; the explicit upper bound is
-  \lean{Problem1016.upper_bound_integer} \\
-Theorem~\ref{thm:forest} & \cite{KNT} & \lean{ShortProof.fewComponentForestEstimate} \\
 Theorem~\ref{thm:cycles}, upper bound & this paper & \lean{cycleCountTheorem},
   \lean{cycleCountTheorem_general} \\
 Theorem~\ref{thm:cycles}, $\psi(r)\sim2^{r-1}$ & this paper & \lean{cycleCountAsymptotic} \\
-Theorem~\ref{thm:exact} and Section~\ref{sec:exact} & this paper & none \\
+Theorem~\ref{thm:forest} & \cite{KNT} & \lean{ShortProof.fewComponentForestEstimate} \\
+Theorem~\ref{thm:main} & \cite{KNT} & \lean{mainTheorem}; the explicit upper bound is
+  \lean{Problem1016.upper_bound_integer} \\
+Theorem~\ref{thm:exact}(a) & this paper & \lean{twoTerminalTheorem} \\
+Theorem~\ref{thm:exact}(b) & this paper & \lean{noWasteTheorem} \\
 \bottomrule
 \end{tabular}
-\caption{The main statements and their formal counterparts at commit \texttt{756d5cc} of the
+\caption{The theorems and their formal counterparts at commit \texttt{9de7271} of the
 repository~\cite{Repo}.}\label{tab:status}
 \end{table}
 
-\emph{What a machine has checked.} Table~\ref{tab:status} lists the formal counterparts of the main
-statements. The Lean kernel accepts their proofs with the axioms \lean{propext},
-\lean{Classical.choice} and \lean{Quot.sound} only. This certifies the formal statements, not the
-prose in this paper. Appendix~\ref{app:lean} prints the Lean statements behind
-Theorem~\ref{thm:cycles}, so that the reader can compare them with the text. It also gives the
-commands that repeat the check.
+All four theorems are formalised in Lean~4~\cite{Lean4} with Mathlib~\cite{Mathlib}.
+Table~\ref{tab:status} lists the declarations. The Lean kernel accepts their proofs with the axioms
+\lean{propext}, \lean{Classical.choice} and \lean{Quot.sound} only. This certifies the formal
+statements. It does not certify the prose of this paper. Appendix~\ref{app:lean} prints the formal
+statements of Theorems~\ref{thm:cycles} and~\ref{thm:exact}, so that the reader can compare them
+with the text. It also gives the commands that repeat the check, names the Lean declaration for
+each step, and says where the formal proofs differ from the text.
 
-Section~\ref{sec:cycles} follows the formal proof of Theorem~\ref{thm:cycles} closely.
-Sections~\ref{sec:lower}, \ref{sec:upper} and~\ref{sec:forest} follow~\cite{KNT}, and so does the
-Lean code. Our text departs from~\cite{KNT} in three ways. One counting lemma
-(Lemma~\ref{lem:count}) serves both theorems. The link formula (Lemma~\ref{lem:link}) is proved by a
-count of dimensions. The facts about the non-backtracking matrix (Lemma~\ref{lem:spectrum}) are
-derived from its definition.
-
-\emph{What no machine has checked.} Theorem~\ref{thm:exact} and Section~\ref{sec:exact} have
-ordinary proofs only. These proofs are short. They use linear algebra over $\mathbb{F}_2$ and one
-lemma of Erd\H{o}s and P\'osa, which we prove. We also tested these statements on small graphs
-(Appendix~\ref{app:checks}). Such tests are sanity checks, not proofs. No referee has read this
-draft.
-
-\emph{References.} We compared the bibliographic data of every reference with the publisher's
-record, with Crossref or with arXiv. The one exception is~\cite{ES}, where we relied on the
-citations in~\cite{AACST} and~\cite{HK}. We read~\cite{AACST}, \cite{Griffin}, \cite{KNT}, and the
-parts of~\cite{HK} that concern cycles. Of~\cite{AT} we read the abstract. We have not
-seen~\cite{Bass}, \cite{Bondy}, \cite{ES}, \cite{EP} or~\cite{KS}. What we say about~\cite{Bondy}
-and~\cite{ES} is taken from~\cite{AACST}, \cite{Bloom}, \cite{HK} and~\cite{KNT}. No proof in this
-paper depends on a source that we have not seen. The lemma from~\cite{EP} is proved in
-Section~\ref{sec:exact}, and the facts related to~\cite{Bass,KS} are proved in
-Section~\ref{sec:forest}.
-
-\emph{Novelty and size of the results.} Theorem~\ref{thm:cycles} is a corollary of
-Theorem~\ref{thm:forest}, and the new part of its proof is one page. We looked for an earlier proof
-of $\psi(r)\sim2^{r-1}$, and for any bound below $\frac{15}{16}2^{r}$ for cubic graphs. We used web
-searches and the literature discussed in~\cite{AACST} and~\cite{HK}, and we found neither. A search
-of this kind can miss things. The results of Section~\ref{sec:exact} are elementary. One of them is
-known in the language of codes (see the remark after Proposition~\ref{prop:nowaste}), and others
-may be folklore.
+The examples and the remarks in this paper are not formalised. Appendix~\ref{app:checks} describes
+tests of the examples, and of our wording of the proofs, on small graphs.
+Appendix~\ref{app:sources} says which sources we read and how we searched the literature. No
+referee has read this draft.
 
 \section{Outside parts}\label{sec:count}
 
@@ -304,8 +289,8 @@ at most $m$ lengths. There are $p\,2^{r-t}$ outside parts that are forests and $
 that are not.
 \end{proof}
 
-Part~(b) with $p\le1$ is the bound~\eqref{eq:trivial} of the introduction. The lemma improves on
-it when $p$ is less than one.
+If $W$ has at least one edge, then part~(b) with $p\le1$ gives the bound~\eqref{eq:trivial} of the
+introduction. The lemma improves on it when $p$ is less than one.
 
 \begin{example}[Two points of attachment]\label{rem:twoports}
 Suppose that $G=W\cup N$, where $W$ and $N$ are connected, have no common edge, and have exactly two
@@ -316,8 +301,9 @@ is not a forest. Hence
 \[
   p(G,W)\;\le\;\frac{1+2^{\beta(N)}}{2^{\beta(N)+1}}\;=\;\frac12+2^{-\beta(N)-1},
 \]
-with equality if and only if every join of $N$ is a forest. So~\eqref{eq:forest} holds without an
-error term when $W$ is attached at two vertices.
+with equality if and only if every join of $N$ is a forest. So when $W$ is attached at two
+vertices, the error term in~\eqref{eq:forest} can be replaced by $2^{-\beta(N)-1}$, which is
+exponentially small.
 
 For a concrete case, let $N$ be a chain of $k$ four-cycles, each joined to the next at opposite
 vertices, and let $u$ and $v$ be the two ends of the chain. Every join of $N$ is a path from $u$ to
@@ -357,18 +343,22 @@ of two four-cycles.}
 
 \section{The number of cycles}\label{sec:cycles}
 
-This section proves Theorem~\ref{thm:cycles}. Appendix~\ref{app:lean} names the Lean declaration for
-each step.
+This section proves Theorem~\ref{thm:cycles}. The new step is Lemma~\ref{lem:through}.
+Appendix~\ref{app:lean} names the Lean declaration for each step.
 
 \subsection{The lower bound}
 
-Let $j\ge2$. Take a cycle of length $j$, and replace each of its edges by a four-cycle in which the
-two ends of the edge are opposite vertices. This is a chain like $N$ in Figure~\ref{fig:twoports},
-closed into a ring. The new graph has $3j$ vertices and $4j$ edges, so its rank is $j+1$. Its cycles
-are the $j$ four-cycles and the $2^{j}$ cycles that use one half of each four-cycle. So
-$\psi(r)\ge2^{r-1}+r-1$ for $r\ge3$. Examples with slightly more than $2^{r-1}$ cycles go back to~\cite{ES}. The formal proof
-uses a closed chain of shortcuts from the construction of Section~\ref{sec:upper} instead, which has
-rank $j+1$ and at least $2^{j}$ cycles.
+Entringer and Slater proved that $\psi(r)>2^{r-1}$ for $r\ge3$. Their examples are cubic: a cycle of
+even length with all its long diagonals. These graphs give
+$\psi(r)\ge2^{r-1}+r^{2}-3r+3$~\cite[Corollary~4]{ES}.
+
+A simpler example suffices here. Let $j\ge2$. Take vertices $u_1,\dots,u_j$ and, for each $i$, two
+further vertices $x_i$ and $y_i$ that are joined to $u_i$ and to $u_{i+1}$, with indices modulo $j$.
+This is a ring of $j$ four-cycles: a chain like $N$ in Figure~\ref{fig:twoports}, closed up. It has
+$3j$ vertices and $4j$ edges, so its rank is $j+1$. Its cycles are the $j$ four-cycles and the
+$2^{j}$ cycles that pass through all the vertices $u_i$. So $\psi(r)\ge2^{r-1}+r-1$ for $r\ge3$.
+The formal proof uses a closed chain of shortcuts from the construction of
+Section~\ref{sec:upper} instead, which has rank $j+1$ and at least $2^{j}$ cycles.
 
 \subsection{The upper bound}
 
@@ -706,12 +696,13 @@ become a small set $P$ of vertices (Lemma~\ref{lem:reduce}).
 \item \emph{Short cycles.} Step~1 and a second moment bound show that many disjoint short cycles in
 $\Gamma-P$ already force the estimate (Lemma~\ref{lem:smallcuts}). So we may delete a small maximal
 family of them, and we are left with a graph $J$ of large girth.
-\item \emph{Supply.} The graph $J$ has many cycles of length about $\log r$. Their total weight
-$\sum_C2^{-|C|}$ is of order $\lgk3r$ (Lemma~\ref{lem:weight}). This step uses the non-backtracking
-matrix.
+\item \emph{Supply.} The graph $J$ has many cycles with between $6\log r$ and
+$\log r\sqrt{\log\log r}$ edges. Their total weight $\sum_C2^{-|C|}$ is at least
+$(\frac18-o(1))\ln\log\log r$ (Lemma~\ref{lem:weight}). This step uses the non-backtracking matrix.
 \item \emph{Second moment.} For such a cycle $C$, the event that $C$ is a component of $\xi$ has
-probability about $2^{-|C|}$. If it occurs, then the part of $\xi$ outside $P$ is not a forest. Most
-pairs of these events are correlated by a factor of at most two.
+probability at least $2^{-|C|}$. If it occurs, then the part of $\xi$ outside $P$ is not a forest.
+We weight the indicators of these events so that their means are exactly $2^{-|C|}$. Most pairs of
+the events are correlated by a factor of at most two.
 \end{enumerate}
 The factor two in step~5 is the source of the constant $\half$. Lemma~\ref{lem:second} turns the
 bound $\EE Z^{2}\le2\mu^{2}+K\mu$ into $\PP(Z=0)\le\half+K/(4\mu)$. Appendix~\ref{app:lean} lists the
@@ -1033,7 +1024,9 @@ $\cO_{V(C)}$ holds and $\xi\cap E(\Gamma[V(C)])=E(C)$. Put
   a_C=2^{-|C|},\qquad p_C=\PP(I_C),\qquad X_C=\frac{a_C}{p_C}\,\mathbf{1}_{I_C},\qquad
   Z=\sum_{C\in\mathcal{C}}X_C .
 \]
-The factor $a_C/p_C$ makes the mean of $X_C$ equal to $a_C$ exactly. The event $I_C$ is given by
+The factor $a_C/p_C$ fixes the mean of $X_C$ at the combinatorial weight $a_C$, whatever the
+probability $p_C$ is. We have no upper bound for $p_C$, and with this normalisation we need none.
+The event $I_C$ is given by
 $|C|$ linear conditions on $\xi\in\Z(\Gamma)$, which are satisfied by $\xi=C$. So $p_C\ge a_C$.
 Hence $0\le X_C\le1$, and $\EE Z=\mu$ with $\mu$ as in Lemma~\ref{lem:weight}. On $\mathcal{F}$
 no cycle of $J\subseteq\Gamma-P$ is contained in $\xi$, so $Z=0$, and by~\eqref{eq:assume}
@@ -1112,13 +1105,29 @@ all that is needed is $L\,d_J=o(v)$; the proof therefore works unchanged for
 $|E(W)|\le r/\log^{2}r$. Similarly the constant $20$ can be replaced by any constant larger than
 $2/\ln2$. We have kept the statement of~\cite{KNT}, which is the one that has been formalised.
 \end{remark}
-\section{Exact counting}\label{sec:exact}
+\section{Two elementary theorems}\label{sec:exact}
 
-By Lemma~\ref{lem:count} the cycles of $G$ have at most $2^{r-t}(pm+1-p)$ lengths.
-Theorem~\ref{thm:forest} says that $p\le\half+o(1)$ when $r$ is large. This section studies the
-other end of the scale, where $p$ can be $1$. It proves Theorem~\ref{thm:exact}: part~(a) is
-Proposition~\ref{prop:terminal}, and part~(b) is Proposition~\ref{prop:nowaste}. Nothing in this
-section is formalised.
+This section proves Theorem~\ref{thm:exact}. Part~(a) is Proposition~\ref{prop:terminal}, and
+part~(b) is Proposition~\ref{prop:nowaste}. Both are formalised (Table~\ref{tab:status}).
+
+Three conditions on a subgraph $W$ of $G$ are easily confused, so we separate them first. Let $W$
+have $m\ge1$ edges.
+\begin{enumerate}
+\item[\textup{(i)}] \emph{Every outside part is a forest.} This means $p(G,W)=1$. It holds if and
+only if $G-E(W)$ is a forest: a subset of a forest is a forest, and a cycle of $G-E(W)$ is its own
+outside part.
+\item[\textup{(ii)}] \emph{No outside part is wasted.} This means that every outside part is the
+outside part of some cycle. It is the hypothesis of Proposition~\ref{prop:nowaste}, and it does not
+imply~(i). Let $G$ be $K_5$ minus an edge, and let $W$ be the triangle on its three vertices of
+degree four. Then $G-E(W)$ is $K_{2,3}$. The sixteen outside parts are the empty set, twelve paths
+and three four-cycles. Each of them is the outside part of a cycle, but only thirteen are forests.
+So no outside part is wasted, and $p(G,W)=13/16$.
+\item[\textup{(iii)}] \emph{Equality in~\eqref{eq:trivial}.} This never holds. The cycles with
+empty outside part lie in $W$, so they have fewer than $m$ different lengths. Every other outside
+part accounts for at most $m$ lengths. So the cycles of $G$ have fewer than $m\,2^{r-t}$ lengths.
+\end{enumerate}
+Proposition~\ref{prop:terminal} is about a fourth condition: a graph has the largest possible
+number of paths between two vertices.
 
 \subsection{Two terminals}
 
@@ -1150,16 +1159,23 @@ The construction uses a necklace with about $\log k$ beads for them. Its own sho
 a third necklace, and so on.
 
 Each of these necklaces costs a factor of two. Consider a necklace $N_j$ that is closed by a chord
-$f_j$, together with $f_j$ and the chords of the smaller necklaces. The rest of the graph is
-attached to this part at the two vertices $v_0$ and $v_j$ only. So half of the outside parts cannot
-be used (Example~\ref{rem:twoports}). These $\lgs k$ halvings are the term $\lgs n$ of
-Theorem~\ref{thm:main}.
+$f_j$, together with $f_j$ and the chords of the smaller necklaces. Call this part $W$. The rest of
+the graph is attached to $W$ at the two vertices $v_0$ and $v_j$ only. By
+Example~\ref{rem:twoports}, half of the outside parts are even subgraphs of the rest. A cycle that
+uses an edge of $W$ cannot have a nonempty even subgraph as its outside part. So nearly half of the
+outside parts are of no use to the cycles through $W$. These $\lgs k$ halvings are the term
+$\lgs n$ of Theorem~\ref{thm:main}.
+
+\paragraph{Formal counterpart.}
+Proposition~\ref{prop:terminal} is the theorem \lean{twoTerminalTheorem}. The formal statement also
+covers the case $u=v$. The formal proof gets the bound $\beta(N)\le|A|$ from a count: an even
+subgraph of $N$ is determined by its edges on the path $A$.
 
 \subsection{No waste}
 
-Call an outside part \emph{wasted} if it is not the outside part of any cycle. The
-bound~\eqref{eq:trivial} can be exact only if no outside part is wasted. This cannot go on for
-long.
+Lemma~\ref{lem:count} counts the cycles of $G$ by their outside parts. Recall that an outside
+part is \emph{wasted} if it is not the outside part of any cycle. A graph cannot avoid all waste
+for long.
 
 \begin{proposition}\label{prop:nowaste}
 Let $G$ be a connected graph and let $W\subseteq G$ be a subgraph that contains a cycle. Suppose
@@ -1196,13 +1212,27 @@ $n+4-|C|\le n-1$, so $|C|\ge5$. Thus $H$ is a simple graph of minimum degree at 
 at least $5$, and such a graph has at least $1+3+6=10$ vertices, a contradiction.
 \end{proof}
 
-The first conclusion of Proposition~\ref{prop:nowaste} is the graphic case of the fact that a binary
-code in which every nonzero word is minimal is intersecting~\cite[\S2]{AACST}. The second is sharp up
-to the additive constant. If $W$ is a cycle $w_1\cdots w_m$ and $G$ consists of $W$ and a path of
-length two from $w_i$ to $w_{i+1}$ for every $i$ modulo $m$, then no outside part is wasted and
-$\beta(G)-\beta(W)=|V(W)|$. If $G$ is $K_5$ minus an edge and $W$ is the triangle on its three
-vertices of degree four, then no outside part is wasted and $\beta(G)-\beta(W)=|V(W)|+1$. An exhaustive
-search found nothing better for a triangle $W$ in graphs with at most eight vertices.
+A graph in which every nonempty even subgraph is a cycle has $2^{\beta}-1$ cycles, the largest
+possible number. Such graphs are known. Entringer and Slater~\cite[Theorem~1]{ES} quote a theorem of
+Maurer, and of Mateti and Deo: a connected graph has this property if and only if it reduces to
+$K_1$, $K_3$, $K_4$ minus an edge, $K_4$ or $K_{3,3}$. A reduction deletes a vertex of degree one,
+or suppresses a vertex of degree two whose two neighbours are not adjacent. So the first conclusion of Proposition~\ref{prop:nowaste}
+puts $G-E(W)$ into a known class. In the language of codes, a binary code in which every nonzero
+word is minimal is intersecting~\cite[\S2]{AACST}.
+
+The second conclusion is sharp up to the additive constant. If $W$ is a cycle $w_1\cdots w_m$ and
+$G$ consists of $W$ and a path of length two from $w_i$ to $w_{i+1}$ for every $i$ modulo $m$, then
+no outside part is wasted and $\beta(G)-\beta(W)=|V(W)|$. In the example of~(ii) above,
+$\beta(G)-\beta(W)=|V(W)|+1$. An exhaustive search found nothing better for a triangle $W$ in
+graphs with at most eight vertices.
+
+\paragraph{Formal counterpart.}
+Proposition~\ref{prop:nowaste} is the theorem \lean{noWasteTheorem}. There $W$ is given by its edge
+set $S$, and $\beta(W)$ is defined through the graph on all vertices of $G$ with edge set $S$.
+Lemma~\ref{lem:EP} is the theorem \lean{ExactCounting.Multi.card_le_of_intersecting}. It is stated
+for multigraphs in the language of even edge sets: if any two nonempty even edge sets share an
+edge, then there are at most $n+3$ edges. The formal proof uses the same reductions as the proof
+above. In the last step it finds both even sets by a pigeonhole count.
 \section{Problems}\label{sec:problems}
 
 \paragraph{Error terms.}
@@ -1222,10 +1252,11 @@ $\psi(r)\le2^{r-1}+2^{(1-c)r}$?
 \end{problem}
 
 \paragraph{Between exactness and the forest estimate.}
-Proposition~\ref{prop:nowaste} and Theorem~\ref{thm:forest} describe the same quantity at two
-scales. No outside part is wasted for at most $|V(W)|+3$ ranks beyond $W$. About half of the outside
-parts fail to be forests once $r\ge|E(W)|^{2}$, or already once $r\ge|E(W)|\log^{2}r$ by
-Remark~\ref{rem:range}. We know no proof of the factor $\half$ that avoids the second moment
+Proposition~\ref{prop:nowaste} and Theorem~\ref{thm:forest} both limit how well the cycles of $G$
+can use the outside parts, at two different scales. No outside part is wasted for at most
+$|V(W)|+3$ ranks beyond $W$. Let $W$ be a union of cycles with at most $(\log r)/100$ components.
+Then about half of the outside parts fail to be forests once $r\ge|E(W)|^{2}$, or already once
+$r\ge|E(W)|\log^{2}r$ by Remark~\ref{rem:range}. We know no proof of the factor $\half$ that avoids the second moment
 computation of Section~\ref{sec:forest}, except in special cases such as
 Example~\ref{rem:twoports}. A stability version of Proposition~\ref{prop:terminal} would be a step
 in that direction.
@@ -1245,10 +1276,12 @@ Can the constant $3$ in Proposition~\ref{prop:nowaste} be replaced by $1$?
 \section{The formal statements}\label{app:lean}
 
 The Lean~4 code is in the repository~\cite{Repo}. This paper refers to commit
-\texttt{756d5cc} on the branch \texttt{feat/cycle-count-bound}. The
-code uses Lean v4.19.0~\cite{Lean4} and a pinned revision of Mathlib~\cite{Mathlib}. It has $256$
-modules and $42{,}495$ lines. The nine modules in \lean{Erdos1016/CycleCount/} are new in this
-commit; they have $1{,}554$ lines and contain the proof of Theorem~\ref{thm:cycles}.
+\texttt{9de7271} on the branch \texttt{feat/cycle-count-bound}. The code uses Lean v4.19.0 and a
+pinned revision of Mathlib. It has $264$ modules and $44{,}082$ lines. The nine modules in
+\lean{Erdos1016/CycleCount/} have $1{,}554$ lines and contain the proof of
+Theorem~\ref{thm:cycles}. The eight modules in \lean{Erdos1016/ExactCounting/} have $1{,}571$
+lines and contain the proof of Theorem~\ref{thm:exact}. The rest is the formalisation
+from~\cite{KNT}.
 
 \subsection{The statements behind Theorem~\ref{thm:cycles}}
 
@@ -1298,6 +1331,57 @@ make \lean{maxCycles} degenerate. The code proves that \texttt{cycleCounts r} is
 The theorem \lean{cycleCountTheorem_general} states the same bound for simple graphs on every
 finite vertex type.
 
+\subsection{The statements behind Theorem~\ref{thm:exact}}
+
+The following text is copied from \lean{Erdos1016/ExactCounting/TwoTerminals.lean},
+\lean{NoWaste.lean} and \lean{Erdos1016/Main.lean}, without the comments and the proofs.
+
+{\small
+\begin{alltt}
+def pathEdgeSets \{V : Type*\} (G : SimpleGraph V) (u v : V) : Set (Set (Sym2 V)) :=
+  \{s | \(\exists\) p : G.Walk u v, p.IsPath \(\land\) s = \{a | a \(\in\) p.edges\}\}
+
+def numPaths \{V : Type*\} (G : SimpleGraph V) (u v : V) : \(\mathbb{N}\) := (pathEdgeSets G u v).ncard
+
+def TwoTerminalStatement : Prop :=
+  \(\forall\) (n : \(\mathbb{N}\)) (G : SimpleGraph (Fin n)) (r : \(\mathbb{N}\)) (u v : Fin n),
+    G.Connected \(\to\) r + n = Nat.card G.edgeSet + 1 \(\to\)
+      numPaths G u v \(\le\) 2 ^ r \(\land\)
+      (numPaths G u v = 2 ^ r \(\to\)
+        \(\forall\) p : G.Walk u v, p.IsPath \(\to\)
+          r \(\le\) p.length \(\land\) (G.deleteEdges \{a | a \(\in\) p.edges\}).IsAcyclic)
+
+def IsEvenEdgeSet \{V : Type*\} (s : Set (Sym2 V)) : Prop :=
+  \(\forall\) v : V, Even \{e | e \(\in\) s \(\land\) v \(\in\) e\}.ncard
+
+def NoWasteStatement : Prop :=
+  \(\forall\) (n : \(\mathbb{N}\)) (G : SimpleGraph (Fin n)) (S : Set (Sym2 (Fin n))) (r t : \(\mathbb{N}\)),
+    G.Connected \(\to\) S \(\subseteq\) G.edgeSet \(\to\)
+    r + n = Nat.card G.edgeSet + 1 \(\to\)
+    t + n = S.ncard + Nat.card (SimpleGraph.fromEdgeSet S).ConnectedComponent \(\to\)
+    (\(\forall\) s : Set (Sym2 (Fin n)), s \(\subseteq\) G.edgeSet \(\to\) IsEvenEdgeSet s \(\to\)
+      \(\exists\) c \(\in\) CycleCount.cycleEdgeSets G, c \textbackslash{} S = s \textbackslash{} S) \(\to\)
+    (\(\forall\) c\(\sb{1}\) \(\in\) CycleCount.cycleEdgeSets (G.deleteEdges S),
+      \(\forall\) c\(\sb{2}\) \(\in\) CycleCount.cycleEdgeSets (G.deleteEdges S), \(\lnot\) Disjoint c\(\sb{1}\) c\(\sb{2}\)) \(\land\)
+    r \(\le\) t + \{v | \(\exists\) e \(\in\) S, v \(\in\) e\}.ncard + 3
+
+theorem twoTerminalTheorem : ExactCounting.TwoTerminalStatement
+theorem noWasteTheorem : ExactCounting.NoWasteStatement
+\end{alltt}}
+
+Five remarks help to compare this with Theorem~\ref{thm:exact}.
+\begin{itemize}
+\item A walk with \lean{IsPath} repeats no vertex. A path is counted once, by its edge set.
+\item The graph \texttt{G.deleteEdges s} is $G$ without the edges in \texttt{s}, and
+\lean{IsAcyclic} says that it is a forest.
+\item The first statement does not assume $u\ne v$.
+\item In the second statement \texttt{S} is $E(W)$. The line with \texttt{t} says that $t$ is the
+rank of the graph with edge set $S$ on all $n$ vertices. Isolated vertices do not change the rank,
+so $t=\beta(W)$. The set in the last line is $V(W)$.
+\item Theorem~\ref{thm:exact}(b) assumes that $W$ contains a cycle. The formal statement does not
+need this hypothesis: it follows from the main hypothesis for the empty even set.
+\end{itemize}
+
 \subsection{The forest estimate}
 
 Theorem~\ref{thm:forest} is the theorem \lean{ShortProof.fewComponentForestEstimate}, which has the
@@ -1327,14 +1411,14 @@ in~\cite[\S1.2]{KNT}.
 
 The repository contains a verifier. It rebuilds every module from source. It compares the types of
 the endpoint theorems with statements that are written out a second time in
-\lean{audits/TheoremAudit.lean}. It prints the axioms of $59$ declarations, among them all endpoints
+\lean{audits/TheoremAudit.lean}. It prints the axioms of $65$ declarations, among them all endpoints
 in Table~\ref{tab:status}, and it accepts only \lean{propext}, \lean{Classical.choice} and
 \lean{Quot.sound}. It rejects proofs that contain \lean{sorry}. The commands are:
 
 {\small
 \begin{verbatim}
 git clone https://github.com/JWKNT/erdos1016.git && cd erdos1016
-git checkout 756d5ccd35c3f916e9e6ae0c00bb7992fc10d6fa
+git checkout 9de7271abf559dc69c1fd843d043fb504480eac4
 elan toolchain install leanprover/lean4:v4.19.0
 lake exe cache get
 python3 -m unittest discover -s scripts -p 'test_*.py'
@@ -1354,6 +1438,9 @@ the edges of $D$ one at a time, and it records only that each of them lies in an
 formal proof uses $r\le\beta(G^{+})\le r+a$ in place of the equality. It states
 Lemma~\ref{lem:through} together with the count of the cycles that avoid $D$. It writes $k$ as
 $\lfloor\log\lfloor\log r\rfloor\rfloor+1$, which is the same number.
+
+The rows for Section~\ref{sec:exact} match the text, with the differences that are stated at the
+end of Sections~\ref{sec:exact}.1 and~\ref{sec:exact}.2.
 
 The rows for Sections~\ref{sec:lower} to~\ref{sec:forest} are taken from~\cite[Appendix~A]{KNT}. We
 checked that these declarations exist at the commit above. We did not compare each of them with our
@@ -1403,6 +1490,15 @@ Lemma~\ref{lem:links} & \lean{actual_cycle_links_le} & \lean{Cycles/Geometry/Act
 Theorem~\ref{thm:forest} & \lean{second_moment_le}, \lean{forest_le_half_add_twenty},
   \lean{fewComponentForestEstimate} & \lean{Probability/Moments/SeedFamilyAvoidance},
   \lean{Probability/Avoidance/FewComponentForest} \\
+\midrule
+Paths and cycles in Section~\ref{sec:exact} & \lean{par_edges_of_isTrail}, \lean{eq_empty_of_subset_path},
+  \lean{eq_edges_of_subset_cycle} & \lean{ExactCounting/EdgeParity} \\
+Proposition~\ref{prop:terminal} & \lean{card_even_le_two_pow}, \lean{twoTerminalStatement} &
+  \lean{ExactCounting/EvenSets}, \lean{ExactCounting/TwoTerminals} \\
+Lemma~\ref{lem:EP} & \lean{exists_even_subset}, \lean{intersecting_suppress},
+  \lean{exists_small_dense}, \lean{card_le_of_intersecting} & \lean{ExactCounting/Multigraph},
+  \lean{Suppression}, \lean{ShortCycle}, \lean{DisjointCycles} \\
+Proposition~\ref{prop:nowaste} & \lean{noWasteStatement} & \lean{ExactCounting/NoWaste} \\
 \bottomrule
 \end{tabular}
 \captionof{table}{Steps of the proofs and the corresponding Lean declarations.}\label{tab:steps}
@@ -1410,12 +1506,15 @@ Theorem~\ref{thm:forest} & \lean{second_moment_le}, \lean{forest_le_half_add_twe
 
 \section{Tests on small graphs}\label{app:checks}
 
-We tested the statements that are not formalised, and our wording of some that are, on small graphs.
-The scripts are in the directory \lean{paper-checks} that accompanies this manuscript. They use
+We tested the examples of this paper, and our wording of the proofs, on small graphs. The scripts
+are in the folder \lean{paper/cycle-count/paper-checks} of the repository~\cite{Repo}. They use
 exact arithmetic, except for the two scripts on the non-backtracking matrix, which compute
 eigenvalues in floating point. All tests passed. A passed test is evidence, not a proof.
 
 \begin{itemize}
+\item \emph{The examples} (\lean{check_examples.py}). The numbers in Example~\ref{rem:twoports},
+the ring of four-cycles in Section~\ref{sec:cycles} for $2\le j\le7$, the example in~(ii) of
+Section~\ref{sec:exact}, and the cycle with ears in Section~\ref{sec:exact} for $3\le m\le6$.
 \item \emph{Section~\ref{sec:cycles}} (\lean{check_chords.py}). $300$ random connected graphs with
 $4$ to $8$ vertices and every admissible $k$, which gives $857$ cases. The script takes $D$ outside a
 random spanning tree and builds the chords, $G^{+}$ and $W$. It checks Lemmas~\ref{lem:indep}
@@ -1449,6 +1548,31 @@ Petersen, Heawood and Tutte--Coxeter graphs. The scripts check the walk bound, t
 on eigenvalues, and the trace inequality for even $\ell\le24$.
 \end{itemize}
 
+\section{Sources}\label{app:sources}
+
+We compared the bibliographic data of every reference with the publisher's record, with Crossref
+or with arXiv. For~\cite{ES} we used the scan that is linked from the OEIS. We
+read~\cite{AACST}, \cite{ES}, \cite{Griffin}, \cite{KNT}, and the parts of~\cite{HK} that concern
+cycles. Of~\cite{AT} we read the abstract. We have not seen~\cite{Bass}, \cite{Bondy},
+\cite{EP} or~\cite{KS}. What we say about~\cite{Bondy} is taken from~\cite{Bloom}
+and~\cite{KNT}. No proof in this paper depends on a source that we have not seen. The lemma
+from~\cite{EP} is proved in Section~\ref{sec:exact}, and the facts related to~\cite{Bass,KS} are
+proved in Section~\ref{sec:forest}.
+
+We looked for an earlier proof of $\psi(r)\sim2^{r-1}$, and for any bound below
+$\frac{15}{16}2^{r}$ for cubic graphs. We used web searches and the literature discussed
+in~\cite{AACST} and~\cite{HK}, and we found neither. A search of this kind can miss things.
+
+The two theorems of Section~\ref{sec:exact} are elementary, and they are close to known results.
+Lemma~\ref{lem:EP} is due to Erd\H{o}s and P\'osa. The graphs in which every nonempty even subgraph
+is a cycle were characterised by Maurer and by Mateti and Deo; we know this
+from~\cite[Theorem~1]{ES} and have not seen the original papers. We do not know whether
+Proposition~\ref{prop:terminal} or the bound in Proposition~\ref{prop:nowaste} has been stated
+before.
+
+The repository keeps three earlier drafts of this paper and the notes of the search for a simpler
+proof, next to the manuscript in the folder \lean{paper/cycle-count}.
+
 \begin{thebibliography}{99}\small
 
 \bibitem{AACST} A.~Alahmadi, R.~E.~L.~Aldred, R.~dela~Cruz, P.~Sol\'e and C.~Thomassen, The maximum
@@ -1468,7 +1592,8 @@ accessed November 2026.
 (1971), 80--84.
 
 \bibitem{ES} R.~C.~Entringer and P.~J.~Slater, On the maximum number of cycles in a graph,
-\emph{Ars Combin.}\ \textbf{11} (1981), 289--294.
+\emph{Ars Combin.}\ \textbf{11} (1981), 289--294. A scan is linked from the entry A006188 of the
+OEIS, \url{https://oeis.org/A006188}.
 
 \bibitem{EP} P.~Erd\H{o}s and L.~P\'osa, On the maximal number of disjoint circuits of a graph,
 \emph{Publ.\ Math.\ Debrecen} \textbf{9} (1962), 3--12.

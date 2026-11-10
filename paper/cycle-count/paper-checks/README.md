@@ -16,6 +16,7 @@ All other scripts use exact integer or rational arithmetic.
 
 | Script | Statement in the paper | Last line of output (10 November 2026) | Time |
 |---|---|---|---|
+| `check_examples.py` | The examples in Sections 2, 3 and 7 | `all assertions passed` | under 1 s |
 | `check_chords.py` | Section 3: Lemmas 3.1 and 3.2 and the chord construction | `cases 857 - all assertions passed` | under 1 s |
 | `check_counting.py` | Lemma 2.1, Proposition 7.2 | `tests 4000 nowaste 2027 viol 0` | 1 s |
 | `nowaste_exh.py` | Proposition 7.2, exhaustive, 5 and 6 vertices | largest value 1 (triangle), 0 (four-cycle) | under 1 s |
