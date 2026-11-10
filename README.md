@@ -37,6 +37,8 @@ Cycles are Mathlib `SimpleGraph.Walk.IsCycle` objects. The count uses their edge
 
 The bound is asymptotic and its threshold is not explicit. The bound is below the elementary bound `2^r` only if `log₂ log₂ log₂ r > 42`. See the [proof map](docs/proof-map.md#cycle-count-theorems) for the modules.
 
+A draft manuscript gives the proof: [PDF](paper/cycle-count/pancyclic-paper.pdf) and [LaTeX source](paper/cycle-count/pancyclic-paper.tex). The folder [`paper/cycle-count`](paper/cycle-count/README.md) also contains tests on small graphs, earlier drafts, and research notes.
+
 ## Proof structure
 
 1. Extract a union of witness cycles using least missing lengths, with simultaneous edge, rank, and component budgets.
