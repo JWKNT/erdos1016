@@ -1,6 +1,7 @@
 import Erdos1016.Probability.Avoidance.FewComponentForest
 import Erdos1016.Extremal.MinimumEdgesStatement
 import Erdos1016.CycleCount.FiniteTypes
+import Erdos1016.ExactCounting.NoWaste
 
 set_option autoImplicit false
 
@@ -36,5 +37,18 @@ theorem cycleCountTheorem_general : CycleCount.GeneralCycleCountStatement :=
 is asymptotically `2^(r-1)`. -/
 theorem cycleCountAsymptotic : CycleCount.AsymptoticCycleCount :=
   CycleCount.asymptoticCycleCount_of_statement cycleCountTheorem
+
+/-- A connected simple graph with cyclomatic number `r` has at most `2^r` paths
+between two vertices. If it has exactly `2^r`, then each of these paths has at
+least `r` edges, and the graph without the edges of any one of them is
+acyclic. -/
+theorem twoTerminalTheorem : ExactCounting.TwoTerminalStatement :=
+  ExactCounting.twoTerminalStatement
+
+/-- If every outside part of a subgraph `W` is the outside part of a cycle,
+then the graph without the edges of `W` has no two edge-disjoint cycles, and
+the cyclomatic numbers satisfy `β(G) ≤ β(W) + |V(W)| + 3`. -/
+theorem noWasteTheorem : ExactCounting.NoWasteStatement :=
+  ExactCounting.noWasteStatement
 
 end Erdos1016

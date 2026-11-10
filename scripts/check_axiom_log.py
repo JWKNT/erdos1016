@@ -14,7 +14,12 @@ CYCLE_TARGET = "Erdos1016.CycleCount.CycleCountStatement"
 ASYMPTOTIC_TARGET = "Erdos1016.CycleCount.AsymptoticCycleCount"
 CYCLE_STATUS = f"CYCLE_COUNT_ENDPOINT_STATUS: UNCONDITIONAL; TARGET: {CYCLE_TARGET}"
 ASYMPTOTIC_STATUS = f"CYCLE_ASYMPTOTIC_ENDPOINT_STATUS: UNCONDITIONAL; TARGET: {ASYMPTOTIC_TARGET}"
-MARKERS = (STATUS, INTEGER_STATUS, FOREST_STATUS, CYCLE_STATUS, ASYMPTOTIC_STATUS)
+TWO_TERMINAL_TARGET = "Erdos1016.ExactCounting.TwoTerminalStatement"
+NO_WASTE_TARGET = "Erdos1016.ExactCounting.NoWasteStatement"
+TWO_TERMINAL_STATUS = f"TWO_TERMINAL_ENDPOINT_STATUS: UNCONDITIONAL; TARGET: {TWO_TERMINAL_TARGET}"
+NO_WASTE_STATUS = f"NO_WASTE_ENDPOINT_STATUS: UNCONDITIONAL; TARGET: {NO_WASTE_TARGET}"
+MARKERS = (STATUS, INTEGER_STATUS, FOREST_STATUS, CYCLE_STATUS, ASYMPTOTIC_STATUS,
+           TWO_TERMINAL_STATUS, NO_WASTE_STATUS)
 REQUIRED = {
     'Erdos1016.BoundaryDecay.exceptional_row_le_of_packing',
     'Erdos1016.CycleCount.asymptoticCycleCount_of_statement',
@@ -27,6 +32,10 @@ REQUIRED = {
     'Erdos1016.CycleCount.exists_triangle_family',
     'Erdos1016.CycleCount.generalCycleCountStatement_of_statement',
     'Erdos1016.BoundaryDecay.small_cut_event_bound',
+    'Erdos1016.ExactCounting.Multi.card_le_of_intersecting',
+    'Erdos1016.ExactCounting.Multi.exists_small_dense',
+    'Erdos1016.ExactCounting.card_even_le_two_pow',
+    'Erdos1016.ExactCounting.eq_edges_of_subset_cycle',
     'Erdos1016.ExceptionalPartners.multigraph_three_links_card_le_cut',
     'Erdos1016.Extremal.LinearExponentialDecay.recurrence_logStar_bound',
     'Erdos1016.FiniteMultiGraph.ConnectedContraction.project_surjective',
@@ -75,6 +84,8 @@ REQUIRED = {
     'Erdos1016.cycleCountTheorem_general',
     'Erdos1016.mainTheorem',
     'Erdos1016.mainTheorem_integer_excess',
+    'Erdos1016.noWasteTheorem',
+    'Erdos1016.twoTerminalTheorem',
 }
 
 
@@ -114,6 +125,10 @@ def check(text: str) -> list[str]:
         problems.append("Missing cycle-count target definition")
     if not re.search(r"\bdef\s+" + re.escape(ASYMPTOTIC_TARGET) + r"\s*:\s*Prop\s*:=", text):
         problems.append("Missing asymptotic cycle-count target definition")
+    if not re.search(r"\bdef\s+" + re.escape(TWO_TERMINAL_TARGET) + r"\s*:\s*Prop\s*:=", text):
+        problems.append("Missing two-terminal target definition")
+    if not re.search(r"\bdef\s+" + re.escape(NO_WASTE_TARGET) + r"\s*:\s*Prop\s*:=", text):
+        problems.append("Missing no-waste target definition")
     if re.search(r"(^|\n).*\berror:", text):
         problems.append("Lean error in audit output")
     return problems
@@ -124,5 +139,5 @@ if __name__ == "__main__":
     if errors:
         print("\n".join(errors))
         raise SystemExit(1)
-    print("Unconditional theorem, forest estimate, and cycle-count theorems checked; "
-          "only standard logical axioms occur.")
+    print("Unconditional theorem, forest estimate, cycle-count theorems, and exact-counting "
+          "theorems checked; only standard logical axioms occur.")

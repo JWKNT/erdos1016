@@ -46,6 +46,19 @@ The public endpoints are `Erdos1016.cycleCountTheorem` and `Erdos1016.cycleCount
 
 The proof does not suppress vertices and does not search for short cycles. The added chords supply the triangles. Each chord doubles the forest-bearing words, so the count loses nothing.
 
+## Exact-counting theorems
+
+The public endpoints are `Erdos1016.twoTerminalTheorem` and `Erdos1016.noWasteTheorem`. Their proofs do not use the forest estimate.
+
+- `ExactCounting/EdgeParity` defines the parity of an edge set at a vertex. The edge set of a trail has odd parity exactly at its two ends. A path contains no nonempty even set. A nonempty even subset of a cycle is the whole cycle.
+- `ExactCounting/EvenSets` proves that an acyclic graph has no nonempty even edge set. A connected graph with cyclomatic number `r` has at most `2^r` even edge sets.
+- `ExactCounting/TwoTerminals` proves the two-terminal theorem. The edge sets of the paths between two vertices lie in one coset of the even sets.
+- `ExactCounting/Multigraph` treats edge sets of a multigraph with loops and parallel edges. An edge set with at least as many edges as vertices contains a nonempty even set.
+- `ExactCounting/Suppression` defines intersecting edge sets: any two nonempty even subsets share an edge. The property survives the suppression of a vertex of degree two.
+- `ExactCounting/ShortCycle` assumes that all degrees are at least three and that there are at most nine vertices. It finds at most four edges on at most as many vertices.
+- `ExactCounting/DisjointCycles` proves the lemma of Erdős and Pósa by induction. An intersecting edge set on `n` vertices has at most `n + 3` edges.
+- `ExactCounting/NoWaste` states and proves the no-waste theorem for Mathlib simple graphs.
+
 ## Final assembly
 
 `Probability/Avoidance/FewComponentForest` selects uniform thresholds. It uses the same retained graph for mass and correlations. It proves the marked multigraph forest bound. `MarkedForestReduction` transfers this bound to the original simple graph and witness union. The result is the unconditional `ShortProof.fewComponentForestEstimate`.

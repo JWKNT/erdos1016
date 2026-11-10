@@ -5,15 +5,17 @@ import tempfile
 import unittest
 
 from check_axiom_log import (ALLOWED, ASYMPTOTIC_STATUS, ASYMPTOTIC_TARGET, CYCLE_STATUS, CYCLE_TARGET,
-                             FOREST_TARGET, FOREST_STATUS, INTEGER_STATUS, MARKERS, REQUIRED, STATUS,
-                             TARGET, check)
+                             FOREST_TARGET, FOREST_STATUS, INTEGER_STATUS, MARKERS, NO_WASTE_STATUS,
+                             NO_WASTE_TARGET, REQUIRED, STATUS, TARGET, TWO_TERMINAL_STATUS,
+                             TWO_TERMINAL_TARGET, check)
 from verify import REQUIRED_CHECKS, fingerprint, initial_status, record_completion, structural_errors
 
 
 class AxiomAuditTests(unittest.TestCase):
     def valid_log(self):
         targets = ''.join(f'def {name} : Prop := True\n'
-                          for name in [TARGET, FOREST_TARGET, CYCLE_TARGET, ASYMPTOTIC_TARGET])
+                          for name in [TARGET, FOREST_TARGET, CYCLE_TARGET, ASYMPTOTIC_TARGET,
+                                       TWO_TERMINAL_TARGET, NO_WASTE_TARGET])
         return targets + ''.join(marker + '\n' for marker in MARKERS) + '\n'.join(
             f"'{name}' depends on axioms: [{', '.join(sorted(ALLOWED))}]" for name in sorted(REQUIRED))
 
@@ -49,11 +51,22 @@ class AxiomAuditTests(unittest.TestCase):
         self.assertTrue(check(self.valid_log().replace(f'def {FOREST_TARGET}', 'def OtherInput')))
 
     def test_cycle_count_endpoints_are_required(self):
-        self.assertEqual(set(MARKERS), {STATUS, INTEGER_STATUS, FOREST_STATUS, CYCLE_STATUS, ASYMPTOTIC_STATUS})
+        self.assertEqual(set(MARKERS), {STATUS, INTEGER_STATUS, FOREST_STATUS, CYCLE_STATUS, ASYMPTOTIC_STATUS,
+                                        TWO_TERMINAL_STATUS, NO_WASTE_STATUS})
         for target in [CYCLE_TARGET, ASYMPTOTIC_TARGET]:
             with self.subTest(target=target):
                 self.assertTrue(check(self.valid_log().replace(f'def {target}', 'def OtherTarget')))
         for name in ['Erdos1016.cycleCountTheorem', 'Erdos1016.cycleCountAsymptotic']:
+            with self.subTest(name=name):
+                self.assertIn(name, REQUIRED)
+                self.assertTrue(check(self.valid_log() + f"\n'{name}' depends on axioms: [UnprovedInput]"))
+
+    def test_exact_counting_endpoints_are_required(self):
+        for target in [TWO_TERMINAL_TARGET, NO_WASTE_TARGET]:
+            with self.subTest(target=target):
+                self.assertTrue(check(self.valid_log().replace(f'def {target}', 'def OtherTarget')))
+        for name in ['Erdos1016.twoTerminalTheorem', 'Erdos1016.noWasteTheorem',
+                     'Erdos1016.ExactCounting.Multi.card_le_of_intersecting']:
             with self.subTest(name=name):
                 self.assertIn(name, REQUIRED)
                 self.assertTrue(check(self.valid_log() + f"\n'{name}' depends on axioms: [UnprovedInput]"))
@@ -99,6 +112,7 @@ class VerificationTests(unittest.TestCase):
         self.assertEqual(report['formalization_status'], 'unverified')
         self.assertFalse(report['unconditional_main_theorem_proved'])
         self.assertFalse(report['unconditional_cycle_count_theorems_proved'])
+        self.assertFalse(report['unconditional_exact_counting_theorems_proved'])
         self.assertIsNone(report['remaining_mathematical_premises'])
 
     def test_only_all_successful_checks_can_claim_completion(self):
@@ -107,6 +121,7 @@ class VerificationTests(unittest.TestCase):
         self.assertEqual(report['formalization_status'], 'complete')
         self.assertTrue(report['unconditional_main_theorem_proved'])
         self.assertTrue(report['unconditional_cycle_count_theorems_proved'])
+        self.assertTrue(report['unconditional_exact_counting_theorems_proved'])
         self.assertEqual(report['remaining_mathematical_premises'], [])
         for missing in REQUIRED_CHECKS - {'verification_inputs_unchanged'}:
             with self.subTest(missing=missing):
@@ -114,6 +129,7 @@ class VerificationTests(unittest.TestCase):
                 self.assertEqual(record_completion(report, [], True), 1)
                 self.assertFalse(report['unconditional_main_theorem_proved'])
                 self.assertFalse(report['unconditional_cycle_count_theorems_proved'])
+                self.assertFalse(report['unconditional_exact_counting_theorems_proved'])
                 self.assertEqual(report['formalization_status'], 'unverified')
 
     def test_failure_and_changed_inputs_revoke_any_completion_claim(self):

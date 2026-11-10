@@ -39,6 +39,21 @@ The bound is asymptotic and its threshold is not explicit. The bound is below th
 
 A draft manuscript gives the proof: [PDF](paper/cycle-count/pancyclic-paper.pdf) and [LaTeX source](paper/cycle-count/pancyclic-paper.tex). The folder [`paper/cycle-count`](paper/cycle-count/README.md) also contains tests on small graphs, earlier drafts, and research notes.
 
+## Exact-counting theorems
+
+Two elementary theorems on paths and cycles are also unconditional. Their proofs do not use the forest estimate.
+
+```lean
+Erdos1016.twoTerminalTheorem : Erdos1016.ExactCounting.TwoTerminalStatement
+Erdos1016.noWasteTheorem : Erdos1016.ExactCounting.NoWasteStatement
+```
+
+The first endpoint concerns a connected simple graph with cyclomatic number `r` and two of its vertices. The graph has at most `2^r` paths between them. If it has exactly `2^r`, then each of these paths has at least `r` edges. The graph without the edges of such a path is acyclic.
+
+The second endpoint concerns a subgraph `W` of a connected simple graph `G`. Suppose that every even edge set of `G` agrees outside `W` with some cycle of `G`. Then the graph without the edges of `W` has no two edge-disjoint cycles. The cyclomatic numbers satisfy `β(G) ≤ β(W) + |V(W)| + 3`.
+
+The second proof contains the lemma of Erdős and Pósa in the language of even edge sets. If any two nonempty even edge sets of a multigraph share an edge, then the multigraph has at most `n + 3` edges on `n` vertices. See the [proof map](docs/proof-map.md#exact-counting-theorems) for the modules.
+
 ## Proof structure
 
 1. Extract a union of witness cycles using least missing lengths, with simultaneous edge, rank, and component budgets.

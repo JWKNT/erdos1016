@@ -19,6 +19,13 @@ set_option pp.proofs false
 #check Erdos1016.cycleCountTheorem
 #check Erdos1016.cycleCountTheorem_general
 #check Erdos1016.cycleCountAsymptotic
+#print Erdos1016.ExactCounting.pathEdgeSets
+#print Erdos1016.ExactCounting.numPaths
+#print Erdos1016.ExactCounting.TwoTerminalStatement
+#print Erdos1016.ExactCounting.IsEvenEdgeSet
+#print Erdos1016.ExactCounting.NoWasteStatement
+#check Erdos1016.twoTerminalTheorem
+#check Erdos1016.noWasteTheorem
 
 example : ∃ Aminus Aplus : ℝ, ∀ n : ℕ, 3 ≤ n →
     Real.logb 2 (n : ℝ) + (Erdos1016.Extremal.logStar n : ℝ) - Aminus ≤
@@ -73,6 +80,42 @@ def AsymptoticStatement : Prop :=
 
 example : AsymptoticStatement := Erdos1016.cycleCountAsymptotic
 
+/-- Independent spelling of the two-terminal theorem. A path is counted once,
+by the edge set of a Mathlib path walk. The number `r` is the cyclomatic
+number of the connected graph `G`. -/
+def TwoTerminalExpanded : Prop :=
+  ∀ (n : ℕ) (G : SimpleGraph (Fin n)) (r : ℕ) (u v : Fin n),
+    G.Connected → r + n = Nat.card G.edgeSet + 1 →
+      ({s : Set (Sym2 (Fin n)) | ∃ p : G.Walk u v,
+          p.IsPath ∧ s = {a | a ∈ p.edges}}).ncard ≤ 2 ^ r ∧
+      (({s : Set (Sym2 (Fin n)) | ∃ p : G.Walk u v,
+          p.IsPath ∧ s = {a | a ∈ p.edges}}).ncard = 2 ^ r →
+        ∀ p : G.Walk u v, p.IsPath →
+          r ≤ p.length ∧ (G.deleteEdges {a | a ∈ p.edges}).IsAcyclic)
+
+example : TwoTerminalExpanded := Erdos1016.twoTerminalTheorem
+
+/-- Independent spelling of the no-waste theorem. The set `S` is the edge set
+of the subgraph `W`. The numbers `r` and `t` are the cyclomatic numbers of `G`
+and of `W`. An edge set is even if every vertex lies on an even number of its
+edges. -/
+def NoWasteExpanded : Prop :=
+  ∀ (n : ℕ) (G : SimpleGraph (Fin n)) (S : Set (Sym2 (Fin n))) (r t : ℕ),
+    G.Connected → S ⊆ G.edgeSet →
+    r + n = Nat.card G.edgeSet + 1 →
+    t + n = S.ncard + Nat.card (SimpleGraph.fromEdgeSet S).ConnectedComponent →
+    (∀ s : Set (Sym2 (Fin n)), s ⊆ G.edgeSet →
+      (∀ v : Fin n, Even {e | e ∈ s ∧ v ∈ e}.ncard) →
+      ∃ c ∈ {c : Set (Sym2 (Fin n)) | ∃ (v : Fin n) (p : G.Walk v v),
+          p.IsCycle ∧ c = {a | a ∈ p.edges}}, c \ S = s \ S) →
+    (∀ c₁ ∈ {c : Set (Sym2 (Fin n)) | ∃ (v : Fin n) (p : (G.deleteEdges S).Walk v v),
+          p.IsCycle ∧ c = {a | a ∈ p.edges}},
+      ∀ c₂ ∈ {c : Set (Sym2 (Fin n)) | ∃ (v : Fin n) (p : (G.deleteEdges S).Walk v v),
+          p.IsCycle ∧ c = {a | a ∈ p.edges}}, ¬ Disjoint c₁ c₂) ∧
+    r ≤ t + {v | ∃ e ∈ S, v ∈ e}.ncard + 3
+
+example : NoWasteExpanded := Erdos1016.noWasteTheorem
+
 open Lean Elab Command in
 run_cmd do
   let decl ← getConstInfo ``Erdos1016.mainTheorem
@@ -101,11 +144,24 @@ run_cmd do
       throwError "The cycle-count theorem differs from its expanded statement"
     unless ← Lean.Meta.isDefEq asymptotic.type (mkConst ``AsymptoticStatement) do
       throwError "The asymptotic cycle-count theorem differs from its expanded statement"
+  let twoTerminal ← getConstInfo ``Erdos1016.twoTerminalTheorem
+  unless twoTerminal.type.isConstOf ``Erdos1016.ExactCounting.TwoTerminalStatement do
+    throwError "The two-terminal theorem has unexpected hypotheses or conclusion"
+  let noWaste ← getConstInfo ``Erdos1016.noWasteTheorem
+  unless noWaste.type.isConstOf ``Erdos1016.ExactCounting.NoWasteStatement do
+    throwError "The no-waste theorem has unexpected hypotheses or conclusion"
+  liftTermElabM do
+    unless ← Lean.Meta.isDefEq twoTerminal.type (mkConst ``TwoTerminalExpanded) do
+      throwError "The two-terminal theorem differs from its expanded statement"
+    unless ← Lean.Meta.isDefEq noWaste.type (mkConst ``NoWasteExpanded) do
+      throwError "The no-waste theorem differs from its expanded statement"
   logInfo "ENDPOINT_STATUS: UNCONDITIONAL; TARGET: Erdos1016.Problem1016.MainTheorem"
   logInfo "INTEGER_ENDPOINT_STATUS: UNCONDITIONAL; TARGET: expanded_integer_excess"
   logInfo "FOREST_ENDPOINT_STATUS: UNCONDITIONAL; TARGET: Erdos1016.ShortProof.FewComponentForestEstimate"
   logInfo "CYCLE_COUNT_ENDPOINT_STATUS: UNCONDITIONAL; TARGET: Erdos1016.CycleCount.CycleCountStatement"
   logInfo "CYCLE_ASYMPTOTIC_ENDPOINT_STATUS: UNCONDITIONAL; TARGET: Erdos1016.CycleCount.AsymptoticCycleCount"
+  logInfo "TWO_TERMINAL_ENDPOINT_STATUS: UNCONDITIONAL; TARGET: Erdos1016.ExactCounting.TwoTerminalStatement"
+  logInfo "NO_WASTE_ENDPOINT_STATUS: UNCONDITIONAL; TARGET: Erdos1016.ExactCounting.NoWasteStatement"
 
 end Erdos1016.TheoremAudit
 
@@ -171,3 +227,9 @@ end Erdos1016.TheoremAudit
 #print axioms Erdos1016.CycleCount.exists_independent_edges
 #print axioms Erdos1016.CycleCount.cycleRank_addChords_le
 #print axioms Erdos1016.CycleCount.exists_graph_many_cycles
+#print axioms Erdos1016.twoTerminalTheorem
+#print axioms Erdos1016.noWasteTheorem
+#print axioms Erdos1016.ExactCounting.eq_edges_of_subset_cycle
+#print axioms Erdos1016.ExactCounting.card_even_le_two_pow
+#print axioms Erdos1016.ExactCounting.Multi.exists_small_dense
+#print axioms Erdos1016.ExactCounting.Multi.card_le_of_intersecting

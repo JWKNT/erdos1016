@@ -12,8 +12,8 @@ import re
 import subprocess
 import sys
 
-from check_axiom_log import (ASYMPTOTIC_TARGET, CYCLE_TARGET, FOREST_TARGET, TARGET,
-                             axiom_reports, check)
+from check_axiom_log import (ASYMPTOTIC_TARGET, CYCLE_TARGET, FOREST_TARGET, NO_WASTE_TARGET,
+                             TARGET, TWO_TERMINAL_TARGET, axiom_reports, check)
 from project_inventory import ROOT, inventory
 
 
@@ -22,6 +22,7 @@ REQUIRED_CHECKS = frozenset({
     'expanded_mathematical_statements', 'unconditional_endpoint_type',
     'unconditional_integer_endpoint_type', 'unconditional_forest_estimate_type',
     'unconditional_cycle_count_endpoint_type', 'unconditional_cycle_asymptotic_endpoint_type',
+    'unconditional_two_terminal_endpoint_type', 'unconditional_no_waste_endpoint_type',
     'kernel_axiom_reports', 'verification_inputs_unchanged',
 })
 
@@ -31,6 +32,7 @@ def initial_status() -> dict:
     return {'status': 'running', 'kernel_checks_status': 'running',
             'formalization_status': 'unverified', 'unconditional_main_theorem_proved': False,
             'unconditional_cycle_count_theorems_proved': False,
+            'unconditional_exact_counting_theorems_proved': False,
             'remaining_mathematical_premises': None}
 
 
@@ -51,6 +53,7 @@ def record_completion(result: dict, errors: list[str], inputs_unchanged: bool) -
                   formalization_status='complete' if passed else 'unverified',
                   unconditional_main_theorem_proved=passed,
                   unconditional_cycle_count_theorems_proved=passed,
+                  unconditional_exact_counting_theorems_proved=passed,
                   remaining_mathematical_premises=[] if passed else None,
                   errors=errors, completed_at=datetime.now(timezone.utc).isoformat())
     return 0 if passed else 1
@@ -105,9 +108,10 @@ def main() -> int:
         run_url = (f"{os.environ.get('GITHUB_SERVER_URL', 'https://github.com')}/"
                    f"{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}")
     manifest = json.loads((ROOT / 'lake-manifest.json').read_text())
-    result = {'schema_version': 4, **initial_status(),
+    result = {'schema_version': 5, **initial_status(),
               'target': TARGET, 'forest_target': FOREST_TARGET,
               'cycle_count_target': CYCLE_TARGET, 'cycle_asymptotic_target': ASYMPTOTIC_TARGET,
+              'two_terminal_target': TWO_TERMINAL_TARGET, 'no_waste_target': NO_WASTE_TARGET,
               'fresh_project_build': args.fresh,
               'started_at': datetime.now(timezone.utc).isoformat(),
               'commit': commit.stdout.strip() if commit.returncode == 0 else None,
@@ -159,6 +163,8 @@ def main() -> int:
                              'unconditional_integer_endpoint_type', 'unconditional_forest_estimate_type',
                              'unconditional_cycle_count_endpoint_type',
                              'unconditional_cycle_asymptotic_endpoint_type',
+                             'unconditional_two_terminal_endpoint_type',
+                             'unconditional_no_waste_endpoint_type',
                              'kernel_axiom_reports'])
     return finish([])
 
