@@ -23,7 +23,10 @@ Lemma~\ref{lem:chain}, the two weight bounds & \lean{antisymm_weight_le}, \lean{
 \end{tabular}
 \end{minipage}\end{center}
 
-The formal statements differ from the text in these points. Lemma~\ref{lem:linkshalf} is formalised
+The formal statements differ from the text in these points. Lemma~\ref{lem:product} is formalised
+for two arbitrary disjoint vertex sets of a multigraph: if, for every even subgraph $x$ and for
+$i=1,2$, the sets $x+z$ with $z\in\Z(G[U_i])$ are forests inside $G[U_i]$ in a proportion of at
+most $a_i$, then the forest probability is at most $a_1a_2$. Lemma~\ref{lem:linkshalf} is formalised
 for the graph and the marked set of Section~\ref{sec:forest}; its first term is the number of
 components of the marked set, which is one in Lemma~\ref{lem:linkshalf}. Lemma~\ref{lem:twolinks} is
 formalised with $\ge$ in the place of $>$, and for a forest probability of at least $\half$. The

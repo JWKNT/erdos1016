@@ -57,9 +57,10 @@ vertex $u$, and pairwise disjoint cycles $C_1,\dots,C_T$ of $J^{+}$ of length at
 \[
   T\;\ge\;\frac{8\cdot2^{s}}{L^{3}}\;\ge\;\frac{2}{A^{3}}\cdot\frac{r^{1/32}}{x^{3}},
 \]
-such that each $C_i$ separates $u$ from $p$ in $H=G-V(C)$. The sets $V(C_i)$ are connected in $H$.
-By Lemma~\ref{lem:nested} we may number them so that $C_1<C_2<\dots<C_T$. Let $U_i$ be the vertex
-set of the component of $u$ in $H-V(C_i)$.
+such that each $C_i$ separates $u$ from $p$ in $G-V(C)$. Let $H$ be the component of $G-V(C)$
+that contains $u$ and $p$. Each $V(C_i)$ is connected and separates $u$ from $p$, so it lies in $H$.
+By Lemma~\ref{lem:nested} we may number the cycles so that $C_1<C_2<\dots<C_T$. Let $U_i$ be the
+vertex set of the component of $u$ in $H-V(C_i)$.
 
 \paragraph{Blocks.}
 Put $w=\lceil128A^{2}x\rceil+2$. For $l=0,1,\dots$ with $(l+1)w\le T-1$ let
@@ -84,8 +85,8 @@ $L+|S^{-}|=r^{o(1)}$ sets. For large $r$ at least two sets remain. Let $X$ be on
 \item $X$ avoids $P$. The set $P$ is connected and disjoint from the cycles, and it contains $p$,
 which is not in $U_i$ for any $i$. A path in $G[P]$ from $p$ to a vertex of $U_i$ would have to pass
 through $C_i$ or through $C$.
-\item No edge of $G$ joins $X$ to $V(C)$. So the edges of $G$ that leave $X$ are edges of $H$, and
-$|\delta X|\le2L$.
+\item No edge of $G$ joins $X$ to $V(C)$, and $H$ is a component of $G-V(C)$. So the edges of $G$
+that leave $X$ are edges of $H$, and $|\delta X|\le2L$.
 \item $X$ avoids $P\cup S^{-}$, so $G[X]$ is a subgraph of $J^{-}$, and its girth is greater than
 $D^{-}$.
 \end{itemize}
@@ -98,7 +99,7 @@ $q(G,P)\le\frac9{25}$. This contradicts $q(G,P)>\half$. Hence there is $R$ such 
 $q(G,P)\le\half$ whenever $r\ge R$. \qed
 
 \begin{remark}\label{rem:restore}
-The set $X$ is defined in $H=G-V(C)$, and not in $J^{+}$. So it contains the vertices of
+The set $X$ is defined in a component $H$ of $G-V(C)$, and not in $J^{+}$. So it contains the vertices of
 $S^{+}\sm S^{-}$ that lie between its two end cycles. This is the reason for the two scales. The
 chain needs the girth of $J^{+}$, and the pieces need only the girth of $J^{-}$, which has far fewer
 deleted vertices than the chain has cycles.

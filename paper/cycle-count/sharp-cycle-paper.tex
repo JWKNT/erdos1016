@@ -49,10 +49,13 @@
 \newcommand{\leansharpmodules}{10}
 \newcommand{\leansharplines}{2{,}215}
 \newcommand{\leancheckstatus}{On 11 November 2026 the check passed on a machine of the authors for
-the Lean sources, the audit and the scripts of this commit. That run did not use the option
-\texttt{--fresh}, and it was made before the commit. The continuous integration of the repository
-repeats the check with a fresh build for every pushed commit. Its records are at
-\url{https://github.com/JWKNT/erdos1016/actions}.}
+the Lean sources, the audit and the scripts of this commit, without the option
+\texttt{--fresh}. The continuous integration of the repository repeated the check on the same day,
+with a fresh build, for commit \texttt{fcea625}. That commit differs from \texttt{\leancommit}
+only in the folder \lean{paper/cycle-count} and in four text files with research notes, so the Lean
+sources, the audit and the scripts are the same. GitHub Actions run
+\href{https://github.com/JWKNT/erdos1016/actions/runs/42980562548}{42980562548} records the
+result.}
 
 \hypersetup{pdftitle={The number of cycles in a graph: the second term, and pancyclic graphs},pdfauthor={KNT, Astra, Fable 5.2}}
 \title{The number of cycles in a graph:\\ the second term, and pancyclic graphs}

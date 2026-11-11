@@ -17,6 +17,8 @@ The current draft has three parts.
 2. A graph of large cyclomatic number `r` has at most `(1/2 + o(1)) 2^r` cycles. This result is formalised in Lean.
 3. A pancyclic graph on `n` vertices has at least `n + log2 n + log* n - O(1)` edges, and this is best possible up to the constant. This result is formalised in Lean.
 
+The draft refers to the Lean code at commit `a5cb5fa`.
+GitHub Actions run 42980562548 verified commit `fcea625`, which has the same Lean sources.
 Section 1.5 of the draft states which results are formalised.
 Appendix A prints the Lean statements, names the commit of the Lean code, and gives the commands that repeat the check.
 Table 3 in Appendix A lists the steps of the first result that are formalised.
