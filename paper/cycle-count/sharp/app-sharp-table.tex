@@ -1,0 +1,39 @@
+\begin{center}\begin{minipage}{\linewidth}\centering\small
+\captionof{table}{The formalised steps of the proof of Theorem~\ref{thm:half}.}\label{tab:sharpsteps}
+\smallskip
+\renewcommand{\arraystretch}{1.0}
+\begin{tabular}{@{}L{4.6cm}L{6.4cm}L{4.6cm}@{}}
+\toprule
+In this paper & Declaration & File \\
+\midrule
+Lemma~\ref{lem:product} & \lean{forest_density_le_mul} & \lean{PolynomialBound/Product} \\
+Lemma~\ref{lem:parallel} & \lean{none_density_le}, \lean{links_card_le_one},
+  \lean{smallCyclicPart_card_le} & \lean{PolynomialBound/ParallelLinks} \\
+Lemma~\ref{lem:linkshalf} & \lean{cycle_links_le} & \lean{PolynomialBound/LinkBound} \\
+Lemma~\ref{lem:twolinks} & \lean{second_moment_le}, \lean{twoLink_weight_ge} &
+  \lean{PolynomialBound/TwoLinkMoment} \\
+Lemma~\ref{lem:nested} & \lean{nested}, \lean{before_total}, \lean{before_asymm},
+  \lean{before_trans} & \lean{PolynomialBound/Separation} \\
+Lemma~\ref{lem:blocks} & \lean{mem_separator_of_adj_block}, \lean{subset_block},
+  \lean{block_not_adj}, \lean{exists_chain}, \lean{exists_blocks} &
+  \lean{PolynomialBound/Separation}, \lean{PolynomialBound/Chain} \\
+Lemma~\ref{lem:chain}, the two weight bounds & \lean{antisymm_weight_le}, \lean{exists_good_row} &
+  \lean{PolynomialBound/Averaging} \\
+\bottomrule
+\end{tabular}
+\end{minipage}\end{center}
+
+The formal statements differ from the text in these points. Lemma~\ref{lem:linkshalf} is formalised
+for the graph and the marked set of Section~\ref{sec:forest}; its first term is the number of
+components of the marked set, which is one in Lemma~\ref{lem:linkshalf}. Lemma~\ref{lem:twolinks} is
+formalised with $\ge$ in the place of $>$, and for a forest probability of at least $\half$. The
+separators of Lemma~\ref{lem:nested} are formalised for arbitrary connected sets in a simple graph.
+The step of Lemma~\ref{lem:chain} from two links to a separator, the pieces of
+Section~\ref{sec:affine} other than Lemma~\ref{lem:product}, and Section~\ref{sec:packing} are not
+formalised.
+
+Three further modules in the same folder prove a conditional statement. If the forest estimate
+holds with the error term $r^{-\kappa}$ for marked sets with few components
+(\lean{PolynomialMarkedBound}), then every graph of large rank $r$ has at most
+$(\half+r^{-\kappa'})2^{r}$ cycles (\lean{polynomialCycleCountStatement_of_markedBound}). The
+hypothesis is the statement of Remark~\ref{rem:polynomial}. It is not formalised.

@@ -1,0 +1,210 @@
+\section{Short cycles, without an excess}\label{sec:packing}
+
+In the proof of Theorem~\ref{thm:forest}, a maximal family of disjoint short cycles is small because
+of Lemma~\ref{lem:smallcuts}. That lemma bounds the family by a multiple of $1/\varepsilon$, where
+$\half+\varepsilon$ is the assumed forest probability. For Theorem~\ref{thm:half} we need a bound
+that holds as soon as the forest probability exceeds $\half$. This section proves such a bound
+(Theorem~\ref{thm:raise}). It uses Proposition~\ref{prop:blocks}(a): two clean pieces would give
+$\frac9{25}$. Throughout, $H=256$.
+
+\subsection{Vertices that share a parity}
+
+Let $Q$ be a connected multigraph without loops. For an edge $e$, the map
+$\xi\mapsto[e\in\xi]$ is a linear functional on $\Z(Q)$. For a vertex $v$ let $L_v$ be the space
+of functionals that is spanned by the edges at $v$. For a set $A$ of vertices put
+$U_A=\sum_{a\in A}L_a$. We use one standard fact: if a set $F$ of edges meets every even subgraph of
+$Q$ in an even number of edges, then $F=\delta Y$ for some set $Y$ of vertices. (Fix a spanning
+tree and a root. Let $Y$ be the set of the vertices whose tree path from the root has an odd number
+of edges in $F$. Then $F$ and $\delta Y$ contain the same tree edges, and the fundamental cycles
+show that they contain the same edges outside the tree.)
+
+\begin{lemma}[Strings]\label{lem:strings}
+Let $Q$ be a connected multigraph without loops, and let $A$ be a nonempty proper set of its
+vertices. Put $b=|\delta A|$. Call a vertex $v\notin A$ \emph{relevant} if $L_v\cap U_A\ne0$. There
+are a set of at most $2b$ relevant vertices, the \emph{exceptions}, and at most $2b$ sequences of
+relevant vertices, the \emph{strings}, with these properties. Every relevant vertex that is not an
+exception is in a string. If $v_1,\dots,v_m$ is a string and $1\le i<j\le m$ with $j\ge i+2$, there
+is a set $M(i,j)$ of vertices such that
+\begin{enumerate}
+\item[\textup{(i)}] $M(i,j)$ is disjoint from $A\cup\{v_i,v_j\}$, the graph $Q[M(i,j)]$ is
+connected, and $v_l\in M(i,j)$ for $i<l<j$;
+\item[\textup{(ii)}] every edge that leaves $M(i,j)$ ends in $v_i$ or in $v_j$;
+\item[\textup{(iii)}] $M(i,j)\cap M(i',j')=\emptyset$ if $j\le i'$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Call the edges of $\delta A$ \emph{terminals}. The end of a terminal outside $A$ is its
+\emph{foot}. Every component of $Q-A$ contains a foot, because $Q$ is connected.
+
+\emph{Step 1.} Let $v\notin A$ be relevant and not a foot, and let $K$ be the component of $Q-A$
+that contains $v$. We show that at least two components of $K-v$ contain feet. Let
+$0\ne a\in L_v\cap U_A$. Then $a$ is the sum of the functionals of a set $F$ of edges at $v$, and
+also of a set $F'$ of edges with an end in $A$. No edge is in both sets, because $v$ is not a foot.
+The set $F\cup F'$ meets every even subgraph in an even number of edges, so $F\cup F'=\delta Y$ for
+some $Y$. We may assume that $v\notin Y$. No edge of $K-v$ is in $F\cup F'$. So each component of
+$K-v$ lies inside $Y$ or outside $Y$, and $F$ is the set of all edges from $v$ to the components
+inside $Y$. For a component $J$ of $K-v$, the cut $\delta V(J)$ consists of the edges from $J$ to
+$v$ and the terminals with a foot in $J$. So on $\Z(Q)$ the sum of the edges from $J$ to $v$ equals
+the sum of the terminals with a foot in $J$. Hence $a$ is the sum of the terminals with a foot in
+$Y$. The sum of all terminals with a foot in $K$ is zero on $\Z(Q)$, because these terminals form
+the cut $\delta V(K)$. As $a\ne0$, some component of $K-v$ inside $Y$ contains a foot, and some
+component outside $Y$ contains a foot.
+
+\emph{Step 2.} In each component $K$ of $Q-A$ fix a spanning tree. For each terminal add a new leaf
+at its foot. Let $T_K$ be the union of the paths of this tree between the new leaves, and let $T$
+be the union of the trees $T_K$. Every leaf of $T$ is a new leaf, so $T$ has at most $b$ leaves and
+at most $b$ vertices of degree at least three. The exceptions are the relevant vertices that are
+feet or have degree at least three in $T$. There are at most $2b$ of them.
+
+Let $v$ be a relevant vertex that is not an exception. By Step~1 two components of $K-v$ contain
+feet. The path of the tree between the two new leaves at these feet passes through $v$. So $v$ is
+a vertex of $T$, and its degree in $T$ is two. A \emph{thread} is a maximal path of $T$ whose inner
+vertices have degree two in $T$. There are at most $2b$ threads, and every vertex of degree two of
+$T$ is an inner vertex of exactly one thread. The strings are the sequences of the relevant
+vertices that are not exceptions on one thread, in the order of the thread.
+
+\emph{Step 3.} Let $v$ be a vertex of a string, in the component $K$. The forest $T-v$ has exactly
+two components that meet $K$, one on each side of $v$ along its thread. Their vertex sets in $K$ are
+the \emph{near side} of $v$, towards the start of the thread, and the \emph{far side} of $v$. Each
+side is connected in $K-v$, and all feet in $K$ lie in the two sides. By Step~1 the two sides lie in
+different components of $K-v$.
+
+Now let $v_i$ and $v_j$ be as in the lemma. Let $\Pi$ be the part of their thread strictly between
+them. It contains $v_{i+1}$, it is connected, and it contains no foot, because a new leaf at a
+vertex of $\Pi$ would give that vertex degree three in $T$. Let $M(i,j)$ be the vertex set of the
+component of $K-v_i-v_j$ that contains $\Pi$. This gives~(i).
+
+For~(ii), suppose that $M(i,j)$ contains a foot $w$. Then $w$ is a vertex of $T$ outside $\Pi$. So
+$w$ lies in the near side of $v_i$ or in the far side of $v_j$; say in the near side of $v_i$. The
+path $\Pi$ lies in the far side of $v_i$. But $w$ and $\Pi$ are joined in $K-v_i$ through
+$M(i,j)$, and the two sides of $v_i$ lie in different components of $K-v_i$. This is a
+contradiction. So $M(i,j)$ contains no foot. An edge that leaves $M(i,j)$ ends in $A$, in $v_i$ or
+in $v_j$, and it does not end in $A$.
+
+For~(iii), let $j\le i'$. The set $M(i,j)$ is connected in $K-v_j$ and contains $\Pi$, which lies
+in the near side of $v_j$. So $M(i,j)$ lies in the component of $K-v_j$ that contains the near side
+of $v_j$. We show that $M(i',j')$ lies in the component of $K-v_j$ that contains the far side of
+$v_j$; then the two sets are disjoint. The set $M(i',j')$ is connected in $K-v_{i'}$ and contains
+the part $\Pi'$ of the thread between $v_{i'}$ and $v_{j'}$, which lies in the far side of
+$v_{i'}$. If $j=i'$, this is the claim. If $j<i'$, then $v_j$ lies in the near side of $v_{i'}$, so
+$v_j\notin M(i',j')$. Hence $M(i',j')$ is connected in $K-v_j$, and it contains $\Pi'$, which lies
+in the far side of $v_j$.
+\end{proof}
+
+\subsection{A packing bound}
+
+\begin{proposition}[Packing]\label{prop:packing}
+Let $G$ be a connected cubic multigraph. Let $P$ be a set of vertices that is empty or induces a
+connected subgraph, and let $S$ be a set of $s$ vertices outside $P$. Let $D\ge D_{*}$, and suppose
+that $G-(P\cup S)$ has girth at least $D$ and that $q(G,P\cup S)>\half$. Let $2\le d\le2D$, and let
+$X_1,\dots,X_n$ be pairwise disjoint sets of vertices outside $P\cup S$ such that each $G[X_i]$ is
+connected and contains a cycle, and $|\delta X_i|\le d$. Then
+\[
+  n\;<\;(6H+15)\,d\,(s+1)\,2^{d}.
+\]
+\end{proposition}
+
+\begin{proof}
+Let $n\ge1$.
+
+\emph{The quotient.} Contract each set $X_i$ to a vertex $x_i$, and contract each component of
+$G-\bigcup_iX_i$ to a vertex. Delete the loops. Call the result $Q$, and call the vertices $x_i$
+\emph{marked}. Then $Q$ is connected, it has no loops, and $x_i$ has degree $|\delta X_i|\le d$.
+The edges of $Q$ are the edges of $G$ between different contracted sets. As in the proof of
+Lemma~\ref{lem:loc}(c), the map $\xi\mapsto\xi\cap E(Q)$ sends the uniform distribution on $\Z(G)$
+to the uniform distribution on $\Z(Q)$. Given $\xi\cap E(Q)$, the sets $\xi\cap E(G[X_i])$ are
+independent, as in the proof of Lemma~\ref{lem:product}. Let $I_i$ be the event that $\xi$ contains
+no edge at $x_i$. On $I_i$ the set $\xi\cap E(G[X_i])$ is a uniform even subgraph of $G[X_i]$. It
+is a forest only if it is empty, and this has probability at most $\half$ because $G[X_i]$ contains
+a cycle. The sets $X_i$ lie in $G-(P\cup S)$. Hence
+\begin{equation}\label{eq:packprod}
+  \frac12\;<\;q(G,P\cup S)\;\le\;\EE\prod_{i=1}^{n}\Bigl(1-\frac{\mathbf 1_{I_i}}2\Bigr).
+\end{equation}
+
+\emph{An independent family.} Write $L_i=L_{x_i}$ for the space of Lemma~\ref{lem:strings} in $Q$.
+The edges at $x_i$ form a cut, so their sum is zero on $\Z(Q)$ and $\dim L_i\le d-1$. The event
+$I_i$ says that the functionals of $L_i$ vanish at $\xi$, so $\PP(I_i)=2^{-\dim L_i}\ge2^{1-d}$.
+No $L_i$ is zero, because then $I_i$ would always hold, against~\eqref{eq:packprod}. Let $A$ be a
+maximal set of marked vertices whose spaces are linearly independent, and let $t=|A|\ge1$. The
+events $I_a$, $a\in A$, are independent. By~\eqref{eq:packprod},
+\[
+  \frac12\;<\;\prod_{a\in A}\Bigl(1-\frac{\PP(I_a)}2\Bigr)\;\le\;\bigl(1-2^{-d}\bigr)^{t}.
+\]
+If $t\ge2^{d}$, the right side is less than $\frac1e$. So $t<2^{d}$. If all marked vertices are in
+$A$, we are done.
+
+\emph{Strings.} Otherwise $A$ is a nonempty proper set of vertices of $Q$, with
+$b=|\delta A|\le dt$. By the maximality of $A$, every marked vertex outside $A$ is relevant in the
+sense of Lemma~\ref{lem:strings}. So all marked vertices outside $A$, except at most $2b$, lie on at
+most $2b$ strings.
+
+Consider one string, and let $u_1,\dots,u_m$ be its marked vertices in the order of the string.
+Suppose that $m\ge(H+2)(s+3)$. For $0\le l\le s+2$ let $M_l$ be the set $M(\cdot,\cdot)$ of
+Lemma~\ref{lem:strings} for the two string vertices $u_{l(H+2)+1}$ and $u_{(l+1)(H+2)}$. By the
+lemma, the sets $M_l$ are pairwise disjoint and connected in $Q$. Each contains $H$ marked
+vertices, and every edge that leaves $M_l$ ends in one of two marked vertices, so
+$|\delta M_l|\le2d$. Let $\widehat M_l$ be the union of the sets of vertices of $G$ that were
+contracted to the vertices of $M_l$. Then $G[\widehat M_l]$ is connected, and
+$|\delta\widehat M_l|\le2d\le4D$. It contains $H$ of the pairwise disjoint sets $X_i$, each with
+a cycle, so its rank is at least $H$.
+
+The sets $\widehat M_l$ are pairwise disjoint. If $P$ is not empty, it is connected and disjoint
+from all $X_i$, so it lies in one contracted set. Hence at most one $\widehat M_l$ meets $P$. At
+most $s$ of them meet $S$. So two of the $s+3$ sets avoid $P\cup S$. They induce subgraphs of
+$G-(P\cup S)$, which has girth at least $D\ge D_{*}$. By Proposition~\ref{prop:blocks}(a), for the
+set $P\cup S$, we get $q(G,P\cup S)\le\frac9{25}$. This contradicts~\eqref{eq:packprod}. So
+$m<(H+2)(s+3)$.
+
+\emph{Count.} The marked vertices are in $A$, or exceptions, or on strings. Hence
+\[
+  n\;\le\;t+2b+2b\,(H+2)(s+3)\;\le\;t+(6H+14)(s+1)\,b\;\le\;(6H+15)\,d\,(s+1)\,t
+  \;<\;(6H+15)\,d\,(s+1)\,2^{d}.
+\]
+The second inequality is $2+2(H+2)(s+3)\le(6H+14)(s+1)$, which holds with equality for $s=0$.
+\end{proof}
+
+\subsection{Raising the girth}
+
+\begin{theorem}[Raising the girth]\label{thm:raise}
+There is an absolute constant $K_1$ with the following property. Let $G$ be a connected cubic
+multigraph. Let $P$ be a set of vertices that is empty or induces a connected subgraph. Suppose
+that $q(G,P)>\half$ and that $G-P$ has girth at least $D_{*}$. Put $D_j=2^{j}D_{*}$ for $j\ge0$.
+Then there are sets $S_0\subseteq S_1\subseteq\cdots$ of vertices outside $P$ such that, for every
+$j\ge0$,
+\begin{enumerate}
+\item[\textup{(i)}] $S_j$ is the union of the vertex sets of a maximal family of pairwise disjoint
+cycles of length at most $D_j$ in $G-P$; in particular $G-(P\cup S_j)$ has girth greater than
+$D_j$;
+\item[\textup{(ii)}] $\log(|S_j|+1)\le2D_j+K_1\log^{2}(D_j+2)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Put $S_{-1}=\emptyset$. Let $j\ge0$ and suppose that $S_{j-1}$ is defined. Let $a=D_{*}$ if $j=0$ and
+$a=D_{j-1}+1$ if $j\ge1$. Then $G-(P\cup S_{j-1})$ has girth at least $a\ge D_{*}$, and
+$b:=D_j\le2a$. Take a maximal family $\mathcal Q_j$ of pairwise disjoint cycles of length at most
+$b$ in $G-(P\cup S_{j-1})$, and let $S_j$ be the union of $S_{j-1}$ and their vertex sets.
+
+For a cycle $C$ of the family, $G[V(C)]$ is connected and contains a cycle, and
+$|\delta V(C)|\le|C|\le b$, because $G$ is cubic. Also
+$q(G,P\cup S_{j-1})\ge q(G,P)>\half$, because a forest in $G-P$ is a forest in a subgraph. So
+Proposition~\ref{prop:packing} applies with $S=S_{j-1}$, $D=a$ and $d=b$:
+\[
+  |\mathcal Q_j|\;<\;(6H+15)\,b\,(|S_{j-1}|+1)\,2^{b},\qquad
+  |S_j|+1\;\le\;(6H+16)\,b^{2}\,2^{b}\,\bigl(|S_{j-1}|+1\bigr).
+\]
+
+(i) The families $\mathcal Q_0,\dots,\mathcal Q_j$ together are a family of pairwise disjoint
+cycles of length at most $D_j$ in $G-P$. A further cycle of length at most $D_j$ in $G-P$ that is
+disjoint from $S_j$ would contradict the maximality of $\mathcal Q_j$.
+
+(ii) Take logarithms in the recursion. Since $D_0+\dots+D_j<2D_j$ and $j\le\log D_j$,
+\[
+  \log(|S_j|+1)\;\le\;\sum_{i\le j}\bigl(D_i+2\log D_i+\log(6H+16)\bigr)
+  \;\le\;2D_j+(\log D_j+1)(2\log D_j+11).\qedhere
+\]
+\end{proof}
+
+The bound of Lemma~\ref{lem:smallcuts} for the same family is about $D_j2^{D_j}/\varepsilon$.
+Theorem~\ref{thm:raise} loses a factor $2^{D_j}$ and gains the independence of $\varepsilon$.

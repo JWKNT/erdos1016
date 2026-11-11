@@ -1,0 +1,53 @@
+\section{The graphs of Horak and Kim}\label{sec:examples}
+
+The lower bound~\eqref{eq:hk} is due to Horak and Kim~\cite[Theorem~5.1]{HK}. We recall their
+graphs for odd rank, because they show where the second term comes from.
+
+Let $j\ge2$. Take vertices $a_i,b_i,c_i,d_i$ for $i$ modulo $j$. Join each of $a_i,b_i$ to each of
+$c_i,d_i$; these four edges are the \emph{square} $i$. Join $c_i$ to $a_{i+1}$ and $d_i$ to
+$b_{i+1}$; these two edges are the \emph{interface} $i$. The graph $M_j$ is cubic, with $4j$
+vertices, $6j$ edges and rank $r=2j+1$. In the notation of~\cite{HK} it is the graph $MC_{2j}$.
+
+\begin{proposition}[Horak and Kim]\label{prop:hk}
+For $j\ge2$,
+\[
+  c(M_j)\;=\;2^{2j}+\bigl(2j+\tfrac12\bigr)2^{j}-3j\;=\;2^{r-1}+\bigl(r-\tfrac12\bigr)2^{(r-1)/2}-\tfrac32(r-1).
+\]
+\end{proposition}
+
+\begin{proof}
+The two edges of an interface form a cut together with the two edges of any other interface. So a
+cycle uses an odd number of edges of every interface, or an even number of edges of every
+interface.
+
+\emph{One edge of every interface.} There are $2^{j}$ ways to choose the edges. In each square the
+cycle then runs from one of $a_i,b_i$ to one of $c_i,d_i$, and there are two such paths: the edge,
+and the path through the other two vertices of the square. Every choice gives a cycle. This gives
+$2^{j}\cdot2^{j}=2^{r-1}$ cycles.
+
+\emph{An even number of edges of every interface.} If the cycle uses no interface, it is one of the
+$j$ squares. If it uses both edges of all interfaces, it uses two disjoint edges of every square,
+and there are two ways to choose them in each square. Such a choice is one cycle, and not two, for
+half of the $2^{j}$ choices: $2^{j-1}$ cycles. Otherwise the interfaces that it uses are $d$
+consecutive ones, with $1\le d\le j-1$. There are $j$ such sets for each $d$. The cycle closes in
+the two squares at the ends, in two ways each, and it uses two disjoint edges in each of the
+$d-1$ squares between them. This gives $j\,2^{d+1}$ cycles for each $d$. Together,
+\[
+  j+2^{j-1}+j\sum_{d=1}^{j-1}2^{d+1}\;=\;\bigl(2j+\tfrac12\bigr)2^{j}-3j .\qedhere
+\]
+\end{proof}
+
+The first class contains exactly half of the even subgraphs of $M_j$, and all of them are cycles.
+The second term counts the cycles in the other half. Most of these are the cycles that use a
+proper set of consecutive interfaces. They exist because each square is a cycle with a cut of four
+edges around it. This is the configuration that Theorem~\ref{thm:smallcut} treats.
+
+The graphs $M_j$ also show that the conclusion of Theorem~\ref{thm:half} fails without the
+hypothesis on the girth. Let $W$ be a square of $M_j$ and let $e$ be one of its edges. The cycles
+of the first class through $e$ number $2^{r-2}$, and the square itself is a further cycle through
+$e$. So $c_e(M_j)>2^{r-2}$, and Lemma~\ref{lem:edge} gives $q(M_j,V(W))>\half$. Here $M_j-V(W)$
+contains cycles of length four.
+
+For even rank, Horak and Kim use the same construction on two cycles of odd length, with one
+uncrossed pair of rungs~\cite[Section~5]{HK}. We tested both formulas of~\eqref{eq:hk} by computer
+for small ranks (Appendix~\ref{app:checks}).

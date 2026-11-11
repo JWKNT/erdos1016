@@ -1,0 +1,123 @@
+\subsection{The statements behind Theorem~\ref{thm:cycles}}
+
+The following text is copied from \lean{Erdos1016/CycleCount/Statement.lean},
+\lean{Asymptotic.lean} and \lean{Erdos1016/Main.lean}, without the comments and the proofs.
+
+{\small
+\begin{alltt}
+def cycleEdgeSets \{V : Type*\} (G : SimpleGraph V) : Set (Set (Sym2 V)) :=
+  \{s | \(\exists\) (v : V) (p : G.Walk v v), p.IsCycle \(\land\) s = \{a | a \(\in\) p.edges\}\}
+
+def numCycles \{V : Type*\} (G : SimpleGraph V) : \(\mathbb{N}\) := (cycleEdgeSets G).ncard
+
+def CycleCountStatement : Prop :=
+  \(\exists\) r\(\sb{1}\) : \(\mathbb{N}\), \(\forall\) (n : \(\mathbb{N}\)) (G : SimpleGraph (Fin n)) (r : \(\mathbb{N}\)),
+    r + n = Nat.card G.edgeSet + Nat.card G.ConnectedComponent \(\to\) r\(\sb{1}\) \(\le\) r \(\to\)
+    (numCycles G : \(\mathbb{R}\)) \(\le\)
+      (1 / 2 + 21 / Real.logb 2 (Real.logb 2 (Real.logb 2 (r : \(\mathbb{R}\))))) * 2 ^ r
+
+def cycleCounts (r : \(\mathbb{N}\)) : Set \(\mathbb{N}\) :=
+  \{c | \(\exists\) (n : \(\mathbb{N}\)) (G : SimpleGraph (Fin n)),
+    r + n = Nat.card G.edgeSet + Nat.card G.ConnectedComponent \(\land\) numCycles G = c\}
+
+def maxCycles (r : \(\mathbb{N}\)) : \(\mathbb{N}\) := sSup (cycleCounts r)
+
+def AsymptoticCycleCount : Prop :=
+  Tendsto (fun r : \(\mathbb{N}\) => (maxCycles r : \(\mathbb{R}\)) / 2 ^ r) atTop (\(\mathcal{N}\) (1 / 2))
+
+theorem cycleCountTheorem : CycleCount.CycleCountStatement
+theorem cycleCountAsymptotic : CycleCount.AsymptoticCycleCount
+\end{alltt}}
+
+Four remarks help to compare this with Theorem~\ref{thm:cycles}.
+\begin{itemize}
+\item \lean{SimpleGraph}, \lean{Walk} and \lean{IsCycle} are Mathlib's. A walk with \lean{IsCycle}
+is a closed walk of length at least $3$ that repeats no vertex except its start. The set
+\texttt{cycleEdgeSets G} contains the edge set of each such walk once. So \texttt{numCycles G} is the
+number of cycles in the sense of this paper, and not the number of closed walks.
+\item The hypothesis \texttt{r + n = ...} says that $r=\beta(G)$. It avoids subtraction of natural
+numbers.
+\item The threshold is existentially quantified, as $r_1$ is in the text. In the proof it is
+$\max(r_0,2^{2048})$, where $r_0$ is the threshold of the forest estimate.
+\item In Lean, \lean{sSup} of an empty or unbounded set of natural numbers is $0$. This does not
+make \lean{maxCycles} degenerate. The code proves that \texttt{cycleCounts r} is bounded by $2^{r}$
+(\lean{cycleCounts_bddAbove}) and that its supremum is attained for $r\ge3$ (\lean{maxCycles_mem}).
+\end{itemize}
+The theorem \lean{cycleCountTheorem_general} states the same bound for simple graphs on every
+finite vertex type.
+
+\subsection{The statements behind Theorem~\ref{thm:exact}}
+
+The following text is copied from \lean{Erdos1016/ExactCounting/TwoTerminals.lean},
+\lean{NoWaste.lean} and \lean{Erdos1016/Main.lean}, without the comments and the proofs.
+
+{\small
+\begin{alltt}
+def pathEdgeSets \{V : Type*\} (G : SimpleGraph V) (u v : V) : Set (Set (Sym2 V)) :=
+  \{s | \(\exists\) p : G.Walk u v, p.IsPath \(\land\) s = \{a | a \(\in\) p.edges\}\}
+
+def numPaths \{V : Type*\} (G : SimpleGraph V) (u v : V) : \(\mathbb{N}\) := (pathEdgeSets G u v).ncard
+
+def TwoTerminalStatement : Prop :=
+  \(\forall\) (n : \(\mathbb{N}\)) (G : SimpleGraph (Fin n)) (r : \(\mathbb{N}\)) (u v : Fin n),
+    G.Connected \(\to\) r + n = Nat.card G.edgeSet + 1 \(\to\)
+      numPaths G u v \(\le\) 2 ^ r \(\land\)
+      (numPaths G u v = 2 ^ r \(\to\)
+        \(\forall\) p : G.Walk u v, p.IsPath \(\to\)
+          r \(\le\) p.length \(\land\) (G.deleteEdges \{a | a \(\in\) p.edges\}).IsAcyclic)
+
+def IsEvenEdgeSet \{V : Type*\} (s : Set (Sym2 V)) : Prop :=
+  \(\forall\) v : V, Even \{e | e \(\in\) s \(\land\) v \(\in\) e\}.ncard
+
+def NoWasteStatement : Prop :=
+  \(\forall\) (n : \(\mathbb{N}\)) (G : SimpleGraph (Fin n)) (S : Set (Sym2 (Fin n))) (r t : \(\mathbb{N}\)),
+    G.Connected \(\to\) S \(\subseteq\) G.edgeSet \(\to\)
+    r + n = Nat.card G.edgeSet + 1 \(\to\)
+    t + n = S.ncard + Nat.card (SimpleGraph.fromEdgeSet S).ConnectedComponent \(\to\)
+    (\(\forall\) s : Set (Sym2 (Fin n)), s \(\subseteq\) G.edgeSet \(\to\) IsEvenEdgeSet s \(\to\)
+      \(\exists\) c \(\in\) CycleCount.cycleEdgeSets G, c \textbackslash{} S = s \textbackslash{} S) \(\to\)
+    (\(\forall\) c\(\sb{1}\) \(\in\) CycleCount.cycleEdgeSets (G.deleteEdges S),
+      \(\forall\) c\(\sb{2}\) \(\in\) CycleCount.cycleEdgeSets (G.deleteEdges S), \(\lnot\) Disjoint c\(\sb{1}\) c\(\sb{2}\)) \(\land\)
+    r \(\le\) t + \{v | \(\exists\) e \(\in\) S, v \(\in\) e\}.ncard + 3
+
+theorem twoTerminalTheorem : ExactCounting.TwoTerminalStatement
+theorem noWasteTheorem : ExactCounting.NoWasteStatement
+\end{alltt}}
+
+Five remarks help to compare this with Theorem~\ref{thm:exact}.
+\begin{itemize}
+\item A walk with \lean{IsPath} repeats no vertex. A path is counted once, by its edge set.
+\item The graph \texttt{G.deleteEdges s} is $G$ without the edges in \texttt{s}, and
+\lean{IsAcyclic} says that it is a forest.
+\item The first statement does not assume $u\ne v$.
+\item In the second statement \texttt{S} is $E(W)$. The line with \texttt{t} says that $t$ is the
+rank of the graph with edge set $S$ on all $n$ vertices. Isolated vertices do not change the rank,
+so $t=\beta(W)$. The set in the last line is $V(W)$.
+\item Theorem~\ref{thm:exact}(b) assumes that $W$ contains a cycle. The formal statement does not
+need this hypothesis: it follows from the main hypothesis for the empty even set.
+\end{itemize}
+
+\subsection{The forest estimate}
+
+Theorem~\ref{thm:forest} is the theorem \lean{ShortProof.fewComponentForestEstimate}, which has the
+following type.
+
+{\small
+\begin{alltt}
+def FewComponentForestEstimate : Prop :=
+  \(\exists\) rmin : \(\mathbb{N}\), \(\forall\) (G : PhysicalGraph), G.IsConnected \(\to\) rmin \(\le\) G.cycleRank \(\to\)
+    \(\forall\) F : Finset G.CycleWord, F.Nonempty \(\to\)
+      (witnessSupportEdges G F).card ^ 2 \(\le\) G.cycleRank \(\to\)
+      100 * (Nat.card (cycleUnionGraph G F).ConnectedComponent : \(\mathbb{R}\)) \(\le\)
+        Real.logb 2 (G.cycleRank : \(\mathbb{R}\)) \(\to\)
+      outsideForestProbability G (witnessSupportEdges G F) \(\le\)
+        (1 / 2 : \(\mathbb{R}\)) + 20 / tripleLog G.cycleRank
+\end{alltt}}
+
+Here \lean{PhysicalGraph} is the project's type of finite simple graphs with numbered vertices and
+edges. The family \lean{F} is a nonempty finite set of cycles of \lean{G}, and $W$ is their union.
+The set \texttt{witnessSupportEdges G F} is $E(W)$. The graph \texttt{cycleUnionGraph G F} is $W$ on
+the vertices that the cycles meet. The number \texttt{outsideForestProbability G E} is the number of
+even subgraphs $x$ such that $x\sm E$ is a forest, divided by $2^{\beta(G)}$. Finally
+\texttt{tripleLog r} is $\lgk3r$. The statement of Theorem~\ref{thm:main} in Lean is described
+in~\cite[\S1.2]{KNT}.

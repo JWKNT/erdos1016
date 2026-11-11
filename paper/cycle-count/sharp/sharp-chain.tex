@@ -1,0 +1,205 @@
+\section{Links, a moment inequality and a chain}\label{sec:chain}
+
+This section uses the notation of Section~\ref{sec:forest}: regions, the events $\cO_A$, and the
+number $\ell(A,B)$ of links. Its three lemmas on links and moments are formalised
+(Table~\ref{tab:sharpsteps}).
+
+\subsection{Components between two connected sets}
+
+Lemma~\ref{lem:links} bounds the number of cyclic components with a small boundary by
+Lemma~\ref{lem:smallcuts}, and that bound contains $1/\varepsilon$. For components that join the
+same two connected sets there is a bound without $\varepsilon$.
+
+\begin{lemma}[Parallel links]\label{lem:parallel}
+Let $\Gamma$ be a connected multigraph, let $A$ and $B$ be disjoint regions, and let $P$ be a set of
+vertices with $q(\Gamma,P)>\half$. Let $t\ge0$. Then at most $2^{t+1}$ components $Y$ of
+$\Gamma-(A\cup B)$ have all of the following properties: $Y$ has an edge to $A$ and an edge to $B$;
+$Y$ avoids $P$; $Y$ contains a cycle; $|\delta Y|\le t$.
+\end{lemma}
+
+\begin{proof}
+Let $Y_0,Y_1,\dots,Y_n$ be such components. For $1\le i<j\le n$ the graph $\Gamma-Y_i-Y_j$ is
+connected. Indeed, it contains the connected set $A\cup B\cup Y_0$, and every other component of
+$\Gamma-(A\cup B)$ is connected and has an edge to $A\cup B$. No edge joins $Y_i$ and $Y_j$. So the
+regions $Y_i$ and $Y_j$ have exactly one link, and by Lemma~\ref{lem:link}
+\[
+  \PP(\cO_{Y_i}\cap\cO_{Y_j})=\PP(\cO_{Y_i})\,\PP(\cO_{Y_j}).
+\]
+Let $E_i$ be the event that $\cO_{Y_i}$ holds and $\xi\cap E(\Gamma[Y_i])$ is not empty. By the last
+part of Lemma~\ref{lem:link}, the events $E_i$ and $E_j$ are independent as well, and
+$\PP(E_i)\ge2^{-t}\cdot\half$. Let $N$ be the number of the events $E_1,\dots,E_n$ that occur, and
+$\nu=\EE N\ge n\,2^{-t-1}$. Then $\EE N^{2}\le\nu^{2}+\nu$, and the Cauchy--Schwarz inequality gives
+\[
+  \PP(N=0)\;\le\;1-\frac{\nu^{2}}{\EE N^{2}}\;\le\;\frac1{1+\nu}.
+\]
+If $\xi\cap E(\Gamma-P)$ is a forest, then no $E_i$ occurs, because $Y_i$ avoids $P$ and a nonempty
+even subgraph is not a forest. So $\half<q(\Gamma,P)\le1/(1+\nu)$. Hence $\nu<1$ and $n<2^{t+1}$.
+\end{proof}
+
+The components between $A$ and $B$ are in parallel. One parity condition couples all of them, and
+it does not couple any family that omits one. The value $\half$ in Lemma~\ref{lem:smallcuts} comes
+from regions in series.
+
+\begin{lemma}[Links, without an excess]\label{lem:linkshalf}
+Let $G$ be a connected cubic multigraph, and let $P$ be a nonempty set of vertices such that $G[P]$
+is connected and $q(G,P)>\half$. Let $S$ be the union of the vertex sets of a maximal family of
+pairwise disjoint cycles of length at most $D$ in $G-P$, and put $J=G-(P\cup S)$. Let
+$8\le D\le L$ and $t\ge1$ with $2(t+2\lfloor D/8\rfloor)\le D$. Then any two disjoint cycles $C,C'$
+of $J$ of length at most $L$ satisfy
+\[
+  \ell\bigl(V(C),V(C')\bigr)\;\le\;1+\frac{2L}{t+1}+2^{t+1}+578\Bigl(\frac LD\Bigr)^{2}.
+\]
+\end{lemma}
+
+\begin{proof}
+This is the proof of Lemma~\ref{lem:links} with one change. Put $U=V(C)\cup V(C')$. At most $2L$
+edges leave $U$. At most one component of $G-U$ meets $P$. At most $2L/(t+1)$ components have more
+than $t$ edges to $U$. Of the other components that are joined to both cycles, at most $2^{t+1}$
+contain a cycle, by Lemma~\ref{lem:parallel} with $A=V(C)$ and $B=V(C')$. This is the change. The
+remaining components that are joined to both cycles are trees with at most $t$ edges to $U$. As in
+the proof of Lemma~\ref{lem:links}, each of them lies in $J$ and gives a path of $J$ from $C$ to
+$C'$ with at most $t$ edges; an edge between the cycles is such a path as well. Divide each cycle
+into at most $17L/D$ arcs of at most $\lfloor D/8\rfloor$ vertices. Two of the paths with ends in the
+same pair of arcs would give a cycle of $J$ of length at most $2t+4\lfloor D/8\rfloor\le D$. So
+there are at most $289(L/D)^{2}$ such paths.
+\end{proof}
+
+\subsection{Pairs with exactly two links}
+
+Let $G$, $P$, $S$, $J$, $D$ and $L$ be as in Lemma~\ref{lem:linkshalf}, with $L>D$, and put
+$s=\lfloor(D-1)/2\rfloor$. Let $\mathcal C$ be the set of the cycles of $J$ of length at most $L$,
+and define $a_C$, $X_C$, $Z$ and $\mu$ as in Section~\ref{sec:forest}, in the cubic multigraph $G$
+in the place of $\Gamma$. The graph $J$ is simple, has maximum degree three and girth greater than
+$D$, so Lemma~\ref{lem:walks} holds for it. It gives
+\begin{equation}\label{eq:load}
+  \sum_{C\in\mathcal C,\ C\ni w}a_C\;\le\;L\,2^{-s}\qquad\text{for every vertex }w.
+\end{equation}
+
+\begin{lemma}[Two links]\label{lem:twolinks}
+Suppose that $\ell(V(C),V(C'))\le b$ for all disjoint $C,C'\in\mathcal C$, and put
+$\eta=2^{b}L^{3}2^{-s}$. Let $W_2$ be the sum of $a_Ca_{C'}$ over the ordered pairs of disjoint
+cycles of $\mathcal C$ with exactly two links. If $\mu>0$, then
+\[
+  W_2\;>\;\mu^{2}-(1+\eta)\,\mu .
+\]
+\end{lemma}
+
+\begin{proof}
+By~\eqref{eq:pair}, a disjoint pair with $\ell$ links has $\EE(X_CX_{C'})=a_Ca_{C'}2^{\ell-1}$. This
+is at most $a_Ca_{C'}$ for one link, and it is $2a_Ca_{C'}$ for two links. Pairs with at least three
+links are treated as in the proof of Theorem~\ref{thm:forest}: for a fixed $C$ they contribute at
+most $a_C\,2^{b}L^{3}2^{-s}=\eta\,a_C$. Intersecting pairs contribute nothing, and
+$\EE X_C^{2}\le a_C$. Hence
+\[
+  \EE Z^{2}\;\le\;\mu^{2}+W_2+(1+\eta)\,\mu .
+\]
+If $\xi\cap E(G-P)$ is a forest, then $Z=0$. So $\PP(Z\ne0)<\half$, and the Cauchy--Schwarz
+inequality gives $\mu^{2}\le\EE Z^{2}\,\PP(Z\ne0)<\half\,\EE Z^{2}$.
+\end{proof}
+
+In the proof of Theorem~\ref{thm:forest} the same computation ends with an upper bound for $\mu$
+in terms of $1/\varepsilon$. Here it is read in the other direction, and it needs only
+$q(G,P)>\half$: almost all pairs, by weight, have exactly two links.
+
+\subsection{Separators are nested}
+
+\begin{lemma}[Nested separators]\label{lem:nested}
+Let $u$ and $p$ be two vertices of a connected graph $H$. Let $C_1$ and $C_2$ be disjoint connected
+sets of vertices that avoid $u$ and $p$, such that $u$ and $p$ lie in different components of
+$H-C_i$ for $i=1,2$. Let $U_i$ be the vertex set of the component of $u$ in $H-C_i$. Then exactly
+one of the following holds: $C_1\subseteq U_2$ and $U_1\subseteq U_2$; or $C_2\subseteq U_1$ and
+$U_2\subseteq U_1$.
+\end{lemma}
+
+\begin{proof}
+Take a path from $u$ to $p$, and let $z$ be its last vertex before the first vertex in $C_1$. The
+part of the path up to $z$ lies in $U_1$. In the same way there is a path from $p$ to a vertex next
+to $C_1$ that avoids $C_1$. The set $C_2$ is connected and disjoint from $C_1$, so it lies in one
+component of $H-C_1$. If this component is neither $U_1$ nor the component of $p$, then the two
+partial paths and a path inside $C_1$ form a walk from $u$ to $p$ that avoids $C_2$. This is
+impossible. So $C_2$ lies in $U_1$ or in the component of $p$ in $H-C_1$, and the same holds with
+the indices exchanged.
+
+Suppose that $C_2$ lies in the component of $p$ in $H-C_1$. Then $C_2$ avoids $U_1$. So every
+vertex of $U_1$ is joined to $u$ outside $C_2$, and so is every vertex of $C_1$, through $z$ and
+the connected set $C_1$. Hence $U_1\cup C_1\subseteq U_2$. If $C_2$ lies in $U_1$ and $C_1$ lies in
+$U_2$, then the path from $p$ to a vertex next to $C_1$, a path inside $C_1$, and a path inside
+$U_2$ from $C_1$ to $u$ give a walk from $p$ to $u$ outside $C_2$. This is impossible. So if $C_2$
+lies in $U_1$, then $C_1$ lies in the component of $p$ in $H-C_2$, and
+$U_2\cup C_2\subseteq U_1$ by the first case with the indices exchanged. The two alternatives
+exclude each other, because $C_1\subseteq U_2$ and $U_2\subseteq U_1$ would give
+$C_1\subseteq U_1$.
+\end{proof}
+
+So a family of pairwise disjoint connected sets that separate $u$ from $p$ is linearly ordered:
+write $C_1<C_2$ in the first case of the lemma. The order is transitive, because it is the order
+of the sets $U_i$ by inclusion.
+
+\begin{lemma}[Blocks]\label{lem:blocks}
+In the situation of Lemma~\ref{lem:nested}, let $C_1<C_2$ and put
+$X=U_2\sm(U_1\cup C_1)$. Then every edge of $H$ that leaves $X$ ends in $C_1$ or in $C_2$. If
+$C_1<C<C_2$ for a third set $C$ of the family, then $C\subseteq X$. If $C_1<C_2\le C_3<C_4$, then
+the sets $U_2\sm(U_1\cup C_1)$ and $U_4\sm(U_3\cup C_3)$ are disjoint.
+\end{lemma}
+
+\begin{proof}
+An edge that leaves $U_2$ ends in $C_2$, because $U_2$ is a component of $H-C_2$. No edge joins
+$X$ to $U_1$: its end in $X$ would lie in the component $U_1$ of $H-C_1$. So an edge from $X$ to
+$U_1\cup C_1$ ends in $C_1$. For the second statement,
+$C\subseteq U_2$, and $C$ avoids $U_1\cup C_1$ because $U_1\cup C_1\subseteq U_C$, the component of
+$u$ in $H-C$. For the third, $U_2\subseteq U_3$.
+\end{proof}
+
+\subsection{The chain}
+
+\begin{lemma}[Chain]\label{lem:chain}
+In the situation of Lemma~\ref{lem:twolinks}, suppose that
+\[
+  \mu>20,\qquad\eta\le\frac12,\qquad L^{2}2^{-s}\le\frac12 .
+\]
+Fix a vertex $p\in P$. Then there are a cycle $C\in\mathcal C$, a vertex $u\notin V(C)$ that has a
+neighbour on $C$, and pairwise disjoint cycles $C_1,\dots,C_T\in\mathcal C$ with
+\[
+  T\;\ge\;\frac{8\cdot2^{s}}{L^{3}},
+\]
+such that each $C_i$ is disjoint from $C$ and avoids $u$, and $u$ and $p$ lie in the same component
+of $G-V(C)$ and in different components of $G-V(C)-V(C_i)$.
+\end{lemma}
+
+\begin{proof}
+For disjoint $C,C'\in\mathcal C$ say that $C'$ is \emph{far behind} $C$ if $C'$ does not lie in the
+component of $p$ in $G-V(C)$. This relation is antisymmetric. Let $C'$ be far behind $C$. A path
+from $p$ to its first vertex on $C$ stays in the component of $p$ in $G-V(C)$ before it ends. So it
+avoids $C'$. As $C$ is connected and disjoint from $C'$, all of $C$ lies in the component of $p$ in
+$G-V(C')$. So $C$ is not far behind $C'$. Hence the ordered pairs $(C,C')$ with $C'$ far behind $C$
+have total weight $\sum a_Ca_{C'}\le\mu^{2}/2$.
+
+Fix $C$. Every vertex of $C$ has exactly one edge end outside $C$, so at most $L$ vertices outside
+$C$ have a neighbour on $C$. A cycle $C'$ that is joined to $C$ by an edge passes through one of
+them. By~\eqref{eq:load} these cycles have total weight at most $L^{2}2^{-s}\le\half$. So the
+ordered pairs of disjoint cycles that are joined by an edge have total weight at most $\mu/2$.
+
+Call an ordered pair $(C,C')$ \emph{good} if the cycles are disjoint, have exactly two links, are
+not joined by an edge, and $C'$ is not far behind $C$. By Lemma~\ref{lem:twolinks} and the two
+bounds above, the good pairs have total weight more than
+\[
+  \mu^{2}-\tfrac32\mu-\tfrac12\mu^{2}-\tfrac12\mu\;=\;\mu\bigl(\tfrac12\mu-2\bigr)\;>\;8\mu .
+\]
+So for some $C\in\mathcal C$ the cycles $C'$ with $(C,C')$ good have total weight more than $8$.
+Fix this $C$, and put $H=G-V(C)$.
+
+Let $(C,C')$ be good. The two links are components $Y_1,Y_2$ of $G-V(C)-V(C')$ that are joined to
+both cycles, because no edge joins the cycles. The vertex $p$ lies in at most one of them. So one of
+them, say $Y$, avoids $p$. Let $u$ be a vertex of $Y$ with a neighbour on $C$. The cycle $C'$ lies
+in the component of $p$ in $H$, and $Y$ is connected and joined to $C'$. So $u$ lies in that
+component as well. The set $Y$ is a component of $H-V(C')$ that contains $u$ and not $p$. So $C'$
+separates $u$ from $p$ in $H$.
+
+There are at most $L$ choices for $u$. So for some vertex $u$ the cycles $C'$ that separate $u$
+from $p$ in $H$, as above, have total weight at least $8/L$. Take a maximal family
+$C_1,\dots,C_T$ of pairwise disjoint cycles among them. Every cycle of the collection meets one of
+the at most $TL$ vertices of the family. By~\eqref{eq:load},
+\[
+  \frac8L\;\le\;TL\cdot L\,2^{-s}.\qedhere
+\]
+\end{proof}

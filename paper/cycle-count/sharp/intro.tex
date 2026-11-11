@@ -1,0 +1,275 @@
+\section{Introduction}\label{sec:intro}
+
+\subsection{The number of cycles}
+
+Graphs in this paper are finite and simple unless we say otherwise. Throughout, $\log$ is the
+binary logarithm, $\lgk{j}$ is its $j$-fold iterate, and $\lgs x$ is the least $j\ge0$ with
+$\lgk{j}x\le1$.
+
+For a graph $G$, an \emph{even subgraph} is a set of edges that meets every vertex an even number of
+times. With symmetric difference as addition, the even subgraphs form a vector space $\Z(G)$ over
+$\mathbb{F}_2$, the \emph{cycle space}. Its dimension is
+\[
+  \beta(G)=|E(G)|-|V(G)|+\comp(G),
+\]
+where $\comp(G)$ is the number of components. We call $\beta(G)$ the \emph{rank} of $G$. Other names
+are cyclomatic number and cycle rank. A \emph{cycle} is a connected $2$-regular subgraph. We
+identify a subgraph that has no isolated vertices with its edge set. Then a cycle is a nonzero
+element of $\Z(G)$, so a graph of rank $r$ has at most $2^{r}-1$ cycles.
+
+Let $\psi(r)$ be the largest number of cycles in a graph of rank $r$. Entringer and
+Slater~\cite{ES} proved that $2^{r-1}<\psi(r)<2^{r}$, and they conjectured that
+$\psi(r)\sim2^{r-1}$. They also proved that the maximum is attained by a cubic graph for every
+$r\ge3$. Aldred and Thomassen~\cite{AT} proved that $\psi(r)\le\frac{15}{16}2^{r}$, and that a
+planar graph of rank $r$ has at most $2^{r-1}+o(2^{r-1})$ cycles. Alahmadi, Aldred, dela Cruz,
+Sol\'e and Thomassen~\cite{AACST} proved that a graph with $p$ vertices and $q>2p+3\log(3p)$ edges
+has at most $2^{q-p}$ cycles. For a connected graph, $2^{q-p}=2^{r-1}$. From below, Horak and
+Kim~\cite{HK} proved that
+\begin{equation}\label{eq:hk}
+\begin{aligned}
+  \psi(r)&\;\ge\;2^{r-1}+\bigl(r-\tfrac12\bigr)2^{(r-1)/2}-\tfrac32(r-1)&&(r\text{ odd}),\\
+  \psi(r)&\;\ge\;2^{r-1}+\bigl(r+\tfrac52\bigr)2^{(r-2)/2}-\tfrac12(3r+2)&&(r\text{ even}),
+\end{aligned}
+\end{equation}
+for $r\ge4$. Our main result shows that this is the right order of the second term.
+
+\begin{theorem}[Sharp bound]\label{thm:sharp}
+There is an absolute constant $K$ such that every graph of rank $r\ge1$ has at most
+\[
+  2^{r-1}+K\,r\,2^{r/2}
+\]
+cycles. Consequently $\psi(r)=2^{r-1}+\Theta\bigl(r\,2^{r/2}\bigr)$.
+\end{theorem}
+
+The theorem confirms the conjecture of Entringer and Slater with the correct second term. It is not
+a useful numerical bound. The constant $K$ comes from a threshold $R_0$ on the rank, below which the
+proof uses only $\psi(r)<2^{r}$. That threshold is not explicit and is very large. So
+$\frac{15}{16}2^{r}$ remains the best explicit bound for every rank of practical size. The theorem
+does not determine the best constant, and it does not determine $\psi(r)$.
+
+The proof of Theorem~\ref{thm:sharp} is long, and only parts of it are formalised. A weaker
+statement has a short proof from the forest estimate below, and this proof is formalised. It is also
+a step in the proof of Theorem~\ref{thm:sharp}.
+
+\begin{theorem}[Leading term]\label{thm:cycles}
+There is $r_1$ such that every graph of rank $r\ge r_1$ has at most
+\[
+  \Bigl(\frac12+\frac{21}{\lgk{3}r}\Bigr)2^{r}
+\]
+cycles. Consequently $\psi(r)\sim2^{r-1}$.
+\end{theorem}
+
+\subsection{The three ideas}
+
+\paragraph{First idea: outside parts.}
+Fix a subgraph $W$ of $G$. For an even subgraph $\xi$ of $G$ we call $\xi\sm E(W)$ its
+\emph{outside part}. If a cycle uses an edge of $W$, then its outside part is a proper subset of a
+cycle, so it is a forest. So the cycles through $W$ are counted by the outside parts that are
+forests (Section~\ref{sec:count}). For an edge $e$ of a cycle $W$, this gives a recursion: the
+cycles of $G$ are the cycles of $G-e$ and the cycles through $e$, and the cycles through $e$ are at
+most half of the even subgraphs whose outside part is a forest (Lemma~\ref{lem:edge}).
+
+\paragraph{Second idea: about one half of the outside parts are forests.}
+This is an estimate of KNT~\cite{KNT}.
+
+\begin{theorem}[Forest estimate, KNT~\cite{KNT}]\label{thm:forest}
+There is $r_0$ such that the following holds for all $r\ge r_0$. Let $G$ be a connected simple graph
+of rank $r$. Let $W\subseteq G$ be a nonempty union of cycles with at most $\sqrt r$ edges and at
+most $(\log r)/100$ components. If $\xi$ is a uniformly random element of $\Z(G)$, then
+\begin{equation}\label{eq:forest}
+  \PP\bigl(\xi\sm E(W)\text{ is a forest}\bigr)\;\le\;\frac12+\frac{20}{\lgk{3}r}.
+\end{equation}
+\end{theorem}
+
+The value $\half$ has a simple source. Suppose that $W$ meets the rest of $G$ in two vertices $u$
+and $v$ only. Then an outside part has even degree at every vertex, or it has odd degree exactly at
+$u$ and $v$. There are equally many outside parts of each kind, and one of the first kind is not a
+forest unless it is empty (Example~\ref{rem:twoports}). Theorem~\ref{thm:forest} says that no other
+way to attach $W$ leaves a larger proportion of forests, up to the error term.
+
+Theorem~\ref{thm:forest} gives Theorem~\ref{thm:cycles} (Section~\ref{sec:cycles}). It was found
+for another problem. A graph on $n$ vertices is \emph{pancyclic} if it contains a cycle of every
+length $3,4,\dots,n$. Let $n+h(n)$ be the least number of edges of a pancyclic graph on $n$
+vertices.
+
+\begin{theorem}[Pancyclic graphs, KNT~\cite{KNT}]\label{thm:main}
+There is an absolute constant $A$ such that, for every $n\ge3$,
+\[
+  \log n+\lgs n-A\;\le\;h(n)\;\le\;\lfloor\log n\rfloor+\lgs n+1 .
+\]
+\end{theorem}
+
+Bondy~\cite{Bondy} stated without proof that $\log(n-1)-1\le h(n)\le\log n+\lgs n+O(1)$. His lower
+bound is a count. A connected graph with $n+h$ edges has at most $2^{h+1}-1$ cycles, and a pancyclic
+graph needs $n-2$ of them. Griffin~\cite{Griffin} wrote this count out and determined $h(n)$ for
+$n\le37$. Problem~\#1016 in Bloom's collection of Erd\H{o}s problems~\cite{Bloom}
+asks whether the upper bound is the truth, and whether even $h(n)-\log n\to\infty$.
+Theorem~\ref{thm:main} answers both questions. The paper~\cite{KNT} gives more of the history.
+
+Here is how the estimate enters the proof of Theorem~\ref{thm:main}. Let $W$ have rank $t$ and at
+least one edge, and sort the cycles of $G$ by their outside parts. Two cycles with the same outside
+part differ only inside $W$, so the cycles with a given outside part have at most $|E(W)|$
+different lengths. There are $2^{r-t}$ outside parts. Hence
+\begin{equation}\label{eq:trivial}
+  \text{the cycles of $G$ have at most }|E(W)|\,2^{r-t}\text{ different lengths.}
+\end{equation}
+Theorem~\ref{thm:forest} improves this by a factor of almost two when $r$ is large.
+Section~\ref{sec:lower} applies the improved bound at ranks that grow like a tower of exponentials.
+Each level halves the number of lengths that a given rank can supply, so each level costs one more
+edge. This gives the term $\lgs n$. Section~\ref{sec:upper} gives the construction for the upper
+bound.
+
+\paragraph{Third idea: at most one half, at large girth.}
+The error term in~\eqref{eq:forest} cannot be removed in general. In the graphs of Horak and Kim a
+short cycle $W$ has slightly more than half of its outside parts acyclic. The reason is local: these
+graphs have many cycles of length four, and many cuts of four edges. The third idea is that nothing
+else can go wrong. For a set $P$ of vertices write
+\[
+  q(G,P)=\PP\bigl(\xi\cap E(G-P)\text{ is a forest}\bigr).
+\]
+If $P=V(W)$ for a subgraph $W$, then every edge of $G-P$ lies outside $W$, so
+$\PP(\xi\sm E(W)\text{ is a forest})\le q(G,P)$.
+
+\begin{theorem}[Exact half]\label{thm:half}
+There are absolute integers $D_{*}\ge3$ and $R$ with the following property. Let $G$ be a connected
+cubic multigraph of rank $r\ge R$. Let $P$ be a nonempty set of at most $3\log r$ vertices such that
+$G[P]$ is connected and $G-P$ has no cycle of length less than $D_{*}$. Then
+\[
+  q(G,P)\;\le\;\frac12 .
+\]
+\end{theorem}
+
+The proof is by contradiction, and it does not use the size of the excess. Suppose that
+$q(G,P)>\half$. The proof finds two disjoint parts of $G-P$ that are large, have small boundaries
+and have large girth. Given all edges outside the two parts, the two parts are independent, and
+each is a forest with probability at most $\frac35$. So $q(G,P)\le\frac9{25}$, a contradiction. The
+bound $\frac35$ comes from Theorem~\ref{thm:forest}, used once, with a fixed error. The two parts
+come from a chain of nested cycles, as follows. Most pairs of moderately long cycles have exactly
+two links in the sense of Section~\ref{sec:forest}. Two links force one cycle to separate the other
+from $P$. Many such cycles around one point are nested, and the parts between them are the pieces
+that we need.
+
+Theorem~\ref{thm:half} applies to a shortest cycle $W$ of a cubic graph of large girth. Then every
+edge of $W$ lies on at most $2^{r-2}$ cycles, and the recursion of the first idea gives
+$\psi(r)\le\psi(r-1)+2^{r-2}$ for such graphs. Two further theorems treat the graphs that
+Theorem~\ref{thm:half} excludes. One is for cubic graphs with a cyclic cut of at most four edges
+(Theorem~\ref{thm:smallcut}). The other is for cubic graphs of bounded girth without such a cut
+(Theorem~\ref{thm:girth}). Section~\ref{sec:sharp} states them and derives Theorem~\ref{thm:sharp}.
+Their proofs are long case analyses of a different kind. They are in a supplement to this paper
+(Section~\ref{sec:inputs}).
+
+\subsection{What the third idea does for the two older results}\label{sec:three}
+
+We asked whether Theorem~\ref{thm:sharp} or its proof improves Theorem~\ref{thm:cycles} or
+Theorem~\ref{thm:main}. The answers are different.
+
+\emph{The number of cycles.} Theorem~\ref{thm:sharp} replaces the statement of
+Theorem~\ref{thm:cycles} by a sharp one. It does not replace its proof. The two auxiliary theorems
+use the bound $(\half+o(1))2^{r}$ as an input, so Theorem~\ref{thm:cycles} is the first step of the
+proof of Theorem~\ref{thm:sharp}.
+
+\emph{Pancyclic graphs.} Theorem~\ref{thm:sharp} does not change Theorem~\ref{thm:main}. The term
+$\log n$ in $h(n)$ comes from the number of cycles, and Theorem~\ref{thm:sharp} sharpens only the
+error in that count: a pancyclic graph of rank $r$ on $n$ vertices has
+$n-2\le2^{r-1}+Kr2^{r/2}$. The term $\lgs n$ comes from the lengths of the cycles. It needs the
+forest estimate for a subgraph $W$ that is a union of many short cycles, in a graph that contains
+short cycles everywhere. Theorem~\ref{thm:half} does not apply to such graphs. A pancyclic graph
+contains cycles of length three and four, and the proportion of forests can exceed $\half$ when
+such cycles are present (Example~\ref{rem:twoports} and Section~\ref{sec:examples}).
+
+One tool from the proof does apply to Theorem~\ref{thm:forest}. The parallel-link lemma
+(Lemma~\ref{lem:parallel}) bounds one term of the link count without the error term
+of~\eqref{eq:forest}. With it, the error term $20/\lgk3r$ in Theorem~\ref{thm:forest} improves to
+$r^{-\kappa}$ for every fixed $\kappa<\frac13$, for unions of cycles with at most
+$r/(2\log^{2}r)$ edges and at most $\gamma(\kappa)\log r$ components. A further refinement gives
+$O((\log r)^{11/2}/\sqrt r)$ (Remark~\ref{rem:polynomial}). This would shorten the error
+analysis in Section~\ref{sec:lower}. It would not change the statement of
+Theorem~\ref{thm:main}, because the lower bound there already loses only an additive constant.
+
+\subsection{Two elementary theorems}
+
+Two further results concern graphs of small rank. Their proofs are elementary and do not use
+Theorem~\ref{thm:forest}.
+
+\begin{theorem}\label{thm:exact}
+\textup{(a)} Let $N$ be a connected graph and let $u\ne v$ be two of its vertices. Then $N$ has at
+most $2^{\beta(N)}$ paths from $u$ to $v$. If it has exactly $2^{\beta(N)}$, then each of these paths
+has at least $\beta(N)$ edges, and deleting the edges of any one of them leaves a forest.
+
+\textup{(b)} Let $G$ be a connected graph and let $W\subseteq G$ be a subgraph that contains a cycle.
+Suppose that every outside part is the outside part of some cycle of $G$. Then $G-E(W)$ has no two
+edge-disjoint cycles, and $\beta(G)\le\beta(W)+|V(W)|+3$.
+\end{theorem}
+
+Part~(a) is about graphs that attain the largest possible number of paths between two vertices. It
+explains the shape of the construction in Section~\ref{sec:upper}. A gadget that turns $k$ units of
+rank into $2^{k}$ path lengths has only long paths, so the short cycles must come from a second,
+much smaller gadget, and so on. This is the source of the term $\lgs n$ in the construction. The
+bound of part~(a) is also a tool in the supplement: the proofs there count paths between two
+vertices, and they need a stable form of part~(a) (Theorem~\ref{thm:stability}).
+
+Part~(b) is about the count of cycles by their outside parts. Call an outside part \emph{wasted} if
+no cycle has it as its outside part. Part~(b) says that a graph can avoid all waste only while its
+rank exceeds the rank of $W$ by at most $|V(W)|+3$. Section~\ref{sec:exact} proves both parts.
+
+\subsection{Authorship and verification}\label{sec:status}
+
+KNT is a person. Astra and Fable~5.2 are language models. Theorems~\ref{thm:forest}
+and~\ref{thm:main}, their proofs, and the Lean formalisation of these proofs come
+from~\cite{KNT}. KNT obtained them in September 2026 with Astra, and has described that process in
+public~\cite{Claim}. In November 2026 KNT asked Fable~5.2 to look for a simpler proof of
+Theorem~\ref{thm:forest}. That search found Theorems~\ref{thm:cycles} and~\ref{thm:exact}, and
+Fable~5.2 wrote their Lean proofs. KNT then asked both models to study the second term of
+$\psi(r)$, in one shared set of files and in parallel. Theorem~\ref{thm:sharp} is the result of
+that work. KNT directed the work at each step.
+
+The parts of the proof of Theorem~\ref{thm:sharp} have these origins. The edge recursion, the
+chain of nested cycles, the parallel-link lemma and the first form of the localisation lemma are
+due to Fable~5.2. The stable form of Theorem~\ref{thm:exact}(a), the two auxiliary theorems, the
+bound $\frac35$ for the pieces, the packing of short cycles without an excess, the use of two girth
+scales, and the assembly of Theorem~\ref{thm:half} are due to Astra. Each model checked the proofs
+of the other in the parts that this paper prints. Fable~5.2 wrote this paper. For
+Sections~\ref{sec:sharp} to~\ref{sec:halfproof} it followed Astra's written proof~\cite{S0} and
+checked every step. It did not check the supplement line by line (Section~\ref{sec:inputs}).
+
+\begin{table}[ht]
+\centering\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}L{4.4cm}L{2.2cm}L{8.8cm}@{}}
+\toprule
+Statement & Status & Lean declaration (namespace \lean{Erdos1016}) \\
+\midrule
+Theorem~\ref{thm:sharp} & not formalised & parts only; see Table~\ref{tab:sharpsteps} \\
+Theorem~\ref{thm:half} & not formalised & parts only; see Table~\ref{tab:sharpsteps} \\
+Theorem~\ref{thm:cycles}, upper bound & formalised & \lean{cycleCountTheorem},
+  \lean{cycleCountTheorem_general} \\
+Theorem~\ref{thm:cycles}, $\psi(r)\sim2^{r-1}$ & formalised & \lean{cycleCountAsymptotic} \\
+Theorem~\ref{thm:forest} & formalised & \lean{ShortProof.fewComponentForestEstimate} \\
+Theorem~\ref{thm:main} & formalised & \lean{mainTheorem}; the explicit upper bound is
+  \lean{Problem1016.upper_bound_integer} \\
+Theorem~\ref{thm:exact}(a) & formalised & \lean{twoTerminalTheorem} \\
+Theorem~\ref{thm:exact}(b) & formalised & \lean{noWasteTheorem} \\
+\bottomrule
+\end{tabular}
+\caption{The theorems and their formal counterparts in the repository~\cite{Repo}.
+Appendix~\ref{app:lean} names the commit.}\label{tab:status}
+\end{table}
+
+Theorems~\ref{thm:cycles}, \ref{thm:forest}, \ref{thm:main} and~\ref{thm:exact} are formalised in
+Lean~4~\cite{Lean4} with Mathlib~\cite{Mathlib}. Table~\ref{tab:status} lists the declarations. The
+Lean kernel accepts their proofs with the axioms \lean{propext}, \lean{Classical.choice} and
+\lean{Quot.sound} only. This certifies the formal statements. It does not certify the prose of this
+paper. Appendix~\ref{app:lean} prints the formal statements of Theorems~\ref{thm:cycles}
+and~\ref{thm:exact}, so that the reader can compare them with the text. It also gives the commands
+that repeat the check and names the Lean declaration for each step.
+
+Theorems~\ref{thm:sharp} and~\ref{thm:half} are not formalised. Their proofs have been read by the
+two models only. Some steps of the proof of Theorem~\ref{thm:half} are formalised:
+the parallel-link lemma, the link bound, the moment inequality, and the order of nested separators.
+Table~\ref{tab:sharpsteps} in Appendix~\ref{app:lean} lists them. The reader should treat
+Theorem~\ref{thm:sharp} as a claim with a written proof, and not as a verified result.
+
+The examples and the remarks in this paper are not formalised. Appendix~\ref{app:checks} describes
+tests of the examples, and of our wording of the proofs, on small graphs.
+Appendix~\ref{app:sources} says which sources we read and how we searched the literature. No
+referee has read this draft.

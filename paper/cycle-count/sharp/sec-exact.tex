@@ -1,0 +1,128 @@
+\section{Two elementary theorems}\label{sec:exact}
+
+This section proves Theorem~\ref{thm:exact}. Part~(a) is Proposition~\ref{prop:terminal}, and
+part~(b) is Proposition~\ref{prop:nowaste}. Both are formalised (Table~\ref{tab:status}).
+
+Three conditions on a subgraph $W$ of $G$ are easily confused, so we separate them first. Let $W$
+have $m\ge1$ edges.
+\begin{enumerate}
+\item[\textup{(i)}] \emph{Every outside part is a forest.} This means $p(G,W)=1$. It holds if and
+only if $G-E(W)$ is a forest: a subset of a forest is a forest, and a cycle of $G-E(W)$ is its own
+outside part.
+\item[\textup{(ii)}] \emph{No outside part is wasted.} This means that every outside part is the
+outside part of some cycle. It is the hypothesis of Proposition~\ref{prop:nowaste}, and it does not
+imply~(i). Let $G$ be $K_5$ minus an edge, and let $W$ be the triangle on its three vertices of
+degree four. Then $G-E(W)$ is $K_{2,3}$. The sixteen outside parts are the empty set, twelve paths
+and three four-cycles. Each of them is the outside part of a cycle, but only thirteen are forests.
+So no outside part is wasted, and $p(G,W)=13/16$.
+\item[\textup{(iii)}] \emph{Equality in~\eqref{eq:trivial}.} This never holds. The cycles with
+empty outside part lie in $W$, so they have fewer than $m$ different lengths. Every other outside
+part accounts for at most $m$ lengths. So the cycles of $G$ have fewer than $m\,2^{r-t}$ lengths.
+\end{enumerate}
+Proposition~\ref{prop:terminal} is about a fourth condition: a graph has the largest possible
+number of paths between two vertices.
+
+\subsection{Two terminals}
+
+\begin{proposition}\label{prop:terminal}
+Let $N$ be a connected graph and let $u\ne v$ be two of its vertices. Then $N$ has at most
+$2^{\beta(N)}$ paths from $u$ to $v$. If it has exactly $2^{\beta(N)}$, then $N-E(A)$ is a forest
+for every path $A$ from $u$ to $v$, and every such path has at least $\beta(N)$ edges.
+\end{proposition}
+
+\begin{proof}
+A path from $u$ to $v$ is a $\{u,v\}$-join in the sense of Example~\ref{rem:twoports}: exactly $u$
+and $v$ have odd degree in it. The joins form a coset of $\Z(N)$, so there are $2^{\beta(N)}$ of
+them. This proves the first statement. Now suppose that all joins are paths, and let $A$ be one of
+them. If $N-E(A)$ contained a cycle $C$, then $A\cup C=A+C$ would be a join that is not a path. So
+$N-E(A)$ is a forest. Deleting an edge lowers the rank by at most one, so $\beta(N)\le|A|$.
+\end{proof}
+
+Equivalently, an edge $f$ of a graph $G$ lies on at most $2^{\beta(G)-1}$ cycles, and if it lies on
+that many, then each of them has at least $\beta(G)$ edges. Equality in
+Proposition~\ref{prop:terminal} holds for the necklace $N_j$ of Section~\ref{sec:upper} between
+$v_0$ and $v_j$. It also holds for $K_4$ minus an edge and for $K_{3,3}$ minus an edge, in each case
+between the ends of the deleted edge.
+
+This explains the shape of the construction. The necklace $N_k$ turns $k$ units of rank into
+$2^{k}$ path lengths, the most that $k$ units can give. By Proposition~\ref{prop:terminal}, no
+gadget that does this has a path with fewer than $k$ edges between its terminals. So the cycles
+through $N_k$ have length greater than $k$, and the lengths $3,\dots,k$ must be produced elsewhere.
+The construction uses a necklace with about $\log k$ beads for them. Its own short lengths require
+a third necklace, and so on.
+
+Each of these necklaces costs a factor of two. Consider a necklace $N_j$ that is closed by a chord
+$f_j$, together with $f_j$ and the chords of the smaller necklaces. Call this part $W$. The rest of
+the graph is attached to $W$ at the two vertices $v_0$ and $v_j$ only. By
+Example~\ref{rem:twoports}, half of the outside parts are even subgraphs of the rest. A cycle that
+uses an edge of $W$ cannot have a nonempty even subgraph as its outside part. So nearly half of the
+outside parts are of no use to the cycles through $W$. These $\lgs k$ halvings are the term
+$\lgs n$ of Theorem~\ref{thm:main}.
+
+\paragraph{Formal counterpart.}
+Proposition~\ref{prop:terminal} is the theorem \lean{twoTerminalTheorem}. The formal statement also
+covers the case $u=v$. The formal proof gets the bound $\beta(N)\le|A|$ from a count: an even
+subgraph of $N$ is determined by its edges on the path $A$.
+
+\subsection{No waste}
+
+Lemma~\ref{lem:count} counts the cycles of $G$ by their outside parts. Recall that an outside
+part is \emph{wasted} if it is not the outside part of any cycle. A graph cannot avoid all waste
+for long.
+
+\begin{proposition}\label{prop:nowaste}
+Let $G$ be a connected graph and let $W\subseteq G$ be a subgraph that contains a cycle. Suppose
+that no outside part is wasted. Then every nonempty even subgraph of $G-E(W)$ is a cycle, and
+\[
+  \beta(G)-\beta(W)\;\le\;|V(W)|+3 .
+\]
+\end{proposition}
+
+\begin{proof}
+Let $z$ be a nonempty even subgraph of $G-E(W)$. Then $z$ is its own outside part. By assumption
+some cycle $C$ has outside part $z$, so $z\subseteq C$. A cycle that contains a nonempty even
+subgraph is equal to it. So $z$ is a cycle.
+
+In particular, two edge-disjoint cycles of $G-E(W)$ would have a union that is an even subgraph but
+not a cycle. So the graph $G'=G-E(W)$, on the vertex set $V(G)$, has no two edge-disjoint cycles.
+By Lemma~\ref{lem:EP} below, $|E(G')|\le|V(G)|+3$. Now $\beta(G)=|E(G)|-|V(G)|+1$ and
+$\beta(W)\ge|E(W)|-|V(W)|+1$. Hence
+$\beta(G)-\beta(W)\le|E(G')|-|V(G)|+|V(W)|\le|V(W)|+3$.
+\end{proof}
+
+\begin{lemma}[Erd\H{o}s and P\'osa~\cite{EP}]\label{lem:EP}
+A multigraph with $n$ vertices and at least $n+4$ edges contains two edge-disjoint cycles.
+\end{lemma}
+
+\begin{proof}
+We include the short proof. Let $H$ be a counterexample with $|V(H)|+|E(H)|$ minimal, and let $n$
+be its number of vertices. Then $H$ has exactly $n+4$ edges and no vertex of degree at most one. It
+has no vertex of degree two either. If such a vertex carries a loop, then the rest of $H$ contains a
+second cycle. Otherwise the vertex and its two edges can be replaced by a single edge, which gives a
+smaller counterexample. So
+$2(n+4)\ge3n$, that is, $n\le8$. Let $C$ be a shortest cycle of $H$. Since $H-E(C)$ is a forest,
+$n+4-|C|\le n-1$, so $|C|\ge5$. Thus $H$ is a simple graph of minimum degree at least $3$ and girth
+at least $5$, and such a graph has at least $1+3+6=10$ vertices, a contradiction.
+\end{proof}
+
+A graph in which every nonempty even subgraph is a cycle has $2^{\beta}-1$ cycles, the largest
+possible number. Such graphs are known. Entringer and Slater~\cite[Theorem~1]{ES} quote a theorem of
+Maurer, and of Mateti and Deo: a connected graph has this property if and only if it reduces to
+$K_1$, $K_3$, $K_4$ minus an edge, $K_4$ or $K_{3,3}$. A reduction deletes a vertex of degree one,
+or suppresses a vertex of degree two whose two neighbours are not adjacent. So the first conclusion of Proposition~\ref{prop:nowaste}
+puts $G-E(W)$ into a known class. In the language of codes, a binary code in which every nonzero
+word is minimal is intersecting~\cite[\S2]{AACST}.
+
+The second conclusion is sharp up to the additive constant. If $W$ is a cycle $w_1\cdots w_m$ and
+$G$ consists of $W$ and a path of length two from $w_i$ to $w_{i+1}$ for every $i$ modulo $m$, then
+no outside part is wasted and $\beta(G)-\beta(W)=|V(W)|$. In the example of~(ii) above,
+$\beta(G)-\beta(W)=|V(W)|+1$. An exhaustive search found nothing better for a triangle $W$ in
+graphs with at most eight vertices.
+
+\paragraph{Formal counterpart.}
+Proposition~\ref{prop:nowaste} is the theorem \lean{noWasteTheorem}. There $W$ is given by its edge
+set $S$, and $\beta(W)$ is defined through the graph on all vertices of $G$ with edge set $S$.
+Lemma~\ref{lem:EP} is the theorem \lean{ExactCounting.Multi.card_le_of_intersecting}. It is stated
+for multigraphs in the language of even edge sets: if any two nonempty even edge sets share an
+edge, then there are at most $n+3$ edges. The formal proof uses the same reductions as the proof
+above. In the last step it finds both even sets by a pigeonhole count.

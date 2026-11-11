@@ -1,0 +1,112 @@
+\section{The sharp bound: the parts of the proof}\label{sec:sharp}
+
+Sections~\ref{sec:sharp} to~\ref{sec:examples} prove Theorem~\ref{thm:sharp}. This section states
+the three parts of the proof and derives the theorem from them. Sections~\ref{sec:affine}
+to~\ref{sec:halfproof} prove the first part, Theorem~\ref{thm:half}. Section~\ref{sec:inputs}
+describes the other two parts, whose proofs are in the supplement. None of these sections is
+formalised as a whole. Table~\ref{tab:sharpsteps} lists the steps that are.
+
+\subsection{Conventions}
+
+As in Section~\ref{sec:forest}, graphs may have loops and parallel edges. A loop adds two to the
+degree of its vertex. A loop is a cycle of length one, and two parallel edges form a cycle of
+length two. A multigraph is \emph{cubic} if every vertex has degree three, and \emph{subcubic} if
+every vertex has degree at most three. The \emph{girth} of a multigraph is the length of a shortest
+cycle; a forest has infinite girth. We write $c(G)$ for the number of cycles of $G$.
+
+If we replace an edge by a path, the rank and the number of cycles do not change. So $\psi(r)$ is
+also the largest number of cycles of a multigraph of rank $r$.
+
+A \emph{cyclic cut} of $G$ is a set $\delta X$ of edges such that $G[X]$ and $G-X$ each contain a
+cycle. Its \emph{size} is $|\delta X|$.
+
+The two auxiliary theorems are stated for cubic multigraphs without loops.
+
+\begin{theorem}[Small cyclic cuts; Astra, supplement~\cite{S1}]\label{thm:smallcut}
+There is an absolute constant $K_4$ such that every connected cubic multigraph without loops, of
+rank $r$, that has a cyclic cut of size at most four satisfies
+\[
+  c(G)\;\le\;2^{r-1}+K_4\,r\,2^{r/2}.
+\]
+\end{theorem}
+
+\begin{theorem}[Bounded girth; Astra, supplement~\cite{S2}]\label{thm:girth}
+For every integer $g_0\ge2$ there is $R(g_0)$ with the following property. Let $G$ be a connected
+cubic multigraph without loops, of rank $r\ge R(g_0)$ and girth at most $g_0$, that has no cyclic
+cut of size at most four. Then $c(G)<2^{r-1}$.
+\end{theorem}
+
+The graphs of Horak and Kim have cyclic cuts of size four, and they have more than $2^{r-1}$
+cycles. So the second term of Theorem~\ref{thm:sharp} comes from Theorem~\ref{thm:smallcut} alone.
+In the other two cases the proof gives no excess over $2^{r-1}$ beyond the excess at smaller rank.
+
+\subsection{Cubic graphs}
+
+\begin{lemma}\label{lem:cubic}
+For every $r\ge2$ there is a connected cubic multigraph of rank $r$ with exactly $\psi(r)$ cycles.
+\end{lemma}
+
+\begin{proof}
+The numbers of cycles of the graphs of rank $r$ are integers below $2^{r}$, so some graph $G_0$
+attains $\psi(r)$. If $G_0$ is not connected, identify a vertex of one component with a vertex of
+another. This changes neither the rank nor the set of cycles. Now delete a vertex of degree one, or
+replace a vertex of degree two and its two edges by one edge, as long as this is possible. These
+steps keep the rank and the number of cycles. They may produce loops and parallel edges. The result
+is a connected multigraph with all degrees at least three, because $r\ge2$.
+
+Let $v$ be a vertex of degree $d\ge4$. Replace $v$ by a path $v^{1}v^{2}\cdots v^{d-2}$, and
+distribute the $d$ edge ends at $v$ along this path: two at $v^{1}$, one at each of
+$v^{2},\dots,v^{d-3}$, and two at $v^{d-2}$. The new multigraph has $d-3$ more vertices and $d-3$
+more edges, so its rank is $r$. A cycle through $v$ uses two edge ends at $v$. Together with the
+part of the path between these two ends it is a cycle of the new multigraph. Different cycles give
+different cycles, and the cycles that avoid $v$ remain. So the number of cycles does not decrease,
+and it cannot increase beyond $\psi(r)$. Repeat this for every vertex of degree at least four.
+\end{proof}
+
+Entringer and Slater proved the same statement with simple cubic graphs for $r\ge3$~\cite{ES}. We
+do not need it in that form.
+
+\subsection{Proof of Theorem~\ref{thm:sharp}}
+
+The lower bound for $\psi(r)$ is~\eqref{eq:hk}; Section~\ref{sec:examples} recalls the graphs.
+For the upper bound, let $D_{*}$ and $R$ be as in Theorem~\ref{thm:half}, let $K_4$ be as in
+Theorem~\ref{thm:smallcut}, and let $R(\cdot)$ be as in Theorem~\ref{thm:girth}. Choose
+$R_0\ge\max\{R,\,R(D_{*}),\,9\}$ so large that $2\log(2r)\le3\log r$ for $r\ge R_0$. Put
+\[
+  K=\max\bigl\{K_4,\;2^{R_0/2}\bigr\}.
+\]
+We prove by induction on $r$ that $\psi(r)\le2^{r-1}+Kr2^{r/2}$. For $1\le r<R_0$ this holds because
+$\psi(r)<2^{r}\le2^{r-1}+2^{R_0/2}2^{r/2}$. Let $r\ge R_0$, and let $G$ be a connected cubic
+multigraph of rank $r$ with $\psi(r)$ cycles (Lemma~\ref{lem:cubic}). There are four cases.
+
+\emph{Case 1: $G$ has a loop $e$.} The loop is the only cycle through $e$, and $G-e$ is connected of
+rank $r-1$. So $c(G)=c(G-e)+1\le2^{r-2}+K(r-1)2^{(r-1)/2}+1\le2^{r-1}+Kr2^{r/2}$.
+
+\emph{Case 2: $G$ has no loop, and it has a cyclic cut of size at most four.} Then
+Theorem~\ref{thm:smallcut} gives the bound, because $K\ge K_4$.
+
+\emph{Case 3: $G$ has no loop and no cyclic cut of size at most four, and its girth is less than
+$D_{*}$.} Then $c(G)<2^{r-1}$ by Theorem~\ref{thm:girth} with $g_0=D_{*}$.
+
+\emph{Case 4: $G$ has no loop and its girth is at least $D_{*}$.} Let $W$ be a shortest cycle and
+let $g$ be its length. A cubic multigraph of girth $g$ has at least $2^{g/2}$ vertices, and $G$ has
+$2r-2$ vertices. So $g\le2\log(2r)\le3\log r$. The set $P=V(W)$ is connected, and $G-P$ has no cycle
+of length less than $D_{*}$. So $q(G,P)\le\half$ by Theorem~\ref{thm:half}. Let $e$ be an edge of
+$W$. By Lemma~\ref{lem:edge} and the induction hypothesis for the connected multigraph $G-e$,
+\[
+  c(G)\;\le\;c(G-e)+2^{r-2}\;\le\;2^{r-1}+K(r-1)2^{(r-1)/2}\;\le\;2^{r-1}+Kr2^{r/2}.
+\]
+This completes the induction. A graph of rank $r$ that is not connected has at most $\psi(r)$
+cycles by definition. \qed
+
+\begin{remark}
+In Case~3 the girth is at least five when $r\ge9$, although the proof does not need this. Let $C$
+be a cycle of length at most four in a cubic multigraph without loops, and put $X=V(C)$. At most
+eight edges have an end in $X$, and at most four of them leave $X$. So $G-X$ has rank at least
+$r-8$. If $r\ge9$, then $\delta X$ is a cyclic cut of size at most four.
+\end{remark}
+
+\begin{remark}
+The multigraph $G-e$ in Case~4 is not cubic. This is why the induction is on $\psi(r)$ and not on a
+class of cubic graphs.
+\end{remark}

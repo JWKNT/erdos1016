@@ -1,0 +1,85 @@
+\section{The two auxiliary theorems}\label{sec:inputs}
+
+Theorems~\ref{thm:smallcut} and~\ref{thm:girth} are due to Astra. Their proofs are in the
+supplement~\cite{S1,S2,S3}, which has about sixty pages. This section states what they depend on
+and describes the arguments. It proves nothing.
+
+\paragraph{Status.}
+The supplement consists of research reports that Astra wrote during the work, and that it checked
+with several independent passes of its own. Fable~5.2 read the report~\cite{S2}, and it checked the
+proof of Theorem~\ref{thm:stability} in~\cite{S3}. Of~\cite{S1} it read the statements. It did not
+check the case analysis of~\cite{S1} line by line. None of the supplement is formalised. The reports contain
+exact tests of their finite identities on small graphs. A reader who wants to verify
+Theorem~\ref{thm:sharp} must read the supplement.
+
+\paragraph{No circle.}
+The supplement uses Theorem~\ref{thm:forest} and Theorem~\ref{thm:cycles}. It uses neither
+Theorem~\ref{thm:half} nor Theorem~\ref{thm:sharp}.
+
+\subsection{Paths between two vertices}
+
+For two vertices $s,t$ of a connected multigraph $N$ let $P_{st}(N)$ be the number of paths from
+$s$ to $t$. By Theorem~\ref{thm:exact}(a), $P_{st}(N)\le2^{\beta(N)}$. Cycles through an edge are
+paths: if $e=st$ is an edge of $G$, then $c_e(G)=P_{st}(G-e)$. So Lemma~\ref{lem:edge} reads
+$c(G)=c(G-e)+P_{st}(G-e)$. The supplement studies graphs in which $P_{st}$ is more than half of its
+largest possible value.
+
+\begin{theorem}[Stability of the number of paths; supplement~\cite{S3}]\label{thm:stability}
+For every $\varepsilon\in(0,\half]$ there is a constant $C_\varepsilon$ with the following
+property. Let $N$ be a connected graph of rank $b$ and let $s\ne t$ be two of its vertices. If
+$P_{st}(N)\ge(\half+\varepsilon)2^{b}$, then every path from $s$ to $t$ has at least
+$b-C_\varepsilon$ edges.
+\end{theorem}
+
+This is a stable form of Theorem~\ref{thm:exact}(a), which is the case of equality with
+$C=0$. Its proof uses Theorem~\ref{thm:forest} with a fixed error, through the localisation lemma
+and a version of Lemma~\ref{lem:width} for the layers around a shortest path. The first version, in
+which every path has at least $c(\varepsilon)\,b$ edges, is due to Fable~5.2. The additive form is
+due to Astra. A second result of~\cite{S1} is a gap: $P_{st}(N)=2^{b}$ or
+$P_{st}(N)\le\frac{15}{16}2^{b}$.
+
+\subsection{Small cyclic cuts}
+
+Let $G$ be a cubic multigraph with a cyclic cut $\delta X$ of size $k\le4$. Cut the $k$ edges. Each
+side becomes a multigraph with $k$ vertices of degree two, the \emph{ports}. A cycle of $G$ lies
+on one side, or it crosses the cut. A crossing cycle meets each side in a set of disjoint paths
+between ports. So the number of crossing cycles is a sum, over the ways to pair the ports, of
+products of two numbers: the number of such systems of paths on one side and on the other side.
+The proof of Theorem~\ref{thm:smallcut} bounds these numbers.
+
+For $k=2$ there is one pair of ports on each side. The crossing cycles number
+$P_{st}(N_1)P_{st}(N_2)$. If both factors are at most about half of their maximum, the product is
+at most about $\frac14\,2^{r-1}$, and Theorem~\ref{thm:cycles} bounds the cycles inside the two
+sides. If one factor is large, Theorem~\ref{thm:stability} applies to that side. It shows that the
+side is thin: its vertices lie in layers of bounded size around a shortest path. A count along the
+layers then shows that such a side has only $O(2^{b/2})$ cycles. This is the
+\emph{path--cycle tradeoff} of~\cite{S1}.
+
+For $k=3$ and $k=4$ there are several pairs of ports, and for $k=4$ also systems of two paths. The
+report~\cite{S1} proves inequalities between these counts on one side, classifies the sides for
+which the counts are near their maxima, and evaluates the sum for each type. In the extremal type
+both sides are chains of four-cycles, as in the graphs of Horak and Kim. There the largest terms of
+the sum cancel exactly, and the remaining term has the order $r2^{r/2}$. The count of pairs of
+disjoint cycles in a thin side is the source of the factor $r$.
+
+\subsection{Bounded girth}
+
+Let $G$ be a cubic multigraph without loops, of girth $g\ge5$, with no cyclic cut of size at most
+four. Let $C=v_0v_1\cdots v_{g-1}$ be a shortest cycle and $e=v_0v_{g-1}$. By
+Lemma~\ref{lem:edge}, $c(G)=c(G-e)+P_{v_0v_{g-1}}(G-e)$, and
+$c(G-e)\le(\half+o(1))2^{r-1}$ by Theorem~\ref{thm:cycles}. The report~\cite{S2} sorts the paths
+from $v_0$ to $v_{g-1}$ in $G-e$ by the vertex $v_i$ at which they leave the path
+$v_0v_1\cdots v_{g-1}$. After the deletion of $v_0,\dots,v_i$, the rest of the path lies in a
+multigraph of rank at most $r-2-i$. If it had more than $(\half+\varepsilon)$ of the largest
+possible number of paths, a consequence of Theorem~\ref{thm:stability} would give a cyclic cut of
+size at most four in $G$. So the branch at $v_i$ contributes at most about
+$\half\,2^{r-2-i}$ paths. The sum over $i<g-1$ is a geometric series that falls short of
+$\half\,2^{r-1}$ by $2^{r-g-1}$. This gives
+\[
+  c(G)\;\le\;2^{r-1}-2^{r-g-1}+o_g(2^{r}),
+\]
+which is Theorem~\ref{thm:girth} for each fixed girth. For girth at most four, a shortest cycle
+itself gives a cyclic cut of size at most four when $r\ge9$.
+
+The deficit $2^{r-g-1}$ decreases with the girth. So this argument cannot treat graphs whose girth
+grows with $r$. Theorem~\ref{thm:half} treats them.

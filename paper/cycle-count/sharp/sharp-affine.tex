@@ -1,0 +1,300 @@
+\section{Pieces with a small boundary}\label{sec:affine}
+
+This section proves that two disjoint pieces of a cubic graph, each large, with a small boundary and
+a large girth, force $q(G,P)\le\frac9{25}$ (Proposition~\ref{prop:blocks}). The only input is
+Theorem~\ref{thm:forest}, in the following form.
+
+\begin{proposition}[Forest input]\label{prop:input}
+There is an integer $R_{*}\ge2^{100}$ with the following property. Let $H$ be a connected multigraph
+of rank $\rho\ge R_{*}$, and let $W$ be a cycle of $H$ with at least three and at most
+$\rho/\log^{2}\rho$ edges. Then
+\[
+  \PP\bigl(\xi_H\sm E(W)\text{ is a forest}\bigr)\;\le\;\frac{11}{20}.
+\]
+\end{proposition}
+
+\begin{proof}
+Replace every edge of $H$ outside $W$ by a path with three edges. The new graph $H'$ is simple and
+connected, it contains $W$, and it has rank $\rho$. The even subgraphs of $H'$ correspond to those
+of $H$, and one has a forest outside $W$ if and only if the other has. Apply
+Theorem~\ref{thm:forest} to $H'$ and $W$, in the range of Remark~\ref{rem:range}: $W$ is one cycle
+with at most $\rho/\log^{2}\rho$ edges. Choose $R_{*}$ so large that $\rho\ge R_{*}$ is in the range
+of the theorem, $\log\rho\ge100$, and $20/\lgk3\rho\le\frac1{20}$.
+\end{proof}
+
+\paragraph{Status of the input.}
+Theorem~\ref{thm:forest} is formalised for $|E(W)|\le\sqrt r$. The range $|E(W)|\le r/\log^{2}r$
+is Remark~\ref{rem:range}, which is not formalised. Lemma~\ref{lem:width} below needs the larger
+range.
+
+\subsection{Localisation}
+
+\begin{lemma}[Localisation]\label{lem:loc}
+Let $G$ be a connected multigraph, and let $X$ be a nonempty proper set of vertices such that
+$G-X$ is connected. Put $d=|\delta X|$. Form $G_X$ from $G[X]$ as follows. For each edge of
+$\delta X$ add a new vertex and join it to the end of that edge in $X$. Join the new vertices by a
+cycle $W_X$ through all of them; if $d<3$, first add $3-d$ further new vertices on that cycle. Then
+\begin{enumerate}
+\item[\textup{(a)}] $G_X$ is connected, and $\beta(G_X)=\beta(G[X])+d-\comp(G[X])+1$;
+\item[\textup{(b)}] if every vertex of $X$ has degree three in $G$, then
+$\beta(G_X)=(|X|+d)/2+1$;
+\item[\textup{(c)}] the set $\xi\cap E(G[X])$ has the same distribution for $\xi$ uniform on
+$\Z(G)$ and for $\xi$ uniform on $\Z(G_X)$;
+\item[\textup{(d)}] an even subgraph $\xi$ of $G_X$ has a forest outside $E(W_X)$ if and only if
+$\xi\cap E(G[X])$ is a forest.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Every component of $G[X]$ has an edge to $G-X$, because $G$ is connected. So the cycle $W_X$
+joins all components. Without the extra vertices, $G_X$ has $d$ more vertices and $2d$ more edges
+than $G[X]$, and it is connected. Extra vertices on the cycle add as many edges as vertices.
+
+(b) Count the edge ends at $X$: $3|X|=2|E(G[X])|+d$. With (a) this gives the formula.
+
+(c) Contract the connected set $V(G)\sm X$ of $G$ to one vertex, and delete the loops that arise.
+Call the result $G/X$. An even subgraph of $G$ restricts to an even subgraph of $G/X$. Every even
+subgraph of $G/X$ arises in this way: the missing edges inside the contracted set can be chosen in
+a spanning tree of that set. So the restriction is a surjective linear map $\Z(G)\to\Z(G/X)$, and it
+sends the uniform distribution to the uniform distribution. Now contract $W_X$ in $G_X$. The result
+is the same multigraph $G/X$, with the new edges in the place of the edges of $\delta X$. So both
+distributions are the image of the uniform distribution on $\Z(G/X)$.
+
+(d) The edges of $G_X$ outside $W_X$ are the edges of $G[X]$ and the $d$ new edges at $X$. In
+$G_X-E(W_X)$ each of these new edges has an end of degree one. So it lies on no cycle of
+$G_X-E(W_X)$.
+\end{proof}
+
+A version of this lemma for connected $X$ was the starting point. The version above, for a set $X$
+with a connected complement, is due to Astra.
+
+\subsection{Thin markers force thin layers}
+
+\begin{lemma}[Layers]\label{lem:width}
+Put $B=2R_{*}+2^{100}+1$. Let $G$ be a connected subcubic multigraph, and let $P$ be a nonempty set
+of vertices such that $G[P]$ is connected and every vertex outside $P$ has degree three. Fix a
+vertex $o$, and call the set of vertices at distance $j$ from $o$ the \emph{layer} $j$. Suppose that
+$P$ has at most $k\ge1$ vertices in each layer, and that $q(G,P)\ge\frac35$. Then every layer has at
+most $B(k+1)^{2}$ vertices.
+\end{lemma}
+
+\begin{proof}
+Put $\Phi(m)=m/\log^{2}m$ and $\Theta=\max\{2R_{*},\,2^{100}(k+1)^{2}\}$.
+
+\emph{Step 1: no large set outside $P$ has a small boundary.} We claim that no set
+$X\subseteq V(G)\sm P$ has $|X|=m\ge\Theta$ and $|\delta X|\le\Phi(m)/4$. Suppose that $X$ is such a
+set. Let $C_0$ be the component of $G-X$ that contains $P$, and put $X^{+}=V(G)\sm V(C_0)$. Then
+$X\subseteq X^{+}$, the set $X^{+}$ avoids $P$, and $G-X^{+}=C_0$ is connected. Different components
+of $G-X$ have no edge between them, so $\delta X^{+}\subseteq\delta X$. Every vertex of $X^{+}$ has
+degree three. Let $d^{+}=|\delta X^{+}|\ge1$ and apply Lemma~\ref{lem:loc} to $X^{+}$. The rank of
+$G_{X^{+}}$ is
+\[
+  \rho=\frac{|X^{+}|+d^{+}}2+1\;\ge\;\frac m2\;\ge\;R_{*}.
+\]
+The cycle $W_{X^{+}}$ has $\max\{d^{+},3\}$ edges. The function $\Phi$ is increasing on
+$[8,\infty)$, and $\Phi(m)/4\le\Phi(m/2)$. So
+$d^{+}\le\Phi(m)/4\le\Phi(m/2)\le\Phi(\rho)$, and also $3\le\Phi(\rho)$. By
+Proposition~\ref{prop:input} and
+Lemma~\ref{lem:loc}(c),(d),
+\[
+  \PP\bigl(\xi_G\cap E(G[X^{+}])\text{ is a forest}\bigr)\;\le\;\frac{11}{20}.
+\]
+But $G[X^{+}]$ is a subgraph of $G-P$, so this probability is at least $q(G,P)\ge\frac35$. This
+contradiction proves the claim.
+
+\emph{Step 2: a window of layers.} Let $m_j$ be the number of vertices of layer $j$ outside $P$, with
+$m_j=0$ outside the range of the layers. For $i\le i'$ let $X(i,i')$ be the set of vertices outside
+$P$ in the layers $i,\dots,i'$. An edge joins vertices of the same layer or of consecutive layers.
+An edge that leaves $X(i,i')$ ends outside $P$ in layer $i-1$ or $i'+1$, or it ends in $P$ in one of
+the layers $i-1,\dots,i'+1$. So
+\begin{equation}\label{eq:window}
+  |\delta X(i,i')|\;\le\;3m_{i-1}+3m_{i'+1}+3k(i'-i+3).
+\end{equation}
+Suppose that $m_j\ge\Theta$ for some $j$. Start with the window $i=i'=j$. As long as a layer next
+to the window has more than $m/(48\log^{2}m)$ vertices outside $P$, where $m=|X(i,i')|$ is the
+present size, add that layer to the window. The graph is finite, so this stops. Let $\mu$ be the
+final size and $\lambda=\log\mu\ge100$. Each step multiplies the size by more than
+$1+1/(48\lambda^{2})$. So the number of steps is at most
+\[
+  \frac{\ln\mu}{\ln\bigl(1+1/(48\lambda^{2})\bigr)}\;\le\;96\lambda^{2}\ln\mu\;<\;67\lambda^{3}.
+\]
+At the end both layers next to the window have at most $\mu/(48\lambda^{2})$ vertices outside $P$.
+By~\eqref{eq:window},
+\[
+  |\delta X(i,i')|\;\le\;\frac{\mu}{8\lambda^{2}}+3k\bigl(67\lambda^{3}+3\bigr)
+  \;\le\;\frac{\mu}{4\lambda^{2}}=\frac{\Phi(\mu)}4 .
+\]
+The second inequality says $24k\lambda^{2}(67\lambda^{3}+3)\le2^{\lambda}$. It holds because
+$k\le2^{\lambda/2-50}$, by $\mu\ge\Theta\ge2^{100}(k+1)^{2}$, and because
+$24\lambda^{2}(67\lambda^{3}+3)\le2000\lambda^{5}\le2^{\lambda/2+50}$ for $\lambda\ge100$. So the
+final window contradicts Step~1.
+
+Hence every layer has fewer than $\Theta$ vertices outside $P$ and at most $k$ vertices in $P$. Their
+number is at most $\Theta+k\le B(k+1)^{2}$.
+\end{proof}
+
+\subsection{Poles and their forest proportions}
+
+A \emph{pole} is a connected multigraph in which every vertex has degree two or three. Its
+vertices of degree two are its \emph{ports}. Let $N$ be a pole and let $T$ be a set of ports of even
+size. A \emph{$T$-join} of $N$ is a set of edges in which the vertices of $T$ have odd degree and
+all other vertices have even degree. There are $2^{\beta(N)}$ of them. The \emph{forest proportion}
+of $T$ is the proportion of the $T$-joins that are forests. For $T=\emptyset$ the $T$-joins are the
+even subgraphs, only the empty one is a forest, and the forest proportion is $2^{-\beta(N)}$.
+
+\begin{lemma}[A marker in a pole]\label{lem:marker}
+Let $N$ be a pole with $k\ge2$ ports. Suppose that some set $T$ of ports has forest proportion at
+least $\frac35$. Then, for every port $o$, each layer of $N$ with respect to $o$ has at most
+$B(k+1)^{2}$ vertices.
+\end{lemma}
+
+\begin{proof}
+Take a breadth-first tree of $N$ from $o$, and let $P$ be the union of its paths from $o$ to the
+other ports. Then $N[P]$ is connected, $P$ contains all vertices of degree two, and $P$ has at most
+$k$ vertices in each layer, because a path of the tree from $o$ has one vertex in each layer that
+it meets. The tree paths inside $P$ contain a $T$-join $F_0$. The map $J\mapsto J+F_0$ is a
+bijection from the $T$-joins of $N$ to the even subgraphs of $N$, and $J+F_0$ has the same edges in
+$N-P$ as $J$. So if $J$ is a forest, then $J+F_0$ is a forest in $N-P$. Hence
+$q(N,P)\ge\frac35$, and Lemma~\ref{lem:width} applies to $N$ and $P$.
+\end{proof}
+
+\begin{lemma}[Girth and rank of a pole]\label{lem:moore}
+Let $N$ be a pole of rank $h\ge2$ with $k$ ports and girth at least $D$. Put
+$t=\lceil\log(8h)\rceil$. Then
+\[
+  D\;\le\;4t\Bigl(1+\frac{k}{3(h-1)}\Bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+Replace every vertex of degree two and its two edges by one edge, and give each edge of the result
+the length of the path of $N$ that it replaces. The result $N_0$ is a connected cubic multigraph
+with $n_0=2h-2$ vertices and $m_0=3h-3$ edges, and the lengths of its edges add up to $m_0+k$. A
+cycle of $N_0$ comes from a cycle of $N$ of the same length.
+
+There are $2m_0\,2^{t-1}$ non-backtracking walks with $t$ edges in $N_0$. Choose one of them
+uniformly. Then each of its steps is uniform over the $2m_0$ directed edges. So the expected length
+of the walk is $t(1+k/m_0)$. At least half of the walks have length at most twice this value. Their
+number is at least
+\[
+  m_0\,2^{t-1}\;\ge\;12h(h-1)\;>\;n_0^{2}.
+\]
+If one of these short walks visits a vertex twice, it contains a cycle that is not longer than the
+walk. Otherwise all of them are paths, and two of them have the same first vertex and the same last
+vertex. Their union contains a cycle of length at most the sum of their lengths. In both cases $N$
+has a cycle of length at most $4t(1+k/m_0)$.
+\end{proof}
+
+\begin{lemma}[Forest proportions at large girth]\label{lem:affine}
+There are absolute constants $D_{*}\ge3$ and $C_0$ with the following property. Let $N$ be a pole
+of rank $h$ with $k$ ports and girth at least $D$. Suppose that
+\begin{enumerate}
+\item[\textup{(a)}] $h\ge256$, $k\le4D$ and $D\ge D_{*}$, or
+\item[\textup{(b)}] $h\ge\Lambda\ge4$, $k\le2\Lambda$ and $D\ge C_0\log(\Lambda+2)$ for some
+number $\Lambda$.
+\end{enumerate}
+Then every set of ports of even size has forest proportion at most $\frac35$.
+\end{lemma}
+
+\begin{proof}
+If $k\le1$, the only set is the empty one, with forest proportion $2^{-h}$. Let $k\ge2$, and put
+$t=\lceil\log(8h)\rceil\le\log h+4$.
+
+\emph{The rank is exponential in the girth.} In case~(a), $h-1>\frac{32}3t$: this holds at
+$h=256$, where $t=11$, and the ratio $(h-1)/(\log h+4)$ increases with $h$. So
+Lemma~\ref{lem:moore} gives $D\le4t+16tD/(3(h-1))<4t+D/2$. In case~(b),
+$k/(3(h-1))\le2h/(3(h-1))<1$, and Lemma~\ref{lem:moore} gives $D<8t$. In both cases
+$D<8t\le8\log h+32$, so
+\begin{equation}\label{eq:rankgirth}
+  h\;\ge\;2^{D/8-4},\qquad\text{and }N\text{ has }n\ge h\text{ vertices}.
+\end{equation}
+
+\emph{A ball without ports.} Put $s=\lfloor D/16\rfloor$. A ball of radius $s$ has at most
+$3\cdot2^{s}$ vertices. So at most $3k\,2^{s}$ vertices are within distance $s$ of a port. In
+case~(a) this is at most $12D\,2^{D/16}$, and in case~(b) at most $6\Lambda\,2^{D/16}$. Choose
+$D_{*}$ and $C_0$ so large that this number is less than $2^{D/8-4}\le n$ in each case. Then some
+vertex $w$ has distance more than $s$ from every port. All vertices within distance $s$ of $w$
+have degree three, and $2s<D$. So the ball of radius $s$ around $w$ is a tree in which every
+vertex at distance less than $s$ from $w$ has degree three, and it has at least
+$2^{s}\ge2^{D/16-1}$ vertices. Fix a port $o$. The distances from $o$ to two vertices of this ball
+differ by at most $2s$. So the ball meets at most $2s+1\le D$ layers with respect to $o$, and some
+layer has at least $2^{D/16-1}/D$ vertices.
+
+\emph{Conclusion.} Suppose that some set of ports has forest proportion more than $\frac35$. By
+Lemma~\ref{lem:marker} every layer has at most $B(k+1)^{2}$ vertices. This is at most
+$B(4D+1)^{2}$ in case~(a) and at most $B(2\Lambda+1)^{2}$ in case~(b). In case~(a) choose $D_{*}$ so
+large that $2^{D/16-1}/D>B(4D+1)^{2}$ for $D\ge D_{*}$. In case~(b) the function $2^{D/16}/D$
+increases for $D\ge32$, and at $D=C_0\log(\Lambda+2)$ its ratio to $(\Lambda+2)^{2}$ is
+$(\Lambda+2)^{C_0/16-2}/(C_0\log(\Lambda+2))$. This tends to infinity with $C_0$, uniformly in
+$\Lambda\ge4$. So a large $C_0$ gives $2^{D/16-1}/D>B(2\Lambda+1)^{2}$. In both cases we have a
+contradiction.
+\end{proof}
+
+\subsection{Two pieces}
+
+\begin{lemma}[Product]\label{lem:product}
+Let $G$ be a cubic multigraph, let $P$ be a set of vertices, and let $U_1,U_2\subseteq V(G)\sm P$
+be disjoint sets such that $G[U_1]$ and $G[U_2]$ are poles. Suppose that in each of these poles
+every set of ports of even size has forest proportion at most $\frac35$. Then
+$q(G,P)\le\frac9{25}$.
+\end{lemma}
+
+\begin{proof}
+Let $E'$ be the set of the edges of $G$ that lie neither in $G[U_1]$ nor in $G[U_2]$. Fix a set
+$x\subseteq E'$ that is the restriction of some even subgraph. For $i=1,2$ let $T_i$ be the set of
+the vertices of $U_i$ that meet an odd number of edges of $x$. An edge set $\xi$ with
+$\xi\cap E'=x$ is even if and only if $\xi\cap E(G[U_i])$ is a $T_i$-join of $G[U_i]$ for $i=1,2$:
+the degree condition at a vertex of $U_i$ involves only edges of $G[U_i]$ and of $x$, and at the
+other vertices it involves only $x$. So, given $\xi\cap E'=x$, the two sets $\xi\cap E(G[U_i])$ are
+independent, and each is a uniform $T_i$-join. A vertex of degree three in $G[U_i]$ meets no edge
+of $E'$, because $G$ is cubic. So $T_i$ is a set of ports, of even size.
+
+If $\xi\cap E(G-P)$ is a forest, then $\xi\cap E(G[U_1])$ and $\xi\cap E(G[U_2])$ are forests. Given
+$\xi\cap E'=x$, this has probability at most $\frac35\cdot\frac35$. Average over $x$.
+\end{proof}
+
+Edges between $U_1$ and $U_2$ belong to $E'$. So the two sets may be adjacent.
+
+\begin{lemma}[The core of a piece]\label{lem:core}
+Let $G$ be a cubic multigraph, and let $X$ be a set of vertices such that $G[X]$ is connected and
+has rank $h\ge2$. Then there is a set $U\subseteq X$ such that $G[U]$ is a pole of rank $h$ with at
+most $|\delta X|$ ports, and the girth of $G[U]$ is at least the girth of $G[X]$.
+\end{lemma}
+
+\begin{proof}
+Delete vertices of degree one from $G[X]$ as long as there are any. The result $G[U]$ is connected,
+has the same cycles as $G[X]$ and all its degrees are two or three. When a vertex of degree one is
+deleted, two edges that left the set no longer do, and one edge inside the set now leaves it. So
+$|\delta U|\le|\delta X|$. A vertex of degree two in $G[U]$ has exactly one edge end outside
+$G[U]$, and a vertex of degree three has none. So $G[U]$ has $|\delta U|$ ports.
+\end{proof}
+
+\begin{proposition}[Two pieces]\label{prop:blocks}
+Let $G$ be a connected cubic multigraph and let $P$ be a set of vertices. Let
+$X_1,X_2\subseteq V(G)\sm P$ be disjoint, nonempty and proper sets of vertices. Suppose that one of
+the following holds for $i=1,2$.
+\begin{enumerate}
+\item[\textup{(a)}] $G[X_i]$ is connected of rank at least $256$ and girth at least $D\ge D_{*}$,
+and $|\delta X_i|\le4D$.
+\item[\textup{(b)}] $|X_i|\ge8\Lambda^{2}$, $|\delta X_i|\le2\Lambda$, and $G[X_i]$ has girth at
+least $D$, where $\Lambda\ge4$ and $D\ge C_0\log(\Lambda+2)$.
+\end{enumerate}
+Then $q(G,P)\le\frac9{25}$.
+\end{proposition}
+
+\begin{proof}
+It suffices to find sets $U_i\subseteq X_i$ as in Lemma~\ref{lem:product}. In case~(a),
+Lemma~\ref{lem:core} gives a pole $G[U_i]$ of rank at least $256$ with at most $4D$ ports and girth
+at least $D$, and Lemma~\ref{lem:affine}(a) applies.
+
+In case~(b) write $n=|X_i|$, $d=|\delta X_i|$ and $c=\comp(G[X_i])$. Every component of $G[X_i]$
+has an edge that leaves $X_i$, so $1\le c\le d\le2\Lambda$. Count the edge ends:
+$3n=2|E(G[X_i])|+d$. So $\beta(G[X_i])=(n-d)/2+c$, and some component $Y$ of $G[X_i]$ has rank at
+least
+\[
+  \frac{n-d}{2c}+1\;\ge\;\frac{8\Lambda^{2}-2\Lambda}{4\Lambda}+1\;>\;\Lambda .
+\]
+Its boundary is a part of $\delta X_i$. Lemma~\ref{lem:core} for $Y$ gives a pole $G[U_i]$ of rank
+at least $\Lambda$ with at most $2\Lambda$ ports and girth at least $D$, and
+Lemma~\ref{lem:affine}(b) applies.
+\end{proof}

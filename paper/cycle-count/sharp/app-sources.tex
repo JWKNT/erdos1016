@@ -1,0 +1,116 @@
+\section{Sources}\label{app:sources}
+
+We compared the bibliographic data of every reference with the publisher's record, with Crossref
+or with arXiv, except where we say otherwise. For~\cite{ES} we used the scan that is linked from
+the OEIS. We read~\cite{AACST}, \cite{ES}, \cite{Griffin}, \cite{KNT}, \cite{Markstrom}, and the
+parts of~\cite{HK} that concern cycles. Of~\cite{AT} we read the abstract. We have not
+seen~\cite{Bass}, \cite{Bondy}, \cite{EP}, \cite{Guichard} or~\cite{KS}. What we say
+about~\cite{Bondy} is taken from~\cite{Bloom} and~\cite{KNT}. What we say about~\cite{Guichard} is
+taken from~\cite{Markstrom}, and we did not compare its bibliographic data with a record. No proof
+in this paper depends on a source that we have not seen. The lemma from~\cite{EP} is proved in
+Section~\ref{sec:exact}, and the facts related to~\cite{Bass,KS} are proved in
+Section~\ref{sec:forest}.
+
+We looked for an earlier proof of $\psi(r)\sim2^{r-1}$, for any bound below $\frac{15}{16}2^{r}$
+for cubic graphs, and for an upper bound of the form $2^{r-1}+o(2^{r})$ with an explicit error
+term. We used web searches and the literature discussed in~\cite{AACST}, \cite{HK}
+and~\cite{Markstrom}, and we found none. A search of this kind can miss things.
+
+The two theorems of Section~\ref{sec:exact} are elementary, and they are close to known results.
+Lemma~\ref{lem:EP} is due to Erd\H{o}s and P\'osa. The graphs in which every nonempty even subgraph
+is a cycle were characterised by Maurer and by Mateti and Deo; we know this
+from~\cite[Theorem~1]{ES} and have not seen the original papers. We do not know whether
+Proposition~\ref{prop:terminal} or the bound in Proposition~\ref{prop:nowaste} has been stated
+before.
+
+\paragraph{The supplement.}
+The entries~\cite{S0} to~\cite{S5} are files in the folder
+\lean{paper/cycle-count/research/2026-11-10} of the repository~\cite{Repo}. They are research
+reports and notes, written by the two models during the work. They are not publications, and no
+person has reviewed them. The reports~\cite{S0} to~\cite{S4} have compiled versions with the same
+name and the ending \lean{.pdf}. The same folder contains the other notes of this work, among them
+results that this paper does not use. The repository also keeps the earlier drafts of this paper,
+next to the manuscript in the folder \lean{paper/cycle-count}.
+
+\begin{thebibliography}{99}\small
+
+\bibitem{AACST} A.~Alahmadi, R.~E.~L.~Aldred, R.~dela~Cruz, P.~Sol\'e and C.~Thomassen, The maximum
+number of minimal codewords in long codes, \emph{Discrete Appl.\ Math.}\ \textbf{161} (2013),
+424--429. arXiv:1201.6043.
+
+\bibitem{AT} R.~E.~L.~Aldred and C.~Thomassen, On the maximum number of cycles in a planar graph,
+\emph{J.~Graph Theory} \textbf{57} (2008), 255--264.
+
+\bibitem{Bass} H.~Bass, The Ihara--Selberg zeta function of a tree lattice, \emph{Internat.\
+J.~Math.}\ \textbf{3} (1992), 717--797.
+
+\bibitem{Bloom} T.~F.~Bloom, Erd\H{o}s Problem \#1016, \url{https://www.erdosproblems.com/1016},
+accessed November 2026.
+
+\bibitem{Bondy} J.~A.~Bondy, Pancyclic graphs~I, \emph{J.~Combin.\ Theory Ser.~B} \textbf{11}
+(1971), 80--84.
+
+\bibitem{ES} R.~C.~Entringer and P.~J.~Slater, On the maximum number of cycles in a graph,
+\emph{Ars Combin.}\ \textbf{11} (1981), 289--294. A scan is linked from the entry A006188 of the
+OEIS, \url{https://oeis.org/A006188}.
+
+\bibitem{EP} P.~Erd\H{o}s and L.~P\'osa, On the maximal number of disjoint circuits of a graph,
+\emph{Publ.\ Math.\ Debrecen} \textbf{9} (1962), 3--12.
+
+\bibitem{Griffin} S.~Griffin, Minimal pancyclicity, arXiv:1312.0274 (2013).
+
+\bibitem{Guichard} D.~R.~Guichard, The maximum number of cycles in graphs, \emph{Congr.\ Numer.}\
+\textbf{121} (1996), 211--215.
+
+\bibitem{HK} P.~Horak and D.~Kim, Connected cubic graphs with the maximum number of perfect
+matchings, \emph{J.~Graph Theory} \textbf{99} (2022), 671--690. arXiv:2006.13459.
+
+\bibitem{KNT} KNT, The minimum number of edges in a pancyclic graph, manuscript, September 2026,
+\url{https://jehlp.net/erdos1016/}.
+
+\bibitem{Claim} KNT, Proof claim for Problem \#1016, Erd\H{o}s Problems forum, 24 September 2026,
+\url{https://www.erdosproblems.com/forum/thread/1016/proof-claims}, accessed November 2026.
+
+\bibitem{Repo} KNT, Astra and Fable~5.2, Lean~4 formalisation of the results of~\cite{KNT} and of
+parts of this paper, \url{https://github.com/JWKNT/erdos1016}.
+
+\bibitem{KS} M.~Kotani and T.~Sunada, Zeta functions of finite graphs, \emph{J.~Math.\ Sci.\ Univ.\
+Tokyo} \textbf{7} (2000), 7--25.
+
+\bibitem{Lean4} L.~de~Moura and S.~Ullrich, The Lean~4 theorem prover and programming language,
+in: \emph{CADE~28}, Lecture Notes in Comput.\ Sci.\ \textbf{12699}, Springer, 2021, 625--635.
+
+\bibitem{Markstrom} K.~Markstr\"om, Extremal graphs for some problems on cycles in graphs,
+\emph{Congr.\ Numer.}\ \textbf{171} (2004), 179--192. We read the author's version of August 2005.
+
+\bibitem{Mathlib} The mathlib Community, The Lean mathematical library, in: \emph{CPP~2020}, ACM,
+2020, 367--381.
+
+\bibitem{S0} Astra, The unrestricted sharp-order cycle bound, research report, 11 November 2026.
+File \lean{unrestricted-sharp-cycle-bound.tex} in the supplement. The proof that
+Sections~\ref{sec:sharp} to~\ref{sec:halfproof} follow.
+
+\bibitem{S1} Astra, The sharp second-order cycle bound for cyclic cuts of size at most five,
+research report, 10 November 2026. File \lean{small-cut-sharp-bound.tex} in the supplement. Proof
+of Theorem~\ref{thm:smallcut}.
+
+\bibitem{S2} Astra, A strict cycle deficit at bounded girth, research report, 11 November 2026.
+File \lean{bounded-girth-cycle-deficit.tex} in the supplement. Proof of Theorem~\ref{thm:girth}.
+
+\bibitem{S3} Astra and Fable~5.2, Additive stability for terminal path counts, research report,
+10 November 2026. File \lean{terminal-path-stability.tex} in the supplement. Proof of
+Theorem~\ref{thm:stability}.
+
+\bibitem{S4} Astra, A polynomial error for the number of cycles, research report, 10 November
+2026, file \lean{polynomial-cycle-error.tex}; and Fable~5.2, Link components are independent,
+research note, file \lean{fable-parallel-links.md}. Both in the supplement.
+
+\bibitem{S5} Astra and Fable~5.2, research notes, November 2026. Files \lean{no-waste-phase2.tex}
+(the constant in Proposition~\ref{prop:nowaste}) and \lean{fable-census.md} (cubic graphs with at
+most $22$ vertices) in the supplement.
+
+\bibitem{S6} Astra, The eventual exact maximum number of cycles, research report, 11 November
+2026. File \lean{eventual-exact-cycle-maximum.tex} in the folder
+\lean{paper/cycle-count/research/2026-11-11} of the repository~\cite{Repo}. Not used in this paper.
+
+\end{thebibliography}

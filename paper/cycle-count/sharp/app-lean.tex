@@ -1,0 +1,118 @@
+\section{The formal statements}\label{app:lean}
+
+The Lean~4 code is in the repository~\cite{Repo}. This paper refers to commit
+\texttt{\leancommit} on the branch \texttt{feat/cycle-count-bound}. The code uses Lean v4.19.0 and
+a pinned revision of Mathlib. It has $\leanmodules$ modules and $\leanlines$ lines. The nine
+modules in \lean{Erdos1016/CycleCount/} contain the proof of Theorem~\ref{thm:cycles}. The eight
+modules in \lean{Erdos1016/ExactCounting/} contain the proof of Theorem~\ref{thm:exact}. The
+$\leansharpmodules$ modules in \lean{Erdos1016/PolynomialBound/}, with $\leansharplines$ lines,
+contain the formalised steps of the proof of Theorem~\ref{thm:half}
+(Table~\ref{tab:sharpsteps}). The rest is the formalisation from~\cite{KNT}.
+
+\input{sharp/app-lean-statements}
+
+\subsection{Repeating the check}
+
+The repository contains a verifier. It rebuilds every module from source. It compares the types of
+the endpoint theorems with statements that are written out a second time in
+\lean{audits/TheoremAudit.lean}. It prints the axioms of the audited declarations, among them all
+endpoints in Table~\ref{tab:status} and the declarations in Table~\ref{tab:sharpsteps}, and it
+accepts only \lean{propext}, \lean{Classical.choice} and \lean{Quot.sound}. It rejects proofs that
+contain \lean{sorry}. The commands are:
+
+{\small
+\begin{alltt}
+git clone https://github.com/JWKNT/erdos1016.git && cd erdos1016
+git checkout \leancommit
+elan toolchain install leanprover/lean4:v4.19.0
+lake exe cache get
+python3 -m unittest discover -s scripts -p 'test_*.py'
+python3 scripts/verify.py --fresh --jobs 2
+\end{alltt}}
+
+\leancheckstatus
+
+\subsection{Steps of the proofs}
+
+Table~\ref{tab:steps} names the Lean declaration for each step of the formalised theorems.
+Namespaces are omitted, and files are relative to \lean{Erdos1016/}. The rows for
+Section~\ref{sec:cycles} match the text closely, with four differences. The formal proof of
+Lemma~\ref{lem:indep} uses no spanning tree: it chooses the edges of $D$ one at a time, and it
+records only that each of them lies in an even subgraph. The formal proof uses
+$r\le\beta(G^{+})\le r+a$ in place of the equality. It states Lemma~\ref{lem:through} together with
+the count of the cycles that avoid $D$. It writes $k$ as
+$\lfloor\log\lfloor\log r\rfloor\rfloor+1$, which is the same number.
+
+The rows for Section~\ref{sec:exact} match the text, with the differences that are stated at the
+end of Sections~\ref{sec:exact}.1 and~\ref{sec:exact}.2.
+
+The rows for Sections~\ref{sec:lower} to~\ref{sec:forest} are taken from~\cite[Appendix~A]{KNT}. We
+checked that these declarations exist at the commit above. We did not compare each of them with our
+wording. In these parts the formal proof replaces $O$-terms by explicit constants, and intermediate
+estimates differ in detail from the text. The statements of Theorems~\ref{thm:forest}
+and~\ref{thm:main}, of Proposition~\ref{prop:halving} and of Corollary~\ref{cor:phi} agree with
+the Lean statements.
+
+\begin{center}\begin{minipage}{\linewidth}\centering\small
+\captionof{table}{Steps of the formalised proofs and the corresponding Lean declarations.}\label{tab:steps}
+\smallskip
+\renewcommand{\arraystretch}{1.0}
+\begin{tabular}{@{}L{3.7cm}L{6.3cm}L{5.6cm}@{}}
+\toprule
+In this paper & Declaration & File \\
+\midrule
+Lemma~\ref{lem:indep} & \lean{exists_independent_edges} & \lean{CycleCount/IndependentEdges} \\
+Second neighbours & \lean{exists_apex} & \lean{CycleCount/IndependentEdges} \\
+Chords and triangles & \lean{addChords}, \lean{cycleRank_addChords_le}, \lean{exists_triangle_family}
+  & \lean{CycleCount/ChordExtension}, \lean{CycleCount/TriangleFamily} \\
+Lemma~\ref{lem:through} & \lean{card_cycleWord_le} & \lean{CycleCount/ConnectedBound} \\
+Theorem~\ref{thm:cycles}, parameters & \lean{witness_parameters},
+  \lean{cycleCountBound_of_forestEstimate} & \lean{CycleCount/Bound} \\
+Theorem~\ref{thm:cycles}, Mathlib form & \lean{cycleCountStatement_of_bound} &
+  \lean{CycleCount/Statement} \\
+Lower bound $\psi(r)\ge2^{r-1}$ & \lean{exists_graph_many_cycles} & \lean{CycleCount/LowerBound} \\
+$\psi(r)\sim2^{r-1}$ & \lean{asymptoticCycleCount_of_statement} & \lean{CycleCount/Asymptotic} \\
+\midrule
+Lemma~\ref{lem:witness} & \lean{exists_budgeted_witness} & \lean{Extremal/Witness/CapacityBudget} \\
+Proposition~\ref{prop:halving} & \lean{recurrence_of_few_component_forest_estimate} &
+  \lean{Extremal/Recurrence/WitnessReduction} \\
+Corollary~\ref{cor:phi} & \lean{recurrence_logStar_bound} &
+  \lean{Extremal/Recurrence/LinearExponentialDecay} \\
+Proposition~\ref{prop:upper} & \lean{upper_bound_integer} & \lean{Extremal/UpperBound} \\
+\midrule
+Lemma~\ref{lem:link} & \lean{multigraph_zeroCut_pair} &
+  \lean{CycleSpace/Graphical/MultigraphCutCorrelation} \\
+Lemma~\ref{lem:exc} & \lean{exceptional_partner_card_le} &
+  \lean{CycleSpace/Graphical/DisjointRegionCuts} \\
+Lemma~\ref{lem:smallcuts} & \lean{smallCut_forest_bound} &
+  \lean{Probability/Moments/SmallCutRegionBound} \\
+Lemma~\ref{lem:reduce} & \lean{exists_marked_subcubic_reduction} &
+  \lean{Graph/Cubicization/MarkedReduction} \\
+Lemma~\ref{lem:spectrum} & \lean{normalized_even_trace_lower} &
+  \lean{Nonbacktracking/Spectrum/DeficitTrace} \\
+Lemma~\ref{lem:weight} & \lean{cycleWordMass_ge_log_ratio} &
+  \lean{Cycles/Counting/LowDegreeTraceCycles} \\
+Lemma~\ref{lem:links} & \lean{actual_cycle_links_le} & \lean{Cycles/Geometry/ActualCycleLinkBound} \\
+Theorem~\ref{thm:forest} & \lean{second_moment_le}, \lean{forest_le_half_add_twenty},
+  \lean{fewComponentForestEstimate} & \lean{Probability/Moments/SeedFamilyAvoidance},
+  \lean{Probability/Avoidance/FewComponentForest} \\
+\midrule
+Paths and cycles in Section~\ref{sec:exact} & \lean{par_edges_of_isTrail}, \lean{eq_empty_of_subset_path},
+  \lean{eq_edges_of_subset_cycle} & \lean{ExactCounting/EdgeParity} \\
+Proposition~\ref{prop:terminal} & \lean{card_even_le_two_pow}, \lean{twoTerminalStatement} &
+  \lean{ExactCounting/EvenSets}, \lean{ExactCounting/TwoTerminals} \\
+Lemma~\ref{lem:EP} & \lean{exists_even_subset}, \lean{intersecting_suppress},
+  \lean{exists_small_dense}, \lean{card_le_of_intersecting} & \lean{ExactCounting/Multigraph},
+  \lean{Suppression}, \lean{ShortCycle}, \lean{DisjointCycles} \\
+Proposition~\ref{prop:nowaste} & \lean{noWasteStatement} & \lean{ExactCounting/NoWaste} \\
+\bottomrule
+\end{tabular}
+\end{minipage}\end{center}
+
+\subsection{The formalised steps of Theorem~\ref{thm:half}}\label{app:sharpsteps}
+
+Theorems~\ref{thm:half} and~\ref{thm:sharp} are not formalised. Table~\ref{tab:sharpsteps} lists
+the steps of the proof of Theorem~\ref{thm:half} that are. Each row is a complete Lean proof of
+the statement named. The files are in \lean{Erdos1016/PolynomialBound/}.
+
+\input{sharp/app-sharp-table}

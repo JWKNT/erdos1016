@@ -1,0 +1,60 @@
+\section{Tests on small graphs}\label{app:checks}
+
+We tested the examples of this paper, and our wording of the proofs, on small graphs. The scripts
+are in the folder \lean{paper/cycle-count/paper-checks} of the repository~\cite{Repo}. They use
+exact arithmetic, except for the two scripts on the non-backtracking matrix, which compute
+eigenvalues in floating point. All tests passed. A passed test is evidence, not a proof.
+
+\begin{itemize}
+\item \emph{The examples} (\lean{check_examples.py}). The numbers in Example~\ref{rem:twoports},
+the ring of four-cycles in Section~\ref{sec:cycles} for $2\le j\le7$, the example in~(ii) of
+Section~\ref{sec:exact}, and the cycle with ears in Section~\ref{sec:exact} for $3\le m\le6$.
+\item \emph{Section~\ref{sec:cycles}} (\lean{check_chords.py}). $300$ random connected graphs with
+$4$ to $8$ vertices and every admissible $k$, which gives $857$ cases. The script takes $D$ outside a
+random spanning tree and builds the chords, $G^{+}$ and $W$. It checks Lemmas~\ref{lem:indep}
+and~\ref{lem:through}, the existence of the second neighbours, and the stated properties of
+$G^{+}$ and $W$.
+\item \emph{Lemma~\ref{lem:count} and Proposition~\ref{prop:nowaste}}
+(\lean{check_counting.py}). $4000$ random connected graphs with $4$ to $8$ vertices, each with a
+random subgraph $W$. The script checks the number of outside parts, the bound of
+Lemma~\ref{lem:count}(b), and the bound $2^{r}p+2^{r-t}(1-p)$ on the number of all cycles, which
+follows from the proof of that lemma. In the $2027$ cases without a wasted outside part it checks
+both conclusions of Proposition~\ref{prop:nowaste}.
+\item \emph{Proposition~\ref{prop:nowaste}, exhaustively} (\lean{nowaste_exh.py},
+\lean{nowaste_exh2.py}). The scripts enumerate connected graphs $G$ that contain a fixed triangle
+or a fixed four-cycle $W$, with up to $8$ vertices. Without a wasted outside part, the largest
+value of $\beta(G)-\beta(W)-|V(W)|$ was $1$ for the triangle and $0$ for the four-cycle.
+\item \emph{Proposition~\ref{prop:upper}} (\lean{check_construction.py}). The graph of
+Section~\ref{sec:upper} for all $n\le139$ and for $n\in\{263,264,265,300,500,520,521,522\}$. Each
+graph is pancyclic, and the number of chords never exceeds $\lfloor\log n\rfloor+\lgs n+1$.
+\item \emph{Lemmas~\ref{lem:link} and~\ref{lem:exc}} (\lean{check_links.py}). $400$ random connected
+multigraphs with $5$ to $9$ vertices and $5221$ pairs of disjoint regions with at most three
+vertices each. The script checks the link formula and the bound on exceptional partners.
+\item \emph{Lemmas~\ref{lem:walks} and~\ref{lem:spectrum}} (\lean{check_nb.py},
+\lean{check_nb2.py}). $292$ random graphs of maximum degree $3$ with $10$ to $40$ vertices, and the
+Petersen, Heawood and Tutte--Coxeter graphs. The scripts check the walk bound, the two statements
+on eigenvalues, and the trace inequality for even $\ell\le24$.
+\item \emph{Lemma~\ref{lem:edge} and Section~\ref{sec:examples}} (\lean{check_cyclic_squares.py}).
+The graphs $M_j$ for $2\le j\le7$ and the graphs of Horak and Kim of even rank from $4$ to $14$. The
+script counts the cycles by a search and, for the smaller graphs, by a list of all even subgraphs.
+It compares the counts with~\eqref{eq:hk} and with Proposition~\ref{prop:hk}. For a square $W$ of
+$M_j$ it computes $q(M_j,V(W))$ and the number of cycles through an edge of $W$, and it checks
+Lemma~\ref{lem:edge} and the inequality $q(M_j,V(W))>\half$.
+\item \emph{Lemma~\ref{lem:parallel}} (\lean{check_parallel_links.py}). $300$ random connected
+multigraphs with two connected sets $A,B$ and two to four components that join them. The script
+lists all even subgraphs. It checks that the events $\cO_Y$ are mutually independent for every
+family of components that omits one link ($2228$ families), and that two components that are the
+only links have the factor two.
+\item \emph{Lemmas~\ref{lem:loc}, \ref{lem:product} and~\ref{lem:strings}}
+(\lean{check_pieces.py}). Small random connected multigraphs. The script checks the rank formula
+and the equality of distributions in Lemma~\ref{lem:loc} in $400$ cases. It checks the product
+structure in the proof of Lemma~\ref{lem:product} for $6973$ sets $x$ in $300$ graphs. For
+Lemma~\ref{lem:strings} it computes the relevant vertices by linear algebra, follows the
+construction of the proof in $4000$ cases, and checks the two bounds and the three properties of
+the sets $M(i,j)$; the cases contain $1132$ strings with at least three vertices and $7103$ sets
+$M(i,j)$.
+\end{itemize}
+
+The reports of the supplement describe further tests of their finite identities~\cite{S0,S1,S2}.
+The census of the cubic graphs with at most $22$ vertices that Section~\ref{sec:problems} quotes is
+in the research notes~\cite{S5}. Its values of $\psi(r)$ agree with~\cite{Markstrom}.

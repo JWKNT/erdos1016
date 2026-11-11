@@ -1,0 +1,115 @@
+\section{The lower bound for pancyclic graphs}\label{sec:lower}
+
+This section derives the lower bound of Theorem~\ref{thm:main} from Theorem~\ref{thm:forest}. The
+plan is as follows. A number $\Phi(R)\le1$ measures how well a graph of rank at least $R$ can fill
+an interval of cycle lengths. In a graph with many cycle lengths we find a small subgraph $W$ that
+already contains the short cycles. The forest estimate for $W$ then shows that $\Phi$ drops by a
+factor of almost two when the rank grows from $R$ to $2^{256R}$.
+
+For an integer $R\ge1$ let
+\[
+  \Phi(R)=\sup\,\frac{L-2}{2^{\beta(G)}} ,
+\]
+where the supremum is over all simple graphs $G$ with $\beta(G)\ge R$ and all integers $L\ge2$ such
+that $G$ contains a cycle of each length $3,\dots,L$. A graph of rank $\beta$ has at most
+$2^{\beta}-1$ cycles, so $\Phi(R)\le1$. The function $\Phi$ is non-increasing, because a larger $R$
+allows fewer graphs.
+
+\begin{lemma}[Witness]\label{lem:witness}
+Let $R\ge1$ and $\varphi=\Phi(R)$, and let $G$ contain a cycle of each length $3,\dots,L$, where
+$L\ge2^{2R}$. Then $G$ has a subgraph $W$ that is a union of at most $2R$ cycles, with
+$\beta(W)\ge2R$ and $|E(W)|\le\varphi\,2^{2R}+2^{R}+5R$.
+\end{lemma}
+
+\begin{proof}
+Put $W_0=\emptyset$ and $W_{i+1}=W_i\cup C_i$, where $C_i$ is a cycle of $G$ whose length $\ell_i$ is
+the least integer $\ge3$ that is not the length of a cycle of $W_i$. Stop as soon as the rank is at
+least $2R$. Consider a step, and let $s=\beta(W_i)<2R$. The graph $W_i$ contains cycles of the
+$\ell_i-3$ lengths $3,\dots,\ell_i-1$. Therefore $\ell_i-3\le2^{s}-1$. This gives
+$\ell_i\le2^{2R-1}+2\le L$, so $C_i$ exists. If $s\ge R$, then also $\ell_i-3\le\varphi\,2^{s}$, by
+the definition of $\Phi$. The cycle $C_i$ is not a subgraph of $W_i$, so the rank increases at every
+step. So there are at most $2R$ steps, their ranks $s$ are distinct, and
+\[
+  |E(W)|\;\le\;\sum_i\ell_i\;\le\;\sum_{s=0}^{R-1}\bigl(2^{s}+2\bigr)+\sum_{s=R}^{2R-1}\bigl(\varphi\,2^{s}+3\bigr)
+  \;\le\;\varphi\,2^{2R}+2^{R}+5R .\qedhere
+\]
+\end{proof}
+
+\begin{proposition}[Near-halving]\label{prop:halving}
+For every sufficiently large integer $R$,
+\[
+  \Phi\bigl(2^{256R}\bigr)\;\le\;\Bigl(\frac12+\frac{20}{\lgk{2}R}\Bigr)\Phi(R)+2^{2-R}.
+\]
+\end{proposition}
+
+\begin{proof}
+Let $G$ be a simple graph of rank $r\ge2^{256R}$ with a cycle of each length $3,\dots,L$. We bound
+$(L-2)\,2^{-r}$. Identifying a vertex of one component with a vertex of another changes neither the
+rank nor the set of cycles, so we may assume that $G$ is connected. If $L<2^{2R}$, then
+$(L-2)\,2^{-r}<2^{2-R}$, and we are done.
+
+Otherwise let $W$ be as in Lemma~\ref{lem:witness}, with $m$ edges and rank $t\ge2R$, and let
+$\varphi=\Phi(R)$. Then $m\le2^{2R+1}\le\sqrt r$ and $\comp(W)\le2R\le(\log r)/100$. This is
+the only place in this proof where the size of the exponent $256$ matters, and any exponent of at
+least $200$ would do.
+So Theorem~\ref{thm:forest} gives
+\[
+  p(G,W)\;\le\;\frac12+\frac{20}{\lgk3r}\;\le\;\frac12+\delta,
+  \qquad\text{where }\delta=\frac{20}{\lgk2R}.
+\]
+The second inequality holds because $\lgk3r\ge\log(8+\log R)\ge\lgk2R$. The graph $G$ has cycles of
+at least $L-2$ lengths. So Lemma~\ref{lem:count}(b), with $p=p(G,W)$, and the bounds on $t$ and $m$
+give
+\[
+  \frac{L-2}{2^{r}}\;\le\;\frac{pm+1}{2^{t}}
+  \;\le\;\Bigl(\frac12+\delta\Bigr)\bigl(\varphi+2^{-R}+5R\,2^{-2R}\bigr)+2^{-2R}
+  \;\le\;\Bigl(\frac12+\delta\Bigr)\varphi+2^{2-R}.\qedhere
+\]
+\end{proof}
+
+\begin{corollary}\label{cor:phi}
+There is a constant $c$ such that $\Phi(r)\le c\,2^{-\lgs r}$ for all $r\ge1$.
+\end{corollary}
+
+\begin{proof}
+Fix $R_0\ge512$ so large that Proposition~\ref{prop:halving} holds for all $R\ge R_0$. Let
+$R_{j+1}=2^{256R_j}$ and $\delta_j=20/\lgk2R_j$. By Proposition~\ref{prop:halving}, the numbers
+$a_j=2^{j}\Phi(R_j)$ satisfy
+\[
+  a_{j+1}\;\le\;(1+2\delta_j)\,a_j+2^{\,j+3-R_j}.
+\]
+For $j\ge2$ we have $\lgk2R_j=8+256R_{j-2}$, so $\sum_j\delta_j<\infty$. Also
+$\sum_j2^{\,j-R_j}<\infty$. Hence the numbers $a_j$ are bounded, say $\Phi(R_j)\le c_1 2^{-j}$.
+
+The numbers $R_j$ grow like a tower of exponentials. To bound $\lgs R_j$, we compare them with an
+exact tower. Let $U_0=R_0^2$ and $U_{j+1}=2^{U_j}$, so that $\lgs U_j=j+\lgs U_0$. Then
+$R_j\le\sqrt{U_j}$ for all $j$. Indeed, if this holds for $j$, then
+\[
+  R_{j+1}=2^{256R_j}\;\le\;2^{256\sqrt{U_j}}\;\le\;2^{U_j/2}=\sqrt{U_{j+1}},
+\]
+because $\sqrt{U_j}\ge R_0\ge512$. Hence $\lgs R_j\le j+\lgs U_0$.
+
+Finally let $r\ge R_0$, and let $j$ be largest with $R_j\le r$. Then
+$\Phi(r)\le\Phi(R_j)\le c_12^{-j}$ and $\lgs r\le\lgs R_{j+1}\le j+1+\lgs U_0$. Together these give
+$\Phi(r)\le c\,2^{-\lgs r}$ with $c=c_1\,2^{1+\lgs U_0}$. For $r<R_0$ use $\Phi(r)\le1$, and enlarge
+$c$ if necessary.
+\end{proof}
+
+\begin{proof}[Proof of the lower bound in Theorem~\ref{thm:main}]
+Let $G$ be a pancyclic graph with $n$ vertices and $n+h$ edges. It is connected, so its rank is
+$r=h+1$. By the definition of $\Phi$ and by Corollary~\ref{cor:phi},
+\[
+  n-2\;\le\;\Phi(r)\,2^{r}\;\le\;c\,2^{\,r-\lgs r}.
+\]
+We compare $\lgs r$ with $\lgs n$. The trivial bound $n-2\le2^{r}-1$ gives
+$n\le2^{r+1}\le2^{2^{r}}$, hence $\lgs n\le\lgs r+2$. Now take logarithms in the display:
+\[
+  h=r-1\;\ge\;\log(n-2)+\lgs r-\log c-1\;\ge\;\log n+\lgs n-\log c-5.\qedhere
+\]
+\end{proof}
+
+\paragraph{Formal counterpart.}
+In the Lean code $\Phi$ is \lean{actualRankTail}. Proposition~\ref{prop:halving} is
+\lean{ShortProof.recurrence_of_few_component_forest_estimate}, with the same constants.
+Corollary~\ref{cor:phi} is an instance of \lean{recurrence_logStar_bound}. Lemma~\ref{lem:witness}
+corresponds to \lean{ShortProof.exists_budgeted_witness}, where the bookkeeping differs in detail.

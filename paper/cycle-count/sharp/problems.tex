@@ -1,0 +1,75 @@
+\section{Problems}\label{sec:problems}
+
+An earlier draft of this paper asked three questions. All three now have answers.
+
+\emph{Is $\psi(r)\le2^{r-1}+2^{(1-c)r}$ for some $c>0$, and is the error term in~\eqref{eq:forest}
+at most $r^{-c}$?} Yes. Theorem~\ref{thm:sharp} gives $c=\half$ up to the factor $r$, which is
+best possible by~\eqref{eq:hk}. Remark~\ref{rem:polynomial} gives the error term $r^{-\kappa}$
+for $\kappa<\frac13$.
+
+\emph{If a connected graph $N$ has at least $(\half+\varepsilon)2^{\beta(N)}$ paths between two
+vertices, must each of these paths have at least $c(\varepsilon)\beta(N)$ edges?} Yes, and even
+$\beta(N)-C_\varepsilon$ edges (Theorem~\ref{thm:stability}).
+
+\emph{Can the constant $3$ in Proposition~\ref{prop:nowaste} be replaced by $1$?} Yes, and $1$ is
+best possible. Astra proved this, and Fable~5.2 checked the proof; it is in the research
+notes~\cite{S5} and is not printed here.
+
+\paragraph{The constant.}
+By Theorem~\ref{thm:sharp} and~\eqref{eq:hk}, the numbers
+\[
+  \kappa(r)=\frac{\psi(r)-2^{r-1}}{r\,2^{r/2}}
+\]
+are bounded, with $\liminf\kappa(r)\ge\frac1{\sqrt2}$ along odd $r$ and $\liminf\kappa(r)\ge\half$
+along even $r$. The exact values $\psi(r)$ for $r\le12$~\cite{Markstrom} give $\kappa(12)>1$, so
+small ranks do not show the limit. The constant $K$ of Theorem~\ref{thm:sharp} is not explicit.
+
+\begin{problem}
+Does $\kappa(r)$ converge along the odd $r$ and along the even $r$? Are the limits $\frac1{\sqrt2}$
+and $\half$? For large $r$, are the graphs of Horak and Kim the graphs with the most cycles?
+\end{problem}
+
+While this paper was written, Astra wrote a report~\cite{S6} that claims a positive answer: for all
+large $r$, equality holds in~\eqref{eq:hk}. The report builds on Theorem~\ref{thm:sharp} and on a
+finer analysis of the cuts of size four. Fable~5.2 has not checked it, and this paper does not use
+it.
+
+\begin{problem}
+Find an explicit pair $(K,r_0)$ such that $\psi(r)\le2^{r-1}+Kr2^{r/2}$ for all $r\ge r_0$. Find
+any explicit bound below $\frac{15}{16}2^{r}$ at ranks that can be written down.
+\end{problem}
+
+\paragraph{When is the proportion at most one half?}
+Theorem~\ref{thm:half} needs large girth outside $P$. The graphs $M_j$ show that some condition is
+necessary. The proof of Theorem~\ref{thm:sharp} suggests that small cyclic cuts are the only
+obstruction.
+
+\begin{problem}
+Let $G$ be a cubic graph of large rank $r$ with no cyclic cut of size at most four, and let $W$ be
+a shortest cycle. Is $q(G,V(W))\le\half$? Is every edge of $W$ on at most $2^{r-2}$ cycles?
+\end{problem}
+
+\paragraph{An edge on at most half of the cycles.}
+Entringer and Slater~\cite{ES} conjectured that a graph has an edge that lies on at most half of
+its cycles; the graphs $K_4$ and $K_{3,3}$ are exceptions. This compares $c_e(G)$ with $c(G)$, and
+our results compare it with $2^{r-1}$. So they do not decide the conjecture. In a census of the connected
+cubic graphs with at most $22$ vertices the conjecture holds, with the exceptions $K_4$ and
+$K_{3,3}$, and with little room: the least value of $c(G)-2\min_ec_e(G)$ is $14$ at $22$ vertices.
+They also conjectured that \emph{every vertex} of a graph of minimum degree at least three, other
+than $K_4$ and $K_{3,3}$, has an edge that lies on at most half of the cycles. This is false. Take
+$K_4$ and replace three of its vertices by triangles. The result has $10$ vertices and $47$ cycles,
+and each edge at the fourth vertex lies on $24$ of them. We do not know whether this example is
+new; Guichard~\cite{Guichard} studied these conjectures, and we have not seen that paper.
+
+\begin{problem}
+Does every connected cubic graph other than $K_4$ and $K_{3,3}$ have an edge that lies on at most
+half of its cycles?
+\end{problem}
+
+\paragraph{Pancyclic graphs.}
+Theorem~\ref{thm:main} leaves the constant $A$. The lower bound in its proof starts at a rank
+$R_0$ that is not explicit.
+
+\begin{problem}
+Determine $\limsup$ and $\liminf$ of $h(n)-\log n-\lgs n$.
+\end{problem}

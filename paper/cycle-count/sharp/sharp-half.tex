@@ -1,0 +1,119 @@
+\section{Proof of Theorem~\ref{thm:half}}\label{sec:halfproof}
+
+Let $D_{*}$ and $C_0$ be as in Lemma~\ref{lem:affine}, and let $K_1$ be as in
+Theorem~\ref{thm:raise}. Let $G$ and $P$ be as in Theorem~\ref{thm:half}, and suppose that
+$q(G,P)>\half$. We derive a contradiction when $r$ is large. All $o(\cdot)$ refer to $r\to\infty$ and
+are uniform in $G$ and $P$. Put
+\[
+  x=\log r,\qquad z=\log x,\qquad A=6\,e^{168},\qquad L=\lfloor Ax\rfloor,\qquad
+  t=\lfloor z-2\log z\rfloor .
+\]
+
+\paragraph{Two girth scales.}
+Let $D_j=2^{j}D_{*}$ and let $S_0'\subseteq S_1'\subseteq\cdots$ be the sets of
+Theorem~\ref{thm:raise}. Let $D^{-}$ be the first $D_j$ that is at least $\sqrt x$, and let $D^{+}$
+be the first $D_j$ that is at least $x/16$. For large $r$,
+\[
+  \sqrt x\le D^{-}<2\sqrt x,\qquad \frac x{16}\le D^{+}<\frac x8,\qquad D^{-}<D^{+}.
+\]
+Let $S^{-}\subseteq S^{+}$ be the corresponding sets, and put $J^{\pm}=G-(P\cup S^{\pm})$. Then
+$J^{-}$ has girth greater than $D^{-}$, $J^{+}$ has girth greater than $D^{+}$, and
+$J^{+}\subseteq J^{-}$. By Theorem~\ref{thm:raise}(ii),
+\begin{equation}\label{eq:twosizes}
+  |S^{-}|\;\le\;2^{4\sqrt x+K_1\log^{2}(2\sqrt x+2)}=r^{o(1)},\qquad
+  |S^{+}|\;\le\;2^{x/4+K_1\log^{2}(x)}=r^{1/4+o(1)}.
+\end{equation}
+The small scale $D^{-}$ will make the final pieces clean. The large scale $D^{+}$ gives a long chain.
+
+\paragraph{Cycles at the large scale.}
+We apply Section~\ref{sec:chain} with $S=S^{+}$, $J=J^{+}$, $D=D^{+}$ and
+$s=\lfloor(D^{+}-1)/2\rfloor\ge x/32-2$. The hypotheses of Lemma~\ref{lem:linkshalf} hold for large
+$r$: $8\le D^{+}\le L$, and $2(t+2\lfloor D^{+}/8\rfloor)\le D^{+}$ because $t\le z\le D^{+}/4$. So
+every two disjoint cycles of $J^{+}$ of length at most $L$ have at most
+\[
+  b\;=\;1+\frac{2L}{t+1}+2^{t+1}+578\Bigl(\frac L{D^{+}}\Bigr)^{2}
+  \;\le\;1+\frac{2Ax}{z-2\log z}+\frac{2x}{z^{2}}+578\,(16A)^{2}\;\le\;\frac{3Ax}{z}
+\]
+links. Hence
+\[
+  \eta=2^{b}L^{3}2^{-s}\;\le\;r^{3A/z}\,(Ax)^{3}\,4\,r^{-1/32}=r^{-1/32+o(1)}=o(1),
+  \qquad L^{2}2^{-s}=o(1).
+\]
+
+The graph $J^{+}$ is simple, with maximum degree three and girth greater than $D^{+}$. It has
+$v=2r-2-|P|-|S^{+}|=2r-o(r)$ vertices, and its deficit is $d_J\le3(|P|+|S^{+}|)=r^{1/4+o(1)}$. Let
+$\mu$ be the total weight of its cycles of length at most $L$. The proof of
+Lemma~\ref{lem:weight} applies to $J^{+}$ with these parameters. It gives
+$\mu\ge(1-o(1))\,T$, and for even $\ell$ with $6x\le\ell\le L$
+\[
+  2^{-\ell}\tr B^{\ell}\;\ge\;1-\frac{L\,d_J}{2v}-3v\,r^{-3}=1-o(1).
+\]
+The sum of $1/(2\ell)$ over the even $\ell$ in $[6x,L]$ is $(\frac14-o(1))\ln(A/6)=42-o(1)$. So
+$\mu>20$ for large $r$.
+
+\paragraph{The chain.}
+Fix $p\in P$. By Lemma~\ref{lem:chain} there are a cycle $C$ of $J^{+}$ of length at most $L$, a
+vertex $u$, and pairwise disjoint cycles $C_1,\dots,C_T$ of $J^{+}$ of length at most $L$ with
+\[
+  T\;\ge\;\frac{8\cdot2^{s}}{L^{3}}\;\ge\;\frac{2}{A^{3}}\cdot\frac{r^{1/32}}{x^{3}},
+\]
+such that each $C_i$ separates $u$ from $p$ in $H=G-V(C)$. The sets $V(C_i)$ are connected in $H$.
+By Lemma~\ref{lem:nested} we may number them so that $C_1<C_2<\dots<C_T$. Let $U_i$ be the vertex
+set of the component of $u$ in $H-V(C_i)$.
+
+\paragraph{Blocks.}
+Put $w=\lceil128A^{2}x\rceil+2$. For $l=0,1,\dots$ with $(l+1)w\le T-1$ let
+\[
+  X_l\;=\;U_{(l+1)w+1}\sm\bigl(U_{lw+1}\cup V(C_{lw+1})\bigr).
+\]
+There are at least $\lfloor(T-1)/w\rfloor\ge r^{1/32}/x^{5}$ such sets, for large $r$. By
+Lemma~\ref{lem:blocks} they are pairwise disjoint. Each contains the $w-1$ cycles between its two
+end cycles. These cycles are pairwise disjoint and each has more than $D^{+}$ vertices, so
+\[
+  |X_l|\;\ge\;(w-1)(D^{+}+1)\;\ge\;128A^{2}x\cdot\frac x{16}=8A^{2}x^{2}\;\ge\;8L^{2}.
+\]
+Every edge of $H$ that leaves $X_l$ ends on one of its two end cycles. An end cycle has at most $L$
+vertices, and each of them has one edge end outside the cycle. So at most $2L$ edges of $H$ leave
+$X_l$.
+
+\paragraph{Clean blocks.}
+Discard a set $X_l$ if it contains a vertex with a neighbour on $C$, or a vertex of $S^{-}$. At most
+$L$ vertices outside $C$ have a neighbour on $C$, so this discards at most
+$L+|S^{-}|=r^{o(1)}$ sets. For large $r$ at least two sets remain. Let $X$ be one of them.
+\begin{itemize}
+\item $X$ avoids $P$. The set $P$ is connected and disjoint from the cycles, and it contains $p$,
+which is not in $U_i$ for any $i$. A path in $G[P]$ from $p$ to a vertex of $U_i$ would have to pass
+through $C_i$ or through $C$.
+\item No edge of $G$ joins $X$ to $V(C)$. So the edges of $G$ that leave $X$ are edges of $H$, and
+$|\delta X|\le2L$.
+\item $X$ avoids $P\cup S^{-}$, so $G[X]$ is a subgraph of $J^{-}$, and its girth is greater than
+$D^{-}$.
+\end{itemize}
+
+\paragraph{The contradiction.}
+The two remaining sets satisfy the hypotheses of Proposition~\ref{prop:blocks}(b) with
+$\Lambda=L$ and $D=D^{-}$: they are disjoint, they avoid $P$, each has at least $8L^{2}$ vertices
+and at most $2L$ boundary edges, and $D^{-}\ge\sqrt x\ge C_0\log(L+2)$ for large $r$. So
+$q(G,P)\le\frac9{25}$. This contradicts $q(G,P)>\half$. Hence there is $R$ such that
+$q(G,P)\le\half$ whenever $r\ge R$. \qed
+
+\begin{remark}\label{rem:restore}
+The set $X$ is defined in $H=G-V(C)$, and not in $J^{+}$. So it contains the vertices of
+$S^{+}\sm S^{-}$ that lie between its two end cycles. This is the reason for the two scales. The
+chain needs the girth of $J^{+}$, and the pieces need only the girth of $J^{-}$, which has far fewer
+deleted vertices than the chain has cycles.
+\end{remark}
+
+\begin{remark}\label{rem:polynomial}
+The same chain proves a quantitative form of Theorem~\ref{thm:forest} for graphs with short cycles.
+Suppose that $q(\Gamma,P)>\half+\varepsilon$ in the setting of Section~\ref{sec:forest}. Delete
+short cycles at two scales with Lemma~\ref{lem:smallcuts}, find the chain, and count the weight of
+the cycles inside the clean blocks. This weight is at most $(1+o(1))/(4\varepsilon)$ by the second
+moment, and it is at least a constant times the number of clean blocks. The result is
+$q(\Gamma,P)\le\half+r^{-\kappa}$ for every fixed $\kappa<\frac13$, when $|P|\le r/\log^{2}r$ and
+$\Gamma[P]$ has at most $\gamma\log r$ components, for a constant $\gamma=\gamma(\kappa)>0$. Both
+models checked this proof; it is in the repository as a research note~\cite{S4} and it is not
+printed here. With an exponential form of Lemma~\ref{lem:smallcuts}, Astra's report~\cite{S4}
+improves the error term to $O((\log r)^{11/2}/\sqrt r)$. Fable~5.2 has not checked that last
+refinement line by line.
+\end{remark}

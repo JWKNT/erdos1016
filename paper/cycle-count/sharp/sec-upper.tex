@@ -1,0 +1,91 @@
+\section{The construction}\label{sec:upper}
+
+This section proves the upper bound of Theorem~\ref{thm:main}. The construction follows~\cite{KNT}.
+It is a chain of beads. Bead $i$ can be passed in two ways, and the two ways differ in length by
+$2^{i}$. So $k$ beads give $2^{k}$ consecutive path lengths for the price of $k$ chords. A few more
+chords close shorter and shorter parts of the chain, and these supply the short cycles.
+
+\begin{proposition}\label{prop:upper}
+For every $n\ge3$ there is a pancyclic graph with $n$ vertices and at most
+$n+\lfloor\log n\rfloor+\lgs n+1$ edges.
+\end{proposition}
+
+\begin{proof}
+For $3\le n\le6$ take a cycle $u_0u_1\cdots u_{n-1}$, with the chord $u_0u_2$ if $n\ge4$ and also
+the chord $u_0u_3$ if $n=6$. Now let $n\ge7$.
+
+\emph{The necklace.} Let $k\ge2$ be the largest integer with $2^{k}+k+1\le n$, so that
+$n\le2^{k+1}+k+1$. Let $H$ be a cycle of length $n$, and let $Q\subseteq H$ be a path that is
+composed of consecutive segments $Q_0,\dots,Q_{k-1}$, where $Q_i$ has $2^{i}+1$ edges and joins
+$v_i$ to $v_{i+1}$. Thus $Q$ has $2^{k}+k-1\le n-2$ edges. Add the chords $e_i=v_iv_{i+1}$ for
+$0\le i<k$. For $1\le j\le k$ let $N_j$, the \emph{necklace with $j$ beads}, be the union of
+$Q_0,\dots,Q_{j-1}$ and $e_0,\dots,e_{j-1}$ (Figure~\ref{fig:necklace}).
+
+A path from $v_0$ to $v_j$ in $N_j$ uses either $Q_i$ or $e_i$ for each $i<j$, and it is shorter by
+$2^{i}$ if it uses $e_i$. So $N_j$ has $2^{j}$ such paths, exactly one of each length from $j$ to
+$2^{j}+j-1$. The rest $H-Q$ of the outer cycle is a path from $v_k$ to $v_0$ with $n-2^{k}-k+1$
+edges. Together with $N_k$ it contains a cycle of each length in the interval
+\[
+  [\,n-2^{k}+1,\ n\,].
+\]
+
+\emph{Closing chords.} For $2\le j\le k$ the chord $f_j=v_0v_j$ closes the paths of $N_j$ to cycles
+of all lengths in the interval
+\[
+  I_j=[\,j+1,\ 2^{j}+j\,].
+\]
+Add the chord $f_j$ for $j=k$, then for $j=\lceil\log k\rceil$, and so on: as long as the last
+value of $j$ is larger than $2$, the next value is $\lceil\log j\rceil$. The last value is $2$. If
+$j'=\lceil\log j\rceil$, then $2^{j'}\ge j$, so the intervals $I_{j'}$ and $I_j$ overlap or are
+adjacent. Since $I_2=[3,6]$, these chords give a cycle of each length in $[\,3,\ 2^{k}+k\,]$.
+
+\emph{All lengths.} The intervals $[\,3,\ 2^{k}+k\,]$ and $[\,n-2^{k}+1,\ n\,]$ cover all lengths
+from $3$ to $n$, except for the length $2^{k}+k+1$ in the case $n=2^{k+1}+k+1$. In that case add
+one more chord, which joins $v_k$ to the neighbour of $v_0$ on $H-Q$. This chord, the edge from that
+neighbour to $v_0$, and the path $Q$ form a cycle of length $2^{k}+k+1$.
+
+\emph{The number of chords.} For an integer $j\ge3$ we have $\lgs\lceil\log j\rceil=\lgs j-1$, and
+$\lgs2=1$. So exactly $\lgs k$ chords $f_j$ were added. The number of all chords is therefore at
+most $k+\lgs k+1\le\lfloor\log n\rfloor+\lgs n+1$.
+\end{proof}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+  iv/.style 2 args={postaction={decorate,decoration={markings,
+      mark=between positions #1 and #2 step #1 with {\fill (0,0) circle (1.1pt);}}}}]
+  \coordinate (v0) at (0,0);
+  \coordinate (v1) at (1.8,0);
+  \coordinate (v2) at (4.0,0);
+  \coordinate (v3) at (6.8,0);
+  \coordinate (v4) at (10.8,0);
+  \draw[iv={0.5}{0.51}]    (v0) to[bend left=50] node[pos=0.5,above=-1pt] {\scriptsize$Q_0$} (v1);
+  \draw[iv={0.3333}{0.67}] (v1) to[bend left=50] node[pos=0.5,above=-1pt] {\scriptsize$Q_1$} (v2);
+  \draw[iv={0.2}{0.81}]    (v2) to[bend left=50] node[pos=0.5,above=-1pt] {\scriptsize$Q_2$} (v3);
+  \draw[iv={0.1111}{0.89}] (v3) to[bend left=50] node[pos=0.5,above=-1pt] {\scriptsize$Q_3$} (v4);
+  \draw[iv={0.2}{0.81}]    (v0) .. controls (0.3,3.5) and (10.5,3.5) .. node[pos=0.5,above=-1pt] {\scriptsize$H-Q$} (v4);
+  \foreach \a/\b/\i in {v0/v1/0,v1/v2/1,v2/v3/2,v3/v4/3}
+    \draw[very thick] (\a) -- node[pos=0.5,above=-2pt] {\scriptsize$e_{\i}$} (\b);
+  \draw[thick,dashed] (v0) .. controls (0.9,-1.1) and (3.3,-1.1) .. node[pos=0.5,below=-1pt] {\scriptsize$f_2$} (v2);
+  \draw[thick,dashed] (v0) .. controls (0.5,-2.2) and (10.3,-2.2) .. node[pos=0.5,below=-1pt] {\scriptsize$f_4$} (v4);
+  \foreach \p in {v0,v1,v2,v3,v4} \fill (\p) circle (1.9pt);
+  \node[left=3pt] at (v0) {$v_0$};
+  \node[below=3pt] at (v1) {$v_1$};
+  \node[anchor=north west,inner sep=3pt] at (v2) {$v_2$};
+  \node[below=3pt] at (v3) {$v_3$};
+  \node[right=3pt] at (v4) {$v_4$};
+\end{tikzpicture}
+\caption{The construction for $n=24$, where $k=4$. The segments $Q_0,\dots,Q_3$ of the outer cycle
+$H$ have $2,3,5,9$ edges and are doubled by the chords $e_0,\dots,e_3$. The chord $f_4$ gives the
+cycle lengths $5,\dots,20$, the rest $H-Q$ of the outer cycle gives $9,\dots,24$, and $f_2$ gives
+$3,\dots,6$.}
+\label{fig:necklace}
+\end{figure}
+
+\paragraph{Formal counterpart.}
+The Lean theorem \lean{Problem1016.upper_bound_integer} states that
+$h(n)\le\lfloor\log n\rfloor+\lgs n+1$ for every $n\ge3$. Its proof formalises the construction
+of~\cite{KNT}. The proof above describes that construction in our own words. As a check on the
+wording, we built the graph of this section by computer for all $n\le139$ and for eight larger
+values up to $522$. Each of these graphs is pancyclic and has at most the stated number of edges
+(Appendix~\ref{app:checks}).

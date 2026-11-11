@@ -1,0 +1,31 @@
+
+\paragraph{One edge of a cycle.}
+The next lemma is the form of the count that Theorem~\ref{thm:sharp} needs. It holds for
+multigraphs, with the same proof. For an edge $e$ let $c(G)$ be the number of cycles of $G$ and
+$c_e(G)$ the number of cycles of $G$ through $e$. Recall that
+$q(G,P)=\PP(\xi\cap E(G-P)\text{ is a forest})$ for a set $P$ of vertices.
+
+\begin{lemma}[Edge recursion]\label{lem:edge}
+Let $G$ be a connected graph of rank $r$, let $W$ be a cycle of $G$, and let $e$ be an edge of $W$.
+Then $G-e$ is connected and has rank $r-1$, and
+\[
+  c(G)=c(G-e)+c_e(G),\qquad c_e(G)\;\le\;q\bigl(G,V(W)\bigr)\,2^{r-1}.
+\]
+\end{lemma}
+
+\begin{proof}
+The edge $e$ lies on a cycle, so $G-e$ is connected, and it has one edge less. A cycle of $G$ either
+avoids $e$ or contains $e$. This is the first formula.
+
+Let $C$ be a cycle through $e$. Then $C$ and $C+W$ are even subgraphs of $G$. The cycle $C$ has a
+vertex in $V(W)$, so $C\cap E(G-V(W))$ is a proper part of a cycle, which is a forest. Every edge of
+$W$ has both ends in $V(W)$, so $C+W$ has the same edges in $G-V(W)$ as $C$. The even subgraph $C$
+contains $e$, and $C+W$ does not. So if $C'$ is another cycle through $e$, the four sets $C$,
+$C+W$, $C'$, $C'+W$ are distinct. Hence there are at least $2c_e(G)$ even subgraphs whose part in
+$G-V(W)$ is a forest, and their number is $q(G,V(W))\,2^{r}$.
+\end{proof}
+
+In particular, if $q(G,V(W))\le\half+\varepsilon$, then
+$c(G)\le c(G-e)+(\frac14+\frac\varepsilon2)2^{r}$. For a graph with the largest number of cycles
+this reads $\psi(r)\le\psi(r-1)+(\frac14+\frac\varepsilon2)2^{r}$. If $\varepsilon$ is zero, the
+difference $\psi(r)-2^{r-1}$ does not grow at all in this step.

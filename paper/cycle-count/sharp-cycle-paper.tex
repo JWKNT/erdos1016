@@ -1,0 +1,112 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{microtype}
+\usepackage{array,booktabs,capt-of}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\usepackage{alltt,upquote}
+\usepackage{tikz}
+\usetikzlibrary{decorations.markings,arrows.meta,positioning}
+\usepackage{url}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+
+% Lean identifiers: typewriter, breakable at dots, slashes and underscores.
+\DeclareUrlCommand\lean{\urlstyle{tt}}
+% Visible placeholder for material that must be filled in before circulation.
+\newcommand{\tbd}[1]{\textcolor{red!70!black}{[#1]}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{problem}[theorem]{Problem}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Z}{\mathcal{Z}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\EE}{\mathbb{E}}
+\newcommand{\comp}{\operatorname{comp}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\girth}{\operatorname{girth}}
+\newcommand{\lgs}{\log^{*}}
+\newcommand{\lgk}[1]{\log^{(#1)}}
+\newcommand{\sm}{\setminus}
+\newcommand{\half}{\tfrac12}
+\newcommand{\cO}{\mathcal{O}}
+\numberwithin{equation}{section}
+\setlength{\emergencystretch}{2em}
+
+% Data of the formalisation; updated when the Lean sources change.
+\newcommand{\leancommit}{a5cb5fa}
+\newcommand{\leanmodules}{274}
+\newcommand{\leanlines}{46{,}306}
+\newcommand{\leansharpmodules}{10}
+\newcommand{\leansharplines}{2{,}215}
+\newcommand{\leancheckstatus}{On 11 November 2026 the check passed on a machine of the authors for
+the Lean sources, the audit and the scripts of this commit. That run did not use the option
+\texttt{--fresh}, and it was made before the commit. The continuous integration of the repository
+repeats the check with a fresh build for every pushed commit. Its records are at
+\url{https://github.com/JWKNT/erdos1016/actions}.}
+
+\hypersetup{pdftitle={The number of cycles in a graph: the second term, and pancyclic graphs},pdfauthor={KNT, Astra, Fable 5.2}}
+\title{The number of cycles in a graph:\\ the second term, and pancyclic graphs}
+\author{KNT \and Astra \and Fable 5.2%
+\thanks{Astra and Fable~5.2 are language models: GPT-6 Astra and Claude Fable~5.2.
+Section~\ref{sec:status} says who did what, and what a machine has checked.}}
+\date{Draft of 11 November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let $\psi(r)$ be the largest number of cycles in a graph of cyclomatic number $r$. Entringer and
+Slater conjectured in 1981 that $\psi(r)\sim2^{r-1}$. We prove that
+\[
+  \psi(r)\;\le\;2^{r-1}+K\,r\,2^{r/2}
+\]
+for an absolute constant $K$ and all $r\ge1$. Graphs of Horak and Kim show that the order of the
+second term is correct. The constant $K$ is not explicit, and the bound gives no numerical
+improvement for graphs of any practical size.
+
+The paper has three ideas. First, count the cycles through a small subgraph $W$ by their parts
+outside $W$; each such part is a forest. Second, about one half of all outside parts are forests,
+when the rank is large. This estimate gives $\psi(r)\sim2^{r-1}$. It also gives
+$h(n)=\log_2n+\log^{*}n+O(1)$ for the least number $n+h(n)$ of edges of a pancyclic graph on $n$
+vertices, which answers Erd\H{o}s Problem~\#1016. Third, if the graph has large girth outside a
+short cycle $W$, then at most one half of the outside parts are forests, with no error term. This
+third idea is new. With two auxiliary theorems, on small cyclic cuts and on bounded girth, it gives
+the sharp bound.
+
+The results on $\psi(r)\sim2^{r-1}$ and on $h(n)$ are formalised in Lean~4. The sharp bound is not
+formalised. Parts of its proof are, and the paper says which. No referee has read this draft.
+\end{abstract}
+
+\input{sharp/intro}
+\input{sharp/sec-outside}
+\input{sharp/edge-lemma}
+\input{sharp/sec-half}
+\input{sharp/sec-lower}
+\input{sharp/sec-upper}
+\input{sharp/sec-forest}
+\input{sharp/sharp-plan}
+\input{sharp/sharp-affine}
+\input{sharp/sharp-packing}
+\input{sharp/sharp-chain}
+\input{sharp/sharp-half}
+\input{sharp/sharp-inputs}
+\input{sharp/sharp-examples}
+\input{sharp/sec-exact}
+\input{sharp/problems}
+
+\appendix
+\input{sharp/app-lean}
+\input{sharp/app-checks}
+\input{sharp/app-sources}
+
+\end{document}
