@@ -97,6 +97,11 @@ h1 { font-size: clamp(1.65rem, 3vw, 2rem); line-height: 1.1; }
 h2 { font-size: clamp(1.3rem, 2.2vw, 1.62rem); line-height: 1.16; }
 h3 { font-size: 1.05rem; line-height: 1.25; }
 code, kbd, pre, samp { font-family: var(--mono); }
+/* Text is justified by default. Hyphenation keeps the word spacing even in a narrow
+   column. Code keeps its exact words, and an empty state keeps its own alignment. */
+p, .prose li { text-align: justify; -webkit-hyphens: auto; hyphens: auto; }
+.empty-state p { text-align: inherit; }
+code, kbd, pre, samp { -webkit-hyphens: manual; hyphens: manual; }
 code { font-size: .86em; }
 kbd { padding: .08em .32em; border: 1px solid var(--line-strong); background: var(--surface); font-size: .78em; }
 mark { padding-inline: .08em; background: var(--mark); color: inherit; }
