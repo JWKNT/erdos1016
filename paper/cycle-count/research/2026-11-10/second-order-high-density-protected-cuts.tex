@@ -1,0 +1,114 @@
+\section{Avoiding fixed modifications in the small-cut construction}
+\label{sec:high-density-protected-cuts}
+
+The small-cut construction can avoid any fixed set of vertices.
+This permits added edges to be removed after the construction.
+
+\begin{theorem}[Protected vertices]
+\label{thm:high-density-protected-cyclic-sets}
+Fix $k\ge2$, $m\ge0$, and $0<\varepsilon\le1/2$.
+Put $C=\lceil C_\varepsilon\rceil$ and
+\[
+ B_{k,m,\varepsilon}
+ =(k+m+1)(9C+8k+4m+9).
+\]
+Let $X$ be a normalized $k$-pole of rank $h\ge B_{k,m,\varepsilon}$.
+Let $Z\subseteq V(X)$ satisfy $|Z|\le m$.
+If some terminal pair has at least $(1/2+\varepsilon)2^h$ paths, then $X$ contains two disjoint vertex sets $V_1,V_2$ with these properties:
+\begin{enumerate}
+\item Each $V_i$ avoids $Z$ and every port of $X$, and contains a cycle.
+\item In every cubic completion of $X$, each $V_i$ has boundary at most four.
+\end{enumerate}
+In particular, either set gives a cyclic cut of size at most four in every completion.
+\end{theorem}
+
+\begin{proof}
+Use the normalization and series decomposition in Theorem~\ref{thm:high-density-pair-small-cyclic-cut}.
+Call the number of bridgeless pieces $q$.
+Each piece retains normalized terminal-path density at least $1/2+\varepsilon$.
+
+If $q\ge k+m+2$, exclude the first and last pieces.
+Also exclude pieces containing a restored port or a vertex of $Z$ that survives normalization.
+At most $(k-2)+m$ further pieces are excluded.
+At least two whole pieces remain.
+Use their original vertex sets, without subdivision vertices on boundary edges.
+They avoid $Z$ and all ports, contain cycles, and have boundary at most two in every completion.
+A protected vertex that was suppressed is one of the restored ports and was already accounted for.
+
+If $q\le k+m+1$, some piece has rank
+\[
+ b\ge\frac h{k+m+1}\ge9C+8k+4m+9.
+\]
+Its terminal distance is at least $b-C$.
+There are at most $2C$ internal layers with more than two vertices.
+Mark these layers and the at most $2(k-2)$ layers meeting endpoints of subdivided edges.
+Also mark the layers of protected vertices that survive normalization.
+This adds at most $m$ layers.
+
+Partition the internal distance layers into disjoint groups of four.
+The number of unmarked groups is at least
+\[
+ \left\lfloor\frac{b-C-1}{4}\right\rfloor-2C-2(k-2)-m
+ \ge6.
+\]
+Choose two such groups and apply Lemma~\ref{lem:four-thin-layers-short-cycle}.
+The resulting cycles have length at most four, avoid $Z$, and use no subdivided edge.
+Internal layers avoid the two retained terminals, and unmarked layers avoid all restored ports.
+Their disjoint vertex sets remain unchanged when the ports are restored.
+Each has boundary at most four in every cubic completion.
+\end{proof}
+
+\begin{corollary}[Avoiding fixed added edges]
+\label{cor:high-density-forbidden-edges}
+Let $X$ be a normalized $k$-pole, and let $E_0$ be at most $s$ designated edges of $X$.
+If $X$ has a terminal pair of density at least $1/2+\varepsilon$ and
+\[
+ \beta(X)\ge(k+2s+1)(9\lceil C_\varepsilon\rceil+8k+8s+9),
+\]
+then the two cyclic vertex sets in Theorem~\ref{thm:high-density-protected-cyclic-sets} avoid every endpoint of every edge in $E_0$.
+Deleting the edges of $E_0$ and changing incidences at their endpoints leaves both cycles and both boundaries unchanged.
+The last statement applies when all other vertex incidences remain unchanged.
+\end{corollary}
+
+\begin{proof}
+Protect the at most $2s$ endpoints of the designated edges.
+Neither a selected vertex nor an edge incident with it is affected by the stated changes.
+\end{proof}
+
+\begin{corollary}[Unconditional augmented inequalities in a five-pole]
+\label{cor:five-pole-unconditional-added-edge}
+Let $Y$ be a normalized five-pole of rank $h$ inside a cubic graph $G$ with no cyclic cut of size at most four.
+For distinct ports $i,j,k,l$, write
+\[
+ a_{kl}=2^{-h}P_{kl}(Y),\qquad
+ U_{ijkl}=2^{-h}F_{\{i,j,k,l\}}(Y),\qquad
+ u_{ij|kl}=2^{-h}f_{\{i,j,k,l\},ij|kl}(Y).
+\]
+Then, uniformly over the choices of ports,
+\[
+ a_{kl}+U_{ijkl}-u_{ij|kl}\le1+o(1)
+ \qquad(h\to\infty).
+\]
+No positive lower bound on $P_{ij}(Y)$ is required.
+\end{corollary}
+
+\begin{proof}
+Add an edge $ij$ to $Y$, obtaining a normalized three-pole $T$ of rank $h+1$.
+The exact added-edge identity gives
+\[
+ P_{kl}(T)
+ =2^h\bigl(a_{kl}+U_{ijkl}-u_{ij|kl}\bigr).
+\]
+Suppose the parenthesized expression exceeds $1+\eta$ for some fixed $\eta>0$ along arbitrarily large ranks.
+Then the normalized $k$--$l$ path density in $T$ exceeds $1/2+\eta/2$.
+Apply Theorem~\ref{thm:high-density-protected-cyclic-sets} with protected vertices $i,j$.
+It supplies two disjoint cyclic vertex sets contained in $Y-\{i,j\}$.
+
+The selected sets avoid $i,j$ and the three remaining ports of $T$.
+Every changed incidence is therefore outside both selected sets.
+Thus their boundary sizes in $G$ equal those in any cubic completion of $T$.
+Both boundaries have size at most four.
+Either selected set therefore gives a forbidden cyclic cut in $G$.
+This contradiction proves the assertion for every fixed $\eta>0$.
+There are only finitely many port choices, so the error is uniform.
+\end{proof}

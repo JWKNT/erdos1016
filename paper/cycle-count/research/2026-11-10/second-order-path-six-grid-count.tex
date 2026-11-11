@@ -1,0 +1,151 @@
+\section{Eleven missing four-terminal sectors for seven ports}
+\label{sec:path-seven-grid-count}
+
+The weighted $K_{3,3}$ argument has a stronger counting form for seven ports.
+Only four-terminal sectors are needed for the count below.
+
+\begin{lemma}[Seven tokens in a three-by-three grid]
+\label{lem:path-seven-grid-eleven}
+Place seven distinct tokens in the cells of a $3\times3$ grid, allowing repeated cells.
+At least eleven four-token subsets have all their cells contained in the union of one row and one column.
+The bound is attained by placing $3,2,2$ tokens in three cells forming a perfect matching.
+\end{lemma}
+
+\begin{proof}
+Call a four-token subset bad if it lies in such a row-column union, and good otherwise.
+There are $\binom74=35$ subsets.
+We prove that at most twenty-four are good.
+
+If a row contains $r\ge4$ tokens, every subset with at least three tokens from that row is bad.
+This gives
+\[
+ \binom r4+\binom r3(7-r)\ge13
+ \qquad(4\le r\le7).
+\]
+We may therefore assume that the row counts are $(3,3,1)$ or $(3,2,2)$.
+
+Here is a formula for the number $G$ of good subsets.
+Write $w_{ic}$ for the token count in row $i$, column $c$, and $r_i=\sum_cw_{ic}$.
+Put
+\[
+ d_i=\binom{r_i}{2}-\sum_c\binom{w_{ic}}2,
+ \qquad H_{ij}=r_ir_j-\sum_cw_{ic}w_{jc}.
+\]
+Thus $d_i$ counts pairs in row $i$ occupying different columns, and $H_{ij}$ counts pairs from rows $i,j$ occupying different columns.
+For $\{u,v\}=[3]\setminus\{c\}$, put
+\[
+ M_{jk,c}=w_{ju}w_{kv}+w_{jv}w_{ku}.
+\]
+Then
+\begin{equation}\label{eq:path-seven-grid-good-count}
+ G=\sum_{i<j}d_id_j
+   +\sum_{i=1}^3
+       \left(d_iH_{jk}+\sum_c\binom{w_{ic}}2M_{jk,c}\right),
+\end{equation}
+where $j,k$ are the other two rows in each term of the second sum.
+
+To verify the formula, a good subset has row multiplicities $(2,2,0)$ or $(2,1,1)$.
+In the first case, each pair must occupy different columns, giving $d_id_j$.
+In the second case, if the doubled-row pair occupies different columns, the other two tokens must occupy different columns.
+This gives $d_iH_{jk}$.
+If the doubled-row pair occupies one column $c$, the other two tokens must occupy the two different columns outside $c$.
+This gives the final minor term.
+
+Suppose first that the row counts are $(3,3,1)$.
+Let $A,B$ be the size-three row vectors, and let the last token occupy column $c$.
+A size-three row has type $111$, $210$, or $300$, up to column permutation.
+Formula~\eqref{eq:path-seven-grid-good-count} becomes
+\[
+\begin{split}
+ G={}&d_Ad_B+d_A(3-B_c)+d_B(3-A_c)\\
+ &+\sum_{i\ne c}\binom{A_i}2B_{j(i)}
+  +\sum_{i\ne c}\binom{B_i}2A_{j(i)},
+\end{split}
+\]
+where $j(i)$ is the third column different from $i,c$.
+The following bounds hold for all relative column placements:
+\[
+\begin{array}{c|c|c}
+ A\text{ type}&B\text{ type}&G\text{ at most}\\\hline
+111&111&21\\
+111&210&20\\
+111&300&12\\
+210&210&20\\
+210&300&15\\
+300&300&18
+\end{array}
+\]
+For $111,210$, the first three terms are $19-3B_c$, and the remaining terms total at most one.
+For $111,300$, they are at most nine and three, respectively.
+For $210,210$, they are at most sixteen and four.
+For $210,300$, they are at most six and nine.
+For $300,300$, only the last two terms remain, each at most nine.
+The $111,111$ value follows directly.
+Thus this row profile has at most twenty-one good subsets.
+
+Now let the row counts be $(3,2,2)$, with row vectors $A,B,C$.
+Write $d=d_A$.
+Each size-two row is either split between two columns or doubled in one column.
+
+First suppose both $B,C$ are split.
+If their missing column is the same column $c$, the formula reduces to
+\[
+ G=7+4d+2A_c+2\binom{A_c}2\le21.
+\]
+For $A_c=0,1,2,3$, the largest possible values are $15,21,21,19$, respectively.
+If their missing columns differ, let $c$ be their common occupied column.
+Their dot product is one, every complementary minor is one, and the formula gives
+\[
+ G=13+4d-A_c\le24.
+\]
+Indeed, $d\le2$ gives $G\le21$, while $d=3$ forces $A=(1,1,1)$ and gives $G=24$.
+
+Next suppose $B$ is doubled in column $b$ and $C$ is split.
+Using $\sum_i\binom{A_i}2=3-d$ and bounding the complementary minor by $3-A_b$ gives
+\[
+ G\le15+d(3-2C_b)-3A_b\le21.
+\]
+For $d\le2$, the last bound is immediate.
+For $d=3$, one has $A_b=1$, and the same bound follows.
+
+Finally suppose both $B,C$ are doubled.
+If their occupied column is the same, every four-subset is bad, so $G=0$.
+Otherwise let their columns be $b,c$, and let $a$ be the remaining column.
+The formula gives
+\[
+ G=4\left(d+\binom{A_a}2+A_a\right)
+  =4\left(3-\binom{A_b}2-\binom{A_c}2+A_a\right)\le24.
+\]
+This completes the upper bound on $G$.
+
+For sharpness, use three matching cells with token counts $3,2,2$.
+A four-subset is bad exactly when it uses at most two of those cells.
+The count is $\binom54+\binom54+\binom44=11$.
+\end{proof}
+
+\begin{theorem}[Missing sectors in a nonplanar seven-pole]
+\label{thm:path-seven-eleven-missing-sectors}
+Let $X$ be a nonplanar normalized seven-pole of rank $h$.
+At least eleven distinct four-port forest totals satisfy
+\[
+ F_S(X)\le2^h-1.
+\]
+\end{theorem}
+
+\begin{proof}
+Choose a $K_{3,3}$ subdivision and assign all ports to its nine core paths as in Theorem~\ref{thm:path-six-full-four-planar}.
+Regard these assignments as seven distinct tokens in the corresponding $3\times3$ grid.
+The complement of any core square consists of the paths in one row-column union.
+For every four-port subset counted by Lemma~\ref{lem:path-seven-grid-eleven}, choose the corresponding square.
+Those four ports lie in one component after deleting its subdivided cycle.
+A parity join in that component, together with the cycle, gives a nonforest state in that four-terminal affine class.
+There are at least eleven distinct such classes.
+Each has $2^h$ states in total, so its forest total is at most $2^h-1$.
+\end{proof}
+
+For a seven-pole of girth at least seven, Euler's inequality gives $n\le7$ if the graph is planar.
+Since $n=2h+5$, a planar example has rank one and is the seven-cycle.
+Thus every such shore of rank at least two is nonplanar and has the eleven missing sectors above.
+There are thirty-five four-terminal sectors and seven six-terminal sectors in total.
+Consequently, at most thirty-one of these forty-two forest sectors can be full.
+This is the count required by the bounded-shore quantum argument at threshold thirty-two.

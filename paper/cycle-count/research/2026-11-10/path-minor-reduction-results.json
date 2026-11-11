@@ -1,0 +1,12 @@
+{
+  "status": "all exact checks passed",
+  "networkx_version": "3.7",
+  "graph_order_limit": 7,
+  "connected_graphs": 995,
+  "above_half_cycle_graphs": 551,
+  "terminal_pairs": 19846,
+  "above_half_pairs": 4906,
+  "marked_paths_checked": 26830,
+  "suppressed_vertices": 19134,
+  "limitations": "Finite checks of the reduction only. The stability theorem uses a mathematical separator argument."
+}

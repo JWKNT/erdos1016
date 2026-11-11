@@ -1,0 +1,252 @@
+\section{Higher-terminal forest stability at high girth}
+\label{sec:path-high-girth-terminal-forests}
+
+The root agent proposed using a breadth-first tree marker for all ports.
+The localization argument of Fable then extends from one terminal path to any even terminal set.
+A growing-window argument bounds each distance layer, while an entropy Moore bound supplies a large cubic ball.
+All logarithms have base two.
+
+\begin{lemma}[A marker with few vertices in each layer]
+\label{lem:path-bfs-terminal-marker}
+Let $N$ be a normalized $k$-pole with $k\ge2$, and let $T$ be any even subset of its ports.
+Choose a breadth-first tree rooted at one port.
+Let $P$ be the union of its root-to-port paths, as a vertex set.
+Then $P$ is connected, contains every port, and meets each distance layer in at most $k$ vertices.
+Moreover, if $J$ is a uniform $T$-join and $\xi$ is a uniform even subgraph, then
+\[
+ \Pr(J\text{ is a forest})
+ \le\Pr(\xi-P\text{ is a forest}).
+\]
+\end{lemma}
+
+\begin{proof}
+Each root-to-port path has at most one vertex in each distance layer.
+Their union gives the asserted layer bound and contains all degree-two vertices.
+The union of their tree edges is connected, so it contains a $T$-join $F_0$.
+The map $\xi\mapsto\xi\mathbin\triangle F_0$ is a bijection onto the affine $T$-join space.
+Its restriction outside $P$ agrees with that of $\xi$.
+A forest image therefore implies the forest event outside $P$.
+\end{proof}
+
+\begin{lemma}[Layer width from a thin connected marker]
+\label{lem:path-thin-marker-layer-width}
+There is an absolute constant $K$ with the following property.
+Let $N$ be connected and subcubic, and let $P$ be a connected marked set containing every vertex of degree below three.
+Suppose $P$ meets each distance layer from a fixed root in at most $k$ vertices, where $k\ge1$.
+If
+\[
+ \Pr(\xi_N-P\text{ is a forest})\ge\frac12+\varepsilon,
+ \qquad 0<\varepsilon\le\frac12,
+\]
+then every full distance layer has size at most
+\[
+ K\left[
+ \varepsilon^{-2}\bigl(\log(4/\varepsilon)\bigr)^{11}
+ +(k+1)^2\right].
+\]
+\end{lemma}
+
+\begin{proof}
+Put $\delta=\varepsilon/2$, and use $R_\delta$ from
+Lemma~\ref{lem:path-polynomial-local-threshold}.
+Set
+\[
+ \Theta=\max\{2R_\delta,\,2^{100}(k+1)^2\}.
+\]
+We first exclude every set $R\subseteq V(N)\setminus P$ satisfying
+\[
+ |R|\ge\Theta,
+ \qquad
+ |\delta_N R|\le\frac{|R|}{4(\log|R|)^2}.
+\]
+Indeed, let $C_0$ be the component of $N-R$ containing $P$, and put
+$R^+=V(N)\setminus V(C_0)$.
+This set contains $R$, avoids $P$, and has connected complement.
+Its boundary is contained in $\delta_N R$.
+All its vertices have degree three in $N$.
+Lemma~\ref{lem:path-disconnected-localization} therefore gives a localized graph of rank
+\[
+ \rho=\frac{|R^+|+|\delta_N R^+|}{2}+1\ge|R|/2\ge R_\delta.
+\]
+Its marked cycle has at most $\rho/(\log\rho)^2$ vertices, by exactly the monotonicity and padding comparison in Lemma~\ref{lem:path-direct-good-set}.
+The forest event outside $P$ implies the forest event on $R^+$.
+Localization and the definition of $R_\delta$ bound the latter probability by
+$1/2+\delta$, a contradiction.
+
+Write $m_j$ for the number of unmarked vertices in layer $j$, with $m_j=0$ outside the layer range.
+For the union $R(i,i')$ of its unmarked layers from $i$ through $i'$, let $m$ be its order.
+Edges join the same or consecutive layers.
+The boundary satisfies
+\[
+ |\delta_N R(i,i')|
+ \le3m_{i-1}+3m_{i'+1}+3k(i'-i+3).
+\]
+The last term bounds all incidences to marked vertices in layers $i-1$ through $i'+1$.
+
+Suppose $m_j\ge\Theta$.
+Start with this layer and include a neighboring layer whenever its mass exceeds
+$m/(48(\log m)^2)$, where $m$ is the current window mass.
+This process stops because the graph is finite.
+Let $\mu$ be the final mass and put $L=\log\mu\ge100$.
+Every step multiplies the current mass by more than $1+1/(48L^2)$.
+The number of steps is at most
+\[
+ \frac{\ln\mu}{\ln(1+1/(48L^2))}
+ \le96L^2\ln\mu<67L^3.
+\]
+Both remaining neighbor masses are at most $\mu/(48L^2)$.
+Consequently
+\[
+ |\delta_N R(i,i')|
+ \le\frac{\mu}{8L^2}+3k(67L^3+3)
+ \le\frac{\mu}{4L^2}.
+\]
+For completeness, the last inequality follows from
+\[
+ 24kL^2(67L^3+3)\le2000kL^5\le2^L.
+\]
+The first comparison holds for $L\ge100$.
+For the second, $\mu\ge2^{100}(k+1)^2$ gives $k\le2^{L/2-50}$, and
+$2000L^5\le2^{L/2+50}$ for $L\ge100$.
+The latter inequality holds at $100$, and its right-to-left ratio increases thereafter.
+Thus the stopped window is an excluded set, a contradiction.
+
+Every layer therefore has fewer than $\Theta$ unmarked vertices and at most $k$ marked vertices.
+Finally,
+\[
+ R_\delta\le K_0\delta^{-2}\bigl(\log(2/\delta)\bigr)^{11}.
+\]
+Absorb this bound and the fixed coefficient $2^{100}$ into an absolute $K$.
+\end{proof}
+
+\begin{theorem}[Uniform affine forest bound for high-girth poles]
+\label{thm:path-high-girth-terminal-forests}
+There is an absolute constant $C$ such that the following holds.
+Let $N$ be a normalized $k$-pole of rank $h\ge2$ and girth $g$, with
+\[
+ 2\le k\le g.
+\]
+For every even subset $T$ of its ports,
+\[
+ \frac{\#\{T\text{-joins in }N\text{ that are forests}\}}{2^h}
+ \le\frac12+C g^{13/2}2^{-g/4}.
+\]
+In particular, the excess tends to zero as $g\to\infty$, uniformly in the rank, the port count, and the even terminal set.
+\end{theorem}
+
+\begin{proof}
+It suffices to prove the assertion for all sufficiently large $g$.
+An increase in $C$ then covers the remaining finitely many girths.
+Corollary~\ref{cor:four-near-moore-shore-rank} gives
+\[
+ n=|V(N)|\ge2^{g/2-5}.
+\]
+Put
+\[
+ s=\left\lfloor\frac g2-\log k-10\right\rfloor.
+\]
+For large $g$, $s\ge1$ and $2s<g$.
+The union of the radius-$s$ balls about the ports has at most
+\[
+ 3k2^s\le3\,2^{g/2-10}<n
+\]
+vertices.
+Choose a vertex $v$ outside that union.
+The radius-$s$ ball about $v$ contains no port.
+Its breadth-first expansion is cubic and has no repeated vertex before radius $s$, since $2s<g$.
+It therefore contains at least
+\[
+ 2^s\ge\frac{2^{g/2}}{2^{11}k}
+\]
+vertices.
+
+Use the breadth-first root and marker from Lemma~\ref{lem:path-bfs-terminal-marker}.
+Distances from this root vary by at most $2s$ across the ball about $v$.
+Thus that ball meets at most $2s+1\le g$ root-distance layers.
+Some layer has size at least
+\begin{equation}\label{eq:path-high-girth-layer-lower}
+ \frac{2^{g/2}}{2^{11}kg}
+ \ge\frac{2^{g/2}}{2^{11}g^2}.
+\end{equation}
+
+Suppose the affine forest proportion is at least $1/2+\varepsilon$.
+Translation and Lemma~\ref{lem:path-thin-marker-layer-width} bound every layer by
+\[
+ K\left[
+ \varepsilon^{-2}\bigl(\log(4/\varepsilon)\bigr)^{11}
+ +(k+1)^2\right].
+\]
+Set $\varepsilon=Cg^{13/2}2^{-g/4}$.
+For sufficiently large $g$, this lies in $(0,1/2]$ and
+$\log(4/\varepsilon)\le g$.
+The last layer bound is then at most
+\[
+ \frac{K}{C^2}\frac{2^{g/2}}{g^2}+K(g+1)^2.
+\]
+Choose $C$ with $K/C^2\le2^{-13}$.
+For sufficiently large $g$, the polynomial second term is also at most
+$2^{-13}2^{g/2}/g^2$.
+The resulting upper bound is strictly smaller than
+\eqref{eq:path-high-girth-layer-lower}, a contradiction.
+This proves the asserted uniform estimate.
+\end{proof}
+
+The hypothesis $h\ge2$ is essential for this argument.
+A cycle with every vertex a port has rank one and girth $k$.
+Every nonempty even-terminal affine class in that pole consists entirely of forests.
+
+\begin{corollary}[A quarter-space bound across a nontrivial minimum cut]
+\label{cor:path-high-girth-noncycle-minimum-cut}
+There is an absolute constant $C_1$ such that the following holds for all sufficiently large girths $g$.
+Let $G$ be a connected loopless cubic multigraph of rank $r$ and girth $g$.
+Suppose a minimum cyclic cut has order $k$ and neither of its shores is a cycle.
+Then
+\[
+ \frac{c(G)}{2^r}
+ \le\frac14+C_1 g^{13/2}2^{-g/4}.
+\]
+Consequently, any sequence of such graphs with ranks tending to infinity, no cyclic cut of size at most four, and cycle counts above $2^{r-1}$ must eventually have the following property:
+its minimum cyclic cut order equals its girth, and every minimum cyclic cut has a shortest cycle as one shore.
+\end{corollary}
+
+\begin{proof}
+At sufficiently large girth, $G$ has a cyclic cut and its minimum order satisfies $k\le g$.
+The shores of a minimum cyclic cut are connected, and its boundary edges have distinct endpoints on each shore.
+Write $N_1,N_2$ for these normalized $k$-poles, and $h_1,h_2$ for their ranks.
+A rank-one normalized pole is a cycle.
+Thus $h_1,h_2\ge2$, and
+\[
+ r=h_1+h_2+k-1.
+\]
+The near-Moore rank bound gives $h_i\ge2^{g/2-5}$.
+If $k=1$, no cycle crosses the cut; the internal-cycle estimate below proves the assertion directly.
+Assume henceforth that $k\ge2$.
+
+A cycle crossing the cut uses a nonempty even subset $S$ of its edges.
+Its restriction to each shore is an $S$-join forest.
+Some pairs of such forests fail to form one cycle, so their product is an upper bound for the crossing count in this sector.
+Apply Theorem~\ref{thm:path-high-girth-terminal-forests} to each shore, with the ambient girth lower bound $g$.
+The proof of that theorem applies unchanged with a girth lower bound in place of the exact girth.
+Writing $\eta_g=Cg^{13/2}2^{-g/4}$, each sector contributes at most
+\[
+ (1/2+\eta_g)^2 2^{h_1+h_2}.
+\]
+There are $2^{k-1}-1$ nonempty even subsets.
+After normalization by $2^r$, all crossing cycles therefore contribute at most
+$(1/2+\eta_g)^2$.
+
+The cycles internal to the shores contribute at most
+\[
+ \frac{2^{h_1}+2^{h_2}}{2^r}
+ =2^{-h_2-k+1}+2^{-h_1-k+1}.
+\]
+The rank lower bounds make this $o(\eta_g)$.
+Absorb this term and $\eta_g^2$ into an absolute multiple of $g^{13/2}2^{-g/4}$.
+This proves the first assertion.
+
+For the final assertion, Corollary~\ref{cor:path-unbounded-girth-reduction} forces the girth to tend to infinity.
+The first assertion then excludes any minimum cyclic cut with two noncycle shores.
+Every remaining minimum cut has a cycle shore.
+Its boundary order equals the length of that cycle, so it is at least the girth.
+Since the minimum cyclic cut order is at most the girth, equality holds, and that shore is a shortest cycle.
+\end{proof}

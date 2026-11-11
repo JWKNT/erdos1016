@@ -1,0 +1,286 @@
+\section{Affine terminal forests at high girth}
+\label{sec:random-terminal-forest-girth}
+
+The larger-marker estimate also applies to a union of terminal paths.
+This gives a quantitative bound for an entire affine terminal-join class.
+All logarithms have base two.
+
+\begin{lemma}[Translation by a terminal forest]
+\label{lem:random-terminal-forest-translation}
+Let $N$ be a normalized $k$-pole, where $k\ge2$ is even, and let $T$ be its set of ports.
+Let $F_0$ be a $T$-join with the fewest edges, and put $P=V(F_0)$.
+Then $F_0$ consists of $k/2$ vertex-disjoint paths.
+For a uniform $T$-join $J$ and a uniform even subgraph $\xi$ of $N$,
+\[
+ \Pr(J\text{ is a forest})
+ \le\Pr(\xi-P\text{ is a forest}).
+\]
+Moreover, if every terminal pair has distance at most $\ell$, then
+\[
+ |P|\le\frac k2(\ell+1),\qquad
+ \operatorname{comp}(N[P])\le\frac k2.
+\]
+\end{lemma}
+
+\begin{proof}
+A cycle in $F_0$ could be deleted while preserving its boundary, contradicting minimality.
+At a port the selected degree is one; at every other vertex it is zero or two.
+Thus $F_0$ is a union of $k/2$ disjoint terminal paths.
+In particular, $P$ contains all ports.
+
+Pair the terminals arbitrarily and choose a shortest path for each pair.
+Their symmetric difference is a $T$-join with at most $k\ell/2$ edges.
+Minimality gives $|E(F_0)|\le k\ell/2$, and hence
+$|P|=|E(F_0)|+k/2\le k(\ell+1)/2$.
+The induced graph on $P$ may join some of these paths, so it has at most $k/2$ components.
+
+The map $\xi\mapsto F_0\mathbin\triangle\xi$ is a bijection from the even space to the affine $T$-join space.
+Outside $P$, its image has exactly the same edges as $\xi$.
+If the image is a forest, its restriction outside $P$ is a forest.
+This proves the probability inequality.
+\end{proof}
+
+\begin{theorem}[The affine forest bound at high girth]
+\label{thm:random-terminal-forest-girth}
+There are absolute constants $C_*,M,R$ such that the following holds.
+Let $N$ be a normalized even-$k$ pole of rank $h\ge R$.
+Put $x=\log h$ and $z=\log x$.
+Assume
+\[
+ 2\le k\le\frac{2x}{z^2},
+ \qquad
+ \operatorname{girth}(N)\ge
+ \left\lceil2z+2\log z+2\log k+C_*\right\rceil.
+\]
+Then the proportion of forests in its affine all-port join space satisfies
+\[
+ \frac{\#\{T\text{-join forests in }N\}}{2^h}
+ \le\frac12+M\frac{x^{11/2}}{\sqrt h}.
+\]
+No condition on bridges or cyclic connectivity is imposed.
+\end{theorem}
+
+\begin{proof}
+Take $a=1/(1000A)$ from Theorem~\ref{thm:random-larger-marker}, and choose
+$C_*=\lceil2\log(1000/a)\rceil$.
+Let
+\[
+ g_*=\lceil2z+2\log z+2\log k+C_*\rceil.
+\]
+Uniformly over the allowed values of $k$, for sufficiently large $h$,
+\[
+ g_*\le8z,\qquad
+ 2^{-g_*/2}\le\frac{a}{1000kxz},\qquad
+ |V(N)|=2h+k-2\le3h.
+\]
+Moore-ball packing bounds every terminal distance by a number $\ell$ with
+\[
+ \ell+1<8z\left(k+1+\frac{3ah}{1000kxz}\right).
+\]
+The preceding lemma therefore gives a marker satisfying
+\[
+ |P|\le4kz(k+1)+\frac{12ah}{1000x}
+ \le a\frac h x
+\]
+for sufficiently large $h$.
+The last comparison is uniform, because $k\le2x/z^2$ makes its first term polynomial in $x$, while $h=2^x$.
+Also $\operatorname{comp}(N[P])\le k/2\le x/z^2$, and $P$ contains every vertex of degree below three.
+
+Apply Theorem~\ref{thm:random-larger-marker} and the translation inequality.
+Its constant $M$ and a sufficiently large absolute threshold work uniformly over $k$.
+\end{proof}
+
+For each fixed even $k$, the girth threshold is
+$2\log\log h+2\log\log\log h+O_k(1)$.
+In this range, a full affine terminal-forest space is impossible at large rank.
+This does not establish a uniform non-saturation gap at fixed girth or a small-cut characterization of full four-terminal forest spaces.
+
+\begin{theorem}[One marker for every terminal sector]
+\label{thm:random-all-terminal-sectors-girth}
+There are absolute constants $C_*,M,R$ with the following property.
+Let $N$ be a normalized $k$-pole of rank $h\ge R$, put $x=\log h$, $z=\log x$, and assume
+\[
+ 2\le k\le x^2,\qquad
+ \operatorname{girth}(N)\ge
+ \left\lceil2z+2\log z+2\log k+C_*\right\rceil.
+\]
+For every even subset $S$ of its ports, the number $F_S(N)$ of forests with odd vertex set $S$ satisfies
+\[
+ F_S(N)\le
+ \left(\frac12+M\frac{x^{11/2}}{\sqrt h}\right)2^h.
+\]
+The estimate is uniform over all sectors, including when $k$ grows with $h$.
+\end{theorem}
+
+\begin{proof}
+Take the same $a$ as in Theorem~\ref{thm:random-larger-marker} and
+$C_*=\lceil2\log(1000/a)\rceil$.
+The integer girth lower bound $g_*$ in the statement satisfies, uniformly for $k\le x^2$,
+\[
+ g_*\le8z,\qquad 2^{-g_*/2}\le\frac{a}{1000kxz}
+\]
+once $h$ is sufficiently large.
+Also $|V(N)|\le3h$.
+Consequently every terminal distance is at most a number $\ell$ satisfying
+\[
+ \ell+1<8z(k+1)+\frac{24ah}{1000kx}.
+\]
+
+Fix one port and join it to every other port by a shortest path.
+Their union is connected and has at most $(k-1)\ell+1$ vertices.
+Let $Q$ be a spanning tree of this union and put $P=V(Q)$.
+Then $P$ contains all ports and is connected in $N$, while
+\[
+ |P|\le k(\ell+1)
+ <8kz(k+1)+\frac{24ah}{1000x}
+ \le a\frac h x.
+\]
+The final comparison is uniform for $k\le x^2$.
+
+For any even port set $S$, the tree $Q$ has an $S$-join $J_S$.
+Translation by $J_S$ maps the even space bijectively to the affine $S$-join space.
+Outside $P$, the translated and original states agree.
+Thus an $S$-join forest gives an even state that is a forest outside $P$.
+Apply Theorem~\ref{thm:random-larger-marker}.
+The same marker and the same probability bound work for every $S$.
+\end{proof}
+
+The same proof gives a more general sufficient condition, without the restriction $k\le(\log h)^2$.
+If an integer girth lower bound $g_0\ge3$ satisfies
+\[
+ k g_0\left(k+1+(2h+k-2)2^{-g_0/2}\right)
+ \le a\frac{h}{\log h},
+\]
+then the conclusion of Theorem~\ref{thm:random-all-terminal-sectors-girth} holds.
+Indeed, Moore-ball packing bounds $k(\ell+1)$ by the left side, and the same connected geodesic marker applies.
+
+\begin{lemma}[The growing-port aggregate]
+\label{lem:random-growing-port-aggregate}
+Let $Y$ be a normalized $k$-pole of rank $j$, where $k\ge2$, and set $\rho=j+k-1$.
+If $\rho$ is sufficiently large and
+\[
+ 2k-2\le a\frac{\rho}{\log\rho},
+\]
+where $a$ is the constant in Theorem~\ref{thm:random-larger-marker}, then
+\[
+ \sum_{S\text{ even}}F_S(Y)
+ \le
+ \left(\frac12+M\frac{(\log\rho)^{11/2}}{\sqrt\rho}\right)2^\rho.
+\]
+\end{lemma}
+
+\begin{proof}
+Take a disjoint tree with $k$ leaves and degree three at every nonleaf vertex; for $k=2$, take a single edge.
+Add one edge from each leaf to a distinct port of $Y$.
+Mark the new tree vertices.
+The resulting subcubic graph has rank $\rho$.
+The tree has $2k-2$ vertices, is connected, and contains every vertex of degree below three.
+Restriction of uniform even states to $Y$ covers each even terminal-join class uniformly, with its $2^j$ states.
+The event of a forest outside the marked tree therefore has probability
+$2^{-\rho}\sum_S F_S(Y)$.
+Apply the larger-marker theorem.
+\end{proof}
+
+\begin{corollary}[A quarter-space bound with a sufficiently large smaller shore]
+\label{cor:random-high-girth-large-shores}
+There are absolute constants $C_1,C_2$ with the following property.
+Let connected loopless cubic graphs have ranks $r\to\infty$ and girths
+\[
+ g\ge
+ \left\lceil4\log\log r+2\log\log\log r+C_1\right\rceil.
+\]
+Suppose a minimum cyclic cut has order $k$ and smaller shore rank
+\[
+ j\ge C_2 k\log(k+2).
+\]
+Then, uniformly over these graphs,
+\[
+ c(G)\le\left(\frac14+o(1)\right)2^r.
+\]
+In particular, these graphs are strictly below the half bound at sufficiently large rank.
+The same conclusion holds with the smaller-shore hypothesis replaced by
+$j\to\infty$ and $2k-2\le a(j+k-1)/\log(j+k-1)$.
+\end{corollary}
+
+\begin{proof}
+Write $h\ge j$ for the shore ranks.
+Minimality makes both shores connected.
+It also makes their cut endpoints distinct: a vertex with two cut incidences is a leaf in its cyclic shore, and moving it to the other shore reduces the cut without destroying either cycle.
+Thus the shores are normalized $k$-poles, with
+\[
+ r=h+j+k-1.
+\]
+
+At these ranks, a shortest cycle has cyclic complement.
+Indeed, since $g\ge5$, it is induced and no outside vertex meets it twice.
+Every component outside it consequently has minimum degree at least two.
+Its boundary is a cyclic cut of size $g$.
+The cubic Moore bound therefore gives
+\[
+ k\le g\le3\log r
+\]
+for large $r$.
+
+Apply Theorem~\ref{thm:random-all-terminal-sectors-girth} to the shore of rank $h$.
+Since $h\ge(r-k+1)/2$ and $k\le3\log r$, one has $h\ge r/3$ and $k\le(\log h)^2$ eventually.
+Since $h\le r$ and $k\le3\log r$, the girth threshold of that theorem is at most
+\[
+ 4\log\log r+2\log\log\log r+C_*+2\log3+1.
+\]
+Choose $C_1$ above this constant.
+It follows that every even terminal sector in that shore has at most
+$(1/2+o(1))2^h$ forests, uniformly.
+
+Choose the absolute constant $C_2$ large enough that
+$j\ge C_2 k\log(k+2)$ implies
+$2k-2\le a(j+k-1)/\log(j+k-1)$ for all $k\ge2$.
+For example, take $C_2\ge16$ with $C_2/(\log(2C_2)+4)\ge1/a$.
+The function $s/\log s$ is increasing in the relevant range.
+At $\rho_0=C_2 k\log(k+2)+k-1$ one has
+\[
+ \frac{\rho_0}{\log\rho_0}
+ \ge
+ \frac{C_2 k\log(k+2)}{\log(2C_2)+2\log(k+2)}
+ \ge\frac{2C_2 k}{\log(2C_2)+4}
+ \ge\frac{2k}{a},
+\]
+which proves the assertion.
+Moreover $j\to\infty$ uniformly: if $k$ tends to infinity this follows from the rank hypothesis, while if $k$ stays bounded the shore order $2j+k-2$ must be at least the girth, which tends to infinity.
+The growing-port aggregate consequently bounds the other shore's total forest mass by
+$(1/2+o(1))2^{j+k-1}$.
+For each fixed forest in that shore, at most the entire matching terminal sector in the first shore can combine with it to form one cycle.
+Every cycle crossing the cut has a unique such pair of forest restrictions.
+Hence the number of crossing cycles is at most
+\[
+ (1/2+o(1))2^h
+ (1/2+o(1))2^{j+k-1}
+ = (1/4+o(1))2^r.
+\]
+Cycles internal to the two shores number at most $2^h+2^j$.
+Their ratio to $2^r$ tends to zero uniformly because $h\ge r/3$ and $j\to\infty$.
+This proves the claim.
+\end{proof}
+
+\begin{proposition}[An exact criterion for full terminal-forest spaces]
+\label{prop:random-full-terminal-forest-criterion}
+Let $N$ be a normalized even-$k$ pole and $T$ its set of ports.
+Every $T$-join is a forest if and only if every cycle $C$ of $N$ disjoint from $T$ leaves a component of $N-V(C)$ containing an odd number of terminals.
+\end{proposition}
+
+\begin{proof}
+If every component of $N-V(C)$ has an even number of terminals, choose a terminal join in each component.
+Their union with $C$ is a cyclic $T$-join.
+
+Conversely, in a cyclic $T$-join choose one of its cycles $C$.
+It avoids every port, whose selected degree is one.
+Every vertex on $C$ has selected degree two, since the available degree is three and its parity is even.
+No selected edge leaves $C$.
+The remaining selected edges therefore form terminal joins in the components of $N-V(C)$.
+Each such component has an even number of terminals.
+\end{proof}
+
+The standard-library checker \texttt{check\_random\_terminal\_forest\_girth.py}
+verifies the translation, the common geodesic marker, and the saturation criterion
+on 247 normalized poles.
+It checks 8,312 affine states and 3,206 even terminal sectors.
+These finite identities corroborate the implementation; the estimates above are proved independently of the checks.

@@ -1,0 +1,114 @@
+\section{A strict deficit for a six-cycle shore}
+\label{sec:six-cycle-shore}
+
+The actual six-cycle state vector admits a stronger estimate than the arbitrary-shore relaxation.
+Its exact dual uses only matching-augmentation inequalities.
+
+Label the six ports $0,1,\ldots,5$ in cyclic order.
+For a four-set $S=\{a<b<c<d\}$, call $ab|cd$ and $ad|bc$ its noncrossing pairings.
+Put
+\[
+ B_{e|f}=U_{e\cup f}-u_{e|f}
+\]
+for disjoint pairs $e,f$, as in Section~\ref{sec:six-cut-partial}.
+Write $R_P$ for the six-terminal forest mass compatible with a perfect matching $P$.
+The two alternating matchings of the six-cycle are
+\[
+ P=01|23|45,\qquad Q=05|12|34.
+\]
+
+\begin{lemma}[The six-cycle functional]
+\label{lem:six-cycle-functional}
+Suppose the normalized states of a six-pole satisfy
+\[
+ a_e\le\tfrac12+\eta_1,\qquad
+ a_e+B_{e|f}\le1+\eta_2,
+\]
+and
+\[
+ a_e+B_{e|f}+B_{e|g}+R_{e|f|g}\le2+\eta_3
+\]
+for disjoint pairs in the respective expressions, where $\eta_i\ge0$.
+Then its normalized crossing functional against a six-cycle satisfies
+\[
+ L_6\le\frac{31}{2}+\eta_1+13\eta_2+\eta_3.
+\]
+\end{lemma}
+
+\begin{proof}
+The six-cycle has two paths between every pair of ports.
+Each four-sector has one forest in each noncrossing pairing and none in the alternating pairing.
+Its six-sector has one forest with pairing $P$ and one with pairing $Q$.
+Since the six-cycle has rank one, the exact normalized crossing functional is
+\[
+ L_6=\sum_ea_e+\frac12\sum_{|S|=4}
+       \left(B_{\alpha_1(S)}+B_{\alpha_2(S)}\right)
+       +\frac12(R_P+R_Q),
+\]
+where $\alpha_1(S),\alpha_2(S)$ are the two noncrossing pairings of $S$.
+
+Use the two inequalities
+\[
+ a_{01}+B_{01|23}+B_{01|45}+R_P\le2+\eta_3,
+\]
+\[
+ a_{05}+B_{05|12}+B_{05|34}+R_Q\le2+\eta_3.
+\]
+Use one inequality $a_e+B_{e|f}\le1+\eta_2$ for each ordered row $(e,f)$ in the following table:
+\[
+\begin{array}{cc|cc|cc|cc}
+e&f&e&f&e&f&e&f\\\hline
+03&12&01&24&04&12&25&01\\
+34&01&04&13&35&01&05&13\\
+14&05&34&02&23&04&02&35\\
+23&05&02&45&24&05&03&45\\
+12&34&14&23&12&35&15&23\\
+45&12&24&15&13&45&15&34\\
+45&23&25&34&&&&
+\end{array}
+\]
+Finally use $a_{13}\le1/2+\eta_1$ and $a_{35}\le1/2+\eta_1$.
+
+The thirty left sides sum exactly to $2L_6$.
+Indeed, each of the fifteen path coordinates occurs twice.
+Each noncrossing four-sector quantity occurs once, and the two six-sector quantities occur once.
+The sum of the right sides is
+\[
+ 2(2+\eta_3)+26(1+\eta_2)+2(1/2+\eta_1)
+ =31+2\eta_1+26\eta_2+2\eta_3.
+\]
+Divide by two to obtain the stated estimate.
+\end{proof}
+
+\begin{theorem}[Six-cycle-shore error bound]
+\label{thm:six-cycle-shore-error}
+There is an absolute constant $K$ with the following property.
+Let $G$ be obtained by joining corresponding ports of a six-cycle and a normalized six-pole $Y$ of rank $k$.
+Put $r=k+6$.
+Then
+\[
+ c(G)\le2^{r-1}+Kr2^{r/2}.
+\]
+For sufficiently large $k$, if $G$ has no cyclic cut of size at most five, then $c(G)<2^{r-1}$.
+\end{theorem}
+
+\begin{proof}
+If $G$ has a cyclic cut of size at most five, apply Theorem~\ref{thm:sharp-order-five-cut-error}.
+Otherwise Theorem~\ref{thm:matching-augmentation-inequalities} gives the hypotheses of Lemma~\ref{lem:six-cycle-functional}, with all three errors tending to zero.
+The crossing contribution, divided by $2^{k+1}$, is at most $31/2+o(1)$.
+The six-cycle contributes one internal cycle.
+The other shore contributes at most $(1/2+o(1))2^k$ cycles.
+Thus
+\[
+ \frac{c(G)}{2^{k+1}}
+ \le\frac{31}{2}+\frac14+o(1)
+ =\frac{63}{4}+o(1)<16.
+\]
+Since $2^{r-1}=16\cdot2^{k+1}$, this gives the strict half bound for large $k$.
+The bounded ranks are absorbed by increasing $K$.
+\end{proof}
+
+The exact rational certificate is saved in \texttt{six-cycle-shore-rational-dual.json}.
+The script \texttt{verify\_six\_cycle\_shore\_dual.py} checks all seventy-five coefficient identities without a numerical solver.
+The independent script \texttt{check\_path\_six\_cycle\_dual.py} reconstructs the six-cycle states directly from its edge subsets and verifies the same certificate.
+This result concerns a six-cycle shore; it does not cover arbitrary cyclic six-edge cuts.

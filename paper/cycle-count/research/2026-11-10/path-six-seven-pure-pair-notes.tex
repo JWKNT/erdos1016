@@ -1,0 +1,57 @@
+\section{Exact pairing concentration and its quantitative limitation}
+\label{sec:path-seven-pure-pair-notes}
+
+Critical seven-cut profiles have disjoint four-terminal pairing supports on their two shores.
+Since a four-set has only three pairings, at least one shore is concentrated on a single pairing.
+The following observation excludes exact concentration in the relevant finite graphs.
+It does not give a uniform gap as rank grows.
+
+\begin{lemma}[Alternative pairings in a bridgeless subcubic graph]
+\label{lem:path-seven-alternative-pairing}
+Let $X$ be a connected bridgeless subcubic graph with distinct degree-two vertices $a,b,c,d$.
+Then
+\[
+ F_{\{a,b,c,d\}}(X)-f_{ab|cd}(X)\ge1.
+\]
+In particular, a nonzero four-terminal forest sector cannot be supported on only one pairing.
+\end{lemma}
+
+\begin{proof}
+Add a new edge $ab$, retaining parallel edges if necessary.
+The resulting graph remains subcubic and bridgeless.
+A connected bridgeless subcubic graph has no cut vertex.
+Each component after deleting a cut vertex would need at least two incident edges at that vertex, since a unique edge would be a bridge.
+Two components would therefore force degree at least four.
+Thus the resulting graph is two-connected.
+
+In a two-connected graph, every edge belongs to a simple path between any prescribed distinct vertices.
+For completeness, subdivide the edge with a new vertex and apply the two-fan form of Menger's theorem from that vertex to the prescribed pair.
+Suppressing the subdivision yields the required path through the edge.
+Apply this fact to the new edge $ab$ and terminals $c,d$.
+Deleting $ab$ from that path gives a four-terminal forest with pairing $ac|bd$ or $ad|bc$.
+This proves the stated lower bound.
+\end{proof}
+
+\begin{lemma}[Small poles have no internal bridge]
+\label{lem:path-seven-poles-bridgeless}
+Let $2\le k\le7$, and let a normalized $k$-pole $X$ lie in a cubic completion $G$.
+If $G$ has no cyclic cut of size at most four, then $X$ is bridgeless.
+\end{lemma}
+
+\begin{proof}
+Suppose $uv$ is a bridge of $X$.
+Each shore of that bridge contains a cycle.
+Indeed, all its vertices have degree at least two inside the shore except possibly its bridge endpoint.
+A nontrivial tree needs two leaves, while a singleton shore would give a degree-one vertex in $X$.
+
+One shore contains at most $\lfloor k/2\rfloor$ ports.
+Its boundary in $G$ consists of the bridge and at most one further incidence for each of those ports.
+Hence its boundary has size at most $1+\lfloor k/2\rfloor\le4$.
+Both shores retain their cycles in $G$, giving the excluded cyclic cut.
+\end{proof}
+
+Together, these lemmas give an alternative-pairing mass of at least $2^{-h}$ in every four-sector of a rank-$h$ pole in this class.
+That lower bound tends to zero.
+It therefore does not exclude a limiting profile concentrated on one pairing.
+A rank-independent lower bound, or a bound strong enough to absorb the other error terms, would be needed for that application.
+No such bound is proved in this note.

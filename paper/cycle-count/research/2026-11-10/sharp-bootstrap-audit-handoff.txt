@@ -1,0 +1,89 @@
+AUDITED MATHEMATICAL WORKING PROOF -- 2026-11-11
+
+Main assembly:
+  second-order-unrestricted-sharp-bootstrap.tex
+
+Conclusion:
+  There is an absolute K such that
+  c(G) <= 2^(r-1) + K r 2^(r/2)
+  for every connected graph of cycle rank r>=1.
+  The cyclic-square family has excess Theta(r 2^(r/2))
+  on an infinite sequence of ranks.
+
+Independent full assembly audits:
+  root: PASS
+  four_regular: PASS
+  path_stability: PASS
+The assembler random_hosts independently audited the underlying
+new component files, but does not count its own assembly review
+as an independent proof audit.
+Four's saved record: four-unrestricted-sharp-bootstrap-audit.txt.
+
+Exact new dependencies:
+  path-quantitative-localization.tex:
+    disconnected localization; fixed-epsilon local forest threshold.
+  path-high-girth-terminal-forests.tex:
+    BFS marker; thin-marker layer width; uniform affine classes.
+  four-high-connectivity-entropy-moore.tex:
+    stationary nonbacktracking entropy Moore bound.
+  four-high-connectivity-weighted-kernel.tex:
+    weighted cubic-kernel Moore bound; constant-rank exception.
+  four-high-connectivity-excess-free-packing.tex:
+    local star spaces and ordered terminal bipartition classes.
+  four-high-connectivity-iterative-packing.tex:
+    S-dependent excess-free packing; dyadic girth raising.
+  path-high-girth-clean-blocks.tex:
+    large clean block -> normalized high-rank core;
+    two conditional affine bounds give probability <=9/25.
+
+Established inputs retained explicitly:
+  polynomial-cycle-error.pdf / its source fragments:
+    nonbacktracking trace and repeated-walk estimates;
+    local cycle-weight bound;
+    Fable parallel-link estimate;
+    refined first moment inequality for exactly-two-link pairs;
+    anchor/far-partner/nested-chain argument.
+  second-order-four-cut-sharp-order.tex:
+    sharp-order bound for loopless cubic cyclic cuts <=4.
+  path-fixed-girth.tex:
+    strict half deficit at each fixed girth with no cyclic cut <=4.
+  second-order-two-scale-extensions.tex:
+    finite cubic extremizer reduction, preserving rank and cycles.
+
+Audit-sensitive points:
+  Common forward dyadic scales give D0~sqrt(log r) and
+  D1 in[log r/16,log r/8]; chain exponent is1/32.
+  No D0 moment estimate and no inverse moment estimate is used.
+  There is no positive-excess-size parameter in the new packing.
+  Connectedness of the marker bounds its block discard by one.
+  Removed sets are restored before defining full separator blocks.
+  Boundary estimates are in the original cubic graph.
+  Core restrictions are independent only after conditioning on
+  all other edges, including edges joining the two cores.
+  The induction hypothesis covers general connected graphs.
+  Cubic loops are handled separately by deletion.
+  Low ranks are absorbed into one absolute constant.
+
+The proof is mathematically audited inside this research workspace.
+This record does not assert external peer review or priority.
+The mathematical assembly is frozen; only its status prose changed
+after the independent audits.
+
+FOCUSED EXPOSITION UPDATE
+
+Root authorized internal-reference and finite-graph scope edits.
+The new focused packet replaces the quantitative dependencies above
+with:
+  unrestricted-sharp-foundations.tex
+  unrestricted-sharp-parallel-links.tex
+  path-qualitative-affine-bootstrap.tex
+  four-unrestricted-iterative-packing.tex
+All four received a full independent line audit from random_hosts.
+See random-unrestricted-focused-audit.txt for exact checks.
+
+The original marked-cycle input is pancyclic-paper.tex,
+Theorem thm:forest plus Remark rem:range. It gives <=11/20
+eventually for one cycle of size <=rho/(log rho)^2.
+The fixed threshold follows by taking log^(3)(rho)>=400.
+Thus the focused qualitative route does not require the later
+polynomial-error theorem or its endpoint parameters.

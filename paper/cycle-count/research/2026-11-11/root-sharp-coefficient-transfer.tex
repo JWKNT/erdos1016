@@ -1,0 +1,127 @@
+\section{Exact and parity-resolved transfer from cyclic four-cuts}
+\label{sec:new-coefficient-transfer}
+
+These reductions use the completed unrestricted sharp-order proof.
+They do not require a better estimate for its unspecified constant.
+All maxima below range over finite graphs, with parallel edges distinguished.
+
+Put
+\[
+ E_r=\psi(r)-2^{r-1}.
+\]
+Let $B_r$ be the maximum excess among connected loopless cubic multigraphs of rank $r$ with a cyclic cut of size at most four.
+Set $B_r=0$ if this class is empty.
+
+\begin{proposition}[An exact running-maximum reduction]
+\label{prop:new-excess-recurrence}
+For all sufficiently large $r$,
+\[
+ E_r\le\max\{B_r,E_{r-1},0\}.
+\]
+Consequently, for one fixed integer $R$ and every $r\ge R$,
+\[
+ E_r\le\max\{E_{R-1},0,B_R,B_{R+1},\ldots,B_r\}.
+\]
+\end{proposition}
+
+\begin{proof}
+Choose a cubic multigraph attaining $\psi(r)$, as in the established reduction.
+If it has a loop, deleting that loop gives
+\[
+ E_r\le E_{r-1}-2^{r-2}+1\le E_{r-1}.
+\]
+If it has a cyclic cut of size at most four, use the definition of $B_r$.
+
+Otherwise, the bounded-girth deficit excludes all girths below the fixed threshold in the exact-half forest theorem, at sufficiently large rank.
+Such graphs have negative excess.
+In the remaining high-girth case, an edge of a shortest cycle has at most $2^{r-2}$ incident cycles.
+Deleting that edge leaves a connected rank-$(r-1)$ graph, so
+\[
+ \psi(r)\le\psi(r-1)+2^{r-2},
+ \qquad E_r\le E_{r-1}.
+\]
+All thresholds are absolute and independent of $B_r$.
+Iteration proves the second assertion.
+\end{proof}
+
+\begin{corollary}[Transfer of an eventual exact formula]
+\label{cor:new-eventual-exact-transfer}
+Suppose graphs of rank $r$ attain $2^{r-1}+H_r$ for every sufficiently large $r$.
+Assume that $H_r$ is eventually nondecreasing and tends to infinity.
+If $B_r\le H_r$ for all sufficiently large $r$, then
+\[
+ \psi(r)=2^{r-1}+H_r
+\]
+for all sufficiently large $r$.
+\end{corollary}
+
+\begin{proof}
+Increase $R$ so that all hypotheses and Proposition~\ref{prop:new-excess-recurrence} hold above $R$.
+The running-maximum bound gives
+\[
+ E_r\le\max\{E_{R-1},0,H_r\}.
+\]
+Eventually $H_r$ exceeds the two fixed initial terms.
+The assumed construction gives the reverse inequality.
+\end{proof}
+
+For the Horak--Kim construction, the excess is
+\[
+ H_r=
+ \begin{cases}
+ (r-\tfrac12)2^{(r-1)/2}-\tfrac32(r-1),&r\text{ odd},\\[1mm]
+ (r+\tfrac52)2^{(r-2)/2}-\tfrac12(3r+2),&r\text{ even}.
+ \end{cases}
+\]
+The two alternating increments are
+\[
+ H_{2q+2}-H_{2q+1}=4\,2^q-4,
+ \qquad
+ H_{2q+3}-H_{2q+2}=(2q+\tfrac12)2^q+1.
+\]
+They are positive for $q\ge1$, and $H_r\to\infty$.
+Thus an eventual sharp upper bound for the small-cut class would transfer as an exact formula, not merely a leading coefficient.
+
+\begin{proposition}[The two parity limits]
+\label{prop:new-parity-limsup}
+Normalize the unrestricted and small-cut excesses by
+\[
+ a_r=\frac{E_r}{r2^{r/2}},\qquad
+ b_r=\frac{\max\{B_r,0\}}{r2^{r/2}}.
+\]
+Let $A_o,A_e$ and $B_o,B_e$ be their respective odd and even limsups.
+Then
+\[
+ B_o\le A_o\le\max\{B_o,B_e/\sqrt2\},
+ \qquad
+ B_e\le A_e\le\max\{B_e,B_o/\sqrt2\}.
+\]
+In particular, $\limsup a_r=\limsup b_r$.
+\end{proposition}
+
+\begin{proof}
+The established sharp-order bound makes all four limsups finite.
+The known constructions make the unrestricted excess positive eventually.
+The recurrence gives
+\[
+ A_o\le\max\{B_o,A_e/\sqrt2\},
+ \qquad
+ A_e\le\max\{B_e,A_o/\sqrt2\}.
+\]
+Substitution yields
+\[
+ A_o\le\max\{B_o,B_e/\sqrt2,A_o/2\}.
+\]
+Since $A_o>0$, it follows that $A_o\le\max\{B_o,B_e/\sqrt2\}$.
+The even bound is the same.
+
+The direct inequalities $A_o\ge B_o$ and $A_e\ge B_e$ follow from inclusion of the small-cut class.
+Taking the maximum of the two upper bounds gives
+$\max\{A_o,A_e\}\le\max\{B_o,B_e\}$.
+The reverse inequality follows from inclusion, proving the global limsup equality.
+\end{proof}
+
+The inequalities do not assert equality separately for each parity.
+A crossed lower transfer would need an additional graph construction.
+The proved bounds already transfer the proposed parity coefficients whenever the local upper coefficients are $B_o\le1/\sqrt2$ and $B_e\le1/2$.
+The Horak--Kim lower bounds then give the matching unrestricted limits.

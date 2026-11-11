@@ -1,0 +1,7 @@
+{"rank":1,"vertices":4,"tested":1,"saturated_port_splits":3,"max_through_pairs":2}
+{"rank":2,"vertices":6,"tested":6,"saturated_port_splits":2,"max_through_pairs":1}
+{"rank":3,"vertices":8,"tested":55,"saturated_port_splits":4,"max_through_pairs":2}
+{"rank":4,"vertices":10,"tested":610,"saturated_port_splits":6,"max_through_pairs":2}
+{"rank":5,"vertices":12,"tested":7980,"saturated_port_splits":10,"max_through_pairs":4}
+{"rank":6,"vertices":14,"tested":120274,"saturated_port_splits":16,"max_through_pairs":4}
+{"rank":7,"vertices":16,"tested":2052309,"saturated_port_splits":26,"max_through_pairs":8}

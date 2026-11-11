@@ -1,0 +1,7 @@
+{
+  "status": "pass",
+  "scope": "exact identities only; no five-cut asymptotic theorem",
+  "shore_graphs": 4,
+  "gluing_checks": 1920,
+  "three_port_cap_checks": 40
+}

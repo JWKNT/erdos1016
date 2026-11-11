@@ -1,0 +1,9 @@
+{
+  "status": "all checks passed",
+  "N_values": [
+    1,
+    100
+  ],
+  "metric_cases": 10300,
+  "explicit_Hamilton_path_cases": 88
+}

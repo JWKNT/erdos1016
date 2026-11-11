@@ -1,0 +1,98 @@
+{
+  "series_parallel": {
+    "edge_limit": 12,
+    "distinct_states": 1728,
+    "composition_transitions": 27264,
+    "all_integer_inequalities_pass": true
+  },
+  "counterexample": {
+    "vertices": 5,
+    "rank": 3,
+    "distance": 2,
+    "path_count": 7,
+    "paths": [
+      [
+        3,
+        0,
+        1,
+        4
+      ],
+      [
+        3,
+        0,
+        2,
+        1,
+        4
+      ],
+      [
+        3,
+        0,
+        4
+      ],
+      [
+        3,
+        2,
+        0,
+        1,
+        4
+      ],
+      [
+        3,
+        2,
+        0,
+        4
+      ],
+      [
+        3,
+        2,
+        1,
+        0,
+        4
+      ],
+      [
+        3,
+        2,
+        1,
+        4
+      ]
+    ]
+  },
+  "sharp_simple_examples": [
+    {
+      "rank": 3,
+      "distance": 1,
+      "paths": 5
+    },
+    {
+      "rank": 4,
+      "distance": 1,
+      "paths": 9
+    },
+    {
+      "rank": 5,
+      "distance": 1,
+      "paths": 17
+    },
+    {
+      "rank": 6,
+      "distance": 1,
+      "paths": 33
+    },
+    {
+      "rank": 7,
+      "distance": 1,
+      "paths": 65
+    },
+    {
+      "rank": 8,
+      "distance": 1,
+      "paths": 129
+    },
+    {
+      "rank": 9,
+      "distance": 1,
+      "paths": 257
+    }
+  ],
+  "scope": "Finite exact checks of the terminal series-parallel inequalities; the general additive theorem is proved separately."
+}

@@ -1,0 +1,59 @@
+\section{A prism obstruction for active six-terminal sectors}
+\label{sec:four-seven-prism-obstruction}
+
+This section concerns a critical pair of limiting seven-pole profiles.
+All path coordinates vanish, and corresponding forest totals are the same Boolean values on both shores.
+Corresponding four-terminal pairing supports are disjoint.
+Positive six-terminal pairings on opposite shores have no common pair.
+These are the equality conditions for the normalized crossing bound $32$.
+
+\begin{lemma}\label{lem:four-seven-active-six-three-missing}
+In a critical pair of limiting profiles, each active six-terminal sector contains at least three inactive four-terminal sectors.
+\end{lemma}
+
+\begin{proof}
+Fix an active six-set $S$.
+Choose positive six-terminal pairing masses $w_X(\beta)$ and $w_Y(\gamma)$ on the two shores.
+Their matchings $\beta,\gamma$ have no common pair.
+Their union is therefore a six-cycle.
+
+For a perfect matching $\alpha=\{e,f,g\}$ of $S$, write
+\[
+ R_X(\alpha)=\sum_{\eta\cap\alpha=\varnothing}w_X(\eta),
+ \qquad
+ R_Y(\alpha)=\sum_{\eta\cap\alpha=\varnothing}w_Y(\eta).
+\]
+Suppose $\alpha$ has no pair in common with either $\beta$ or $\gamma$.
+Then both displayed quantities are positive.
+The three four-sectors $e\cup f,e\cup g,f\cup g$ cannot all be active.
+Indeed, the three matching-augmentation inequalities on either shore would give
+\[
+ u_{e|f}+u_{e|g}\ge R(\alpha),\qquad
+ u_{e|f}+u_{f|g}\ge R(\alpha),\qquad
+ u_{e|g}+u_{f|g}\ge R(\alpha).
+\]
+Thus at least two of these three pairing coordinates would be positive on each shore.
+This contradicts disjoint corresponding supports.
+
+The graph $K_6-(\beta\cup\gamma)$ is a triangular prism.
+Its four perfect matchings are the common compatible matchings $\alpha$ above.
+An inactive four-subset $T\subset S$ corresponds to the complementary pair $S\setminus T$.
+The preceding paragraph says that these complementary pairs meet every perfect matching of the prism.
+
+Label the prism's two triangles compatibly, with three joining spokes.
+Its perfect matchings are the three spokes together and three further matchings.
+Each further matching contains one spoke and the opposite edge of each triangle.
+A triangle edge belongs to one perfect matching, while a spoke belongs to two.
+Any two spokes belong together to the all-spoke matching.
+Consequently two edges meet at most three of the four perfect matchings.
+At least three complementary pairs, and therefore three inactive four-sectors, are required.
+\end{proof}
+
+For Boolean sector flags, the lemma gives the valid inequalities
+\[
+ \sum_{\substack{T\subset S\\|T|=4}}z_T+3z_S\le15
+ \qquad(|S|=6).
+\]
+The standard-library checker \texttt{four-seven-prism-cuts.py} verifies all $120$ compatible ordered pairs $\beta,\gamma$.
+It tests every possible two-edge blocker and records all minimum three-edge blockers.
+The proof does not depend on that finite verification.

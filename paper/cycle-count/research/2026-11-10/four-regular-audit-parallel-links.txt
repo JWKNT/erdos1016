@@ -1,0 +1,182 @@
+Independent audit of Fable's parallel-link improvement
+Auditor: four_regular. Date: 2026-11-10.
+Source: fable-parallel-links.md, including Sections 4 and 5.
+Status: mathematical audit PASS. This is not a Lean-completion claim.
+
+1. Parallel topology and probability
+
+Keep one component c0 joining the connected sets A and B. Then
+K=A union B union c0 is connected. Every other component of Gamma-K
+has an edge to K. Deleting any two such components leaves a connected
+graph. Therefore their zero-boundary events have exactly one link in
+the pair law, and are independent.
+
+Given zero boundary, a component's internal cycle space is uniform.
+For two closed components these internal choices are independent too.
+Thus the events "closed boundary and nonzero internal even set" are
+pairwise independent. A cyclic component with boundary at most t has
+event probability at least2^(-t-1). The conditional nonzero probability
+is1-2^(-beta), at least one half.
+
+If m components remain after c0 is omitted, their event count N has
+mean mu>=m2^(-t-1) and second moment at most mu^2+mu. Hence the forest
+probability is at most1/(1+mu). A value above one half forces
+m<2^(t+1). Reinstating c0 gives at most2^(t+1) qualifying components.
+This bound needs no positive lower bound on the forest excess.
+
+The stronger mutual-independence statement is also correct. Every cut
+supported on the union of the selected component stars has all of K
+on one side and decomposes into cuts supported on individual stars.
+The pairwise statement alone suffices for the argument.
+
+2. Small-cycle deletion input
+
+Each chosen short cycle lies outside P and has cubic vertices, so its
+vertex region has boundary at most its length. The exponential cut bound
+  p <= 1/2 + 2 exp[-k/(8D2^D)]
+and p>1/2+epsilon give
+  k < 8D2^D ln(2/epsilon).
+Multiplication by D gives |S|=O(x^3 2^D) for polynomially small epsilon.
+The older inverse-k cut estimate instead gives
+|S|=O(x^2 2^D/epsilon). Both uses are valid for variable D.
+
+3. Second moment and the exact two-link family
+
+For disjoint cycles, a one-link pair has normalized factor1 and a
+two-link pair has factor2. The weighted contribution of at least
+three links is at most eta*mu, by the exceptional-partner estimate.
+Consequently
+  E Z^2 <= mu^2 + W2 + (1+eta)mu,
+where W2 is the ordered weight of exactly-two-link disjoint pairs.
+The forest event forces Z=0. Its probability above one half gives
+W2>mu^2-(1+eta)mu. The upper bound W2<=mu^2 also gives
+mu<=(1+eta)/(4epsilon). Removing direct-edge pairs leaves two exterior
+link components, as required for the separator-chain construction.
+
+4. Restored clean blocks
+
+Use the full slab V(a,b) in H=Gamma-C. Every H-edge leaving the slab
+ends on one of its two separator cycles. These cycles avoid P and S0.
+Thus a slab disjoint from P and S0 cannot have a neighbor in either set.
+Discarding only slabs that meet S0 is sufficient. The earlier discard
+of S0-neighbors was safe but unnecessary. Discarding slabs that meet
+N(C) handles edges that were removed when H was formed.
+
+Each retained block induces exactly the same graph in Gamma and J0.
+Its vertices are cubic in Gamma. As a graph by itself, its degree
+deficit equals its boundary, at most2L. Its girth exceeds D0.
+Different blocks are vertex-disjoint, so their cycle collections are
+disjoint even without a nonadjacency condition.
+
+5. One-block spectral supply
+
+Choose q=ceil(8L^2/(D1+1))+2. Then q=O(x), and each block has at least
+8L^2 vertices. Its deficit d<=2L gives Ld/(2n)<=1/8.
+Also n<=|Gamma|<=3r eventually. Use the manuscript's even-power window
+[6x,L], rather than an unspecified window "about2x". The nonreal error
+is then at most9r^(-2), uniformly over blocks.
+
+The normalized Perron contribution is at least7/8-o(1). Repeated
+nonbacktracking walks contribute a relative O(L^2 2^(-s0))=o(1).
+Thus each block has cycle weight at least
+  (7/32-o(1)) ln(A/6).
+For A=6 exp(168), a uniform lower bound w0=1 is safe. This proves the
+required linear supply in the number of blocks without multiplicity
+counting or the matrix-pencil multi-mode lemma.
+
+6. Fixed exponent arithmetic
+
+For0<kappa<1/3, delta=(1-3kappa)/8 gives
+ d1+kappa=1-2delta,
+ d1/2-(d0+kappa)=delta,
+ d1/2-kappa=3delta.
+For0<kappa<1/2, delta=(1-2kappa)/8 gives
+ d1=1-2delta,
+ d1/2-d0=1/2-3delta>0,
+ d1/2-kappa=3delta.
+The new link count is at most(delta/2)x+O(1), whereas s0>=delta*x-2.
+The exceptional-pair error therefore tends to zero at both scales.
+The stated packing, restoration, and final moment contradictions pass.
+State the useful ranges with kappa positive explicitly.
+
+7. Root's endpoint proposal: PASS
+
+Put x=log2 r, L=floor(Ax),
+ t=floor(log2 x-2log2 log2 x),
+ D0=ceil(8Ax/log2 x), D1=floor(x-5log2 x),
+ epsilon=x^7/sqrt(r), with connected P and |P|<=r/x^2.
+All quantities below concern sufficiently large r; A is fixed.
+
+Then2^(t+1)=O(x/(log x)^2), and the tree-link term is
+O((log x)^2). Since t~log2 x, the full link count is less than
+3Ax/log2 x, while s0=4Ax/log2 x+O(1). Thus eta0=o(1), and eta1=o(1).
+The tree-region condition2(t+2floor(Dj/8))<=Dj holds because t=o(D0).
+
+The exponential deletion estimate gives
+ |S1|=O(r/x^2), |S0|=r^o(1).
+Hence L(|P|+|S1|)=o(r). Also
+ 2^s1=Omega(sqrt(r)/x^(5/2)),
+ T=Omega(sqrt(r)/x^(11/2)),
+ m=Omega(sqrt(r)/x^(13/2)),
+where q=O(x). All discarded blocks are negligible.
+The one-block supply contradicts
+ mu0<=(1+o(1))sqrt(r)/(4x^7)
+by a factor of order sqrt(x). The direct cubic recurrence therefore
+gives an unrestricted O(2^r(log r)^7/sqrt(r)) cycle-count error.
+
+Possible optimization, not claimed here as a completed theorem:
+D1=x-4log2 x-B_A, with a sufficiently large fixed shift, keeps a fixed
+small spectral loss and yields m=Omega_A(sqrt(r)/x^6). Choosing the
+constant in epsilon=C_A x^6/sqrt(r) large enough may give logarithmic
+power6. This requires tracking the fixed constants, not a new exponent
+margin. The audited endpoint statement above uses the safer power7.
+
+8. Written logarithmic-power-six fragment: independent full audit PASS
+
+I read second-order-parallel-links-endpoint.tex after it was written.
+Its fixed constants complete the optimization proposed above:
+ B=ceil(log2(10^6 A)), c_B=2^(-B/2)/(64A^5), M=1/c_B.
+The sharper marked-component allowance comp(P)<=x/(log2 x)^2 also fits
+the link budget. The spectral loss is eventually below1/100, the chain
+constant is correct, and q=ceil(16A^2x)+2 gives the required block volume.
+The coefficient c_B has ample slack after discarding bad blocks.
+The recurrence gives the stated(M+o(1)) cycle-error coefficient.
+
+One minor lemma wording issue was sent to its author: a strict assertion
+W2>mu^2-(1+eta)mu requires mu>0. At mu=0 both sides vanish. The upper
+bound on mu remains valid at zero, and the main proof uses strictness
+only for the large-scale family with mu1>20. This does not affect the
+theorem.
+
+9. Strong-branch packing optimization, sent to root
+
+The already audited exponential-cut proof has a stronger large-k branch:
+if k>=2(5D+1)2^D, then
+ p-1/2 <= (1/2)exp[-k/2^(D+1)].
+Thus under p>1/2+epsilon,
+ k < 2^(D+1) max(5D+1, ln(1/(2epsilon)))
+up to replacing strictness by a weak bound at the threshold.
+For D<=x and epsilon a fixed polylogarithm divided by sqrt(r), this is
+O(x2^D), saving one logarithm over the weaker all-k estimate.
+It gives |S1|=O(x^2 2^D1). Choosing D1=x-3log2 x-B suggests
+O(2^r(log r)^(11/2)/sqrt(r)) by the same constant-loss argument.
+This last optimization awaits its separate written proof and audit.
+
+10. Final logarithmic-power-eleven-halves theorem: audit PASS
+
+I independently read second-order-parallel-links-log-five-half.tex after
+it was written. The strong packing inversion and the bound12x2^D are
+correct. The changed spectral loss18A2^(-B) remains below the required
+fixed margin. The floor bounds give chain size
+2^(1-B/2)A^(-3)sqrt(r)/x^(9/2), and clean-block count at least
+c_B sqrt(r)/x^(11/2), with the same conservative c_B.
+The choice M=1/c_B gives the required factor-four contradiction.
+The marked-component loss remains negligible, and the geometric rank
+summation preserves the stated(M+o(1)) coefficient.
+
+Final audited unrestricted result:
+ psi(r) <= 2^(r-1) + (M+o(1))2^r(log r)^(11/2)/sqrt(r).
+
+The base endpoint fragment's zero-mass moment statement was also fixed.
+Root and path_stability were notified of this full audit PASS.
+No further optimization is claimed in this audit record.

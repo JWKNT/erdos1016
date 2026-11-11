@@ -1,0 +1,10 @@
+{
+  "status": 2,
+  "message": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)",
+  "seconds": 16.76126503944397,
+  "variables": 777,
+  "binary_variables": 357,
+  "constraints": 3860,
+  "six_active": 2,
+  "scope": "Abstract limiting-state relaxation; not a graph realization"
+}

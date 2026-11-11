@@ -1,0 +1,140 @@
+\section{An improved explicit polynomial exponent}
+\label{sec:two-scale-optimized-constants}
+
+This section changes only the parameters of the two-scale proof.
+The structural argument is unchanged.
+It also uses paired consecutive spectral powers to shorten the counted-cycle interval.
+The original audited parameter choice remains available separately.
+
+\begin{theorem}[An explicit exponent]
+\label{thm:two-scale-explicit-exponent}
+Put
+\[
+ \kappa_* = 2^{-1050}.
+\]
+For all sufficiently large ranks $r$,
+\[
+ \psi(r)\le2^{r-1}+(1+o(1))2^r r^{-\kappa_*}.
+\]
+More generally, the polynomial forest bound with this exponent holds whenever
+\[
+ |P|\le\frac{r}{112000\log_2r},\qquad
+ \operatorname{comp}(\Gamma[P])\le\frac{\log_2r}{100},
+\]
+under the degree hypotheses of Theorem~\ref{thm:two-scale-critical-marking}.
+\end{theorem}
+
+\begin{proof}
+Set
+\[
+ x=\log_2r,\qquad A=112,\qquad t=1024,\qquad L=\lfloor112x\rfloor,
+\]
+\[
+ D_0=\lfloor12x/25\rfloor,\qquad
+ D_1=\lfloor49x/50\rfloor,\qquad
+ s_j=\lfloor(D_j-1)/2\rfloor.
+\]
+Assume that the forest probability exceeds $1/2+r^{-\kappa_*}$.
+Choose the nested families $\mathcal Q_0\subseteq\mathcal Q_1$ as before.
+Their vertex unions satisfy
+\[
+ |S_0|=O(x^3r^{12/25}),\qquad
+ |S_1|=O(x^3r^{49/50}).
+\]
+Both are $o(r/x)$.
+The graphs $J_1\subseteq J_0$ have the required girths, and their orders are $2r+o(r)$.
+
+We first check the cycle supply with the new value of $A$.
+Let $a$ be the smallest even integer at least $2x+10\log_2x$.
+Let $b$ be the largest odd integer at most $L$.
+The non-backtracking eigenvalues have modulus at most two.
+For a negative real eigenvalue $\lambda=-2u$, with $0\le u\le1$, an even power $j$ and its successor contribute
+\[
+ \frac{u^j}{2j}-\frac{u^{j+1}}{2(j+1)}\ge0
+\]
+to the normalized trace sum.
+Thus pairing every even power with the following odd power removes any loss from negative real eigenvalues.
+
+The marked-set hypothesis gives
+\[
+ \frac{Ld_1}{2v_1}\le\frac3{4000}+o(1)<\frac1{500}.
+\]
+The positive eigenvalue at least $2-d_1/v_1$ consequently contributes at least
+\[
+ \left(1-\frac1{500}\right)\sum_{j=a}^b\frac1{2j}.
+\]
+The nonreal contribution has magnitude at most
+\[
+ 3v_1\sum_{j\ge a}\frac{2^{-j/2}}{2j}=O(x^{-6})=o(1),
+\]
+since $2^{-a/2}\le r^{-1}x^{-5}$.
+The repeated-walk factor is $1+O(L^2 2^{-s_1})=1+o(1)$.
+Therefore
+\begin{equation}\label{eq:optimized-initial-mass}
+ \mu_1\ge\left(1-\frac1{500}\right)\frac{\ln56}{2}-o(1)
+ >\frac{401}{200}=2.005
+\end{equation}
+for sufficiently large $r$.
+The strict numerical inequality has a margin greater than $0.003$.
+
+Next, check the uniform link bound at the smaller girth scale.
+The marked component term is at most $x/100$.
+Also
+\[
+ \frac{2L}{t}\le\frac7{32}x,
+ \qquad
+ 8t2^t\ln(2r^{\kappa_*})
+ =\frac{\ln2}{8192}x+O(1).
+\]
+The remaining tree-link term is bounded independently of $r$.
+Since
+\[
+ \frac1{100}+\frac7{32}+\frac{\ln2}{8192}<\frac{47}{200}=0.235,
+\]
+all link counts are at most $47x/200$ for large $r$.
+The tree argument's condition $2t+D_0/2\le D_0$ also holds eventually.
+Because $s_0=6x/25+O(1)$, the exceptional contribution is at most
+\[
+ a_C\,2^{47x/200}L^3 2^{-s_0}
+ =O(a_C x^3r^{-1/200})=o(a_C).
+\]
+Thus both inverse moment bounds remain valid.
+
+Use one connected component of $\Gamma[P]$ as the anchor for far-pair antisymmetry.
+The weighted main-component partner mass for some cycle is at least
+$\mu_1/2-1-o(1)$.
+By \eqref{eq:optimized-initial-mass}, this is at least $1/1000$ for large $r$.
+The same maximal-disjoint-family argument supplies a nested chain with
+\[
+ T\ge\frac{2^{s_1}}{1000L^3}
+ =\Omega(r^{49/100}/x^3).
+\]
+
+Group the chain into blocks using $q=\lceil20000Ax\rceil+2$ as before.
+There are $\Omega(r^{49/100}/x^4)$ blocks.
+The blocks have boundary at most $2L$ and volume at least $2000Ax^2$.
+Discard blocks meeting a marked component, a neighbor of the anchor cycle, or $S_0$ and its neighbors.
+The total loss is at most
+\[
+ \operatorname{comp}(\Gamma[P])+L+4|S_0|
+ =O(x^3r^{12/25})
+ =o(r^{49/100}/x^4).
+\]
+Every remaining block has zero deficit in $J_0$.
+
+The multiple-mode spectral test, still using $\theta=1/(12x)$ and even lengths between $6x$ and $24x$, now gives
+\[
+ \mu_0=\Omega(r^{49/100}/x^4).
+\]
+Those lengths lie below $L=\lfloor112x\rfloor$.
+The inverse moment estimate gives
+\[
+ \mu_0\le\frac{1+o(1)}4\,r^{\kappa_*},
+\]
+a contradiction since $\kappa_*<12/25$.
+This proves the forest estimate.
+The direct cubic-extremizer transfer and the same geometric recurrence prove the cycle estimate.
+\end{proof}
+
+The exponent remains too small for a useful finite-rank estimate.
+This calculation gives a substantially simpler explicit constant without changing the theorem's scope or proof structure.

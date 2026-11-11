@@ -1,0 +1,303 @@
+\section{Exact bounds for saturated blocks}
+\label{sec:second-order-saturated-blocks}
+
+All multigraphs in this section are finite and loopless.
+Parallel edges are allowed and are distinguished when paths are counted.
+The four-terminal classification in Proposition~\ref{prop:saturated-four-pole}
+also holds for such multigraphs.
+Its proof forces a spanning pair of paths and a matching between them.
+The resulting permutation ladder is simple.
+
+For positive integers $h$, define
+\[
+ M(2j)=3\cdot2^j-2,\qquad
+ M(2j+1)=4\cdot2^j-2.
+\]
+Thus $M(1)=2$, and $M(h)\le3\cdot2^{h/2}$.
+
+\begin{theorem}\label{thm:saturated-three-pole}
+Let $T$ be connected, with three distinct degree-two terminals $a,b,c$.
+Every other vertex has degree three.
+Suppose that $\beta(T)=h$ and
+$P_{ac}(T)=P_{bc}(T)=2^h$.
+Then
+\[
+ P_{ab}(T)\le M(h).
+\]
+For every $h\ge1$, a simple graph attains equality.
+\end{theorem}
+
+\begin{proof}
+Saturation implies that every $a$--$c$ path and every $b$--$c$ path meets every cycle.
+Indeed, the corresponding affine parity class has $2^h$ members.
+Every member is one terminal path together with vertex-disjoint cycles.
+
+We first reduce bridges by induction on $h$.
+Every component obtained by deleting a bridge contains a cycle.
+To see this, let the component have $n$ vertices and $p$ original terminals.
+Its degree sum is $3n-p-1$, so its rank is $(n-p+1)/2$.
+Since $n\ge p$, this integer is positive.
+Consequently, a bridge must separate $\{a,b\}$ from $c$.
+Otherwise, one saturated terminal pair lies on one side and avoids a cycle on the other.
+
+The endpoint of this bridge on the $\{a,b\}$ side cannot be $a$ or $b$.
+Such a terminal path to $c$ would immediately cross the bridge and avoid a cycle on its starting side.
+The other endpoint cannot be $c$, by the same argument.
+Write the bridge as $zw$, with $a,b,z$ on its left side.
+After deleting the bridge, the left graph $T_L$ is a three-terminal graph with terminals $a,b,z$.
+The right graph $T_R$ has two degree-two terminals $w,c$ and otherwise degree three.
+Write their ranks as $h_L,h_R$.
+Both ranks are positive, and $h=h_L+h_R$.
+Terminal paths factor across the bridge.
+The bounds $P_{az}(T_L)\le2^{h_L}$ and $P_{wc}(T_R)\le2^{h_R}$ force equality in both.
+The same argument gives $P_{bz}(T_L)=2^{h_L}$.
+Also, $P_{ab}(T)=P_{ab}(T_L)$.
+Induction and the monotonicity of $M$ prove the result when a bridge exists.
+
+Now suppose that $T$ has no bridge.
+A connected bridgeless graph of maximum degree three has no cut vertex.
+Otherwise, each component after deleting a cut vertex requires at least two incident edges at that vertex.
+Thus $T$ is two-connected.
+When $h=1$, degree counting gives three vertices, so $T$ is a triangle.
+Assume $h\ge2$.
+
+The vertex $c$ is not adjacent to $a$ or $b$.
+For example, an edge $ac$ gives at most
+$1+2^{h-1}<2^h$ simple $a$--$c$ paths.
+Here, delete that nonbridge edge to bound all paths other than the edge itself.
+The two neighbors $x,y$ of $c$ are distinct.
+If both incident edges joined $c$ to one vertex, that vertex's remaining edge would be a bridge.
+
+Set $K=T-c$.
+This connected four-terminal graph has terminals $a,b,x,y$ and rank $h-1$.
+The equalities
+\[
+ P_{ax}(K)+P_{ay}(K)=2^h,
+ \qquad
+ P_{bx}(K)+P_{by}(K)=2^h
+\]
+force each summand to equal $2^{h-1}$.
+Thus $K$ is saturated.
+It has a through pair.
+Otherwise, the vertex form of Menger's theorem gives a single vertex separating
+$\{a,b\}$ from $\{x,y\}$ in $K$.
+That vertex would disconnect $T$, contrary to two-connectivity.
+The statement remains valid when the separating vertex is one of the four terminals.
+At least one left terminal and one right terminal remain after its deletion.
+
+Apply Proposition~\ref{prop:saturated-four-pole}.
+Suppose that its ladder has $A$ square blocks and $s$ single-rung blocks.
+Then $h=2A+s$, and its through-pair count is $2^A$.
+An $a$--$b$ path in $K$ reaches one final block, turns there, and returns along the other strand.
+A square block has two possible turns and two through choices.
+A single-rung block has one turn and one through choice.
+The square turns contribute $2(2^A-1)$ in total.
+Each single-rung turn contributes at most $2^A$.
+Therefore
+\[
+ P_{ab}(K)\le (s+2)2^A-2.
+\]
+Paths in $T$ through $c$ correspond exactly to the through pairs in $K$.
+Hence
+\[
+ P_{ab}(T)=P_{ab}(K)+2^A
+ \le(s+3)2^A-2.
+\]
+Subject to $2A+s=h$, this expression is largest when $A=\lfloor h/2\rfloor$.
+Indeed, replacing two single-rung blocks by one square multiplies the positive factor by
+$2(s+1)/(s+3)>1$ when $s\ge2$.
+The resulting bound is $M(h)$.
+
+For even $h$, take only square blocks and join the two right terminals to a new terminal $c$.
+For odd $h\ge3$, add one single-rung block at the right end before adding $c$.
+All single-rung turns then have their maximum weight, so equality holds.
+For $h=1$, use a triangle.
+All these examples are simple.
+\end{proof}
+
+\begin{lemma}\label{lem:saturated-two-pole-cycles}
+Let $N$ be a connected loopless multigraph with two distinct degree-two terminals $u,v$.
+Every other vertex has degree three.
+If $\beta(N)=b$ and $P_{uv}(N)=2^b$, then
+\[
+ c(N)\le S(b):=\sum_{j=1}^b\bigl(M(j)-1\bigr)
+ \le10\cdot2^{b/2}.
+\]
+The same bound holds if extra degree-two vertices subdivide edges.
+\end{lemma}
+
+\begin{proof}
+Suppress unmarked vertices of degree two.
+This preserves rank, terminal-path counts, and cycle counts.
+No loop can arise in this normalization.
+A pendant cycle would avoid every terminal path and contradict saturation.
+The rank-one case is a cycle, with one cycle in total.
+
+Suppose that $b\ge2$, and choose an edge $e=ux$ incident to $u$.
+The vertices $u,v$ cannot be adjacent, since a direct edge would give at most $1+2^{b-1}$ terminal paths.
+This edge is not a bridge.
+If it were, both shores would contain cycles by degree counting.
+If $v$ lies opposite $u$, every terminal path immediately crosses the bridge and avoids the cycle on the $u$ shore.
+If $v$ lies on the $u$ shore, every terminal path avoids the cycle on the opposite shore.
+
+Subdivide $e$ by a new vertex $a$ to obtain a three-terminal graph $T$ with terminals $u,a,v$.
+Sliding the initial endpoint across the new edge gives a bijection between
+$u$--$v$ paths and $a$--$v$ paths.
+If a path starts with $ua$, remove that edge.
+Otherwise, prepend $au$.
+The degree-two condition at $u$ makes both operations reversible.
+Thus both counts equal $2^b$.
+Theorem~\ref{thm:saturated-three-pole} gives
+\[
+ 1+c_e(N)=P_{ua}(T)\le M(b).
+\]
+
+Deleting $e$ leaves a connected graph of rank $b-1$.
+Exactly half of the affine $u$--$v$ parity class avoids $e$.
+Every member of that class is a path, so
+$P_{uv}(N-e)=2^{b-1}$.
+Delete the now-forced initial leaf segment and suppress unmarked degree-two vertices.
+These operations preserve the rank and cycle count, and preserve the terminal-path count after moving the initial terminal.
+If the rank is positive, the resulting terminals remain distinct and have degree two.
+Otherwise, a forced terminal path would be unique, contrary to $2^{b-1}>1$.
+A loop or an off-route cyclic component would contradict saturation.
+Thus induction applies to the resulting two-terminal graph.
+The identity $c(N)=c(N-e)+c_e(N)$ proves the recurrence.
+
+Direct summation gives
+\[
+ S(2j)=10\cdot2^j-6j-10,
+ \qquad
+ S(2j+1)=14\cdot2^j-6j-13.
+\]
+Both expressions are at most $10\cdot2^{b/2}$.
+\end{proof}
+
+\begin{corollary}\label{cor:saturated-four-pole-cap}
+For a saturated four-terminal graph $K$ of rank $h$, let $D(K)$ count its through pairs.
+Then
+\[
+ \begin{split}
+ c(K)&\le10\cdot2^{h/2},\\
+ P_{L_1L_2}(K)+D(K)&\le M(h+1),\\
+ P_{R_1R_2}(K)+D(K)&\le M(h+1),\\
+ D(K)&\le2^{\lfloor(h+1)/2\rfloor}.
+ \end{split}
+\]
+\end{corollary}
+
+\begin{proof}
+For the first bound, select one cross-terminal pair and suppress the two unused degree-two terminals.
+Apply Lemma~\ref{lem:saturated-two-pole-cycles}.
+For the second, add a new vertex $c$ joined to $R_1,R_2$.
+The resulting three-terminal graph has rank $h+1$.
+Each path count from $L_i$ to $c$ is $2^{h+1}$.
+Its $L_1$--$L_2$ paths either avoid $c$ or correspond to through pairs in $K$.
+Apply Theorem~\ref{thm:saturated-three-pole}.
+The third bound is symmetric.
+For the last bound, use Proposition~\ref{prop:saturated-four-pole} when $D(K)>0$.
+When $D(K)=0$, it is immediate.
+\end{proof}
+
+\begin{lemma}\label{lem:saturated-four-pole-double-cap}
+For a saturated four-terminal graph $K$ of rank $h$, let $C(K)$ count pairs
+of vertex-disjoint cap paths, one from $L_1$ to $L_2$ and one from $R_1$ to $R_2$.
+Then
+\[
+ C(K)\le3(h+1)2^{(h+1)/2}.
+\]
+\end{lemma}
+
+\begin{proof}
+First suppose that $D(K)>0$.
+Use its classified ladder, and give a square block weight two and a single-rung block weight one.
+Their total weight is $w=h+1$.
+A disjoint cap pair turns its left path in a block $i$ and its right path in a later block.
+The two paths cannot turn in the same block, since their local turns would intersect.
+Fix the first turn block $i$.
+The preceding through choices contribute at most $2^{w_{<i}/2}$.
+The turn at block $i$ contributes at most $2^{w_i/2}$.
+The right cap in the remaining suffix contributes at most $3\cdot2^{w_{>i}/2}$.
+For this last bound, a suffix with $A$ squares and $s$ single rungs has at most $(s+2)2^A-2$ caps.
+The inequality follows from $(s+2)2^{-s/2}\le3$.
+It also covers a one-rung suffix, while an empty suffix contributes zero.
+Thus each first-turn block contributes at most $3\cdot2^{w/2}$.
+There are at most $w$ blocks.
+
+Now suppose that $D(K)=0$.
+Join $R_1,R_2$ to a new vertex $c$, as in Corollary~\ref{cor:saturated-four-pole-cap}.
+The resulting saturated three-terminal graph has a bridge.
+Otherwise, the bridgeless case in the proof of Theorem~\ref{thm:saturated-three-pole} would give a through pair in $K$.
+Every such bridge separates $\{L_1,L_2\}$ from $c$, and neither endpoint is $c$.
+It therefore lies in $K$ and separates its left terminal pair from its right terminal pair.
+
+Each component of $K$ after deleting this bridge has positive rank.
+Indeed, the same degree count gives rank $(n-p+1)/2\ge1$ for a side containing $p$ original terminals.
+Neither bridge endpoint can be an original terminal.
+Otherwise, a cross path from that terminal would avoid a cycle on its own side.
+The two sides are thus three-terminal graphs, of ranks $h_L,h_R\ge1$, with $h_L+h_R=h$.
+The cross-path counts factor across the bridge.
+Their saturation forces both path counts to the bridge endpoint to be saturated on each side.
+Hence Theorem~\ref{thm:saturated-three-pole} gives
+\[
+ C(K)=P_{L_1L_2}(K_L)P_{R_1R_2}(K_R)
+ \le M(h_L)M(h_R)\le9\cdot2^{h/2}.
+\]
+Since $h\ge2$, this is at most $3(h+1)2^{(h+1)/2}$.
+\end{proof}
+
+\begin{theorem}\label{thm:saturated-ring-barrier}
+Take $k\ge2$ vertex-disjoint saturated four-terminal graphs $K_1,\ldots,K_k$.
+Join their right terminal pairs to the next left terminal pairs by two matching edges, cyclically.
+The matching at each interface can be straight or crossed.
+Let $G$ be the resulting graph and let $r=\beta(G)$.
+Then
+\[
+ 2^{r-1}\le c(G)\le2^{r-1}+20r2^{r/2}.
+\]
+Thus this entire saturated-block construction method cannot improve the half exponent in the cycle excess.
+\end{theorem}
+
+\begin{proof}
+Write $h_i=\beta(K_i)$ and $w_i=h_i+1$.
+Each four-terminal graph has $h_i\ge1$, so $w_i\ge2$.
+Set $W=\sum_i w_i=r-1$.
+Cut parity makes the number of used edges at every interface have the same parity.
+
+For odd parity, choose one edge at each interface.
+Each block then supplies $2^{h_i}$ paths between its selected cross terminals.
+Every choice gives one simple cycle.
+This sector has exactly
+$2^k\prod_i2^{h_i}=2^W$ cycles.
+
+An even-parity cycle with no used interface lies inside one block.
+Corollary~\ref{cor:saturated-four-pole-cap} bounds their total by
+$10\sum_i2^{h_i/2}\le10k2^{W/2}$.
+If all interfaces are used, each block supplies a through pair or a pair of disjoint caps.
+Two or more cap-pair blocks produce two or more components, so a single cycle uses at most one.
+The all-through choices contribute at most $\prod_iD(K_i)\le2^{W/2}$ cycles.
+By Lemma~\ref{lem:saturated-four-pole-double-cap}, the choices with one cap-pair block contribute at most
+\[
+ \sum_i C(K_i)\prod_{j\ne i}D(K_j)
+ \le3W2^{W/2}.
+\]
+
+Otherwise, the used interfaces form a nonempty proper cyclic interval.
+The two end blocks supply cap paths.
+Every inner block supplies a through pair.
+For a fixed interval whose occupied blocks form $I$, its contribution is at most
+\[
+ 9\cdot2^{\frac12\sum_{i\in I}w_i}.
+\]
+Here we used $M(h_i+1)\le3\cdot2^{w_i/2}$ at both ends.
+If the interval omits $t$ blocks, then their total weight is at least $2t$.
+There are $k$ intervals for each $t\in\{0,\ldots,k-2\}$.
+Their combined contribution is therefore at most
+\[
+ 9k2^{W/2}\sum_{t=0}^{k-2}2^{-t}
+ \le18k2^{W/2}.
+\]
+The total excess is at most $(28k+3W+1)2^{W/2}$.
+Since $2k\le W$, this is at most $(17W+1)2^{W/2}$,
+which is smaller than $20r2^{r/2}$.
+\end{proof}

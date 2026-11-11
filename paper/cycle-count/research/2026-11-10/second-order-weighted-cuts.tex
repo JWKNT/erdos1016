@@ -1,0 +1,72 @@
+% Weighted refinement; path_stability independently audited all steps and constants.
+\section{A closure-mass version of the cut estimate}
+\label{sec:closure-mass-cuts}
+
+The degree bound and the local coordinate rank play different roles.
+Keeping them separate gives a weighted bound with polynomial dependence on the maximum boundary size.
+
+\begin{lemma}[Degree and local rank separately]\label{lem:degree-rank-cut-estimate}
+Let $Q$ be connected and loopless, with $k$ distinct marked vertices.
+Suppose their degrees are at most $d\ge2$ and their local coordinate spaces have dimension at most $s\ge1$.
+If $Z$ counts the closed marked vertices in a uniform even subgraph, then
+\[
+ \mathbb E2^{-Z}\le\frac12+2\exp\!\left(-\frac{k}{8d2^{s+1}}\right).
+\]
+\end{lemma}
+
+\begin{proof}
+A zero local space gives an expectation at most one half.
+Otherwise put $T=2^{s+1}$.
+If $T$ marked local spaces form a direct sum, their closure indicators are independent.
+Each has closure probability at least $2^{-s}$, so the expectation is at most
+$(1-2^{-s-1})^T\le e^{-1}<1/2$.
+
+Otherwise choose a maximal direct-sum family $S$ with $t<T$ vertices.
+Every other marked local space meets $U=\sum_{v\in S}L_v$ nontrivially.
+For $k\ge2(5d+1)T$, the set $S$ is nonempty and proper, and its boundary has size $B\le dt$.
+Lemma~\ref{lem:weighted-block-conditioning}, with $\eta_v=1/2$, gives
+\[
+ \mathbb E2^{-Z}-\frac12
+ \le\frac12\exp\!\left(-2^{-s-1}(k-t-5B)\right)
+ \le\frac12\exp\!\left((5d+1)-\frac{k}{T}\right)
+ \le\frac12 e^{-k/(2T)}.
+\]
+This is stronger than the stated bound.
+For $k<2(5d+1)T$, one has $k/(8dT)<11/8<\ln4$.
+The stated right side then exceeds one.
+\end{proof}
+
+\begin{corollary}[Total closure mass]\label{cor:closure-mass-cut-estimate}
+Let $Q$ be connected and loopless, with distinct marked vertices of degree at most $d\ge2$.
+For a uniform even subgraph, put
+\[
+ p_v=\Pr(v\text{ is closed}),\qquad \mu=\sum_{v\text{ marked}}p_v.
+\]
+Then
+\begin{equation}\label{eq:closure-mass-cut-estimate}
+ \mathbb E2^{-Z}
+ \le\frac12+2\exp\!\left(-\frac{\mu}{16d(d-1)}\right).
+\end{equation}
+The same estimate bounds simultaneous forest restrictions in disjoint connected cyclic regions,
+where $p_v$ is the probability that the corresponding region boundary is closed.
+\end{corollary}
+
+\begin{proof}
+If some local space has dimension zero, the expectation is already at most one half.
+Otherwise each dimension belongs to $\{1,\ldots,d-1\}$.
+For each $s$, let $k_s$ count marked vertices of local dimension exactly $s$.
+Their closure mass is $\mu_s=k_s2^{-s}$.
+Some $s$ satisfies $\mu_s\ge\mu/(d-1)$.
+Ignore the other marked factors and apply Lemma~\ref{lem:degree-rank-cut-estimate} to this class.
+Its exponent is
+\[
+ \frac{k_s}{8d2^{s+1}}=\frac{\mu_s}{16d}
+ \ge\frac{\mu}{16d(d-1)}.
+\]
+This proves~\eqref{eq:closure-mass-cut-estimate}.
+The cyclic-region statement follows from the quotient and internal-cycle-space reduction.
+\end{proof}
+
+This bound retains the actual closure mass, which can be much larger than the estimate obtained from the maximum degree alone.
+The regions must still be vertex-disjoint.
+The estimate does not yet control an overlapping family of moderate-length cycles.

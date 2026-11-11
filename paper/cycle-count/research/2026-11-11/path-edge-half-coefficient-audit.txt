@@ -1,0 +1,20 @@
+Independent audit of four-coefficient-rigidity.tex and four-coefficient-rings.tex
+2026-11-11, path_stability agent
+
+Result: PASS on a full mathematical line audit. No source change was requested.
+
+The aggregate rigidity proof handles every triangle-free high-coordinate graph on four ports. Its numerical gaps are correct. In the low-cross case, the opposite-pair lower bound is 0.98. Without a full coordinate, all six coordinates exceed 0.0425. Summing the three added-edge constraints gives the stated contradiction. With a full coordinate, the two small adjacent choices and the 15/16 gap force a full star.
+
+The small-cut assembly is uniform in the smaller shore rank. Every asymptotic threshold applies only to the larger rank k. The h=1 shore is exactly C4 and uses its separate weighted crossing bound. The h>=2 low-state bound is 3.960625+o(1). A positive path density bounds the larger shore's internal cycles by an absolute multiple of 2^(k/2). Missing saturation on the smaller shore costs exactly at least 1/16.
+
+Aligned full stars contribute only an absolute O(2^(r/2)) error, including bounded smaller ranks. Aligned saturated K2,2 poles either have a zero-through bridge that gives a cyclic three-cut, or have the classified tile-chain structure. A bounded C4 shore is compatible with this classification. Depending on its terminal partition, it is one square tile or two single-rung tiles.
+
+The ring count passes an independent algebraic audit. The odd-interface sector has 2^W cycles. For at least one square, exactly half the all-through choices give one cycle. Proper interface intervals give the stated Q sum. The omitted length-(m-1) intervals have weight 2^(-a)W. The endpoint decomposition of Q, its convexity bound, and simultaneous attainment by consecutive single rungs are correct. The fixed-W difference formula is correct and strictly negative in the stated range. The all-single-rung comparison starts correctly at W=7,8 and propagates along both parities.
+
+No circularity was found. The inputs are the earlier path saturation gap, path/cycle tradeoffs, saturated-pole classification, asymptotic cycle bound, and small-cut error bounds. They do not assume the proposed optimal coefficient.
+
+This is an internal mathematical audit. It is not a Lean verification or external peer review.
+
+Further full line audits: PASS for root-sharp-coefficient-transfer.tex, root-eventual-exact-cycle-theorem.tex, four-coefficient-uniqueness.tex, and the assembled eventual-exact-cycle-maximum.tex input statements. The running-maximum recurrence has the correct rank shifts. Both alternating HK excess increments are positive. The parity section now makes only the justified crossed upper-bound assertions. Eventual uniqueness follows by increasing the threshold so that the rank-(r-1) exact formula also applies. Every non-ring branch has a strict deficit, and the ring optimization is strict outside the parity-minimal tile count. Square-tile automorphisms remove all interface twists.
+
+The separate root-edge-half-reductions.tex also passes. Its absolute edge-frequency bound, density comparison, finite bounded-girth alternative, and conditional weighted-tripole parity argument are exact. None of these statements proves the unresolved relative edge-half conjecture.

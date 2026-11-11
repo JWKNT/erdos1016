@@ -1,0 +1,155 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,booktabs,microtype,xcolor}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\setlength{\emergencystretch}{3em}
+\title{The eventual exact maximum number of cycles}
+\author{Collaborative research working draft}
+\date{11 November 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Let $\psi(r)$ be the maximum number of cycles in a finite graph of cycle rank $r$.
+Using the established unrestricted sharp-order proof and terminal-path estimates, we obtain, for all sufficiently large ranks,
+\[
+\begin{aligned}
+ \psi(2q+1)&=2^{2q}+(2q+\tfrac12)2^q-3q,\\
+ \psi(2q+2)&=2^{2q+1}+(2q+\tfrac92)2^q-3q-4.
+\end{aligned}
+\]
+These are the counts attained by the Horak--Kim rings.
+The new local step gives a fixed gap outside two saturated four-terminal profiles, uniformly over unbalanced cuts.
+Exact ring optimization handles the remaining profile.
+An exact running-maximum recurrence transfers the local bound to all graphs.
+In particular, the normalized second-order coefficients are $1/\sqrt2$ on odd ranks and $1/2$ on even ranks.
+\end{abstract}
+
+\paragraph{Proof status.}
+The new ring formulas, rigidity argument, and transfer recurrence have separate line audits by the root, four-regular, path-stability, and random-host agents.
+Finite exact checks corroborate the formulas and case analysis; they do not replace the proofs.
+The theorem has not been formalized in Lean or externally peer reviewed.
+The absolute rank threshold is not evaluated.
+The stable source modules used by Fable's formalization are unchanged.
+The lower-bound construction and its cycle counts are due to Horak and Kim~\cite{HK}; the new claim is eventual unrestricted optimality.
+
+\clearpage
+\tableofcontents
+
+\section{Conventions and established inputs}
+The cycle rank of $G$ is $|E(G)|-|V(G)|+\operatorname{comp}(G)$.
+Cycles are simple circuits; loops and parallel pairs count as cycles of lengths one and two.
+Parallel edges are distinguished.
+Subdivision preserves both cycle rank and cycle count, so allowing multigraphs does not change $\psi$.
+The established cubic reduction gives a connected cubic multigraph attaining $\psi(r)$ at each relevant rank.
+A cyclic cut has a cycle on each shore.
+
+A normalized $k$-pole is connected, with $k$ distinct degree-two terminals and degree three elsewhere.
+Its terminal paths are simple paths.
+For a four-pole of rank $h$, divide all path counts $P_{ij}$ and disjoint path-pair counts $f_\alpha$ by $2^h$, writing $a_{ij}$ and $u_\alpha$.
+Here $\alpha$ runs over the three pairings of the four terminals.
+Put $S=\sum a_{ij}$ and $F=\sum u_\alpha$.
+The affine cycle-space bounds give $0\le a_{ij}\le1$ and $0\le F\le1$.
+
+This packet gives the new deductions in full, while taking the following previously audited results as inputs.
+Their proof sources remain in the neighboring \nolinkurl{2026-11-10} directory.
+
+\begin{theorem}[Established global inputs]
+\label{thm:exact-packet-global-inputs}
+There are absolute constants and thresholds with these properties.
+\begin{enumerate}
+\item $\psi(r)\le2^{r-1}+Kr2^{r/2}$.
+\item At sufficiently large rank and sufficiently large fixed girth, every edge of a shortest cycle in a connected cubic graph belongs to at most $2^{r-2}$ cycles.
+\item For each fixed girth, a connected cubic graph without a cyclic cut of size at most four has fewer than $2^{r-1}$ cycles at sufficiently large rank.
+\item A connected loopless cubic graph with a cyclic cut of size at most three has at most $2^{r-1}+C2^{r/2}$ cycles.
+\end{enumerate}
+\end{theorem}
+
+Items one through three are proved in \nolinkurl{unrestricted-sharp-cycle-bound.tex}; item four is in the small-cut proof modules assembled by \nolinkurl{small-cut-sharp-bound.tex}.
+Only the exact shortest-cycle edge estimate and fixed-girth deficit are needed for the new running-maximum recurrence.
+
+\begin{theorem}[Established path saturation gap]
+\label{thm:terminal-path-saturation-gap}
+Each normalized path coordinate of a loopless cubic two-pole is either one or at most $15/16$.
+The conclusion applies to selected terminal pairs in three- and four-poles after suppressing the unused terminals.
+\end{theorem}
+Source: \nolinkurl{second-order-path-gap.tex}.
+
+\begin{theorem}[Established high-path consequences]
+\label{thm:three-pole-two-high}
+For every fixed $\epsilon>0$, a normalized two-pole of rank $h$ with path density at least $1/2+\epsilon$ has at most $C_\epsilon2^{h/2}$ internal cycles.
+In a three-pole, two path coordinates sharing a terminal and exceeding $1/2+\epsilon$ force the third coordinate to be at most $C'_\epsilon2^{-h/2}$.
+The same statements hold for selected pairs in a four-pole after suppressing unused terminals.
+\end{theorem}
+Sources: the high-path cycle tradeoff and \nolinkurl{second-order-three-pole-tradeoff.tex}.
+
+\begin{lemma}[Established one-full-path consequence]
+\label{lem:one-full-tripole-small-adjacent}
+In a rank-$h$ four-pole, $a_{12}=1$ implies
+\[
+ \min(a_{13},a_{23}),\ \min(a_{14},a_{24})\le3\,2^{-h/4}.
+\]
+\end{lemma}
+Source: \nolinkurl{second-order-one-full-tripole.tex}.
+
+\begin{corollary}[Established cross-sum forest estimate]
+\label{cor:linear-four-pole-cross-sum-forest}
+For each fixed $\eta>0$, a rank-$h$ four-pole with
+$\sum_{i,j=1}^2a_{L_iR_j}\ge2+\eta$ satisfies
+$F\le A_\eta(h+3)2^{-h/2}$.
+\end{corollary}
+Source: \nolinkurl{second-order-two-cycle-packing-refinement.tex}.
+
+\begin{lemma}[Established added-edge and low-state bounds]
+\label{lem:four-pole-added-edge}
+For sufficiently large $h$, if both coordinates of an opposite pairing $\alpha=ij|kl$ exceed $0.01$, then
+\[
+ \max(a_{ij},a_{kl})+F-u_\alpha\le1.01.
+\]
+If all six path coordinates are at most $0.51$, then
+\[
+ S+F\le3.82,\qquad
+ S+\tfrac12F+\tfrac12u_\gamma\le3.7
+\]
+for each selected pairing $\gamma$.
+\end{lemma}
+Source: \nolinkurl{second-order-all-four-cuts.tex}.
+
+\begin{lemma}[Established saturated four-pole classification]
+\label{lem:saturated-four-pole-double-cap}
+Suppose all four path coordinates across a selected partition into left and right terminal pairs equal one.
+If there is a pair of vertex-disjoint left-to-right paths, the pole is a chain of square and single-rung tiles, with the conventions in the next section.
+If there is no such pair, the pole has an internal bridge separating its left terminals from its right terminals, and both resulting components have positive rank.
+\end{lemma}
+Source: \nolinkurl{second-order-saturated-blocks.tex}, including the zero-through case in the proof of its double-cap lemma.
+
+Finally, in the absence of smaller cyclic cuts, a cyclic four-cut can be normalized to connected four-poles with distinct terminals and positive ranks $h,k$, satisfying $r=h+k+3$.
+The exact crossing formula is stated and used in Section~\ref{sec:four-coefficient-rigidity}.
+If $h=1$, the smaller shore is $C_4$; its normalized forest vector gives precisely the second low-state expression in the preceding lemma.
+These normalizations are part of \nolinkurl{second-order-all-four-cuts.tex}.
+
+\input{four-coefficient-rings}
+\input{four-coefficient-rigidity}
+\input{root-sharp-coefficient-transfer}
+\input{root-eventual-exact-cycle-theorem}
+\input{four-coefficient-uniqueness}
+
+\section{Exact checks and review scope}
+The companion \nolinkurl{four-coefficient-check.py} uses exact integer and rational arithmetic.
+Its saved results cover 527520 even affine states in 456 mixed rings, including both interface twists and all tile words through weight ten; 86 open-chain formulas; 62491 fixed-rank optimization inequalities; and 1059 rational endpoint profiles in the rigidity cases.
+The largest path sum outside a full $K_{2,2}$ in the checked endpoint cases is $1583/400=3.9575$.
+
+The line audits check the omitted-interval indexing, the all-through parity count, fixed-rank comparisons, the zero-through bridge alternative, constants uniform in the smaller shore, and the exact recurrence through rank deletion.
+The audit record distinguishes the proved parity limsup inequalities from a stronger, unproved crossed lower-transfer assertion.
+The eventual exact theorem uses the monotone-excess corollary and does not require such an assertion.
+
+\begin{thebibliography}{9}
+\bibitem{HK} P. Horak and J. Kim, \emph{On the maximum number of cycles in a graph}, Journal of Graph Theory 99 (2022), 671--690.
+The explicit ring counts are in Theorem 5.1 of the revised preprint, \url{https://arxiv.org/html/2006.13459v2}.
+\end{thebibliography}
+\end{document}

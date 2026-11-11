@@ -1,0 +1,32 @@
+Independent full audit by random_hosts: PASS.
+Source: path-fixed-cut-induction.tex.
+Date: 2026-11-10.
+
+The minimum cyclic cut has connected shores and distinct boundary ports.
+Deleting one cut edge leaves a connected graph of rank r-1.
+Suppressing its endpoints preserves each shore rank and creates no loop.
+The remaining cut has order k-1.
+
+Every cyclic j-cut after suppression lifts to a cyclic cut of size at most j+1.
+Restore each suppressed vertex on the side of its two neighbors when they agree.
+If the neighbors differ, either placement preserves one crossing edge.
+Every cycle within a shore lifts unchanged.
+Restoring the deleted edge adds at most one crossing edge.
+Therefore the new minimum cyclic order is exactly k-1.
+
+The identity c(G)=c(G')+P_uv(G-e) is exact.
+The high-density two-pole theorem bounds the path term uniformly by
+  (1/2+o(1))*2^(r-1)
+when the cubic completion has no cyclic cut of size at most four.
+
+The genuine five-cut base has crossing term at most15/2 after normalization
+by2^(h+l), and internal contribution at most1/4+o(1).
+Thus its normalized cycle count is at most31/64+o(1).
+The induction halves the relative deficit at each step.
+For every fixed minimum cyclic order k>=5, the resulting bound is
+  c(G) <= (1/2-2^(-k-1)+o_k(1))*2^r.
+
+Combining this with the sharp bound for cyclic cuts of size at most four
+proves O_K(r*2^(r/2)) error for every fixed cyclic-cut order K.
+The argument uses neither the six-cut nor the seven-cut state classifications.
+The unrestricted sharp-order bound remains open.

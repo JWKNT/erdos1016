@@ -1,0 +1,66 @@
+{
+  "status": "all exact return-path layer checks passed",
+  "simple_cubic_vertex_deletions": [
+    {
+      "order": 4,
+      "cubic_graphs": 1,
+      "three_poles": 4,
+      "exact_path_reconstructions": 24,
+      "two_choice_cuts": 0,
+      "terminal_source_choices": 12
+    },
+    {
+      "order": 6,
+      "cubic_graphs": 2,
+      "three_poles": 12,
+      "exact_path_reconstructions": 138,
+      "two_choice_cuts": 0,
+      "terminal_source_choices": 36
+    },
+    {
+      "order": 8,
+      "cubic_graphs": 5,
+      "three_poles": 36,
+      "exact_path_reconstructions": 731,
+      "two_choice_cuts": 6,
+      "terminal_source_choices": 108,
+      "skipped_with_bridges": 4
+    },
+    {
+      "order": 10,
+      "cubic_graphs": 19,
+      "three_poles": 162,
+      "exact_path_reconstructions": 5894,
+      "two_choice_cuts": 42,
+      "terminal_source_choices": 486,
+      "skipped_with_bridges": 26,
+      "skipped_disconnected": 2
+    },
+    {
+      "order": 12,
+      "cubic_graphs": 85,
+      "three_poles": 857,
+      "exact_path_reconstructions": 55219,
+      "two_choice_cuts": 226,
+      "terminal_source_choices": 2571,
+      "skipped_with_bridges": 155,
+      "skipped_disconnected": 8
+    },
+    {
+      "order": 14,
+      "cubic_graphs": 509,
+      "three_poles": 6037,
+      "exact_path_reconstructions": 703530,
+      "two_choice_cuts": 2450,
+      "terminal_source_choices": 18111,
+      "skipped_with_bridges": 1029,
+      "skipped_disconnected": 60
+    }
+  ],
+  "subdivided_ladders_and_multigraphs": {
+    "three_poles": 530,
+    "exact_path_reconstructions": 93889,
+    "two_choice_cuts": 6984,
+    "terminal_source_choices": 1590
+  }
+}

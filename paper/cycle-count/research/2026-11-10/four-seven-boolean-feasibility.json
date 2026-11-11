@@ -1,0 +1,9 @@
+{
+  "status": 1,
+  "message": "Time limit reached. (HiGHS Status 13: model_status is Time limit reached; primal_status is None)",
+  "seconds": 300.0300648212433,
+  "variables": 777,
+  "binary_variables": 357,
+  "constraints": 3848,
+  "scope": "Abstract limiting-state relaxation; not a graph realization"
+}

@@ -1,0 +1,199 @@
+\section{Cycle packing with no positive-excess parameter}
+\label{sec:four-unrestricted-iterative-packing}
+
+Throughout this section, $\xi_G$ is a uniform member of the binary cycle space of $G$.
+The rank of a graph is its cycle-space dimension.
+All logarithms have base two.
+We use only the following qualitative input from
+Lemma~\ref{lem:path-qualitative-fixed-ratio-core}:
+there is an absolute $D_*\ge3$ such that, with $H=256$, every connected normalized pole of rank at least $H$, girth at least $D\ge D_*$, and at most $4D$ degree-two ports has forest probability at most $3/5$ in every feasible affine parity class.
+All its other vertices have degree three.
+
+\begin{lemma}[Terminal bipartitions along a forest]
+\label{lem:four-terminal-bipartition}
+Let $Q$ be a connected loopless multigraph and let $A$ be a nonempty proper vertex set.
+For each vertex $v$, let $L_v$ be the span of its incident coordinate forms on $\mathcal Z(Q)$.
+Put $U=\sum_{a\in A}L_a$ and $B=|\delta_QA|$.
+Among vertices $v\notin A$ with $L_v\cap U\ne0$, at most $2B$ are exceptional.
+The others form at most $2B$ ordered classes.
+Within each class, the vertices are articulation vertices of one component of $Q-A$ and give the same bipartition of its boundary terminals.
+Each edge to $A$ supplies a distinct terminal.
+\end{lemma}
+
+\begin{proof}
+Exclude the at most $B$ vertices adjacent to $A$.
+In each component of $Q-A$, choose a spanning tree, attach a leaf for each boundary terminal, and retain the union of paths between those leaves.
+This forest has at most $B$ leaves and at most $B$ branching vertices.
+Exclude its branching vertices and suppress its degree-two vertices.
+The resulting forest has at most $2B$ edges.
+
+We verify that those edges contain all other relevant vertices.
+Fix such a vertex $v$ and choose $0\ne a\in L_v\cap U$.
+Represent $a$ both by a subset of the star at $v$ and by edges incident with $A$.
+Their symmetric difference annihilates the cycle space, so it is a cut.
+This elementary cut-space fact follows, for example, by assigning each vertex the parity of a root-to-vertex tree path; orthogonality to every fundamental cycle gives the same endpoint rule on each nontree edge.
+
+Let $K$ be the component of $Q-A$ containing $v$.
+Every component of $K-v$ lies entirely on one side of that cut.
+Thus the star subset joins $v$ to a union of components of $K-v$.
+As a functional, it equals the sum of the terminal coordinates in that union.
+The sum of all terminal coordinates of $K$ is zero.
+Since $a\ne0$, at least two components of $K-v$ contain terminals.
+Every spanning tree must connect those terminal groups through $v$.
+After removing the branching exceptions, exactly two terminal-bearing components remain.
+Their terminal sets are the two sides of one edge of the suppressed forest.
+Vertices on the same edge therefore give the same actual terminal bipartition.
+Ordering them along that edge proves the assertion.
+\end{proof}
+
+\begin{lemma}[Two clean regions]
+\label{lem:four-two-clean-regions}
+Let $G$ be connected and cubic, let $P$ be connected or empty, and let $S$ be disjoint from $P$.
+Suppose $G-(P\cup S)$ has girth at least $D\ge D_*$.
+If $R_1,R_2$ are disjoint connected vertex sets avoiding $P\cup S$, each of rank at least $H$ and boundary at most $4D$, then
+\[
+ \Pr(\xi_G-(P\cup S)\text{ is a forest})\le\frac9{25}.
+\]
+\end{lemma}
+
+\begin{proof}
+Prune leaves from each induced graph $G[R_i]$.
+Its connected two-core has the same rank and no larger boundary.
+Indeed, removing a leaf in a cubic ambient graph replaces two external incidences by one, decreasing the boundary by one.
+Each core has internal degrees two and three, with one boundary edge at each degree-two vertex.
+It retains girth at least $D$.
+
+Condition on every edge outside the two core interiors, including any edges between the cores.
+For every conditioning of positive probability, the internal fiber is the Cartesian product of two affine translates of the internal cycle spaces.
+Thus the two internal states are independent and uniform in their parity classes.
+Odd prescribed parity can occur only at degree-two ports, and its port set has even size.
+Each conditional forest probability is at most $3/5$ by the qualitative core lemma.
+If a core has zero or one port, its only feasible parity class is the even space, whose only forest is empty and has probability $2^{-h}\le3/5$.
+The global forest event requires both restrictions to be forests, so its probability is at most $(3/5)^2$.
+\end{proof}
+
+\begin{proposition}[Packing after a previous deletion]
+\label{prop:four-packing-after-deletion}
+Under the preceding notation, suppose
+\[
+ \Pr(\xi_G-(P\cup S)\text{ is a forest})>\frac12,
+ \qquad s=|S|.
+\]
+Let $2\le d\le2D$.
+Every family of $q$ disjoint connected cyclic regions in $G-(P\cup S)$, each with boundary in $G$ at most $d$, satisfies
+\[
+ q<(6H+15)d(s+1)2^d.
+\]
+\end{proposition}
+
+\begin{proof}
+If $q=0$ there is nothing to prove.
+Contract each region to a marked vertex, and contract each connected component outside all regions to one unmarked vertex.
+Discard loops, and call the resulting connected quotient $Q$.
+Its marked vertices have degree at most $d$.
+
+Restriction to the quotient edges maps $\mathcal Z(G)$ onto $\mathcal Z(Q)$.
+To see surjectivity, extend the even quotient boundary pattern inside each connected contracted part by any parity join.
+The fiber is a product of affine internal cycle spaces, so the quotient state is uniform and its internal choices are conditionally independent.
+At a marked vertex $v$, let $I_v$ indicate that every incident quotient edge is absent.
+In that event the internal state is uniform even; since the region is cyclic, being a forest requires the empty state and has probability at most $1/2$.
+When $I_v=0$, use the upper bound one.
+It follows that
+\[
+ \Pr(\xi_G-(P\cup S)\text{ is a forest})
+ \le\mathbb E\prod_v(1-I_v/2).
+\]
+
+Write $L_v$ for the incident coordinate span on $\mathcal Z(Q)$.
+It has dimension at most $d-1$, because even star parity gives one relation.
+No $L_v$ is zero: a zero space would make $I_v=1$ identically and the displayed bound at most one half.
+Take a maximal family of these spaces forming a direct sum, with vertex set $A$ and size $t$.
+For this family the zero-star events are independent, each with probability
+$2^{-\dim L_v}\ge2^{1-d}$.
+Discarding the other factors gives
+\[
+ \Pr(\xi_G-(P\cup S)\text{ is a forest})
+ \le(1-2^{-d})^t.
+\]
+If $t\ge2^d$, this is at most $e^{-1}<1/2$.
+Consequently $1\le t<2^d$.
+If all marked vertices are selected, the required conclusion follows already.
+
+Otherwise put $U=\sum_{a\in A}L_a$ and $B=|\delta_QA|\le dt$.
+Maximality gives $L_v\cap U\ne0$ at every remaining marked vertex.
+Lemma~\ref{lem:four-terminal-bipartition} places all but at most $2B$ of them in at most $2B$ ordered classes.
+
+Consider one class $v_1,\ldots,v_m$.
+Every consecutive block of $H+2$ class vertices gives a middle component of $Q-A$ after deleting its first and last vertices.
+It contains the $H$ interior marked vertices.
+It has no neighbor in $A$: any attached terminal in that middle component would change the actual terminal bipartition between the first and last vertices.
+Every edge leaving it therefore ends at those two vertices, giving boundary at most $2d$.
+The articulation separations make the middle components from disjoint consecutive blocks pairwise disjoint.
+Their lifts to $G$ are connected and contain $H$ disjoint cyclic regions, hence have rank at least $H$.
+
+If $P$ is nonempty, its connectedness and avoidance of all marked regions put it in one contracted outside component.
+At most one middle lift can meet it.
+At most $s$ further lifts meet $S$.
+Thus $m\ge(H+2)(s+3)$ would give at least two clean lifts, each with boundary at most $2d\le4D$.
+Lemma~\ref{lem:four-two-clean-regions} would make the forest probability at most $9/25$, a contradiction.
+Every class therefore has fewer than $(H+2)(s+3)$ members.
+
+Counting selected vertices, exceptions, and classes now gives
+\begin{align*}
+ q&\le t+2B+2B(H+2)(s+3)\\
+  &\le t+(6H+14)(s+1)B\\
+  &\le(6H+15)d(s+1)t
+   <(6H+15)d(s+1)2^d.
+\end{align*}
+\end{proof}
+
+\begin{theorem}[An excess-free girth-raising bound]
+\label{thm:four-excess-free-girth-raising}
+There is an absolute constant $K$ with the following property.
+Let $G$ be connected and cubic and let $P$ be connected or empty.
+Assume
+\[
+ \Pr(\xi_G-P\text{ is a forest})>\frac12,
+ \qquad \operatorname{girth}(G-P)\ge D_*.
+\]
+For each integer $D\ge D_*$, there is $S\subseteq V(G)\setminus P$ such that
+\[
+ \operatorname{girth}(G-(P\cup S))>D,
+ \qquad |S|+1\le2^{\,2D+K\log^2(D+2)}.
+\]
+The set $S$ is the vertex union of a disjoint cycle family, maximal among cycles of length at most $D$ outside $P$.
+On the common forward dyadic scales $D_j=2^jD_*$, the sets $S_j$ can be chosen nested with this bound simultaneously at every scale.
+\end{theorem}
+
+\begin{proof}
+Deletion can only increase the probability of the forest event.
+To raise an available girth scale $a\ge D_*$ to $b\le2a$, take a maximal disjoint family of cycles of length at most $b$ outside $P\cup S$ and add its vertices to $S$.
+Every cycle has boundary at most its length in the cubic ambient graph.
+The packing proposition, applied with $d=b$, gives
+\[
+ s_{\mathrm{new}}+1
+ \le(6H+16)b^2 2^b(s+1).
+\]
+This also holds for an empty family.
+The remaining graph has girth greater than $b$.
+
+For an arbitrary target $D$, plan the scales backwards as $\lceil D/2^j\rceil$, stopping at the first value between $D_*$ and $2D_*$.
+Read them forwards, starting with $S=\varnothing$ and available girth $D_*$.
+If $D=D_*$, perform one deletion at that same scale.
+Every step at most doubles the available scale; the sum of the new scales is at most $2D+O(\log(D+2))$.
+There are $O(\log(D+2))$ steps.
+Taking logarithms of the recurrence gives the asserted bound after increasing the absolute constant $K$.
+
+Alternatively, use the common forward sequence $D_*,2D_*,4D_*,\ldots$.
+The scales through $D_j$ sum to $2D_j-D_*$, so the same estimate holds simultaneously, and deletions are nested.
+At every stage new cycles avoid all earlier deleted vertices.
+Thus the combined family is disjoint, and the final girth assertion is exactly its maximality at the target length.
+\end{proof}
+
+\paragraph{Verification.}
+This fragment restates the independently audited packing argument without its earlier forbidden-cut formulation.
+An exact checker verifies the terminal partitions, middle intervals, core pruning, and complete conditional affine products:
+\begin{center}
+\small\nolinkurl{four-high-connectivity-iterative-packing-check.py}.
+\end{center}
+It does not numerically test the absolute high-girth threshold.

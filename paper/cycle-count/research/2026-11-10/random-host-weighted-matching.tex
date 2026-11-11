@@ -1,0 +1,120 @@
+\section{A weighted matching consequence of hypergraph edge colouring}
+\label{sec:rhost-weighted-matching}
+
+We use the Pippenger--Spencer edge-colouring theorem:
+for fixed uniformity, an almost regular hypergraph with relative codegree $o(1)$ has chromatic index $(1+o(1))$ times its degree.
+The primary paper is
+N.~Pippenger and J.~Spencer, \emph{Asymptotic behavior of the chromatic index for hypergraphs},
+Journal of Combinatorial Theory, Series~A \textbf{51} (1989), 24--42,
+\url{https://doi.org/10.1016/0097-3165(89)90074-5}.
+A precise statement also appears as Lemma~2.1 of Alon and Yuster,
+\url{https://web.math.princeton.edu/~nalon/PDFS/ayhyper2.pdf}.
+
+\begin{lemma}[Maximum degree and a weighted objective]\label{lem:rhost-max-degree-colouring}
+Fix $r\ge3$.
+Let $H$ be a simple $r$-uniform hypergraph with maximum degree at most $D\to\infty$ and maximum codegree $o(D)$.
+Give each edge a nonnegative value $v_e$.
+Then $H$ has a matching $M$ such that
+\[
+ \sum_{e\in M}v_e\ge\frac{1-o(1)}D\sum_{e\in E(H)}v_e.
+\]
+No lower bound on vertex degrees is required.
+\end{lemma}
+
+\begin{proof}
+We reduce to the regular form of the edge-colouring theorem.
+Take $L$ disjoint copies of $H$, where $L$ is a sufficiently large multiple of $r$.
+For each original vertex $u$, group its $L$ copies together.
+Independently choose $D-\deg_H(u)$ uniformly random partitions of that group into $r$-sets.
+Add all sets in those partitions as edges.
+Every vertex now has degree $D$, counted with multiplicity.
+
+For a fixed pair within one group, its probability of sharing a part in one partition is $(r-1)/(L-1)$.
+The probability that it shares a part in at least three partitions is $O(D^3/L^3)$.
+A union bound over all groups and pairs gives $O(|V(H)|D^3/L)$.
+The expected number of repeated added edges is $O(|V(H)|D^2L^{2-r})$.
+Choose $L$ so large that both bounds tend to zero.
+There is therefore a choice with no repeated added edges and with every new pair codegree at most two.
+
+An original edge lies within one copy and uses distinct vertex positions.
+An added edge lies within one vertex-position group and uses distinct copies.
+No pair is contained in both an original and an added edge.
+The resulting simple hypergraph is $D$-regular and has codegree at most $\max\{\Delta_2(H),2\}=o(D)$.
+By Pippenger--Spencer, its edges split into $(1+o(1))D$ matchings.
+Give added edges value zero and copied original edges their original values.
+Some colour class has total value at least
+\[
+ \frac{L}{(1+o(1))D}\sum_{e\in E(H)}v_e.
+\]
+Within that colour class, some copy of $H$ carries at least the average of this value over the $L$ copies.
+Its original edges form the required matching.
+\end{proof}
+
+\begin{lemma}[Weighted length packing]\label{lem:rhost-weighted-matching}
+Fix integers $r\ge3$ and $C\ge1$, and constants $a,V,c>0$.
+For $h\to\infty$, let $\mathcal A_h$ be a family of distinct $r$-element sets on at most $h^C$ vertices.
+Give each set a nonnegative weight $p_A$ and a value $v_A\in[0,V]$.
+Suppose
+\[
+ \sum_Ap_A=O(1),\qquad \sum_Ap_Av_A\ge c,
+\]
+\[
+ \max_z\sum_{A\ni z}p_A\le\frac{a+o(1)}h,
+ \qquad
+ \max_{z\ne z'}\sum_{A\supset\{z,z'\}}p_A=O(h^{-3/2}).
+\]
+Then some pairwise disjoint subfamily $\mathcal M_h$ satisfies
+\[
+ \sum_{A\in\mathcal M_h}v_A
+ \ge\left(\frac h a-o(h)\right)\sum_Ap_Av_A.
+\]
+\end{lemma}
+
+\begin{proof}
+Put $\lambda=h(\ln h)^2$.
+Each $p_A$ is bounded by a pair weight, so $\lambda p_A<1$ for large $h$.
+Include every distinct set independently with probability $\lambda p_A$.
+This gives a simple $r$-uniform hypergraph $H$.
+
+Every vertex degree has mean at most $(a+o(1))(\ln h)^2$.
+Chernoff bounds, followed by a union bound over polynomially many vertices, give
+\[
+ \Delta(H)\le(a+o(1))(\ln h)^2
+\]
+with probability tending to one.
+For example, an additional relative allowance $(\ln h)^{-1/4}$ suffices.
+Every codegree has mean $O(h^{-1/2}(\ln h)^2)$.
+A Chernoff upper-tail bound at $K\ln h$, followed by a union bound over polynomially many pairs, gives
+$\Delta_2(H)=O(\ln h)$.
+
+Let $W=\sum_{A\in E(H)}v_A$ and $S=\sum_Ap_Av_A$.
+Then $\mathbb EW=\lambda S$ and
+\[
+ \operatorname{Var}(W)\le V^2\lambda\sum_Ap_A=O(\lambda).
+\]
+Since $S\ge c$, Chebyshev's inequality gives $W=(1-o(1))\lambda S$ with probability tending to one.
+Fix a realization satisfying all these conclusions.
+If needed, increase the degree parameter to an integer
+$D=(a+o(1))(\ln h)^2\ge\Delta(H)$ in the regularisation proof of Lemma~\ref{lem:rhost-max-degree-colouring}.
+That proof remains valid with this upper degree bound.
+Its matching has value at least
+\[
+ \frac{(1-o(1))\lambda S}{(a+o(1))(\ln h)^2}
+ =\left(\frac h a-o(h)\right)S.
+\]
+\end{proof}
+
+\paragraph{Variable set sizes and private vertices.}
+The lemma also applies when every real set has size between two and a fixed integer $r$.
+Aggregate equal real sets before padding, retaining their weight and a fixed objective value for that set.
+If a real set $A$ has fewer than $r$ vertices, add $r-|A|$ new private vertices used only by that set.
+Every individual weight $p_A$ is at most a weighted codegree of two real vertices of $A$.
+Thus each private vertex has weighted degree $O(h^{-3/2})$.
+Every new pair codegree has the same bound, including pairs of private vertices from one padded set.
+If the real ground set has $O(h)$ vertices, there are polynomially many possible real sets and private vertices.
+The hypotheses therefore remain valid for the padded $r$-uniform family.
+A matching of padded sets restricts to disjoint real sets and preserves its objective value.
+
+In particular, wheel outcomes may retain $k\in\{4,\ldots,12\}$ required non-rim lengths and one marked rim length.
+Their real sets have sizes $k+1\in\{5,\ldots,13\}$.
+After padding to uniformity thirteen, their values $k-3\in\{1,\ldots,9\}$ count the saved block rank.

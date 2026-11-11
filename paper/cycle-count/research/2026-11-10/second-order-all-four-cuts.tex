@@ -1,0 +1,246 @@
+\section{The four-pole aggregate and every cyclic four-edge cut}
+\label{sec:all-four-cuts}
+
+For a rank-$h$ four-pole, use normalized path counts $a_{ij}$ and normalized
+forest-pairing counts $u_\alpha$ as in Section~\ref{sec:four-cut-large-shores}.
+Put
+\[
+ S=\sum_{i<j}a_{ij},\qquad F=\sum_\alpha u_\alpha.
+\]
+Each path count and $F$ lies in $[0,1]$.
+
+\begin{lemma}[The added-edge constraint]\label{lem:four-pole-added-edge}
+For each $0<\delta,\epsilon<1$, there is an absolute rank threshold
+$H_{\delta,\epsilon}$ such that the following holds.
+Assume the four-pole rank satisfies $h\ge H_{\delta,\epsilon}$.
+Let $\alpha=ij|kl$ be one of the three opposite pairings.
+If $a_{kl}\ge\delta$, then
+\[
+ a_{ij}+F-u_\alpha\le1+\epsilon.
+\]
+If both $a_{ij},a_{kl}\ge\delta$, then
+\[
+ \max(a_{ij},a_{kl})+F-u_\alpha\le1+\epsilon.
+\]
+\end{lemma}
+
+\begin{proof}
+Add an edge $kl$ to the four-pole.
+This gives a normalized two-pole $N$ with terminals $i,j$ and rank $h+1$.
+Its terminal-path and cycle counts satisfy
+\[
+ P_{ij}(N)=2^h(a_{ij}+F-u_\alpha),\qquad c(N)\ge a_{kl}2^h.
+\]
+Paths using the new edge correspond exactly to the two cross forest pairings.
+Cycles using it correspond to the original $k$--$l$ paths.
+If the asserted inequality failed, the normalized path density of $N$
+would exceed $1/2+\epsilon/2$.
+Theorem~\ref{thm:high-path-cycle-tradeoff} would imply
+\[
+ \delta2^h\le c(N)\le K_{\epsilon/2}2^{(h+1)/2},
+\]
+which is impossible for sufficiently large $h$.
+Reverse the roles of the opposite pairs to obtain the second assertion.
+\end{proof}
+
+\begin{theorem}[The four-pole aggregate]\label{thm:four-pole-aggregate}
+There is an absolute constant $A_4$ such that every connected loopless
+cubic four-pole of rank $h$ satisfies
+\[
+ \sum_{i<j}P_{ij}+\sum_\alpha f_\alpha
+ \le4\,2^h+A_4(h+3)^4 2^{h/2}.
+\]
+\end{theorem}
+
+\begin{proof}
+Suppress each unused fourth port and apply
+Theorem~\ref{thm:universal-tripole-sum} to the other three.
+Summing the four resulting inequalities counts each pair twice.
+Consequently, for an absolute constant $C$,
+\begin{equation}\label{eq:four-pole-total-paths}
+ S\le4+C2^{-h/2}.
+\end{equation}
+If suppression creates a loop, every path between the remaining terminals
+avoids its cycle and has density at most one half.
+The relevant three-terminal sum bound therefore remains valid in that case.
+
+If some cross sum is at least $2.01$, the cross-sum forest bound gives
+$F\le C'(h+3)^4 2^{-h/2}$, proving the result.
+Assume that every cross sum is below $2.01$.
+The three cross sums add to $2S$, so $S<3.015$.
+There is nothing to prove if $S+F\le4$.
+Otherwise $S>3$ and $F>0.985$.
+
+For each opposite pairing $\alpha$, let $x_\alpha$ be the sum of its two
+path densities. Its complementary cross sum is $S-x_\alpha$.
+Thus
+\begin{equation}\label{eq:four-pole-opposite-positive}
+ x_\alpha>0.99\qquad\hbox{for every }\alpha.
+\end{equation}
+Suppose first that no path pair is full.
+The terminal-path gap bounds each density by $15/16$.
+Equation~\eqref{eq:four-pole-opposite-positive} then makes every density
+greater than $0.99-15/16=0.0525$.
+Apply Lemma~\ref{lem:four-pole-added-edge} with $\delta=\epsilon=0.01$.
+Writing $M_\alpha$ for the larger density in opposite pair $\alpha$, summation gives
+\[
+ \sum_\alpha M_\alpha+2F\le3.03.
+\]
+Since $S\le2\sum_\alpha M_\alpha$, we get $S+4F\le6.06$.
+This contradicts $S>3$ and $F>0.985$.
+
+Now suppose that $a_{12}=1$.
+Lemma~\ref{lem:one-full-tripole-small-adjacent}, applied after suppressing
+the unused fourth port, gives one density at most $3\,2^{-h/4}$ in each set
+\[
+ \{a_{13},a_{23}\},\qquad \{a_{14},a_{24}\}.
+\]
+For sufficiently large $h$, these two densities are at most $0.01$.
+Their opposite densities exceed $0.98$ by
+\eqref{eq:four-pole-opposite-positive}, and hence are full by the $15/16$ gap.
+The two small densities cannot themselves be opposite, since their sum
+would violate~\eqref{eq:four-pole-opposite-positive}.
+Therefore the three full pairs form a star.
+Theorem~\ref{thm:three-pole-two-high} bounds each of its three leaf-pair
+densities by $C''2^{-h/2}$.
+It follows that $S+F\le4+3C''2^{-h/2}$.
+
+All thresholds used above are absolute.
+For the finitely many smaller ranks, the trivial bound $S+F\le7$ is
+absorbed by increasing $A_4$.
+\end{proof}
+
+\begin{lemma}[Low path states]\label{lem:four-pole-low-state}
+For sufficiently large $h$, suppose all six normalized path densities
+of a four-pole are at most $\tau=0.51$.
+Then
+\[
+ S+F\le3.82.
+\]
+For any selected pairing $\gamma$, one also has
+\[
+ S+\frac12F+\frac12u_\gamma\le3.7.
+\]
+\end{lemma}
+
+\begin{proof}
+If $S\le2.75$, the first bound follows from $F\le1$.
+Otherwise every path density exceeds $2.75-5\tau=0.20$.
+Apply the added-edge constraint with $\delta=\epsilon=0.01$ to all three pairings.
+It gives $S/2+2F\le3.03$.
+Since $S\le6\tau=3.06$,
+\[
+ S+F\le1.515+\frac34S\le3.81<3.82.
+\]
+
+For the second bound, the case $S\le2.7$ follows from $u_\gamma\le F\le1$.
+Otherwise every density exceeds $2.7-5\tau=0.15$.
+Let $\alpha,\beta$ be the other pairings.
+The two corresponding added-edge constraints give
+\[
+ M_\alpha+M_\beta+F+u_\gamma\le2.02.
+\]
+Consequently,
+\[
+ S+\frac12(F+u_\gamma)
+ \le S-\frac12(M_\alpha+M_\beta)+1.01.
+\]
+The two coordinates in each of $\alpha,\beta$ contribute at most
+$3\tau/2$ after this subtraction.
+The coordinates in $\gamma$ contribute at most $2\tau$.
+The last display is therefore at most $5\tau+1.01=3.56<3.7$.
+\end{proof}
+
+\begin{theorem}[Every cyclic cut of size at most four]
+\label{thm:all-four-cut-half-exponent}
+There is an absolute constant $K_4$ such that every connected loopless
+cubic multigraph with a cyclic edge cut of size at most four satisfies
+\[
+ c(G)\le2^{r-1}+K_4r^8 2^{r/2},\qquad r=\beta(G).
+\]
+A cut is cyclic when both shores contain a cycle.
+\end{theorem}
+
+\begin{proof}
+Cyclic cuts of size at most three are covered by
+Theorem~\ref{thm:all-three-cut-half-exponent}.
+Assume none exists, and consider a cyclic cut of size four.
+The graph has no bridge or two-edge cut, since those are cyclic in a cubic graph.
+Thus each component after deleting the four cut edges has boundary at least three.
+There are exactly two components: three would require total boundary at least nine,
+whereas the four cut edges supply only eight.
+Write these connected cyclic shores as $X,Y$.
+
+Their attachment vertices are distinct.
+Indeed, a vertex with two cut edges has one internal edge and is a leaf in its shore.
+Move this vertex to the other shore.
+The original shore remains connected and cyclic, while the other remains connected
+and gains a cycle. The new boundary has size three, a contradiction.
+A vertex with three cut edges would make its connected shore a singleton,
+contrary to cyclicity.
+Thus $X,Y$ are normalized four-poles.
+Their positive ranks $h,k$ satisfy $r=h+k+3$.
+
+If $h,k\ge H_0$, apply Theorem~\ref{thm:four-cut-large-shores}.
+Otherwise reorder so that $1\le h<H_0$ and $h\le k$.
+If $k$ is bounded by any fixed threshold needed below, all ranks are bounded.
+Increase $K_4$ to cover those cases by the trivial cycle bound.
+Assume henceforth that $k$ exceeds all these absolute thresholds.
+
+Suppose some terminal pair of $Y$ has at least $0.51\,2^k$ paths.
+Suppress the other two ports and apply
+Theorem~\ref{thm:high-path-cycle-tradeoff} to obtain
+$c(Y)\le K_{1/100}2^{k/2}$.
+Any loop created by suppression would force path density at most one half,
+so it cannot occur in this case.
+Every path count of $X$ is at most $2^h$.
+Every forest coefficient $\sum_\alpha f_\alpha-f_\beta$ is also at most $2^h$.
+The exact gluing formula and the aggregate theorem therefore give
+\[
+ c(G)\le c(X)+c(Y)+2^h
+ \left(4\,2^k+A_4(k+3)^4 2^{k/2}\right).
+\]
+The first crossing term is $2^{r-1}$.
+Since $h<H_0$, all remaining terms are
+$O(r^4 2^{r/2})$, with an absolute implied constant.
+
+It remains to suppose that every path density of $Y$ is at most $0.51$.
+The established asymptotic cycle bound gives
+\[
+ c(Y)\le\frac9{16}2^k
+\]
+for sufficiently large $k$.
+This also applies to multigraphs after uniform subdivision.
+If $h\ge2$, the first bound in Lemma~\ref{lem:four-pole-low-state}
+limits crossing cycles to $3.82\,2^{h+k}$.
+Their deficit from $2^{r-1}$ is at least
+\[
+ 0.18\,2^{h+k}\ge0.72\,2^k.
+\]
+It absorbs $c(Y)\le(9/16)2^k$ and $c(X)<2^h$ for large $k$,
+because $h<H_0$ is bounded.
+Thus $c(G)<2^{r-1}$ in this case.
+
+Finally suppose $h=1$.
+The degree sum gives four vertices in $X$, all of degree two.
+Since $X$ is connected and loopless, it is a four-cycle.
+Its six path counts are all two.
+Its normalized forest vector has entries $1/2,1/2,0$.
+Let $\gamma$ be the pairing with zero entry.
+The exact normalized crossing contribution is
+\[
+ S+\frac12F+\frac12u_\gamma,
+\]
+where the state belongs to $Y$.
+Lemma~\ref{lem:four-pole-low-state} bounds this expression by $3.7$.
+The crossing deficit is therefore at least $0.6\,2^k$.
+This absorbs $c(Y)\le(9/16)2^k$ and $c(X)=1$ for sufficiently large $k$.
+The theorem follows after increasing $K_4$ over the bounded cases.
+\end{proof}
+
+\paragraph{Scope.}
+Cyclicity is essential to the cut hypothesis.
+An acyclic two-vertex shore has a four-edge boundary in every cubic graph.
+The theorem does not prove an unrestricted half-exponent bound.
+After the earlier reductions, the remaining cubic kernels are cyclically
+five-edge-connected.

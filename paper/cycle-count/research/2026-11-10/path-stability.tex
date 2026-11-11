@@ -1,0 +1,299 @@
+\section{Path stability and the size of a marked subgraph}
+\label{sec:research-path}
+
+These results use the forest proof in the November 10 manuscript.
+The parameter extension below is a mathematical argument, not a Lean formalization.
+It first improves the general path bound to order $b/\log b$.
+Theorem~\ref{thm:general-linear-path-stability} later obtains the full linear bound from this enlarged forest range.
+Theorem~\ref{thm:general-additive-path-stability} then strengthens it to an additive loss depending only on the density gap.
+For two-terminal series-parallel networks, an elementary argument gives an explicit logarithmic loss.
+
+All logarithms in this section have base two, except for $\ln$ and $\exp$.
+Write $P_{uv}(N)$ for the number of simple paths between distinct vertices $u,v$.
+Write $b=\beta(N)$.
+
+\subsection{From paths to forest outside parts}
+
+\begin{lemma}\label{lem:research-path-injection}
+Let $N$ be a connected simple graph, and let $A$ be any $u$--$v$ path of length $\ell$.
+Add a new vertex $w$ and edges $uw,wv$ to obtain $H$.
+Let $W=A\cup\{uw,wv\}$.
+Then
+\[
+ \beta(H)=b+1,\qquad \beta(W)=1,\qquad |E(W)|=\ell+2,
+ \qquad P_{uv}(N)\le p(H,W)2^b.
+\]
+\end{lemma}
+
+\begin{proof}
+Each terminal path $P$ gives the cycle $P\cup\{uw,wv\}$ of $H$.
+Its outside part is $P\setminus E(A)$, which is a forest.
+Suppose that $P\setminus E(A)=Q\setminus E(A)$.
+Then $P\mathbin\triangle Q$ is an even edge set supported on the forest $A$.
+It must be empty, so $P=Q$.
+There are $2^{\beta(H)-\beta(W)}=2^b$ outside parts.
+Their forest proportion is $p(H,W)$.
+\end{proof}
+
+The formalized forest theorem gives $\ell>\sqrt{b+1}-2$ for fixed positive path-density gap and sufficiently large $b$.
+The manuscript's size extension gives $\ell>(b+1)/\log^2(b+1)-2$.
+The next argument removes one logarithmic factor for a fixed gap.
+
+\subsection{A fixed-gap forest estimate at size \texorpdfstring{$r/\log r$}{r/log r}}
+
+\begin{theorem}\label{thm:research-marked-size}
+Fix $0<\delta<1/2$, and set
+\[
+ A_\delta=6\exp(16/\delta),\qquad
+ a_\delta=\frac{1}{12A_\delta}.
+\]
+For sufficiently large $r$, the following statement holds.
+Let $G$ be a connected simple graph of rank $r$.
+Let $W$ be a nonempty union of cycles satisfying
+\[
+ |E(W)|\le a_\delta\frac{r}{\log r},\qquad
+ \operatorname{comp}(W)\le\frac{\log r}{100}.
+\]
+Then $p(G,W)\le1/2+\delta$.
+\end{theorem}
+
+\begin{proof}
+We use the manuscript's reduction, cut lemmas, spectral estimate, and second-moment argument.
+The details below check each estimate affected by the new parameters.
+Constants in $O_\delta(\cdot)$ may depend on $\delta$.
+
+Put $x=\log r$, $y=\log x$, $D=\lfloor x/10\rfloor$, and $s=\lfloor(D-1)/2\rfloor$.
+Set $L=\lfloor A_\delta x\rfloor$.
+The reduction gives a subcubic multigraph $\Gamma$ and a marked vertex set $P$.
+Every vertex outside $P$ has degree three, $|P|\le2|E(W)|$, and $\Gamma[P]$ has at most $x/100$ components.
+Also $\beta(\Gamma)=r$ and $2r-2\le |V(\Gamma)|\le2r+2|E(W)|$.
+Let $\mathcal F$ mean that the random even subgraph is a forest on $\Gamma-P$.
+It suffices to rule out $\mathbb P(\mathcal F)>1/2+\delta$.
+
+Assume this strict inequality.
+Choose a maximal vertex-disjoint family $\mathcal Q$ of cycles of length at most $D$ in $\Gamma-P$.
+The small-cut lemma gives
+\[
+ |\mathcal Q|<\frac{(D+1)2^{D-1}}{\delta}
+       =O_\delta(xr^{1/10}).
+\]
+For their vertex union $S$, this implies
+\[
+ |S|=O_\delta(x^2r^{1/10})=o(r/x).
+\]
+Let $J=\Gamma-(P\cup S)$, and put $v=|V(J)|$.
+This graph is simple and has girth greater than $D$.
+The vertex and deficit estimates become
+\[
+ v=2r+O_\delta(r/x),\qquad
+ d_J:=\sum_{z\in V(J)}(3-\deg_Jz)
+ \le 3(|P|+|S|)
+ \le\frac{6a_\delta r}{x}+o(r/x).
+\]
+Consequently,
+\[
+ \frac{Ld_J}{2v}\le\frac32 A_\delta a_\delta+o(1)
+                 =\frac18+o(1).
+\]
+
+Let $B$ be the non-backtracking matrix of $J$.
+For even $j$ with $6x\le j\le L$, the spectral estimate gives
+\[
+ 2^{-j}\operatorname{tr}B^j
+ \ge\left(1-\frac{d_J}{2v}\right)^j-3v2^{-j/2}
+ \ge1-\frac{Ld_J}{2v}-3vr^{-3}\ge\frac12
+\]
+for sufficiently large $r$.
+For the cycles $C$ of $J$ of length at most $L$, put
+$\mu=\sum_C2^{-|C|}$.
+The repeated-vertex walk estimate from the manuscript has error at most
+\[
+ \frac32 L^2 2^{-s}\mu=o(\mu).
+\]
+Therefore
+\[
+ (1+o(1))\mu
+ \ge\frac12\sum_{\substack{6x\le j\le L\\j\ \mathrm{even}}}\frac1{2j}
+ =\frac18\ln(A_\delta/6)+o(1).
+\]
+In particular, $\mu\ge\frac1{16}\ln(A_\delta/6)=1/\delta$ for sufficiently large $r$.
+
+It remains to check the pair correlations.
+Use $t_0=\lfloor y/2\rfloor$ in the manuscript's link argument.
+For disjoint cycles $C,C'$ of length at most $L$, it gives
+\[
+ \ell(C,C')\le \operatorname{comp}(\Gamma[P])
+ +\frac{2L}{t_0}
+ +\frac{(t_0+1)2^{t_0-1}}{\delta}
+ +\left(\frac{8L}{D}\right)^2
+ \le\frac{x}{100}+o(x).
+\]
+Here the three added terms are respectively $O_\delta(x/y)$, $O_\delta(y\sqrt{x})$, and $O_\delta(1)$.
+The exceptional-partner estimate thus remains
+\[
+ 2^{x/100+o(x)}L^3 2^{-s}
+ \le2^{x/100-x/20+o(x)}=o(1).
+\]
+The same weighted variable $Z$ therefore satisfies
+\[
+ \mathbb EZ=\mu,\qquad
+ \mathbb EZ^2\le2\mu^2+(1+o(1))\mu.
+\]
+Since $\mathcal F$ implies $Z=0$, the second-moment lemma yields
+\[
+ \mathbb P(\mathcal F)\le\frac12+\frac{1+o(1)}{4\mu}
+ \le\frac12+\frac\delta2
+\]
+for sufficiently large $r$.
+This contradicts the assumption.
+\end{proof}
+
+\begin{corollary}\label{cor:research-general-path}
+Fix $0<\varepsilon\le1/2$.
+For sufficiently large $b$, if
+\[
+ P_{uv}(N)\ge(1/2+\varepsilon)2^b,
+\]
+then every terminal path has length
+\[
+ \ell>a_{\varepsilon/2}\frac{b+1}{\log(b+1)}-2.
+\]
+In particular, $\ell=\Omega_\varepsilon(b/\log b)$.
+\end{corollary}
+
+\begin{proof}
+Apply Lemma~\ref{lem:research-path-injection}.
+If the displayed length inequality failed, Theorem~\ref{thm:research-marked-size} would give
+$P_{uv}(N)\le(1/2+\varepsilon/2)2^b$, a contradiction.
+The one-component condition holds for sufficiently large $b$.
+\end{proof}
+
+The threshold is not explicit because the supporting asymptotic estimates are not explicit.
+The additive $-2$ comes from the added two-edge path.
+Neither issue affects the asymptotic order.
+
+\begin{corollary}\label{cor:research-small-marked}
+Suppose $r\to\infty$ along connected simple graphs $G$ and nonempty unions of cycles $W$.
+If $|E(W)|=o(r/\log r)$ and $\operatorname{comp}(W)\le(\log r)/100$, then
+$p(G,W)\le1/2+o(1)$.
+\end{corollary}
+
+\begin{proof}
+For each fixed $0<\delta<1/2$, the size hypothesis eventually meets Theorem~\ref{thm:research-marked-size}.
+Thus $\limsup p(G,W)\le1/2$.
+\end{proof}
+
+\subsection{An additive theorem for two-terminal series-parallel networks}
+
+A two-terminal series-parallel network starts with one edge and its two endpoints.
+Series composition identifies one terminal from each network.
+Parallel composition identifies the corresponding terminal pairs.
+Apart from those identifications, the two networks are disjoint.
+Parallel edges are permitted and are counted separately.
+This definition imposes a condition on the terminals, not only on the underlying graph.
+
+\begin{theorem}\label{thm:research-ttsp}
+Let $(N,u,v)$ be a two-terminal series-parallel network of rank $b$ and terminal distance $\ell$.
+Then
+\[
+ P_{uv}(N)\le 2^{b-1}+2^{\ell-1}.
+\]
+Consequently, for $0<\varepsilon\le1/2$,
+\[
+ P_{uv}(N)\ge(1/2+\varepsilon)2^b
+ \quad\Longrightarrow\quad
+ \ell\ge b-\log\frac1{2\varepsilon}
+ \quad\Longrightarrow\quad
+ \ell\ge\frac{b}{\log(1/\varepsilon)}.
+\]
+\end{theorem}
+
+\begin{proof}
+Every terminal path is a join, so $P_{uv}(N)\le2^b$ for every connected network.
+Define $h(t)=(1+2^{-t})/2$ for $t\ge0$.
+We prove the stronger normalized statement
+\[
+ \frac{P_{uv}(N)}{2^b}\le h((b-\ell)_+),
+ \qquad (z)_+=\max\{z,0\}.
+\]
+It holds for a single edge.
+
+For series composition, write $b_i,\ell_i,P_i$ for the two input networks.
+Then $b=b_1+b_2$, $\ell=\ell_1+\ell_2$, and $P=P_1P_2$.
+For $s,t\ge0$,
+\[
+ h(s+t)-h(s)h(t)=\frac{(1-2^{-s})(1-2^{-t})}{4}\ge0.
+\]
+Also $(b_1-\ell_1)_++(b_2-\ell_2)_+\ge(b-\ell)_+$, and $h$ is decreasing.
+The normalized statement follows by multiplication.
+
+For parallel composition, $b=b_1+b_2+1$, $\ell=\min\{\ell_1,\ell_2\}\ge1$, and $P=P_1+P_2$.
+Since $b_1,b_2\ge0$,
+\[
+ P\le2^{b_1}+2^{b_2}
+ \le2^{b_1+b_2}+1
+ =2^{b-1}+1
+ \le2^{b-1}+2^{\ell-1}.
+\]
+Together with $P\le2^b$, this is the normalized statement.
+Induction proves the theorem's first inequality.
+
+The density hypothesis now gives $\varepsilon2^b\le2^{\ell-1}$.
+Thus $b\le\ell+\log(1/(2\varepsilon))$.
+Since $\ell\ge1$, the right side is at most $\ell\log(1/\varepsilon)$.
+\end{proof}
+
+The coefficient is sharp when $\varepsilon=2^{-b}$.
+Take a series of $b-1$ triangles between $u,v$, and add the edge $uv$.
+For $b\ge3$, the result is simple, has rank $b$, distance one, and $2^{b-1}+1$ terminal paths.
+For $b=2$, a direct edge in parallel with two internally disjoint two-edge paths has the same count.
+For $b=1$, use a triangle with adjacent terminals.
+
+The theorem fails for arbitrary choices of terminals in a series-parallel graph.
+On vertices $0,1,2,3,4$, take
+\[
+ E=\{01,02,03,04,12,14,23\},\qquad u=3,\quad v=4.
+\]
+This graph has rank three and terminal distance two.
+Its seven terminal paths are
+\[
+ 3014,\quad30214,\quad304,\quad32014,\quad3204,\quad32104,\quad3214.
+\]
+Thus $P=7>2^{3-1}+2^{2-1}=6$.
+The graph is a triangle with two vertices successively attached to existing edges, so it has no $K_4$ minor.
+It does not satisfy the two-terminal composition hypothesis for terminals $3,4$.
+
+\subsection{An elementary structural reduction}
+
+\begin{proposition}\label{prop:research-offroute}
+Let $N$ be connected, with distinct terminals $u,v$.
+Let $N_0$ be the union of the blocks on the $u$--$v$ route in the block-cut tree.
+Count bridges as blocks.
+Put $s=\beta(N)-\beta(N_0)$.
+Then
+\[
+ P_{uv}(N)=P_{uv}(N_0)\le2^{\beta(N_0)}=2^{b-s}.
+\]
+In particular, $P_{uv}(N)>2^{b-1}$ implies $s=0$.
+\end{proposition}
+
+\begin{proof}
+A simple terminal path cannot enter a block outside the terminal route.
+It would have to revisit the articulation vertex where it left that route.
+Thus all terminal paths lie in $N_0$.
+Apply the join bound to $N_0$.
+Ranks add across blocks, so $s$ is a nonnegative integer.
+\end{proof}
+
+This removes cyclic blocks outside the terminal route from the unresolved problem.
+It does not control the internal structure of a single block.
+The fixed-gap argument still loses a factor $\log b$ there.
+Its spectral estimate counts walks of length at least order $\log b$.
+A marked set of order $b$ creates a constant degree deficit, whose effect accumulates along those walks.
+The present retuning does not prove general linear stability.
+
+\paragraph{Finite checks.}
+The accompanying script checks 1,728 distinct composition states for networks with at most 12 edges.
+It verifies the inequality with exact integers across 27,264 series or parallel transitions.
+It also enumerates the seven counterexample paths and the sharp simple examples for ranks three through nine.
+These checks do not verify the asymptotic estimates or replace their proofs.

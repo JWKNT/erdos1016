@@ -1,0 +1,2480 @@
+{
+  "fixtures": 247,
+  "affine_states": 8312,
+  "saturated_fixtures": 91,
+  "even_sector_checks": 3206,
+  "maximum_rank": 6,
+  "all_checks_pass": true,
+  "details": [
+    {
+      "rank": 3,
+      "ports": 2,
+      "states": 8,
+      "forests": 8,
+      "outside_forests": 8,
+      "marker_vertices": 4,
+      "full": true,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 3,
+      "ports": 2,
+      "states": 8,
+      "forests": 8,
+      "outside_forests": 8,
+      "marker_vertices": 4,
+      "full": true,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 3,
+      "ports": 2,
+      "states": 8,
+      "forests": 7,
+      "outside_forests": 7,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 3,
+      "ports": 2,
+      "states": 8,
+      "forests": 7,
+      "outside_forests": 7,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 3,
+      "ports": 2,
+      "states": 8,
+      "forests": 7,
+      "outside_forests": 7,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 3,
+      "ports": 2,
+      "states": 8,
+      "forests": 7,
+      "outside_forests": 7,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 3,
+      "ports": 2,
+      "states": 8,
+      "forests": 8,
+      "outside_forests": 8,
+      "marker_vertices": 4,
+      "full": true,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 3,
+      "ports": 2,
+      "states": 8,
+      "forests": 7,
+      "outside_forests": 7,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 3,
+      "ports": 2,
+      "states": 8,
+      "forests": 7,
+      "outside_forests": 7,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 3,
+      "ports": 2,
+      "states": 8,
+      "forests": 7,
+      "outside_forests": 7,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 3,
+      "ports": 2,
+      "states": 8,
+      "forests": 7,
+      "outside_forests": 7,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 3,
+      "ports": 2,
+      "states": 8,
+      "forests": 7,
+      "outside_forests": 7,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 3,
+      "ports": 2,
+      "states": 8,
+      "forests": 7,
+      "outside_forests": 7,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 3,
+      "ports": 2,
+      "states": 8,
+      "forests": 7,
+      "outside_forests": 7,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 3,
+      "ports": 2,
+      "states": 8,
+      "forests": 7,
+      "outside_forests": 7,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 3,
+      "ports": 4,
+      "states": 8,
+      "forests": 8,
+      "outside_forests": 8,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 3,
+      "ports": 4,
+      "states": 8,
+      "forests": 8,
+      "outside_forests": 8,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 3,
+      "ports": 4,
+      "states": 8,
+      "forests": 8,
+      "outside_forests": 8,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 3,
+      "ports": 4,
+      "states": 8,
+      "forests": 8,
+      "outside_forests": 8,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 3,
+      "ports": 4,
+      "states": 8,
+      "forests": 8,
+      "outside_forests": 8,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 3,
+      "ports": 4,
+      "states": 8,
+      "forests": 8,
+      "outside_forests": 8,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 3,
+      "ports": 4,
+      "states": 8,
+      "forests": 8,
+      "outside_forests": 8,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 3,
+      "ports": 4,
+      "states": 8,
+      "forests": 8,
+      "outside_forests": 8,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 3,
+      "ports": 4,
+      "states": 8,
+      "forests": 8,
+      "outside_forests": 8,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 3,
+      "ports": 4,
+      "states": 8,
+      "forests": 8,
+      "outside_forests": 8,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 3,
+      "ports": 4,
+      "states": 8,
+      "forests": 8,
+      "outside_forests": 8,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 3,
+      "ports": 4,
+      "states": 8,
+      "forests": 8,
+      "outside_forests": 8,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 3,
+      "ports": 4,
+      "states": 8,
+      "forests": 8,
+      "outside_forests": 8,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 3,
+      "ports": 4,
+      "states": 8,
+      "forests": 8,
+      "outside_forests": 8,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 3,
+      "ports": 4,
+      "states": 8,
+      "forests": 8,
+      "outside_forests": 8,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 3,
+      "ports": 6,
+      "states": 8,
+      "forests": 8,
+      "outside_forests": 8,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 15,
+      "outside_forests": 15,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 14,
+      "outside_forests": 14,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 12,
+      "outside_forests": 12,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 15,
+      "outside_forests": 15,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 14,
+      "outside_forests": 14,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 12,
+      "outside_forests": 12,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 12,
+      "outside_forests": 12,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 12,
+      "outside_forests": 12,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 12,
+      "outside_forests": 14,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 14,
+      "outside_forests": 15,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 12,
+      "outside_forests": 14,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 15,
+      "outside_forests": 15,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 14,
+      "outside_forests": 15,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 12,
+      "outside_forests": 12,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 14,
+      "outside_forests": 14,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 15,
+      "outside_forests": 15,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 12,
+      "outside_forests": 12,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 14,
+      "outside_forests": 15,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 12,
+      "outside_forests": 12,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 14,
+      "outside_forests": 14,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 14,
+      "outside_forests": 14,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 12,
+      "outside_forests": 12,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 12,
+      "outside_forests": 12,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 2,
+      "states": 16,
+      "forests": 12,
+      "outside_forests": 12,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 14,
+      "outside_forests": 14,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 15,
+      "outside_forests": 15,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 14,
+      "outside_forests": 14,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 7,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 15,
+      "outside_forests": 15,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 14,
+      "outside_forests": 14,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 7,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 14,
+      "outside_forests": 14,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 14,
+      "outside_forests": 14,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 7,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 7,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 7,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 7,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 7,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 4,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 6,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 14,
+      "outside_forests": 14,
+      "marker_vertices": 9,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 4,
+      "ports": 6,
+      "states": 16,
+      "forests": 16,
+      "outside_forests": 16,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 24,
+      "outside_forests": 27,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 27,
+      "outside_forests": 27,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 22,
+      "outside_forests": 22,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 22,
+      "outside_forests": 22,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 22,
+      "outside_forests": 22,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 28,
+      "outside_forests": 30,
+      "marker_vertices": 5,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 27,
+      "outside_forests": 27,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 24,
+      "outside_forests": 27,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 24,
+      "outside_forests": 27,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 22,
+      "outside_forests": 22,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 27,
+      "outside_forests": 27,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 22,
+      "outside_forests": 22,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 24,
+      "outside_forests": 27,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 28,
+      "outside_forests": 30,
+      "marker_vertices": 5,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 22,
+      "outside_forests": 22,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 27,
+      "outside_forests": 27,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 22,
+      "outside_forests": 22,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 22,
+      "outside_forests": 22,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 28,
+      "outside_forests": 30,
+      "marker_vertices": 5,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 24,
+      "outside_forests": 27,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 22,
+      "outside_forests": 22,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 27,
+      "outside_forests": 27,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 24,
+      "outside_forests": 27,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 2,
+      "states": 32,
+      "forests": 27,
+      "outside_forests": 27,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 27,
+      "outside_forests": 27,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 30,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 30,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 32,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 7,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 7,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 30,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 27,
+      "outside_forests": 27,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 30,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 32,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 30,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 30,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 7,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 30,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 30,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 8,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 32,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 7,
+      "full": true,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 27,
+      "outside_forests": 27,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 30,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 30,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 30,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 32,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 4,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 30,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 30,
+      "marker_vertices": 9,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 30,
+      "marker_vertices": 9,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 10,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 10,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 30,
+      "marker_vertices": 9,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 10,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 10,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 10,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 30,
+      "marker_vertices": 9,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 10,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 30,
+      "marker_vertices": 9,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 30,
+      "outside_forests": 30,
+      "marker_vertices": 9,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 5,
+      "ports": 6,
+      "states": 32,
+      "forests": 32,
+      "outside_forests": 32,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 50,
+      "outside_forests": 53,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 43,
+      "outside_forests": 43,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 43,
+      "outside_forests": 43,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 43,
+      "outside_forests": 43,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 50,
+      "outside_forests": 53,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 50,
+      "outside_forests": 53,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 50,
+      "outside_forests": 53,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 43,
+      "outside_forests": 43,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 50,
+      "outside_forests": 53,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 52,
+      "outside_forests": 59,
+      "marker_vertices": 5,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 52,
+      "outside_forests": 59,
+      "marker_vertices": 5,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 50,
+      "outside_forests": 53,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 50,
+      "outside_forests": 53,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 52,
+      "outside_forests": 59,
+      "marker_vertices": 5,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 50,
+      "outside_forests": 53,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 43,
+      "outside_forests": 43,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 50,
+      "outside_forests": 53,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 50,
+      "outside_forests": 53,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 50,
+      "outside_forests": 53,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 52,
+      "outside_forests": 59,
+      "marker_vertices": 5,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 50,
+      "outside_forests": 53,
+      "marker_vertices": 4,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 43,
+      "outside_forests": 43,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 43,
+      "outside_forests": 43,
+      "marker_vertices": 3,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 2,
+      "states": 64,
+      "forests": 52,
+      "outside_forests": 59,
+      "marker_vertices": 5,
+      "full": false,
+      "all_even_sectors_checked": 2
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 59,
+      "outside_forests": 59,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 59,
+      "outside_forests": 59,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 53,
+      "outside_forests": 53,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 59,
+      "outside_forests": 59,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 59,
+      "outside_forests": 59,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 59,
+      "outside_forests": 59,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 59,
+      "outside_forests": 59,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 59,
+      "outside_forests": 59,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 59,
+      "outside_forests": 62,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 62,
+      "outside_forests": 64,
+      "marker_vertices": 8,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 60,
+      "outside_forests": 62,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 60,
+      "outside_forests": 62,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 59,
+      "outside_forests": 59,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 59,
+      "outside_forests": 59,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 61,
+      "outside_forests": 62,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 60,
+      "outside_forests": 62,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 59,
+      "outside_forests": 59,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 59,
+      "outside_forests": 59,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 60,
+      "outside_forests": 62,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 59,
+      "outside_forests": 62,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 53,
+      "outside_forests": 53,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 59,
+      "outside_forests": 59,
+      "marker_vertices": 6,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 60,
+      "outside_forests": 62,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 4,
+      "states": 64,
+      "forests": 60,
+      "outside_forests": 62,
+      "marker_vertices": 7,
+      "full": false,
+      "all_even_sectors_checked": 8
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 63,
+      "outside_forests": 64,
+      "marker_vertices": 10,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 64,
+      "outside_forests": 64,
+      "marker_vertices": 10,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 64,
+      "outside_forests": 64,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 62,
+      "outside_forests": 64,
+      "marker_vertices": 10,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 62,
+      "outside_forests": 62,
+      "marker_vertices": 10,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 64,
+      "outside_forests": 64,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 62,
+      "outside_forests": 62,
+      "marker_vertices": 9,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 62,
+      "outside_forests": 62,
+      "marker_vertices": 9,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 62,
+      "outside_forests": 64,
+      "marker_vertices": 10,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 64,
+      "outside_forests": 64,
+      "marker_vertices": 9,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 63,
+      "outside_forests": 63,
+      "marker_vertices": 9,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 64,
+      "outside_forests": 64,
+      "marker_vertices": 10,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 62,
+      "outside_forests": 62,
+      "marker_vertices": 9,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 62,
+      "outside_forests": 62,
+      "marker_vertices": 10,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 62,
+      "outside_forests": 62,
+      "marker_vertices": 10,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 64,
+      "outside_forests": 64,
+      "marker_vertices": 10,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 64,
+      "outside_forests": 64,
+      "marker_vertices": 10,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 63,
+      "outside_forests": 63,
+      "marker_vertices": 9,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 62,
+      "outside_forests": 62,
+      "marker_vertices": 10,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 62,
+      "outside_forests": 62,
+      "marker_vertices": 9,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 64,
+      "outside_forests": 64,
+      "marker_vertices": 10,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 63,
+      "outside_forests": 63,
+      "marker_vertices": 10,
+      "full": false,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 64,
+      "outside_forests": 64,
+      "marker_vertices": 10,
+      "full": true,
+      "all_even_sectors_checked": 32
+    },
+    {
+      "rank": 6,
+      "ports": 6,
+      "states": 64,
+      "forests": 62,
+      "outside_forests": 64,
+      "marker_vertices": 10,
+      "full": false,
+      "all_even_sectors_checked": 32
+    }
+  ]
+}

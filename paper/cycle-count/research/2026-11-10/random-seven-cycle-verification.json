@@ -1,0 +1,9 @@
+{
+  "status": "exact verification passed",
+  "scope": "C7 shore only",
+  "bound": "63/2",
+  "certificate_rows": 42,
+  "nonzero_formal_symbols": 105,
+  "expanded_coefficients": 231,
+  "numerical_solver_required": false
+}

@@ -1,0 +1,169 @@
+\section{Reductions for the exact four-regular bound}\label{sec:four-regular}
+
+All graphs in this section are loopless multigraphs.
+Parallel edges are distinct, and two parallel edges form a cycle.
+Write $c(G)$ for the number of cycles.
+The target is
+\begin{equation}\label{eq:four-target}
+ c(G)\le 2^n+n
+ \qquad\text{for every four-regular graph on $n$ vertices.}
+\end{equation}
+This is Open Problem~2 of Alahmadi, Aldred, dela Cruz, Sol\'e, and Thomassen,
+\emph{The maximum number of minimal codewords in long codes},
+\url{https://arxiv.org/html/1201.6043}, Section~6.
+A focused literature search found no subsequent resolution.
+This search does not establish that none exists.
+The results below do not settle \eqref{eq:four-target}.
+
+\subsection{Complementation and the possible counterexamples}
+
+For connected $G$, its cycle space has $2^{n+1}$ elements.
+The pairs $\{X,E(G)\setminus X\}$ number $2^n$.
+Let $a$ count pairs containing two cycles, and let $b$ count pairs containing no cycle.
+Then
+\[
+ c(G)=2^n+a-b.
+\]
+Both members of a pair counted by $a$ must be Hamilton cycles.
+Indeed, their degrees sum to four at every vertex.
+Each cycle contributes at most two there, so both must contribute two.
+Consequently, a graph without a Hamilton decomposition has $c(G)\le2^n$.
+This is the specialization of the cited paper's Theorem~6.
+
+A graph with a Hamilton decomposition is four-edge-connected.
+Each Hamilton cycle crosses every nontrivial cut at least twice.
+For $n\ge3$, such a graph has edge multiplicity at most two.
+Each Hamilton cycle uses at most one edge between a given pair of vertices.
+
+\subsection{Doubled-edge expansion preserves the proposed bound}
+
+Suppose that $G$ has exactly two edges between $u$ and $v$.
+Replace these edges by two $uw$ edges and two $wv$ edges, where $w$ is new.
+Call the resulting graph $G'$.
+This operation preserves four-regularity and adds one vertex.
+Let $a_{uv}(G)$ count cycles using exactly one of the two $uv$ edges.
+
+\begin{proposition}\label{prop:double-expansion}
+For connected four-regular $G$ on $n\ge3$ vertices,
+\[
+ c(G')=c(G)+a_{uv}(G)+1,
+ \qquad a_{uv}(G)\le2^n.
+\]
+Thus \eqref{eq:four-target} for $G$ implies \eqref{eq:four-target} for $G'$.
+Moreover, $a_{uv}(G)=2^n$ holds if and only if $G$ is the doubled $n$-cycle.
+\end{proposition}
+
+\begin{proof}
+Cycles avoiding both $uv$ edges remain unchanged.
+Each cycle using exactly one gains twice as many choices after expansion.
+The original two-edge cycle is replaced by two two-edge cycles.
+This proves the identity.
+
+Let $N$ result from deleting the two $uv$ edges.
+If $N$ is disconnected, its terminals lie in different components, and $a_{uv}(G)=0$.
+Otherwise $\beta(N)=n-1$, and
+\[
+ a_{uv}(G)=2P_{uv}(N)\le2\cdot2^{\beta(N)}=2^n.
+\]
+Here the path bound follows by injecting paths into the affine space of $\{u,v\}$-joins.
+The argument allows parallel edges.
+
+Suppose equality holds.
+Every join of $N$ is then a path.
+For any such path $A$, deleting $E(A)$ leaves a forest.
+Otherwise $A$ together with an edge-disjoint cycle would be a join that is not a path.
+Thus $|E(A)|\ge\beta(N)=n-1$, and every terminal path is Hamiltonian.
+Fix one such path.
+An edge joining nonconsecutive vertices of that path would give a shorter terminal path.
+Therefore all edges of $N$ join consecutive vertices of the fixed path.
+The terminal degrees are two, and every internal degree is four.
+Successive degree equations force every consecutive pair to have multiplicity two.
+Adding the deleted pair makes $G$ a doubled cycle.
+The converse follows by counting the $2^{n-1}$ terminal paths in a doubled path.
+\end{proof}
+
+More generally, replace the doubled edge by a doubled path with $t$ new internal vertices.
+Call this graph $G_t$, with $G_0=G$.
+Let $b_{uv}(G)$ count cycles avoiding both $uv$ edges.
+Direct counting gives
+\begin{align}
+ c(G_t)&=2^t a_{uv}(G)+b_{uv}(G)+t+1,\\
+ \bigl(2^{n+t}+n+t-c(G_t)\bigr)
+ &=\bigl(2^n+n-c(G)\bigr)+(2^t-1)\bigl(2^n-a_{uv}(G)\bigr).
+ \label{eq:double-chain-deficit}
+\end{align}
+If $G$ is not a doubled cycle, then $a_{uv}(G)$ is even and at most $2^n-2$.
+Hence each expansion sequence increases the deficit by at least $2(2^t-1)$.
+This conclusion assumes only the displayed initial deficit, not the full conjecture.
+
+\begin{corollary}\label{cor:four-core}
+If \eqref{eq:four-target} fails, a counterexample of minimum order has all the following properties:
+it is connected, Hamilton-decomposable, and four-edge-connected.
+Its underlying simple graph has minimum degree at least three.
+Its parallel pairs form a matching.
+\end{corollary}
+
+\begin{proof}
+Disconnected graphs cannot be minimum counterexamples.
+Apply the smaller-order bounds to their components and use $\sum_i2^{n_i}\le2^{\sum_i n_i}$.
+Complementation gives the Hamilton decomposition, which gives four-edge-connectivity.
+
+Suppose a vertex $w$ has only two distinct neighbors, $u$ and $v$.
+Each Hamilton cycle uses one edge to each neighbor at $w$.
+Thus both incident multiplicities are two.
+For $n>3$, there is no $uv$ edge.
+Such an edge would close a triangle in whichever Hamilton cycle contains it.
+Suppress $w$ and replace its four edges by a doubled $uv$ edge.
+The resulting graph is loopless, four-regular, connected, and has one fewer vertex.
+Proposition~\ref{prop:double-expansion} then excludes a minimum counterexample.
+The smaller base cases are the doubled triangle and the four parallel edges on two vertices.
+Their counts are $11$ and $6$.
+
+Every vertex now has at least three distinct neighbors and total degree four.
+It can therefore meet at most one parallel pair.
+\end{proof}
+
+This reduction identifies a concrete remaining class: four-regular graphs whose doubled edges form a matching.
+It does not justify contracting an arbitrary doubled edge.
+That operation also changes cycles that use both endpoints without using the doubled edge.
+
+\subsection{Equality is not unique}
+
+The doubled $n$-cycle has $2^n+n$ cycles.
+There is another equality example:
+\[
+ c(K_5)=\binom53+3\binom54+\frac{(5-1)!}{2}
+       =10+15+12=37=2^5+5.
+\]
+Thus an exact equality classification cannot contain doubled cycles alone.
+Proposition~\ref{prop:double-expansion} gives a limited classification.
+If an equality graph has a vertex with two distinct neighbors, it must be a doubled cycle.
+No asymptotic stability classification follows from this observation.
+
+\subsection{Finite verification}
+
+The script \texttt{check\_four\_regular.py} fixes one Hamilton cycle and enumerates the second up to reversal.
+Every Hamilton-decomposable graph occurs, possibly more than once.
+Cycle counts use vertex-simple cyclic orders, weighted by edge multiplicities.
+For orders through eight, an independent implementation enumerates the binary cycle space and tests connectedness and degrees.
+The two counts agree for every tested graph.
+The script also checks $2{,}050$ doubled-path expansions and the equality criterion in Proposition~\ref{prop:double-expansion}.
+
+\begin{center}
+\begin{tabular}{r|rrrrrrr}
+$n$&3&4&5&6&7&8&9\\\hline
+Second Hamilton cycles&1&3&12&60&360&2520&20160\\
+Maximum cycle count&11&20&37&70&135&264&521
+\end{tabular}
+\end{center}
+
+These maxima equal $2^n+n$.
+Together with complementation, the two-vertex base case, and the component argument, this verifies the bound through order nine.
+The enumeration covers $23{,}116$ second-cycle orderings.
+It is reproducible evidence, not a Lean certificate or an infinite-order proof.
+The data are in \texttt{four-regular-results.json}.
+
+An additional experiment tested $52{,}145$ contractions of arbitrary doubled edges.
+The inequality $c(G)\le c(G/\{u,v\})+2^{n-1}+1$ held in every test.
+Here the contraction identifies $u,v$ and deletes the two resulting loops.
+This inequality remains unproved and is not used above.

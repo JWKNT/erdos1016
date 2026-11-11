@@ -1,0 +1,137 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,booktabs,array}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{microtype,xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\setlength{\emergencystretch}{3em}
+\title{Further results from the cycle-space machinery\\Extended research report}
+\author{Research working draft}
+\date{10 November 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We prove the sharp no-waste rank bound, replacing the additive constant three by one, and describe its equality cases.
+Fixed-gap terminal-path stability is additive for arbitrary graphs: every terminal path has length at least $b-C_\varepsilon$, and the reduced terminal core has bounded pathwidth.
+This combines Fable's localization and distance-layer argument with the extended forest estimate proved here.
+Sharper explicit bounds hold for bounded genus and fixed proper minor-closed classes.
+For sparse random hosts at the stated Alon--Krivelevich density, the second-order pancyclicity excess lies between coefficients $1$ and $199/192$ times $\ln n/\ln\ln n$.
+An adaptive attachment construction proves the leading sparse-pancyclic bound throughout the full range $np-\ln n-\ln\ln n\to\infty$.
+For every fixed proper minor-closed class, the cycle-count error above $2^{r-1}$ is $O(2^r/r)$.
+A separate companion paper proves the exact $2^n+n$ cycle bound for four-regular multigraphs, classifies the extremizers, and identifies every graph above $2^n$.
+The proofs have undergone independent internal audits and include reproducible finite checks.
+They have not been formalised in Lean, and publication priority has not been established.
+\end{abstract}
+
+\section*{Scope and notation}
+The source manuscript is \emph{The number of cycles in a graph and the minimum number of edges in a pancyclic graph}, dated November 10, 2026.
+Its local source is \nolinkurl{paper/cycle-count/pancyclic-paper.tex} at repository revision \texttt{a965788}.
+We use its definitions of outside parts and forest probability $p(G,W)$.
+Rank means $\beta(G)=|E(G)|-|V(G)|+\operatorname{comp}(G)$.
+An even subgraph is an edge set of even degree at every vertex.
+A cycle is connected and two-regular on its incident vertices.
+
+This report retains several intermediate estimates because their proofs supply ingredients for the stronger results that follow.
+The initial 16-page report remains available as \nolinkurl{research-progress.pdf}.
+The existing main manuscripts, formal Lean sources, and public site were not changed.
+The shared repository-root handoff is \nolinkurl{RESEARCH-HANDOFF-CODEX-2026-11-10.txt}.
+
+\tableofcontents
+
+\input{no-waste-phase2}
+\input{path-stability}
+\input{path-stability-phase2}
+\input{general-path-stability}
+\input{general-additive-path-stability}
+\input{link-stability}
+\input{cycle-recursion}
+\input{planar-cycle-error}
+\input{random-hosts}
+\input{random-hosts-phase2}
+\input{k4-random-host-blocks}
+\input{random-hosts-phase3}
+\input{theta-random-host-partition}
+\input{random-hosts-phase4}
+\input{random-host-weighted-matching}
+\input{random-hosts-phase5}
+\input{random-hosts-phase6}
+\input{random-hosts-phase7}
+\input{random-host-threshold-tools}
+\input{random-host-full-threshold}
+\input{random-host-block-barrier}
+
+\section{The exact four-regular theorem}
+
+The full proof is in the companion manuscript \nolinkurl{four-regular-theorem.pdf}, with source and certificates beside it.
+The following statements summarize its conclusions.
+Parallel edges are distinct, and two parallel edges form a cycle.
+For order two, a doubled cycle means four parallel edges joining two vertices.
+
+\begin{theorem}
+Every finite loopless four-regular multigraph on $n$ vertices has at most $2^n+n$ cycles.
+Equality holds precisely for doubled cycles and $K_5$.
+Moreover, such a graph has more than $2^n$ cycles if and only if it is a doubled cycle, $K_5$, or $K_4$ with two opposite edges doubled.
+\end{theorem}
+
+The last exceptional graph has $19$ cycles: two digons, eight triangles, and nine Hamilton cycles.
+Complementation first reduces the problem to unions of two Hamilton cycles.
+Doubled-edge expansion and gluing across two doubled pairs preserve the bound.
+A parity count then reduces any remaining case to at most two matching doubled pairs.
+The published degree-sequence path theorem, used after one or two vertex deletions, puts every such graph of order at least eleven strictly below $2^n$.
+An induction verifies the analytic estimate at all larger orders from seven exact rational base inequalities.
+
+The remaining finite check consists of $925$ matching instances on at most ten vertices, generated from $3234$ underlying simple graphs.
+Every instance was counted independently by vertex-simple path enumeration and binary cycle-space enumeration.
+Only $K_5$ attains $2^n+n$ in this reduced class.
+The independent comparison was also run on all $5012$ reduced instances through order eleven.
+
+\begin{corollary}
+Every connected loopless Eulerian multigraph of rank $r\ge1$ has at most
+\[
+ 2^{r-1}+r-1
+\]
+cycles.
+For $r\ge3$, equality holds precisely for subdivisions of doubled cycles and of $K_5$.
+The graphs with more than $2^{r-1}$ cycles are precisely the subdivisions of the three four-regular families in the preceding theorem.
+At rank one the maximum is one, and at rank two it is two.
+\end{corollary}
+
+The companion paper gives the full reduction, equality analysis, source citations, and reproduction instructions.
+The small-core certificate is \nolinkurl{four-regular-theorem-certificate.json}.
+It can be regenerated with \nolinkurl{verify_four_regular_theorem.py} after building the nauty generator and the supplied C++ checker.
+The theorem uses computer assistance for this finite check; it is not a formal Lean theorem.
+
+\input{cubic-edge-frequency}
+\input{remaining-directions-phase2}
+
+\section{Verification records}
+
+The scripts beside this report use exact integer or rational arithmetic for finite graph identities and certificate inequalities.
+They test the claimed finite statements; asymptotic probability and separator arguments are mathematical proofs.
+\begin{itemize}
+\item \nolinkurl{check_no_waste.py}: all marked cyclic edge subsets in the connected graph atlas through six vertices.
+\item \nolinkurl{check_path_stability.py} and \nolinkurl{check_path_stability_phase2.py}: terminal series-parallel recurrences and explicit path-count obstructions.
+\item \nolinkurl{check_path_minor_reduction.py}: all above-half terminal pairs and marked paths in the connected graph atlas through seven vertices.
+\item \nolinkurl{check_link_stability.py}: exact small-cut moments and inverse inequalities.
+\item \nolinkurl{check_random_host_encoding.py} and \nolinkurl{check_random_host_phase2.py}: explicit length encodings, pseudoforest inequalities, and theta-block constructions.
+\item \nolinkurl{check_k4_random_host_blocks.py}: the integer bands, local density conditions, and spanning paths of the $K_4$ blocks.
+\item \nolinkurl{check_random_host_wheels.py} and \nolinkurl{check_theta_random_host_partition.py}: wheel metrics, exact pair marginals, spanning paths, and the middle-interval theta partition.
+\item \nolinkurl{check_random_host_rank3_barrier.py}: exact dual certificates for the limits of cycle, theta, and $K_4$ block constructions.
+\item \nolinkurl{check_additive_layer_structure.py}: minimum-span cyclic windows and their greedy rank bound.
+\item \nolinkurl{check_cubic_edge_frequency.py}: triangle and square identities and perfect-matching weighted cycle counts.
+\item \nolinkurl{check_full_threshold_integration.py}: adaptive attachment positions, binary and digit lengths, Hamilton integration, and exact final excess.
+\item Fable's \nolinkurl{fable_check_tools.py}: exact checks of the edge recursion, localization, product formula, cubic splitting, and layer boundaries.
+\item \nolinkurl{verify_four_regular_theorem.py}: the complete finite part of the four-regular theorem, checked by two independent cycle counters.
+\item \nolinkurl{four_regular_vertex_deletion_certificates.py}: exact analytic inequalities and induction constants for the four-regular theorem.
+\end{itemize}
+
+The accompanying JSON files contain completed results.
+The larger four-regular experiments are retained as additional checks; they are not needed for the compact proof.
+The source hashes and final PDF review status are recorded in \nolinkurl{verification-extended.json}.
+\end{document}

@@ -1,0 +1,112 @@
+SECOND-ORDER CYCLE RESEARCH: CURRENT STATUS
+2026-11-11 06:11 UTC
+
+UNRESTRICTED SHARP-ORDER BOUND: MATHEMATICAL PROOF COMPLETED
+For an absolute constant K and every finite graph of rank r>=1,
+  c(G) <= 2^(r-1) + K*r*2^(r/2).
+The known Horak-Kim cyclic-square family has excess Theta(r*2^(r/2)),
+so the order is necessary. The optimal constant and exact psi(r) remain open.
+
+This is a written mathematical working proof with independent internal
+line audits. It is not yet a complete Lean formalization or an externally
+peer-reviewed result. Publication priority has not been established.
+
+PRIMARY DELIVERABLE
+paper/cycle-count/research/2026-11-10/unrestricted-sharp-cycle-bound.tex
+paper/cycle-count/research/2026-11-10/unrestricted-sharp-cycle-bound.pdf
+The focused packet has 20 pages and builds with zero TeX warnings.
+The final verification record is verification-unrestricted-sharp-2026-11-11.json
+in the same directory. It records source hashes, audits, exact checks, and
+visual review. Earlier packets marked OPEN are historical checkpoints.
+The preceding status is preserved in research-status-before-sharp-bootstrap-2026-11-11.txt.
+
+THE DECISIVE NEW ARGUMENT
+1. Localization works for a disconnected retained region whenever its
+   complement is connected. A cap cycle preserves the full interior law.
+   Removing cap-cycle EDGES leaves pendant spokes, so the original marked-
+   cycle forest theorem applies to the interior forest event exactly.
+2. A connected BFS-tree marker for all ports has at most k vertices per layer.
+   Localization and the growing-window argument bound each layer by B(k+1)^2
+   whenever an affine forest sector has density at least .6. Only the original
+   qualitative forest theorem at fixed error .05 is needed.
+3. A weighted-kernel Moore bound supplies a large port-free ball. It gives
+   conditional affine forest density <=.6 for either of two core regimes:
+   (a) rank>=256, ports<=4D, and girth>=D above a fixed absolute threshold;
+   (b) rank>=L, ports<=2L, and girth>=C0*log2(L+2).
+4. The quotient star-space argument gives long classes of articulation
+   vertices with identical actual terminal bipartitions. Split a long class
+   into disjoint middle regions of rank>=256 and boundary<=4D. At most|S|+1
+   regions meet the previous deletion S or the connected marker P. Two clean
+   regions would give forest probability <=(.6)^2=.36, a contradiction.
+   Therefore the next cycle packing is bounded independently of its excess.
+5. Iterating maximal packings on common dyadic scales gives
+     log2(|S(D)|+1) <= 2D + O(log2(D+2)^2).
+   At D0 in[sqrt(log2 r),2sqrt(log2 r)), S0=r^o(1).
+   At D1 in[(log2 r)/16,(log2 r)/8), S1<=r^(1/4+o(1)).
+6. Fable's parallel-link and nested-chain machinery applies at D1. Its first
+   moment conclusion needs only forest probability>1/2. It produces at least
+   a constant times r^(1/32)/(log r)^3 nested separators. Restoring medium
+   deletions yields many blocks of order>=8L^2 and boundary<=2L, L=A*log2 r.
+   After discarding r^o(1) dirty blocks, two clean blocks remain. Their
+   independent conditional affine probabilities again give .36<.5.
+7. Thus the marked forest probability is EXACTLY <=1/2 above a fixed girth
+   threshold, for connected markers of size<=3log2 r at sufficiently large rank.
+   Each edge of a shortest cycle then lies on at most 2^(r-2) cycles.
+   General-graph rank induction, the sharp <=4-cut theorem, and the bounded-
+   girth deficit prove the unrestricted result.
+
+FOCUSED SOURCE MODULES
+- path-qualitative-affine-bootstrap.tex
+- four-unrestricted-iterative-packing.tex
+- unrestricted-sharp-foundations.tex
+- unrestricted-sharp-parallel-links.tex
+- second-order-unrestricted-sharp-bootstrap.tex
+
+The three established inputs are stated explicitly in the primary packet:
+original qualitative marked-cycle forest estimate; sharp cyclic-cut<=4 bound;
+strict bounded-girth deficit without such small cuts. No polynomial error
+theorem or assumed unrestricted sharp bound is used in the focused proof.
+
+AUDITS AND EXACT CHECKS
+Root, path_stability, and four_regular separately audited the full assembly.
+Random_hosts assembled it and independently audited supporting proofs and
+the focused exposition. All mathematical audits passed.
+See four-unrestricted-sharp-bootstrap-audit.txt,
+path-sharp-bootstrap-independent-audit.txt,
+random-unrestricted-focused-audit.txt, and sharp-bootstrap-audit-handoff.txt.
+
+The new packing checker passes 5,572 selected-star sets, 636 middle intervals,
+114 disjoint segment pairs, 4,482 core prunings, and 4,163 full conditional
+affine fibers from 421 core pairs. Adjacent cores are included.
+Other independent checks cover 1,193 localization laws, 292 shortest-cycle
+prefix identities, 198 minimum-cut edge incidences, and the exact cyclic-square
+formula. These checks support finite identities; they are not numerical
+proofs of the asymptotic thresholds.
+
+SIX-CUT CASES AND OTHER RESULTS PRESERVED
+The remaining six-edge-cut cases were resolved earlier in this continuation,
+including both large shores and all bounded-shore configurations.
+The independent proof is six-cut-sharp-bound.tex/.pdf (16 pages).
+A separate induction proves, for every fixed minimum cyclic cut order k>=5,
+  c(G) <= 2^(r-1)-2^(r-k-1)+o_k(2^r).
+The earlier all-fixed-cut-cycle-bound.pdf records the structural stage before
+the final unrestricted bootstrap. Its open-status sentences are historical.
+
+Additional independent results include quantitative additive path stability,
+uniform high-girth terminal forests, weighted and entropy Moore bounds,
+growing-girth and cut ranges, and counterexamples to the proposed shortcut
+that a minimum cyclic cut must contain an edge on a short cycle.
+These are described in the archived preceding status and their source notes.
+The general polynomial-prefactor exponential rank-distance path bound remains
+unresolved; it is not required for the cycle theorem.
+
+FABLE AND FORMAL STATUS
+Latest observed Fable handoff remains UPDATE10, stopped at usage limit,
+mtime 2026-11-11 03:11 UTC. No new Fable source was seen during this continuation.
+CODEX-TO-FABLE-LIVE.txt contains the intermediate discoveries and final proof
+outline. The existing eight completed PolynomialBound modules were built
+in the preceding continuation with standard axioms only. Chain.lean.wip is
+unfinished. None of those sources was edited here.
+The new affine-core lemmas, iterative packing, and final exact-half assembly
+remain to be formalized. No tracked manuscript, root import, site, commit,
+or publication was changed.

@@ -1,0 +1,29 @@
+{
+  "scope": {
+    "min_order": 18,
+    "max_order": 20,
+    "girth_five": false,
+    "input": null,
+    "name": "catalog18-20",
+    "stop": true
+  },
+  "status": "search complete",
+  "orders": [
+    {
+      "order": 18,
+      "counts": {
+        "universal_edge": 740357,
+        "strict_feasible": 53
+      }
+    },
+    {
+      "order": 20,
+      "counts": {
+        "universal_edge": 10183262,
+        "strict_feasible": 104
+      }
+    }
+  ],
+  "violations": [],
+  "seconds": 325.1685140132904
+}

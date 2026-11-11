@@ -1,0 +1,149 @@
+\section{A larger marked set and a lower girth threshold}
+\label{sec:random-larger-marker}
+
+The endpoint forest proof permits a fixed multiple of $r/\log r$ marked vertices.
+Only its initial spectral loss changes.
+All logarithms below have base two.
+
+\begin{theorem}[The endpoint estimate with a larger marked set]
+\label{thm:random-larger-marker}
+Put
+\[
+ A=6e^{168},\qquad a=\frac1{1000A},\qquad
+ B=\lceil\log(10^6A)\rceil,\qquad M=64A^5 2^{B/2}.
+\]
+Let $\Gamma$ be a connected subcubic multigraph of rank $r$.
+Let $P$ contain all vertices of degree below three.
+Write $x=\log r$ and $z=\log x$, and assume
+\[
+ |P|\le a\,\frac r x,\qquad
+ \operatorname{comp}(\Gamma[P])\le\frac x{z^2}.
+\]
+Then, for all sufficiently large $r$, a uniform even subgraph satisfies
+\[
+ \Pr(\xi_\Gamma-P\text{ is a forest})
+ \le\frac12+M\frac{x^{11/2}}{\sqrt r}.
+\]
+The threshold is absolute.
+\end{theorem}
+
+\begin{proof}
+If $P$ is empty, the probability is $2^{-r}$.
+Otherwise use the parameters from Theorem~\ref{thm:parallel-links-log-five-half-forest}:
+\[
+ L=\lfloor Ax\rfloor,\quad
+ t=\lfloor z-2\log z\rfloor,\quad
+ D_0=\left\lceil\frac{8Ax}{z}\right\rceil,\quad
+ D_1=\lfloor x-3z-B\rfloor.
+\]
+Assume for contradiction that the probability exceeds
+$1/2+\varepsilon$, where $\varepsilon=Mx^{11/2}/\sqrt r$.
+The nested short-cycle packings give
+\[
+ |S_0|=r^{o(1)},\qquad
+ |S_1|\le12\,2^{-B}r/x.
+\]
+These estimates use the forest excess and the boundary sizes of cycles outside $P$.
+They do not use $|P|\le r/x^2$.
+
+The degree sum gives $|V(\Gamma)|=2r+O(|P|+1)$.
+Thus $v_1=|V(\Gamma-(P\cup S_1))|=2r+o(r)$, and in particular $v_1\ge r$ for large $r$.
+Its degree deficit satisfies $d_1\le3(|P|+|S_1|)$.
+The only changed spectral estimate is
+\[
+ \frac{Ld_1}{2v_1}
+ \le\frac{3Aa}{2}+18A2^{-B}
+ \le\frac3{2000}+\frac{18}{10^6}
+ <\frac1{100}.
+\]
+Consequently the same even trace sum supplies $\mu_1>20$.
+
+The link estimate uses the number of connected components of $P$, not its order.
+It therefore still gives at most $3Ax/z$ links at either girth scale.
+The exceptional-pair error remains $O(L^3 2^{-Ax/z})=o(1)$.
+The two-link moment bounds, the anchor-component argument, and weighted maximal disjointness consequently give
+\[
+ T\ge\frac{2^{1-B/2}}{A^3}\frac{\sqrt r}{x^{9/2}}
+\]
+nested separators.
+
+Use full blocks with $\lceil16A^2x\rceil+2$ gaps, as in the endpoint proof.
+Their orders are at least $8L^2$, and their boundaries have size at most $2L$.
+The number discarded is at most
+\[
+ L+|S_0|+\operatorname{comp}(\Gamma[P])=r^{o(1)}.
+\]
+In particular, enlarging a connected component of $P$ cannot create extra discarded blocks:
+that component cannot cross a block boundary, whose vertices lie on separator cycles disjoint from $P$.
+Every retained block has degree deficit at most $2L$, girth greater than $D_0$, and order at most $3r$.
+The one-block spectral estimate therefore gives
+\[
+ \mu_0\ge c_B\frac{\sqrt r}{x^{11/2}},
+ \qquad c_B=\frac{2^{-B/2}}{64A^5}.
+\]
+The inverse moment estimate gives instead
+\[
+ \mu_0\le\frac{1+o(1)}{4\varepsilon}
+ =(1+o(1))\frac{c_B}{4}\frac{\sqrt r}{x^{11/2}},
+\]
+a contradiction.
+This lists every place where the marked-set hypothesis enters the proof.
+\end{proof}
+
+\begin{corollary}[Improved girth window]
+\label{cor:random-improved-girth-window}
+There are absolute constants $C_*,C,C_0,R$.
+Let $G$ be a connected loopless cubic multigraph of rank $r\ge R$.
+If its girth satisfies
+\[
+ g\ge
+ \left\lceil
+ 2\log\log r+2\log\log\log r+C_*
+ \right\rceil
+\]
+satisfies
+\[
+ c(G)\le
+ 2^{r-1}-2^{r-g-1}
+ +C\,2^r\frac{(\log r)^{11/2}}{\sqrt r}.
+\]
+If also
+\[
+ g\le\frac12\log r-\frac{11}{2}\log\log r-C_0,
+\]
+then $c(G)\le2^{r-1}-2^{r-g-2}$.
+Neither assertion requires a cyclic-connectivity assumption.
+\end{corollary}
+
+\begin{proof}
+Use the proof of Theorem~\ref{thm:random-girth-window}, replacing its large-branch lemma as follows.
+Put $x=\log r$, $z=\log x$, and take
+\[
+ C_*=\left\lceil2\log(1000/a)\right\rceil,\qquad
+ g_*=\lceil2z+2\log z+C_*\rceil.
+\]
+For large $r$, $g_*\le6z$ and
+\[
+ 2^{-g_*/2}\le\frac{a}{1000xz}.
+\]
+Let a branch pole have rank $b\in[r/2,r]$ and at most $3x$ ports.
+Its order is at most $3b$.
+Moore-ball packing bounds its terminal distance by
+\[
+ \ell+2
+ \le6z(3x+1)+\frac{18ab}{1000x}+1
+ \le\frac{ab}{2x}
+\]
+for all sufficiently large $r$, uniformly over these branches.
+Suppress its other ports, and add the new two-edge terminal path as before.
+The resulting rank is $\rho=b+1$.
+Its marked cycle is connected, contains every vertex of degree below three, and has order at most
+\[
+ \frac{ab}{2x}\le a\frac{\rho}{\log\rho}.
+\]
+Theorem~\ref{thm:random-larger-marker} gives the same branch error
+$O(x^{11/2}/\sqrt r)$.
+The low-rank branch bound, geometric prefix sum, and unrestricted cycle error are unchanged.
+They prove the finite estimate.
+Choose $C_0$ as in Corollary~\ref{cor:random-girth-window-strict} to obtain the strict deficit.
+\end{proof}

@@ -1,0 +1,118 @@
+{
+  "equality_families": [
+    {
+      "rank": 1,
+      "cap_paths": 2,
+      "two_pole_cycles": 3,
+      "normalization_checks": 4
+    },
+    {
+      "rank": 2,
+      "cap_paths": 4,
+      "two_pole_cycles": 7,
+      "normalization_checks": 4
+    },
+    {
+      "rank": 3,
+      "cap_paths": 6,
+      "two_pole_cycles": 12,
+      "normalization_checks": 4
+    },
+    {
+      "rank": 4,
+      "cap_paths": 10,
+      "two_pole_cycles": 22,
+      "normalization_checks": 4
+    },
+    {
+      "rank": 5,
+      "cap_paths": 14,
+      "two_pole_cycles": 33,
+      "normalization_checks": 4
+    },
+    {
+      "rank": 6,
+      "cap_paths": 22,
+      "two_pole_cycles": 55,
+      "normalization_checks": 4
+    },
+    {
+      "rank": 7,
+      "cap_paths": 30,
+      "two_pole_cycles": 78,
+      "normalization_checks": 4
+    },
+    {
+      "rank": 8,
+      "cap_paths": 46,
+      "two_pole_cycles": 124,
+      "normalization_checks": 4
+    },
+    {
+      "rank": 9,
+      "cap_paths": 62,
+      "two_pole_cycles": 171,
+      "normalization_checks": 4
+    },
+    {
+      "rank": 10,
+      "cap_paths": 94,
+      "two_pole_cycles": 265,
+      "normalization_checks": 4
+    },
+    {
+      "rank": 11,
+      "cap_paths": 126,
+      "two_pole_cycles": 360,
+      "normalization_checks": 4
+    },
+    {
+      "rank": 12,
+      "cap_paths": 190,
+      "two_pole_cycles": 550,
+      "normalization_checks": 4
+    }
+  ],
+  "independent_search_checks": [
+    {
+      "rank": 2,
+      "cap_paths": 4
+    },
+    {
+      "rank": 3,
+      "cap_paths": 6
+    },
+    {
+      "rank": 4,
+      "cap_paths": 10
+    },
+    {
+      "rank": 5,
+      "cap_paths": 14
+    },
+    {
+      "rank": 6,
+      "cap_paths": 22
+    },
+    {
+      "rank": 7,
+      "cap_paths": 30
+    },
+    {
+      "rank": 8,
+      "cap_paths": 46
+    },
+    {
+      "rank": 9,
+      "cap_paths": 62
+    },
+    {
+      "rank": 10,
+      "cap_paths": 94
+    },
+    {
+      "rank": 11,
+      "cap_paths": 126
+    }
+  ]
+}

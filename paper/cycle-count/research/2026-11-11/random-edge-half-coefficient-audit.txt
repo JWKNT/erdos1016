@@ -1,0 +1,34 @@
+INDEPENDENT COEFFICIENT AUDIT -- random_hosts -- 2026-11-11
+
+PASS: four-coefficient-rings.tex.
+The interval count includes the empty omitted interval, which
+corresponds to using every tile while omitting one interface.
+The excluded omitted intervals of length m-1 have total
+weight 2^(-a)*(2a+s).
+The square-square and ordered mixed contributions to Q are exact.
+Convexity gives the pairwise single-rung bound, with simultaneous
+attainment when all single-rung tiles are consecutive.
+The a=1 case and arbitrary interface twists satisfy the same count.
+The all-used even sector has exactly 2^(a-1) cycles when a>=1.
+The fixed-W subtraction and its sign are correct for W>=7.
+The pure single-rung ring comparison works on both parities.
+The open-chain cap-turn formula and its stated bound are valid.
+
+PASS: four-coefficient-rigidity.tex.
+Checked every high-support graph on four vertices.
+The constants 3.98,3.9575,3.915,3.04 all preserve strict margins.
+The low-cross-sum case forces every opposite pair above .98.
+The coupled inequalities exclude the nonfull case.
+The one-full minima and saturation gap force a full star.
+The resulting cases cover S+F>=3.99.
+
+The small-cut assembly retains uniform bounds as h<=k vary.
+Low-state poles give the stated strict half deficits, including C4.
+A missing full coordinate gives a fixed1/16 crossing loss.
+Aligned full stars have O(2^(r/2)) error, including bounded h.
+Aligned K22 poles either give a cyclic3cut or a tile ring.
+Thus the proposed eventual exact small-cut maximum follows
+from the stated, previously audited inputs.
+
+This audit is mathematical, not an assertion of external peer
+review or priority. Finite checks are separate corroboration.

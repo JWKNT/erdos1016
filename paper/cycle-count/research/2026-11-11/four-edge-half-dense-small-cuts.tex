@@ -1,0 +1,108 @@
+\section{Edge-half for sufficiently large graphs at half density}
+\label{sec:four-edge-half-dense-small-cuts}
+
+\begin{lemma}\label{lem:four-full-pole-short-cycle}
+Let $X$ be a connected normalized $k$-pole of rank $h$, with $k\ge2$.
+If $h>5k$ and some terminal pair has $2^h$ paths, then $X$ contains a cycle of length at most four.
+\end{lemma}
+
+\begin{proof}
+Suppress the $k-2$ unused ports and use the saturated two-pole classification.
+Its positive-rank pieces are digons or capped singleton-and-square ladders.
+The candidate construction in Theorem~\ref{thm:saturated-pair-small-cyclic-cut} gives at least $h/5$ vertex-disjoint candidates.
+For a piece of rank at most four, its whole vertex set is a candidate.
+It contains a digon, a cap triangle when its first block is a singleton, or a cap four-cycle when its first block is a square.
+For a larger piece, each candidate is a square block or two consecutive singleton blocks, and contains a four-cycle.
+
+Restoring the unused ports subdivides at most $k-2$ edges.
+Each restored port can spoil at most one candidate, since their vertex sets are disjoint.
+An unspoiled candidate therefore retains a cycle of length at most four in $X$.
+Such a candidate exists because $h/5>k>k-2$.
+\end{proof}
+
+\begin{lemma}\label{lem:four-girth-five-small-pole-ranks}
+A simple normalized $k$-pole of girth at least five has rank at least four when $k=3$, and at least three when $k=4$.
+\end{lemma}
+
+\begin{proof}
+Let $n$ denote its order.
+There is at most one path of length one or two between each ordered pair of distinct vertices.
+The numbers of such paths sum to
+\[
+ (3n-k)+(6n-4k)=9n-5k.
+\]
+Thus $n(n-1)\ge9n-5k$, or $n^2-10n+5k\ge0$.
+Use $n=2h+k-2$ and $h\ge1$.
+For $k=3$, this forces $n\ge9$ and $h\ge4$.
+For $k=4$, it forces $n\ge8$ and $h\ge3$.
+\end{proof}
+
+\begin{proposition}\label{prop:four-girth-five-small-cut-deficit}
+For all sufficiently large ranks, every three-edge-connected simple cubic graph of girth at least five with a cyclic cut of size at most four satisfies
+\[
+ c(G)<2^{\beta(G)-1}.
+\]
+\end{proposition}
+
+\begin{proof}
+Choose a cyclic cut of minimum size $j\in\{3,4\}$.
+Its shores are connected normalized $j$-poles with distinct ports.
+Indeed, disconnected shores or repeated attachments would produce a smaller cyclic cut, or an edge cut of size at most two.
+Write the shores as $X,Y$, with ranks $h\le k$.
+Then $\beta(G)=h+k+j-1$, and $k$ tends to infinity with $\beta(G)$.
+Lemma~\ref{lem:four-full-pole-short-cycle} excludes every saturated terminal pair in $Y$ for sufficiently large $k$.
+The path saturation gap therefore bounds each normalized path coordinate of $Y$ by $15/16$.
+
+Suppose first that $j=3$.
+If two path coordinates exceed $0.51$, the two-high-pair theorem makes the third $O(2^{-k/2})$.
+Their sum is then at most $15/8+O(2^{-k/2})$.
+Otherwise, their sum is at most
+\[
+ \frac{15}{16}+2(0.51)=\frac{783}{400}=1.9575.
+\]
+Each path coordinate of $X$ is at most one.
+The exact three-cut identity, the trivial bound $c(X)<2^h$, and the asymptotic cycle bound give
+\[
+ \frac{c(G)}{2^{h+k}}
+ \le \frac{783}{400}+o(1)+\frac9{16}2^{-h}+2^{-k}
+ \le \frac{783}{400}+\frac9{256}+o(1)<2.
+\]
+Here $h\ge4$ by Lemma~\ref{lem:four-girth-five-small-pole-ranks}.
+Every error is uniform in $h\le k$.
+
+Now suppose that $j=4$.
+Use the normalized state notation $S(Y),F(Y)$ from the four-cut rigidity proof.
+If all six path coordinates of $Y$ are at most $0.51$, the low-state inequality gives $S(Y)+F(Y)\le3.82$.
+Since $h\ge3$, the exact gluing formula yields
+\[
+ \frac{c(G)}{2^{h+k}}
+ \le3.82+\frac9{16}2^{-h}+2^{-k}
+ \le3.82+\frac9{128}+2^{-k}<4.
+\]
+If a path coordinate exceeds $0.51$, the high-path cycle tradeoff gives $c(Y)=O(2^{k/2})$.
+The aggregate rigidity lemma forces $S(Y)+F(Y)<3.99$, since $Y$ has no saturated pair.
+Consequently
+\[
+ \frac{c(G)}{2^{h+k}}
+ \le3.99+O(2^{-h-k/2})+2^{-k}<4
+\]
+uniformly for $h\ge3$ and sufficiently large $k$.
+This proves both cases.
+\end{proof}
+
+\begin{corollary}\label{cor:four-dense-edge-half}
+There is an absolute rank threshold $R$ such that every connected simple cubic graph $G$ of rank $r\ge R$ with
+\[
+ c(G)\ge2^{r-1}
+\]
+has an edge $e$ satisfying $2c_e(G)\le c(G)$.
+\end{corollary}
+
+\begin{proof}
+The existing local identities handle bridges, two-edge cuts, triangles, and four-cycles.
+Thus assume that $G$ is three-edge-connected and has girth at least five.
+Proposition~\ref{prop:four-girth-five-small-cut-deficit} excludes a cyclic cut of size at most four at sufficiently large rank.
+The established below-half reduction without small cyclic cuts, Corollary~\ref{cor:new-edge-half-below-density}, now supplies the desired edge.
+\end{proof}
+
+This result does not settle edge-half below half density or at the finitely many ranks below the threshold.

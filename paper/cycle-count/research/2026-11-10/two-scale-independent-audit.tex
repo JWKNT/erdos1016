@@ -1,0 +1,155 @@
+% Independent audit by the four-regular agent. This is not the main proof draft.
+\section{Independent audit of the spectral and restoration steps}
+\label{sec:two-scale-independent-audit}
+
+This note checks two steps in the proposed two-scale polynomial argument.
+It does not replace the audit of the chain construction or the final recurrence.
+The spectral statement is Fable's Lemma T6 from \texttt{fable-thin-chain.md}.
+The restoration statement applies that lemma after restoring cycles at the larger girth scale.
+
+\begin{lemma}[Several almost-cubic test sets]
+\label{lem:audit-multiple-perron}
+Let $J$ be a simple graph of maximum degree three.
+Let $V_1,\ldots,V_m$ be pairwise disjoint vertex sets with no edge between different sets.
+Write $n_i=|V_i|$, $b_i=|\delta_JV_i|$, and
+\[
+ \delta_i=\sum_{v\in V_i}(3-\deg_Jv).
+\]
+Suppose $0<\theta\le1/2$ and $\delta_i+3b_i\le\theta n_i$ for every $i$.
+Then the non-backtracking matrix $B$ has at least $m$ real eigenvalues in $[2-\theta,2]$, counted with algebraic multiplicity.
+For every even integer $\ell$,
+\[
+ \operatorname{tr}B^\ell
+ \ge m(2-\theta)^\ell-3|V(J)|2^{\ell/2}.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $A$ be the adjacency matrix and $D$ the degree matrix.
+Use the symmetric pencil
+\[
+ M(\lambda)=\lambda^2I-\lambda A+D-I.
+\]
+For the indicator $z_i$ of $V_i$, the degree sum gives
+\[
+ z_i^TM(2-\theta)z_i
+ =-\theta(1-\theta)n_i+(1-\theta)\delta_i+(2-\theta)b_i.
+\]
+This is at most
+\[
+ (1-\theta)(\delta_i+3b_i-\theta n_i)+(2\theta-1)b_i\le0.
+\]
+The mixed quadratic forms vanish, since the sets are disjoint and nonadjacent.
+Thus $M(2-\theta)$ has at least $m$ nonpositive eigenvalues.
+Also
+\[
+ M(2)=2(D-A)+(3I-D)\succeq0.
+\]
+
+The ordered eigenvalues of this symmetric pencil are continuous.
+They are strictly increasing on $[3/2,2]$.
+Indeed, for $\lambda_2>\lambda_1\ge3/2$,
+\[
+ M(\lambda_2)-M(\lambda_1)
+ =(\lambda_2-\lambda_1)[(\lambda_1+\lambda_2)I-A]\succ0,
+\]
+since $\|A\|\le3$ and $\lambda_1+\lambda_2>3$.
+Each of the first $m$ ordered eigenvalues therefore has a zero in $[2-\theta,2]$.
+If several zeros coincide, their number is at most the dimension of the kernel there.
+
+For $\lambda>1$, the manuscript's explicit map
+\[
+ g\longmapsto f(i\mathbin{\to}j)=\lambda g(j)-g(i)
+\]
+injects $\ker M(\lambda)$ into the $\lambda$-eigenspace of $B$.
+Thus the roots supply at least $m$ real eigenvalues, with the required multiplicities.
+Every nonreal eigenvalue of $B$ has modulus at most $\sqrt2$.
+There are at most $3|V(J)|$ eigenvalues in total.
+For even powers, all other real eigenvalues contribute nonnegatively.
+This proves the trace bound.
+\end{proof}
+
+\begin{corollary}[Cycle weight from the test sets]
+\label{cor:audit-test-set-cycle-weight}
+Put $x=\log_2r$ and $\theta=1/(12x)$.
+Suppose $|V(J)|\le3r$, the girth of $J$ exceeds $D_0=\lfloor x/100\rfloor$, and $L=Ax$ for a fixed $A>24$.
+Let $\mu_0$ be the total weight $\sum_C2^{-|C|}$ of cycles of length at most $L$.
+Under the hypotheses of Lemma~\ref{lem:audit-multiple-perron}, for all sufficiently large $r$,
+\[
+ \mu_0\ge m/16-1.
+\]
+\end{corollary}
+
+\begin{proof}
+Sum the trace bound over even $\ell$ between $6x$ and $24x$.
+The normalized positive term is at least $(e^{-1}-o(1))m$.
+The summed nonreal contribution is $o(1)$, since $|V(J)|\le3r$ and $2^{-\ell/2}\le r^{-3}$.
+Hence the full weighted walk sum is at least
+\[
+ \left(\frac{\ln4}{4e}-o(1)\right)m-o(1).
+\]
+The repeated-walk estimate in the manuscript bounds its excess over $\mu_0$ by
+\[
+ \frac32L^2 2^{-\lfloor(D_0-1)/2\rfloor}\mu_0=o(\mu_0).
+\]
+Since $\ln4/(4e)>1/16$, the stated inequality follows uniformly in $m$.
+\end{proof}
+
+\begin{lemma}[Restoring the larger-scale deleted cycles]
+\label{lem:audit-clean-restored-blocks}
+Let $\Gamma$ have maximum degree three, with every vertex outside a connected marked set $P$ cubic.
+Let $C$ be a cycle disjoint from $P$, with $|C|\le L$.
+In $\Gamma-V(C)$, suppose the pairwise disjoint cycles
+\[
+ C_1<\cdots<C_T
+\]
+separate a vertex $u$ from $P$ in the indicated nested order.
+Suppose $D<|C_i|\le L$ for every $i$.
+Let $S_0$ be any vertex set disjoint from all these cycles and from $C\cup P$.
+Put $J_0=\Gamma-(P\cup S_0)$.
+
+Group $q$ consecutive separating cycles into each block, with one unused separating cycle between successive blocks.
+Leave a later separating cycle after the last block.
+Include every full slab between the first and last cycles of each block.
+After discarding at most $4|S_0|+L$ blocks, the remaining vertex sets $V_i$ satisfy:
+\begin{enumerate}
+\item They are disjoint and pairwise nonadjacent in $J_0$.
+\item $|V_i|\ge q(D+1)$.
+\item $|\delta_{J_0}V_i|\le2L$.
+\item $\sum_{v\in V_i}(3-\deg_{J_0}v)=0$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Define the slabs in the full graph $\Gamma-V(C)$, before deleting $S_0$ or any other short-cycle vertices.
+The nested-separator lemma places every slab edge within its two boundary cycles, except for possible edges to $C$ in $\Gamma$.
+For a union of consecutive slabs and their separating cycles, only its first and last cycles can meet its external boundary in $\Gamma-V(C)$.
+Each cycle vertex has at most one edge outside its own cycle.
+Thus this boundary has at most $2L$ edges.
+
+One unused separator between blocks makes the block sets disjoint and nonadjacent.
+The later separator after each block puts the whole block on its $u$-side.
+No block vertex can therefore be adjacent to $P$.
+Each block contains its $q$ disjoint separating cycles, giving the size bound.
+
+Discard every block meeting $S_0\cup N_\Gamma(S_0)$.
+There are at most $4|S_0|$ such blocks, since they are disjoint and the maximum degree is three.
+Also discard every block containing a neighbor of $C$.
+There are at most $L$ such blocks, since every vertex of $C$ has at most one external incidence.
+
+Every remaining block lies in $J_0$ and has no neighbor in $P\cup S_0\cup C$.
+Its boundary bound therefore remains at most $2L$.
+Every one of its vertices keeps all three incident edges in $J_0$.
+This proves the exact zero-deficit assertion.
+\end{proof}
+
+For $q=\lceil20000Ax\rceil$ and $D=\lfloor x/10\rfloor$, the retained blocks satisfy the spectral test condition with a large margin.
+Indeed, $3b_i\le6L$ whereas $|V_i|/(12x)\ge q(D+1)/(12x)$.
+If the chain has order $r^{1/20}/\operatorname{polylog}r$ blocks and $|S_0|=O(r^{1/100}\operatorname{polylog}r)$, almost every block survives.
+This comparison is the reason for using two different girth scales.
+
+The script \texttt{check\_two\_scale\_structure.py} checks the combinatorial statements with exact sets and integer weights.
+It verifies 9759 disjoint cycle pairs, 200 weighted antisymmetry bounds, and 521 clean restored blocks in 160 nested chains.
+All retained blocks have a strict deficit reduction after the medium-cycle vertices are restored.
+The separate \texttt{check\_multiple\_perron\_modes.py} compares pencil inertia with non-backtracking eigenvalues on graphs of 112 and 256 vertices.
+Those numerical operator checks supplement the exact spectral proof; they are not used as a proof step.

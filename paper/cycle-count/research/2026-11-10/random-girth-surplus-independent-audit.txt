@@ -1,0 +1,32 @@
+Independent audit by random_hosts, 2026-11-11
+
+PASS: path-girth-surplus-cuts.tex.
+
+The terminal geodesic balls are disjoint and avoid both degree-two
+vertices. BFS collisions before the final sphere contradict 2a<h;
+edges inside that sphere do not change its vertex count. The center
+count and the displayed weaker distance constant are valid.
+
+The two injections into even states in the endpoint lemma are
+disjoint, because one uses the new two-edge path and the other does
+not. Outside the marked cycle both restrictions are subgraphs of
+the original simple terminal path.
+
+Retaining the original minimum cut is valid at every deletion:
+its remaining edges stay a minimum cut, and deleting one cut edge
+and suppressing its endpoints removes one original port vertex
+from each shore. Every shore cycle restores at most i such
+vertices after i steps. Thus a cycle shorter than g-i must cross
+the retained cut and supplies a short alternate path at a selected
+cut edge. Otherwise the entire graph has the needed girth lower
+bound and the Moore estimate applies to any retained cut edge.
+
+The original graph has g=O(log r), while the assumed surplus itself
+implies k<g. Hence all current ranks are r-O(log r); the endpoint
+error is uniform through the recursion. Both final error terms
+are compared to 2^(-k-1) with the correct weights. In the endpoint
+version, a_5<=1/256 contributes at most 2^(-k-3), and the chosen
+constant gives the same upper bound for the selected-edge errors.
+
+No gap found. This argument makes no assumption that an arbitrary
+minimum-cut edge has a short alternate path.

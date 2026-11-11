@@ -1,0 +1,66 @@
+\section{The degree dependence in exponential small-cut decay}
+\label{sec:cut-rate-obstruction}
+
+The factor $2^{-d}$ in the improved exponential rate is necessary up to a polynomial factor in $d$.
+Parallel bundles on a cycle give an explicit example.
+
+Let $Q_{k,m}$ replace every edge of a $k$-cycle by $m$ parallel edges, where $k\ge3$ and $m\ge1$.
+Mark all $k$ vertices, each of degree $d=2m$.
+For a uniform even subgraph, let $Z$ count the closed marked vertices.
+Put $s=2^{1-m}$ and define
+\[
+ T_s=\begin{pmatrix}1-s&s\\1-s&s/2\end{pmatrix},
+ \qquad
+ \lambda_\pm(s)=\frac{1-s/2\pm\sqrt{1+s-7s^2/4}}2.
+\]
+
+\begin{proposition}\label{prop:cut-rate-obstruction}
+For these graphs,
+\begin{equation}\label{eq:bundle-cycle-moment}
+ \mathbb E2^{-Z}
+ =\frac12+\frac12\operatorname{tr}(T_s^k)
+ =\frac12+\frac12\bigl(\lambda_+(s)^k+\lambda_-(s)^k\bigr).
+\end{equation}
+For fixed $m$, the exponential decay rate of the excess above one half is $-\ln\lambda_+(s)$.
+As $m\to\infty$,
+\[
+ -\ln\lambda_+(s)=\frac{s^2}{2}+O(s^3)
+ =(1+o(1))2^{1-d}.
+\]
+Consequently, any bound of the form
+\[
+ \mathbb E2^{-Z}\le\frac12+C_d e^{-c_d k}
+\]
+with finite $C_d$ independent of $k$ must satisfy $c_d\le-\ln\lambda_+(2^{1-d/2})$ for even $d$.
+\end{proposition}
+
+\begin{proof}
+Parity at each vertex forces all bundle parities to agree.
+Their common parity is a uniform bit.
+Conditional on either value, the edge choices within different bundles are independent and uniform among the $2^{m-1}$ choices of that parity.
+
+In the odd sector every bundle is nonempty, so every marked vertex is open.
+In the even sector, a bundle is empty with probability $s$.
+Let $X_1,\ldots,X_k$ be the independent indicators of empty bundles in this sector.
+Then
+\[
+ 2^{-Z}=\prod_{i=1}^k\left(1-\frac12X_iX_{i+1}\right),
+ \qquad X_{k+1}=X_1.
+\]
+Summing over the Bernoulli variables gives the transfer-matrix trace $\operatorname{tr}(T_s^k)$.
+The entries are $T_s(a,b)=\mathbb P(X=b)(1-ab/2)$ for $a,b\in\{0,1\}$.
+This proves~\eqref{eq:bundle-cycle-moment}.
+
+The trace and determinant of $T_s$ are $1-s/2$ and $-s(1-s)/2$.
+They give the displayed eigenvalues.
+For $0<s<1$, one has $\lambda_+>0$ and $|\lambda_-|<\lambda_+$.
+For $s=1$, the eigenvalues are $1/2$ and zero.
+Thus the dominant eigenvalue gives the stated fixed-$m$ decay rate.
+Expanding its explicit formula at $s=0$ gives $\lambda_+(s)=1-s^2/2+O(s^3)$.
+The last assertion follows by letting $k\to\infty$ with $d$ fixed.
+\end{proof}
+
+The exact closure probability at each vertex is $p=2^{1-d}=s^2/2$.
+Thus this family has total closure mass $\mu=kp$ and excess decay rate $(1+o(1))\mu$ as $d$ grows.
+It supports a possible weighted formulation in terms of closure mass.
+It rules out replacing the degree dependence by a substantially larger exponential rate uniformly over these multigraphs.

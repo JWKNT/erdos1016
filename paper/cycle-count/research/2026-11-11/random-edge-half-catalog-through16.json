@@ -1,0 +1,62 @@
+{
+  "scope": {
+    "min_order": 4,
+    "max_order": 16,
+    "girth_five": false,
+    "input": null,
+    "name": "catalog-through16",
+    "stop": true
+  },
+  "status": "search complete",
+  "orders": [
+    {
+      "order": 4,
+      "counts": {
+        "universal_edge": 4
+      }
+    },
+    {
+      "order": 6,
+      "counts": {
+        "universal_edge": 12
+      }
+    },
+    {
+      "order": 8,
+      "counts": {
+        "tight": 8,
+        "universal_edge": 32
+      }
+    },
+    {
+      "order": 10,
+      "counts": {
+        "universal_edge": 184,
+        "strict_feasible": 4
+      }
+    },
+    {
+      "order": 12,
+      "counts": {
+        "universal_edge": 1011,
+        "strict_feasible": 1
+      }
+    },
+    {
+      "order": 14,
+      "counts": {
+        "universal_edge": 7030,
+        "strict_feasible": 36
+      }
+    },
+    {
+      "order": 16,
+      "counts": {
+        "universal_edge": 64548,
+        "strict_feasible": 22
+      }
+    }
+  ],
+  "violations": [],
+  "seconds": 1.554624080657959
+}

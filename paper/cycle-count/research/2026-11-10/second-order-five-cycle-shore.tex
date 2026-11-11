@@ -1,0 +1,104 @@
+\section{A five-cycle shore}
+\label{sec:five-cycle-shore}
+
+The protected-set form of the small-cut lemma makes the added-edge inequalities unconditional.
+This gives a fixed deficit for the smallest cyclic five-cut shore.
+
+\begin{lemma}[Unconditional augmented-path inequalities]
+\label{lem:five-pole-unconditional-augmentation}
+Fix $\varepsilon>0$.
+Let $Y$ be a normalized five-pole of sufficiently large rank $k$.
+Suppose a cubic completion of $Y$ has no cyclic edge cut of size at most four.
+Normalize its terminal counts by $2^k$.
+Then every pair satisfies $a_e\le1/2+\varepsilon$.
+For every four-port set $S$ and each pairing $\alpha=ij|lm$ of $S$,
+\[
+ a_{ij}+U_S-u_{S,\alpha}\le1+2\varepsilon,
+ \qquad
+ a_{lm}+U_S-u_{S,\alpha}\le1+2\varepsilon.
+\]
+\end{lemma}
+
+\begin{proof}
+The ordinary path bound follows from the fixed-density small-cut theorem.
+Add the edge $lm$ to $Y$.
+This gives a normalized three-pole of rank $k+1$.
+Its $i$--$j$ path count equals
+\[
+ 2^k\bigl(a_{ij}+U_S-u_{S,\alpha}\bigr).
+\]
+If the first augmented inequality failed, this new pole would have terminal-path density greater than $1/2+\varepsilon$.
+Apply the protected-set small-cut theorem with both endpoints of the added edge protected.
+It supplies two vertex-disjoint cyclic sets, each with boundary at most four, that avoid those endpoints.
+Both cycles and their boundaries are therefore unchanged when the added edge is removed and the original completion is restored.
+This contradicts the hypothesis on that completion.
+Exchange the two pairs for the other inequality.
+All augmentation patterns form a fixed finite list, so one rank threshold suffices.
+\end{proof}
+
+\begin{theorem}[A five-cycle cut]
+\label{thm:five-cycle-shore-sharp-order}
+There is an absolute constant $K$ such that the following statement holds.
+Let $G$ be a cubic graph obtained by joining a five-cycle to a normalized five-pole $Y$ of rank $k$.
+Put $r=k+5$.
+Then
+\[
+ c(G)\le2^{r-1}+Kr2^{r/2}.
+\]
+If $k$ is sufficiently large and $G$ has no cyclic cut of size at most four, then $c(G)<2^{r-1}$.
+\end{theorem}
+
+\begin{proof}
+If $G$ has a cyclic cut of size at most four, apply Theorem~\ref{thm:sharp-order-four-cut-error}.
+Otherwise assume $k$ is sufficiently large for Lemma~\ref{lem:five-pole-unconditional-augmentation}.
+Label the five ports in their cyclic order on the five-cycle.
+Write $S_{\rm edge}$ for the sum of the five path densities joining consecutive ports.
+Write $S_{\rm diag}$ for the sum of the other five path densities, and put $S=S_{\rm edge}+S_{\rm diag}$.
+
+Every terminal pair in the five-cycle has two paths.
+In each four-port sector it has two pairing forests, one in each noncrossing pairing.
+The alternating pairing is absent.
+Let $A$ be the sum of the five alternating-pairing masses of $Y$, and let $R=\sum_{|T|=4}U_T$.
+The crossing contribution, divided by $2^{k+1}$, is exactly
+\[
+ L=S+\frac12(R+A).
+\]
+
+For a noncrossing pairing $\alpha=ij|lm$ in a sector $T$, put $M_\alpha=\max(a_{ij},a_{lm})$.
+The two augmented inequalities imply
+\[
+ M_\alpha+U_T-u_{T,\alpha}\le1+2\varepsilon.
+\]
+Sum this over the two noncrossing pairings of $T$.
+Their two masses sum to $U_T-u_{T,\rm alt}$, so
+\[
+ M_{\alpha_1}+M_{\alpha_2}+U_T+u_{T,\rm alt}\le2+4\varepsilon.
+\]
+Across all five sectors, each consecutive pair occurs in three noncrossing pairings.
+Each diagonal pair occurs in one.
+Using $\max(x,y)\ge(x+y)/2$ gives
+\[
+ R+A\le10+20\varepsilon-\frac12(3S_{\rm edge}+S_{\rm diag}).
+\]
+Consequently,
+\[
+ L\le5+10\varepsilon+\frac14S_{\rm edge}+\frac34S_{\rm diag}
+ \le\frac{15}{2}+15\varepsilon.
+\]
+
+Take $\varepsilon=1/100$.
+Then $L\le7.65$.
+The asymptotic cycle estimate gives $c(Y)\le(9/16)2^k$ for sufficiently large $k$.
+The five-cycle contributes one internal cycle.
+Hence
+\[
+ \frac{c(G)}{2^{k+1}}
+ \le7.65+\frac9{32}+2^{-k-1}<8
+\]
+for sufficiently large $k$.
+This proves the strict half bound in this case.
+The remaining bounded ranks are absorbed by increasing the absolute constant $K$.
+\end{proof}
+
+The proof uses the exact five-cycle pairing vector $(1/2,1/2,0)$ after normalization.
+The alternating pairing receives the larger gluing coefficient because it is absent on the five-cycle shore.

@@ -1,0 +1,149 @@
+\section{A fixed number of disjoint cycles at high path density}
+\label{sec:fixed-cycle-packings}
+
+The thin-layer encoding extends to any fixed number of cycle components.
+Its polynomial factor is the number of ways to split a long sequence of ordinary layers.
+This gives an optimal polynomial order for each fixed number of components.
+
+\begin{lemma}[A fixed number of almost disjoint intervals]
+\label{lem:fixed-interval-tuple-sum}
+Fix integers $j\ge1$ and $B\ge0$.
+There is a constant $c_{j,B}$ such that
+\[
+ \sum_{\substack{I_1,\ldots,I_j\text{ nonempty integer intervals in }[0,D]\\
+ |I_a\cap I_b|\le B\ (a\ne b)}}
+ 2^{\frac12\sum_{a=1}^j|I_a|}
+ \le c_{j,B}(D+1)^{j-1}2^{D/2}
+\]
+for every integer $D\ge0$.
+The interval tuples are ordered.
+\end{lemma}
+
+\begin{proof}
+Put $u=\sqrt2$ and $N=D+1$.
+First consider $q$ pairwise disjoint intervals in their left-to-right order.
+Let their positive lengths be $\ell_1,\ldots,\ell_q$.
+Let $g_0,\ldots,g_q$ be the nonnegative gaps, including the two outer gaps.
+Then
+\[
+ \sum_i\ell_i+\sum_i g_i=N.
+\]
+For a fixed gap vector, there are at most $N^{q-1}$ possible length vectors.
+Thus the weighted sum over these disjoint intervals is at most
+\begin{equation}\label{eq:disjoint-interval-tuple-bound}
+ N^{q-1}u^N\sum_{g_0,\ldots,g_q\ge0}u^{-\sum_i g_i}
+ =\frac{u}{(1-u^{-1})^{q+1}}N^{q-1}u^D.
+\end{equation}
+
+Now sort a general tuple by its left endpoints, at a cost of at most $j!$.
+For each interval, remove the part covered by earlier intervals.
+Because all earlier left endpoints are no larger, the removed part is an initial segment.
+The remaining interval is empty or is a single interval.
+The nonempty remainders are pairwise disjoint and occur in order.
+
+The $i$-th interval loses at most $(i-1)B$ positions.
+Indeed, its overlap with the union of earlier intervals is at most the sum of its pairwise overlaps.
+The total removed length is therefore at most $B\binom j2$.
+At least the first remainder is nonempty.
+Let $q\ge1$ be the number of nonempty remainders.
+
+For a fixed nonempty remainder, its original interval is recovered by restoring an initial segment of length at most $(j-1)B$.
+There are at most $(j-1)B+1$ possibilities.
+An empty remainder came from an interval of length at most $(j-1)B$.
+There are at most $((j-1)B+1)N$ possibilities for such an interval.
+Choosing which remainders are empty costs only a factor depending on $j$.
+Their possible positions therefore contribute at most a constant times $N^{j-q}$.
+The weight lost in trimming contributes at most $u^{B\binom j2}$.
+
+Apply \eqref{eq:disjoint-interval-tuple-bound} to the $q$ nonempty remainders.
+The resulting power is $N^{j-q}N^{q-1}=N^{j-1}$.
+All other factors depend only on $j,B$.
+Summing over $1\le q\le j$ proves the lemma.
+\end{proof}
+
+\begin{theorem}[Fixed-component cycle packing bound]
+\label{thm:fixed-component-high-path-packings}
+Fix $j\ge1$ and $0<\varepsilon\le1/2$.
+There is a constant $K_{j,\varepsilon}$ such that every normalized two-pole $N$ of rank $b$ satisfying
+\[
+ P(N)\ge(1/2+\varepsilon)2^b
+\]
+has at most
+\[
+ K_{j,\varepsilon}(b+1)^{j-1}2^{b/2}
+\]
+nonempty edge sets that are unions of at most $j$ vertex-disjoint cycles.
+For each fixed $j$, the power $j-1$ cannot be reduced throughout this class.
+\end{theorem}
+
+\begin{proof}
+First suppose $N$ is bridgeless.
+Use the distance layers and initial whole-layer marking from Lemma~\ref{lem:thin-layer-cycle-count}.
+Additive stability bounds both $\Delta$ and $H$ by $C_\varepsilon$.
+Thus at most $10C_\varepsilon+2$ vertices, and at most that many layers, are initially marked.
+The maximum distance is $D\le b+2C_\varepsilon$.
+
+Consider a union of exactly $m\le j$ vertex-disjoint cycles.
+Write $I_1,\ldots,I_m$ for their intervals of distance layers.
+Any layer strictly inside two of these intervals contains at least four vertices of their cycles.
+Such a layer cannot be initially ordinary, since ordinary layers have only two vertices.
+Only four layers can be endpoints of a given pair of intervals.
+Consequently,
+\[
+ |I_a\cap I_b|\le B:=\lceil10C_\varepsilon+2\rceil+4
+ \qquad(a\ne b).
+\]
+
+Fix the intervals, and mark all their endpoint layers.
+This adds at most $4m$ vertices.
+Fix all selected edges incident with marked vertices.
+This costs a constant depending only on $j,\varepsilon$.
+Every remaining ordinary layer is unused or carries the two through strands of one cycle.
+The intervals determine this choice.
+Across consecutive occupied ordinary layers, the selected edges form a perfect matching.
+Two-choice cuts are nonconsecutive, so their number is at most $\tfrac12\sum_a|I_a|$.
+These data determine the complete selected edge set.
+
+Lemma~\ref{lem:fixed-interval-tuple-sum} bounds the number of unions with exactly $m$ components by
+\[
+ O_{j,\varepsilon}((D+1)^{m-1}2^{D/2})
+ =O_{j,\varepsilon}((b+1)^{m-1}2^{b/2}).
+\]
+Sum over $1\le m\le j$ to prove the bridgeless case.
+
+For a general normalized two-pole, its relevant bridgeless pieces occur in series.
+Let their positive ranks be $b_1,\ldots,b_q$, with sum $b$.
+Every piece retains normalized path density at least $1/2+\varepsilon$.
+Suppose a packing uses $s$ pieces and has $m_i\ge1$ cycle components in piece $i$, with $\sum m_i\le j$.
+The product of the polynomial factors is at most
+\[
+ \prod_{i\text{ used}}(b_i+1)^{m_i-1}
+ \le(b+1)^{j-s}.
+\]
+For every fixed $s$, one has
+\[
+ \frac{\displaystyle\sum_{I\subseteq[q],\ |I|=s}
+             2^{\frac12\sum_{i\in I}b_i}}
+      {2^{b/2}}
+ \le\binom qs2^{-(q-s)/2}\le c_s,
+\]
+where $c_s$ is finite because exponential decay dominates the fixed-degree polynomial in $q$.
+There are only a bounded number of component-count allocations for fixed $j,s$.
+Since $s\ge1$, the resulting polynomial degree is at most $j-1$.
+Summing over $1\le s\le j$ proves the stated bound.
+
+For sharpness, take the saturated capped ladder with $m$ square blocks.
+Its rank is $b=2m+1$.
+Partition its square blocks into $j$ consecutive groups, each containing at least two squares.
+A group of $\ell$ squares has $2^\ell$ cycles that meet every square of the group.
+There are two cap choices in each end square and two through choices in each interior square.
+The cycles from different groups are vertex-disjoint.
+Their block supports recover the chosen partition.
+Thus this graph has at least
+\[
+ \binom{m-j-1}{j-1}2^m
+ =\Omega_j(b^{j-1}2^{b/2})
+\]
+unions of exactly $j$ vertex-disjoint cycles, for $m\ge2j$.
+This proves the optimality of the polynomial degree.
+\end{proof}

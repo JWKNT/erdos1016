@@ -1,0 +1,155 @@
+% Further random-host refinement. Include after random-hosts-phase2.tex
+% and k4-random-host-blocks.tex.
+\section{A random-host upper coefficient of eight sevenths}
+\label{sec:rhost-eight-sevenths}
+
+\paragraph{Status.}
+This section uses the explicit traceable $K_4$ blocks in Lemma~\ref{lem:rhost-k4-bands}.
+It adds a uniform overlap estimate for their random embeddings.
+This construction leaves the sharp coefficient and the full-threshold question unresolved.
+Later sections improve the coefficient and address the threshold.
+
+\begin{lemma}[Overlap estimate for a subdivided $K_4$]
+\label{lem:rhost-k4-moments}
+Let $Q$ be a subdivision of $K_4$, with $v$ vertices and $e=v+2$ edges.
+Let $g$ be its shortest cycle length.
+Let $b$ be the smallest number of edges in a connected subgraph of minimum degree at least two and rank two.
+Let $J\sim G(n,D/n)$, with $D\ge54$ and $v^2/n=o(1)$.
+Let $X$ count copies of $Q$, and let $Y$ count ordered intersecting pairs, including identical pairs.
+Put $\mu=\mathbb E X$ and
+\[
+ \varepsilon_Q=\frac{v^2}{n}
+ +(v+1)^{32}\left(D^{-g}+nD^{-b}+n^2D^{-e}\right).
+\]
+For an absolute constant $C$,
+\[
+ \operatorname{Var}(X)\le C\mu^2\varepsilon_Q,
+ \qquad \mathbb E Y\le C\mu^2\varepsilon_Q.
+\]
+\end{lemma}
+
+\begin{proof}
+The normalized weight of an overlap with $u$ vertices and $f$ edges is
+$(1+O(v^2/n))n^{-u}(n/D)^f$.
+As in Lemma~\ref{lem:rhost-theta-moments}, all forest overlaps contribute $O(v^2/n)$.
+Their disjoint components also supply at most the factor $\exp(2v^2/n)$ when a cyclic component is present.
+
+A subdivision of $K_4$ has no two vertex-disjoint cycles.
+Thus at most one overlap component contains a cycle.
+Strip its degree-one vertices to obtain its nonempty core.
+Each original subdivided edge is either wholly present in this core or absent from it.
+The core is therefore one of the following:
+a subdivided cycle, a subdivision of $K_4$ with one edge deleted, or all of $Q$.
+Its excess $f-u$ is respectively zero, one, or two.
+Its edge count is at least $g$, $b$, or $e$.
+
+We give a polynomial bound for the number of connected cyclic overlap descriptions.
+On each of the six original edge paths, such a component uses at most an initial segment from each endpoint.
+Thus at most twelve cut positions specify its edge set, after the core type is chosen.
+There are $O((v+1)^{12})$ possible source subgraphs.
+Each has at most twelve vertices of degree one and four vertices of degree three.
+Choose the images of these at most sixteen vertices in the second copy.
+After suppressing degree-two vertices, at most twenty-four path segments remain.
+Between two specified vertices in $Q$, there are at most $2^{\beta(Q)}=8$ simple paths.
+A loop segment has at most fourteen oriented cycle images, since $Q$ has seven cycles.
+Hence the segment images have only an absolute constant number of choices.
+A component that is itself a cycle has at most $14v$ possible images and obeys the same bound.
+There are therefore $O((v+1)^{28})$ connected cyclic overlap descriptions.
+
+Their total normalized contribution is at most
+\[
+ O((v+1)^{28})\left(D^{-g}+nD^{-b}+n^2D^{-e}\right).
+\]
+The forest components and falling-factorial correction give the stated estimate with exponent $32$.
+The argument applies first to labelled embeddings and then to unlabelled copies.
+Vertex-disjoint pairs contribute at most $\mu^2$, which also proves the variance estimate.
+\end{proof}
+
+\begin{corollary}[A list of robust $K_4$ embeddings]
+\label{cor:rhost-k4-list}
+Let $d=(1+o(1))\ln n/\ln\ln n$ and $D=\Theta(d)$.
+Assume $nD^{-d}$ tends to zero faster than every fixed negative power of $d$.
+Consider $O(d)$ subdivisions of $K_4$.
+Suppose each has $O(d)$ edges, shortest cycle length at least $d/4$,
+every rank-two core has at least $d$ edges, and its full edge count is at least $2d$.
+With high probability, all these graphs embed vertex-disjointly in $G(n,D/n)$.
+They can avoid any prescribed set of $O(d^2)$ vertices, even if that set is chosen after observing the graph.
+\end{corollary}
+
+\begin{proof}
+Apply Lemma~\ref{lem:rhost-k4-moments} to each graph in the list.
+The sum of its error parameters, multiplied by $O(d^2)$, tends to zero.
+The forest term contributes $O(d^5/n)$.
+The cycle term tends to zero because $D^{-d/4}=n^{-1/4+o(1)}$.
+The other terms tend to zero by the hypothesis on $nD^{-d}$.
+The Chebyshev, Markov, and independent-set argument in Lemma~\ref{lem:rhost-theta-list}
+therefore supplies more than $M$ vertex-disjoint copies of each type, for any fixed $M=O(d^2)$.
+Choose one copy of each type greedily, avoiding the prescribed vertices and earlier choices.
+\end{proof}
+
+\begin{theorem}[An upper coefficient of eight sevenths]
+\label{thm:rhost-eight-sevenths}
+For the same $p_*$ as in Theorem~\ref{thm:rhost-scale}, and every $p\ge p_*$,
+with high probability
+\[
+ \operatorname{Pex}(G(n,p))
+ \le\log_2n+\left(\frac87+o(1)\right)\frac{\ln n}{\ln\ln n}.
+\]
+\end{theorem}
+
+\begin{proof}
+Use the exposure scheme and parameters of Theorem~\ref{thm:rhost-four-thirds}.
+In particular, split $G_2$ into two independent subexposures of probability
+$q_2=1-\sqrt{1-p_2}$, and use
+\[
+ \beta=\frac{4(\ln\ln n)^2}{\ln n},\qquad
+ a=\lfloor(5\beta)^{-1}\rfloor,
+ \qquad d=\lfloor\log_a(n/200)\rfloor.
+\]
+Let $b=\lceil\sqrt{2\ln n}\rceil$, $T=2(d+b+1)$, and $N=\lceil T/14\rceil$.
+Replace the theta list by the two families of $K_4$ blocks from Lemma~\ref{lem:rhost-k4-bands}.
+They use $2(N+1)$ blocks of rank three.
+Add one single-cycle block for each length $3,\ldots,2N+5$, and one for length $4N+8$.
+The resulting blocks cover every length through $14N+10\ge T$.
+Their total rank is exactly
+\[
+ 6(N+1)+(2N+4)=8N+10
+ \le\frac87(d+b+1)+18.
+\]
+
+Prepare the single-cycle blocks, the binary base cycles, the two-digit base cycle,
+and the reserve edge in $G_1$, using the separated subexposures described above.
+Their total vertex count is $O(d^2)$.
+Use the first $G_2$ subexposure for the complete $K_4$ blocks.
+Corollary~\ref{cor:rhost-k4-list} applies.
+Indeed, the metric lemma gives shortest cycles $2N+6>d/4$,
+rank-two cores with at least $7N+13\ge d$ edges, and whole blocks with at least $14N+15\ge2d$ edges.
+Also, $D=nq_2=\Theta(d)$ and $nD^{-d}$ has the required superpolynomial decay.
+
+Each block has a specified unsubdivided arm and therefore has a spanning path.
+Choose those paths after the embeddings are found.
+Use the second $G_2$ subexposure to join the short blocks into the connector chain.
+The previously audited endpoint-query and vertex-budget estimates remain unchanged.
+Complete the binary and two-digit gadgets in $G_3$ and the Hamilton cycle in $G_4$.
+Use the original $G_5$ long interval-covering chords.
+
+The blocks cover every length through $T$.
+The two-digit and binary gadgets cover the remaining intervals as before.
+The final excess is at most
+\[
+ K+2b+8N+m+O(1)
+ \le\log_2n+\frac87d+O(\sqrt{\ln n}).
+\]
+This gives the asserted asymptotic bound at $p_*$.
+Monotonicity handles $p\ge p_*$.
+\end{proof}
+
+Together with Theorem~\ref{thm:rhost-coefficient-one}, this gives
+\[
+ \boxed{\quad
+ \log_2n+(1-o(1))\frac{\ln n}{\ln\ln n}
+ \le\operatorname{Pex}(G(n,p_*))
+ \le\log_2n+\left(\frac87+o(1)\right)\frac{\ln n}{\ln\ln n}
+ \quad}
+\]
+with high probability.

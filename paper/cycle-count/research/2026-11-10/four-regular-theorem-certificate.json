@@ -1,0 +1,557 @@
+{
+  "status": "all exact counts agree; bound and exception classification passed",
+  "nauty_version": "2.8.9",
+  "nauty_source_url": "https://pallini.di.uniroma1.it/nauty2_8_9.tar.gz",
+  "nauty_archive_sha256": "c97ab42bf48796a86a598bce3e9269047ca2b32c14fc23e07208a244fe52c4ee",
+  "max_n": 10,
+  "classes": [
+    {
+      "n": 4,
+      "k": 2,
+      "underlying_graphs": 1,
+      "without_matching": 0,
+      "multigraph_instances": 3,
+      "full_cycle_counts": 3,
+      "maximum_full_count": 19,
+      "passed_after_length": {},
+      "seconds": 3.2334e-05,
+      "independent_cycle_space_checks": 3,
+      "above_half_instances": [
+        {
+          "graph6": "C~",
+          "doubled_pairs": [
+            [
+              0,
+              1
+            ],
+            [
+              2,
+              3
+            ]
+          ],
+          "cycles": 19,
+          "cycles_by_length_2_to_n": [
+            2,
+            8,
+            9
+          ]
+        },
+        {
+          "graph6": "C~",
+          "doubled_pairs": [
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ]
+          ],
+          "cycles": 19,
+          "cycles_by_length_2_to_n": [
+            2,
+            8,
+            9
+          ]
+        },
+        {
+          "graph6": "C~",
+          "doubled_pairs": [
+            [
+              0,
+              3
+            ],
+            [
+              1,
+              2
+            ]
+          ],
+          "cycles": 19,
+          "cycles_by_length_2_to_n": [
+            2,
+            8,
+            9
+          ]
+        }
+      ],
+      "equality_instances": [],
+      "generator_command": [
+        "/tmp/nauty2_8_9/geng",
+        "-c",
+        "-d3",
+        "-D4",
+        "4",
+        "6"
+      ],
+      "generator_report": ">A /tmp/nauty2_8_9/geng -cd3D3 n=4 e=6\n>Z 1 graphs generated in 0.00 sec\n",
+      "graph6_stream_sha256": "62073900de6d9451c02333f80b3c4de1105edb4559989fee6cfa91c1365d102b"
+    },
+    {
+      "n": 5,
+      "k": 0,
+      "underlying_graphs": 1,
+      "without_matching": 0,
+      "multigraph_instances": 1,
+      "full_cycle_counts": 1,
+      "maximum_full_count": 37,
+      "passed_after_length": {},
+      "seconds": 2.3541e-05,
+      "independent_cycle_space_checks": 1,
+      "above_half_instances": [
+        {
+          "graph6": "D~{",
+          "doubled_pairs": [],
+          "cycles": 37,
+          "cycles_by_length_2_to_n": [
+            0,
+            10,
+            15,
+            12
+          ]
+        }
+      ],
+      "equality_instances": [
+        {
+          "graph6": "D~{",
+          "doubled_pairs": [],
+          "cycles": 37,
+          "cycles_by_length_2_to_n": [
+            0,
+            10,
+            15,
+            12
+          ]
+        }
+      ],
+      "generator_command": [
+        "/tmp/nauty2_8_9/geng",
+        "-c",
+        "-d3",
+        "-D4",
+        "5",
+        "10"
+      ],
+      "generator_report": ">A /tmp/nauty2_8_9/geng -cd3D4 n=5 e=10\n>Z 1 graphs generated in 0.00 sec\n",
+      "graph6_stream_sha256": "04003765f09de2f4e929e50b225b2fff590e4f0b9106c3eab308682abdd60944"
+    },
+    {
+      "n": 5,
+      "k": 1,
+      "underlying_graphs": 1,
+      "without_matching": 1,
+      "multigraph_instances": 0,
+      "full_cycle_counts": 0,
+      "maximum_full_count": 0,
+      "passed_after_length": {},
+      "seconds": 5.625e-06,
+      "independent_cycle_space_checks": 0,
+      "above_half_instances": [],
+      "equality_instances": [],
+      "generator_command": [
+        "/tmp/nauty2_8_9/geng",
+        "-c",
+        "-d3",
+        "-D4",
+        "5",
+        "9"
+      ],
+      "generator_report": ">A /tmp/nauty2_8_9/geng -cd3D4 n=5 e=9\n>Z 1 graphs generated in 0.00 sec\n",
+      "graph6_stream_sha256": "7bc8d10d9027b7cb541a8c68ad4fe21bad781970dfa7556d7e3a7df1823d5f91"
+    },
+    {
+      "n": 5,
+      "k": 2,
+      "underlying_graphs": 1,
+      "without_matching": 0,
+      "multigraph_instances": 2,
+      "full_cycle_counts": 2,
+      "maximum_full_count": 32,
+      "passed_after_length": {},
+      "seconds": 3.3958e-05,
+      "independent_cycle_space_checks": 2,
+      "above_half_instances": [],
+      "equality_instances": [],
+      "generator_command": [
+        "/tmp/nauty2_8_9/geng",
+        "-c",
+        "-d3",
+        "-D4",
+        "5",
+        "8"
+      ],
+      "generator_report": ">A /tmp/nauty2_8_9/geng -cd3D4 n=5 e=8\n>Z 1 graphs generated in 0.00 sec\n",
+      "graph6_stream_sha256": "d1abecff9e261a76ac307782e56769ba2be6fc072c68197350764f6d49ea221f"
+    },
+    {
+      "n": 6,
+      "k": 0,
+      "underlying_graphs": 1,
+      "without_matching": 0,
+      "multigraph_instances": 1,
+      "full_cycle_counts": 1,
+      "maximum_full_count": 63,
+      "passed_after_length": {},
+      "seconds": 3.5625e-05,
+      "independent_cycle_space_checks": 1,
+      "above_half_instances": [],
+      "equality_instances": [],
+      "generator_command": [
+        "/tmp/nauty2_8_9/geng",
+        "-c",
+        "-d3",
+        "-D4",
+        "6",
+        "12"
+      ],
+      "generator_report": ">A /tmp/nauty2_8_9/geng -cd3D4 n=6 e=12\n>Z 1 graphs generated in 0.00 sec\n",
+      "graph6_stream_sha256": "ebf7dbd7e62f1b7edab612a6d15b145e3d73ff72f1c609bc0b34d5824c5fae49"
+    },
+    {
+      "n": 6,
+      "k": 1,
+      "underlying_graphs": 2,
+      "without_matching": 1,
+      "multigraph_instances": 1,
+      "full_cycle_counts": 1,
+      "maximum_full_count": 60,
+      "passed_after_length": {},
+      "seconds": 2.375e-05,
+      "independent_cycle_space_checks": 1,
+      "above_half_instances": [],
+      "equality_instances": [],
+      "generator_command": [
+        "/tmp/nauty2_8_9/geng",
+        "-c",
+        "-d3",
+        "-D4",
+        "6",
+        "11"
+      ],
+      "generator_report": ">A /tmp/nauty2_8_9/geng -cd3D4 n=6 e=11\n>Z 2 graphs generated in 0.00 sec\n",
+      "graph6_stream_sha256": "379e9b1f7eaf58af65d140159d908372ec546ae669a1773fd3605c5e5a55953e"
+    },
+    {
+      "n": 6,
+      "k": 2,
+      "underlying_graphs": 3,
+      "without_matching": 1,
+      "multigraph_instances": 2,
+      "full_cycle_counts": 2,
+      "maximum_full_count": 52,
+      "passed_after_length": {},
+      "seconds": 3.6416e-05,
+      "independent_cycle_space_checks": 2,
+      "above_half_instances": [],
+      "equality_instances": [],
+      "generator_command": [
+        "/tmp/nauty2_8_9/geng",
+        "-c",
+        "-d3",
+        "-D4",
+        "6",
+        "10"
+      ],
+      "generator_report": ">A /tmp/nauty2_8_9/geng -cd3D4 n=6 e=10\n>Z 3 graphs generated in 0.00 sec\n",
+      "graph6_stream_sha256": "bdf6ff2b987bc428638c1f7d6c00665aaac2fa2cdb290e63e2af5b37169844c8"
+    },
+    {
+      "n": 7,
+      "k": 0,
+      "underlying_graphs": 2,
+      "without_matching": 0,
+      "multigraph_instances": 2,
+      "full_cycle_counts": 2,
+      "maximum_full_count": 108,
+      "passed_after_length": {},
+      "seconds": 4.3958e-05,
+      "independent_cycle_space_checks": 2,
+      "above_half_instances": [],
+      "equality_instances": [],
+      "generator_command": [
+        "/tmp/nauty2_8_9/geng",
+        "-c",
+        "-d3",
+        "-D4",
+        "7",
+        "14"
+      ],
+      "generator_report": ">A /tmp/nauty2_8_9/geng -cd3D4 n=7 e=14\n>Z 2 graphs generated in 0.00 sec\n",
+      "graph6_stream_sha256": "30614e91fa96043579844309bf2745ea4b1f68a6864f8f61627b03c36e2b03b9"
+    },
+    {
+      "n": 7,
+      "k": 1,
+      "underlying_graphs": 7,
+      "without_matching": 4,
+      "multigraph_instances": 3,
+      "full_cycle_counts": 3,
+      "maximum_full_count": 102,
+      "passed_after_length": {},
+      "seconds": 5.0042e-05,
+      "independent_cycle_space_checks": 3,
+      "above_half_instances": [],
+      "equality_instances": [],
+      "generator_command": [
+        "/tmp/nauty2_8_9/geng",
+        "-c",
+        "-d3",
+        "-D4",
+        "7",
+        "13"
+      ],
+      "generator_report": ">A /tmp/nauty2_8_9/geng -cd3D4 n=7 e=13\n>Z 7 graphs generated in 0.00 sec\n",
+      "graph6_stream_sha256": "1eaffbd422a1603538d6730689cc66dd54ba0273661d3b612927acebdd1cf0c7"
+    },
+    {
+      "n": 7,
+      "k": 2,
+      "underlying_graphs": 11,
+      "without_matching": 6,
+      "multigraph_instances": 5,
+      "full_cycle_counts": 5,
+      "maximum_full_count": 97,
+      "passed_after_length": {},
+      "seconds": 7.2167e-05,
+      "independent_cycle_space_checks": 5,
+      "above_half_instances": [],
+      "equality_instances": [],
+      "generator_command": [
+        "/tmp/nauty2_8_9/geng",
+        "-c",
+        "-d3",
+        "-D4",
+        "7",
+        "12"
+      ],
+      "generator_report": ">A /tmp/nauty2_8_9/geng -cd3D4 n=7 e=12\n>Z 11 graphs generated in 0.00 sec\n",
+      "graph6_stream_sha256": "df197b54433f7fb1ab2e9d07f325d194fbd55fa5abc9e32cd39f13fdf3f56c55"
+    },
+    {
+      "n": 8,
+      "k": 0,
+      "underlying_graphs": 6,
+      "without_matching": 0,
+      "multigraph_instances": 6,
+      "full_cycle_counts": 6,
+      "maximum_full_count": 204,
+      "passed_after_length": {},
+      "seconds": 0.000142667,
+      "independent_cycle_space_checks": 6,
+      "above_half_instances": [],
+      "equality_instances": [],
+      "generator_command": [
+        "/tmp/nauty2_8_9/geng",
+        "-c",
+        "-d3",
+        "-D4",
+        "8",
+        "16"
+      ],
+      "generator_report": ">A /tmp/nauty2_8_9/geng -cd3D4 n=8 e=16\n>Z 6 graphs generated in 0.00 sec\n",
+      "graph6_stream_sha256": "781b0a4dd2c4289669bc9ff37264cc85afccfa9aaddc9313ae8466fd1bb111e5"
+    },
+    {
+      "n": 8,
+      "k": 1,
+      "underlying_graphs": 28,
+      "without_matching": 18,
+      "multigraph_instances": 10,
+      "full_cycle_counts": 10,
+      "maximum_full_count": 177,
+      "passed_after_length": {},
+      "seconds": 0.000229625,
+      "independent_cycle_space_checks": 10,
+      "above_half_instances": [],
+      "equality_instances": [],
+      "generator_command": [
+        "/tmp/nauty2_8_9/geng",
+        "-c",
+        "-d3",
+        "-D4",
+        "8",
+        "15"
+      ],
+      "generator_report": ">A /tmp/nauty2_8_9/geng -cd3D4 n=8 e=15\n>Z 28 graphs generated in 0.00 sec\n",
+      "graph6_stream_sha256": "847858e129ed6235dff893eb9309f190e0576192206831e1e92d3d02c44e69a8"
+    },
+    {
+      "n": 8,
+      "k": 2,
+      "underlying_graphs": 50,
+      "without_matching": 29,
+      "multigraph_instances": 22,
+      "full_cycle_counts": 22,
+      "maximum_full_count": 165,
+      "passed_after_length": {},
+      "seconds": 0.000418709,
+      "independent_cycle_space_checks": 22,
+      "above_half_instances": [],
+      "equality_instances": [],
+      "generator_command": [
+        "/tmp/nauty2_8_9/geng",
+        "-c",
+        "-d3",
+        "-D4",
+        "8",
+        "14"
+      ],
+      "generator_report": ">A /tmp/nauty2_8_9/geng -cd3D4 n=8 e=14\n>Z 50 graphs generated in 0.00 sec\n",
+      "graph6_stream_sha256": "70e48543c9c3e26e97e4e3f10efd8644694e12d152609c2b456d2439c3631747"
+    },
+    {
+      "n": 9,
+      "k": 0,
+      "underlying_graphs": 16,
+      "without_matching": 0,
+      "multigraph_instances": 16,
+      "full_cycle_counts": 16,
+      "maximum_full_count": 333,
+      "passed_after_length": {},
+      "seconds": 0.00090125,
+      "independent_cycle_space_checks": 16,
+      "above_half_instances": [],
+      "equality_instances": [],
+      "generator_command": [
+        "/tmp/nauty2_8_9/geng",
+        "-c",
+        "-d3",
+        "-D4",
+        "9",
+        "18"
+      ],
+      "generator_report": ">A /tmp/nauty2_8_9/geng -cd3D4 n=9 e=18\n>Z 16 graphs generated in 0.00 sec\n",
+      "graph6_stream_sha256": "bd98dba790fea0be4b5bd5693eaddef592db5358dc6727d64e7986e5ff4c2a7d"
+    },
+    {
+      "n": 9,
+      "k": 1,
+      "underlying_graphs": 126,
+      "without_matching": 85,
+      "multigraph_instances": 41,
+      "full_cycle_counts": 41,
+      "maximum_full_count": 325,
+      "passed_after_length": {},
+      "seconds": 0.00126521,
+      "independent_cycle_space_checks": 41,
+      "above_half_instances": [],
+      "equality_instances": [],
+      "generator_command": [
+        "/tmp/nauty2_8_9/geng",
+        "-c",
+        "-d3",
+        "-D4",
+        "9",
+        "17"
+      ],
+      "generator_report": ">A /tmp/nauty2_8_9/geng -cd3D4 n=9 e=17\n>Z 126 graphs generated in 0.00 sec\n",
+      "graph6_stream_sha256": "d9b46f0f30354a2d9cdefbbc4c0ec4150f4902dfe53e120a0927a950df8cd656"
+    },
+    {
+      "n": 9,
+      "k": 2,
+      "underlying_graphs": 285,
+      "without_matching": 200,
+      "multigraph_instances": 90,
+      "full_cycle_counts": 90,
+      "maximum_full_count": 286,
+      "passed_after_length": {},
+      "seconds": 0.00216575,
+      "independent_cycle_space_checks": 90,
+      "above_half_instances": [],
+      "equality_instances": [],
+      "generator_command": [
+        "/tmp/nauty2_8_9/geng",
+        "-c",
+        "-d3",
+        "-D4",
+        "9",
+        "16"
+      ],
+      "generator_report": ">A /tmp/nauty2_8_9/geng -cd3D4 n=9 e=16\n>Z 285 graphs generated in 0.00 sec\n",
+      "graph6_stream_sha256": "1eac7ed17f05a282612e416d3e3bee1655269a94c38368e04ab5bfb5e4120d04"
+    },
+    {
+      "n": 10,
+      "k": 0,
+      "underlying_graphs": 59,
+      "without_matching": 0,
+      "multigraph_instances": 59,
+      "full_cycle_counts": 59,
+      "maximum_full_count": 593,
+      "passed_after_length": {},
+      "seconds": 0.00348088,
+      "independent_cycle_space_checks": 59,
+      "above_half_instances": [],
+      "equality_instances": [],
+      "generator_command": [
+        "/tmp/nauty2_8_9/geng",
+        "-c",
+        "-d3",
+        "-D4",
+        "10",
+        "20"
+      ],
+      "generator_report": ">A /tmp/nauty2_8_9/geng -cd3D4 n=10 e=20\n>Z 59 graphs generated in 0.00 sec\n",
+      "graph6_stream_sha256": "c62ed570911e66e98eaaa8ba56191a316f01dba5dbdf59aacd008ce5108e3f40"
+    },
+    {
+      "n": 10,
+      "k": 1,
+      "underlying_graphs": 719,
+      "without_matching": 519,
+      "multigraph_instances": 200,
+      "full_cycle_counts": 200,
+      "maximum_full_count": 534,
+      "passed_after_length": {},
+      "seconds": 0.00975779,
+      "independent_cycle_space_checks": 200,
+      "above_half_instances": [],
+      "equality_instances": [],
+      "generator_command": [
+        "/tmp/nauty2_8_9/geng",
+        "-c",
+        "-d3",
+        "-D4",
+        "10",
+        "19"
+      ],
+      "generator_report": ">A /tmp/nauty2_8_9/geng -cd3D4 n=10 e=19\n>Z 719 graphs generated in 0.00 sec\n",
+      "graph6_stream_sha256": "11931afe60f94171456958e2bd986ee6f888033dc776593f64703fca14f1d5c9"
+    },
+    {
+      "n": 10,
+      "k": 2,
+      "underlying_graphs": 1915,
+      "without_matching": 1472,
+      "multigraph_instances": 461,
+      "full_cycle_counts": 461,
+      "maximum_full_count": 526,
+      "passed_after_length": {},
+      "seconds": 0.0187309,
+      "independent_cycle_space_checks": 461,
+      "above_half_instances": [],
+      "equality_instances": [],
+      "generator_command": [
+        "/tmp/nauty2_8_9/geng",
+        "-c",
+        "-d3",
+        "-D4",
+        "10",
+        "18"
+      ],
+      "generator_report": ">A /tmp/nauty2_8_9/geng -cd3D4 n=10 e=18\n>Z 1915 graphs generated in 0.00 sec\n",
+      "graph6_stream_sha256": "be7d6de6d8b3ea74fe49ff72685cba0315ec03fb4896893280a916a0c436be36"
+    }
+  ],
+  "source_sha256": {
+    "geng": "5105ee2600c94d3789693caef6f32265e1832e96aeecffa0a819abd54b235287",
+    "check_four_regular_finite": "31b97051f4842249a989cdbab2f677c428c55214c4b2e71da5b7470065730cf7",
+    "verify_four_regular_theorem.py": "7c72924ba8e0f33e607d5dd3d4cbe43f7b7ce2c6475a85d114e4f1523e8fd3d4",
+    "check_four_regular_finite.cpp": "81dac2ac825dad4888f1bd70b4acc5ba89ffa9dd8e11f26efc589203ed9fb001",
+    "run_four_regular_finite.py": "39a91935227353953e506914c49bc64693da33036e2b2a8aba6ec6ed2fe6272c"
+  },
+  "total_instances": 925,
+  "total_underlying_graphs": 3234,
+  "total_seconds": 2.2206971645355225
+}

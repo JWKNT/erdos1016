@@ -1,0 +1,86 @@
+Independent mathematical audit by path_stability
+Source: fable-parallel-links.md, Sections1,3,4,5
+Status: PASS for the mathematical claims used below.
+No Fable source file or Lean file was changed.
+
+1. Parallel complementary components
+
+Retaining one component joining A and B gives a connected core.
+Deleting any two other complementary components leaves a connected graph.
+The one-link pair law therefore makes their zero-boundary events independent.
+Conditional internal nonzero-even events preserve pairwise independence.
+Their probabilities are at least2^(-t-1), so the elementary second moment
+gives at most2^(t+1) eligible regions when forest probability exceeds1/2.
+The statement is correctly limited to these parallel components.
+
+2. Refined moment
+
+For total cycle weight mu and ordered two-link weight W2,
+
+  E Z^2 <=mu^2+W2+(1+eta)mu.
+
+One-link pairs are covered by the baseline mu^2.
+Two-link pairs add W2, and the exceptional-partner bound handles >=3 links.
+When mu>0 and forest probability exceeds1/2, this gives
+
+  W2 >mu^2-(1+eta)mu.
+
+At mu=0, only the nonstrict version is valid.
+This vacuous edge case was corrected in our extension fragment.
+All substantive applications have mu>=20.
+
+3. Clean block geometry
+
+The full block U_b minus(U_a union C_a) has boundary in the two separator cycles.
+The separator cycles avoid both marked vertices and S0.
+After discarding blocks that meet S0 or P, no retained block can have a neighbor there.
+Discarding blocks meeting a neighbor of the anchor cycle removes the only
+additional boundary edges absent from Gamma minus the anchor cycle.
+Hence only S0 itself must be discarded, not its neighbors.
+
+4. One-block spectral supply
+
+For a block with n>=8L^2 and deficit d<=2L,
+
+  Ld/(2n)<=1/8.
+
+For even lengths6x..L, the normalized Perron contribution is at least7/8.
+The block order is at most3r, so the nonreal error is at most9r^(-2).
+The repeated-walk factor is1+o(1), uniformly over the blocks.
+Thus its cycle weight is at least(7/32-o(1))*ln(A/6)>1 for A=6exp168.
+This argument does not require connected blocks or eigenvalue multiplicities.
+
+5. Fixed-exponent parameters
+
+For Theorem E, delta=(1-3kappa)/8 gives
+
+  d1/2-(d0+kappa)=delta,
+  d1/2-kappa=3delta.
+
+For Theorem X, delta=(1-2kappa)/8 gives
+
+  d1/2-d0=1/2-3delta>0,
+  d1/2-kappa=3delta.
+
+All deletion, overlap, and chain losses are lower-order under these margins.
+The proof is substantive for0<kappa<1/3 or0<kappa<1/2, respectively.
+For nonpositive kappa, the displayed forest estimate is eventually trivial.
+If the marked set is empty, the forest event consists only of the empty even set.
+That case is also immediate and needs no anchor component.
+
+6. New endpoint parameters
+
+The root proposed variable t,D0,D1 and a square-root-scale excess.
+The complete extension and refinement are saved separately:
+
+  second-order-parallel-links-endpoint.tex
+  second-order-parallel-links-log-five-half.tex
+
+Both have full independent line-level PASS audits by four_regular and random_hosts.
+The strongest proved conclusion is
+
+  psi(r)<=2^(r-1)+O(2^r*(log r)^(11/2)/sqrt(r)).
+
+The stronger packing branch of the existing exponential cut proof is essential
+for the11/2 logarithmic exponent.
+The first file preserves the conservative log7 and log6 parameter arguments.

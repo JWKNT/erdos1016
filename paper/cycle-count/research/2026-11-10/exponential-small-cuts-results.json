@@ -1,0 +1,50 @@
+{
+  "status": "all exact F2 and rational checks passed",
+  "simple_graph_classes": [
+    {
+      "order": 2,
+      "connected_simple_graphs": 1
+    },
+    {
+      "order": 3,
+      "connected_simple_graphs": 2
+    },
+    {
+      "order": 4,
+      "connected_simple_graphs": 6
+    },
+    {
+      "order": 5,
+      "connected_simple_graphs": 21
+    },
+    {
+      "order": 6,
+      "connected_simple_graphs": 78
+    }
+  ],
+  "additional_cycle_doubled_cycle_and_cubic_necklace_cases": 16,
+  "counts": {
+    "terminal_forest_subsets": 5682,
+    "nonempty_terminal_classes": 459,
+    "block_selection_cases": 5682,
+    "graphs": 124,
+    "conditional_cartesian_product_checks": 878,
+    "matching_product_law_checks": 878,
+    "common_functional_inequalities": 878,
+    "largest_common_family": 12,
+    "full_U_conditional_product_checks": 1028,
+    "block_selected_vertices": 393
+  },
+  "checks": [
+    "simultaneous split cycle-space bijection",
+    "equal new coordinates and exact component count",
+    "two-regular connected series quotient",
+    "conditional Cartesian-product cycle spaces",
+    "matched closed-star product law",
+    "exact rational common-functional inequality",
+    "terminal-forest classes and their nonzero functional",
+    "block-cut exclusions and weighted path coloring",
+    "exact conditional closure probability given full U",
+    "full-U conditional block product law"
+  ]
+}

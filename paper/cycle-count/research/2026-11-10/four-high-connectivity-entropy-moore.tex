@@ -1,0 +1,183 @@
+\section{A rank dichotomy for high-girth shores}
+\label{sec:four-high-connectivity-entropy-moore}
+
+The following average-growth bound uses a stationary non-backtracking walk.
+It avoids an external irregular Moore-bound theorem.
+All logarithms and entropies have base two.
+
+\begin{lemma}[An entropy Moore bound for normalized poles]
+\label{lem:four-entropy-moore}
+Let $N$ be a normalized $k$-pole of rank $h\ge2$, order $n$, and girth $g\ge3$.
+Then
+\[
+ n=2h+k-2,
+ \qquad
+ g\le4+2\left(1+\frac{k}{3(h-1)}\right)\log n.
+\]
+\end{lemma}
+
+\begin{proof}
+The degree sum gives $2h-2$ cubic vertices and $k$ degree-two vertices.
+Hence $n=2h+k-2$ and $m=|E(N)|=3h+k-3$.
+
+Start with a uniformly chosen directed edge.
+At each step, choose uniformly among edges that do not reverse the preceding step.
+The directed-edge distribution remains uniform.
+Indeed, a directed edge leaving $v$ has $\deg(v)-1$ possible predecessors, each assigning it probability $1/(\deg(v)-1)$.
+Thus the conditional entropy of each further step is
+\[
+ \sigma=\frac{1}{2m}\sum_v\deg(v)\log(\deg(v)-1)
+       =\frac{3(h-1)}{3h+k-3}>0.
+\]
+
+Put $t=\lfloor(g-1)/2\rfloor$.
+The random walk of length $t$ has entropy
+\[
+ H_t=\log(2m)+(t-1)\sigma.
+\]
+Every such walk is a simple path, since $t<g$.
+Two distinct such paths with the same ordered endpoints would give a cycle of length at most $2t<g$.
+There are therefore at most $n^2$ possible walks.
+Entropy is at most the logarithm of the support size, so
+\[
+ (t-1)\sigma\le2\log n-\log(2m)\le\log n.
+\]
+The final inequality uses $2m\ge n$.
+Since $t\ge(g-2)/2$, this gives $g\le4+2\log n/\sigma$.
+Substitute the formula for $\sigma$.
+\end{proof}
+
+\begin{corollary}[Small or polynomial-rank shores]
+\label{cor:four-high-girth-shore-dichotomy}
+Fix $c,C>0$.
+For all sufficiently large $r$, the following holds.
+Suppose a normalized $k$-pole has rank $h\ge1$, with
+\[
+ k\le C\log r,
+ \qquad \operatorname{girth}(N)\ge c\log r.
+\]
+Then either
+\[
+ h\le1+\frac{4C}{3c}\log(3C\log r),
+\]
+or
+\[
+ h\ge r^{c/4}.
+\]
+The rank threshold depends only on $c,C$.
+\end{corollary}
+
+\begin{proof}
+The case $h=1$ satisfies the first bound.
+Assume $h\ge2$, and write $x=\log r$.
+First suppose $h<k$.
+Then $n\le3Cx$ and Lemma~\ref{lem:four-entropy-moore} gives
+\[
+ cx\le4+2\log(3Cx)
+       +\frac{2Cx}{3(h-1)}\log(3Cx).
+\]
+For large $r$, the first two terms sum to at most $cx/2$.
+Rearrangement gives the first alternative.
+
+Now suppose $h\ge k$.
+Then $n\le3h$ and $k/[3(h-1)]\le2/3$.
+Consequently
+\[
+ cx\le4+\frac{10}{3}\log(3h),
+ \qquad
+ h\ge\frac{2^{-6/5}}{3}\,r^{3c/10}.
+\]
+For sufficiently large $r$, the last bound exceeds $r^{c/4}$.
+\end{proof}
+
+For a minimum cyclic cut in a cubic graph, every shore is connected and its ports are distinct.
+Thus each shore is a normalized pole.
+The girth of either shore is at least the ambient girth.
+The corollary therefore applies directly when the cut order is $O(\log r)$.
+
+For minimum-cut shores, an elementary argument gives a stronger direct conclusion.
+It avoids any external theorem about atoms or cyclic parts.
+
+\begin{corollary}[Every noncycle shore has exponential rank in its girth]
+\label{cor:four-minimum-shore-exponential-rank}
+Let $N$ be a normalized $k$-pole of rank $h\ge2$ and girth $g\ge\max\{k,3\}$.
+Then
+\[
+ k\le6(h-1),\qquad
+ h\ge1+2^{(g-22)/6}.
+\]
+Consequently, a shore of a minimum cyclic cut in a cubic graph is either a cycle or has rank exponential in the ambient girth.
+\end{corollary}
+
+\begin{proof}
+Every graph of rank at least two contains two distinct cycles.
+If they are edge-disjoint, their union has at least $2g$ edges.
+Otherwise their union contains a theta graph.
+Its three cycles have total length twice its number of edges, so that number is at least $3g/2$.
+In either case, writing $m=3h+k-3$,
+\[
+ g\le\frac{2m}{3}=2h+\frac{2k}{3}-2.
+\]
+Since $g\ge k$, it follows that $k\le6(h-1)$.
+Therefore
+\[
+ n=2h+k-2\le8(h-1),\qquad
+ \sigma=\frac{3(h-1)}{3(h-1)+k}\ge\frac13.
+\]
+Lemma~\ref{lem:four-entropy-moore} gives
+\[
+ g\le4+6\log n\le22+6\log(h-1).
+\]
+Rearranging proves the exponential bound.
+
+A minimum cyclic-cut shore is a normalized pole, and its girth is at least the ambient girth.
+The cut order is at most the ambient girth.
+Thus the bound applies whenever its rank is at least two.
+A connected normalized pole of rank one has only degree-two vertices, so it is a cycle.
+\end{proof}
+
+This is a structural reduction, not a cycle-count bound by itself.
+The crossing-count application also needs the growing-terminal forest estimate and its uniform error.
+
+\begin{corollary}[A stronger rank bound and a large port-free ball]
+\label{cor:four-near-moore-shore-rank}
+Under the hypotheses of Corollary~\ref{cor:four-minimum-shore-exponential-rank}, if $g\ge120$, then
+\[
+ h\ge2^{g/2-5}.
+\]
+Moreover, $N$ has a port-free radius-$a$ ball, where
+\[
+ a=\left\lfloor\frac g2-\log(192g)\right\rfloor.
+\]
+This ball contains at least $2^{g/2}/(192g)$ vertices.
+\end{corollary}
+
+\begin{proof}
+The preceding corollary gives $h-1\ge2^{(g-22)/6}\ge g^2$ for $g\ge120$.
+The final comparison holds at $120$, and its left-to-right ratio increases thereafter.
+If $h\ge2^{g/2}$, the first assertion already holds.
+Otherwise
+\[
+ n=2h+k-2\le2^{g/2+2},\qquad
+ \frac{2k\log n}{3(h-1)}
+ \le\frac{2g(g/2+2)}{3g^2}<1.
+\]
+Lemma~\ref{lem:four-entropy-moore} now gives $g<5+2\log n$.
+Thus $n>2^{(g-5)/2}$.
+For $g\ge120$, one has $g\le2^{(g-5)/2}/2$.
+Since $k\le g$,
+\[
+ h=\frac{n-k+2}{2}>\frac14\,2^{(g-5)/2}>2^{g/2-5}.
+\]
+
+Any radius-$a$ ball in a graph of maximum degree three contains at most $3\cdot2^a-2$ vertices.
+The union of those balls around all ports therefore has at most
+\[
+ 3k2^a\le3g\frac{2^{g/2}}{192g}=2^{g/2-6}
+\]
+vertices.
+But $n\ge h\ge2^{g/2-5}$, so some vertex lies outside that union.
+Its radius-$a$ ball contains no port.
+Since $2a<g$, its breadth-first expansion has at least $3\cdot2^a-2\ge2^{a+1}$ vertices.
+The definition of $a$ gives $2^{a+1}\ge2^{g/2}/(192g)$, as required.
+\end{proof}

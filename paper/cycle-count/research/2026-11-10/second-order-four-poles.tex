@@ -1,0 +1,85 @@
+\section{Saturated four-terminal blocks}
+\label{sec:second-order-four-poles}
+
+A four-terminal block is a simple connected graph $K$ with four specified vertices
+$L_1,L_2,R_1,R_2$ of degree two.
+Every other vertex has degree three.
+A cross path joins some $L_i$ to some $R_j$.
+A through pair consists of two vertex-disjoint cross paths that cover the four terminals.
+Write $h=\beta(K)$.
+Call $K$ saturated if $P_{L_iR_j}(K)=2^h$ for every $i,j\in\{1,2\}$.
+
+\begin{proposition}\label{prop:saturated-four-pole}
+Suppose that $K$ is saturated and has a through pair.
+Then $K$ consists of two paths on $h+1$ vertices each, together with a perfect matching between them.
+Orient each path from its left terminal to its right terminal.
+In these orders, the matching permutation is a concatenation of singleton blocks and adjacent transpositions.
+If there are $a$ transposition blocks, then the number of through pairs is exactly $2^a$.
+In particular, that number is at most $2^{\lfloor(h+1)/2\rfloor}$.
+\end{proposition}
+
+\begin{proof}
+Fix cross terminals $s,t$.
+The edge sets with odd degrees precisely at $s,t$ form an affine space of size $2^h$.
+Since $s,t$ have degree two, every such set consists of one simple $s$--$t$ path and disjoint cycles.
+The other vertices have degree at most three.
+Saturation therefore implies that every cross path meets every cycle in a vertex.
+
+Choose a through pair $P,Q$.
+Let $F$ contain all edges outside $E(P)\cup E(Q)$.
+Every vertex of $P\cup Q$ has degree one in $F$.
+Every other vertex has degree three in $F$.
+A cycle in $F$ would avoid $P$, which is impossible.
+Thus $F$ is a forest.
+
+No component of $F$ has two leaves on $P$.
+Otherwise, its path between those leaves, together with a subpath of $P$, contains a cycle disjoint from $Q$.
+The internal vertices of that forest path lie outside $P\cup Q$, since all vertices on $P\cup Q$ have degree one in $F$.
+The same argument applies to $Q$.
+Thus every component of $F$ has at most two leaves.
+A tree whose vertex degrees belong to $\{1,3\}$ has two more leaves than degree-three vertices.
+Each component is consequently one edge, with one endpoint on each path.
+Hence $P\cup Q$ spans $K$, and $F$ is a perfect matching between $P$ and $Q$.
+
+Both paths have the same number $k$ of vertices.
+Write their vertices as $x_1,\ldots,x_k$ and $y_1,\ldots,y_k$, in left-to-right order.
+The matching has edges $x_i y_{\pi(i)}$ for a permutation $\pi$.
+Counting edges gives $h=k-1$.
+
+We claim that $\pi$ avoids the patterns $231$, $312$, and $321$.
+Suppose that $i<j<k'$ and $\pi(k')<\min\{\pi(i),\pi(j)\}$.
+The first two matching edges, their top interval, and their bottom interval form a cycle.
+The path from $x_k$ to $x_{k'}$, across its matching edge, and then to $y_1$ avoids that cycle.
+It is a cross path, a contradiction.
+This excludes both $231$ and $321$.
+If instead $\pi(i)>\max\{\pi(j),\pi(k')\}$, use the last two matching edges for the cycle.
+The path from $x_1$ through the first matching edge to $y_k$ avoids it.
+This excludes $312$.
+
+For completeness, these three forbidden patterns force the claimed block form.
+If $\pi(1)\ge3$, its entries with values one and two give a $312$ or $321$ pattern.
+If $\pi(1)=1$, remove this singleton and apply induction.
+If $\pi(1)=2$, the value one must occur second.
+Otherwise, the first entry, second entry, and later value one form a $231$ pattern.
+Remove this adjacent transposition and apply induction.
+
+The graph is therefore a chain of single-rung blocks and square blocks.
+Between successive blocks there are two edges.
+Each through pair uses both edges at every such interface.
+A single-rung block has one possible local through pairing.
+A square block has two.
+The choices are independent, so there are exactly $2^a$ through pairs.
+Since each square block uses two positions, $a\le\lfloor k/2\rfloor$.
+\end{proof}
+
+Conversely, every graph described in the proposition is saturated.
+With $a$ square blocks and $c$ single-rung blocks, its rank is $h=2a+c-1$.
+For fixed cross terminals, choose one edge at each of the $a+c-1$ interfaces.
+Each square then supplies two local paths, while each single-rung block supplies one.
+This gives $2^{a+c-1}2^a=2^h$ cross paths.
+
+The proposition gives a barrier for a restricted construction method.
+In a cyclic chain of saturated blocks, the odd-interface sector gives the half-density leading term.
+The proposition limits the through-state growth of every block with a through pair to the half exponent.
+It does not classify saturated blocks with no through pair.
+It also does not bound arbitrary graphs or blocks with unsaturated cross-path counts.

@@ -1,0 +1,74 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,booktabs,array,microtype,xcolor}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\PP}{\mathbb P}
+\newcommand{\EE}{\mathbb E}
+\newcommand{\comp}{\operatorname{comp}}
+\setlength{\emergencystretch}{3em}
+\title{The sharp second-order cycle bound for cyclic cuts of size at most four}
+\author{Collaborative research working draft}
+\date{10 November 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+There is an absolute constant $K$ such that every connected loopless cubic multigraph $G$ of cycle rank $r$ with a cyclic edge cut of size at most four satisfies
+\[
+ c(G)\le 2^{r-1}+Kr2^{r/2}.
+\]
+The known Horak--Kim cyclic-square family shows that the order $r2^{r/2}$ is necessary within this class.
+The proof combines terminal-path saturation, a path--cycle tradeoff, exact four-terminal gluing, and a linear bound for pairs of disjoint cycles.
+The unrestricted sharp-order bound remains open.
+\end{abstract}
+
+\section*{Status, inputs, and conventions}
+These statements have passed independent mathematical audits within the research team.
+The exact cut-state identities and the sharpness formulas also have independent finite checks.
+The proofs are not formalized in Lean, and publication priority has not been established.
+The lower-bound family is due to Horak and Kim; it is not a new construction.
+
+Two earlier results in the shared research programme are inputs.
+First, fixed path density above one half implies additive terminal-distance stability and bounded rank after deleting a suitable shortest path; see the accompanying report \nolinkurl{terminal-path-stability.pdf}.
+Second, the asymptotic one-half cycle bound gives $c(H)\le(1/2+o(1))2^{\beta(H)}$ for unrestricted graphs.
+The separate report \nolinkurl{polynomial-cycle-error.pdf} strengthens that input.
+These two results are not re-proved here.
+
+Rank means $|E|-|V|+\operatorname{comp}$.
+Paths and cycles are simple; parallel edges remain distinct, and a parallel pair is a cycle.
+A cyclic cut has a cycle on each shore.
+A normalized $k$-pole has $k$ distinct degree-two ports and degree three at every other vertex.
+The final section gives the sharp-order theorem; the earlier, weaker estimates are retained as steps of its proof.
+
+\clearpage
+\tableofcontents
+\input{second-order-four-poles}
+\input{second-order-saturated-blocks}
+\input{second-order-path-gap}
+\input{second-order-high-path-cycle-tradeoff}
+\input{second-order-one-full-tripole}
+\input{second-order-three-pole-tradeoff}
+\input{second-order-four-cut-states}
+\input{second-order-four-cut-large-shores}
+\input{second-order-all-four-cuts}
+\input{second-order-two-cycle-packing-refinement}
+\input{second-order-constructions}
+\input{second-order-four-cut-sharp-order}
+\section{Verification record}
+The exact four-cut checker tests 600 gluings, 120 added-edge and capping identities, and 768 individual forest mappings.
+It compares the state formula with independent global cycle-space enumeration.
+A separate checker verifies the cyclic-square total cycle formula for two through seven blocks and the disjoint-cap packing formula for one through six square blocks.
+The layer encodings and terminal-path saturation statements have additional independent checks recorded in the shared research directory.
+These finite checks support the identities; the asymptotic bounds follow from the proofs.
+
+The unrestricted $O(r2^{r/2})$ question is now reduced, within the established cubic-kernel reductions, to cyclically five-edge-connected kernels.
+Five-terminal state analysis remains work in progress.
+\begin{thebibliography}{9}
+\bibitem{HK} P. Horak and D. Kim, \emph{Connected cubic graphs with the maximum number of perfect matchings}, Journal of Graph Theory 99 (2022), 671--690. Updated author version: \url{https://arxiv.org/abs/2006.13459}.
+\end{thebibliography}
+\end{document}

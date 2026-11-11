@@ -1,0 +1,66 @@
+\section{A path gap on every six-pole of girth at least seven}
+\label{sec:root-six-planarity}
+
+This observation applies at every rank.
+It strengthens the bounded-shore reduction, but does not by itself prove a six-cut bound.
+
+\begin{lemma}[Planarity of a saturated pole]
+\label{lem:root-saturated-pole-planar}
+Let $X$ be a connected normalized $k$-pole, with two ports $s,t$.
+If $P_{st}(X)=2^{\beta(X)}$, then $X$ is planar.
+\end{lemma}
+
+\begin{proof}
+Suppress all degree-two ports except $s,t$.
+A loop cannot arise: it would be an off-route cycle, which makes the normalized terminal-path count at most one half.
+The result is a saturated normalized two-pole of the same rank.
+Apply Lemma~\ref{lem:full-two-pole-classification}.
+
+Each bridgeless piece is a digon or a capped permutation ladder.
+The permitted ladder blocks are singletons and adjacent transpositions.
+Complete each block by adding an edge between its two left attachments, and another between its two right attachments.
+For a singleton, the completed multigraph has two vertices and three parallel edges.
+For a transposition, it is $K_4$.
+Both are planar.
+
+A planar two-edge join preserves planarity.
+Indeed, put one designated edge of each planar graph on its outer face, remove these edges, and join corresponding endpoints across the two disks.
+Apply this operation to successive completed blocks.
+At the two ends, subdivide the remaining completion edges to form the terminal caps.
+This constructs the capped ladder as a planar graph.
+Joining planar pieces by bridges also preserves planarity.
+Finally, restore the suppressed ports by subdivision.
+\end{proof}
+
+\begin{proposition}[Uniform path gap in a six-pole of large girth]
+\label{prop:root-six-girth-path-gap}
+Let $X$ be a connected normalized six-pole of girth at least seven and rank $h$.
+Every terminal pair satisfies
+\[
+ P_{st}(X)\le\frac{15}{16}\,2^h.
+\]
+\end{proposition}
+
+\begin{proof}
+If some pair were saturated, Lemma~\ref{lem:root-saturated-pole-planar} would make $X$ planar.
+Let $n,e,f$ denote its numbers of vertices, edges, and faces in a planar embedding.
+The degree sum gives $2e=3n-6$.
+The graph has minimum degree two and contains a cycle.
+Every facial boundary walk therefore has length at least seven, even when bridges occur.
+Thus $2e\ge7f=7(2-n+e)$, or $5e\le7n-14$.
+Combining the two inequalities gives $n\le2$.
+This contradicts the six distinct ports.
+The terminal-path saturation gap now proves the assertion.
+\end{proof}
+
+The facial-walk assertion uses minimum degree two.
+A facial walk with no cycle in its support would force a leaf in its finite tree support.
+At such a leaf, the facial walk turns back immediately, so the original graph has degree one there.
+This is impossible.
+Equivalently, apply the usual planar girth inequality after deleting bridges and summing over the cyclic blocks.
+
+\begin{remark}[Scope]
+The argument does not claim that every planar six-pole is saturated.
+It only excludes saturation when the girth is at least seven.
+The preceding six-cycle-shore theorem already handles the smaller-girth cores relevant to the cycle-count problem.
+\end{remark}

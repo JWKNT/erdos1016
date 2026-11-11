@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "block_rank": 2,
+      "rank": 9,
+      "vertices": 20,
+      "forest_states": 512,
+      "pairing_counts": [
+        256,
+        256
+      ],
+      "pair_path_counts": [
+        32,
+        32,
+        32,
+        32,
+        32,
+        32
+      ]
+    },
+    {
+      "block_rank": 3,
+      "rank": 13,
+      "vertices": 28,
+      "forest_states": 8192,
+      "pairing_counts": [
+        4096,
+        4096
+      ],
+      "pair_path_counts": [
+        128,
+        128,
+        128,
+        128,
+        128,
+        128
+      ]
+    },
+    {
+      "block_rank": 4,
+      "rank": 17,
+      "vertices": 36,
+      "forest_states": 131072,
+      "pairing_counts": [
+        65536,
+        65536
+      ],
+      "pair_path_counts": [
+        512,
+        512,
+        512,
+        512,
+        512,
+        512
+      ]
+    }
+  ],
+  "total_affine_states": 139776
+}

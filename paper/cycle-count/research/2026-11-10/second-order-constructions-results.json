@@ -1,0 +1,130 @@
+[
+  {
+    "q": 2,
+    "rank": 4,
+    "kind": "square",
+    "distance": 3,
+    "paths": 14,
+    "excess": 6
+  },
+  {
+    "q": 2,
+    "rank": 4,
+    "kind": "link",
+    "distance": 3,
+    "paths": 14,
+    "excess": 6
+  },
+  {
+    "q": 3,
+    "rank": 6,
+    "kind": "square",
+    "distance": 3,
+    "paths": 51,
+    "excess": 19
+  },
+  {
+    "q": 3,
+    "rank": 6,
+    "kind": "link",
+    "distance": 5,
+    "paths": 56,
+    "excess": 24
+  },
+  {
+    "q": 4,
+    "rank": 8,
+    "kind": "square",
+    "distance": 3,
+    "paths": 181,
+    "excess": 53
+  },
+  {
+    "q": 4,
+    "rank": 8,
+    "kind": "link",
+    "distance": 5,
+    "paths": 204,
+    "excess": 76
+  },
+  {
+    "q": 5,
+    "rank": 10,
+    "kind": "square",
+    "distance": 3,
+    "paths": 649,
+    "excess": 137
+  },
+  {
+    "q": 5,
+    "rank": 10,
+    "kind": "link",
+    "distance": 5,
+    "paths": 724,
+    "excess": 212
+  },
+  {
+    "q": 6,
+    "rank": 12,
+    "kind": "square",
+    "distance": 3,
+    "paths": 2385,
+    "excess": 337
+  },
+  {
+    "q": 6,
+    "rank": 12,
+    "kind": "link",
+    "distance": 5,
+    "paths": 2596,
+    "excess": 548
+  },
+  {
+    "q": 7,
+    "rank": 14,
+    "kind": "square",
+    "distance": 3,
+    "paths": 8993,
+    "excess": 801
+  },
+  {
+    "q": 7,
+    "rank": 14,
+    "kind": "link",
+    "distance": 5,
+    "paths": 9540,
+    "excess": 1348
+  },
+  {
+    "q": 8,
+    "rank": 16,
+    "kind": "square",
+    "distance": 3,
+    "paths": 34625,
+    "excess": 1857
+  },
+  {
+    "q": 8,
+    "rank": 16,
+    "kind": "link",
+    "distance": 5,
+    "paths": 35972,
+    "excess": 3204
+  },
+  {
+    "q": 9,
+    "rank": 18,
+    "kind": "square",
+    "distance": 3,
+    "paths": 135297,
+    "excess": 4225
+  },
+  {
+    "q": 9,
+    "rank": 18,
+    "kind": "link",
+    "distance": 5,
+    "paths": 138500,
+    "excess": 7428
+  }
+]

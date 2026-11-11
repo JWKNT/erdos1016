@@ -1,0 +1,277 @@
+{
+  "date_utc": "2026-11-10T23:42:35.807478+00:00",
+  "original_source_revision": "a965788",
+  "status": "Mathematical research drafts with independent internal audits; new results not formalized in Lean; publication priority unverified",
+  "attribution": {
+    "Fable 5.2": "localization, general linear path stability via shortest-path layers, and the chord-free cycle recurrence",
+    "Codex team": "fixed-gap forest range, additive stability deduction, exact four-regular theorem and finite verification, random-host refinements, and other fragments"
+  },
+  "audit_scope": {
+    "additive_path_stability": "root, path_stability, and four_regular independently checked the layer-to-cycle deduction; Fable's input separately audited twice",
+    "four_regular": "structural and analytic arguments audited independently; all 925 required finite cases checked by two cycle counters",
+    "centered_wheel_upper_bound": "root and four_regular independently audited distribution, matching theorem, overlap moments, density, and rank accounting",
+    "minor_closed_cycle_error": "root audit; independent chord-free proof supplied by path_stability",
+    "full_random_host_threshold": "root, path_stability, and four_regular independently checked adaptive exposure, rollback, finite topology, interval coverage, Hamilton completion at the exact threshold, and excess accounting"
+  },
+  "pdfs": {
+    "research-progress-extended.pdf": {
+      "pages": 75,
+      "sha256": "6789ee8b548e49342477e22af323f383a7e3c87468821b42d1772c0ec3fbcad6",
+      "build": "tectonic --keep-logs research-progress-extended.tex",
+      "tex_warnings": [],
+      "visual_review": "All pages reviewed in rendered PNGs by root and/or path_stability; no clipped mathematics or unresolved references"
+    },
+    "terminal-path-stability.pdf": {
+      "pages": 13,
+      "sha256": "c5f655d0170e1c554b6efbe2f94391515cd062ac55cbbbd16644fdb986303407",
+      "build": "tectonic --keep-logs terminal-path-stability.tex",
+      "tex_warnings": [],
+      "visual_review": "All pages reviewed in rendered PNGs by root and/or path_stability; no clipped mathematics or unresolved references"
+    },
+    "four-regular-theorem.pdf": {
+      "pages": 10,
+      "sha256": "f6ef1983a39a992edee1a2351fbe9aa86708d884ac34f8a822b6d32703f81e1c",
+      "build": "tectonic --keep-logs four-regular-theorem.tex",
+      "tex_warnings": [],
+      "visual_review": "All pages reviewed in rendered PNGs by root and/or path_stability; no clipped mathematics or unresolved references"
+    },
+    "full-threshold-pancyclicity.pdf": {
+      "pages": 7,
+      "sha256": "e6662b7d12b5aa471494ad8899dd72f256bb610929292d8d64ee24b241342183",
+      "build": "tectonic --keep-logs full-threshold-pancyclicity.tex",
+      "tex_warnings": [],
+      "visual_review": "All pages reviewed in rendered PNGs by root and/or path_stability; no clipped mathematics or unresolved references"
+    }
+  },
+  "finite_checks": {
+    "no-waste-results.json": {
+      "sha256": "4c5178de6023940d14b1dca1c3e21d57f946860aab98c00b0ec7c992fb0bef59",
+      "summary": {
+        "networkx_version": "3.7",
+        "max_n": 6,
+        "status": "PASS",
+        "scope": "All edge subsets W containing a cycle in every connected atlas graph through max_n. Isolated marked vertices omitted."
+      }
+    },
+    "path-stability-results.json": {
+      "sha256": "eb55fb35feced7796845b6c2d724728ae147b95c2286cbe0145edccedc334187",
+      "summary": {
+        "scope": "Finite exact checks of the terminal series-parallel inequalities; the general additive theorem is proved separately."
+      }
+    },
+    "path-stability-phase2-results.json": {
+      "sha256": "9898bd0ee3793187a874027d981304b1b6ffe6d2fdc9be4f6d6e3754f361c707",
+      "summary": {
+        "status": "all exact checks passed",
+        "rank_four_distance_two_paths": 13,
+        "limitations": "Finite path counts only; the planar stability proof is a mathematical argument."
+      }
+    },
+    "path-minor-reduction-results.json": {
+      "sha256": "3ee28af60526486d83a9885905e4acc705fc02595fae1a9b35567e47506daabb",
+      "summary": {
+        "status": "all exact checks passed",
+        "networkx_version": "3.7",
+        "graph_order_limit": 7,
+        "connected_graphs": 995,
+        "above_half_cycle_graphs": 551,
+        "terminal_pairs": 19846,
+        "above_half_pairs": 4906,
+        "marked_paths_checked": 26830,
+        "suppressed_vertices": 19134,
+        "limitations": "Finite checks of the reduction only. The stability theorem uses a mathematical separator argument."
+      }
+    },
+    "additive-layer-structure-results.json": {
+      "sha256": "e9c0f0603c18ff3b2433a145d31ce1059def86f27b331d01d56d84d67be31fd4",
+      "summary": {
+        "status": "all exact checks passed",
+        "networkx_version": "3.7",
+        "graphs_checked": 157,
+        "selected_windows": 301,
+        "largest_expanded_graph": 322,
+        "largest_outside_rank": 81,
+        "largest_selected_window": 35,
+        "limitations": "Finite checks of the cubic-layer argument only; the probability theorem remains a mathematical proof."
+      }
+    },
+    "link-stability-results.json": {
+      "sha256": "d34e2d827ac1bd697191b865c5a6224864de5803ae39deb34568aee4d8bbab7d",
+      "summary": {
+        "seed": 101620261110,
+        "cases": 180,
+        "max_rank": 10,
+        "exact_rational_checks": true,
+        "status": "PASS"
+      }
+    },
+    "random-host-encoding-results.json": {
+      "sha256": "12a99d79c474610f3fd3a3f489677f9ad8799d68321d3315e78a28e8aa59705b",
+      "summary": {
+        "status": "pass",
+        "parameter_pairs": 114,
+        "explicit_cycles_checked": 17214,
+        "scope": "two-digit gadget, exact ranks, and interval coverage"
+      }
+    },
+    "random-host-phase2-results.json": {
+      "sha256": "26e00c61358e399f81bb20a430d0ee9745bfa6e6ba769eb85ed5ae470aa0bd24",
+      "summary": {
+        "status": "pass",
+        "graphs_checked": 1099,
+        "graph_pseudoforest_pairs_checked": 54315,
+        "strict_pairs": 43469,
+        "theta_interval_parameter_pairs": 67,
+        "theta_blocks_with_spanning_paths_checked": 7712,
+        "whole_theta_blocks_with_spanning_paths_checked": 10024,
+        "scope": "all simple graphs through five vertices and all spanning pseudoforests; all cycle subfamilies via the worst-case inequality; explicit theta cycles, spanning paths, and interval coverage"
+      }
+    },
+    "k4-random-host-blocks-results.json": {
+      "sha256": "07ee27e997992de3d14d2d802b735e92e32156bfce6a2fc7511eb4fdadae30e4",
+      "summary": {
+        "status": "all checks passed",
+        "metric_cases": 10300,
+        "explicit_Hamilton_path_cases": 88
+      }
+    },
+    "theta-random-host-partition-results.json": {
+      "sha256": "95a7e123a4d45841e2f0d78520a909d9f02bb2b613e81b9560b45292082f2e57",
+      "summary": {
+        "status": "all exact checks passed",
+        "theta_blocks_checked": 1000000
+      }
+    },
+    "random-host-wheel-results.json": {
+      "sha256": "eb937c3144a08d184d85a3f2ebcad4d4031354295c2c41b7f8808fbe0024419f",
+      "summary": {
+        "metric_cases": 3962,
+        "centered_metric_cases": 3000,
+        "explicit_spanning_paths": 120,
+        "kernel_core_types": 42,
+        "kernel_cycles": 13,
+        "exact_pair_marginal_checks": 96,
+        "asymptotic_matching_and_embedding_theorems": "not certified by finite checks"
+      }
+    },
+    "four-regular-theorem-certificate.json": {
+      "sha256": "4c8fb3258488a1a876cc25adf1a69329c119b1d63c7eeb57befa258cb8df8e5c",
+      "summary": {
+        "status": "all exact counts agree; bound and exception classification passed",
+        "nauty_version": "2.8.9",
+        "nauty_source_url": "https://pallini.di.uniroma1.it/nauty2_8_9.tar.gz",
+        "nauty_archive_sha256": "c97ab42bf48796a86a598bce3e9269047ca2b32c14fc23e07208a244fe52c4ee",
+        "max_n": 10,
+        "total_instances": 925,
+        "total_underlying_graphs": 3234,
+        "total_seconds": 2.2206971645355225
+      }
+    },
+    "four-regular-vertex-deletion-results.json": {
+      "sha256": "0a56da94a5c136793d3ffc441bf0a6abb8c2507885eda0e023d6fe57158cb002",
+      "summary": {
+        "status": "all exact inequalities passed",
+        "finite_cases": 24,
+        "standalone_induction_base_cases": 7,
+        "tail_monotonicity": "all exact constant checks passed",
+        "maximum_display_ratio": 0.9922851501892875,
+        "kappa_upper": "845071/1000000",
+        "rho_upper": "107457/100000",
+        "rho_cubed_upper": "1240807/1000000",
+        "chi_upper": "1398653/1000000",
+        "delta_two_upper": "1023197/1000000"
+      }
+    },
+    "cubic-edge-frequency-results.json": {
+      "sha256": "c5194acf7b089354d9e00150790c7458b2aa36d5b0d6a28017f1018293571596",
+      "summary": {
+        "status": "all exact checks passed",
+        "method": "fundamental binary cycle space; connected nonzero even sets",
+        "generator": "nauty 2.8.9 geng -cq -d3 -D3 n"
+      }
+    },
+    "full-threshold-integration-results.json": {
+      "sha256": "d1352ada05df9b5da5b7fa8d6e5934f53a4948f3e7c176d51f2b50ceb2a00bcd",
+      "summary": {
+        "gadget_cases": 16,
+        "binary_cycle_checks": 3072,
+        "digit_cycle_checks": 1784,
+        "spanning_hamilton_cycle_checks": 16,
+        "adaptive_exposure_and_asymptotic_probability_proofs": "not certified by finite checks"
+      }
+    },
+    "fable_check_tools.py": {
+      "status": "passed on 2026-11-10",
+      "exact_checks": "300 graphs each for edge recursion, product formula, localization, and splitting; layer checks also passed"
+    },
+    "random-host-rank3-barrier-certificates.json": {
+      "sha256": "dfb40cbf11e5c3c3cef75e6af35aaf5082188c1a2ef0cf4be118b583cb2d02bc",
+      "status": "all exact rational dual inequalities passed",
+      "theta_regions": 64,
+      "K4_regions": 16384,
+      "integral": "37/36"
+    }
+  },
+  "source_sha256": {
+    "check_additive_layer_structure.py": "f9d70f91ed611e600c88bf69b8bd2dbbeb8203019d582ad2f3894698ab9d30d8",
+    "check_cubic_edge_frequency.py": "b16937c7bedeb938338a66ee479d8157e64fc3219547a24c23e8b73726111a58",
+    "check_four_regular.py": "653d2217589678f5da1950816671a53bbfddda5bc73f71133b8ecf00642943aa",
+    "check_four_regular_core_bound.py": "0538adbde303f4e4db1b88929eed8209c177f9980d50475110ca2809ac2d8136",
+    "check_four_regular_finite.cpp": "81dac2ac825dad4888f1bd70b4acc5ba89ffa9dd8e11f26efc589203ed9fb001",
+    "check_full_threshold_integration.py": "828756b54f185d20753d505d9567a72a7fbafcaf5fe24d93c4dadc9cee5d0db2",
+    "check_k4_random_host_blocks.py": "32be78428393aee674be0307addf63cc0b0100d620cb1abf122411870be6486c",
+    "check_link_stability.py": "3c9272580280e2ce3e5a3726e472164a13155c6f8d122f79917991bea30fe7e8",
+    "check_no_waste.py": "849ebf6a9c09b12e19d60012dfb5c7e0a8f57b31c85df02d7f52c40200632b46",
+    "check_path_minor_reduction.py": "a716b8715c4daff8374fe9336290464a672104021dfe53de066b41eb9b786001",
+    "check_path_stability.py": "1b7a7c1bdb95aaa965575d9ae3554290c6feba7a88287221cd48f54f3d359fb4",
+    "check_path_stability_phase2.py": "d7d64b2557642d34cf5ee79c5880dcc9c4be131ebd99889e3ee024b6ea64b2be",
+    "check_random_host_encoding.py": "3bb33f2deb360fb0f2501489654028cbf45fb39ad3fcfcb6a6d3a87eeffbbe43",
+    "check_random_host_phase2.py": "fa5821c5723ede3b125b90933aacf3e674a952b8d8bf856eb106febfc36f50a4",
+    "check_random_host_rank3_barrier.py": "67637473e4bb9289c837033e22a1f3458faeafd6f01ba9ec8d918944de4eba41",
+    "check_random_host_wheels.py": "73f0562003d56ae8581e7e00e9af6dbbe74341b00b3eae7aeb7095f92c886695",
+    "check_theta_random_host_partition.py": "4954c4976e01b8204e45a9f19559d94dfe860b57f7b06661df6455da050604d3",
+    "cubic-edge-frequency.tex": "5f72957605509ff64439142c9143e2af785c195ed516abd30627c7c2aa196ca2",
+    "cycle-recursion.tex": "e221fbdf7c959b49971ba85c1965981d5a7add7ae0c28cbdc526fa3fa8671502",
+    "fable-notes.md": "fdee67e722926bf1a32a4eb1d62054e19a04b2efce9299e868571cf3510a8fdb",
+    "fable_check_blocking.py": "fb2f1c331ca1e726804445cd8806768440c2b27b18943ab2a9053e7a834689f3",
+    "fable_check_tools.py": "55e5ace50fcd908e459ac6cc77eeaef6860bc9579093956b62e067a4d6895343",
+    "fable_search_excess.py": "4a5306d0fbe1178b918bfa414c5019573c7d73257553b17d50400709967d1bc6",
+    "four-regular-phase2.tex": "b32cdcb776e029f1dbcb454de0aa0f8010f3eb7992961f7405e3a384f8939b75",
+    "four-regular-structure.tex": "7fe55dee9ea709bfcccdad12100e283756cfadcbe5ad5f8b8f18bf804462a827",
+    "four-regular-theorem.tex": "8abc7405d6b94e4cd041524c36639923f6c9b29af4ff6fe4c52c6b2fa9d3737d",
+    "four-regular-vertex-deletion.tex": "6314c6d0cf94241dac84f8d612b416e3f300c1a5baa6b34c54b145b3c8f94fc9",
+    "four-regular.tex": "be4c0690cbb31de16faeff6d69099164bc73872777b93a083157102a5405dedf",
+    "four_regular_enumeration_bounds.py": "99de57f89f1367cb42fa1ff11adac5a8f53a14cc4c2c95db6dd1d16b6dfde31f",
+    "four_regular_vertex_deletion_certificates.py": "3b6b2904389636401be17d2bde9021807cc2dcfca2df71be684c1f6b097d387a",
+    "full-threshold-pancyclicity.tex": "052d912c0747fe043d554cbac14a01d3b11461136dd61d70e245352ed169bafd",
+    "general-additive-path-stability.tex": "ac4e59321077d240bfbd549a1798761a7ed1008ace135987edf41bcefe8cc7c0",
+    "general-path-stability.tex": "3e25ab49dc778f621eb9f2d56490f776b85096cb2377e216fe2baae9049434d8",
+    "k4-random-host-blocks.tex": "f99c70ecc439cc2a01b3be256aef27634d63061583b0116fee8f6d410c41a915",
+    "link-stability.tex": "7d6d24713539b9c57ab5a8a98eee00a2b916c8500cfed89d487ae7cf3ef5e1dc",
+    "no-waste-phase2.tex": "492480c6f3df7f9ddf986a2715b7b6dd066f49688f0cccf36972fd436a092a9e",
+    "path-stability-phase2.tex": "5585e016ed89d5a0f52e40c43c768bfb4c8fcd979796d084231f3136102345d4",
+    "path-stability.tex": "f3b411283bc27ac6bd39b47297914596ea660680859741e87f5f1c9577f783e1",
+    "planar-cycle-error.tex": "f53a98c5ab18a225231542bd6934866af6cca828ab1b5fe9ecd00bf8d90a4a96",
+    "random-host-block-barrier.tex": "c94cebd247c45f160e8afde73388bde81389103005fa646b82e3ea5e4af3bb22",
+    "random-host-full-threshold.tex": "3d06f75f90e6ac702a050e539af0f10aa4997c97b4b0ddfb6d73d393b14cc5d4",
+    "random-host-threshold-tools.tex": "21c0ade3d965b77db114ff0bd03649775e06efed29244b04d07732fb181c3b38",
+    "random-host-threshold.tex": "6b0dda607d9d3b1dee639e9d0cb255f31ed055014da747840efbdd343c1d9b26",
+    "random-host-weighted-matching.tex": "5e94f034b29f38f49ec7300741ded5e1e2590037bd6b1c1100846e6c1bd65ac5",
+    "random-hosts-phase2.tex": "82468fedc093de33a19a619c3f4eb37255f9ab21fc8a641eacbd83fca3cf8a05",
+    "random-hosts-phase3.tex": "bd1d771e6e76b136d61b35b43154ee3fd020daed715d1d6dd4da12050f632c15",
+    "random-hosts-phase4.tex": "cd07953b270021f2276347838fc12fe6f03d4b17385020753c65b9b48485307a",
+    "random-hosts-phase5.tex": "ec06cef83e1b72223353e101f656c39f5a915304171166bab74b4179ba3ed707",
+    "random-hosts-phase6.tex": "53252f814016b077cda00f3e22e0671baba23a7e8353aae8edf33b55182790a5",
+    "random-hosts-phase7.tex": "0aadcaeb6e9f9148497a6b04987b5d69c85b52facf2ed9ae1946a312c23d5103",
+    "random-hosts.tex": "6081814e93cef74e1459439e9bed956091f217eedbb21517b9f99c8c3b5ad37b",
+    "remaining-directions-phase2.tex": "5415c52eca5265b38d4c01684c23e790afd997149304c76f98e70c89d7dd14b7",
+    "remaining-directions.tex": "50fe449ce1a7b4e953b187bc564e8b6e669ad8fdd962ea9e98ef03b6f53bd667",
+    "research-progress-extended.tex": "b79e4ec0cd7fb4d6c5808ea619052f6186ad6bd505e8b92c63576cb2277a05e8",
+    "research-progress.tex": "8856ecdac9b287bb1cc0b2a08a1ec78dda1f7ea944448dda4c2725ddac2379b7",
+    "run_four_regular_finite.py": "39a91935227353953e506914c49bc64693da33036e2b2a8aba6ec6ed2fe6272c",
+    "terminal-path-stability.tex": "4ce21391e020cfcbcb676850c32d10ffe54248b6153b640122c69b01a578f815",
+    "theta-random-host-partition.tex": "5401d47d04a0e5d70f434143b74dda87bc17b2cb9cb62f06d3ad1b8b8cb71fa6",
+    "verify_four_regular_theorem.py": "7c72924ba8e0f33e607d5dd3d4cbe43f7b7ce2c6475a85d114e4f1523e8fd3d4",
+    "write_verification_manifest.py": "c6191c17c4f1d934e225ad195b1105e25d63f03af0373aa474a2eb73e8011d0d"
+  }
+}

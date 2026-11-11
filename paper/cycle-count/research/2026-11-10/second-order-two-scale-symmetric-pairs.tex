@@ -1,0 +1,121 @@
+\section{Symmetric partner averaging and the exponent $2^{-145}$}
+\label{sec:two-scale-symmetric-pairs}
+
+The far-pair estimate improves when it is restricted to the symmetric family of multiple-link pairs.
+This reduces the initial cycle mass needed to produce a chain from two to one.
+The resulting parameter choice gives a larger explicit exponent.
+
+\begin{lemma}[Symmetric partner averaging]
+\label{lem:symmetric-partner-averaging}
+In either cycle family of the two-scale argument, let $M$ be the total weight of ordered disjoint pairs
+with no edge between them and at least two links.
+Suppose the local intersection and direct-edge weights are $o(\mu)$, and the one-link weight is at most $(1+o(1))\mu$.
+Then some cycle has main-component multiple-link partners of total weight at least
+\[
+ \frac{\mu-1}{2}-o(1).
+\]
+The main component is defined relative to one fixed connected marked component.
+\end{lemma}
+
+\begin{proof}
+The hypotheses give $M\ge\mu^2-(1+o(1))\mu$.
+The relation defining $M$ is symmetric.
+Within each unordered pair, at most one orientation can be far, by the far-pair antisymmetry argument.
+Thus far orientations have weight at most $M/2$, rather than merely $\mu^2/2$.
+The main orientations have weight at least
+\[
+ M/2\ge\frac12\mu^2-\frac{1+o(1)}2\mu.
+\]
+Divide by the total first-cycle weight $\mu$ to obtain the conclusion.
+\end{proof}
+
+\begin{theorem}[A revised explicit exponent]
+\label{thm:two-scale-exponent-145}
+Put $\widehat\kappa=2^{-145}$.
+Under the degree hypotheses of Theorem~\ref{thm:two-scale-critical-marking}, suppose
+\[
+ |P|\le\frac{r}{15000\log_2r},\qquad
+ \operatorname{comp}(\Gamma[P])\le\frac{\log_2r}{1000}.
+\]
+For all sufficiently large $r$,
+\[
+ \Pr(\mathcal F)\le\frac12+r^{-\widehat\kappa}.
+\]
+Consequently,
+\[
+ \psi(r)\le2^{r-1}+(1+o(1))\frac{2^r}{r^{\widehat\kappa}}.
+\]
+\end{theorem}
+
+\begin{proof}
+Run the same two-scale proof with
+\[
+ A=15,\qquad t=128,\qquad x=\log_2r,\qquad L=\lfloor15x\rfloor,
+\]
+\[
+ D_0=\lfloor49x/100\rfloor,\qquad
+ D_1=\lfloor99x/100\rfloor,
+ \qquad s_j=\lfloor(D_j-1)/2\rfloor.
+\]
+Assume that the forest probability exceeds $1/2+r^{-\widehat\kappa}$.
+The nested deletions satisfy
+\[
+ |S_0|=O(x^3r^{49/100}),\qquad
+ |S_1|=O(x^3r^{99/100}).
+\]
+
+Use paired spectral powers starting at the smallest even integer at least $2x+10\log_2x$.
+End at the largest odd integer at most $L$.
+The marked-set bound again gives $Ld_1/(2v_1)<1/500$ for large $r$.
+The nonreal error is $O(x^{-6})$, and the repeated-walk factor is $1+o(1)$.
+Therefore
+\[
+ \mu_1\ge\frac{499}{500}\,\frac{\ln(15/2)}2-o(1)
+ >\frac{201}{200}=1.005.
+\]
+The limiting numerical lower bound is $1.005436607250590\ldots$.
+
+At both girth scales, the link decomposition has asymptotic coefficient at most
+\[
+ \frac1{1000}+\frac{30}{128}
+       +8\cdot128\cdot2^{128}\widehat\kappa\ln2
+ =\frac1{1000}+\frac{30}{128}+\frac{\ln2}{128}
+ <\frac{61}{250}=0.244.
+\]
+The limiting value is $0.240790212348124\ldots$.
+The bounded tree-link term and all rounding errors are absorbed for large $r$.
+Since $s_0=49x/200+O(1)$, exceptional partners contribute
+\[
+ O(a_Cx^3r^{-1/1000})=o(a_C).
+\]
+Both inverse moment estimates remain valid.
+
+Lemma~\ref{lem:symmetric-partner-averaging} now supplies a cycle with main-component partner mass at least $1/1000$.
+It yields a nested chain of length
+\[
+ T=\Omega(r^{99/200}/x^3).
+\]
+Grouping this chain into full blocks gives $\Omega(r^{99/200}/x^4)$ candidate blocks.
+The discarded marked components, anchor neighbors, and $S_0$ neighborhoods total
+\[
+ O(x^3r^{49/100})=o(r^{99/200}/x^4).
+\]
+Thus the clean-block construction works unchanged.
+
+For the multiple-mode spectral test, keep $\theta=1/(12x)$ but use even lengths between $6x$ and $15x$.
+Its lower-bound coefficient per real eigenvalue tends to
+\[
+ e^{-15/24}\frac{\ln(15/6)}4
+ =0.122613771520417\ldots>\frac1{16}.
+\]
+The nonreal and repeated-walk errors still vanish.
+Hence
+\[
+ \mu_0=\Omega(r^{99/200}/x^4).
+\]
+The inverse moment bound gives $\mu_0\le(1+o(1))r^{\widehat\kappa}/4$, a contradiction.
+The direct cubic-extremizer transfer proves the cycle estimate.
+\end{proof}
+
+These constants remain too large for a practical finite-rank bound.
+The improvement changes the explicit exponent and the marked-set coefficient, while preserving the underlying proof.

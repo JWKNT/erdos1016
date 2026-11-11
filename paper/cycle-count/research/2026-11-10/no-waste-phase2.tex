@@ -1,0 +1,250 @@
+\section{The sharp no-waste rank bound}\label{sec:nowaste-sharp}
+
+This section answers the final problem in the source manuscript.
+The constant three can be replaced by one for simple graphs.
+The proof uses the manuscript's elementary Erd\H{o}s--P\'osa lemma.
+It does not use the asymptotic forest estimate.
+
+\begin{theorem}\label{thm:nowaste-one}
+Let $G$ be a connected simple graph, and let $W\subseteq G$ contain a cycle.
+Suppose every outside part of an even subgraph is the outside part of a cycle.
+Then
+\[
+ \beta(G)-\beta(W)\le |V(W)|+1.
+\]
+The additive constant one is sharp.
+\end{theorem}
+
+We first give the small classification needed in the proof.
+A cyclic block means a maximal two-connected subgraph that contains a cycle.
+Tree attachments do not change the cycle space.
+
+\begin{lemma}\label{lem:nowaste-small-cores}
+Suppose every nonempty even subgraph of a simple graph $F$ is a cycle.
+Then $\beta(F)\le4$, and at most one component contains a cycle.
+If $\beta(F)=2$, its unique cyclic block consists of three internally disjoint paths between two branch vertices.
+If $\beta(F)=3$, that block is a subdivision of $K_4$.
+If $\beta(F)=4$, that block is a subdivision of $K_{3,3}$.
+All other edges in the cyclic component belong to trees attached to that block.
+\end{lemma}
+
+\begin{proof}
+Two edge-disjoint cycles would have a union that is not a cycle.
+Thus there is at most one cyclic block in the entire graph.
+Every other edge is a bridge.
+Remove the tree attachments and call the remaining cyclic block $B$.
+It is two-connected and has minimum degree at least two.
+
+No vertex of $B$ can have degree at least four.
+Suppose $v$ did, and choose four edges incident to $v$.
+Since $B-v$ is connected, it has an edge set whose odd-degree vertices are the four chosen neighbors.
+Such an edge set exists by taking the appropriate join in a spanning tree.
+Its union with the four chosen edges is even, with degree four at $v$.
+This contradicts the hypothesis.
+Hence the maximum degree of $B$ is three.
+
+If every degree is two, then $B$ is a cycle and has rank one.
+Otherwise suppress all degree-two vertices to obtain a connected cubic multigraph $J$.
+Suppression preserves rank and the property concerning even subgraphs.
+The manuscript's Erd\H{o}s--P\'osa lemma gives
+$|E(J)|\le|V(J)|+3$.
+As $J$ is cubic, it follows that $|V(J)|\le6$ and $\beta(J)\le4$.
+
+For rank two, the cubic graph has two vertices.
+It consists of three parallel edges, since the cyclic block has no bridge.
+Its subdivision is the stated theta graph.
+For rank three, the cubic graph has four vertices.
+For rank four, it has six vertices.
+In either case it has no loop or parallel pair.
+Deleting such a cycle would leave at least as many edges as vertices, and therefore another edge-disjoint cycle.
+The only simple cubic graph on four vertices is $K_4$.
+
+In the six-vertex case, a triangle would also leave six edges after deletion, which again forces another cycle.
+Thus $J$ is triangle-free.
+Fix a vertex and its three neighbors.
+The neighbors are independent and must each join both remaining vertices to have degree three.
+This is exactly $K_{3,3}$.
+\end{proof}
+
+\begin{lemma}\label{lem:nowaste-path-obstruction}
+Let $F=G-E(W)$, on the full vertex set of $G$.
+Under the hypotheses of Theorem~\ref{thm:nowaste-one}, the following statements hold.
+Every nonempty even subgraph of $F$ is a cycle.
+Moreover, if $C$ is a cycle of $F$, then each component of $F-E(C)$ contains at most one vertex from each component of $W$.
+\end{lemma}
+
+\begin{proof}
+An even edge set of $F$ is an outside part.
+If a cycle of $G$ has this nonempty outside part, it contains that even edge set.
+A cycle cannot contain a proper nonempty even edge set.
+This proves the first assertion.
+
+For the second assertion, suppose distinct $u,v$ lie in the same component of $W$ and the same component of $F-E(C)$.
+Choose a $u$--$v$ path $P$ in $F-E(C)$ and a $u$--$v$ path $Q$ in $W$.
+Their edge sets are disjoint.
+The set $P\cup Q\cup C$ is even, since $P,Q$ have the same odd-degree vertices and $C$ is even.
+Its outside part is $P\cup C$.
+This contains the entire cycle $C$ and at least one further edge.
+No cycle can have such an outside part, a contradiction.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:nowaste-one}]
+Put $s=\operatorname{comp}(F)$, $c=\operatorname{comp}(W)$, $m=|V(W)|$, and $k=\beta(F)$.
+Counting edges and vertices gives
+\begin{equation}\label{eq:nowaste-rank-identity}
+ \beta(G)-\beta(W)=m+k-s-c+1.
+\end{equation}
+It suffices to show $k\le s+c$.
+Here $s,c\ge1$, so the assertion is immediate for $k\le2$.
+By Lemmas~\ref{lem:nowaste-small-cores} and~\ref{lem:nowaste-path-obstruction}, only $k=3,4$ remain.
+
+Choose a component $W_0$ of $W$ that contains a cycle.
+It has at least three vertices, since $G$ is simple.
+Each tree component of $F$ contains at most one vertex of $W_0$.
+Indeed, the path between two such vertices would avoid any cycle in the cyclic component of $F$.
+
+Suppose first that $k=3$.
+The cyclic component of $F$ has a core that is a subdivision of $K_4$.
+For each of the four triangles of $K_4$, delete the edges of its subdivided cycle.
+One component of the remaining graph contains all four branch vertices.
+Its core edges form the complementary spanning star.
+Call these four components $T_1,\ldots,T_4$, including their surviving tree attachments.
+Each $T_i$ contains at most one vertex of $W_0$, by Lemma~\ref{lem:nowaste-path-obstruction}.
+
+Every vertex of the cyclic component belongs to at least two of these four components.
+A branch vertex belongs to all four.
+An internal vertex of a subdivided edge belongs to the two complementary stars that contain that edge.
+A vertex in an attached tree has the same memberships as its attachment vertex.
+Therefore the cyclic component contains at most two vertices of $W_0$.
+The $s-1$ tree components each contain at most one further vertex.
+Thus $3\le |V(W_0)|\le s+1$, and $s\ge2$.
+It follows that $k=3\le s+c$.
+
+Suppose next that $k=4$.
+The core is a subdivision of $K_{3,3}$.
+Delete the subdivided cycles corresponding to its nine four-cycles, one at a time.
+Each deletion leaves a component containing all six branch vertices.
+The complementary kernel edges form a spanning tree with two adjacent centers.
+Each such component contains at most one vertex of $W_0$.
+
+Every branch vertex belongs to all nine components.
+Each kernel edge belongs to five complementary trees, since it lies in four of the nine four-cycles.
+Thus an internal vertex of a subdivided edge belongs to five components.
+Tree attachments again inherit the membership of their attachment vertex.
+Every vertex of the cyclic component therefore belongs to at least five of the nine components.
+The cyclic component contains at most $\lfloor9/5\rfloor=1$ vertex of $W_0$.
+Consequently $3\le |V(W_0)|\le s$, and $s\ge3$.
+Hence $k=4\le s+c$.
+Equation~\ref{eq:nowaste-rank-identity} proves the bound.
+
+For sharpness, take $G=K_5$ minus one edge.
+Let $W$ be the triangle on its three vertices of degree four.
+Here $F=K_{2,3}$, with the three marked vertices in its larger part.
+Its outside parts are the empty set, its three four-cycles, and four paths for each of the three marked vertex pairs.
+Each path closes with the corresponding edge of $W$.
+The empty outside part is represented by $W$ itself.
+Here $\beta(G)=5$, $\beta(W)=1$, and $|V(W)|=3$.
+Thus the difference is $4=|V(W)|+1$.
+\end{proof}
+
+The simple-graph assumption supplies three vertices in $W_0$.
+The theorem is not asserted for marked loops or marked parallel pairs.
+The new proof has not been formalized in Lean.
+
+
+\begin{corollary}[Dependence on the marked components]\label{cor:nowaste-component}
+Under the same hypotheses, put $m=|V(W)|$, $c=\operatorname{comp}(W)$, and
+$M=\max_i |V(W_i)|$, where $W_i$ ranges over the components of $W$.
+Then
+\[
+ \beta(G)-\beta(W)
+ \le m-c+1+\max\{0,4-M\}.
+\]
+In particular, the difference is at most $m$ unless $W$ is a triangle.
+If $W$ is connected, the difference is at most $\max\{m,4\}$.
+\end{corollary}
+
+\begin{proof}
+Keep $F,s,k$ from the preceding proof.
+If $k\le1$, then $k-s\le0$, and the rank identity gives the result.
+Suppose $k\ge2$.
+For ranks three and four, the preceding covering arguments apply to every component $W_i$.
+They bound its intersection with the cyclic component of $F$ by two and one, respectively.
+
+For rank two, use the three cycles of the theta core.
+The three complementary components contain its two branch vertices and one subdivided branch each.
+Each such component contains at most one vertex of $W_i$.
+Every vertex of the cyclic component belongs to at least one of them.
+Thus at most three vertices of $W_i$ lie in that component.
+
+In each of the three cases, at most $5-k$ vertices of $W_i$ lie in the cyclic component.
+Each of the other $s-1$ components contributes at most one.
+Consequently $|V(W_i)|\le s+4-k$, and $k-s\le4-M$.
+Substitute in the rank identity.
+Since $M\ge3$, an excess of one over $m$ requires $c=1$ and $M=3$.
+A connected simple graph with three vertices and a cycle is a triangle.
+\end{proof}
+
+\paragraph{Equality structure.}
+The equality case in Theorem~\ref{thm:nowaste-one} has an explicit description.
+For a vertex in the cyclic component of $F$, call its nearest vertex in the cyclic block its \emph{anchor}.
+A vertex already in the block anchors itself.
+Every tree attached to the block has exactly one attachment vertex, so the anchor is well-defined.
+
+\begin{proposition}\label{prop:nowaste-equality}
+Under the no-waste hypothesis,
+$\beta(G)-\beta(W)=|V(W)|+1$ if and only if $W$ is a triangle and one of the following configurations holds.
+\begin{enumerate}
+\item $F$ is connected of rank two.
+Its cyclic block is a theta graph.
+The three marked vertices have anchors in the interiors of its three different branches.
+\item $F$ has two components and rank three.
+Its cyclic block is a subdivision of $K_4$.
+Two marked vertices lie in this component, with anchors interior to two opposite subdivided edges.
+The third marked vertex lies in the tree component.
+\item $F$ has three components and rank four.
+Its cyclic block is a subdivision of $K_{3,3}$.
+Each component of $F$ contains exactly one marked vertex.
+The two other components are trees.
+\end{enumerate}
+Conversely, every connected simple graph with $W$ a triangle and one of these configurations satisfies the no-waste hypothesis and equality.
+\end{proposition}
+
+\begin{proof}
+Corollary~\ref{cor:nowaste-component} forces $W$ to be a triangle.
+The rank identity then gives $k=s+1$.
+The three possibilities are $(k,s)=(2,1),(3,2),(4,3)$.
+
+For the theta core, the three marked vertices must use the three complementary-component slots exactly once.
+An anchor at a branch vertex would use all three slots by itself.
+Hence the anchors are internal and lie on different branches.
+For the $K_4$ core, the two marked vertices in the cyclic component must use the four star slots exactly twice each.
+Thus their anchors are internal and their kernel edges have disjoint endpoints.
+These edges are opposite.
+For the $K_{3,3}$ core, the component bound gives at most one marked vertex in each component.
+All three components therefore contain one.
+
+For the converse, an outside part is an edge set in $F$ whose odd-degree vertices lie among the three marked vertices.
+Its boundary is empty or a marked pair.
+Every allowable edge set can be completed inside the triangle.
+The empty-boundary sets are the even subgraphs of $F$.
+Their nonempty members are cycles by the core descriptions.
+
+In the theta configuration, each marked pair has exactly four simple paths in $F$.
+These exhaust its $2^2$ joins.
+In the $K_4$ configuration, only the pair in the cyclic component can be a boundary.
+The eight paths between opposite-edge interior points exhaust its $2^3$ joins.
+Tree tails do not change these counts or create repeated vertices.
+In the $K_{3,3}$ configuration, component parity excludes every nonempty boundary.
+Every nonempty outside part is therefore either a cycle of $F$ or a marked-pair path.
+Close each path with the corresponding triangle edge, and use $W$ for the empty part.
+This proves no waste.
+The rank identity gives equality in each configuration.
+\end{proof}
+
+\paragraph{Finite checks.}
+The script \texttt{check\_no\_waste.py} checks every marked edge subset containing a cycle in every connected simple graph through six vertices.
+It uses the NetworkX graph atlas and exact cycle-space enumeration.
+The refined component bound passes for all $101{,}904$ tested pairs, including $19{,}035$ pairs with no waste.
+Every equality case has a marked triangle.
+These checks support the proof but do not replace it.

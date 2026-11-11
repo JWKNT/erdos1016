@@ -1,0 +1,182 @@
+Research handoff from Codex — 10 November 2026, latest audited checkpoint
+Shared with Fable 5.2 and KNT. Mathematical proof drafts, not Lean theorems.
+No commits, main manuscript edits, or public-site edits have been made.
+
+All new files are in paper/cycle-count/research/2026-11-10/.
+The earlier chronological handoff is preserved as codex-handoff-history.txt.
+This status supersedes its intermediate bounds and open-problem statements.
+
+GENERAL ADDITIVE PATH STABILITY: proved in the combined draft.
+For every eps>0, P_uv >= (1/2+eps)2^b forces every terminal path to have
+length at least b-C_eps. The reduced terminal core has bounded pathwidth,
+and deleting its expanded geodesic leaves bounded cycle rank.
+Fable supplied localization and the shortest-path layer argument. Our proved
+r/log r forest range supplies FE2. Root and path_stability audited the full
+proof independently. Both found only the same padding repair for cuts of
+size one or two. See general-path-stability.tex and codex-audit-fable.txt.
+See general-additive-path-stability.tex and the standalone
+terminal-path-stability.tex/pdf. The new short-cycle window argument was
+found by path_stability and audited independently by root and four_regular.
+
+EXACT FOUR-REGULAR THEOREM: complete computer-assisted proof draft.
+Every loopless four-regular multigraph on n vertices has c<=2^n+n.
+Equality: doubled cycles (including four parallel edges at order two) and K5.
+Strictly above 2^n: those families and K4 with two opposite edges doubled.
+Connected Eulerian consequence: c<=2^(r-1)+r-1, with equality classified.
+See four-regular-theorem.tex/pdf. Root and path_stability audited all steps.
+The finite part has 925 matching instances through order ten, generated from
+3234 underlying graphs. Every cycle histogram was independently counted by
+C++ vertex DFS and Python binary cycle-space enumeration. Seven rational
+base inequalities complete the analytic part. Reproduce with
+verify_four_regular_theorem.py. Wider checks are retained but unnecessary.
+
+RANDOM HOSTS: second-order coefficients 1 and 199/192 at the same explicit p*.
+With high probability, Pex-log_2 n lies between (1-o(1))ln n/ln ln n and
+(199/192+o(1))ln n/ln ln n. See random-hosts-phase7.tex and the earlier lower
+bound. Constant-sum theta blocks and centered traceable wheel subdivisions give the
+upper bound. Root and four_regular independently audited the distribution,
+codegrees, exceptional-vertex matching theorem, overlap moments, traceability,
+and rank budget. Finite metric checks are saved beside the proof.
+The coefficient gap remains open. A full-threshold leading-term proof is now
+written in random-host-full-threshold.tex: Pex=(1+o(1))log_2 n whenever
+np-ln n-ln ln n tends to infinity. Root, four_regular, and path_stability full audits all pass. Adaptive attachment edges remove
+the slow-divergence endpoint failure obstruction. The focused paper full-threshold-pancyclicity.tex/pdf includes the auxiliary
+probability lemmas. Its quantitative upper correction is
+(4+o(1))ln n/ln w, where w=min(np-ln n-ln ln n, ln ln n).
+The 37/36 obstruction in random-host-block-barrier.tex concerns only the
+cycle/theta/K4 construction method; it is not a global random-host lower bound.
+
+POLYNOMIAL ERROR FOR MINOR-CLOSED CLASSES.
+Every fixed proper minor-closed class satisfies c<=2^(r-1)+O_class(2^r/r).
+The planar constant 32257 is explicit; genus o(r) also permits O(2^r/r).
+See planar-cycle-error.tex. Root audit passed. Aldred and Thomassen proved
+the planar first-order result; quantitative publication priority is unchecked.
+Fable's edge-deletion recurrence is being written separately. It removes the
+chord construction's separate 2^-k error. The unrestricted polynomial and
+exponential-saving targets remain open.
+
+OTHER RESULTS.
+Sharp no-waste rank bound q<=m+1, with triangle equality cases classified
+(no-waste-phase2.tex); otherwise q<=m. Quantitative inverse small-cut moments
+and one-link mass bounds (link-stability.tex). Exact finite checks retained. Cubic edge-half partial results cover bridges,
+two-edge cuts, triangles, and four-cycles; the general cubic problem remains
+open. See cubic-edge-frequency.tex for exact identities, weighted corollaries,
+and counterexamples to two simpler approaches.
+
+FABLE AUDIT COMMENTS.
+See codex-audit-fable.txt. The |W|/r -> 3/4 construction does not by itself
+refute existence of a sufficiently small linear coefficient c(eps). The
+smaller-c claim is still heuristic. Finite-rank data cannot disprove an
+unspecified absolute constant in the exponent-one-half path bound.
+No Fable-owned file has been modified.
+
+DELIVERABLES.
+research-progress-extended.tex/pdf is complete: 75 pages, built without
+TeX warnings and fully reviewed in rendered PNGs.
+The initial 16-page research-progress.pdf is unchanged. The standalone
+10-page four-regular-theorem.pdf, 13-page terminal-path-stability.pdf, and
+7-page full-threshold-pancyclicity.pdf were all rendered and visually checked.
+Final verification and source hashes are in verification-extended.json.
+No new result is formalized in Lean. Publication priority is not established.
+
+FINAL CHECKPOINT.
+All focused papers and the consolidated report are built and reviewed.
+Unrestricted polynomial/exponential cycle error, sharp random-host second
+order, quantitative stability rates, and exact edge-half structure remain open.
+
+NEW CONTINUATION: 19:34 EST, 10 November 2026.
+User requested several more hours focused on the unrestricted second-order
+cycle bound. Live partial notes are in second-order-coordination.txt and
+second-order-*-notes.txt in the research directory. Earlier papers are frozen.
+The constant-C exponent-half terminal-path conjecture is disproved by the
+marked-edge formula for the Horak-Kim cyclic-square family. Details are in
+second-order-constructions-notes.txt. No stronger unrestricted upper rate
+is claimed yet.
+
+NEW THEOREM CHECKPOINT — 19:55 EST
+For k disjoint cyclic regions with boundaries at most d>=2,
+  forest probability <= 1/2 + 2 exp[-k/(2 d 4^d)].
+Proofs: second-order-structural-notes.tex and second-order-terminal-forest.tex.
+Both have passed independent line-level mathematical audits. Finite structural
+checks are in progress. This gives exponential savings for fixed minor-closed
+classes. Unrestricted second-order improvement remains the current focus.
+
+20:02 EST: Read Fable’s new sharpness work. Please see root CODEX-TO-FABLE-LIVE.txt for the exact Conjecture A counterexample and new exponential small-cut theorem. We are not duplicating the configuration-model sharpness project.
+
+NEW STRUCTURAL THEOREM — 20:25 EST
+For every connected graph or multigraph of rank b and distinct terminals,
+  P_st=2^b, or P_st<=(15/16)2^b.
+The factor15/16 is sharp, attained by deleting a cycle edge of the eight-vertex
+Mobius ladder. Proof: second-order-path-gap.tex. Three independent audits passed.
+It classifies saturated cubic two-poles as series compositions of capped ladders
+whose matching permutations contain only singleton and adjacent-swap blocks.
+A full-or7/8 three-pole transfer then gives the rank induction.
+Publication priority is unchecked; the same15/16 constant occurs in Aldred–
+Thomassen's older cycle bound, so no novelty claim is made for this path theorem.
+Exhaustive cubic catalogues through20 vertices and independent DFS checks agree.
+Order22 is still running.
+
+
+LATEST CHECKPOINT — 11 November2026 UTC
+CURRENT SECOND-ORDER RESEARCH CHECKPOINT
+11 November 2026 (UTC)
+
+MAIN UNRESTRICTED RESULT — PROVED IN MATHEMATICAL DRAFT, INDEPENDENT AUDITS PASS
+For cycle rank r,
+  psi(r) <= 2^(r-1) + (M+o(1))*2^r*(log_2 r)^(11/2)/sqrt(r),
+with an absolute constant M. This implies every fixed relative exponent kappa<1/2.
+Primary packet: polynomial-cycle-error.tex/.pdf.
+Final proof fragments: second-order-parallel-links-endpoint.tex and
+second-order-parallel-links-log-five-half.tex.
+The earlier tiny-exponent proofs remain valid but are superseded.
+
+The decisive new input is Fable's parallel-link independence lemma: small cyclic
+components linking two connected sets have a bound independent of the forest
+excess. Fable also supplied the nested-chain argument and the separate spectral
+supply inside each clean block. Codex supplied the exponential cut estimate,
+the two-scale restoration assembly, and the endpoint parameter refinement.
+The strong branch of the exponential estimate removes one further half-power
+of log r. Full independent mathematical reads found no gap.
+The constants and the rank threshold are very large; this is asymptotic research.
+
+SHARP ORDER FOR SMALL CYCLIC CUTS — PROVED, INDEPENDENT AUDITS PASS
+Every connected loopless cubic multigraph with a cyclic cut of size at most five
+satisfies c(G)<=2^(r-1)+K*r*2^(r/2).
+For sufficiently large rank, a cyclic five-cut with no smaller cyclic cut gives
+c(G)<2^(r-1). The known Horak–Kim cyclic-square family shows the order r*2^(r/2)
+is necessary in this class.
+Primary packet: small-cut-sharp-bound.tex/.pdf.
+Final proof: second-order-five-cut-universal-crossing.tex.
+Supporting steps: second-order-high-density-small-cut.tex and
+second-order-high-density-protected-cuts.tex.
+The five-cut functional is at most7.5+o(1), by distinct representatives in the
+Petersen disjointness graph. All243 exact representative choices pass.
+
+WHAT REMAINS OPEN
+The unrestricted O(r*2^(r/2)) error is NOT proved.
+The remaining cubic kernels have no cyclic edge cut of size at most five.
+General six-cut state analysis is partial. Exact augmentation identities and an
+abstract half-integral relaxation witness are saved in second-order-six-cut-partial.tex.
+The relaxation witness is not known to be graph-realizable and is not a
+counterexample to the conjectured cycle bound.
+
+FORMAL STATUS
+Fable's new modules under Erdos1016/PolynomialBound/ were independently built:
+Statement, Separation, ParallelLinks, LinkBound, Averaging, TwoLinkMoment,
+with ForestStatement and CycleBound as dependencies. The build succeeds.
+Axioms for the parallel-link lemma, link bound, refined moment, and conditional
+cycle transfer are exactly propext, Classical.choice, Quot.sound.
+The full marked forest estimate and assembly are NOT yet formalized.
+Chain.lean.wip is explicitly unfinished. No new root import has been added.
+Codex did not edit any Fable-owned Lean source.
+
+VERIFICATION AND COLLABORATION
+The final statements have full independent mathematical audits.
+Exact checks cover cut states, parity fibers, restored blocks, path/forest
+identities, and all five-cut representative choices. Computations support the
+proofs and do not replace the asymptotic arguments.
+CODEX-TO-FABLE-LIVE.txt contains chronological partial notes and audit exchanges.
+RESEARCH-HANDOFF-FABLE-2026-11-10.txt contains Fable's updates and formalization plan.
+Publication priority is not established. Census values through rank12 are known
+from Markstrom; our computations independently confirm them.
+The tracked original manuscripts and root formalization remain unchanged.

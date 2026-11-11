@@ -1,0 +1,158 @@
+{
+  "shore_graphs": 5,
+  "gluing_checks": 600,
+  "added_edge_and_capping_checks": 120,
+  "individual_forest_maps": 768,
+  "cases": [
+    {
+      "left": 0,
+      "right": 0,
+      "permutations": 24,
+      "total_rank": 5
+    },
+    {
+      "left": 0,
+      "right": 1,
+      "permutations": 24,
+      "total_rank": 6
+    },
+    {
+      "left": 0,
+      "right": 2,
+      "permutations": 24,
+      "total_rank": 6
+    },
+    {
+      "left": 0,
+      "right": 3,
+      "permutations": 24,
+      "total_rank": 7
+    },
+    {
+      "left": 0,
+      "right": 4,
+      "permutations": 24,
+      "total_rank": 8
+    },
+    {
+      "left": 1,
+      "right": 0,
+      "permutations": 24,
+      "total_rank": 6
+    },
+    {
+      "left": 1,
+      "right": 1,
+      "permutations": 24,
+      "total_rank": 7
+    },
+    {
+      "left": 1,
+      "right": 2,
+      "permutations": 24,
+      "total_rank": 7
+    },
+    {
+      "left": 1,
+      "right": 3,
+      "permutations": 24,
+      "total_rank": 8
+    },
+    {
+      "left": 1,
+      "right": 4,
+      "permutations": 24,
+      "total_rank": 9
+    },
+    {
+      "left": 2,
+      "right": 0,
+      "permutations": 24,
+      "total_rank": 6
+    },
+    {
+      "left": 2,
+      "right": 1,
+      "permutations": 24,
+      "total_rank": 7
+    },
+    {
+      "left": 2,
+      "right": 2,
+      "permutations": 24,
+      "total_rank": 7
+    },
+    {
+      "left": 2,
+      "right": 3,
+      "permutations": 24,
+      "total_rank": 8
+    },
+    {
+      "left": 2,
+      "right": 4,
+      "permutations": 24,
+      "total_rank": 9
+    },
+    {
+      "left": 3,
+      "right": 0,
+      "permutations": 24,
+      "total_rank": 7
+    },
+    {
+      "left": 3,
+      "right": 1,
+      "permutations": 24,
+      "total_rank": 8
+    },
+    {
+      "left": 3,
+      "right": 2,
+      "permutations": 24,
+      "total_rank": 8
+    },
+    {
+      "left": 3,
+      "right": 3,
+      "permutations": 24,
+      "total_rank": 9
+    },
+    {
+      "left": 3,
+      "right": 4,
+      "permutations": 24,
+      "total_rank": 10
+    },
+    {
+      "left": 4,
+      "right": 0,
+      "permutations": 24,
+      "total_rank": 8
+    },
+    {
+      "left": 4,
+      "right": 1,
+      "permutations": 24,
+      "total_rank": 9
+    },
+    {
+      "left": 4,
+      "right": 2,
+      "permutations": 24,
+      "total_rank": 9
+    },
+    {
+      "left": 4,
+      "right": 3,
+      "permutations": 24,
+      "total_rank": 10
+    },
+    {
+      "left": 4,
+      "right": 4,
+      "permutations": 24,
+      "total_rank": 11
+    }
+  ]
+}

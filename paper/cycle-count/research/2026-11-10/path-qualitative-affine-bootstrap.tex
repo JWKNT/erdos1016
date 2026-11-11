@@ -1,0 +1,345 @@
+\section{Qualitative affine-forest bounds for the sharp bootstrap}
+\label{sec:path-qualitative-affine-bootstrap}
+
+This section uses one qualitative marked-forest input.
+It does not use a quantitative rate of convergence to one half.
+All logarithms have base two.
+A normalized $k$-pole is connected, has $k$ vertices of degree two, and has degree three at every other vertex.
+Ranks are cycle-space dimensions, including for disconnected graphs.
+
+\paragraph{Established forest input.}
+Use Theorem~\ref{thm:sharp-qualitative-forest-input}, and increase its absolute rank threshold $R_*$ to at least $2^{100}$.
+Its fixed-error conclusion is the following: if a connected graph has rank $\rho\ge R_*$ and a marked cycle $W$ with
+\[
+ |E(W)|\le\frac{\rho}{(\log\rho)^2},
+\]
+then
+\begin{equation}\label{eq:path-qualitative-forest-input}
+ \Pr(\xi\setminus E(W)\text{ is a forest})\le\frac{11}{20}.
+\end{equation}
+The input for simple graphs also applies to the localized multigraphs below.
+Subdivide edges outside $W$ to remove loops and parallel edges; this preserves rank, the marked cycle, and the outside-forest probability.
+Only this one-cycle input is used.
+
+\begin{lemma}[Localization with a connected exterior]
+\label{lem:path-qualitative-localization}
+Let $G$ be connected, and let $R$ be a nonempty proper vertex set whose complement is connected.
+For each edge of $\delta_G R$, add a distinct new vertex and an edge joining it to the original endpoint in $R$.
+Join these new vertices in a cycle, padding to length three if necessary.
+Call the new cycle $W_R$, its resulting graph $G_R$, and write $d=|\delta_G R|$.
+Then $G_R$ is connected and
+\[
+ \beta(G_R)=\beta(G[R])+d-\operatorname{comp}(G[R])+1.
+\]
+Uniform even subgraphs have the same restriction law on $E(G[R])$ in $G$ and $G_R$.
+If every vertex of $R$ is cubic in $G$, then
+\[
+ \beta(G_R)=\frac{|R|+d}{2}+1.
+\]
+\end{lemma}
+
+\begin{proof}
+Every component of $G[R]$ has a boundary edge, so the new cycle connects them all.
+Before padding, the construction adds $d$ vertices and $2d$ edges.
+Its rank is therefore $|E(G[R])|+d-|R|+1$, which is the first formula.
+Padding adds equally many edges and vertices.
+The cubic degree identity $3|R|=2|E(G[R])|+d$ gives the second formula.
+
+Contract the connected complement of $R$ in $G$ and, separately, contract $W_R$ in $G_R$.
+The resulting graphs agree on the original interior edges and the boundary edges.
+Restriction under either contraction maps the original cycle space onto the quotient cycle space.
+To see surjectivity, complete each prescribed even boundary by a join in a spanning tree of the contracted connected set.
+A surjective linear map sends the uniform law to the uniform law on its image.
+This proves the equality of restriction laws.
+\end{proof}
+
+\begin{lemma}[A fixed-error layer-width estimate]
+\label{lem:path-qualitative-marker-width}
+There is an absolute constant $B$ with the following property.
+Let $G$ be connected and subcubic, and let $P$ be a nonempty connected marked set containing every vertex of degree below three.
+Suppose that $P$ meets each distance layer from a fixed root in at most $k$ vertices, where $k\ge1$.
+If
+\[
+ \Pr(\xi_G-P\text{ is a forest})\ge\frac35,
+\]
+then each full distance layer has at most $B(k+1)^2$ vertices.
+\end{lemma}
+
+\begin{proof}
+Put $\Phi(m)=m/(\log m)^2$ and
+\[
+ \Theta=\max\{2R_*,\,2^{100}(k+1)^2\}.
+\]
+We first exclude every set $R\subseteq V(G)\setminus P$ with
+\[
+ m:=|R|\ge\Theta,
+ \qquad |\delta_G R|\le\Phi(m)/4.
+\]
+Let $C_0$ be the component of $G-R$ containing $P$, and set
+$R^+=V(G)\setminus V(C_0)$.
+It contains $R$, avoids $P$, and has connected complement.
+Distinct components of $G-R$ have no edge between them, so
+$\delta_G R^+\subseteq\delta_G R$.
+Every vertex of $R^+$ is cubic.
+
+Localize at $R^+$ by Lemma~\ref{lem:path-qualitative-localization}.
+Writing $d^+=|\delta_G R^+|$, the localized rank is
+\[
+ \rho=\frac{|R^+|+d^+}{2}+1\ge m/2\ge R_*.
+\]
+The function $\Phi$ is increasing on $[8,\infty)$.
+If $d^+\ge3$, the marked cycle has order
+\[
+ d^+\le\Phi(m)/4\le\Phi(m/2)\le\Phi(\rho).
+\]
+If $d^+<3$, its padded order is three, which also satisfies this bound because $\rho\ge2^{100}$.
+The event of a forest outside $P$ implies the forest event on $G[R^+]$.
+In the localized graph, deleting the marked cycle edges leaves the new spokes incident with leaves.
+Those spokes cannot create a cycle, so the outside-edge forest event is exactly the forest event on $G[R^+]$.
+Localization and \eqref{eq:path-qualitative-forest-input} therefore bound its probability by $11/20$, contradicting the assumed lower bound $3/5$.
+Thus every such $R$ is excluded.
+
+Write $m_j$ for the number of unmarked vertices in distance layer $j$.
+For the union $R(i,i')$ of unmarked layers $i$ through $i'$, its boundary satisfies
+\[
+ |\delta_G R(i,i')|
+ \le3m_{i-1}+3m_{i'+1}+3k(i'-i+3).
+\]
+Indeed, every edge joins the same or consecutive layers; the last term counts incidences to marked vertices in layers $i-1$ through $i'+1$.
+Use zero masses outside the layer range.
+
+If some $m_j\ge\Theta$, begin with that layer.
+Add a neighboring layer whenever its mass exceeds $m/(48(\log m)^2)$, where $m$ is the current mass.
+The process stops in the finite graph.
+Let $\mu$ be its final mass and $L=\log\mu\ge100$.
+Each step multiplies the current mass by more than $1+1/(48L^2)$.
+There are therefore at most
+\[
+ \frac{\ln\mu}{\ln(1+1/(48L^2))}
+ \le96L^2\ln\mu<67L^3
+\]
+steps.
+At termination the two neighboring masses are at most $\mu/(48L^2)$.
+Hence
+\[
+ |\delta_G R(i,i')|
+ \le\frac{\mu}{8L^2}+3k(67L^3+3)
+ \le\frac{\mu}{4L^2}.
+\]
+For the last comparison, use
+\[
+ 24kL^2(67L^3+3)\le2000kL^5\le2^L.
+\]
+The first inequality holds for $L\ge100$.
+The threshold on $\mu$ gives $k\le2^{L/2-50}$, and
+$2000L^5\le2^{L/2+50}$ for $L\ge100$.
+The latter inequality holds at $100$, with an increasing right-to-left ratio thereafter.
+The stopped window is thus an excluded set, a contradiction.
+
+Every layer has fewer than $\Theta$ unmarked vertices and at most $k$ marked vertices.
+For example,
+\[
+ B=2R_*+2^{100}+1
+\]
+bounds their total by $B(k+1)^2$.
+\end{proof}
+
+\begin{lemma}[Translation by a breadth-first tree marker]
+\label{lem:path-qualitative-affine-width}
+Let $N$ be a normalized $k$-pole with $k\ge2$.
+If some even port subset $T$ has affine forest proportion at least $3/5$, then every distance layer from any chosen port has at most $B(k+1)^2$ vertices.
+\end{lemma}
+
+\begin{proof}
+Choose a breadth-first tree rooted at that port and take the union of its root-to-port paths.
+Its vertex set $P$ is connected, contains every degree-two vertex, and meets each distance layer in at most $k$ vertices.
+The union of the tree edges contains a $T$-join $F_0$.
+Translation by $F_0$ is a bijection from the even space to the affine $T$-join space.
+The translated and original states agree outside $P$.
+Thus an affine forest gives a state that is a forest outside $P$, and the preceding lemma applies.
+\end{proof}
+
+\begin{lemma}[Weighted Moore bound after suppressing the ports]
+\label{lem:path-qualitative-weighted-moore}
+Let $N$ be a normalized $k$-pole of rank $h\ge2$ and girth at least $D$.
+With $t=\lceil\log(8h)\rceil$, one has
+\[
+ D\le4t\left(1+\frac{k}{3(h-1)}\right).
+\]
+\end{lemma}
+
+\begin{proof}
+Suppress all degree-two vertices and give each resulting edge the length of the path that it replaces.
+The kernel is a connected cubic multigraph with
+$n_0=2h-2$ vertices and $m_0=3h-3$ edges.
+Its positive edge lengths sum to $m_0+k$.
+Loops and parallel edges are permitted, and weighted cycles lift to cycles of the same length in $N$.
+
+The kernel has $2m_0\,2^{t-1}$ directed non-backtracking walks of $t$ edges.
+Under the uniform law on these walks, each directed edge is uniform at every step.
+The expected total weight is $t(1+k/m_0)$.
+At least half the walks have weight at most twice that expectation, and their number is at least
+\[
+ m_0\,2^{t-1}\ge12h(h-1)>n_0^2.
+\]
+If a short walk repeats a vertex, its support contains a cycle of no greater weight.
+Otherwise all these short walks are simple paths, and two have the same ordered endpoints.
+Their union contains a cycle of weight at most the sum of their weights.
+In either case, a cycle has weight at most $4t(1+k/m_0)$.
+This proves the bound.
+\end{proof}
+
+\begin{lemma}[The fixed-ratio affine input]
+\label{lem:path-qualitative-fixed-ratio-core}
+There is an absolute integer $D_*\ge3$ such that every normalized $k$-pole with
+\[
+ h\ge256,\qquad k\le4D,
+ \qquad\operatorname{girth}(N)\ge D\ge D_*
+\]
+has affine forest proportion at most $3/5$ for every even port subset.
+The assertion includes $k=0,1$.
+\end{lemma}
+
+\begin{proof}
+With at most one port, the only even port subset is empty, and its forest proportion is $2^{-h}$.
+Assume $k\ge2$ and put $t=\lceil\log(8h)\rceil$.
+For $h\ge256$,
+\[
+ h-1>\frac{32}{3}\,t.
+\]
+Indeed, $t\le\log h+4$, the ratio $(h-1)/(\log h+4)$ increases for $h\ge2$, and at $h=256$ it exceeds $32/3$.
+The weighted Moore bound therefore gives
+\[
+ D\le4t+\frac{16tD}{3(h-1)}<4t+\frac D2.
+\]
+Thus
+\[
+ h\ge2^{D/8-4},\qquad n=|V(N)|\ge h.
+\]
+
+Put $s=\lfloor D/16\rfloor$.
+A graph of maximum degree three has at most $3\cdot2^s-2$ vertices in each radius-$s$ ball.
+The union of these balls around the ports has at most
+\[
+ 3k2^s\le12D2^{D/16}<2^{D/8-4}\le n
+\]
+vertices for sufficiently large $D$.
+Choose a vertex outside that union.
+Its radius-$s$ ball contains no port.
+Since $2s<D$, its cubic breadth-first expansion has at least
+$2^s\ge2^{D/16-1}$ vertices.
+This ball meets at most $2s+1\le D$ distance layers from any fixed root.
+Some layer therefore has at least $2^{D/16-1}/D$ vertices.
+
+If any affine forest proportion were greater than $3/5$, Lemma~\ref{lem:path-qualitative-affine-width} would bound that layer by
+$B(k+1)^2\le B(4D+1)^2$.
+Choose $D_*$ large enough that the preceding ball comparisons hold and
+\[
+ \frac{2^{D/16-1}}D>B(4D+1)^2
+ \qquad(D\ge D_*).
+\]
+The exponential term makes such a fixed threshold possible.
+This contradiction proves the lemma.
+\end{proof}
+
+\begin{lemma}[An affine bound at the boundary scale]
+\label{lem:path-clean-core-affine-forest}
+There is an absolute constant $C_0$ such that every normalized $k$-pole with
+\[
+ h\ge L\ge4,
+ \qquad k\le2L,
+ \qquad\operatorname{girth}(N)\ge D\ge C_0\log(L+2)
+\]
+has affine forest proportion at most $3/5$ for every even port subset.
+The assertion includes $k=0,1$.
+\end{lemma}
+
+\begin{proof}
+The cases $k\le1$ again have forest proportion $2^{-h}$.
+For $k\ge2$, one has
+\[
+ 1+\frac{k}{3(h-1)}\le1+\frac{2h}{3(h-1)}<2.
+\]
+The weighted Moore bound gives
+\[
+ D<8\lceil\log(8h)\rceil\le8\log h+32,
+ \qquad h\ge2^{D/8-4}.
+\]
+Choose $s=\lfloor D/16\rfloor$.
+The radius-$s$ port balls contain at most $6L2^{D/16}$ vertices.
+For a sufficiently large absolute $C_0$, this is less than
+$n\ge h\ge2^{D/8-4}$ whenever $D\ge C_0\log(L+2)$.
+The resulting port-free cubic ball gives a layer of size at least
+$2^{D/16-1}/D$.
+
+An affine forest proportion greater than $3/5$ would instead bound the layer by
+$B(k+1)^2\le B(2L+1)^2$.
+Increase $C_0$ so that the lower bound exceeds this quantity uniformly for $L\ge4$.
+For explicit uniformity, the function $2^{D/16}/D$ increases for $D\ge32$.
+At $D=C_0\log(L+2)$, its ratio to $(L+2)^2$ is
+\[
+ \frac{(L+2)^{C_0/16-2}}{C_0\log(L+2)}.
+\]
+This tends uniformly to infinity as $C_0\to\infty$, for $L\ge4$.
+The same choice ensures the port-ball comparison.
+The resulting contradiction proves the lemma.
+\end{proof}
+
+\begin{lemma}[Extracting a core from a large block]
+\label{lem:path-clean-block-core}
+Let $G$ be connected and cubic, and let $R$ be a nonempty proper vertex set with
+\[
+ |R|\ge8L^2,\qquad |\delta_G R|\le2L,\qquad L\ge4.
+\]
+Some connected component of $G[R]$ has a connected two-core of rank at least $L$, with at most $2L$ degree-two vertices and degree three elsewhere.
+\end{lemma}
+
+\begin{proof}
+Write $n=|R|$, $d=|\delta_G R|$, and $c=\operatorname{comp}(G[R])$.
+Each component has a boundary edge, so $1\le c\le d\le2L$.
+The cubic degree identity gives
+\[
+ \beta(G[R])=\frac{n-d}{2}+c.
+\]
+Thus the average component rank is at least
+\[
+ \frac{n-d}{2d}+1
+ \ge\frac{8L^2-2L}{4L}+1>L.
+\]
+Take a component of rank at least $L$ and prune its degree-one vertices.
+The nonempty two-core remains connected and keeps the same rank.
+At each step, the removed leaf has two incidences outside the current set and one inside it, so the boundary decreases by one.
+The core boundary is therefore at most $2L$.
+Its vertices have internal degree two or three, and each degree-two vertex has one boundary incidence.
+This proves the port bound.
+\end{proof}
+
+\begin{proposition}[Two clean blocks]
+\label{prop:path-two-clean-blocks}
+Let $G$ be connected and cubic, and let $P$ be any marked set.
+Suppose two vertex-disjoint sets $R_1,R_2\subseteq V(G)\setminus P$ satisfy
+\[
+ |R_i|\ge8L^2,\qquad |\delta_G R_i|\le2L,
+ \qquad\operatorname{girth}(G[R_i])\ge D,
+\]
+where $L\ge4$ and $D\ge C_0\log(L+2)$.
+Then
+\[
+ \Pr(\xi_G-P\text{ is a forest})\le\frac9{25}<\frac12.
+\]
+\end{proposition}
+
+\begin{proof}
+Extract cores $K_1,K_2$ by Lemma~\ref{lem:path-clean-block-core}.
+Each remains disjoint from $P$, has rank at least $L$, at most $2L$ ports, and girth at least $D$.
+Condition on every edge outside $E(K_1)\cup E(K_2)$.
+For each feasible conditioning, the remaining states are independent and uniform in two affine parity classes.
+The fiber is the product of their internal cycle spaces, translated by any compatible pair of states.
+Only degree-two vertices can have odd prescribed parity, and each prescribed odd set has even size.
+
+Lemma~\ref{lem:path-clean-core-affine-forest} bounds each conditional forest probability by $3/5$.
+The forest event outside $P$ requires both core states to be forests.
+Its conditional probability is therefore at most $9/25$.
+Average over the conditioned edges.
+Edges joining the two cores are already conditioned, so nonadjacency is not needed.
+\end{proof}

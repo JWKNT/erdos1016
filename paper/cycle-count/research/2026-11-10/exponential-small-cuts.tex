@@ -1,0 +1,70 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,booktabs}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{microtype,xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\setlength{\emergencystretch}{3em}
+\title{Exponential small-cut estimates for uniform even subgraphs}
+\author{Research working draft}
+\date{10 November 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Let $U_1,\ldots,U_k$ be disjoint connected cyclic regions in a connected graph.
+Suppose that each region has at most $d\ge2$ boundary edges.
+For a uniform even subgraph, we prove that the probability of a forest in every region is at most
+\[
+ \frac12+2\exp\!\left(-\frac{k}{8d2^d}\right).
+\]
+The proof combines local coordinate spaces, vertex splitting, terminal forests, and conditional independence across blocks.
+A weighted version uses the sum of the boundary-closure probabilities.
+Parallel bundles on a cycle show that the degree scale $2^{-d}$ is necessary up to a factor of order $d$.
+The proofs have passed independent mathematical audits, including an audit by Fable 5.2.
+They are not formalized in Lean, and publication priority has not been established.
+\end{abstract}
+
+\section*{Reading guide}
+Rank means $|E|-|V|+\operatorname{comp}$.
+An even subgraph is an edge set with even degree at every vertex.
+An internal even subgraph is a forest exactly when it is empty.
+Parallel edges remain distinct.
+
+The first section proves the common-functional mechanism and a coarse exponential estimate.
+The second section uses graphical structure to improve its constant.
+The third section proves the bound stated in the abstract.
+The last two sections give the weighted form and the degree-dependence obstruction.
+Intermediate estimates are retained because their mechanisms may be useful in further work.
+
+\tableofcontents
+\input{second-order-structural-notes}
+\input{second-order-terminal-forest}
+\input{second-order-block-conditioning}
+\input{second-order-weighted-cuts}
+\input{second-order-cut-rate-obstruction}
+
+\section{Verification and scope}
+The mathematical argument applies to every finite connected graph satisfying its hypotheses.
+The finite checks test the structural identities and conditional laws used in the proof.
+They are not substitutes for those proofs.
+
+The script \nolinkurl{check_exponential_small_cuts.py} uses exact binary linear algebra and rational probabilities.
+Its initial catalogue contains 108 connected simple graphs of maximum degree four through order six and 16 additional multigraphs.
+It checks terminal partitions, common-functional splits, and full conditional laws.
+The saved record includes 5,682 terminal subsets, 878 common-functional splits, and 1,028 nontrivial block-conditioning checks.
+
+The script \nolinkurl{check_bundle_cycle_decay.py} compares three independent exact counts.
+These are cycle-space enumeration, sums over empty-bundle indicators, and transfer-matrix traces.
+Its 12 cases contain 77,558 cycle-space states.
+All comparisons agree.
+
+The bounded regions must be vertex-disjoint.
+The present result does not directly control an overlapping family of moderate-length cycles.
+That distinction remains important for the unrestricted second-order cycle bound.
+The existing main manuscripts, formal sources, and earlier reviewed reports remain unchanged.
+\end{document}

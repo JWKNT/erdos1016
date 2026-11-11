@@ -1,0 +1,111 @@
+{
+  "status": "pass",
+  "cases": [
+    {
+      "ports": 2,
+      "rank": 1,
+      "parity_patterns": 2,
+      "even_extensions": 4,
+      "forests": 3
+    },
+    {
+      "ports": 2,
+      "rank": 2,
+      "parity_patterns": 2,
+      "even_extensions": 8,
+      "forests": 4
+    },
+    {
+      "ports": 2,
+      "rank": 3,
+      "parity_patterns": 2,
+      "even_extensions": 16,
+      "forests": 6
+    },
+    {
+      "ports": 3,
+      "rank": 1,
+      "parity_patterns": 4,
+      "even_extensions": 8,
+      "forests": 7
+    },
+    {
+      "ports": 3,
+      "rank": 2,
+      "parity_patterns": 4,
+      "even_extensions": 16,
+      "forests": 10
+    },
+    {
+      "ports": 3,
+      "rank": 3,
+      "parity_patterns": 4,
+      "even_extensions": 32,
+      "forests": 16
+    },
+    {
+      "ports": 4,
+      "rank": 1,
+      "parity_patterns": 8,
+      "even_extensions": 16,
+      "forests": 15
+    },
+    {
+      "ports": 4,
+      "rank": 2,
+      "parity_patterns": 8,
+      "even_extensions": 32,
+      "forests": 22
+    },
+    {
+      "ports": 4,
+      "rank": 3,
+      "parity_patterns": 8,
+      "even_extensions": 64,
+      "forests": 36
+    },
+    {
+      "ports": 5,
+      "rank": 1,
+      "parity_patterns": 16,
+      "even_extensions": 32,
+      "forests": 31
+    },
+    {
+      "ports": 5,
+      "rank": 2,
+      "parity_patterns": 16,
+      "even_extensions": 64,
+      "forests": 46
+    },
+    {
+      "ports": 5,
+      "rank": 3,
+      "parity_patterns": 16,
+      "even_extensions": 128,
+      "forests": 76
+    },
+    {
+      "ports": 6,
+      "rank": 1,
+      "parity_patterns": 32,
+      "even_extensions": 64,
+      "forests": 63
+    },
+    {
+      "ports": 6,
+      "rank": 2,
+      "parity_patterns": 32,
+      "even_extensions": 128,
+      "forests": 94
+    },
+    {
+      "ports": 6,
+      "rank": 3,
+      "parity_patterns": 32,
+      "even_extensions": 256,
+      "forests": 156
+    }
+  ],
+  "total_extensions": 868
+}

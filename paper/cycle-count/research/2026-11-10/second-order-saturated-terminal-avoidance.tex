@@ -1,0 +1,118 @@
+% Independently audited by random_hosts and path_stability.
+% Exact checks: four-regular-terminal-avoidance-checks.json.
+\section{Avoiding one terminal of a saturated pair}
+\label{sec:saturated-terminal-avoidance}
+
+\begin{lemma}[At least half the paths avoid the other terminal]
+\label{lem:saturated-terminal-avoidance}
+Let $T$ be a normalized three-pole of rank $h$, with distinct ports $a,b,c$.
+Suppose $P_{ac}(T)=2^h$.
+Then
+\[
+ P_{bc}(T-a)\ge\tfrac12P_{bc}(T),\qquad
+ P_{ab}(T-c)\ge\tfrac12P_{ab}(T).
+\]
+\end{lemma}
+
+\begin{proof}
+It suffices to prove the first inequality.
+Suppress $b$ and use the saturated two-pole classification.
+Its positive-rank bridgeless pieces occur in series from $a$ to $c$.
+If $b$ subdivides a bridge, every $b$--$c$ path avoids $a$.
+The same conclusion holds when its active piece is not the first piece.
+Indeed, entering an earlier piece and returning would repeat its separating bridge.
+
+Suppose the active piece is the first piece.
+Later pieces contribute the same multiplicative factor to both path counts.
+We therefore work inside the active piece.
+For a prefix with $p$ ladder positions, let $A_p$ be its cap count.
+Let $T_p$ count prefix caps that pass through $a$.
+Equivalently, $T_p$ counts the two through paths before attaching the initial cap.
+The empty prefix has $A_0=T_0=1$.
+A singleton block replaces $(A,T)$ by $(A+1,T)$.
+A square block replaces it by $(2A+2,2T)$.
+Consequently,
+\begin{equation}\label{eq:prefix-cap-through-dominance}
+ A_p\ge2T_p-1.
+\end{equation}
+
+Use the same prefix and suffix parameters as in the local subdivision table.
+For an interface edge, a singleton rung, and a square edge, respectively, the total local $b$--$c$ counts are
+\[
+ (1+A_p)2^q,\qquad 2(1+A_p)2^q,\qquad (4+3A_p)2^q.
+\]
+The corresponding counts through $a$ are
+\[
+ T_p2^q,\qquad 2T_p2^q,\qquad 3T_p2^q.
+\]
+These follow from the same local path choices in the subdivision table.
+Only the terms that use a prefix cap can meet $a$.
+Replacing its cap count $A_p$ by $T_p$ gives precisely those terms.
+Equation~\eqref{eq:prefix-cap-through-dominance} bounds each through-$a$ count by half its total count.
+
+If the active piece is a digon, subdividing either edge gives two local paths.
+Exactly one passes through $a$.
+This also gives the required factor one half.
+The reflected argument proves the second inequality.
+\end{proof}
+
+\begin{proposition}[Forest concentration beside a full $K_{2,2}$ profile]
+\label{prop:five-pole-k22-forest-concentration}
+Let $X$ be a normalized five-pole of rank $h$.
+Write its ports as $L=\{l_1,l_2\}$, $R=\{r_1,r_2\}$, and $b$.
+Suppose all four $L$--$R$ path counts equal $2^h$.
+For $j\in L$, let $D_j$ count forests on odd set $\{b,j,r_1,r_2\}$ whose pairing differs from $bj\mid r_1r_2$.
+For $j\in R$, define $D_j$ with $L$ and $R$ exchanged.
+Then
+\[
+ \sum_{j\in L}D_j\le\sum_{j\in L}P_{bj}(X),\qquad
+ \sum_{j\in R}D_j\le\sum_{j\in R}P_{bj}(X).
+\]
+\end{proposition}
+
+\begin{proof}
+Add vertices $z,w$ adjacent to the two ports of $L,R$, respectively.
+This gives a normalized three-pole $T$ of rank $h+2$, with ports $z,w,b$.
+Its $z$--$w$ path count is the sum of the four full cross counts.
+Thus $P_{zw}(T)=2^{h+2}$.
+
+A $b$--$z$ path that avoids $w$ corresponds to a $b$--$j$ path in $X$, for exactly one $j\in L$.
+A $b$--$z$ path through $w$ corresponds to one of the forests counted by $D_j$.
+Deleting the two cap vertices establishes both correspondences bijectively.
+Therefore
+\[
+ P_{bz}(T-w)=\sum_{j\in L}P_{bj}(X),\qquad
+ P_{bz}(T)=\sum_{j\in L}\bigl(P_{bj}(X)+D_j\bigr).
+\]
+Lemma~\ref{lem:saturated-terminal-avoidance} gives the first asserted inequality.
+Exchange $L$ and $R$ to obtain the second.
+\end{proof}
+
+\begin{corollary}[An isolated fifth port cannot give an aligned critical profile]
+\label{cor:five-pole-k22-isolate-deficit}
+Consider two rank-$h,k$ five-poles with the same four full $K_{2,2}$ path pairs.
+Suppose every path count involving the fifth port is at most $\delta$ times its shore's affine-space size.
+For fixed $\delta>0$, their normalized five-cut crossing contribution is at most
+\[
+ 4+8\delta+4\delta^2+o(1)
+\]
+as $\min(h,k)\longrightarrow\infty$.
+In particular, this is bounded below the one-half threshold $8$ when $\delta$ is sufficiently small.
+\end{corollary}
+
+\begin{proof}
+The four full path products contribute $4$.
+The two same-side path densities tend to zero by the two-high-pairs tripole theorem.
+The four fifth-port products contribute at most $4\delta^2$.
+
+The forest sector on $L\cup R$ tends to zero by the high-cross-sum capping bound.
+In each of the other four sectors, let $D,E$ be the normalized masses outside the distinguished cap pairing on the two shores.
+The exact gluing expression for this sector is at most $D+E$.
+Indeed, its subtracted equal-pairing term includes the product of the two distinguished masses.
+All total forest masses are at most one.
+Proposition~\ref{prop:five-pole-k22-forest-concentration} bounds the sum of these errors by $4\delta$ on each shore.
+Adding the path and forest contributions proves the result.
+\end{proof}
+
+The concentration statement does not require the four forest sectors themselves to be small.
+It identifies the common pairings whose products cancel in the exact five-cut identity.

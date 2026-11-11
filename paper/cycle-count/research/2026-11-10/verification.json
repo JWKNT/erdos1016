@@ -1,0 +1,51 @@
+{
+  "date": "2026-11-10",
+  "source_revision": "a965788",
+  "proof_status": "Mathematical research draft with independent agent audits; new results not Lean-formalized.",
+  "pdf": {
+    "pages": 16,
+    "compile": "tectonic --keep-logs research-progress.tex",
+    "visual_review": "All 16 final pages inspected",
+    "tex_warnings": []
+  },
+  "checks": {
+    "path": {
+      "edge_limit": 12,
+      "distinct_states": 1728,
+      "composition_transitions": 27264,
+      "all_integer_inequalities_pass": true
+    },
+    "links": {
+      "seed": 101620261110,
+      "cases": 180,
+      "max_rank": 10,
+      "exact_rational_checks": true,
+      "status": "PASS"
+    },
+    "random_encoding": {
+      "status": "pass",
+      "parameter_pairs": 114,
+      "explicit_cycles_checked": 17214,
+      "scope": "two-digit gadget, exact ranks, and interval coverage"
+    },
+    "four_regular": {
+      "max_order": 9,
+      "hamilton_pair_orders": 23116,
+      "double_expansions": 2050,
+      "independent_cycle_space_through": 8
+    }
+  },
+  "sha256": {
+    "check_four_regular.py": "653d2217589678f5da1950816671a53bbfddda5bc73f71133b8ecf00642943aa",
+    "check_link_stability.py": "3c9272580280e2ce3e5a3726e472164a13155c6f8d122f79917991bea30fe7e8",
+    "check_path_stability.py": "2fc1a5ec061ed86ba3aaf00a13990198a70b3b1f67481e9e20bbfadb4dc3c4cc",
+    "check_random_host_encoding.py": "3bb33f2deb360fb0f2501489654028cbf45fb39ad3fcfcb6a6d3a87eeffbbe43",
+    "four-regular.tex": "be4c0690cbb31de16faeff6d69099164bc73872777b93a083157102a5405dedf",
+    "link-stability.tex": "7d6d24713539b9c57ab5a8a98eee00a2b916c8500cfed89d487ae7cf3ef5e1dc",
+    "path-stability.tex": "53bc30fda33dd65afa47c4926d275921973a8f4d5f4ec80760156f4a14466f09",
+    "random-hosts.tex": "464d2a75eff926309e75675a21f901cd6b6261b95f8d8226177e362ad9f876e8",
+    "remaining-directions.tex": "50fe449ce1a7b4e953b187bc564e8b6e669ad8fdd962ea9e98ef03b6f53bd667",
+    "research-progress.pdf": "2bc1dd206e1aa5baa1e474dd317fce2cfc88b91b309bcc6a16ff74af1d9bc562",
+    "research-progress.tex": "8856ecdac9b287bb1cc0b2a08a1ec78dda1f7ea944448dda4c2725ddac2379b7"
+  }
+}

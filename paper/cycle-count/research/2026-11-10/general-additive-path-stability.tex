@@ -1,0 +1,165 @@
+\section{General additive path stability}
+\label{sec:general-additive-path-stability}
+
+The bounded-layer conclusion of the preceding proof yields a stronger result.
+It forces every terminal path to have length at least the rank, up to a constant depending on the density gap.
+This deduction was developed by the Codex path-stability agent and independently audited by the root and four-regular agents.
+It uses Fable's localization and layer argument through the preceding section.
+The result has not been formalized in Lean.
+
+\begin{theorem}[Additive path stability]\label{thm:general-additive-path-stability}
+For every $0<\varepsilon\le1/2$, there is a constant $C_\varepsilon$ such that the following holds.
+If $N$ is a connected simple graph of rank $b$, with distinct terminals $u,v$, and
+\[
+ P_{uv}(N)\ge(1/2+\varepsilon)2^b,
+\]
+then every $u$--$v$ path has length at least
+\[
+ b-C_\varepsilon.
+\]
+In particular, $\operatorname{dist}_N(u,v)\ge b-C_\varepsilon$.
+
+Let $\Theta$ be the constant from Theorem~\ref{thm:general-linear-path-stability}, and put
+\[
+ B=\lceil\Theta\rceil,\qquad L=20B+2.
+\]
+One may take
+\begin{equation}\label{eq:general-additive-constant}
+ C_\varepsilon=\frac{2L(L+1)2^{L-1}}{\varepsilon}.
+\end{equation}
+For the cubic expansion $\Gamma$ and shortest path $A$ from Lemma~\ref{lem:general-shortest-reduction},
+one also has $\beta(\Gamma-V(A))\le C_\varepsilon$.
+\end{theorem}
+
+The size of this constant is not optimized.
+Its finiteness gives the qualitative additive conclusion.
+
+\subsection{A short cycle in any cyclic layer interval}
+
+Retain $\Gamma,A,U_j$ from the preceding proof.
+All vertices outside $A$ are cubic, and each vertex of $A$ has at most one incidence outside $A$.
+Assume that $|U_j|\le B$ in every distance layer.
+
+\begin{lemma}[Minimum layer span]\label{lem:additive-minimum-span}
+If the subgraph induced by $\bigcup_{j\in I}U_j$ contains a cycle for an interval $I$ of layer indices,
+then it contains a cycle of length at most $20B+2$.
+\end{lemma}
+
+\begin{proof}
+Among all cycles in that subgraph, choose one whose layer span is smallest.
+Let its minimum and maximum layer indices be $a,b'$, and put $s=b'-a$.
+Let $R=U_a\cup\cdots\cup U_{b'}$.
+Every cycle in $\Gamma[R]$ has span at least $s$, by the choice of the first cycle.
+Since it lies in this same interval, it must meet $U_a$.
+Thus $\Gamma[R]-U_a$ is a forest.
+
+Deleting a vertex of degree at most three decreases rank by at most two.
+Consequently,
+\[
+ \beta(\Gamma[R])\le2|U_a|\le2B.
+\]
+Put $m=|R|$, $d=|\delta_\Gamma R|$, and $c=\operatorname{comp}(\Gamma[R])\ge1$.
+Cubicity outside $A$ gives the exact identity
+\[
+ m=2\beta(\Gamma[R])+d-2c.
+\]
+The layer-boundary estimate \eqref{eq:general-window-boundary} yields
+\[
+ d\le6B+s+3.
+\]
+Combining these bounds gives
+\begin{equation}\label{eq:additive-span-size}
+ m\le10B+s+1.
+\end{equation}
+
+The chosen cycle has length at least $2s$.
+Indeed, its two arcs between a minimum-layer vertex and a maximum-layer vertex each have at least $s$ edges.
+This also holds when $s=0$.
+Hence $2s\le m\le10B+s+1$, so $s\le10B+1$.
+Equation~\eqref{eq:additive-span-size} now gives $m\le20B+2$.
+The chosen cycle has at most $m$ edges, proving the assertion.
+\end{proof}
+
+\begin{lemma}[Greedy deletion of whole windows]\label{lem:additive-layer-deletion}
+Put $J=\Gamma-V(A)$ and $L=20B+2$.
+There are $k$ vertex-disjoint cycles in $J$, each of length at most $L$, such that
+\[
+ \beta(J)\le2Lk.
+\]
+\end{lemma}
+
+\begin{proof}
+Start with all unmarked layers.
+If one remaining layer interval contains a cycle, choose a cycle of minimum span in that interval.
+Delete its entire tight layer window $R$, as defined in Lemma~\ref{lem:additive-minimum-span}.
+That lemma's proof gives $|R|\le L$.
+The remaining vertices again form whole layer intervals, and no edge joins two different intervals.
+Repeat until the remaining graph is a forest.
+
+Suppose that this procedure selects $k$ cycles, and let $Z$ be the union of the deleted windows.
+The selected cycles are vertex-disjoint, have length at most $L$, and satisfy $|Z|\le Lk$.
+Since $J$ has maximum degree at most three, deleting $Z$ decreases rank by at most $2|Z|$.
+Therefore $\beta(J)\le2|Z|\le2Lk$.
+\end{proof}
+
+\subsection{Completing the additive estimate}
+
+\begin{proof}[Proof of Theorem~\ref{thm:general-additive-path-stability}]
+Use Lemma~\ref{lem:general-shortest-reduction} to obtain $\Gamma$ and its shortest terminal path $A$ of length $\ell_0$.
+In the proof of Theorem~\ref{thm:general-linear-path-stability}, the density assumption excludes every good set.
+Lemma~\ref{lem:general-window} therefore gives $|U_j|<\Theta\le B$ for every layer.
+
+Use Lemma~\ref{lem:additive-layer-deletion} to choose $k$ vertex-disjoint cycles of length at most $L$ in $J=\Gamma-V(A)$.
+Each of their vertex sets is a cyclic region with boundary at most $L$ in $\Gamma$.
+Every vertex of such a cycle has degree three and uses two incidences in that cycle.
+Add the new two-edge terminal path and mark its union with $A$, giving $H,W$ as before.
+The chosen region boundaries are unchanged, and all the regions avoid $V(W)$.
+
+If $k\ge1$, the path injection and \eqref{eq:general-small-cut-input} give
+\[
+ \frac12+\varepsilon\le p(H,W)
+ \le\frac12+\frac{(L+1)2^{L-1}}{k}.
+\]
+Thus $k\le(L+1)2^{L-1}/\varepsilon$.
+The same upper bound holds when $k=0$.
+Lemma~\ref{lem:additive-layer-deletion} yields
+\[
+ \beta(J)\le2Lk\le C_\varepsilon.
+\]
+
+It remains to compare this rank with $b-\ell_0$.
+The degree sum at the $\ell_0+1$ vertices of $A$ is at most $3(\ell_0-1)+4=3\ell_0+1$.
+These vertices contain the $\ell_0$ path edges.
+Deleting them therefore removes at most $2\ell_0+1$ edges.
+If $J$ is nonempty, its rank satisfies
+\[
+ \beta(J)\ge b+(\ell_0+1)-(2\ell_0+1)=b-\ell_0.
+\]
+If $J$ is empty, then $|E(\Gamma)|\le(3\ell_0+1)/2$, so
+\[
+ b=|E(\Gamma)|-\ell_0\le(\ell_0+1)/2\le\ell_0.
+\]
+Thus $b-\ell_0\le\beta(J)$ in both cases.
+It follows that $\ell_0\ge b-C_\varepsilon$.
+Every original terminal path has length at least $\ell_0$, which proves the theorem.
+\end{proof}
+
+\begin{corollary}\label{cor:general-rank-deficit}
+For any sequence of connected graphs and terminal pairs with
+$\beta(N)-\operatorname{dist}_N(u,v)\to\infty$,
+\[
+ P_{uv}(N)\le(1/2+o(1))2^{\beta(N)}.
+\]
+\end{corollary}
+
+\begin{proof}
+A fixed positive density gap would bound the rank-distance deficit by Theorem~\ref{thm:general-additive-path-stability}.
+\end{proof}
+
+The conclusion does not yet give an exponential error in the rank-distance deficit.
+Such a rate would require quantitative control beyond the constants supplied here.
+
+The script \texttt{check\_additive\_layer\_structure.py} checks the finite layer argument on 157 explicit cubic expansions.
+It verifies 301 selected windows, including examples with 322 vertices and outside rank 81.
+The checks cover the minimum-span feedback set, cubic rank identity, boundary bound, and final greedy rank estimate.
+They support these finite identities and do not replace the probability argument.

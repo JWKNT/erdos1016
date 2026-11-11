@@ -1,0 +1,234 @@
+% Independently audited by root and four_regular; finite checks are recorded below.
+% Include after random-hosts-phase3.tex and theta-random-host-partition.tex.
+\section{A wheel construction and an upper coefficient of ten ninths}
+\label{sec:rhost-ten-ninths}
+
+This section adds one external matching theorem to the previous construction.
+All metric distributions and random-host embedding estimates are proved below.
+The matching input is Pippenger's near-perfect matching theorem.
+We use its version allowing $o(v)$ exceptional vertices, as stated after Theorem~1.1 in
+Alon and Yuster, \emph{On a hypergraph matching problem},
+\url{https://web.math.princeton.edu/~nalon/PDFS/ayhyper2.pdf}.
+
+\begin{lemma}[Wheel length packing]\label{lem:rhost-wheel-lengths}
+For integers $h\to\infty$, there are $(1+o(1))h/12$ traceable subdivisions of the four-rim wheel.
+Their cycle lengths cover all but $o(h)$ integers in $[h+1,2h]$.
+Each subdivision has $O(h)$ edges, shortest cycle length at least $2\lceil\sqrt h\rceil$,
+and at least $(r-1)h$ edges in every connected core of cycle rank $r\in\{2,3,4\}$.
+\end{lemma}
+
+\begin{proof}
+Put $s=\lceil\sqrt h\rceil$.
+Choose $U,L,M$ independently and uniformly from the integers $s,\ldots,2s$.
+Put $t=h+U$ and
+\[
+ c_j=4^{-j}\binom{2j}{j}\qquad(j\ge0).
+\]
+Choose four nonnegative integers $X_0,\ldots,X_3$ of sum $t$, with probability
+\begin{equation}
+ \Pr(X_0=x_0,\ldots,X_3=x_3)
+   =\frac{c_{x_0}c_{x_1}c_{x_2}c_{x_3}}{t+1}.
+ \label{eq:rhost-wheel-distribution}
+\end{equation}
+This is a probability distribution because $\sum_{j\ge0}c_jz^j=(1-z)^{-1/2}$.
+For every pair $i,j$, the sum $X_i+X_j$ is uniform on $\{0,\ldots,t\}$.
+Indeed, each convolution of two sequences $(c_j)$ is identically one.
+
+Give the four spokes lengths $w_i=h+s-X_i$.
+Give the cyclic rim arms $01,12,23,30$ lengths $1,L,1,M$.
+Discard the outcome if a spoke length is nonpositive.
+The probability of this event is $o(1)$.
+To see this, fix a spoke and put $r=t-X_i$.
+The generating function for the other three coordinates gives
+\[
+ \Pr(t-X_i=r)=\frac{c_{t-r}(2r+1)c_r}{t+1}.
+\]
+Since $c_j\le C/\sqrt{j+1}$, summing over $r\le s$ gives $O((s/h)^{3/2})$.
+A union bound handles all four spokes.
+
+There are twelve non-rim cycles, two for each pair of spokes.
+Their lengths have the form
+\[
+ Z_{ij,a}=2h+2s-X_i-X_j+a.
+\]
+The two possible offsets for each pair are
+\[
+\begin{array}{c|c}
+ ij&\text{offsets}\\\hline
+ 01,23&1,\ L+M+1\\
+ 12&L,\ M+2\\
+ 30&M,\ L+2\\
+ 02,13&L+1,\ M+1.
+\end{array}
+\]
+All these lengths lie in
+$J=[h+1,2h+6s+1]\cap\mathbb Z$.
+For every $z\in I=[h+5s+1,2h]\cap\mathbb Z$ and each specified cycle label,
+\begin{equation}
+ \Pr(Z_{ij,a}=z)=\mathbb E\frac1{h+U+1}
+                  =\frac{1+O(s/h)}h.
+ \label{eq:rhost-wheel-marginal}
+\end{equation}
+For every integer $z$, the same probability is at most $1/h$.
+
+We next bound the joint probabilities of two distinct cycle labels.
+For the same spoke pair, the difference of the offsets is one of
+$\pm(L+M)$, $\pm(L-M)$, or $\pm(L-M+2)$.
+For fixed target lengths, this relation has probability $O(1/s)$.
+Conditioning on $U,L,M$ then costs at most $1/h$ for the required pair sum.
+For complementary spoke pairs, the sum of the two lengths is
+\[
+ 3h+4s-U+a+a'.
+\]
+Conditioning on $L,M$ fixes at most one value of $U$.
+The remaining pair-sum condition again costs at most $1/h$.
+Both cases therefore give $O(1/(hs))$.
+
+Suppose that the spoke pairs share one index.
+Condition on $X_i+X_j=q$.
+The split within this pair and the split within its complement are independent.
+A split of an integer $q$ has masses $c_a c_{q-a}$, whose maximum is at most $C/\sqrt{q+1}$.
+The shared-index pair sum is a convolution of splits of $q$ and $t-q$.
+Its largest mass is at most
+\[
+ \min\left\{\frac C{\sqrt{q+1}},\frac C{\sqrt{t-q+1}}\right\}
+ \le\frac C{\sqrt h}.
+\]
+The first pair sum has mass $1/(t+1)$.
+Thus, uniformly in two target lengths and two distinct labels,
+\begin{equation}
+ \Pr(Z=z,Z'=z')=O(h^{-3/2}).
+ \label{eq:rhost-wheel-codegree}
+\end{equation}
+Here we used $s=\lceil\sqrt h\rceil$.
+Summing over $z=z'\in J$ shows that repeated cycle lengths occur with probability $O(h^{-1/2})$.
+Discard these outcomes too.
+
+For each twelve-element subset $A\subset J$, let $p_A$ be the probability that the retained outcome has length set $A$.
+Then
+\[
+ \sum_Ap_A=1-o(1),\qquad
+ \sum_{A\ni z}p_A\le\frac{12}h,\qquad
+ \max_{z\ne z'}\sum_{A\supset\{z,z'\}}p_A=O(h^{-3/2}).
+\]
+Before the discarded outcomes, every vertex of $I$ has labelled incidence weight $(12+o(1))/h$.
+Discarding outcomes removes total incidence weight $o(1)$.
+Consequently, all but $o(h)$ vertices of $J$ have degree weight $(12+o(1))/h$.
+
+This weighted system reduces to a simple hypergraph.
+Set $\lambda=h(\ln h)^2$ and include each distinct set $A$ independently with probability $\lambda p_A$.
+These probabilities are below one for large $h$, by the codegree bound.
+Chernoff bounds show that the maximum degree is at most $(12+o(1))(\ln h)^2$.
+All but $o(h)$ vertices have degree $(12+o(1))(\ln h)^2$.
+The maximum codegree is $O(\ln h)$.
+For completeness, each degree is a sum of independent indicators with mean at most $12(\ln h)^2$.
+Use an error $(\ln h)^{-1/4}$ and a union bound over $O(h)$ vertices.
+Each codegree has mean $O(h^{-1/2}(\ln h)^2)$.
+The upper-tail estimate at $C\ln h$ permits a union bound over $O(h^2)$ pairs.
+Pippenger's theorem, with its exceptional-vertex extension, gives a matching covering $|J|-o(h)$ vertices.
+It has $h/12+o(h)$ edges.
+Choose one retained wheel metric for each matching edge.
+This proves the length coverage.
+
+We verify the graph conditions.
+The total spoke length is $3h+4s-U$, and the total edge count is at least $3h+4s+2$.
+Every spoke has length at most $h+s$.
+Every pair of spokes has total length at least $h$.
+A non-rim cycle therefore has length at least $h+1$, while the rim has length $L+M+2\ge2s$.
+
+A connected core of rank two contains either two spokes and the full rim, or at least three spokes.
+Its edge count is at least $h$.
+A core of rank three contains either three spokes and the full rim, or all four spokes.
+Its edge count is at least $2h$.
+A core of rank four is the whole wheel and has at least $3h$ edges.
+These classifications follow by writing the rank as $k+r-v$,
+where $k$ counts spokes and $r,v$ count rim edges and rim vertices.
+
+Finally, delete the unit rim edges $01,23$.
+Delete the hub-end edge of spokes $0,1$.
+The remaining graph is a spanning path, with branch order $1,2,\text{hub},3,0$.
+If a deleted spoke has length one, its rim vertex is an endpoint.
+This proves traceability.
+\end{proof}
+
+\begin{lemma}[Wheel embeddings]\label{lem:rhost-wheel-embeddings}
+Let $d\sim\ln n/\ln\ln n$, $h=d+O(1)$, and $D=\Theta(d)$.
+Suppose $nD^{-d}$ tends to zero faster than every fixed negative power of $d$.
+Any list of $O(d)$ wheel subdivisions supplied by Lemma~\ref{lem:rhost-wheel-lengths}
+embeds vertex-disjointly in $G(n,D/n)$ with high probability.
+The embeddings can avoid any set of $O(d^2)$ vertices chosen after observing the graph.
+\end{lemma}
+
+\begin{proof}
+The overlap proof of Lemma~\ref{lem:rhost-k4-moments} extends to this fixed wheel kernel.
+Here are the required details.
+A wheel has no two vertex-disjoint cycles, so an overlap has at most one cyclic component.
+After removing leaves, its core consists of complete kernel arms.
+There are only constantly many core types.
+For a core of rank $r$, its normalized overlap weight is at most $n^{r-1}D^{-e_r}$.
+The metric lemma gives
+\[
+ e_1\ge2\lceil\sqrt h\rceil,\quad e_2\ge h,\quad e_3\ge2h,\quad e_4\ge3h.
+\]
+On eight arms, at most sixteen cut positions specify a connected overlap.
+There are at most sixteen leaves and five other vertices of degree different from two.
+Choose their images and then the images of the suppressed path segments.
+A graph of cycle rank four has at most sixteen simple paths between prescribed endpoints.
+It has at most fifteen simple cycles, so loop segments also have only constantly many choices.
+Thus the number of cyclic overlap descriptions is at most $C(v+1)^{48}$.
+Forest overlaps contribute $O(v^2/n)$, as before; maximum degree four only changes the geometric-series constant.
+For large $n$, $D$ exceeds that constant.
+
+Both the relative variance and the normalized intersecting-pair expectation are at most
+\[
+ C\left[\frac{v^2}n+(v+1)^{48}
+ \left(D^{-2\lceil\sqrt h\rceil}+nD^{-h}+n^2D^{-2h}+n^3D^{-3h}\right)\right].
+\]
+This tends to zero faster than every fixed negative power of $d$.
+The Chebyshev, Markov, and independent-set argument from Lemma~\ref{lem:rhost-theta-list}
+therefore gives more than $C_0d^2$ disjoint copies of each metric, for every fixed $C_0$.
+A greedy choice proves the assertion, including the adaptive forbidden set.
+\end{proof}
+
+\begin{theorem}[An upper coefficient of ten ninths]\label{thm:rhost-ten-ninths}
+For the same $p_*$ as in Theorem~\ref{thm:rhost-scale} and every $p\ge p_*$,
+with high probability
+\[
+ \operatorname{Pex}(G(n,p))
+ \le\log_2n+\left(\frac{10}9+o(1)\right)\frac{\ln n}{\ln\ln n}.
+\]
+\end{theorem}
+
+\begin{proof}
+Use the exposure scheme of Theorem~\ref{thm:rhost-eight-sevenths}.
+Put $h=9\lceil d/9\rceil$.
+Use single cycles through length $h/3+1$.
+Use the constant-sum theta partition in Lemma~\ref{lem:rhost-theta-middle} for $[h/3+2,h-2]$.
+Use Lemma~\ref{lem:rhost-wheel-lengths} for $[h+1,2h]$.
+Add one single-cycle block for every still-uncovered length through $T=2(d+b+1)$.
+There are $o(d)$ such extra lengths, since $T-2h=O(b)=o(d)$.
+The rank sum of the short blocks is at most
+\[
+ \frac h3+\frac{4h}9+4\frac h{12}+o(d)
+ =\left(\frac{10}9+o(1)\right)d.
+\]
+All these choices depend only on $n$, before exposing the random host.
+
+Prepare the single cycles and the previous base cycles in $G_1$.
+Embed the theta and wheel blocks in the first half of $G_2$.
+The theta moment estimate applies because every theta cycle has length at least $h/3+2$ and its edge count is $h\ge d$.
+Lemma~\ref{lem:rhost-wheel-embeddings} supplies the wheel blocks.
+Each type has more than $C_0d^2$ disjoint copies, so both lists can be selected greedily together.
+Every block has a spanning path and the total number of vertices is $O(d^2)$.
+Use the second half of $G_2$ for the connector chain.
+The remaining exposures and interval coverage are unchanged.
+The final excess is
+\[
+ K+2b+m+\left(\frac{10}9+o(1)\right)d
+ =\log_2n+\left(\frac{10}9+o(1)\right)\frac{\ln n}{\ln\ln n}.
+\]
+\end{proof}
+
+The finite checker \texttt{check\_random\_host\_wheels.py} verifies 3962 wheel metrics, all 42 kernel core types, and 120 explicit spanning paths.
+It also verifies 96 pair-marginal identities with exact rational arithmetic.
+These checks do not certify the asymptotic matching or embedding arguments.

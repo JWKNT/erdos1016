@@ -1,0 +1,7 @@
+{
+  "gadget_cases": 16,
+  "binary_cycle_checks": 3072,
+  "digit_cycle_checks": 1784,
+  "spanning_hamilton_cycle_checks": 16,
+  "adaptive_exposure_and_asymptotic_probability_proofs": "not certified by finite checks"
+}

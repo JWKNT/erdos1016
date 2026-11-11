@@ -1,0 +1,42 @@
+Coefficient research checkpoint, 2026-11-11.
+
+Outcome: an eventual exact Horak--Kim formula follows from the new local
+proofs and the root's running-maximum transfer. This is stronger than the
+requested leading coefficient. The eventual rank threshold is unspecified.
+
+Files:
+- four-coefficient-rings.tex: exact mixed-square/single-rung ring formula,
+  optimal cyclic ordering at fixed tile counts, exact optimization at each
+  rank r>=8, and the open-chain cap formula.
+- four-coefficient-rigidity.tex: the large-four-pole 3.99 aggregate rigidity
+  lemma, aligned saturation reduction, and eventual exact maximum in the
+  cyclic-cut<=4 class. Smaller-shore contributions are uniform in its rank.
+- root-sharp-coefficient-transfer.tex: exact running-maximum recurrence and
+  eventual exact transfer to all finite graphs. Independently audited here.
+- four-coefficient-check.py / four-coefficient-checks.json: exact tests.
+
+Independent mathematical audits of both four-coefficient fragments:
+root PASS; path_stability PASS; random_hosts PASS.
+
+Finite checks passed:
+- 456 mixed-ring graphs with both global interface twists;
+- 527,520 full binary cycle-space states;
+- 86 open-chain through, cross-path, and disjoint-cap counts;
+- 62,491 exact integer optimization cases for total tile weights through 500;
+- 1,059 rational endpoint profiles on four terminals.
+The largest tested endpoint path sum outside full K22 is 1583/400=3.9575.
+The graph tests correctly recover small exceptions: all-single twisted
+rings beat HK at ranks 4 and 5. The new theorem makes no claim of optimality
+at those ranks. These tests support the finite identities; the asymptotic
+classification follows from the written proofs, not from enumeration.
+
+Audited transfer details:
+For large r, E_r<=max(B_r,E_(r-1),0). The convention B_r=0 for an empty
+small-cut class is harmless. An eventually increasing unbounded excess H_r
+with matching constructions and B_r<=H_r forces E_r=H_r eventually.
+The HK alternating increments are 4*2^q-4 and (2q+1/2)*2^q+1, both positive.
+The parity limsup statement correctly gives inequalities; no unjustified
+cross-parity lower transfer is asserted.
+
+No stable 2026-11-10 proof or Fable/Lean source was changed.
+No full Lean formalization of this refinement is claimed.

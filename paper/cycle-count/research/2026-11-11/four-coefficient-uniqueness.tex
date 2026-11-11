@@ -1,0 +1,46 @@
+\section{Eventual uniqueness among cubic maximizers}
+\label{sec:four-coefficient-uniqueness}
+
+\begin{corollary}
+\label{cor:four-eventual-cubic-uniqueness}
+There is an absolute integer $R$ such that, for every $r\ge R$, a connected cubic multigraph $G$ of rank $r$ satisfies
+\[
+ c(G)=\psi(r)
+\]
+if and only if $G$ is isomorphic to the Horak--Kim graph $MC_{r-1}$.
+For odd $r$, this is the ring of $(r-1)/2$ square tiles.
+For even $r$, it is the ring of $(r-2)/2$ square tiles and one single-rung tile.
+The assertion concerns cubic graphs; it does not classify arbitrary subdivisions or other noncubic maximizers.
+\end{corollary}
+
+\begin{proof}
+Increase $R$ until the eventual exact formula and every threshold in its proof apply.
+Write $H_r=\psi(r)-2^{r-1}$ for the Horak--Kim excess.
+Its two alternating increments are strictly positive.
+
+The loop and high-girth deletion branches give excess at most $H_{r-1}<H_r$.
+The bounded-girth branch has negative excess.
+Thus every cubic maximizer has a cyclic cut of size at most four.
+Cyclic cuts of size at most three give only $O(2^{r/2})$ excess, which is strictly smaller than $H_r$ for large $r$.
+
+In the four-cut proof, every fixed-deficit branch lies below one half.
+The aligned full-star branch again has only $O(2^{r/2})$ excess.
+The only remaining case is an aligned pair of saturated cross poles with positive through counts.
+It is a square and single-rung ring.
+
+The fixed-rank optimization in Theorem~\ref{thm:four-coefficient-ring-maximum} is strict whenever the number of single-rung tiles exceeds its parity minimum.
+The all-single-rung case is also strictly smaller.
+Thus a maximizing ring has no single-rung tile at odd rank and exactly one at even rank.
+Its cyclic tile order is unique up to rotation.
+
+Finally, interface twists do not change its isomorphism type.
+Swapping both strand labels in a tile transfers a twist from one adjacent interface to the other.
+A square tile additionally permits swapping its left pair while fixing its right pair, since its internal graph is $K_{2,2}$.
+Move all twists to an interface next to a square and remove the remaining twist by this last automorphism.
+There is at least one square at the ranks under consideration.
+The untwisted ring is exactly $MC_{r-1}$.
+Conversely, that graph attains the eventual exact formula.
+\end{proof}
+
+The rank threshold is unspecified, as in the eventual exact-count theorem.
+No uniqueness assertion is made at smaller ranks.

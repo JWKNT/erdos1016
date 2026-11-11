@@ -1,0 +1,117 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,booktabs,array,microtype,xcolor}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\setlength{\emergencystretch}{3em}
+\title{The sharp second-order cycle bound through six-edge cuts}
+\author{Collaborative research working draft}
+\date{11 November 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Every connected loopless cubic multigraph of cycle rank $r$ with a cyclic edge cut of size at most six satisfies
+\[
+ c(G)\le2^{r-1}+K r2^{r/2}
+\]
+for an absolute constant $K$.
+The known Horak--Kim family shows that the error has sharp order within this class.
+For large rank, a cyclic six-cut without a smaller cyclic cut gives the stronger strict inequality $c(G)<2^{r-1}$.
+Two large shores are handled by incompatible terminal-pairing supports.
+For a bounded shore, a $K_{3,3}$ subdivision forces a missing four-terminal forest state.
+Its integral counting deficit absorbs the internal cycles of the other shore.
+The unrestricted sharp bound remains open.
+\end{abstract}
+\section*{Status and scope}
+All new arguments in this report passed independent mathematical audits by the root and three research agents.
+Exact computations separately check the state identities, the six-cycle certificate, and the subdivision witnesses.
+The new theorems are not formalized in Lean.
+Publication priority has not been established.
+The earlier five-cut proof and the unrestricted forest machinery are explicit inputs, stated below.
+This report records the new extension; it does not reproduce those earlier proofs.
+
+Rank means $|E|-|V|+\operatorname{comp}$.
+Paths and cycles are simple, with parallel edges distinguished.
+A cyclic cut has a cycle on each shore.
+A normalized $k$-pole has $k$ distinct degree-two ports and all other degrees three.
+An earlier relaxation obstruction is included because the new cap inequalities explain its failure.
+\tableofcontents
+\section{Inputs from the earlier research packets}
+The following reports contain the earlier proofs:
+\begin{itemize}
+\item \nolinkurl{small-cut-sharp-bound.pdf}: cuts of size at most five, saturation, and protected terminal-path estimates.
+\item \nolinkurl{terminal-path-stability.pdf}: additive terminal-path stability.
+\item \nolinkurl{polynomial-cycle-error.pdf}: unrestricted marked forest and cycle estimates.
+\end{itemize}
+The statements needed below are recorded explicitly.
+\begin{theorem}[Established five-cut bound]\label{thm:sharp-order-five-cut-error}
+There is an absolute $K_5$ such that every connected loopless cubic multigraph of rank $r$ with a cyclic cut of size at most five satisfies $c(G)\le2^{r-1}+K_5r2^{r/2}$.
+\end{theorem}
+\begin{theorem}[Established forest and cycle estimates]
+For connected subcubic graphs of unbounded rank, cubic outside a fixed connected marked set, the probability that a uniform even edge set is a forest outside that set is at most $1/2+o(1)$.
+Also, uniformly over graphs of rank $h$, one has $c(G)\le(1/2+o(1))2^h$.
+The separate unrestricted packet proves a stronger quantitative estimate.
+\end{theorem}
+\begin{lemma}[Established saturated two-pole classification]\label{lem:full-two-pole-classification}
+A saturated normalized two-pole consists of bridgeless saturated pieces joined by bridges in series.
+Each piece is a digon or a capped permutation ladder.
+Its permutation is a concatenation of singleton blocks and adjacent transpositions.
+\end{lemma}
+\begin{theorem}[Established path saturation gap]\label{thm:terminal-path-saturation-gap}
+For a connected graph of rank $h$ and distinct terminals $s,t$, either $P_{st}=2^h$ or $P_{st}\le(15/16)2^h$.
+\end{theorem}
+\begin{theorem}[Established protected high-density theorem]\label{thm:high-density-protected-cyclic-sets}
+Fix the number of ports, a bound on the number of protected vertices, and $\varepsilon>0$.
+At sufficiently large rank, terminal-path density at least $1/2+\varepsilon$ in a normalized pole gives two disjoint cyclic vertex sets.
+They avoid every port and protected vertex, and have boundary at most four in every cubic completion.
+The rank threshold depends only on the fixed parameters.
+\end{theorem}
+\begin{theorem}[Aggregate forest states]\label{thm:fixed-port-aggregate}
+For a normalized $k$-pole $Y$ of rank $h$, with fixed $k$, let $F_S$ count forests with odd-degree set $S$.
+Then, uniformly as $h\to\infty$,
+\[
+ 2^{-h}\sum_{S\text{ even}}F_S\le2^{k-2}+o(1).
+\]
+\end{theorem}
+\begin{proof}
+Attach a fixed trivalent tree with $k$ leaves to the $k$ ports, using one edge per leaf.
+Mark the entire added tree.
+The graph has rank $h+k-1$, and all vertices outside the marked set are cubic.
+Every even port pattern has a unique extension through the tree, determined by parity across its edge cuts.
+Each port parity class has $2^h$ members.
+The forest probability outside the marked set is therefore $2^{-(h+k-1)}\sum_SF_S$.
+Apply the established marked forest estimate and multiply by $2^{k-1}$.
+\end{proof}
+\input{second-order-matching-augmentation}
+\input{second-order-six-cut-partial}
+\input{second-order-path-six-caps}
+\input{second-order-six-cycle-shore}
+\input{second-order-four-six-large-shores}
+\input{second-order-four-six-explicit-gap}
+\input{second-order-root-six-planarity}
+\input{second-order-path-six-four-sector-planarity}
+\input{second-order-root-all-six-cuts}
+\section{Verification and remaining work}
+The exact six-cut checker verifies 960 complete gluings and 180 two-edge augmentation identities.
+Two independent solver-free checks verify the six-cycle coefficient certificate.
+The new subdivision checker tests all 3,003 assignments of six ports to the nine $K_{3,3}$ core paths.
+It constructs a nonforest four-port parity witness for each assignment and checks 48,048 affine parity states.
+It also checks 500 outside-attachment fixtures, including components with several attachments.
+These checks support the finite identities; the asymptotic conclusions follow from the proofs above.
+
+The unrestricted $O(r2^{r/2})$ bound is still open.
+The established reductions now allow the remaining large cubic kernels to be assumed cyclically seven-edge-connected, with girth at least seven.
+The strongest unrestricted estimate remains
+\[
+ \psi(r)\le2^{r-1}+O\!\left(\frac{2^r(\log_2 r)^{11/2}}{\sqrt r}\right).
+\]
+The shared live handoff records subsequent partial work separately.
+\begin{thebibliography}{9}
+\bibitem{HK} P. Horak and D. Kim, \emph{Connected cubic graphs with the maximum number of perfect matchings}, Journal of Graph Theory 99 (2022), 671--690. Updated author version: \url{https://arxiv.org/abs/2006.13459}.
+\end{thebibliography}
+\end{document}

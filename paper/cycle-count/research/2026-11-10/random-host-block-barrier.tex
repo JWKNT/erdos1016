@@ -1,0 +1,157 @@
+\section{A limitation of cycle, theta, and $K_4$ block constructions}
+\label{sec:rhost-block-barrier}
+
+This section concerns a construction method, not a lower bound for arbitrary pancyclic subgraphs.
+The method supplies its short cycle lengths inside separate cycle, theta, and subdivided-$K_4$ blocks.
+Its cost is the sum of the cycle ranks of those blocks.
+The following obstruction shows that this method cannot attain coefficient one under the stated density constraints.
+
+\subsection{An elementary obstruction to the proposed balanced mixture}
+
+\begin{lemma}\label{lem:rhost-excess-length}
+Let $d>0$.
+For a subdivision of $K_4$ with total arm length $E\ge2d$, suppose every arm has length at most $E-d$.
+Then
+\[
+ \sum_C(|C|-d)_+\le4E-6d.
+\]
+For a theta graph of total length $E\ge d$,
+\[
+ \sum_C(|C|-d)_+\le2E-2d.
+\]
+Here $x_+=\max\{x,0\}$, and each sum is over all cycles of the stated graph.
+\end{lemma}
+
+\begin{proof}
+Each arm of $K_4$ belongs to four of its seven cycles.
+It suffices to prove $\sum_C\min\{|C|,d\}\ge6d$.
+The left side is a concave function of the six nonnegative arm lengths.
+For fixed $E\ge2d$, minimise it on the polytope
+\[
+ \sum_iw_i=E,\qquad 0\le w_i\le E-d.
+\]
+Its vertices have two nonzero coordinates, equal to $E-d$ and $d$.
+When $E=2d$, both coordinates equal $d$.
+Any two distinct edges of $K_4$ occur together in exactly two cycles.
+They each occur in four cycles, so their union meets exactly six cycles.
+At each polytope vertex, the sum of the truncated cycle lengths is therefore $6d$.
+Concavity proves the bound throughout the polytope.
+
+For a theta graph, every arm belongs to two cycles.
+On the simplex of three nonnegative arm lengths summing to $E\ge d$,
+concavity gives $\sum_C\min\{|C|,d\}\ge2d$.
+Indeed, at every simplex vertex, the two nonzero cycle lengths both equal $E$.
+Subtract these truncated sums from the full cycle-length sums.
+\end{proof}
+
+Consider the proposed mixture of $N+O(1)$ subdivided-$K_4$ blocks and $N+O(1)$ theta blocks.
+Let $d=5N$, and suppose their arm lengths are $O(N)$.
+Require the $K_4$ blocks to have total length at least $10N$ and every rank-two core at least $5N$.
+Require each theta block to have total length at least $5N$.
+Suppose their cycles cover all lengths $3,\ldots,10N$.
+There are only $10N+O(1)$ cycle occurrences, so all but $O(1)$ must supply distinct required lengths.
+Consequently, their total cycle-length sum is $50N^2+O(N)$.
+Lemma~\ref{lem:rhost-excess-length} bounds their total excess above $5N$ by
+\[
+ 50N^2-6(5N)N-2(5N)N+O(N)=10N^2+O(N).
+\]
+But the required lengths have excess sum
+\[
+ \sum_{\ell=5N+1}^{10N}(\ell-5N)
+ =\frac{25}{2}N^2+O(N),
+\]
+a contradiction for large $N$.
+This excludes arbitrary choices and parameterisations of these blocks.
+It is not restricted to affine families or to a particular parity assignment.
+
+\subsection{A quantitative barrier for arbitrary mixtures}
+
+Define a nonnegative weight function on $[0,\infty)$ by
+\[
+ w(x)=
+ \begin{cases}
+ 1,&0\le x\le1/3,\\
+ 4/3-x,&1/3\le x\le1,\\
+ 1/2-x/6,&1\le x\le2,\\
+ 0,&x>2.
+ \end{cases}
+\]
+Its two formulas agree at $1/3$ and $1$.
+At $2$, use the third formula.
+
+\begin{lemma}[Finite rational certificate]\label{lem:rhost-block-weight}
+Let $Q$ be a subdivision of $K_4$ with total length at least $2d$ and every rank-two core of length at least $d$.
+Then
+\[
+ \sum_{C\subseteq Q}w(|C|/d)\le3.
+\]
+For a theta graph $Q$ of total length at least $d$, the corresponding sum is at most two.
+For a single-cycle block, it is at most one.
+\end{lemma}
+
+\begin{proof}
+The single-cycle assertion follows from $0\le w\le1$.
+The other assertions have finite rational certificates, described explicitly below.
+Scale the arm lengths by $d$ and write them as a nonnegative vector $x$.
+For $K_4$, the metric inequalities are
+\[
+ \sum_{i=1}^6x_i\ge2,\qquad
+ \sum_{i\ne j}x_i\ge1\quad(1\le j\le6).
+\]
+For a theta graph, the metric inequality is $x_1+x_2+x_3\ge1$.
+
+Assign each cycle length to one of the four intervals in the definition of $w$.
+There are $4^7=16384$ assignments for $K_4$, and $4^3=64$ for a theta graph.
+Each assignment gives rational linear inequalities $Ax\le b$ and a linear objective $c\cdot x+c_0$.
+The objective is the sum of cycle weights on that region.
+For every assignment, the supplied certificate gives a rational vector $y$ satisfying
+\[
+ y\ge0,\qquad A^{\mathsf T}y\ge c,\qquad
+ b\cdot y+c_0\le r,
+\]
+where $r=3$ for $K_4$ and $r=2$ for a theta graph.
+Since $x\ge0$, these inequalities imply
+\[
+ c\cdot x+c_0\le y^{\mathsf T}Ax+c_0\le b\cdot y+c_0\le r.
+\]
+Every permitted metric lies in a listed region.
+At the discontinuity $x=2$, use the region with the nonzero boundary weight.
+Thus the certificates prove the claims for all real nonnegative arm lengths.
+\end{proof}
+
+The file \nolinkurl{random-host-rank3-barrier-certificates.json} contains the rational multipliers.
+The standard-library verifier \nolinkurl{check_random_host_rank3_barrier.py} checks every inequality exactly.
+Its optional generation mode uses a linear-programming solver only to find candidate multipliers.
+Every candidate is converted to rational numbers and checked exactly before it is accepted.
+The proof does not use floating-point solver success as a certificate.
+
+\begin{proposition}[A barrier of $37/36$]\label{prop:rhost-block-barrier}
+Suppose a collection of single-cycle, theta, and subdivided-$K_4$ blocks supplies all lengths $3,\ldots,\lfloor2d\rfloor$ internally.
+Suppose each theta block has total length at least $d$.
+Suppose each $K_4$ block has total length at least $2d$ and each of its rank-two cores has length at least $d$.
+Then the sum of the block cycle ranks is at least
+\[
+ \frac{37}{36}d-O(1).
+\]
+\end{proposition}
+
+\begin{proof}
+The weight function is nonnegative.
+Select one block cycle of each required length and apply Lemma~\ref{lem:rhost-block-weight} to all blocks.
+Their rank sum is at least
+\[
+ \sum_{\ell=3}^{\lfloor2d\rfloor}w(\ell/d)
+ =d\int_0^2w(x)\,dx+O(1).
+\]
+The function has bounded variation, so the Riemann-sum error is bounded independently of $d$.
+Finally,
+\[
+ \int_0^2w(x)\,dx
+ =\frac13+\frac49+\frac14=\frac{37}{36}.
+\]
+\end{proof}
+
+The obstruction permits arbitrary numbers, metrics, and parameterisations of the three block types.
+It also permits duplicate and unused cycle lengths.
+It does not cover constructions using larger kernels or short cycles that traverse several blocks.
+Thus it supports the search for wheel blocks without excluding coefficient one for the original random-host problem.

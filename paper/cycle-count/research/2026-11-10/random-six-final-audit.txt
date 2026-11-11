@@ -1,0 +1,55 @@
+Independent audit by random_hosts, 2026-11-10.
+
+RESULT: PASS for the complete cyclic-cut-at-most-six theorem.
+
+Sources checked line by line:
+  second-order-four-six-large-shores.tex
+  second-order-root-six-planarity.tex
+  second-order-path-six-four-sector-planarity.tex
+  second-order-root-all-six-cuts.tex
+  second-order-path-six-caps.tex
+
+Large shores: the aggregate and half path ceiling force a hypothetical
+critical pair to have zero path coordinates and all sixteen forest totals
+equal to one. Equal four-pairing masses cannot be positive on both shores.
+The matching-augmentation inequalities then forbid simultaneous positive
+R_A on both shores. Every two six-matchings have a common disjoint matching,
+which gives the contradiction. Compactness yields a uniform strict gap.
+The repeated-cut-endpoint sentence was corrected from a decrease of two
+to a decrease of at least one; moving a two-incidence endpoint gives6->5.
+
+Planarity: completed singleton/square tiles are a triple edge and K4.
+Two-edge joins preserve planarity, so every saturated pole is planar.
+The planar girth inequality applies despite bridges because minimum degree
+two makes every facial boundary contain a cycle. For a six-pole, combining
+2e=3n-6 with5e<=7n-14 gives n<=2, impossible.
+
+Four-sector saturation: in a K3,3 subdivision, branch vertices cannot be
+ports or attachment points for outside components. Assign each outside
+component's ports to one chosen attachment path. The five omitted paths
+of some core square carry at least four ports, by the exact average5k/9.
+All these ports survive in one component after deleting the square.
+Its spanning-tree parity solution plus the deleted cycle is a nonforest
+in a four-terminal affine class. This proves the missing-state quantum.
+
+Bounded shores: every path coefficient and one four-sector coefficient is
+at most1-delta, delta=2^-h. The other fifteen forest totals are at most1.
+Thus crossing <=16-delta+o(1). Large-shore internal cycles contribute at
+mostdelta/2+o(1), while small-shore internal cycles vanish after normalization.
+For h<=H, delta>=2^-H makes the deficit uniform.
+
+The short-cycle reduction is valid: if a shortest cycle has length at most
+six and the complement is acyclic, then rank<=6. At large rank its cyclic
+boundary is covered by the smaller-cut theorem or the C6-shore result.
+Absence of smaller cyclic cuts makes the opposite shore connected with
+distinct ports. Finite remaining ranks are absorbed in an absolute constant.
+
+The general fixed-cap theorem, rank increment q+g-c, protected-vertex
+transfer, and exact star/binary-tree identities also pass. They are valid
+independent refinements but are unnecessary for the final six-cut proof.
+
+Exploratory computation retained, not used as proof:
+  random-six-cap-exploration.json: universal path weight1 maximum16.
+  random-six-gap-cap-exploration.json: path weight15/16 maximum2027/128.
+Both include star and binary caps. Their numerical optima are corroboration
+only; no exact universal MILP certificate is claimed.

@@ -1,0 +1,133 @@
+\section{Four-edge cuts: exact states and a forest estimate}
+\label{sec:four-cut-states}
+
+\subsection{Exact gluing formula}
+Let $X,Y$ be connected four-poles with ranks $h,k$.
+Their four distinct degree-two ports have matching labels $1,2,3,4$.
+All other vertices have degree three.
+Join equally labelled ports by four new edges to obtain $G$.
+Then $r=\beta(G)=h+k+3$.
+
+Write $p_{ij}=P_{ij}(X)$ and $q_{ij}=P_{ij}(Y)$.
+Let $f_\alpha$ count the vertex-disjoint path pairs in $X$ with pairing
+$\alpha\in\{12|34,13|24,14|23\}$.
+Define $g_\alpha$ similarly in $Y$, and put $F=\sum_\alpha f_\alpha$,
+$J=\sum_\alpha g_\alpha$.
+The exact cycle decomposition is
+\begin{equation}\label{eq:four-cut-exact}
+ c(G)=c(X)+c(Y)+\sum_{i<j}p_{ij}q_{ij}
+       +FJ-\sum_\alpha f_\alpha g_\alpha.
+\end{equation}
+Indeed, a crossing cycle uses either two or four cut edges.
+Two cut edges give one corresponding terminal path in each shore.
+Four cut edges give a path pair in each shore.
+Different pairings combine into one cycle, while equal pairings give two cycles.
+The half-density target for the crossing contribution is $4\,2^{h+k}$.
+
+\subsection{At most two cycles in a graph with many terminal paths}
+
+\begin{lemma}[Two-component cycle packings]
+\label{lem:high-path-two-cycle-packings}
+For each $\varepsilon>0$, there is a constant $B_\varepsilon$ with the
+following property. Let $N$ be a normalized two-pole of rank $b$ with
+\[
+ P(N)\ge(1/2+\varepsilon)2^b.
+\]
+The number of nonempty unions of at most two vertex-disjoint cycles in $N$
+is at most
+\[
+ B_\varepsilon(b+1)^4 2^{b/2}.
+\]
+\end{lemma}
+
+\begin{proof}
+First assume $N$ is bridgeless.
+Use the shortest terminal path, distance layers, and initial marked set from
+Lemma~\ref{lem:thin-layer-cycle-count}.
+The additive stability theorem bounds both $\Delta$ and $H$ by
+$C_\varepsilon$. The initial marked set has at most
+$6\Delta+4H+2$ vertices.
+
+Choose the minimum and maximum distance layers of each selected cycle.
+There are at most $(D+1)^4$ choices for two cycles, where
+$D\le b+2\Delta$ is the largest distance.
+For one cycle, the corresponding bound is $(D+1)^2$.
+Mark the chosen extreme layers when they were previously ordinary.
+At most eight vertices are added, so the marked set $B$ satisfies
+\[
+ |B|\le6\Delta+4H+10.
+\]
+Fix all selected edges incident with $B$, at a cost of at most $2^{3|B|}$.
+
+Every remaining ordinary layer used by one cycle lies strictly between
+that cycle's extreme layers. The cycle therefore uses both vertices, with
+two strands through the layer.
+Two vertex-disjoint cycles cannot both use an ordinary layer.
+The union thus uses each ordinary layer either through two strands or not at all.
+Across consecutive occupied ordinary layers, its edges form a perfect matching.
+The two-choice cuts remain nonconsecutive, as in the thin-layer lemma.
+Their number is at most $(D+1)/2$.
+The extreme layers, marked incidences, and matching choices determine the union.
+Consequently the number of these unions is at most
+\[
+ \bigl((D+1)^4+(D+1)^2\bigr)
+ 2^{3(6\Delta+4H+10)+(D+1)/2}.
+\]
+Since $\Delta,H\le C_\varepsilon$, this is at most
+$B'_\varepsilon(b+1)^4 2^{b/2}$ for a constant $B'_\varepsilon$.
+
+For a general normalized two-pole, use the series decomposition from
+Theorem~\ref{thm:high-path-cycle-tradeoff}.
+Every positive-rank piece has normalized path density at least
+$1/2+\varepsilon$.
+Let their ranks be $b_1,\ldots,b_q$, with sum $b$.
+Packings contained in one piece contribute at most
+\[
+ B'_\varepsilon(b+1)^4\sum_i2^{b_i/2}
+ \le2B'_\varepsilon(b+1)^4 2^{b/2}.
+\]
+Packings with one cycle in each of two pieces contribute at most
+\[
+ K_\varepsilon^2\sum_{i<j}2^{(b_i+b_j)/2}
+ \le K_\varepsilon^2b^2 2^{b/2}.
+\]
+Increase the constant to cover both terms.
+\end{proof}
+
+\begin{corollary}[A cross-sum forest bound]
+\label{cor:four-pole-cross-sum-forest}
+For each $\eta>0$, there is a constant $A_\eta$ with the following property.
+Let $K$ be a connected four-pole of rank $h$ with left ports $L_1,L_2$
+and right ports $R_1,R_2$.
+If
+\[
+ \sum_{i,j=1}^2P_{L_iR_j}(K)\ge(2+\eta)2^h,
+\]
+then the total number of four-terminal forests in $K$ is at most
+\[
+ A_\eta(h+3)^4 2^{h/2}.
+\]
+\end{corollary}
+
+\begin{proof}
+Add a new vertex $z$ adjacent to both left ports.
+Add a new vertex $w$ adjacent to both right ports.
+The resulting graph $N$ is a normalized two-pole of rank $h+2$.
+Its terminal-path count is the displayed cross sum, so its normalized
+density is at least $1/2+\eta/4$.
+
+Append the four new edges to any four-terminal forest of $K$.
+A through pair becomes one cycle containing $z,w$.
+Two same-side caps become two vertex-disjoint cycles, one through each new vertex.
+This operation is injective.
+Apply Lemma~\ref{lem:high-path-two-cycle-packings} and absorb the factor two
+from $2^{(h+2)/2}$ into $A_\eta$.
+\end{proof}
+
+\paragraph{Status.}
+The exact state identity and the complete forest estimate passed the
+path-stability agent's independent audit.
+These estimates supply the state-counting input for
+Theorem~\ref{thm:all-four-cut-half-exponent}.
+That later theorem combines them with the aggregate inequality and the
+separate analysis of bounded-rank shores.

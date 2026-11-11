@@ -1,0 +1,141 @@
+Independent audit of Fable's general path-stability argument
+Date: 10 November 2026
+Auditor: Codex path-stability agent
+Source: fable-notes.md, Sections 3 and 4
+
+Conclusion
+
+The proof passes this independent mathematical audit. Our proved fixed-gap
+marked-size theorem implies the required FE2 hypothesis after increasing its
+rank threshold. Thus the proof establishes general linear path stability as a
+mathematical result. It is not a Lean formalization. The root agent is conducting
+a separate audit and preparing any final presentation.
+
+One small repair should be explicit in a clean proof. If a localized region has
+one or two boundary edges, its new marked cycle has three edges. The argument
+still applies because the local rank is at least 2^100, so 3 <= rho/log_2(rho)^2.
+Choose the forest threshold to be an integer, so the M0 cutoff is an integer.
+
+1. Localization
+
+For any edge set T, restriction to E(G) minus T maps the binary cycle space
+onto the cycle space after contracting every connected component of T. To see
+surjectivity, prescribe an even configuration in the contraction. In each
+component of T, its incident boundary has even size. A join inside a spanning
+tree of that component completes the prescribed configuration. This is a
+surjective linear map, so it carries the uniform law to the uniform law.
+
+For T = E(G-R), connectedness of G-R contracts the complement to one vertex.
+For T = E(W_R), the cycle W_R contracts to exactly the same vertex and graph.
+Thus the restrictions to G[R] have the same law. Before contraction in G_R,
+the boundary spokes end at distinct leaves outside the marked cycle. They do
+not create outside cycles. This proves the equality in Lemma 3.1.
+
+For d >= 3 boundary edges, adding d boundary vertices, d spokes, and d cycle
+edges changes the rank from beta(G[R]) to beta(G[R]) + d. Padding the marked
+cycle to length three when d is one or two gives the same rank formula.
+
+If R is connected and W is connected, take the component C0 of G-R containing
+W. Every other component of G-R has an edge to R. Hence R+ = V(G) minus C0
+is connected, contains R, avoids W, and has boundary contained in delta(R).
+
+2. Reduction and distance layers
+
+Density above one half eliminates every cyclic block outside the terminal
+route. After deleting the resulting irrelevant trees, suppress all degree-two
+vertices except the terminals. This preserves rank and path count and can
+only shorten paths. A loop would belong to a cyclic block with only one route
+attachment, which has already been excluded.
+
+Choose a shortest terminal path in this kernel. The unrestricted trivalent
+tree splitting can keep each of its internal vertices as one marked vertex.
+Both path edges meet that vertex, with all other ports in its third branch.
+The terminal marked vertices have degree at most two. Every other vertex of
+the expanded graph is cubic. Original paths inject into expanded paths.
+
+Contraction of the replacement trees maps any expanded terminal path to an
+original terminal walk of no greater length. Therefore the chosen path remains
+shortest, with the same length. This point is valid even though the expansion
+can create additional terminal paths.
+
+The exact degree equation gives n = 2b + 4 - deg(u) - deg(v) >= 2b. Thus the
+number of unmarked vertices is at least 2b - ell - 1. A shortest path has its
+i-th vertex in distance layer i. Each marked vertex has at most one unmarked
+neighbor. These facts prove inequality (4.1) with its term i'-i+3.
+
+3. Window growth
+
+Let mu be the final window mass and L=log_2(mu). Each accepted neighboring
+layer increases the current mass by a factor greater than
+1 + 1/(48 L^2). Thus the number of steps is at most
+
+    ln(mu)/ln(1+1/(48 L^2)) <= 96 L^2 ln(mu) < 67 L^3.
+
+The two final boundary layers contribute at most Phi(mu)/8. The marked path
+contributes at most 67 L^3+3. At L=36,
+
+    2^L >= 8 L^2 (67 L^3+3),
+
+and the ratio of the left side to the right side increases for L>=36.
+This proves that the final window is good.
+
+If no good set exists, each layer has fewer than theta unmarked vertices.
+The tail beyond layer ell+1 has cut size below 3 theta. If its size were at
+least theta^2, monotonicity of Phi and theta>=2^36 would make it good.
+Thus its size is below theta^2. The resulting inequality is exactly
+
+    2b < (theta+1) ell + (theta+1)^2.
+
+4. From a good set to the forest estimate
+
+The connected components of a good set have disjoint boundaries whose sizes
+sum to the whole boundary. Cubicity gives, for each component of size s and
+boundary d, the exact identity beta=(s-d)/2+1.
+
+Class 2 uses less than 2 d_total log_2(m)^2 <= m/2 vertices. A tree component
+has boundary s+2, so class 3 uses fewer than d_total <= m/4 vertices. If class
+1 is empty, class 4 therefore uses more than m/4 vertices and contains more
+than m/(4 M0) cyclic regions. Each has boundary less than M0. The manuscript's
+small-cut constant gives precisely
+
+    (M0+1) M0 2^(M0+1) / m
+
+as the additive error, which the stated theta bounds by epsilon.
+
+If class 1 is nonempty, close its region by adjoining all complementary
+components except the one containing W. The resulting R+ remains entirely
+unmarked, hence cubic in the ambient graph. Its local rank is
+
+    rho = beta(Gamma[R+]) + |delta R+|
+        = (|R+| + |delta R+|)/2 + 1 >= |R_s|/2.
+
+The boundary comparison is valid:
+
+    |delta R+| <= Phi(|R_s|)/2
+                <= Phi(|R_s|/2) <= Phi(rho).
+
+The middle inequality follows because log_2(s/2)=log_2(s)-1. Monotonicity
+applies throughout this range. The rank is above the forest threshold and
+above 2^100. Subdividing parallel interior edges, or loops if needed in a
+general localization statement, preserves rank and outside-forest probability.
+It gives the simple graph required by FE2 without changing the marked cycle.
+The triangle-padding issue for boundary sizes one and two was addressed above.
+
+5. Removing the conditional hypothesis
+
+Our marked-size theorem gives p <= 1/2+epsilon whenever the marked cycle has
+at most a_epsilon rho/log_2(rho) edges, above a fixed rank threshold.
+For log_2(rho) >= 1/a_epsilon, one has
+
+    rho/log_2(rho)^2 <= a_epsilon rho/log_2(rho).
+
+Increasing the threshold also ensures that the one-component restriction is
+satisfied. This gives FE2. For a non-strict input density at least
+1/2+epsilon, use the argument with epsilon/2. The all-rank bound follows from
+the final pigeonhole inequality and ell>=1, exactly as in Fable's Section 4.5.
+
+Scope
+
+This audit concerns Sections 3 and 4 and their use of our marked-size theorem.
+It does not certify the literature assertions, heuristics, or conjectures in
+Fable's Sections 5 and 6. No Fable-owned file was changed.

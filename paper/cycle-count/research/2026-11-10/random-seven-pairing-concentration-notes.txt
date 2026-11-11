@@ -1,0 +1,62 @@
+Status: the unrestricted concentration claim below is false.
+Date: 2026-11-10.
+
+Critical seven-cut profiles have all normalized pair-path counts tending to zero.
+They have Boolean limits for four-terminal and six-terminal forest totals.
+A narrower question may be easier than a uniform four-terminal forest gap:
+
+If all six pair-path densities tend to zero and the four-terminal forest
+total tends to one, must the forest pairing mass concentrate on one pairing?
+
+A sufficient inequality would be
+  f_i f_j <= C * 2^h * sum_ab P_ab
+for distinct four-terminal pairings i,j, with an absolute constant C.
+The attached-four-ladder construction below disproves this inequality.
+Any replacement must use a structural condition such as the absence of small cyclic cuts.
+
+Counterexample:
+Start with a four-cycle whose vertices are the four ports.
+Attach one saturated two-pole of rank b to each port by a bridge.
+Retain the other terminal of each two-pole as the corresponding new port.
+The resulting normalized four-pole has rank h=4b+1.
+Its four-terminal forest total is exactly 2^h.
+The two alternating four-cycle pairings each have mass 2^(h-1).
+Every terminal-pair path count is exactly 2^(2b+1).
+Thus all six normalized path counts equal 2^(-2b), but the pairing mass does not concentrate.
+Each attached pole gives a cyclic two-edge cut in any cubic completion.
+Its boundary is its attachment bridge together with its filled port edge.
+The example does not address the restricted critical seven-cut problem.
+
+The full-forest bridge family supports this possible conclusion.
+Take two saturated capped singleton ladders of rank 2m+1.
+Subdivide a central rung in each and join the new vertices by a bridge.
+The four remaining ports are the original ladder endpoints.
+The total rank is 4m+2.
+Every four-terminal join omits the bridge and is a forest.
+Its pairing always joins the two ports within each original ladder.
+The within-ladder pair densities are 2^(-2m-1).
+The cross-pair densities tend to zero by the central-rung path estimates.
+
+The rank-eight unique-bad witness gives a different diagnostic.
+Its four-forest count is 255/256 of the parity class.
+Its six terminal-path counts are 219,143,168,168,143,128 out of 256.
+Its girth is four.
+Thus this near-full witness does not approach the critical zero-path regime.
+
+One attempted proof uses switching between two forests of different pairings.
+The needed output could be one simple terminal path and one unrestricted parity state.
+This would give the correct counting scale P*2^h.
+However, local switching can create a terminal-free cycle in the proposed path color.
+Shared terminal edges also prevent changing source sets while preserving the edge multiset.
+These are unresolved obstacles, not evidence against the inequality.
+
+Related primary sources were inspected for switching techniques:
+https://metaphor.ethz.ch/x/2021/hs/401-3822-17L/sc/lectureNotes.pdf
+https://www.unige.ch/~duminil/publi/2018universality_pfaffian.pdf
+Their random-current switching lemmas do not directly provide the required
+uniform edge-subset forest inequality.
+
+The fixed-girth theorem gives a useful additional restriction.
+Any unresolved above-half family without cyclic cuts of size at most four
+must have girth tending to infinity.
+All current near-full four-forest switch witnesses have girth three or four.

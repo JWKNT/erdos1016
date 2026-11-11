@@ -1,0 +1,45 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,booktabs,array,microtype,xcolor}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\setlength{\emergencystretch}{3em}
+\title{Additive stability for terminal path counts}
+\author{Collaborative research working draft}
+\date{10 November 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+For every fixed $\varepsilon>0$, we prove that a connected graph of cycle rank $b$ with at least $(1/2+\varepsilon)2^b$ simple paths between two specified terminals has terminal distance at least $b-C_\varepsilon$.
+The constant depends only on $\varepsilon$.
+The reduced terminal kernel also has bounded pathwidth, and deleting a suitable shortest path from its cubic expansion leaves bounded cycle rank.
+The proof combines the source manuscript's cycle-space machinery, an extended fixed-gap forest estimate, Fable 5.2's localization and distance-layer argument, and a new short-cycle packing argument in bounded layers.
+The proof has received independent internal audits; it has not been formalized in Lean.
+\end{abstract}
+
+\section*{Scope and attribution}
+This note uses the forest-probability machinery of the November 10, 2026 manuscript
+\emph{The number of cycles in a graph and the minimum number of edges in a pancyclic graph},
+whose local source is \nolinkurl{paper/cycle-count/pancyclic-paper.tex} at revision \texttt{a965788}.
+The source manuscript's cut, spectral, and second-moment lemmas are inputs to the parameter extension below.
+They are not re-proved here.
+Fable 5.2 supplied localization and the shortest-path layer proof of general linear stability.
+The Codex path-stability agent supplied the deduction of additive stability from bounded layers.
+The Codex root and four-regular agents independently audited that deduction.
+The original manuscripts and formal sources have not been changed.
+
+Rank means $\beta(G)=|E(G)|-|V(G)|+\operatorname{comp}(G)$.
+The forest probability $p(G,W)$ is the probability that the part outside $E(W)$ of a uniform even edge set is a forest.
+The main conclusion is Theorem~\ref{thm:general-additive-path-stability}.
+Earlier estimates are retained because their proofs supply its inputs.
+
+\tableofcontents
+\input{path-stability}
+\input{general-path-stability}
+\input{general-additive-path-stability}
+\end{document}

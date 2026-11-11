@@ -1,0 +1,380 @@
+\section{General linear path stability}
+\label{sec:general-linear-path-stability}
+
+Fable 5.2 proposed the localization and shortest-path layer argument in its November 10 research notes.
+The Codex root and path-stability agents independently audited that argument.
+The proof below includes the minor padding correction found in both audits.
+It uses Theorem~\ref{thm:research-marked-size} to supply the required forest estimate.
+Thus the conclusion is a mathematical theorem, rather than a conditional reduction.
+It has not been formalized in Lean.
+
+All logarithms in this section have base two, except $\ln$.
+Put $\Phi(x)=x/\log^2x$ for $x\ge8$.
+This function is increasing on its domain.
+
+\begin{theorem}[General linear stability]\label{thm:general-linear-path-stability}
+For every $0<\varepsilon\le1/2$, there is a constant $c_\varepsilon>0$ with the following property.
+Let $N$ be a connected simple graph of rank $b$, with distinct terminals $u,v$.
+If
+\[
+ P_{uv}(N)\ge(1/2+\varepsilon)2^b,
+\]
+then every $u$--$v$ path has length at least $c_\varepsilon b$.
+In particular, $\operatorname{dist}_N(u,v)\ge c_\varepsilon b$.
+
+An explicit expression in terms of the forest threshold is available.
+Set $\delta=\varepsilon/2$, and let $R_\delta$ be an integer as in Lemma~\ref{lem:general-fe2} below.
+Put
+\[
+ M=2R_\delta,\qquad
+ \Theta=\max\left\{2^{36},\frac{(M+1)M2^{M+1}}{\delta}\right\}.
+\]
+One may take $c_\varepsilon=(\Theta+1)^{-2}$.
+Every terminal path also satisfies the stronger inequality
+\begin{equation}\label{eq:general-linear-strong}
+ \ell>\frac{2b}{\Theta+1}-(\Theta+1).
+\end{equation}
+\end{theorem}
+
+The formula determines a positive constant once the forest threshold is fixed.
+The present proof does not give a numerical value for that threshold.
+
+\subsection{The forest input and its localization}
+
+\begin{lemma}\label{lem:general-fe2}
+Fix $0<\delta<1/2$.
+There is an integer $R_\delta\ge2^{100}$ such that the following statement holds.
+If $G$ is connected and simple, $\rho=\beta(G)\ge R_\delta$, and $W$ is one cycle with
+$|E(W)|\le\Phi(\rho)$, then
+\[
+ p(G,W)\le1/2+\delta.
+\]
+\end{lemma}
+
+\begin{proof}
+Use $a_\delta$ from Theorem~\ref{thm:research-marked-size}.
+Choose $R_\delta$ above that theorem's rank threshold and so that
+$\log R_\delta\ge\max\{100,1/a_\delta\}$.
+For $\rho\ge R_\delta$,
+\[
+ \Phi(\rho)=\frac{\rho}{\log^2\rho}
+ \le a_\delta\frac{\rho}{\log\rho}.
+\]
+The single-component condition also holds, since $1\le\log\rho/100$.
+Theorem~\ref{thm:research-marked-size} applies.
+\end{proof}
+
+We also use the manuscript's small-cut estimate in the following form.
+If $q$ disjoint cyclic regions avoid $V(W)$ and each has boundary at most an integer $D\ge1$, then
+\begin{equation}\label{eq:general-small-cut-input}
+ p(G,W)\le\frac12+\frac{(D+1)2^{D-1}}{q}.
+\end{equation}
+This statement permits loops and parallel edges.
+It follows directly from the cut formula, the exceptional-partner bound, and the second-moment estimate.
+
+\begin{lemma}[Localization]\label{lem:general-localization}
+Let $G$ be a connected multigraph, and let $R$ be a nonempty connected proper vertex set.
+Suppose that $G-R$ is connected, and write $d=|\delta_G R|\ge1$.
+For each boundary edge $f$, with endpoint $z_f\in R$, add a distinct new vertex $t_f$ and an edge $z_ft_f$.
+Add a cycle $W_R$ through the vertices $t_f$, padding it with new vertices if $d<3$.
+Together with $G[R]$, this gives a graph $G_R$ satisfying
+\[
+ |E(W_R)|=\max\{d,3\},\qquad
+ \beta(G_R)=\beta(G[R])+d.
+\]
+For uniform even subgraphs,
+\begin{equation}\label{eq:general-localization-law}
+ \Pr\bigl(\xi_G\cap E(G[R])\text{ is a forest}\bigr)=p(G_R,W_R).
+\end{equation}
+If $R\cap V(W)=\varnothing$, then $p(G,W)\le p(G_R,W_R)$.
+\end{lemma}
+
+\begin{proof}
+Restriction outside an edge set $T$ maps the cycle space onto the cycle space after contracting every component of $T$.
+For surjectivity, prescribe an even edge set in the contraction.
+Its boundary inside each component of $T$ has even size.
+A join in a spanning tree of that component completes the prescribed edge set.
+This is a surjective linear map and therefore preserves uniformity on its image.
+
+Contract $E(G-R)$ in $G$.
+The resulting graph consists of $G[R]$ and one vertex receiving its $d$ boundary edges.
+Contract $E(W_R)$ in $G_R$.
+The same graph results, so the restrictions to $E(G[R])$ have the same law.
+The added spokes have distinct leaf endpoints outside $W_R$.
+They cannot create a cycle outside $W_R$, which proves \eqref{eq:general-localization-law}.
+The stated inequality follows because $E(G[R])$ avoids $E(W)$.
+
+For $d\ge3$, the construction adds $d$ vertices and $2d$ edges, giving the rank formula.
+For $d=1,2$, padding the cycle adds equally many further edges and vertices.
+Thus the rank formula remains valid.
+\end{proof}
+
+\begin{lemma}[Connected complementary shore]\label{lem:general-shore-closure}
+Let $G$ and $W$ be connected, and let $R$ be a connected vertex set avoiding $V(W)$.
+Let $C_0$ be the component of $G-R$ containing $W$, and put $R^+=V(G)\setminus V(C_0)$.
+Then $R^+$ is connected, contains $R$, avoids $V(W)$, and satisfies
+$\delta_G R^+\subseteq\delta_G R$.
+Its complement is connected.
+\end{lemma}
+
+\begin{proof}
+Every component of $G-R$ other than $C_0$ has an edge to $R$, since $G$ is connected.
+Their union with $R$ is therefore connected.
+Edges between $R^+$ and $C_0$ must have their other endpoint in $R$.
+This gives the boundary inclusion and the remaining conclusions.
+\end{proof}
+
+\subsection{A shortest path in a cubic expansion}
+
+\begin{lemma}\label{lem:general-shortest-reduction}
+Suppose $P_{uv}(N)>2^{b-1}$.
+There is a connected loopless multigraph $\Gamma$, with distinct terminals $u',v'$ and a shortest terminal path $A$, such that
+\begin{enumerate}
+\item $\beta(\Gamma)=b$ and $P_{u'v'}(\Gamma)\ge P_{uv}(N)$;
+\item every nonterminal vertex of $\Gamma$ has degree three, and both terminals have degree one or two;
+\item the length $\ell_0$ of $A$ is at most the length of every terminal path in $N$;
+\item $|V(\Gamma)|\ge2b$, and $U=V(\Gamma)\setminus V(A)$ has size at least $2b-\ell_0-1$.
+\end{enumerate}
+Every vertex of $A$ has at most one neighbor incidence outside $A$.
+\end{lemma}
+
+\begin{proof}
+By Proposition~\ref{prop:research-offroute}, no cyclic block lies outside the terminal route.
+Delete the trees outside that route.
+Suppress every degree-two vertex other than $u,v$.
+This preserves rank and path count, and it can only shorten terminal paths.
+No loop arises, since a cyclic block on the route retains its two distinct route terminals.
+Call the resulting kernel $N_1$.
+Every nonterminal vertex of $N_1$ has degree at least three.
+
+Choose a shortest terminal path $A_1$ in $N_1$.
+At each internal vertex of $A_1$, retain one vertex incident with its two path edges.
+Attach all other incident edges through a rooted trivalent tree in its third branch.
+At each terminal, retain one vertex incident with the path edge and attach its other edges through one rooted tree.
+A single remaining incident edge needs no internal tree vertex.
+Replace every other vertex of degree at least four by a trivalent tree.
+No embedding restriction is imposed on these trees.
+
+These replacements preserve rank.
+Every original terminal path has a unique simple lift, so path count cannot decrease.
+The image $A$ of $A_1$ has exactly the same length $\ell_0$.
+Contracting the replacement trees maps any new terminal path to a terminal walk in $N_1$ of no greater length.
+Every such walk has length at least the terminal distance in $N_1$, namely $\ell_0$.
+Thus $A$ remains shortest.
+This argument uses a shortest path after suppression, not an arbitrary path in the original graph.
+
+All nonterminal degrees are three, and both terminal degrees are at most two.
+If $n=|V(\Gamma)|$, the degree sum gives
+\[
+ 2(n+b-1)=3(n-2)+\deg(u')+\deg(v').
+\]
+Hence $n=2b+4-\deg(u')-\deg(v')\ge2b$.
+Subtracting $|V(A)|=\ell_0+1$ proves the last assertion.
+The construction also gives the asserted bound on incidences from $A$ to $U$.
+\end{proof}
+
+\subsection{Wide distance layers give a region with small boundary}
+
+Write $A=w_0w_1\cdots w_{\ell_0}$.
+Let $L_j$ be the distance-$j$ layer from $u'=w_0$ in $\Gamma$.
+Since $A$ is shortest, $w_j\in L_j$.
+Put $U_j=L_j\cap U$ and $m_j=|U_j|$, taking $m_j=0$ for nonexistent layers.
+For integers $i\le i'$, put
+\[
+ R(i,i')=U_i\cup\cdots\cup U_{i'},\qquad
+ m(i,i')=\sum_{j=i}^{i'}m_j.
+\]
+Every edge joins vertices in the same or consecutive distance layers.
+At most one edge joins each marked vertex to $U$.
+Consequently,
+\begin{equation}\label{eq:general-window-boundary}
+ |\delta_\Gamma R(i,i')|
+ \le3m_{i-1}+3m_{i'+1}+(i'-i+3).
+\end{equation}
+The last term counts the possible marked vertices in layers $i-1,\ldots,i'+1$.
+
+For a parameter $\Theta\ge2^{36}$, call $R\subseteq U$ good if
+\[
+ |R|\ge\Theta,\qquad |\delta_\Gamma R|\le\Phi(|R|)/4.
+\]
+A good set need not be connected.
+
+\begin{lemma}[Growing a window]\label{lem:general-window}
+If $m_j\ge\Theta$ for some $j$, then a good set exists.
+\end{lemma}
+
+\begin{proof}
+Start with the window $[j,j]$.
+While a neighboring layer has mass greater than $\Phi(m(i,i'))/48$, include that layer.
+Repeat until neither neighboring layer satisfies the condition.
+Only finitely many layers are nonempty, so the procedure stops.
+
+Let $\mu$ be the final mass, and set $L=\log\mu\ge36$.
+Every step multiplies the current mass by more than $1+1/(48L^2)$.
+Thus the number of steps is at most
+\[
+ \frac{\ln\mu}{\ln(1+1/(48L^2))}
+ \le96L^2\ln\mu<67L^3.
+\]
+At termination, each neighboring layer has mass at most $\Phi(\mu)/48$.
+Equation~\eqref{eq:general-window-boundary} therefore gives
+\[
+ |\delta_\Gamma R(i,i')|
+ \le\Phi(\mu)/8+67L^3+3\le\Phi(\mu)/4.
+\]
+The final inequality follows from
+$2^L\ge8L^2(67L^3+3)$ for $L\ge36$.
+It holds at $L=36$, and the ratio of its left side to its right side increases thereafter.
+Since $\mu\ge\Theta$, the final window is good.
+\end{proof}
+
+\begin{lemma}[No good set forces a long path]\label{lem:general-layer-count}
+If no good subset of $U$ exists, then
+\[
+ \ell_0>\frac{2b}{\Theta+1}-(\Theta+1).
+\]
+\end{lemma}
+
+\begin{proof}
+Lemma~\ref{lem:general-window} gives $m_j<\Theta$ in every layer.
+Let $R$ be the union of the layers $U_j$ with $j\ge\ell_0+2$.
+No vertex of $A$ has a neighbor in $R$.
+Therefore $|\delta_\Gamma R|\le3m_{\ell_0+1}<3\Theta$.
+If $|R|\ge\Theta^2$, monotonicity of $\Phi$ and $\Phi(\Theta^2)/4\ge3\Theta$ would make $R$ good.
+Hence $|R|<\Theta^2$.
+Counting the remaining layers gives
+\[
+ 2b-\ell_0-1\le|U|<(\ell_0+2)\Theta+\Theta^2.
+\]
+Rearranging proves the assertion.
+\end{proof}
+
+\subsection{A good set contradicts excess path density}
+
+Add a new vertex $x$ and edges $u'x,xv'$ to $\Gamma$.
+Call the resulting graph $H$, and mark the cycle $W=A\cup\{u'x,xv'\}$.
+The proof of Lemma~\ref{lem:research-path-injection} also applies to multigraphs, giving
+\begin{equation}\label{eq:general-path-forest}
+ P_{u'v'}(\Gamma)\le p(H,W)2^b.
+\end{equation}
+
+\begin{lemma}[The good-set dichotomy]\label{lem:general-good-set}
+Use $\delta,R_\delta,M,\Theta$ from Theorem~\ref{thm:general-linear-path-stability}.
+If a good subset of $U$ exists, then $p(H,W)\le1/2+\delta$.
+\end{lemma}
+
+\begin{proof}
+Let $R$ be good, with $m=|R|$ and $d=|\delta_\Gamma R|\le m/(4\log^2m)$.
+Let $R_s$ be the vertex sets of the components of $\Gamma[R]$.
+Their boundaries are disjoint and have total size $d$.
+Every vertex in $R$ is cubic in both $\Gamma$ and $H$, so
+\[
+ \beta(\Gamma[R_s])=\frac{|R_s|-|\delta_\Gamma R_s|}{2}+1.
+\]
+Separate the components into four classes:
+\begin{enumerate}
+\item $|R_s|\ge M$ and $|\delta_\Gamma R_s|\le\Phi(|R_s|)/2$;
+\item $|R_s|\ge M$ and $|\delta_\Gamma R_s|>\Phi(|R_s|)/2$;
+\item $|R_s|<M$ and $\Gamma[R_s]$ is a tree;
+\item $|R_s|<M$ and $\Gamma[R_s]$ contains a cycle.
+\end{enumerate}
+
+Class 2 has total size less than $2d\log^2m\le m/2$.
+Indeed, each of its components satisfies
+$|R_s|<2|\delta_\Gamma R_s|\log^2|R_s|\le2|\delta_\Gamma R_s|\log^2m$.
+A tree component satisfies $|\delta_\Gamma R_s|=|R_s|+2$.
+Thus class 3 has total size less than $d\le m/4$.
+A cyclic component in class 4 has boundary at most its size, hence less than $M$.
+
+Suppose first that class 1 is empty.
+Class 4 then has total size greater than $m/4$, so it contains more than $m/(4M)$ components.
+These are disjoint cyclic regions avoiding $W$, with boundaries less than $M$.
+By \eqref{eq:general-small-cut-input},
+\[
+ p(H,W)\le\frac12+
+ \frac{(M+1)2^{M-1}\,4M}{m}
+ \le\frac12+\delta.
+\]
+The last inequality uses $m\ge\Theta$.
+
+Suppose instead that class 1 contains $R_s$.
+Apply Lemma~\ref{lem:general-shore-closure} in $H$ to obtain $R^+\supseteq R_s$ with connected complement.
+It avoids $V(W)$, so it is contained in $U$ and all its vertices are cubic.
+Write $d^+=|\delta_H R^+|$ and
+\[
+ \rho=\beta(H[R^+])+d^+
+ =\frac{|R^+|+d^+}{2}+1
+ \ge|R_s|/2\ge R_\delta.
+\]
+Since $\delta_HR_s=\delta_\Gamma R_s$, the boundary comparison gives
+\[
+ d^+\le|\delta_\Gamma R_s|
+ \le\Phi(|R_s|)/2
+ \le\Phi(|R_s|/2)
+ \le\Phi(\rho).
+\]
+The middle inequality uses $\log(s/2)=\log s-1$.
+
+Localize at $R^+$ using Lemma~\ref{lem:general-localization}.
+If $d^+\ge3$, its marked cycle has at most $\Phi(\rho)$ edges by the last display.
+If $d^+=1$ or $2$, its marked cycle has three edges, which still meets that bound since $\rho\ge2^{100}$.
+Subdivide any parallel interior edges until the localized graph is simple.
+Such subdivisions preserve rank, marked-cycle length, and outside-forest probability.
+Lemma~\ref{lem:general-fe2} now yields
+\[
+ p(H,W)\le p(H_{R^+},W_{R^+})\le1/2+\delta.
+\]
+This completes both cases.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:general-linear-path-stability}]
+Use Lemma~\ref{lem:general-shortest-reduction}.
+The density assumption and $\delta=\varepsilon/2$ give
+\[
+ p(H,W)\ge\frac{P_{u'v'}(\Gamma)}{2^b}
+ \ge\frac12+\varepsilon>\frac12+\delta.
+\]
+Lemma~\ref{lem:general-good-set} excludes every good subset of $U$.
+Lemma~\ref{lem:general-layer-count} proves \eqref{eq:general-linear-strong} for $\ell_0$.
+Every original terminal path has length at least $\ell_0$, so the same inequality holds for its length $\ell$.
+
+Put $Q=\Theta+1$.
+If $b\ge Q^2$, then $\ell>2b/Q-Q\ge b/Q\ge b/Q^2$.
+If $b<Q^2$, then $\ell\ge1>b/Q^2$.
+Thus $c_\varepsilon=Q^{-2}$ works at every rank.
+\end{proof}
+
+\subsection{Structural consequences}
+
+\begin{corollary}\label{cor:general-short-path-density}
+For any sequence of connected graphs with ranks $b\to\infty$ and terminal distances $o(b)$,
+\[
+ P_{uv}(N)\le(1/2+o(1))2^b.
+\]
+If $P_{uv}(N)\ge(1-\alpha)2^b$ for a fixed $0\le\alpha<1/2$, every terminal path has length
+$\Omega_\alpha(b)$.
+\end{corollary}
+
+\begin{proof}
+A fixed positive density gap in the first assertion would contradict Theorem~\ref{thm:general-linear-path-stability}.
+For the second assertion, use $\varepsilon=1/2-\alpha$.
+\end{proof}
+
+\begin{corollary}[Bounded width of the terminal kernel]\label{cor:general-bounded-pathwidth}
+Under the hypotheses of Theorem~\ref{thm:general-linear-path-stability}, remove all blocks outside the terminal route and suppress nonterminal degree-two vertices.
+The resulting terminal kernel has pathwidth at most $2\lceil\Theta\rceil+1$.
+The same bound holds for the cubic expansion in Lemma~\ref{lem:general-shortest-reduction}.
+\end{corollary}
+
+\begin{proof}
+The proof excludes good sets, so Lemma~\ref{lem:general-window} gives $|U_j|<\Theta$ in every distance layer.
+At most one marked path vertex lies in each layer.
+Therefore each full layer has at most $\lceil\Theta\rceil+1$ vertices.
+The bags $L_j\cup L_{j+1}$ form a path decomposition, since every edge joins equal or consecutive layers.
+Their sizes give the stated pathwidth bound.
+The terminal kernel is obtained from the cubic expansion by contracting its replacement trees.
+Pathwidth does not increase under taking minors.
+\end{proof}
+
+The restriction to the terminal kernel matters.
+Trees attached outside the terminal route can have arbitrarily large pathwidth without changing rank or terminal path count.

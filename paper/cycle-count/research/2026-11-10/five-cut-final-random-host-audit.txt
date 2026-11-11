@@ -1,0 +1,44 @@
+Independent audit: random_hosts agent, 2026-11-10
+
+RESULT: PASS
+
+Audited final source:
+  second-order-five-cut-universal-crossing.tex
+
+Audited supporting geometric sources:
+  second-order-high-density-small-cut.tex
+  second-order-high-density-protected-cuts.tex
+
+The four-layer lemma handles parallel pairs, K22 cuts, two matching cuts
+with rungs, and the three-edge-cut square. The series decomposition and
+protected-layer counts give two disjoint original cycles. They avoid all
+changed incidences when the augmented edge is removed.
+
+The auxiliary pairing graph is KG(5,2). It has no triangle or four-cycle.
+Its five selected edges therefore admit distinct endpoint representatives.
+Summing the five corresponding augmented inequalities and the remaining
+five path bounds gives the exact universal coefficient 15/2.
+
+For an arbitrary opposite shore, its normalized pair-path coordinates and
+four-terminal forest totals are at most one. The exact gluing identity
+therefore lies below the universal functional. This domination retains the
+equal-pairing subtraction and is uniform in the smaller shore's rank.
+
+When no cyclic cut of size at most four exists, a cyclic five-cut has
+connected shores and distinct ports. Moving a repeated cut endpoint would
+give a cyclic four-cut. Each normalized five-pole has rank at least one.
+Thus the large shore's internal cycles contribute at most 1/4+o(1), and
+the other internal cycle contribution vanishes. The resulting normalized
+bound is 31/4+o(1), strictly below the target eight.
+
+The finite-rank cases are absorbed into an absolute constant. The existing
+cyclic-square family has a cyclic four-cut and proves the linear factor
+cannot be replaced by o(r) throughout the class of cyclic cuts at most five.
+
+Independent exact check:
+  check_five_cut_pairing_representatives.py
+  five-cut-pairing-representative-checks.json
+All 243 choices passed. The checker verifies 6075 objective coefficients
+with integer arithmetic. It does not use the other agent's checker.
+
+No mathematical blockers or statement corrections were found.

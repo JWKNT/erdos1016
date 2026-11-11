@@ -1,0 +1,222 @@
+% Research fragment. The general edge-half problem remains open here.
+\section{Partial results for the cubic edge-half problem}
+\label{sec:cubic-edge-frequency}
+
+Write $c_e(G)$ for the number of cycles containing an edge $e$.
+The edge-half problem asks for an edge with $c_e(G)\le c(G)/2$.
+The two usual exceptions among connected simple cubic graphs are $K_4$ and $K_{3,3}$.
+The results below settle several structural cases, but do not settle the general problem.
+No priority claim is made for these elementary reductions.
+
+\begin{proposition}\label{prop:cubic-small-structures}
+Let $G$ be a connected simple cubic graph other than $K_4$ or $K_{3,3}$.
+If $G$ has a bridge, a two-edge cut, a triangle, or a four-cycle, then some edge satisfies
+\[
+ c_e(G)\le\frac12c(G).
+\]
+\end{proposition}
+
+\begin{proof}
+A bridge lies in no cycle.
+We may therefore suppose that $G$ is bridgeless.
+
+First suppose that $\delta(S)$ is a two-edge cut.
+Both induced shores $N_1,N_2$ are connected.
+Otherwise one shore component has a cut of size at most one.
+On each shore, the two cut endpoints are distinct.
+If they coincided, the third edge at that endpoint would be a bridge.
+The terminals have degree two within their shore.
+
+Let $p_i$ count terminal paths in $N_i$, and put $c_i=c(N_i)$.
+Every cycle crossing the cut uses a terminal path on each shore, so
+\[
+ c(G)=c_1+c_2+p_1p_2.
+\]
+Relabel the shores so that $c_1\le c_2$.
+At one terminal of $N_1$, let $f,g$ be its two internal edges.
+The terminal paths partition according to their first edge.
+Choose $f$ to occur in at most $p_1/2$ terminal paths.
+At most $c_1$ cycles wholly inside $N_1$ contain $f$.
+Consequently,
+\[
+ c_f(G)\le c_1+\frac12p_1p_2\le\frac12c(G).
+\]
+
+Next suppose that $W$ is a triangle.
+Put $c_0=c(G-V(W))$.
+Let $S$ count paths in $G-E(W)$ joining distinct vertices of $W$.
+Their internal vertices lie outside $W$, since every vertex of $W$ has outside degree one.
+Every cycle meeting both $W$ and its exterior is one such path plus one of the two corresponding triangle arcs.
+Thus
+\[
+ c(G)=c_0+1+2S,\qquad c_e(G)=1+S\quad(e\in E(W)).
+\]
+If $n=|V(G)|\ge6$, the exterior has $n-3$ vertices and $3n/2-6$ edges.
+It therefore contains a cycle, since its edge count is at least its vertex count.
+Hence $c_0\ge1$, and every triangle edge satisfies the required inequality.
+The only simple cubic graph of order four is $K_4$.
+
+Finally suppose that $W$ is a four-cycle.
+A chord gives a triangle, so assume that $W$ is induced.
+We claim the exact identity
+\begin{equation}\label{eq:cubic-square-frequency}
+ \sum_{e\in E(W)}c_e(G)=2c(G)+2-2c(G-V(W)).
+\end{equation}
+To prove it, group cycles by their edge sets outside $E(W)$.
+A cycle with two attachment vertices has one outside path and two possible rim completions.
+The two completed cycles use four rim edges in total.
+A cycle with four attachment vertices has two disjoint outside paths.
+Every connected completion uses a perfect matching of the four-cycle, and therefore uses exactly two rim edges.
+The cycle $W$ itself uses four rim edges.
+A cycle avoiding $E(W)$ avoids $V(W)$, since each rim vertex has outside degree one.
+These cases prove~\eqref{eq:cubic-square-frequency}.
+
+If $n\ge8$, the exterior has $n-4$ vertices and $3n/2-8$ edges.
+Its edge count is at least its vertex count, so it contains a cycle.
+Equation~\eqref{eq:cubic-square-frequency} gives
+\[
+ \min_{e\in E(W)}c_e(G)
+ \le\frac14\sum_{e\in E(W)}c_e(G)\le\frac12c(G).
+\]
+For $n=6$, the complement of $G$ is a two-regular simple graph.
+It is either a six-cycle or two triangles.
+The corresponding cubic graphs are the triangular prism and $K_{3,3}$.
+The former has a triangle and the latter is excluded.
+\end{proof}
+
+Thus any unresolved connected simple cubic example is three-edge-connected and has girth at least five.
+The square identity also gives the quantitative bound
+\[
+ \min_{e\in E(W)}c_e(G)
+ \le\frac12c(G)-\frac12\bigl(c(G-V(W))-1\bigr).
+\]
+
+\subsection{A weighted consequence of the four-regular classification}
+
+\begin{proposition}\label{prop:cubic-matching-weight}
+Let $G$ be a connected simple cubic graph on $n\ge6$ vertices.
+For every perfect matching $M$ of $G$,
+\begin{equation}\label{eq:cubic-matching-weight}
+ \sum_{C\text{ a cycle of }G}2^{|E(C)\cap M|}\le2^n-\frac n2.
+\end{equation}
+If $G$ is bridgeless, then
+\begin{equation}\label{eq:cubic-length-weight}
+ \sum_{C\text{ a cycle of }G}2^{|E(C)|/3}\le2^n-\frac n2.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Double every edge of $M$, obtaining a loopless four-regular multigraph $Q$.
+Its cycles of length two are exactly the $n/2$ doubled matching edges.
+Each longer cycle projects to one cycle $C$ of $G$ and has $2^{|E(C)\cap M|}$ lifts.
+Hence
+\[
+ c(Q)=\frac n2+\sum_C2^{|E(C)\cap M|}.
+\]
+The four-regular classification gives $c(Q)\le2^n$.
+Indeed, its underlying graph is cubic, so $Q$ is neither a doubled cycle nor $K_5$.
+The remaining exceptional graph has order four.
+This proves~\eqref{eq:cubic-matching-weight}.
+
+Suppose now that $G$ is bridgeless.
+Every odd cut has odd size and has at least three edges.
+The vector assigning weight $1/3$ to every edge satisfies the perfect matching polytope constraints.
+Edmonds' theorem therefore gives a probability distribution on perfect matchings with edge marginals $1/3$.
+For a fixed cycle $C$, convexity gives
+\[
+ \mathbb E_M 2^{|E(C)\cap M|}
+ \ge2^{\mathbb E_M|E(C)\cap M|}=2^{|E(C)|/3}.
+\]
+Average~\eqref{eq:cubic-matching-weight} and sum this inequality over the cycles.
+This proves~\eqref{eq:cubic-length-weight}.
+\end{proof}
+
+The external input is J.~Edmonds, \emph{Maximum matching and a polyhedron with $0,1$-vertices},
+Journal of Research of the National Bureau of Standards, Section~B \textbf{69B} (1965), 125--130,
+\url{https://doi.org/10.6028/jres.069b.013}.
+The original paper is available at
+\url{https://nvlpubs.nist.gov/nistpubs/jres/69B/jresv69Bn1-2p125_A1b.pdf}.
+The weighted inequalities do not by themselves establish the edge-half property.
+
+\subsection{Exact formulas across a three-edge cut}
+
+Let a nontrivial three-edge cut split a three-edge-connected simple cubic graph into connected shores $N_1,N_2$.
+The three cut endpoints on each shore are distinct.
+Otherwise an internal edge at a repeated endpoint, together with the remaining cut edge, gives a two-edge cut.
+Label corresponding terminals by $1,2,3$.
+Put $c_i=c(N_i)$, and let $p_{jk}$ and $q_{jk}$ count terminal paths in the two shores.
+Then
+\begin{equation}\label{eq:cubic-three-cut}
+ S=\sum_{1\le j<k\le3}p_{jk}q_{jk},\qquad
+ c(G)=c_1+c_2+S.
+\end{equation}
+The cut edge at terminal $j$ belongs to
+\[
+ \sum_{k\ne j}p_{jk}q_{jk}
+\]
+cycles, with subscripts interpreted as unordered pairs.
+Hence some cut edge satisfies the edge-half bound whenever
+\[
+ S\le3(c_1+c_2).
+\]
+For an internal edge $e$ of $N_1$, let $p_{jk}(e)$ count terminal paths using $e$.
+Its exact cycle frequency is
+\begin{equation}\label{eq:cubic-three-cut-internal}
+ c_e(G)=c_e(N_1)+\sum_{j<k}q_{jk}p_{jk}(e).
+\end{equation}
+
+One sufficient extension would be the following weighted three-terminal statement.
+For every connected simple graph $N$ with three degree-two terminals and all other vertices cubic, and every $w_{jk}\ge0$, some edge $e$ would satisfy
+\begin{equation}\label{eq:cubic-three-pole-candidate}
+ 2c_e(N)+2\sum_{j<k}w_{jk}p_{jk}(e)
+ \le c(N)+1+\sum_{j<k}w_{jk}p_{jk}.
+\end{equation}
+This statement is not proved here.
+If it holds, apply it with $w_{jk}=q_{jk}$.
+The other shore contains a cycle, since it has $(3|V(N_2)|-3)/2$ edges and odd order at least three.
+Thus $c_2\ge1$, and~\eqref{eq:cubic-three-cut-internal} would give an edge with frequency at most $c(G)/2$.
+
+A simpler terminal-visitation bound is false.
+Take the cubic graph with vertex set $\{0,\ldots,13\}$ and edge list
+\[
+\begin{split}
+ &(0,5),(1,6),(2,7),(0,8),(1,8),(3,8),(0,9),\\
+ &(2,9),(4,9),(2,10),(5,10),(6,10),(1,11),(4,11),\\
+ &(7,11),(3,12),(4,12),(6,12),(3,13),(5,13),(7,13).
+\end{split}
+\]
+It is three-edge-connected and has girth five.
+After deleting vertex $2$, there are $50$ paths between terminals $7$ and $9$.
+Exactly $26$ visit the third terminal $10$.
+Thus even this restricted class does not guarantee that at most half the terminal paths visit the third terminal.
+This does not disprove~\eqref{eq:cubic-three-pole-candidate}.
+
+\subsection{A counterexample to the mean-length route}
+
+A sufficient condition for the edge-half property would be mean cycle length at most $3n/4$.
+This condition fails even at order eight.
+Replace one vertex of $K_{3,3}$ by a triangle, attaching its three old incident edges to distinct triangle vertices.
+The resulting simple cubic graph has cycle polynomial
+\[
+ z^3+3z^4+6z^5+6z^6+6z^7+6z^8.
+\]
+Indeed, $K_{3,3}$ has nine four-cycles and six six-cycles.
+The replaced vertex belongs to six cycles of each length.
+Each such cycle has two lifts, whose lengths increase by one and two.
+The remaining three four-cycles persist, and the new triangle contributes one cycle.
+The mean cycle length is therefore
+\[
+ \frac{171}{28}>6=\frac{3\cdot8}{4}.
+\]
+Nevertheless, every new triangle edge belongs to exactly $13$ of the $28$ cycles.
+Thus the mean-length condition is stronger than the edge-half conclusion and cannot prove it in general.
+
+\subsection{Independent finite checks}
+
+The script \texttt{check\_cubic\_edge\_frequency.py} enumerates connected simple cubic graphs using nauty's \texttt{geng}.
+It counts cycles as connected nonzero vectors of the binary cycle space.
+For all $621$ such graphs through order fourteen, it verifies every triangle and induced-square identity above.
+It also verifies~\eqref{eq:cubic-matching-weight} for all $8\,140$ perfect matchings in the graphs of order at least six.
+The order-eight counterexample is checked separately, including its cycle polynomial and three triangle-edge frequencies.
+The exact output is saved in \texttt{cubic-edge-frequency-results.json}.
+These checks support the arguments but are not premises of the propositions.

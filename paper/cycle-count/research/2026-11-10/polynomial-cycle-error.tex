@@ -1,0 +1,95 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,booktabs}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{microtype,xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\PP}{\mathbb P}
+\newcommand{\EE}{\mathbb E}
+\newcommand{\Z}{\mathcal Z}
+\newcommand{\cO}{\mathcal O}
+\newcommand{\comp}{\operatorname{comp}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\half}{\tfrac12}
+\setlength{\emergencystretch}{3em}
+\title{A stronger unrestricted second-order cycle bound}
+\author{Research working draft}
+\date{10 November 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Let $\psi(r)$ be the maximum number of cycles in a finite graph of cycle rank $r$.
+We prove that, for an absolute constant $M$,
+\[
+ \psi(r)\le2^{r-1}+(M+o(1))\frac{2^r(\log_2 r)^{11/2}}{\sqrt r}.
+\]
+In particular, every fixed exponent $\kappa<1/2$ is valid in a relative error $O(r^{-\kappa})$.
+The proof combines an exponential cut estimate, independence of parallel link components, and two nested short-cycle deletions.
+A weighted separation argument produces a long chain of nested cycles.
+Restoring the medium-length deleted cycles leaves many regions with small boundary.
+Each region supplies a positive amount of cycle weight, contradicting a second-moment upper bound.
+The proposed error $O(r2^{r/2})$ remains open without structural restrictions.
+\end{abstract}
+
+\section*{Status and contributions}
+This draft extends the existing cycle-space machinery in the shared research programme.
+Codex derived the exponential cut estimates and the endpoint parameter refinement.
+Fable 5.2 supplied the nested-cycle argument, the independent parallel-link lemma, and the simplification to a separate spectral estimate in each restored block.
+The final proof combines these contributions.
+The earlier two-scale proof is retained to make the geometry and the direct cycle transfer explicit.
+The new endpoint proof and its sharper packing refinement have passed independent mathematical audits.
+Publication priority has not been established.
+
+Fable formalized the parallel-link lemma, the link bound, separator geometry, averaging, the refined moment, and the transfer from a forest estimate in Lean.
+An independent build of these modules succeeded.
+The global forest estimate and the assembly of the full theorem are not yet formalized.
+No existing root Lean import or original manuscript was changed by this research pass.
+
+\section*{Conventions and reading guide}
+Rank means $|E|-|V|+\operatorname{comp}$.
+An even subgraph is an edge set with even degree at every vertex.
+Graphs may have loops and parallel edges; distinct edges remain distinct.
+A loop is a cycle of length one, and a parallel pair is a cycle of length two.
+Subdivision transfers cycle counts and rank to simple graphs.
+
+The first three sections prove the exponential cut estimate used in the main argument.
+The next section supplies the cycle-space, walk, and spectral identities.
+The remaining sections give the first polynomial proof and its cycle transfer, then prove the stronger endpoint estimate.
+The last theorem uses the stronger branch of the cut estimate to obtain the logarithmic power $11/2$.
+The direct cubic-extremizer transfer gives a self-contained route to unrestricted cycle counts.
+The intermediate cut bounds are retained to make the proof self-contained.
+
+\clearpage
+\tableofcontents
+\input{second-order-structural-notes}
+\input{second-order-terminal-forest}
+\input{second-order-block-conditioning}
+\input{polynomial-cycle-foundations}
+\input{second-order-two-scale-polynomial}
+\input{second-order-two-scale-extensions}
+\input{second-order-parallel-links-endpoint}
+\input{second-order-parallel-links-log-five-half}
+
+\section{Verification and remaining questions}
+The proof is independent of the terminal-path saturation theorem and the separate results for cuts of sizes two, three, and four.
+Its inputs are the exponential cut estimate, the parallel-link lemma, and the walk and cycle-space identities proved here.
+
+Exact finite checks independently test the cut-space decompositions and block conditional laws.
+A separate exact checker tests 9,759 disjoint cycle pairs, 200 weighted antisymmetry inequalities, and 521 clean restored blocks in 160 chains.
+Every retained block has a strict deficit reduction after restoration.
+Independent numerical spectral checks test the operator identities and eigenvalue counts.
+The final endpoint proof uses a separate spectral supply estimate in each block, so it does not need the earlier multiplicity argument.
+The parallel-link identities also have an independent exact check on 2,228 component families.
+These checks support individual identities; they do not replace the asymptotic proof.
+
+The constants and the associated rank threshold are very large.
+No useful finite-rank numerical estimate is claimed from them.
+The proposed bound $\psi(r)-2^{r-1}=O(r2^{r/2})$ remains open in this research programme.
+The original manuscripts and existing root formalization remain unchanged.
+The new supporting Lean modules are separate, and the full new theorem still requires formal assembly.
+\end{document}

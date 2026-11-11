@@ -1,0 +1,264 @@
+\section{Exponential cycle-count errors in proper minor-closed classes}
+\label{sec:minor-exponential-error}
+
+The exponential small-cut estimate upgrades the earlier polynomial error for proper minor-closed classes.
+The proof uses the same short-cycle recurrence and the same cycle packings.
+It adds no witness chords.
+The result below is a mathematical deduction; its publication priority has not been determined.
+
+\begin{lemma}[Transferring an exponential edge error]
+\label{lem:exponential-edge-recurrence}
+Let $\mathcal G$ be a class closed under taking subgraphs.
+Suppose that for every rank $r\ge r_0$, each $G\in\mathcal G$ with $c(G)>2^{r-1}$ has a cyclic edge $e$ satisfying
+\[
+ c_e(G)\le 2^{r-2}+2^r e^{-r/A},
+\]
+where $A\ge4$ and $r_0\le A$.
+Then every $G\in\mathcal G$ of rank $r\ge1$ satisfies
+\[
+ c(G)\le 2^{r-1}+3\,2^r e^{-r/A}.
+\]
+\end{lemma}
+
+\begin{proof}
+Put $\alpha=2e^{-1/A}$, so $\alpha>3/2$.
+For $r<r_0$, the trivial cycle bound gives
+\[
+ c(G)-2^{r-1}<2^{r-1}\le3\alpha^r,
+\]
+because $r/A\le1$.
+Proceed by induction on $r$.
+The assertion is immediate when $c(G)\le2^{r-1}$.
+Otherwise delete the specified cyclic edge, which reduces rank by one.
+The identity $c(G)=c(G-e)+c_e(G)$ gives
+\[
+ c(G)-2^{r-1}\le3\alpha^{r-1}+\alpha^r\le3\alpha^r.
+\]
+The last inequality uses $\alpha\ge3/2$.
+\end{proof}
+
+\begin{theorem}[A planar exponential error]
+\label{thm:planar-exponential-error}
+Every planar graph of rank $r\ge1$ satisfies
+\[
+ c(G)\le2^{r-1}+3\,2^r\exp\!\left(-\frac{r}{774144}\right).
+\]
+Equivalently, the additive error is at most $3\,2^{(1-\delta)r}$, where
+\[
+ \delta=\frac1{774144\ln2}>0.
+\]
+\end{theorem}
+
+\begin{proof}
+Suppose $r\ge2048$ and $c(G)>2^{r-1}$.
+As in the previous minor-closed argument, exactly one cyclic block contains all cycles.
+Discard its tree attachments and suppress its degree-two vertices.
+The resulting loopless planar kernel $N$ has minimum degree three and at most $2r-2$ vertices.
+Its rank and cycle count are unchanged.
+A shortest cycle $W$ of $N$ has length
+\[
+ m\le2\log_2(2r)+1=2\log_2r+3\le r/72.
+\]
+
+Apply the embedded marked-set reduction and face packing from Lemma~\ref{lem:embedded-marked-forest}.
+With $L=6$ and genus zero, the packing contains at least
+\[
+ k\ge\frac{r-36m}{3\cdot6\cdot7}\ge\frac r{252}
+\]
+vertex-disjoint cyclic regions outside the marked vertices.
+Every region has edge boundary at most six.
+Theorem~\ref{thm:sharper-exponential-cuts} therefore gives
+\[
+ p(N,W)\le\frac12+
+ 2\exp\!\left(-\frac{r}{252\cdot48\cdot2^6}\right)
+ =\frac12+2e^{-r/774144}.
+\]
+For an edge $f$ of $W$, the one-cycle outside-part injection yields
+\[
+ c_f(N)\le p(N,W)2^{r-1}
+ \le2^{r-2}+2^r e^{-r/774144}.
+\]
+Choose any original edge on the subdivided path represented by $f$.
+It has the same cycle frequency, and deleting it preserves planarity.
+Lemma~\ref{lem:exponential-edge-recurrence}, with $r_0=2048$, proves the theorem.
+\end{proof}
+
+\begin{theorem}[A fixed excluded minor]
+\label{thm:minor-exponential-error}
+Fix $h\ge4$, and put
+\[
+ K_h=4096h^3,\qquad A_h=192K_h^2 2^{3K_h}.
+\]
+Every simple graph $G$ with no $K_h$ minor and rank $r\ge1$ satisfies
+\[
+ c(G)\le2^{r-1}+3\,2^r e^{-r/A_h}.
+\]
+Consequently, every fixed proper minor-closed class admits an exponential saving in the additive cycle-count error.
+\end{theorem}
+
+\begin{proof}
+Suppose $r\ge512$ and $c(G)>2^{r-1}$.
+The reduction used in the polynomial minor-closed theorem gives a unique cyclic kernel $N$.
+Its rank and cycle count equal those of $G$, and
+\[
+ 3\le\deg_N(v)\le5,\qquad |V(N)|\le2r-2.
+\]
+Its underlying simple graph has no $K_h$ minor.
+Choose a shortest cycle $W$ of $N$.
+It has at most $2\log_2(2r)+1\le r/16$ vertices.
+Deleting these vertices decreases rank by at most $4|V(W)|$.
+Thus $J=N-V(W)$ has rank at least $3r/4$.
+
+Apply the recursive separator lemma with component size $K_h$.
+It gives $S\subseteq V(J)$ with $|S|\le|V(J)|/16\le r/8$.
+Every component of $J-S$ has at most $K_h$ vertices.
+Deleting $S$ decreases rank by at most $4|S|$, so
+\[
+ \beta(J-S)\ge r/4.
+\]
+Each component has rank at most $2K_h$.
+Choose one cycle from each cyclic component.
+There are at least $k\ge r/(8K_h)$ chosen cycles.
+Their vertex sets are disjoint, avoid $W$, and have edge boundaries at most $3K_h$ in $N$.
+
+The exponential cut estimate gives
+\[
+ p(N,W)\le\frac12+
+ 2\exp\!\left(-\frac{r}{8K_h\cdot8(3K_h)2^{3K_h}}\right)
+ =\frac12+2e^{-r/A_h}.
+\]
+Every edge of $W$ therefore has cycle frequency at most
+$2^{r-2}+2^r e^{-r/A_h}$.
+Transfer one such edge to the corresponding original edge of $G$.
+The class of $K_h$-minor-free graphs is closed under its deletion.
+Lemma~\ref{lem:exponential-edge-recurrence}, with $r_0=512$, completes the proof.
+\end{proof}
+
+\begin{corollary}[Genus smaller than the rank]
+\label{cor:sublinear-genus-exponential}
+For graphs of rank $r\to\infty$ and orientable genus $g=o(r)$,
+\[
+ c(G)\le2^{r-1}+3\,2^r
+ \exp\!\left(-\frac{r}{1548288}\right)
+\]
+for all sufficiently large $r$ along the sequence.
+\end{corollary}
+
+\begin{proof}
+In the planar packing calculation, the numerator becomes $r-36m-14g$.
+It is at least $r/2$ whenever $r\ge4096$ and $r\ge56g$.
+If $r\ge\max(8192,112g)$, the same edge bound holds at every stage with rank $s\in[r/2,r]$.
+The genus does not increase during these deletions.
+Write $A=774144$ and normalize the excess by $2^s$.
+Iterating the edge recurrence down to $\lfloor r/2\rfloor$ gives
+\[
+ \frac{c(G)}{2^r}-\frac12
+ \le2^{-r/2}+2e^{-r/(2A)}
+ \le3e^{-r/(2A)}.
+\]
+The hypothesis $g=o(r)$ ensures the required range of ranks eventually satisfies both conditions.
+\end{proof}
+
+The explicit constants are intentionally coarse.
+The planar argument uses only the face packing and the new exponential cut estimate.
+The excluded-minor argument additionally uses the classical separator theorem.
+None of these statements currently yields an unrestricted exponential saving.
+
+\subsection{One separator decomposition, and variable treewidth}
+
+The witness construction also gives a bound from one decomposition of the original kernel.
+The exponential cut theorem permits arbitrarily many marked components.
+This removes the earlier restriction on the number of witness triangles.
+
+\begin{proposition}[One bounded-component deletion]
+\label{prop:one-decomposition-exponential}
+Let $G$ have rank $r\ge1$ and more than $2^{r-1}$ cycles.
+Let $N$ be its unique cyclic kernel, after suppressing degree-two vertices.
+Suppose $S\subseteq V(N)$ satisfies
+\[
+ |S|\le |V(N)|/16,
+\]
+and every component of $N-S$ has at most $K\ge1$ vertices.
+Then
+\[
+ c(G)\le2^{r-1}+4\,2^r
+ \exp\!\left(-\frac{r}{128K^2 2^{3K}}\right).
+\]
+The integer $K$ may depend on $G$ and $r$.
+\end{proposition}
+
+\begin{proof}
+The above-half assumption gives $3\le\deg_N(v)\le5$ and $|V(N)|\le2r-2$.
+Suppose $r\ge64$, and put $k=\lfloor r/64\rfloor$.
+Choose $k$ edges $D$ outside a spanning tree, and let $P$ contain their endpoints.
+Then $|P|\le2k$.
+Deleting $P\cup S$ decreases rank by at most
+\[
+ 4|P|+4|S|\le8k+r/2\le5r/8.
+\]
+Every component of $N-(P\cup S)$ has at most $K$ vertices and rank at most $2K$.
+Consequently, at least $3r/(16K)$ components contain a cycle.
+Choose one cycle from each such component.
+The selected vertex sets are disjoint and have edge boundaries at most $3K$ in $N$.
+
+For each edge $uv\in D$, add a new two-edge $u$--$v$ path.
+Call the resulting graph $H$ and the union of the resulting triangles $W$.
+These added edges meet $N$ only at vertices of $P$.
+The selected cyclic regions therefore avoid $W$ and keep their boundary bounds.
+The exponential cut theorem gives
+\[
+ p(H,W)\le\frac12+
+ 2\exp\!\left(-\frac{3r}{16K\cdot24K2^{3K}}\right)
+ =\frac12+2e^{-r/(128K^2 2^{3K})}.
+\]
+
+The triangle-flip injection bounds cycles meeting $D$ by $p(H,W)2^r$.
+At most $2^{r-k}$ cycles avoid $D$, since those $k$ cotree coordinates are independent.
+With $A=128K^2 2^{3K}\ge1024$, one has
+\[
+ 2^{-k}\le2e^{-r\ln2/64}\le2e^{-r/A}.
+\]
+Combining these estimates proves the assertion.
+For $r<64$, its right side exceeds the trivial bound $2^r$.
+\end{proof}
+
+\begin{corollary}[A quantitative treewidth bound]
+\label{cor:treewidth-exponential-error}
+Let $G$ have rank $r\ge1$ and treewidth at most $w\ge1$.
+Then
+\[
+ c(G)\le2^{r-1}+4\,2^r
+ \exp\!\left(-\frac{r}{2^{96(w+1)+17}(w+1)^2}\right).
+\]
+In particular, if $w=o(\log r)$, the relative additive error is
+\[
+ \exp\bigl(-r^{1-o(1)}\bigr).
+\]
+For every fixed $0<c<1/96$, the condition $w\le c\log_2r$ gives relative error
+\[
+ \exp\!\left(-\Omega_c\!\left(\frac{r^{1-96c}}{\log^2r}\right)\right).
+\]
+\end{corollary}
+
+\begin{proof}
+Assume $c(G)>2^{r-1}$, and use its cyclic kernel $N$.
+Taking minors does not increase treewidth, so $N$ also has treewidth at most $w$.
+A graph of treewidth at most $w$ has a separator of at most $w+1$ vertices whose remaining components have at most half its vertices.
+For completeness, choose a tree decomposition of width $w$.
+Assign each graph vertex to one bag containing it.
+A weighted centroid bag separates the other bags into parts with at most half the assigned vertices.
+The tree-decomposition axioms give the required graph separator.
+
+Apply such separators recursively to components larger than $K=32(w+1)$.
+Charge a deleted separator's size equally to all vertices in its current component.
+Along any recursion branch, component sizes decrease by at least a factor two.
+The total charge to one vertex is therefore at most $2(w+1)/K=1/16$.
+Thus the union $S$ of all separators satisfies $|S|\le|V(N)|/16$.
+Every component of $N-S$ has at most $K$ vertices.
+Proposition~\ref{prop:one-decomposition-exponential} now gives the explicit bound, since
+\[
+ 128K^2 2^{3K}=2^{96(w+1)+17}(w+1)^2.
+\]
+The asymptotic statements follow by substitution.
+The argument uses only one decomposition, so variable $w$ causes no recursion monotonicity issue.
+\end{proof}

@@ -1,0 +1,98 @@
+UNRESTRICTED SECOND-ORDER RESEARCH — continuation begun 10 Nov 2026, 19:34 EST
+Shared partial notes for Fable 5.2 and KNT. Updated during the research run.
+The earlier audited papers are frozen. These notes do not alter their claims.
+
+TARGET
+Improve psi(r)-2^(r-1) for unrestricted graphs, ideally to polynomial relative
+error or an exponential saving. Fable's edge-deletion recurrence is the main
+transfer tool: X_r-X_(r-1)<=g(r), where g(r) is the worst minimum edge excess.
+
+FABLE STATUS
+No newer Fable files were visible at the start of this continuation.
+The latest fable-notes.md has filesystem time 17:41 EST on 10 November.
+We continue checking for updates. Codex's latest completed results and audits
+remain in RESEARCH-HANDOFF-CODEX-2026-11-10.txt and codex-audit-fable.txt.
+
+ASSIGNED BRANCHES
+path_stability: quantitative forest estimates, additive-stability rates, and
+the exact obstruction in the link-count argument.
+random_hosts: explicit cycle/path excess constructions and transfer matrices.
+four_regular: structural upper bounds, cubic reductions, and stronger small-cut
+estimates. Root: independent audits, higher correlations, and coordination.
+
+FIRST CONSTRUCTION RESULT — exact proof and enumeration supplied by random_hosts
+For the Horak-Kim cyclic-square family MC_(2q), delete an internal square edge.
+The resulting network has rank b=2q, terminal distance three, and
+  P=2^(2q-1)+(q-3/4)2^q+1.
+Hence the excess divided by 2^((b+3)/2) grows linearly in q.
+This disproves the proposed absolute-constant-C path bound in Fable's
+Conjecture A. A polynomial rank factor is necessary even at fixed distance.
+It does not improve the known exponential scale of the cycle-count lower bound.
+See second-order-constructions-notes.txt and its checker outputs.
+
+FOREST RATE BOTTLENECK
+The current method obtains cycle weight mu from a harmonic sum in cycle length.
+The link-count term 2L/t0 and the small-cut term roughly 2^t0/epsilon force
+L to be at most order log(r) loglog(r). Thus making old constants explicit
+does not remove the triple logarithm. Even mu of order log(r) would leave
+only inverse-log error under the present second-moment estimate.
+The path agent is checking a better trace summation that includes odd lengths
+and improves the leading triple-log constant. This is not a polynomial rate.
+
+POTENTIAL STRONGER SMALL-CUT LEMMA — UNPROVED
+For k disjoint cyclic regions with cut size at most fixed d, can the forest
+probability be bounded by 1/2+C_d exp(-c_d k)?
+Condition on the quotient even edge pattern. Every closed region cut permits
+an independent internal cycle bit, so the forest probability is at most
+  E product_i (1 - 1_{cut_i is zero}/2).
+A cycle quotient gives exactly 1/2+2^(-k-1), so an exponential bound would fit
+the standard extremal geometry. General linear-subspace models can have a
+1/k error, but those models may not arise from graphical cut spaces.
+A spanning tree with many marked leaves gives independent cut patterns after
+choosing nonadjacent leaves. Long degree-two series chains instead carry one
+common parity bit. A rigorous combination of these cases is being investigated.
+This proposed bound is not yet proved and must not be cited as a theorem.
+
+BREAKTHROUGH CHECKPOINT — 19:55 EST
+The proposed exponential small-cut lemma is now PROVED, with two independent
+line-level audits. For k disjoint cyclic regions of boundary at most d>=2,
+  p <= 1/2 + 2 exp[-k/(2 d 4^d)].
+The safe direct-sum/common-functional proof is in second-order-structural-notes.tex.
+The improved graphical constant is in second-order-terminal-forest.tex.
+Splitting a common functional produces a series class. Conditional on its zero
+value, alternate regions use independent components. A terminal forest finds
+a large common-functional class using only O(d 2^d) classes.
+This implies exponential second-order savings in each fixed proper minor-closed
+class. A separate corollary and finite structural checks are in progress.
+The unrestricted logarithmic rate is not yet improved in order.
+
+NEW STRUCTURAL THEOREM — 20:25 EST
+For every connected graph or multigraph of rank b and distinct terminals,
+  P_st=2^b, or P_st<=(15/16)2^b.
+The factor15/16 is sharp, attained by deleting a cycle edge of the eight-vertex
+Mobius ladder. Proof: second-order-path-gap.tex. Three independent audits passed.
+It classifies saturated cubic two-poles as series compositions of capped ladders
+whose matching permutations contain only singleton and adjacent-swap blocks.
+A full-or7/8 three-pole transfer then gives the rank induction.
+Publication priority is unchecked; the same15/16 constant occurs in Aldred–
+Thomassen's older cycle bound, so no novelty claim is made for this path theorem.
+Exhaustive cubic catalogues through20 vertices and independent DFS checks agree.
+Order22 is still running.
+
+2026-11-11 02:02 UTC: Root full mathematical audits PASS for second-order-high-path-cycle-tradeoff.tex and second-order-detour-obstruction.tex. Checked whole-layer parallel marking, geometric endpoint sum, bridge factors, digon shore, terminal forest hitting, inverse moment bound, deletion diameter, expansion under triangle gadgets, and cotree flip injection. Fable thin-chain audited separately, with one expander remark correction shared.
+
+Root full read of second-order-two-scale-polynomial.tex: PASS preliminary mathematical audit. Checked Q0 subsetQ1 maximality; both girth-scale covariance bounds; weighted antisymmetric far relation; main-component separator choice; full-graph block definition; restoration and four-timesS0 discard; zero deficit; matrix-pencil eigenvalue multiplicity; normalized trace/repeated-walk comparison; and edge-deletion recurrence. Requested full independent Fable audit. The argument does not use the proposed3cut or4cut theorems.
+
+Root full audits PASS second-order-four-cut-states.tex, second-order-four-cut-large-shores.tex, second-order-all-four-cuts.tex, and one-full tripole minimum refinement. The all4cut bound is O(r^8 2^{r/2}); a linear-r refinement is in progress separately. Root also passes second-order-two-scale-extensions.tex and second-order-two-scale-constants.tex (kappa2^-1050). Fable full originaltwo-scaleaudit PASS seen in fable-audit-two-scale.md.
+
+Root audit PASS second-order-five-pole-return-forests.tex: port suppression, far-tail placement, minimum-layer matching encoding, bridge reduction. Sharp four-cut theorem now has O(r*2^(r/2)) error, four independent mathematical reads, and exact state/sharpness checks.
+
+Root full audit PASS second-order-fixed-cycle-packings.tex (optimal fixed-j polynomial degreej-1) and second-order-positive-port-localization.tex (distance clustering, productbound7*2^(3h/2), partialfive-star bridgecases). Newrootfragmentsecond-order-five-cut-partial.tex records exact5cutgluing,3portcap,addededgeconstraints and all-positiveenergygap7.9483; full5cuttheorem remainsopen. Exactcheckerpasses1920gluingsand40caps.
+
+Root full audits PASS second-order-saturated-terminal-avoidance.tex and second-order-three-arm-isolated-port.tex. Checked prefix-cap recurrences, half-path avoidance, exact capped-tripole forest maps, cancellation, exact full-arm localization, last-piece distance layers, bounded-tail barrier, and geometric minimum-layer sum. Root aggregate checker independently passes868 extensions over15poles with2..6ports. Root localization checker passes6330single-piece and833series subdivisions; four_regular independent checker retained under its own filenames.
+
+Root full audits PASS second-order-saturated-pair-small-cut.tex and second-order-five-cut-large-shores.tex. The direct route counts at least h/5 disjoint cyclic candidates, loses at most k-2 to restored ports, and gives a cyclic<=4 cut when h>5k. Without a full pair, five-pole energy is at most125/16+o(1). The independent Boolean proof also passes: all triangle-free supports enumerated, exceptional forest pairings cancel, and aligned K14/K23 errors are uniform in rank ratio. Bounded-shore five-cuts remain open.
+
+Root full audits PASS second-order-high-density-small-cut.tex and second-order-high-density-protected-cuts.tex. Checked local four-layer cycles, bridge count, bad-layer thresholds, protection of vertices and restored ports, unchanged boundaries after deleting designated edges, and unconditional added-edge identity. Exact Petersen representative proof independently confirmed conceptually; final all-five-cut fragment pending.
+
+Root full audit PASS second-order-five-cut-universal-crossing.tex. The Petersen representative argument and7.5 functional are exact. Protected augmentation makes its hypotheses unconditional, uniformly over the other shore. Connected shores and distinct ports follow from absence of smaller cyclic cuts. Internal cycle contribution is<=1/4+o after normalizing by2^(h+k), leaving31/4+o<8. Therefore all cyclic cuts<=5 have sharp O(r*2^(r/2)) error; the unrestricted core is now cyclically6-edge-connected.

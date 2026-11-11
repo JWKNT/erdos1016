@@ -1,0 +1,9 @@
+{
+  "metric_cases": 3962,
+  "centered_metric_cases": 3000,
+  "explicit_spanning_paths": 120,
+  "kernel_core_types": 42,
+  "kernel_cycles": 13,
+  "exact_pair_marginal_checks": 96,
+  "asymptotic_matching_and_embedding_theorems": "not certified by finite checks"
+}

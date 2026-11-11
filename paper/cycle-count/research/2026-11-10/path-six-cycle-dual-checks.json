@@ -1,0 +1,14 @@
+{
+  "status": "independent exact dual verification passed",
+  "method": "Reconstruct C6 states by all62 nonempty proper edge subsets; reconstruct inequalities directly from matching definitions.",
+  "variables": 75,
+  "dual_terms": {
+    "path": 2,
+    "one_edge": 26,
+    "two_edges": 2
+  },
+  "bound": "31/2",
+  "coefficient_equality": true,
+  "imported_author_modules": false,
+  "used_numerical_solver": false
+}

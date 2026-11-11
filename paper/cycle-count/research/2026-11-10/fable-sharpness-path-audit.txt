@@ -1,0 +1,87 @@
+Independent audit of fable-sharpness.md
+Agent: path_stability (Codex). Date: 2026-11-10.
+Status: PASS for Theorem S and Corollaries S1 and S2.
+This is a mathematical audit, not Lean verification.
+
+1. Pair enumeration and tilted law.
+The local states in Lemma 2 cover all even possibilities, including loops.
+When a spoke is used, exactly one of its two free points is used. At a
+cubic vertex, a used loop is represented by its two used points and its
+unique unused point. A T-join on W gives exactly the required spoke parity.
+The used and unused matchings therefore give the claimed bijection.
+
+The exact Radon--Nikodym relation is
+
+  E_nu f = E_pi[2^(comp(G)-1) E_xi f] / (1+eta).
+
+Since the weight is at least one, both inequalities in Lemma 4 have the
+stated direction. No connectivity assumption is silently imposed here.
+
+2. Component moments.
+A closed set of cubic vertices is exactly a union of components not
+meeting W. The parity restriction y even is necessary and included.
+The denominator bound follows by selecting the indicated vertex groups
+in a binomial coefficient with the correct total size. For the first
+moment, j<=N-3 because m>=3. Thus all j>=2 terms are bounded by
+2/[N(N-1)], while j=1 contributes 1/N. The stated 3/N bound follows.
+The reciprocal-binomial sum for n0/2>=4 is at most three, proving the
+second component-moment bound.
+
+3. Spoke distribution.
+The image of the spoke map consists exactly of subsets even in every
+S-containing component of J. It is a product of uniform even-subset laws.
+Using the first a-1 bits in each component gives a binomial variable with
+m-q trials dominated by tau. For q<=m/2, the threshold m/8 is at most
+one quarter of the number of trials. Hoeffding therefore gives exp(-m/16).
+The tilted bad-component term is correctly bounded using
+comp(J)=comp(G)-1+q and the second component moment.
+
+4. Long and short cycles.
+Lemma 3 counts cycles correctly at lengths one and two, as well as longer
+lengths. When tau>=m/8, the denominator 2k+tau-1 is below 2(n0+m), which
+gives the claimed damping parameter. Summing (1-kappa)^t/(2t) first, then
+using (1-kappa)^g<=exp(-kappa g), gives the exact factor 1/(2g kappa).
+The alternative sqrt(k)/t bound covers the rare small-tau event.
+
+The short-cycle first moment uses the ordered point-pair counts 6n0+2m.
+The hypothesis 4g^2<=M controls the pairing denominator by a factor below e.
+Summing t times the cycle expectation gives the stated 2^(g+1) bound.
+
+5. Cleanup and monotonicity.
+Removing the spokes at a cycle can create at most one component outside
+the W-component, because all removed outside endpoints remain connected
+by that cycle. This proves Lemma 9.
+
+Lemma 10 only subdivides J, so it creates no new cycles of J. The four
+rank comparisons after deleting an image cycle are correct. In the case
+with one endpoint on the cycle, the new two-edge path can merge components,
+which only decreases its rank contribution. In the chord case, the new
+vertex is a leaf. Both cases satisfy the required upper bound.
+
+Every original loop and parallel pair is short. Subdividing each of its
+edges at least twice removes loops and parallel edges in the final graph.
+All added spoke endpoints on W are distinct. The result is simple, cubic,
+and connected. Further attachment operations preserve these properties.
+
+6. Choice of a good pairing and constants.
+The two Markov failures each have probability at most 1/4. Connectivity
+fails with probability at most 6/n0. Their sum is below one eventually.
+The cleanup contribution is at most delta/4. The long-cycle contribution
+is at most (1+eta)delta/4+o(1), so there is ample room below delta.
+All comparisons involving C0=41 max(2,ln(4/delta)) are valid.
+
+7. Exact rank and marked size.
+The cleanup cost K*2^(g+3)=O(sqrt(n0) log n0) is o(m). The target-rank
+budget has jumps of this same order when ceil(log n0/2) increases.
+Its other increments are bounded. Thus choosing the largest admissible
+even n0 leaves an o(m) gap, including the difference between the budgeted
+and actual cleanup costs. Each additional attachment increases rank and
+marked-cycle length by exactly one. This supplies every sufficiently
+large integer rank while preserving the asserted size constant.
+
+Wording caveat, not a theorem gap.
+Remark 8 says the proof gives p(G,W)->1. For a fixed delta and its fixed
+coefficient C_delta, the argument proves p>=1-delta. Convergence to one
+can be obtained by choosing delta tending to zero sufficiently slowly;
+then C_delta also grows. Such a diagonal sequence can still have |W|=o(r).
+The proof does not establish p->1 for one fixed coefficient in r/log r.

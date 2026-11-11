@@ -1,0 +1,47 @@
+\section{The eventual exact unrestricted maximum}
+\label{sec:eventual-exact-cycle-theorem}
+
+\begin{theorem}[Eventual exact Horak--Kim formula]
+\label{thm:eventual-exact-cycle-maximum}
+There is an absolute integer $R$ such that the maximum number $\psi(r)$ of cycles in a finite graph of cycle rank $r\ge R$ is
+\[
+\begin{aligned}
+ \psi(2q+1)&=2^{2q}+(2q+\tfrac12)2^q-3q,\\
+ \psi(2q+2)&=2^{2q+1}+(2q+\tfrac92)2^q-3q-4.
+\end{aligned}
+\]
+The Horak--Kim rings attain both formulas.
+\end{theorem}
+
+\begin{proof}
+Let $H(r)$ denote the two displayed counts and put $H_r=H(r)-2^{r-1}$.
+Theorem~\ref{thm:four-coefficient-eventual-small-cut} bounds the maximum small-cut excess $B_r$ by $H_r$ at every sufficiently large rank.
+The exact ring count supplies a graph attaining $H(r)$ at each such rank.
+The two increments computed in Section~\ref{sec:new-coefficient-transfer} show that $H_r$ is eventually strictly increasing and tends to infinity.
+Corollary~\ref{cor:new-eventual-exact-transfer} therefore gives the claimed unrestricted equality.
+\end{proof}
+
+\begin{corollary}[Sharp second-order coefficients]
+\[
+ \psi(r)=2^{r-1}+(1+o(1))r2^{\lfloor(r-1)/2\rfloor}.
+\]
+More precisely,
+\[
+ \lim_{\substack{r\to\infty\\r\text{ odd}}}
+ \frac{\psi(r)-2^{r-1}}{r2^{r/2}}=\frac1{\sqrt2},
+ \qquad
+ \lim_{\substack{r\to\infty\\r\text{ even}}}
+ \frac{\psi(r)-2^{r-1}}{r2^{r/2}}=\frac12.
+\]
+\end{corollary}
+
+\begin{proof}
+Divide the exact formulas by the indicated scales.
+The additive terms linear in $r$ vanish after normalization.
+\end{proof}
+
+\paragraph{Scope.}
+The threshold is not evaluated.
+The result does not assert the Horak--Kim formula at every small rank, and does not settle the relative edge-half conjecture.
+The proof is a new mathematical working proof, with separate internal audits, based on the established source modules listed in this packet.
+It has not been formalized in Lean or externally peer reviewed.

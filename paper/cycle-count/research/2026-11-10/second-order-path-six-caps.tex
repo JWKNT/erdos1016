@@ -1,0 +1,125 @@
+\section{Protected cap constraints beyond added matchings}
+\label{sec:path-six-protected-caps}
+
+Matching augmentation is one special case of a fixed cap construction.
+Branching tree caps give additional constraints on six-pole forest states.
+These constraints exclude the earlier abstract half-integral obstruction.
+They do not yet prove a bound for every bounded six-cut shore.
+
+\begin{theorem}[A fixed cap cannot produce high terminal-path density]
+\label{thm:path-six-fixed-cap-density}
+Fix an integer $k\ge2$ and a finite loopless cap graph $F$.
+Its vertices have the following types:
+\begin{enumerate}
+\item $q$ distinct attachment leaves of degree one.
+\item $p$ designated terminal vertices of degree two.
+\item Vertices of degree three.
+\end{enumerate}
+Every component of $F$ contains an attachment leaf.
+Write $g=\beta(F)$ and $c=\operatorname{comp}(F)$.
+Assume $q\le k$ and $k-q+p\ge2$.
+
+Let $Y$ be a normalized $k$-pole of rank $h$ inside a cubic graph with no cyclic cut of size at most four.
+Identify the attachment leaves of $F$ with any $q$ distinct ports of $Y$.
+Call the resulting graph $Y_F$.
+It is a normalized $(k-q+p)$-pole of rank
+\[
+ \beta(Y_F)=h+d_F,\qquad d_F=q+g-c.
+\]
+For every pair $a,b$ of its ports,
+\[
+ 2^{-h}P_{ab}(Y_F)\le2^{d_F-1}+o(1)
+ \qquad(h\to\infty).
+\]
+For a fixed finite collection of caps, the error is uniform over all caps and port choices.
+\end{theorem}
+
+\begin{proof}
+The identifications make every filled port cubic.
+All other degrees have the required values, and each cap component attaches to the connected graph $Y$.
+Hence $Y_F$ is connected and normalized.
+The rank increment is
+\[
+ |E(F)|-(|V(F)|-q)=g-c+q=d_F.
+\]
+
+Protect all new cap vertices and all filled ports of $Y$.
+Their total number is fixed, independently of $h$.
+If the normalized terminal-path density of $Y_F$ exceeded one half by a fixed amount along unbounded ranks, Theorem~\ref{thm:high-density-protected-cyclic-sets} would apply.
+It would give two disjoint cyclic vertex sets avoiding every protected vertex and every remaining port.
+Both sets lie in $Y$ and avoid all of its original ports.
+Their induced graphs and boundaries are unchanged when the cap is removed and the original completion is restored.
+Either set would therefore give a cyclic cut of size at most four in the original graph.
+This contradiction proves the density bound.
+Finiteness gives the stated uniformity.
+\end{proof}
+
+The path count in this theorem is a finite linear combination of the terminal forest states of $Y$.
+Here is a precise coefficient description, including caps whose new vertices are the chosen terminals.
+Let $A$ be the filled ports, and split the chosen pair into $T_Y\subseteq V(Y)$ and $T_F\subseteq V(F)\setminus A$.
+For $S\subseteq A$, a path restricts to forests in $Y,F$ with odd sets $T_Y\cup S$ and $T_F\cup S$, respectively.
+Their path pairings must join into one path between the chosen terminals when the vertices of $S$ are identified.
+For each forest pairing in $Y$, its coefficient is the number of cap forests with this compatibility property.
+The empty restriction is included when its odd set is empty.
+These coefficients depend only on the fixed cap and terminal choices.
+
+The description is exact.
+A simple path restricts to two forests, since neither restriction can contain a cycle.
+Conversely, compatible forests have maximum degree two after gluing, exactly two odd vertices, and one nonempty component.
+Their union is therefore one simple terminal path.
+
+\begin{corollary}[A three-port star cap]
+\label{cor:path-six-star-cap}
+Let $Y$ be a normalized six-pole of rank $h$ inside a cubic graph with no cyclic cut of size at most four.
+Choose three ports $Q$ and a pair $e=ab$ among the other three.
+For disjoint pairs $e,f$, let $B_{e|f}$ be the normalized sum of the two forest pairings other than $e|f$.
+Then
+\[
+ a_e+\sum_{f\in\binom Q2}B_{e|f}\le2+o(1).
+\]
+There are sixty such inequalities.
+\end{corollary}
+
+\begin{proof}
+Attach one new cubic vertex to the three ports of $Q$.
+The resulting three-pole has rank $h+2$.
+A terminal path either avoids the new vertex or uses exactly two of its incident edges.
+Deleting those edges and the new vertex gives one of the two noncap forest pairings on $e\cup f$.
+Every such forest conversely gives a terminal path.
+Thus the displayed left side is exactly $2^{-h}$ times the augmented path count.
+Apply Theorem~\ref{thm:path-six-fixed-cap-density}.
+\end{proof}
+
+\begin{corollary}[A four-leaf binary tree cap]
+\label{cor:path-six-binary-tree-cap}
+In the same setting, retain terminals $e=ab$ and partition the other four ports as $f\mid g$.
+Let $R_{e|f|g}$ be the normalized six-terminal forest mass whose pairing has no edge in common with $\{e,f,g\}$.
+Then
+\[
+ a_e+\sum_{f'\in\binom{[6]\setminus e}{2}}B_{e|f'}
+     +R_{e|f|g}\le4+o(1).
+\]
+There are forty-five such inequalities.
+\end{corollary}
+
+\begin{proof}
+Add two adjacent cubic vertices, attaching one to the two ports of $f$ and the other to the two ports of $g$.
+The resulting two-pole has rank $h+3$.
+For every two-port boundary pattern in the cap, its unique joining path gives one of the six terms $B_{e|f'}$.
+For the four-port pattern, the cap's central edge is absent by parity.
+Its two disjoint paths have pairing $f|g$.
+They form one terminal path with a forest in $Y$ exactly for the six-terminal pairings counted by $R_{e|f|g}$.
+The empty cap contributes $a_e$.
+Theorem~\ref{thm:path-six-fixed-cap-density} now proves the inequality.
+\end{proof}
+
+These inequalities exclude the saved half-integral vector in Section~\ref{sec:six-cut-partial} as a limit of large poles in this setting.
+For example, choose terminal pair $14$ and star attachment set $\{0,2,3\}$.
+That vector gives
+\[
+ a_{14}+B_{14|02}+B_{14|03}+B_{14|23}=3,
+\]
+whereas Corollary~\ref{cor:path-six-star-cap} gives an upper limit of two.
+The exact checker finds seven violated star inequalities and seven violated binary-tree inequalities for that vector.
+This conclusion concerns the saved vector only.
+It does not show that the enlarged relaxation has a strict universal deficit.

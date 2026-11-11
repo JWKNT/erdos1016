@@ -1,0 +1,276 @@
+\section{A polynomial error unless a short cycle creates a long detour}
+\label{sec:second-order-detours}
+
+The exponential cut estimate also sharpens a structural alternative in the unrestricted proof.
+A polynomial excess above one half forces a short cycle whose deletion greatly separates two of its neighbors.
+This gives a polynomial cycle-count error for fixed cubic vertex-expanders.
+It does not give that error for arbitrary graphs.
+
+All logarithms below have base two unless written as $\ln$.
+Fix the absolute constants
+\[
+ A=6e^{16},\qquad t=\lceil1000A\rceil,
+ \qquad \alpha=\frac1{10^6t2^t}>0.
+\]
+Their sizes are not optimized.
+
+\begin{lemma}[A terminal forest meets every multiple-link partner]
+\label{lem:multiple-link-terminal-forest}
+Let $C$ be a cycle of a connected subcubic graph $\Gamma$.
+For each component $H$ of $\Gamma-V(C)$, choose a tree $T_H\subseteq H$ connecting all its neighbors of $C$.
+Include a single vertex when there is only one such neighbor.
+Let $T$ be the union of these trees.
+Every cycle $C'$ disjoint from $C$ with at least two links to $C$ meets $T$.
+
+If every pair of neighbors of $C$ in the same component has distance at most $\Delta$ there, one may choose
+\[
+ |V(T)|\le |C|(\Delta+1).
+\]
+\end{lemma}
+
+\begin{proof}
+Suppose $C'$ avoids $T$.
+It lies in one component $H$ of $\Gamma-V(C)$.
+It contains no neighbor of $C$, so no edge directly joins the two cycles.
+After deleting $C'$, the tree $T_H$ still connects all neighbors of $C$ in $H$.
+Thus at most one component of $\Gamma-V(C)-V(C')$ can be joined to both cycles.
+This gives at most one link.
+
+For the size bound, fix one neighbor in each component.
+Join every other neighbor to it by a path of length at most $\Delta$.
+Take a spanning tree of the resulting connected union.
+The total number of terminal incidences is at most $|\delta V(C)|\le|C|$.
+Summing the path-length bounds proves the assertion.
+\end{proof}
+
+\begin{theorem}[A polynomial-gap detour obstruction]
+\label{thm:polynomial-gap-detour}
+Let $\Gamma$ be a connected multigraph of rank $r$, with all degrees two or three.
+Let $P\subseteq V(\Gamma)$ contain every degree-two vertex, and suppose
+\[
+ |P|\le\frac{2r}{\log^2r},\qquad
+ \operatorname{comp}(\Gamma[P])\le\frac{\log r}{100}.
+\]
+Let $\mathcal F$ mean that a uniform even subgraph is a forest on $\Gamma-P$.
+For all sufficiently large $r$, the inequality
+\[
+ \Pr(\mathcal F)>\frac12+r^{-\alpha}
+\]
+implies the following conclusion.
+There is a cycle $C\subseteq\Gamma-P$ of length at most $A\log r$ and a component $H$ of $\Gamma-V(C)$ containing two neighbors $u,v$ of $C$ with
+\[
+ \operatorname{dist}_H(u,v)>r^{1/25}.
+\]
+The threshold is absolute.
+\end{theorem}
+
+\begin{proof}
+Put $x=\log r$, $y=\log x$, $D=\lfloor x/10\rfloor$, $s=\lfloor(D-1)/2\rfloor$, and $L=\lfloor Ax\rfloor$.
+Assume the displayed probability bound and suppose the detour conclusion fails.
+
+Choose a maximal disjoint family $\mathcal Q$ of cycles of length at most $D$ in $\Gamma-P$.
+Its cycle regions have cuts of size at most $D$.
+Theorem~\ref{thm:sharper-exponential-cuts} gives
+\[
+ |\mathcal Q|<8D2^D\ln(2r^\alpha).
+\]
+Let $S$ be their vertex union.
+Then
+\[
+ |S|=O(x^3r^{1/10})=o(r/x).
+\]
+The graph $J=\Gamma-(P\cup S)$ is simple and has girth greater than $D$.
+Its vertex count $v$ and degree deficit $d_J$ satisfy
+\[
+ v=2r+O(r/x^2+|S|),\qquad
+ d_J\le3(|P|+|S|),\qquad Ld_J=o(v).
+\]
+
+Let $\mathcal C$ contain its cycles of length at most $L$, and write
+\[
+ a_C=2^{-|C|},\qquad \mu=\sum_{C\in\mathcal C}a_C.
+\]
+The paired-power spectral lemma and the repeated-walk estimate give
+\[
+ \mu\ge\frac12\ln(A/6)-o(1)=8-o(1)\ge7.
+\]
+For every vertex $u$ of $J$, the manuscript's walk bound gives
+\begin{equation}\label{eq:detour-local-cycle-mass}
+ \sum_{C\in\mathcal C:u\in V(C)}a_C\le L2^{-s}.
+\end{equation}
+
+We next check the exceptional-pair estimate with the smaller error margin.
+Use the fixed integer $t$ in the link decomposition.
+For two disjoint cycles $C,C'\in\mathcal C$, the cyclic complementary regions with cuts at most $t$ number fewer than
+\[
+ 8t2^t\ln(2r^\alpha)
+ =\frac{8\ln2}{10^6}x+O_t(1).
+\]
+The other terms in the link decomposition are unchanged.
+For sufficiently large $r$, one has $2t+D/2\le D$, and hence
+\[
+ \ell(C,C')\le \operatorname{comp}(\Gamma[P])
+ +\frac{2L}{t}+8t2^t\ln(2r^\alpha)+(8L/D)^2
+ \le x/40.
+\]
+Indeed, the four terms are at most $x/100,x/500,x/1000,x/1000$ eventually.
+The exceptional-partner lemma therefore bounds the normalized exceptional contribution for each fixed $C$ by
+\[
+ 2^{x/40}L^3 2^{-s}=o(1).
+\]
+
+For $C\in\mathcal C$, let $w_2(C)$ be the total weight of its disjoint partners with at least two links.
+The assumed absence of the detour conclusion and Lemma~\ref{lem:multiple-link-terminal-forest} give a hitting forest with at most $L(r^{1/25}+1)$ vertices.
+Using \eqref{eq:detour-local-cycle-mass}, including only its vertices in $J$, gives
+\[
+ w_2(C)\le L^2(r^{1/25}+1)2^{-s}=o(1),
+\]
+uniformly over $C$.
+
+Use the manuscript's normalized component indicators $X_C$ and let $Z=\sum_CX_C$.
+Then $\mathbb EZ=\mu$ and $\mathbb EX_C^2\le a_C$.
+Intersecting cycles contribute zero.
+One-link pairs contribute exactly $a_Ca_{C'}$.
+Two-link pairs contribute twice that amount, and exceptional pairs contribute $o(\mu)$ in total.
+Consequently,
+\[
+ \mathbb EZ^2
+ \le\mu^2+\mu+\sum_Ca_Cw_2(C)+o(\mu)
+ =\mu^2+(1+o(1))\mu.
+\]
+Since $\mathcal F$ implies $Z=0$, Cauchy--Schwarz gives
+\[
+ \Pr(\mathcal F)\le\Pr(Z=0)
+ \le\frac{1+o(1)}{\mu+1+o(1)}\le\frac18+o(1).
+\]
+This contradicts the assumed probability above one half.
+\end{proof}
+
+\begin{lemma}[Diameter after deleting vertices from an expander]
+\label{lem:expander-deletion-diameter}
+Suppose an $n$-vertex graph $Q$ satisfies
+\[
+ |N_Q(U)\setminus U|\ge h|U|
+ \qquad(0<|U|\le n/2)
+\]
+for some $0<h\le1$.
+For any set $Z$ of $z$ vertices, every component of $Q-Z$ has diameter at most
+\[
+ \frac{4z+6\ln n+4}{h}.
+\]
+\end{lemma}
+
+\begin{proof}
+A component $K$ of size at most $n/2$ has $h|K|\le z$, so its diameter is at most $z/h$.
+There is at most one larger component.
+If $z/h\ge n/4$, the claimed bound follows from the trivial diameter bound $n-1$.
+Assume $z/h<n/4$.
+In that component, a ball $B$ of size at most $n/2$ has at least $h|B|-z$ external neighbors within the component.
+Connectivity grows a ball to size at least $\max\{1,2z/h\}$ in at most $2z/h+1$ steps.
+After that point, every step multiplies its size by at least $1+h/2$, until it exceeds $n/2$.
+Since $\ln(1+h/2)\ge h/3$, this takes at most $3\ln n/h+1$ further steps.
+Two such balls intersect.
+Their combined radius is at most $(4z+6\ln n+4)/h$, as required.
+\end{proof}
+
+\begin{corollary}[The forest bound for fixed expanders]
+\label{cor:expander-polynomial-forest}
+Under the hypotheses of Theorem~\ref{thm:polynomial-gap-detour}, suppose additionally that $\Gamma$ has vertex expansion at least a fixed $h>0$.
+Then, for sufficiently large $r$ depending on $h$,
+\[
+ \Pr(\mathcal F)\le\frac12+r^{-\alpha}.
+\]
+\end{corollary}
+
+\begin{proof}
+The vertex count is $2r+o(r)$.
+Deleting any cycle of length at most $A\log r$ leaves components of diameter $O_h(\log r)$.
+For large $r$, this is smaller than $r^{1/25}$.
+Apply Theorem~\ref{thm:polynomial-gap-detour}.
+\end{proof}
+
+\begin{theorem}[A polynomial cycle error for cubic expanders]
+\label{thm:expander-polynomial-cycles}
+Fix $h>0$.
+For every sufficiently large connected simple cubic graph $G$ with vertex expansion at least $h$ and rank $r$,
+\[
+ c(G)\le2^{r-1}+2\frac{2^r}{r^\alpha}.
+\]
+\end{theorem}
+
+\begin{proof}
+Choose a spanning tree of $G$.
+Its $r$ cotree edges contain a matching of size at least $r/5$, by greedy selection in a graph of maximum degree three.
+Choose a matching $D$ of $k=\lceil\alpha\log_2r\rceil$ cotree edges.
+
+For each $uv\in D$, replace that edge by
+\[
+ u\!-!u'\!-!v'\!-!v,
+ \qquad u'\!-!w\!-!v',
+\]
+using three new vertices.
+The middle edge $u'v'$ and the two edges through $w$ form a triangle.
+Call the new graph $\Gamma$ and let $P$ be the union of these triangle vertices.
+Then $\beta(\Gamma)=R=r+k$.
+Every unmarked vertex has degree three, every marked vertex has degree two or three, and
+\[
+ |P|=3k,\qquad \operatorname{comp}(\Gamma[P])=k.
+\]
+The matching condition ensures that the gadgets have distinct endpoints.
+
+We check expansion explicitly.
+Partition $V(\Gamma)$ into connected branch sets indexed by $V(G)$, each of size at most three.
+Assign $u',w$ to $u$ and $v'$ to $v$ for each gadget.
+Every original edge has a representative between the corresponding branch sets.
+
+For $U\subseteq V(\Gamma)$ with $|U|\le|V(\Gamma)|/2$, let $B$ count partially occupied branch sets.
+Each such branch set supplies a distinct external neighbor of $U$, so $|N_\Gamma(U)\setminus U|\ge B$.
+The numbers of fully occupied and fully unoccupied branch sets are each at least $|U|/3-B$.
+The original expansion and maximum degree three therefore give
+\[
+ |\delta_\Gamma U|\ge h|U|/3-(h+3)B.
+\]
+If $B\ge h|U|/[6(h+3)]$, the first bound suffices.
+Otherwise the edge boundary has size at least $h|U|/6$.
+Since $\Gamma$ has maximum degree three, its external vertex boundary then has size at least $h|U|/18$.
+Thus $\Gamma$ has vertex expansion at least $h/[6(h+3)]$.
+
+The size and component conditions of Corollary~\ref{cor:expander-polynomial-forest} hold for large $r$.
+It gives $\Pr(\mathcal F)\le1/2+R^{-\alpha}$.
+Lift every original cycle meeting $D$ through the three-edge gadget paths.
+Toggle any subset of the $k$ triangles.
+The resulting $2^k$ even subgraphs are distinct, and their restrictions to $\Gamma-P$ are forests.
+The new edges through each $w$ determine the toggled subset, so the full map is injective.
+Hence the cycles meeting $D$ number at most $\Pr(\mathcal F)2^r$.
+
+At most $2^{r-k}$ cycles avoid $D$, since the chosen cotree coordinates are independent.
+Finally, $R^{-\alpha}\le r^{-\alpha}$ and $2^{-k}\le r^{-\alpha}$.
+Combining these estimates proves the theorem.
+\end{proof}
+
+\begin{corollary}[Expansion may decay polynomially]
+\label{cor:weak-expander-polynomial-cycles}
+For all sufficiently large connected simple cubic graphs $G$ of rank $r$ with vertex expansion at least $r^{-1/50}$,
+\[
+ c(G)\le2^{r-1}+2\frac{2^r}{r^\alpha}.
+\]
+The threshold is absolute.
+\end{corollary}
+
+\begin{proof}
+Apply the same triangle-gadget construction.
+Its rank is $R=r+O(\log r)$, and its vertex expansion is at least $r^{-1/50}/24$.
+Indeed, the previous comparison gives $h/[6(h+3)]\ge h/24$ for $0<h\le1$.
+Deleting a cycle of length at most $A\log R$ therefore leaves components of diameter
+\[
+ O(r^{1/50}\log r)<R^{1/25}
+\]
+for all sufficiently large $r$.
+The constant in this estimate is absolute, by Lemma~\ref{lem:expander-deletion-diameter}.
+The detour theorem now gives the same forest estimate.
+The triangle-flip injection and the witness-avoidance bound complete the proof as before.
+\end{proof}
+
+The obstruction theorem does not yet control the case of long terminal detours.
+Such detours suggest distance-layer decompositions.
+A proof must still combine the resulting localized restrictions without losing the density gap.

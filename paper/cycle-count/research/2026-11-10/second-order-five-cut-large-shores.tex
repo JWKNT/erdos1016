@@ -1,0 +1,179 @@
+\section{Five-edge cuts with two large shores}
+\label{sec:five-cut-large-shores}
+
+The aggregate theorem reduces a nearly critical five-cut profile to finitely many Boolean supports.
+Exact path saturation then controls the surviving supports.
+The argument below keeps the equal-pairing subtraction in the five-cut identity.
+
+\begin{theorem}[Large-shore five-cut bound]
+\label{thm:large-five-cut-sharp-order}
+There are absolute constants $H_0,K$ with the following property.
+Let $X,Y$ be connected normalized five-poles, with ranks $h,k\ge H_0$.
+Join corresponding ports to obtain a cubic multigraph $G$ of rank $r=h+k+4$.
+Then
+\[
+ c(G)\le 2^{r-1}+Kr2^{r/2}.
+\]
+The constants do not depend on the ratio of the two shore ranks.
+\end{theorem}
+
+We use the fifteen normalized coordinates from Section~\ref{sec:five-cut-partial}.
+There are ten path coordinates $a_e$ and five forest totals $U_S$.
+Their sum is at most $8+o(1)$, uniformly as the shore rank tends to infinity.
+This follows from Theorem~\ref{thm:fixed-port-aggregate}.
+
+\begin{lemma}[Boolean support list]
+\label{lem:five-pole-boolean-supports}
+Consider a sequence of normalized five-poles whose ranks tend to infinity.
+Suppose its fifteen coordinates converge to zero or one, with exactly eight limiting ones.
+Let $H$ be the graph of path coordinates with limit one.
+Then $H$ is one of
+\[
+ K_{1,4},\quad K_{2,3},\quad K_{2,2}\sqcup K_1,
+ \quad P_3\sqcup K_2.
+\]
+Every edge of $H$ is exactly saturated for all sufficiently large ranks.
+\end{lemma}
+
+\begin{proof}
+The last assertion follows from the $15/16$ path gap.
+The two-high-pairs theorem makes $H$ triangle-free.
+Indeed, two full pairs with a shared port force the third pair to have density tending to zero.
+There must be at least three edges, since only five forest coordinates are available.
+
+If a four-port set contains a $P_4$ or $K_{2,2}$ in $H$, its forest total tends to zero.
+For that set, some bipartition has at least three full cross pairs.
+Suppress the unused port and apply Corollary~\ref{cor:four-pole-cross-sum-forest}.
+Suppression preserves all relevant path and forest counts.
+It cannot create a loop here: such a loop would force every cross-path density to be at most one half.
+
+The following table lists all triangle-free graphs on five vertices with at least three edges.
+Its last column counts four-port sets forced to have vanishing forest total by the preceding test.
+The fork is the tree with degree sequence $(3,2,1,1,1)$.
+\[
+\begin{array}{c|c|c}
+ H&|E(H)|&\text{forced zero forest sectors}\\ \hline
+ K_{1,3}\sqcup K_1&3&0\\
+ P_4\sqcup K_1&3&1\\
+ P_3\sqcup K_2&3&0\\
+ K_{1,4}&4&0\\
+ P_5&4&2\\
+ \text{fork}&4&2\\
+ K_{2,2}\sqcup K_1&4&1\\
+ C_5&5&5\\
+ K_{2,3}-e&5&3\\
+ K_{2,3}&6&3
+\end{array}
+\]
+For completeness, a triangle-free graph with at least three edges is a forest or contains a cycle of length four or five.
+Listing forests by their component sizes gives the six forest rows.
+A four-cycle permits only a pendant fifth vertex or two additional incidences to that vertex.
+These give $K_{2,3}-e$ and $K_{2,3}$, respectively; a five-cycle permits no extra edge.
+The sector counts follow by deleting each vertex in turn.
+
+The eight-coordinate requirement eliminates all rows except the four claimed graphs and $K_{1,3}\sqcup K_1$.
+In the last case, every forest total would tend to one.
+Theorem~\ref{thm:three-full-arms-forest-control} instead makes the four-leaf forest total tend to zero.
+The fifth port has vanishing paths to all three leaves, so that theorem applies.
+This eliminates the last row under consideration.
+\end{proof}
+
+Call a pair of shores \emph{aligned exceptional} if both contain the same full $K_{1,4}$ or the same full $K_{2,3}$.
+The port labels are those used in the gluing.
+
+\begin{lemma}[A fixed gap outside the aligned exceptional pairs]
+\label{lem:five-cut-fixed-profile-gap}
+There are $\gamma>0$ and $H_1$ such that the following statement holds.
+If $h,k\ge H_1$ and the shores are not aligned exceptional, their normalized crossing contribution is at most $8-\gamma$.
+\end{lemma}
+
+\begin{proof}
+Suppose no such constants exist.
+Choose a sequence with $\min(h,k)\to\infty$, outside the aligned exceptional classes, whose crossing contributions tend to at least eight.
+Pass to a subsequence on which all coordinates and all individual pairing masses converge.
+Write $z,w$ for the fifteen-coordinate limits on the two shores.
+The aggregate theorem gives
+\[
+ \sum z_i\le8,\qquad \sum w_i\le8.
+\]
+The crossing contribution is at most $\sum_i z_iw_i$.
+Since every coordinate belongs to $[0,1]$,
+\[
+ 8\le\sum_i z_iw_i
+ \le\tfrac12\left(\sum_i z_i^2+\sum_i w_i^2\right)\le8.
+\]
+Equality forces $z=w$, with exactly eight coordinates equal to one and all others zero.
+Every equal-pairing product in an active forest sector must also tend to zero.
+Apply Lemma~\ref{lem:five-pole-boolean-supports} to this common support.
+
+If its path graph is $K_{1,4}$ or $K_{2,3}$, the path gap makes both shores exactly aligned exceptional eventually.
+This contradicts their choice.
+If it is $K_{2,2}\sqcup K_1$, Corollary~\ref{cor:five-pole-k22-isolate-deficit} bounds the crossing limit by four.
+The common distinguished pairing in each of the other four sectors accounts for the missing contribution.
+
+It remains to consider $P_3\sqcup K_2$.
+Two of its four-port sets contain two disjoint full pairs, say $ij$ and $kl$.
+For such a set, the added-edge inequality gives
+\[
+ a_{kl}+U_{\{i,j,k,l\}}-u_{ij|kl}\le1+o(1).
+\]
+Here the error tends to zero by first fixing its positive allowance and then letting the rank grow.
+Both $a_{kl}$ and $U_{\{i,j,k,l\}}$ tend to one.
+Thus $u_{ij|kl}\to1$ on each shore.
+The two shores consequently have the same full pairing mass in each of these two sectors.
+Their exact crossing limit is at most $8-2=6$, another contradiction.
+This proves the uniform fixed gap.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:large-five-cut-sharp-order}]
+First suppose the shores are not aligned exceptional.
+Their crossing contribution is at most $(8-\gamma)2^{h+k}$.
+The two internal cycle counts are at most $2^h+2^k$.
+Increase $H_0$ until $2^{-h}+2^{-k}\le\gamma$ whenever $h,k\ge H_0$.
+Then $c(G)\le8\cdot2^{h+k}=2^{r-1}$.
+
+Now suppose both shores have the same full $K_{1,4}$.
+The four corresponding path products contribute exactly $4\cdot2^{h+k}$.
+Every other path pair joins two leaves.
+The two-high-pairs theorem bounds each such path count by $O(2^{h/2})$ or $O(2^{k/2})$.
+Their products total $O(2^{(h+k)/2})$.
+The four forest sectors containing the common center contribute at most $4\cdot2^{h+k}$.
+The remaining four-leaf sector has size $O(2^{h/2})$ on each shore, by Corollary~\ref{cor:five-pole-four-far-forests}.
+Its contribution is therefore $O(2^{(h+k)/2})$.
+
+Finally suppose both shores have the same full $K_{2,3}$, with common sides $A,B$.
+The six full path products contribute $6\cdot2^{h+k}$.
+The four remaining path products total $O(2^{(h+k)/2})$, again by the two-high-pairs theorem.
+The two forest sectors containing one vertex of $A$ and all three vertices of $B$ contribute at most $2\cdot2^{h+k}$.
+Each other sector induces a full $K_{2,2}$ on its four ports.
+
+Suppress the unused fifth port in one such sector.
+Its path and forest counts are unchanged, and its rank remains $h$ or $k$.
+The full cross pairs exclude a loop after suppression.
+Let $C_h$ count its same-side cap pairing, and let $D_h$ count its two through pairings together.
+The saturated four-pole bounds give
+\[
+ C_h\le3(h+1)2^{(h+1)/2},\qquad D_h\le2^{(h+1)/2},
+\]
+and the analogous bounds at rank $k$.
+The cap pairing is the same on both shores.
+Its product cancels in the exact gluing identity, leaving at most
+\[
+ C_hD_k+D_hC_k+D_hD_k
+ =O\bigl((h+k+1)2^{(h+k)/2}\bigr).
+\]
+There are three such sectors.
+
+In both exceptional cases, suppress all unused ports around any full terminal pair.
+The resulting saturated two-pole has the same rank and cycle count.
+Lemma~\ref{lem:saturated-two-pole-cycles} therefore bounds the internal cycle counts by $O(2^{h/2}+2^{k/2})$.
+Combining the contributions gives
+\[
+ c(G)\le8\cdot2^{h+k}+O\bigl((h+k+1)2^{(h+k)/2}\bigr).
+\]
+Since $r=h+k+4$, this is the asserted bound.
+All fixed constants used above are uniform in the two ranks.
+\end{proof}
+
+The theorem concerns two large normalized shores.
+It does not, by itself, settle five-edge cuts with one bounded-rank shore or repeated cut endpoints.

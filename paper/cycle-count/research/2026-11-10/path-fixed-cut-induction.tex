@@ -1,0 +1,234 @@
+\section{An induction over the cyclic cut order}
+\label{sec:path-fixed-cut-induction}
+
+Deleting one edge of a cyclic cut reduces its order by one after two suppressions.
+The uniform terminal-path bound controls the cycles lost in this deletion.
+This gives the sharp error for every fixed cyclic cut order.
+
+Write $\lambda_c(G)$ for the minimum size of an edge cut whose two shores both contain cycles.
+Set $\lambda_c(G)=\infty$ when no such cut exists.
+
+\begin{lemma}[Smoothing one edge of a minimum cyclic cut]
+\label{lem:path-minimum-cyclic-cut-smoothing}
+Let $G$ be a connected cubic multigraph of girth at least five, and suppose $\lambda_c(G)=k\ge5$.
+Choose a minimum cyclic cut $\delta_G A$, an edge $e=uv$ in it, and put $N=G-e$.
+Suppress the degree-two vertices $u,v$ in $N$, obtaining $G'$.
+Then
+\begin{enumerate}
+\item $G'$ is connected and loopless cubic, with $\beta(G')=\beta(G)-1$;
+\item the two original shores give a cyclic $(k-1)$-cut in $G'$, with unchanged shore ranks;
+\item $\lambda_c(G')=k-1$;
+\item $c(G)=c(G')+P_{uv}(N)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Each shore of the minimum cut is connected.
+If one shore were disconnected, a cyclic component on that shore would have boundary smaller than $k$.
+Its complement would still contain the opposite shore's cycle.
+
+Each vertex has at most one incidence in the cut.
+Otherwise its internal degree is at most one, so it lies on no cycle in its shore.
+Moving it across preserves a cycle on each side and decreases the cut size.
+Thus $u$ has two neighbors inside $A$, and $v$ has two inside its opposite shore.
+The girth assumption makes each pair of internal neighbors distinct.
+
+Every bridge in a cubic multigraph is a cyclic cut.
+Indeed, a bridge shore with $n$ vertices and rank $h$ satisfies $n=2h-1$, so $h\ge1$.
+The hypothesis therefore makes $G$ bridgeless, and $N$ is connected.
+Deleting $e$ decreases rank by one.
+Suppressing $u,v$ preserves rank and connectedness and creates no loop.
+This proves the first assertion.
+The suppression occurs wholly within each original shore.
+It preserves both shore ranks, while the other $k-1$ cut edges remain unchanged.
+This proves the second assertion.
+
+To prove minimality, take any cyclic cut of size $j$ in $G'$.
+Lift its shore partition when restoring each suppressed vertex.
+If the endpoints of its smoothed edge lie on the same shore, put the restored vertex on that shore.
+If they lie on opposite shores, put it on either shore.
+The corresponding two-edge path then has the same number of cut edges as the smoothed edge.
+Every cycle contained in either shore lifts to a cycle on that shore.
+Finally restore $e$, which increases the boundary size by at most one.
+This gives a cyclic cut of size at most $j+1$ in $G$.
+Hence $j\ge k-1$, proving the third assertion.
+
+Suppression gives a bijection between the cycles of $N$ and those of $G'$.
+The cycles of $G$ containing $e$ correspond bijectively to the simple $u$--$v$ paths in $N$.
+This proves the final identity.
+\end{proof}
+
+\begin{lemma}[Uniform path bound after one edge deletion]
+\label{lem:path-cut-deletion-path-bound}
+Let $G$ range over connected loopless cubic multigraphs of rank $r$ with no cyclic cut of size at most four.
+For every edge $e=uv$, uniformly in $G$ and $e$,
+\[
+ P_{uv}(G-e)\le(1/2+o(1))2^{r-1}
+ \qquad(r\to\infty).
+\]
+\end{lemma}
+
+\begin{proof}
+The graph $G$ is bridgeless by the bridge observation in Lemma~\ref{lem:path-minimum-cyclic-cut-smoothing}.
+Thus $G-e$ is a connected normalized two-pole of rank $r-1$, with terminals $u,v$.
+Its cubic completion obtained by restoring $e$ is $G$.
+For each fixed $\varepsilon>0$, Theorem~\ref{thm:high-density-pair-small-cyclic-cut} excludes path density at least $1/2+\varepsilon$ once $r-1\ge B_{2,\varepsilon}$.
+The threshold is independent of $G$ and $e$, which proves the uniform estimate.
+\end{proof}
+
+\begin{theorem}[A relative deficit at every fixed minimum cut order]
+\label{thm:path-fixed-cyclic-order-deficit}
+For every fixed integer $k\ge5$, connected loopless cubic multigraphs of rank $r$ with $\lambda_c(G)=k$ satisfy
+\[
+ c(G)\le\left(\frac12-2^{-k-1}+o_k(1)\right)2^r
+ \qquad(r\to\infty),
+\]
+uniformly over these graphs.
+\end{theorem}
+
+\begin{proof}
+The five-cut proof gives the required base case with its explicit relative gap.
+Indeed, for $\lambda_c(G)=5$, write the shore ranks as $h\le l$.
+Proposition~\ref{prop:five-cut-universal-deficit} and the internal-cycle estimate in Theorem~\ref{thm:sharp-order-five-cut-error} give
+\[
+ \frac{c(G)}{2^{h+l}}\le\frac{31}{4}+o(1).
+\]
+Since $r=h+l+4$, this is
+\[
+ \frac{c(G)}{2^r}\le\frac{31}{64}+o(1)
+ =\frac12-2^{-6}+o(1).
+\]
+
+Suppose the theorem holds for $k-1\ge5$.
+Let $\lambda_c(G)=k$ and $\beta(G)=r$.
+At sufficiently large rank, $G$ has girth at least five.
+Otherwise a cycle of length at most four has a cyclic complement and gives an excluded cut of size at most four.
+Apply Lemma~\ref{lem:path-minimum-cyclic-cut-smoothing} to one edge of a minimum cyclic cut.
+The resulting graph $G'$ has rank $r-1$ and minimum cyclic cut order $k-1$.
+The induction hypothesis gives
+\[
+ c(G')\le\left(\frac12-2^{-k}+o_k(1)\right)2^{r-1}.
+\]
+Lemma~\ref{lem:path-cut-deletion-path-bound} gives
+\[
+ P_{uv}(G-e)\le(1/2+o(1))2^{r-1}.
+\]
+Adding these estimates through the exact cycle identity yields
+\[
+ c(G)\le\left(1-2^{-k}+o_k(1)\right)2^{r-1}
+ =\left(\frac12-2^{-k-1}+o_k(1)\right)2^r.
+\]
+All errors are uniform at each fixed induction step.
+This completes the induction.
+\end{proof}
+
+\begin{corollary}[Sharp error for every fixed cyclic cut order]
+\label{cor:path-all-fixed-cyclic-cuts-sharp}
+For every fixed integer $K\ge1$, there is a constant $C_K$ such that every connected loopless cubic multigraph $G$ of rank $r$ with a cyclic cut of size at most $K$ satisfies
+\[
+ c(G)\le2^{r-1}+C_K r2^{r/2}.
+\]
+For all sufficiently large ranks, if $G$ has no cyclic cut of size at most four, then the stronger uniform estimate holds:
+\[
+ c(G)\le\left(\frac12-2^{-K-1}+o_K(1)\right)2^r<2^{r-1}.
+\]
+The second assertion is vacuous when $K\le4$.
+\end{corollary}
+
+\begin{proof}
+For a cyclic cut of size at most four, use the established sharp four-cut theorem.
+Otherwise the minimum cyclic cut order is one of $5,\ldots,K$.
+Apply Theorem~\ref{thm:path-fixed-cyclic-order-deficit} to these finitely many orders.
+The ranks below the resulting thresholds are absorbed into $C_K$, using $c(G)\le2^r-1$.
+\end{proof}
+
+Consequently, any sequence of above-half cubic multigraphs with ranks tending to infinity either has small cyclic cuts or has minimum cyclic cut order tending to infinity, in the extended sense.
+After the sharp four-cut class is removed, a counterexample sequence to the unrestricted sharp-order bound must have cyclic connectivity tending to infinity.
+The unrestricted bound $O(r2^{r/2})$ remains open.
+
+For sufficiently large cubic rank, the minimum cyclic cut order is finite and logarithmic in the rank.
+Indeed, the breadth-first tree bound gives a shortest cycle of length
+\[
+ g\le2\log_2(2r-2)+2<r.
+\]
+A shortest cycle is induced at these ranks.
+Deleting its vertices leaves rank at least $r-g>0$, by the cubic degree count.
+It therefore defines a cyclic cut of size $g$.
+Thus the remaining unbounded-order regime still satisfies
+\[
+ \lambda_c(G)\le2\log_2(2r-2)+2.
+\]
+
+\subsection{A finite recurrence for a growing cut order}
+
+For an integer $s$, define the edge-deletion path excess
+\[
+ q(s)=\sup_{G,e}\left(2^{1-s}P_{uv}(G-e)-\frac12\right)_+,
+\]
+where $G$ has rank $s$, is connected loopless cubic, has no cyclic cut of size at most four, and $e=uv$.
+Here and below, cubic graphs may have parallel edges.
+Set a supremum over an empty class equal to zero.
+Lemma~\ref{lem:path-cut-deletion-path-bound} gives $q(s)\to0$.
+Define the nonnegative five-cut base error by
+\[
+ a_5(s)=\sup_{\substack{\beta(G)=s\\\lambda_c(G)=5}}
+ \left(2^{-s}c(G)-\frac{31}{64}\right)_+.
+\]
+The uniform five-cut estimate gives $a_5(s)\to0$.
+
+\begin{proposition}[Finite cut-order recurrence]
+\label{prop:path-finite-cut-recurrence}
+Let $G$ be connected loopless cubic, with rank $r$ and minimum cyclic cut order $k\ge5$.
+Assume $r-k+5\ge10$.
+Then
+\begin{align*}
+ \frac{c(G)}{2^r}
+ \le{}&\frac12-2^{-k-1}
+ +2^{-(k-5)}a_5(r-k+5)\\
+ &+\sum_{i=0}^{k-6}2^{-i-1}q(r-i).
+\end{align*}
+The sum is empty when $k=5$.
+\end{proposition}
+
+\begin{proof}
+Apply Lemma~\ref{lem:path-minimum-cyclic-cut-smoothing} repeatedly, each time to an edge of a minimum cyclic cut.
+After $j=k-5$ steps, the rank is $r-j$ and the minimum cyclic cut order is five.
+Every intermediate rank is at least ten, so the absence of a cyclic cut of size at most four guarantees the needed girth condition.
+The exact cycle identity and the definition of $q$ give at step $i$
+\[
+ c(G_i)\le c(G_{i+1})+(1/2+q(r-i))2^{r-i-1}.
+\]
+Sum these identities for $0\le i<j$ and use
+\[
+ c(G_j)\le\left(\frac{31}{64}+a_5(r-j)\right)2^{r-j}.
+\]
+The geometric sum of the half terms gives the stated formula.
+\end{proof}
+
+For a sequence with $k=k(r)\ge5$, the same argument gives a strict half-bound deficit whenever
+\[
+ r-k\longrightarrow\infty,
+ \qquad
+ 2^k\max_{r-k+6\le s\le r}q(s)\longrightarrow0.
+\]
+For $k=5$, the maximum condition is unnecessary.
+The base-error term is then negligible relative to $2^{-k-1}$, as is the weighted path-excess sum.
+
+There is also an explicit sufficient threshold in terms of additive path stability.
+Choose $R_5$ so that $a_5(s)\le1/256$ for $s\ge R_5$.
+Set $\varepsilon=2^{-k-3}$ and
+\[
+ B_{2,\varepsilon}=3\bigl(9\lceil C_\varepsilon\rceil+25\bigr).
+\]
+If
+\[
+ r-k+5\ge\max\{10,R_5,B_{2,2^{-k-3}}\},
+\]
+then the path theorem gives $q(s)\le2^{-k-3}$ at every rank in the recurrence.
+The two error terms are each at most one quarter of $2^{-k-1}$.
+Consequently
+\[
+ c(G)\le\left(\frac12-2^{-k-2}\right)2^r.
+\]
+This condition permits a cut order that grows sufficiently slowly with rank.
+Its quantitative limitation is the dependence of $C_\varepsilon$ on $\varepsilon$.

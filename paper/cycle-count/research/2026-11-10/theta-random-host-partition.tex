@@ -1,0 +1,61 @@
+\section{An exact theta partition of the middle interval}
+\label{sec:rhost-theta-partition}
+
+\begin{lemma}\label{lem:rhost-theta-middle}
+Let $d=9q$, where $q\ge1$ is an integer.
+There are exactly $2d/9-1$ traceable theta graphs whose cycle lengths partition
+\[
+ \{d/3+2,d/3+3,\ldots,d-2\}.
+\]
+Each theta graph has exactly $d$ edges.
+Every branch has at least two edges, and every cycle has length at least $d/3+2$.
+The total cycle rank is $4d/9-2$, and the total vertex count is $(2d/9-1)(d-1)$.
+\end{lemma}
+
+\begin{proof}
+Put
+\[
+ m=2q-1,\qquad h=q-1,\qquad A=3q+2.
+\]
+Thus $m=2h+1$ is odd.
+For $0\le i<m$, define
+\[
+ \pi(i)=(i+h)\bmod m,\qquad \sigma(i)=3h-i-\pi(i).
+\]
+The map $\pi$ is a permutation of $\{0,\ldots,m-1\}$.
+For $0\le i\le h$, we have $\sigma(i)=2h-2i$, which runs through all even values.
+For $h+1\le i\le2h$, we have $\sigma(i)=4h+1-2i$, which runs through all odd values.
+Hence $\sigma$ is also a permutation of the same set.
+
+For each $i$, form the triple
+\[
+ L_{i,1}=A+i,\qquad
+ L_{i,2}=A+m+\pi(i),\qquad
+ L_{i,3}=A+2m+\sigma(i).
+\]
+The triples partition the consecutive interval from $A=d/3+2$ to $A+3m-1=d-2$.
+Each triple sums to
+\[
+ 3A+3m+i+\pi(i)+\sigma(i)
+ =3A+3m+3h=18q=2d.
+\]
+Take a theta graph with branch lengths $d-L_{i,1}$, $d-L_{i,2}$, and $d-L_{i,3}$.
+These are integers at least two and sum to $d$.
+Its three cycle lengths are exactly the entries of the triple.
+This also verifies every triangle inequality and the required even total without a separate parity adjustment.
+
+A theta graph with all branches of length at least two has a Hamilton path.
+Delete one edge at the first branch vertex on one branch, and one edge at the second branch vertex on another branch.
+The remaining graph is a spanning path.
+Each block has cycle rank two and $d-1$ vertices.
+There are $m=2d/9-1$ blocks, giving the stated totals.
+\end{proof}
+
+For an arbitrary positive threshold $d_0$, take $d=9\lceil d_0/9\rceil$.
+Then $d_0\le d<d_0+9$.
+The covered lengths include every integer in $[\lceil d_0/3\rceil+5,\lfloor d_0\rfloor-2]$.
+The number of theta blocks is $2d_0/9+O(1)$.
+Their edge counts are at least $d_0$, so the rounding preserves the embedding density condition.
+
+The permutation and length identities are checked by
+\nolinkurl{check_theta_random_host_partition.py}.

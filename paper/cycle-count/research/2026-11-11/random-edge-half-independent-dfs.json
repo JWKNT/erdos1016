@@ -1,0 +1,118 @@
+{
+  "status": "all independent exact DFS checks passed",
+  "certified_poles": 71,
+  "enumerated_cycles_and_paths": 15572,
+  "terminal_local_counterexample": {
+    "edges": [
+      [
+        0,
+        3
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        0,
+        5
+      ],
+      [
+        3,
+        5
+      ],
+      [
+        4,
+        5
+      ],
+      [
+        0,
+        6
+      ],
+      [
+        2,
+        6
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        3,
+        7
+      ]
+    ],
+    "terminals": [
+      4,
+      6,
+      7
+    ],
+    "totals": [
+      7,
+      7,
+      7,
+      7
+    ],
+    "other_terminal_visits": [
+      4,
+      4,
+      4
+    ],
+    "edge_counts": [
+      [
+        4,
+        3,
+        3,
+        3
+      ],
+      [
+        4,
+        3,
+        3,
+        4
+      ],
+      [
+        4,
+        3,
+        3,
+        3
+      ],
+      [
+        4,
+        3,
+        3,
+        3
+      ],
+      [
+        4,
+        4,
+        4,
+        4
+      ],
+      [
+        4,
+        4,
+        4,
+        4
+      ],
+      [
+        4,
+        3,
+        4,
+        3
+      ],
+      [
+        4,
+        4,
+        3,
+        3
+      ],
+      [
+        4,
+        4,
+        4,
+        4
+      ]
+    ]
+  },
+  "scope": "Finite certificates only; no general weighted theorem inferred."
+}

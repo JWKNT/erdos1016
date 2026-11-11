@@ -1,0 +1,89 @@
+Six-edge-cut research: computational and structural checkpoint
+Agent: four_regular. Date: 2026-11-10/11.
+
+PROVED: two large shores have a fixed crossing deficit.
+Full argument: second-order-four-six-large-shores.tex.
+Conceptual independent audits by root, path_stability, and random_hosts pass.
+Written audits have been requested.
+
+The normalized six-cut state vector has15 paths,15 four-terminal forest
+sectors with3 pairings each, and one six-terminal sector with15 pairings.
+The exact crossing matrix is block diagonal: identity on paths, J3-I3
+on each four-sector, and the disjoint-matching adjacency matrix on the
+six-sector. Each six-matching has8 compatible matchings among15.
+
+The aggregate bound and path coordinates<=1/2 imply the energy bound
+ E<=16-(1/2)sum(paths).
+If two limiting states had crossing16, both would have all paths zero,
+all fifteen four-sector totals one, and six-sector total one. Equal
+pairing products in every four-sector would vanish across the shores.
+
+For a perfect matching alpha={e,f,g}, two-edge augmentation then gives
+ R_alpha<=u_(e|f)+u_(e|g), and the other two pair-sum inequalities.
+Positive R_alpha requires at least two positive entries among these
+three slots. Both shores cannot have positive R_alpha, since their
+supports in each slot are disjoint. But each has positive six-sector
+mass. Pick matchings beta,gamma in their supports. Their8-element
+compatibility neighborhoods intersect in the15-element matching set.
+The common alpha has positive R_alpha on both shores, a contradiction.
+
+Compactness gives an absolute positive gap below16. This absorbs
+internal cycles when both shore ranks are large. Repeated cut endpoints
+would give a smaller cyclic cut; disconnected shores are also excluded.
+Thus cyclically six-connected cubic graphs with a six-cut and two large
+shores lie strictly below the half bound. Bounded-rank shores remain open.
+
+NUMERICAL EXPLORATION ONLY:
+four-six-state-analysis.py builds the75-coordinate polytope and exact
+bilinear gluing matrix. It alternates linear-program best responses
+from random extreme points. The300-start run reached value15, with
+several lower local optima. This is a lower bound on the relaxation
+maximum, not a global upper bound or a graph realization.
+Output: four-six-bilinear-exploration.json.
+
+The existing one-shore relaxation witness16 is still feasible for its
+stated constraints. It ignores the constraints on the opposite shore.
+Its feasibility does not conflict with the two-shore gap proved here.
+Additional fixed-tree cap constraints are being investigated by the
+other agents. This file does not assert their computational conclusions.
+
+EXPLICIT TWO-LARGE-SHORE GAP:
+second-order-four-six-explicit-gap.tex strengthens the compactness result
+to the exact limiting bound B<16-1/40. Root and path_stability audited it.
+It uses a triple-overlap inequality, the total forest deficits, and a
+common compatible matching. No solver is used in this proof.
+
+ALL SIX-CUTS NOW CLOSED IN THE MATHEMATICAL DRAFT:
+Root's bounded-shore assembly uses two planarity obstructions. A full
+terminal pair makes a normalized pole planar by the capped-ladder
+classification. Full four-terminal forest mass for every four-set also
+forces planarity: a K3,3 subdivision has a square whose complementary
+five paths carry at least four assigned ports. A join on those ports
+plus that square is a forbidden nonforest parity state.
+
+A normalized six-pole of girth>=7 cannot be planar, by Euler's formula.
+Thus all of its paths and at least one four-terminal sector miss an
+integer state. At fixed rank h their normalized coefficients are at
+most1-delta, delta=2^(-h). The other15 forest totals are at most one.
+The opposite shore aggregate<=16+o then gives crossing<=16-delta+o.
+Its internal cycles cost at mostdelta/2+o, leaving a strict deficit.
+
+I independently audited the complete written files:
+ second-order-root-six-planarity.tex
+ second-order-path-six-four-sector-planarity.tex
+ second-order-root-all-six-cuts.tex.
+All pass, including the C6-shore reduction and uniform bounded-rank errors.
+
+The resulting theorem is c(G)<=2^(r-1)+K r2^(r/2) for cyclic cuts of
+size at most six. A sufficiently large graph with a genuine six-cut
+and no smaller cyclic cut lies strictly below one half. The unrestricted
+sharp-order problem remains open in the residual higher-connectivity class.
+
+INDEPENDENT EXACT PLANARITY CHECKS:
+four-six-planarity-checks.py uses only the standard library. It verifies
+all3003 six-port assignments to K3,3 edge paths and constructs a nonforest
+four-port parity witness for each. It checks all48048 states in the
+selected rank-four affine sectors. Their forest counts are9,13,14,15.
+It also checks500 outside-component fixtures containing675 components,
+including477 with multiple attachments. All connectivity, parity, and
+cycle assertions passed. Output: four-six-planarity-checks.json.

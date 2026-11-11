@@ -1,0 +1,78 @@
+Independent audit by four_regular, 2026-11-11.
+
+Result: PASS for the full mathematical argument in
+second-order-unrestricted-sharp-bootstrap.tex, including its final common
+forward-dyadic parameter choice. This is an independent mathematical audit,
+not a claim that the assembled theorem has been formalized in Lean.
+
+New dependency chain checked:
+1. The weighted-kernel Moore lemma and the all-terminal forest estimate at
+   fixed boundary/girth ratio have uniform constants once rank is at least
+   the explicit H_C. They use the earlier polynomial forest bound through
+   localization and thin BFS layers; they do not use the sharp conclusion.
+2. The terminal-forest construction preserves the actual terminal partition,
+   not only its binary functional. Middle components therefore have no edge
+   to the selected-star set. Disjoint consecutive blocks yield disjoint lifts.
+3. Connected P occupies one contracted outside component. At most |S|+1
+   middle lifts meet P or an earlier deletion S. Two other lifts have rank
+   at least H_4, boundary at most 4D, and girth at least D. Pruning leaves
+   preserves rank and reduces boundary.
+4. Given all edges outside two core interiors, the fiber is the Cartesian
+   product of the two affine internal cycle spaces. Cross-core edges are
+   already conditioned. The uniform 3/5 forest bounds multiply to 9/25.
+5. This gives q<(6H_4+15)d(|S|+1)2^d and the deletion recurrence
+   s_new+1 <= (6H_4+16)d^2 2^d(s+1), with no positive-excess parameter.
+   The deleted cycles are disjoint across stages and the final family is
+   maximal at the target scale.
+
+Assembly parameters checked:
+- Along common forward dyadic scales, the new scales sum to less than 2D_j.
+  Thus log_2(|S_j|+1)<=2D_j+O(log^2 D_j) simultaneously.
+- D0 is the first dyadic scale at least sqrt(log_2 r); D1 is the first at
+  least (log_2 r)/16. Hence S0=r^{o(1)}, S1<=r^{1/4+o(1)}, and
+  s1>= (log_2 r)/32-2.
+- With t=floor(log_2 log_2 r-2log_2 log_2 log_2 r), the link bound is
+  at most 3A log_2 r/log_2 log_2 r. Its exceptional-pair error is o(1).
+- The trace supply gives mu1>20; only W2>mu1^2-(1+eta1)mu1 is used.
+  There is no inverse-excess moment bound at the small scale.
+- The established chain has T>=2r^{1/32}/(A^3(log_2 r)^3).
+  Taking q=ceil(128A^2 log_2 r)+2 yields blocks of size at least 8L^2.
+  Their boundary is at most 2L after discarding neighbors of the anchor
+  cycle. The loss L+|S0|+1 is smaller than the number of blocks.
+- D0/log_2(L+2) tends to infinity, so two retained blocks meet the
+  independently audited clean-block theorem and contradict forest>1/2.
+
+Final induction checked:
+- For fixed rank>=2 a cubic multigraph attains the extremal cycle count:
+  pruning, suppression, and trivalent-tree expansion preserve rank and
+  inject cycles; only finitely many cubic multigraphs have that rank.
+- A loop belongs only to its one-edge cycle. Its deletion preserves
+  connectivity and reduces rank by one.
+- The previous loopless cyclic-cut<=4 theorem provides an absolute sharp
+  error constant. The finitely many girths below D_* have finite rank
+  thresholds for the previous strict deficit theorem.
+- In the remaining case, a shortest cycle W has at most 3log_2 r vertices.
+  For e in W, the states C and C symmetric-difference W, over cycles C
+  containing e, are all distinct: the first group contains e and the
+  second does not. Both restrict to forests outside W. Thus c_e<=2^{r-2}.
+- Deleting e preserves connectivity. Strong induction on general connected
+  graphs gives c(G)<=2^{r-1}+K(r-1)2^{(r-1)/2}, which is within the stated
+  2^{r-1}+Kr2^{r/2}. The already audited cyclic-square family supplies the
+  matching lower order along infinitely many ranks.
+
+Exact supporting checks:
+four-high-connectivity-iterative-packing-check.py and its JSON record verify
+5,572 selected-star sets, 636 middle intervals, 114 disjoint segment pairs,
+4,482 core prunings, and 4,163 complete affine conditional fibers. The finite
+checks do not numerically test the large analytic girth threshold.
+
+Focused exposition audit, later on 2026-11-11: PASS.
+The files path-qualitative-affine-bootstrap.tex and
+four-unrestricted-iterative-packing.tex replace the quantitative dependencies
+by a fixed 11/20 one-cycle forest estimate from the original paper. The
+localization, layer-width, weighted-kernel and 3/5 affine-core proofs are
+written in full. The focused packing uses H=256, retains the assembly labels,
+and includes its quotient-uniformity and direct-sum arguments explicitly.
+Both focused fragments have independent line-audit passes from the other
+agents. Thus the completed proof does not require the intermediate
+polynomial-error theorem, although that theorem was used in its discovery.

@@ -1,0 +1,44 @@
+{
+  "created_utc": "2026-11-11T07:31:03.592831+00:00",
+  "proof_status": "internally audited mathematical working proof; not Lean formalized or externally reviewed",
+  "pdf_pages": 12,
+  "visual_review": "all 12 pages PASS",
+  "tex_warnings": 0,
+  "audits": {
+    "rings": [
+      "root",
+      "path_stability",
+      "random_hosts"
+    ],
+    "rigidity": [
+      "root",
+      "path_stability",
+      "random_hosts"
+    ],
+    "exact_transfer": [
+      "four_regular",
+      "path_stability",
+      "random_hosts"
+    ],
+    "assembly": [
+      "root",
+      "path_stability"
+    ],
+    "cubic_uniqueness": [
+      "root",
+      "path_stability",
+      "random_hosts"
+    ]
+  },
+  "sha256": {
+    "eventual-exact-cycle-maximum.tex": "bc413aefbe9fba603576355a4a63179136fe2ae9ee1890f875b2945e2a00336c",
+    "eventual-exact-cycle-maximum.pdf": "c20fc6f0dbefa755f0b2d1c6aa2360fe649a47ea21216ac92a250d7f953d0de5",
+    "four-coefficient-rings.tex": "121782e6e0c98b490fe879fc6d7384f6fa86e6b5fb773a5e8d5ce863d5c5e83a",
+    "four-coefficient-rigidity.tex": "33d5bf5565f45e554a9541807411874d98f0ef8e67796baa49d0dc63a1f9dde1",
+    "root-sharp-coefficient-transfer.tex": "3ea1e99520762feb7259d94d457af32630f3c1a80af762721e31a4743f3eb0a3",
+    "root-eventual-exact-cycle-theorem.tex": "9a314c493f142b314d5bc23a95c68d0889a1b68fd1682f53a3d9f816b5b5d3a7",
+    "four-coefficient-uniqueness.tex": "232819f487ce1eaf99fc00024f26fddb3c01687d9f15e3963787e047d85c7fd7",
+    "four-coefficient-check.py": "70758a7a049f30ca3136d0cfe149c599d8fec4cbd961adebec78d1da65fb5d4d",
+    "four-coefficient-checks.json": "2c09c7b44a1e1ea3f496cd6eb9de28abb6409a3625a12c90655c5ef79d43083d"
+  }
+}

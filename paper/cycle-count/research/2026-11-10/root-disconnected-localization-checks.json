@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "random_graphs": 150,
+  "checks": 1193,
+  "disconnected_checks": 265,
+  "padded_checks": 56,
+  "cubic_rank_checks": 1189,
+  "enumerated_states": 93632,
+  "max_localized_rank": 8,
+  "scope": "Exact full restriction distributions and rank formulas; no asymptotic theorem is inferred from testing."
+}

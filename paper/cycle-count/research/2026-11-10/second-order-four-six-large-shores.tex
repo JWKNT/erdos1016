@@ -1,0 +1,140 @@
+% Independently audited by random_hosts; boundary reduction wording corrected.
+\section{A strict six-cut deficit when both shores have large rank}
+\label{sec:four-six-large-shores}
+
+The two shores cannot simultaneously realize the critical states of the one-shore relaxation.
+The obstruction uses only the matching-augmentation inequalities and the total forest-state bound.
+
+\begin{lemma}[A matching disjoint from two prescribed matchings]
+\label{lem:four-six-common-matching}
+Any two perfect matchings of six vertices have a common disjoint perfect matching.
+Here disjoint means that the two matchings share no edge.
+\end{lemma}
+
+\begin{proof}
+There are fifteen perfect matchings of six vertices.
+A fixed matching has eight disjoint perfect matchings.
+To count these, choose the partner of one vertex in four ways, avoiding its prescribed partner.
+On the remaining four vertices, exactly one forbidden matching edge remains, leaving two choices.
+Thus two sets of disjoint matchings, each of size eight, must intersect.
+\end{proof}
+
+Define a limiting six-port state vector to consist of nonnegative path coordinates $a_e$, four-terminal pairing coordinates $u_{S,\alpha}$, and six-terminal pairing coordinates $w_\beta$.
+Put
+\[
+ U_S=\sum_\alpha u_{S,\alpha},\qquad W=\sum_\beta w_\beta,
+ \qquad R_A=\sum_{\beta:\,\beta\cap A=\varnothing}w_\beta.
+\]
+Let $\mathcal P$ be the set of these vectors satisfying
+\[
+ a_e\le\tfrac12,\qquad U_S\le1,\qquad W\le1,
+ \qquad \sum_ea_e+\sum_SU_S+W\le16,
+\]
+and, for each perfect matching $A=\{e,f,g\}$,
+\begin{equation}\label{eq:four-six-limit-augmentation}
+ a_e+(U_{e\cup f}-u_{e|f})
+     +(U_{e\cup g}-u_{e|g})+R_A\le2.
+\end{equation}
+The same inequality is required with each of $e,f,g$ as the distinguished edge.
+Including the one-added-edge inequalities only reduces $\mathcal P$; the proof below does not need them.
+
+For two state vectors $x,y$, let $\mathcal B(x,y)$ be their normalized crossing expression from the exact six-cut gluing identity.
+
+\begin{proposition}[An absolute gap for two limiting state vectors]
+\label{prop:four-six-bilinear-gap}
+There is an absolute constant $\delta_6>0$ such that
+\[
+ \mathcal B(x,y)\le16-\delta_6
+ \qquad(x,y\in\mathcal P).
+\]
+\end{proposition}
+
+\begin{proof}
+For one state vector, define
+\[
+ E(x)=\sum_ea_e^2+\sum_SU_S^2+W^2.
+\]
+Dropping all incompatible-pairing subtractions and using $2uv\le u^2+v^2$ gives
+\[
+ \mathcal B(x,y)\le\tfrac12(E(x)+E(y)).
+\]
+Since $a_e^2\le a_e/2$ and the forest totals lie in $[0,1]$,
+\[
+ E(x)\le16-\tfrac12\sum_ea_e\le16,
+\]
+and the same holds for $y$.
+
+Suppose equality $\mathcal B(x,y)=16$ holds.
+Both path sums must vanish.
+The aggregate bounds then force every one of the fifteen four-terminal totals, and the six-terminal total, to equal one on both shores.
+Indeed, sixteen numbers in $[0,1]$ must have squared sum sixteen.
+Equality in the dropped four-sector terms also gives
+\begin{equation}\label{eq:four-six-disjoint-pairing-supports}
+ u^x_{S,\alpha}u^y_{S,\alpha}=0
+ \qquad\text{for every }S,\alpha.
+\end{equation}
+
+Choose a six-terminal matching $\beta$ with $w^x_\beta>0$, and a matching $\gamma$ with $w^y_\gamma>0$.
+They exist because both six-terminal totals equal one.
+Lemma~\ref{lem:four-six-common-matching} supplies a matching $A=\{e,f,g\}$ disjoint from both.
+Hence $R^x_A>0$ and $R^y_A>0$.
+
+At the proposed equality state, \eqref{eq:four-six-limit-augmentation} becomes
+\[
+ R_A\le u_{e|f}+u_{e|g},
+ \qquad R_A\le u_{e|f}+u_{f|g},
+ \qquad R_A\le u_{e|g}+u_{f|g}.
+\]
+If $R_A>0$, at least two of these three pairing coordinates are positive.
+Applying this to both shores requires at least four positive coordinates among three shared slots.
+This contradicts~\eqref{eq:four-six-disjoint-pairing-supports}.
+Thus equality is impossible.
+
+The set $\mathcal P$ is compact: it is closed, and every coordinate lies in $[0,1]$.
+The bilinear function $\mathcal B$ therefore attains its maximum on $\mathcal P\times\mathcal P$.
+Its maximum is strictly below sixteen, proving the proposition.
+\end{proof}
+
+\begin{theorem}[Two large shores of a cyclic six-cut]
+\label{thm:four-six-two-large-shores}
+There is an absolute integer $H$ with the following property.
+Let $G$ be a connected loopless cubic multigraph with no cyclic cut of size at most five.
+Suppose it has a cyclic six-edge cut whose two shores have ranks $h,k\ge H$.
+Then, with $r=h+k+5$,
+\[
+ c(G)<2^{r-1}.
+\]
+\end{theorem}
+
+\begin{proof}
+Both shores are connected.
+A cyclic component of either shore must have at least six boundary edges, since its complement contains a cycle.
+It therefore uses the entire six-edge cut.
+Any further component would have no boundary edge, contradicting the connectedness of $G$.
+
+The cut has distinct endpoints on each shore.
+If one vertex has at least two cut incidences, its internal degree is at most one.
+Moving it across the cut preserves cycles on both sides and reduces the cut size to at most five.
+This would produce a forbidden smaller cyclic cut.
+Thus the shores are normalized six-poles.
+
+Their actual normalized state vectors satisfy the matching-augmentation inequalities with errors tending to zero as their ranks tend to infinity.
+They also satisfy the aggregate bound
+\[
+ \sum_ea_e+\sum_SU_S+W\le16+o(1)
+\]
+from Theorem~\ref{thm:fixed-port-aggregate}.
+The individual forest totals are at most one exactly.
+Every convergent subsequence of these state vectors therefore has its limit in $\mathcal P$.
+
+Proposition~\ref{prop:four-six-bilinear-gap} and compactness imply that, for sufficiently large $h,k$, the normalized crossing contribution is at most $16-\delta_6/2$.
+Otherwise, a sequence violating this bound would have limiting state vectors contradicting the proposition.
+
+Each shore has at most its affine-space size minus one internal cycles.
+Their contribution divided by $2^{h+k}$ is at most $2^{-h}+2^{-k}$.
+Increase $H$ until this is less than $\delta_6/2$.
+The total cycle count is then strictly below $16\,2^{h+k}=2^{r-1}$.
+\end{proof}
+
+This theorem leaves bounded-rank six-cut shores unresolved.
+The constant gap is established by compactness; no numerical value of $\delta_6$ is asserted here.

@@ -1,0 +1,110 @@
+% Independently audited by path_stability and random_hosts.
+% Exact certificates: four-regular-saturated-small-cut-checks.json.
+\section{A saturated terminal pair produces a small cyclic cut}
+\label{sec:saturated-pair-small-cut}
+
+\begin{theorem}[A full pair inside a fixed-order pole]
+\label{thm:saturated-pair-small-cyclic-cut}
+Let $X$ be a connected normalized $k$-pole of rank $h$, with $k\ge2$ distinct ports.
+Suppose one terminal pair has $2^h$ simple paths.
+If $h>5k$, then every cubic completion of $X$ has a cyclic edge cut of size at most four.
+Here a completion adds one incidence at each port and preserves all edges of $X$.
+\end{theorem}
+
+\begin{proof}
+Keep the saturated pair as terminals and suppress the other $k-2$ ports.
+The resulting two-pole $N$ still has rank $h$ and a full terminal-path count.
+It has no loop: the independent loop coordinate would halve the maximum possible path density.
+Its positive-rank bridgeless pieces therefore form a series of saturated capped ladders and digons.
+Write their ranks as $b_1,\ldots,b_m$, so $\sum_i b_i=h$.
+
+We construct vertex-disjoint cyclic candidates inside these pieces.
+If a piece has rank $b\le4$, take its whole vertex set as one candidate.
+Its boundary has size at most two in every completion, provided no additional port subdivides an internal edge.
+Its two attachment vertices account for these two boundary incidences.
+
+Now consider a piece of rank $b\ge5$.
+Its ladder has $b-1$ positions, arranged in singleton and square blocks.
+Take the four vertices of every square block as one candidate.
+Within each maximal run of singleton blocks, pair consecutive blocks and take their four vertices as further candidates.
+Each candidate contains a four-cycle and has boundary at most four.
+The candidates are vertex-disjoint.
+
+Let $a$ be the number of square blocks.
+Let $s$ be the number of singleton positions, and let $o$ count singleton runs of odd length.
+The number of candidates is
+\[
+ q=a+\frac{s-o}{2}.
+\]
+Since $o\le a+1$ and $a\le q$, one has
+\[
+ b-1=2a+s=2q+o\le3q+1.
+\]
+Consequently,
+\[
+ q\ge\frac{b-2}{3}\ge\frac b5.
+\]
+For $b\le4$, the single whole-piece candidate also gives at least $b/5$ candidates.
+Summing over the pieces produces at least $h/5$ disjoint cyclic candidates.
+
+Restoring the other $k-2$ ports subdivides at most $k-2$ edges of $N$.
+Call a candidate spoiled if a restored port subdivides one of its internal edges.
+Each subdivided edge spoils at most one candidate, because their vertex sets are disjoint.
+Thus at most $k-2$ candidates are spoiled.
+Subdivisions of boundary edges do not spoil a candidate or enlarge its boundary.
+The new subdivision vertices simply remain outside its selected vertex set.
+
+Since $h/5>k$, at least two unspoiled candidates remain.
+Choose one as a vertex set in the completed cubic graph.
+It contains a cycle, and its boundary has size at most four.
+The other unspoiled candidate supplies a cycle in its complement.
+This boundary is therefore a cyclic edge cut.
+\end{proof}
+
+\begin{corollary}[A short proof for five-cuts with two large shores]
+\label{cor:five-cut-large-shores-saturation-shortcut}
+There are absolute constants $H,K$ with the following property.
+Let $G$ arise by joining corresponding ports of connected normalized five-poles of ranks $h,k\ge H$.
+Put $r=h+k+4$.
+Then
+\[
+ c(G)\le2^{r-1}+Kr2^{r/2}.
+\]
+If neither shore has a full terminal pair, then $c(G)<2^{r-1}$.
+\end{corollary}
+
+\begin{proof}
+Choose $H>25$.
+If either shore has a full terminal pair, Theorem~\ref{thm:saturated-pair-small-cyclic-cut} supplies a cyclic cut of size at most four in $G$.
+Theorem~\ref{thm:sharp-order-four-cut-error} then gives the asserted error bound.
+
+Suppose neither shore has a full terminal pair.
+For one shore, normalize all counts by its affine-space size.
+Let $S$ be the sum of its ten path coordinates $a_e$.
+Let $F$ be the sum of its five four-terminal forest coordinates $U_A$.
+Theorem~\ref{thm:fixed-port-aggregate} gives
+\[
+ S+F\le8+16(h+4)^{-2^{-145}}-2^{-h}=8+o(1),
+\]
+where $h$ denotes this shore's rank.
+Each forest coordinate lies in $[0,1]$, so $F\le5$.
+The full-or-$15/16$ path gap gives $a_e\le15/16$ for every pair.
+Hence the shore energy satisfies
+\[
+ E=\sum_e a_e^2+\sum_A U_A^2
+ \le\frac{15}{16}S+F
+ \le\frac{15}{16}(8+o(1))+\frac5{16}
+ =\frac{125}{16}+o(1).
+\]
+
+Apply this to both shores.
+The exact five-cut gluing formula and Cauchy--Schwarz bound their normalized crossing contribution by the average of their energies.
+It is therefore at most $125/16+o(1)$, strictly below the leading threshold $8$.
+The internal cycles have normalized contribution at most $2^{-h}+2^{-k}$.
+Increase $H$ until the combined errors are smaller than $3/16$.
+Then $c(G)<8\,2^{h+k}=2^{r-1}$, as claimed.
+\end{proof}
+
+This argument covers two large shores.
+It does not remove the separate bounded-shore problem for five-edge cuts.
+The stronger profile and terminal-avoidance lemmas remain valid independent refinements.

@@ -1,0 +1,71 @@
+Date: 2026-11-10.
+Status: a research route; no higher-terminal stability theorem is proved.
+
+Target.
+Fix an even terminal set T of bounded size in a normalized pole.
+Investigate whether affine T-join forest density near one forces a cyclic cut
+of bounded order in every cubic completion.
+The remaining unrestricted cores have both girth and cyclic connectivity tending to infinity.
+
+Exact translation observation.
+Fix any T-join forest F0 and let Z be a uniform even subgraph.
+Then J=F0 symmetric-difference Z is a uniform affine T-join.
+Outside V(F0), the edge sets of J and Z agree.
+Consequently
+  Pr(J is a forest) <= Pr(Z induced outside V(F0) is a forest).
+The marked-forest theorem therefore forces every T-join forest to be long
+when the affine forest density is high.
+This alone gives only the available marked-size scale, not additive stability.
+
+Minimum-join structure.
+Choose F0 with the fewest edges among all T-joins.
+It is a forest, and in a normalized pole it is a union of |T|/2 disjoint paths.
+For every cycle C,
+  |C intersect F0| <= |C outside F0|.
+Otherwise toggling C gives a shorter T-join.
+Each path component is geodesic.
+Two direct edges joining two distinct path components cannot have widely
+separated endpoints: the two intervening F0 segments have total length at most two.
+These restrictions remove many naive parallel-rail obstructions.
+
+A possible dual organization.
+The minimum T-join LP has the T-odd-cut constraints x(delta U)>=1.
+Its dual packs T-odd cuts with total load at most one on each edge.
+Standard uncrossing gives an optimal laminar dual support.
+For an unweighted minimum join F0, complementary slackness then gives:
+  each positive dual cut crosses F0 exactly once;
+  each edge of F0 has total dual load exactly one.
+After choosing one excluded root vertex, the laminar tree has at most |T| leaves,
+since every inclusion-minimal positive cut contains a terminal.
+Thus it has only O(|T|) branching nodes.
+The induced weighted tree distance is at most one across every graph edge.
+The F0 paths traverse its positive-weight edges without repetition.
+
+This may replace ordinary distance layers by chains in a laminar cut tree.
+Long unbranched chains have only one marked F0 crossing per cut.
+A possible proof would first bound the branch regions, then apply the
+one-path layer argument along the remaining chains.
+The missing step is localization while preserving connected complement
+when the marked forest has several components.
+No bounded-width or additive-rank conclusion is currently justified.
+
+Why a naive multi-path layer argument fails.
+With q marked paths, the layer-window boundary can gain q times the span.
+A cycle supplies only twice the span in vertices.
+The minimum-span calculation that works for q=1 therefore does not directly
+bound cycle length when q>=2.
+The minimum-join restrictions or the laminar dual need to be used essentially.
+
+External references inspected.
+Edmonds-Johnson's T-join LP and cycle-toggle optimality are presented in:
+https://www.dm.uni-bonn.de/tspbook/book.pdf
+The unweighted half-integral T-cut packing theorem is proved in:
+https://ir.cwi.nl/pub/10149/10149D.pdf
+These sources support the standard optimization input, not the proposed
+higher-terminal stability conclusion.
+
+Structural warning.
+The four attached saturated ladders around C4 give a full four-terminal
+forest space with two equal pairing masses and vanishing path densities.
+Every attached pole has a cyclic two-edge boundary after completion.
+Thus any general concentration theorem must use connectivity restrictions.

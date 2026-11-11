@@ -1,0 +1,677 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,booktabs,longtable,microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newcommand{\Cyc}{\mathcal C}
+\DeclareMathOperator{\comp}{comp}
+\setlength{\emergencystretch}{3em}
+\title{The exact cycle bound for loopless four-regular multigraphs}
+\author{Research working draft}
+\date{10 November 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We prove that a loopless four-regular multigraph on $n$ vertices has at most $2^n+n$ cycles.
+Equality holds precisely for doubled cycles and $K_5$.
+We also classify all graphs above the one-half cycle-space bound and obtain an Eulerian rank bound.
+The proof combines cycle-space reductions, a parity count, and a published degree-sequence path bound.
+The remaining finite verification counts $925$ multigraph instances on at most ten vertices.
+Two independent counting methods agree on these instances and on all tested instances through order eleven.
+The finite verification is reproducible; this proof has not been formalised in Lean.
+\end{abstract}
+
+\section{Statement and conventions}
+
+A cycle is a nonempty connected edge set whose incident vertices all have degree two.
+Parallel edges are distinct.
+Thus two parallel edges form a cycle of length two.
+Write $c(G)$ for the number of cycles, and $P_{st}(G)$ for the number of vertex-simple paths between distinct vertices $s,t$.
+The doubled $n$-cycle replaces each edge of a cycle by two parallel edges.
+For $n=2$, this means the graph with two vertices and four parallel edges.
+
+\begin{theorem}\label{thm:main}
+Every finite loopless four-regular multigraph $G$ on $n$ vertices satisfies
+\[
+ c(G)\le2^n+n.
+\]
+Equality holds if and only if $G$ is a doubled cycle or is isomorphic to $K_5$.
+\end{theorem}
+
+The inequality is Open Problem~2 in Section~6 of Alahmadi, Aldred, dela Cruz, Sol\'e, and Thomassen~\cite{aacst}.
+Their Theorem~6 already gives $c(G)\le2^n$ unless $G$ has a Hamilton decomposition.
+We include the short cycle-space argument that gives this reduction.
+Our analytic input is Theorem~7 of Dvo\v r\'ak, Morrison, Noel, Norin, and Postle~\cite{dmnnp}.
+The finite computation uses \texttt{geng} from nauty~2.8.9~\cite{nauty}.
+The proof below does not require contraction of an arbitrary doubled edge.
+
+For a graph $F$, put $\beta(F)=|E(F)|-|V(F)|+\comp(F)$.
+Its binary cycle space $\Cyc(F)$ consists of all even edge sets and has size $2^{\beta(F)}$.
+Vertices of degree zero are permitted when computing this space.
+
+\section{Reductions and equality under the reductions}
+
+\begin{lemma}[Terminal paths]\label{lem:paths}
+Let $N$ be connected and loopless on $s\ge2$ vertices.
+Suppose that distinct terminals $u,v$ have degree two and all other vertices have degree four.
+Then
+\[
+ P_{uv}(N)\le2^{s-1}.
+\]
+Equality holds only when $N$ is a doubled Hamilton path from $u$ to $v$.
+The converse also holds.
+\end{lemma}
+
+\begin{proof}
+The edge sets with odd-degree vertices exactly $u,v$ form an affine translate of $\Cyc(N)$.
+There are $2^{\beta(N)}=2^{s-1}$ such sets.
+Every terminal path is one of them.
+
+If equality holds, every such set is a path.
+For each terminal path $A$, the graph $N-E(A)$ is a forest.
+Otherwise adjoining an edge-disjoint cycle to $A$ gives a join that is not a path.
+Since $|E(N)|=2s-2$, this implies $|E(A)|\ge s-1$.
+Every terminal path is therefore Hamiltonian.
+Fix one such path.
+An edge between nonconsecutive vertices would give a shorter terminal path.
+Thus every edge joins consecutive vertices of the fixed path.
+The degree equations, starting at $u$, force multiplicity two on each consecutive pair.
+The converse follows by choosing one edge independently from each doubled pair.
+\end{proof}
+
+\begin{lemma}[Expansion]\label{lem:expansion}
+Let $H$ be a connected four-regular multigraph on $s$ vertices with two chosen parallel edges between $u,v$.
+Delete those edges and replace them by doubled edges $uw$ and $wv$, where $w$ is new.
+Call the resulting graph $G$.
+Then
+\[
+ c(G)=c(H)+a+1,\qquad 0\le a\le2^s,
+\]
+where $a$ counts cycles of $H$ using exactly one chosen edge.
+Consequently, the bound in Theorem~\ref{thm:main} for $H$ implies that bound for $G$.
+If equality holds for $G$, then $G$ is a doubled cycle.
+\end{lemma}
+
+\begin{proof}
+Cycles avoiding the chosen pair remain unchanged.
+Each cycle using exactly one chosen edge has twice as many replacements.
+The chosen digon is replaced by two digons.
+This gives the identity.
+
+Let $N$ be obtained by deleting the chosen pair.
+If $N$ is disconnected, then $a=0$.
+Otherwise $a=2P_{uv}(N)\le2^s$ by Lemma~\ref{lem:paths}.
+Equality in the resulting bound for $G$ requires $a=2^s$.
+That lemma makes $N$ a doubled path, hence makes both $H$ and $G$ doubled cycles.
+\end{proof}
+
+\begin{lemma}[Gluing]\label{lem:gluing}
+For $i=1,2$, let $H_i$ be connected and four-regular on $s_i$ vertices.
+Choose two parallel edges with distinct ends $u_i,v_i$.
+Assume that deleting the chosen pair leaves a connected graph $N_i$.
+Delete both chosen pairs and add doubled edges $u_1u_2$ and $v_1v_2$.
+Call the resulting graph $G$.
+If the bound in Theorem~\ref{thm:main} holds for both $H_i$, it holds for $G$.
+Equality for $G$ forces $G$ to be a doubled cycle.
+\end{lemma}
+
+\begin{proof}
+Put $A_i=2^{s_i}$, $a_i=2P_{u_iv_i}(N_i)$, and $b_i=c(N_i)$.
+Lemma~\ref{lem:paths} gives $2\le a_i\le A_i$.
+Direct cycle classification gives
+\[
+ c(H_i)=a_i+b_i+1,\qquad c(G)=a_1a_2+b_1+b_2+2.
+\]
+A crossing cycle chooses one terminal path in each shore and one edge from each new doubled pair.
+All other cycles lie in a shore or are one of the two new digons.
+Therefore
+\[
+ c(G)\le a_1a_2-a_1-a_2+A_1+A_2+s_1+s_2.
+\]
+The difference from $A_1A_2+s_1+s_2$ is
+\[
+ (A_1-a_1)(A_2-1)+(A_2-a_2)(a_1-1)\ge0.
+\]
+Both coefficients are positive, so equality requires $a_i=A_i$ for both $i$.
+Lemma~\ref{lem:paths} makes both $N_i$ doubled paths.
+Their gluing is a doubled cycle.
+The argument permits a chosen pair to belong to a larger parallel class.
+\end{proof}
+
+\begin{lemma}[Parity count]\label{lem:parity}
+Let $G$ be connected and four-regular.
+Suppose its only parallel classes are $k$ doubled pairs, and these pairs form a matching.
+Delete their $2k$ edges to obtain $F$, and put $t=\comp(F)$.
+If $k-t\ge2$, then
+\[
+ c(G)\le\frac{27}{32}2^n-1+k<2^n+n.
+\]
+\end{lemma}
+
+\begin{proof}
+Contract the components of $F$ and represent each doubled pair by one edge.
+The resulting connected multigraph $J$ has $t$ vertices and $k$ edges; loops are allowed.
+Let $Z$ count even edge sets of $G$ using at most one edge from each doubled pair.
+A selected edge set of $J$ permits a parity completion inside $F$ exactly when it is even.
+Each such selection has $2^{\beta(F)}$ completions and two choices for each selected pair.
+Since $\beta(F)=n-2k+t$, a parity filter gives
+\[
+ Z=2^{n-2k+t}\sum_{S\in\Cyc(J)}2^{|S|}
+  =2^{n-2k}\sum_{\sigma\in\{-1,1\}^{V(J)}}
+       \prod_{uv\in E(J)}(1+2\sigma_u\sigma_v).
+\]
+Fix a spanning tree of $J$.
+Every non-tree factor has absolute value at most three.
+Summing absolute tree products gives $2\cdot4^{t-1}$, by choosing the root sign and then each tree-edge agreement.
+Hence
+\[
+ \frac Z{2^n}\le2^{-2k}\,2\cdot4^{t-1}3^{k-t+1}
+       =\frac32\left(\frac34\right)^{k-t}.
+\]
+Every cycle except the $k$ digons is a nonempty set counted by $Z$.
+Thus $c(G)\le Z-1+k$, proving the claim.
+\end{proof}
+
+\begin{proposition}[Reduction to small matchings]\label{prop:reduction}
+In an induction on the order for Theorem~\ref{thm:main}, every remaining graph is connected, has a Hamilton decomposition,
+and has at most two doubled pairs forming a matching.
+Its underlying simple graph has minimum degree at least three.
+\end{proposition}
+
+\begin{proof}
+Every nonempty component of a loopless four-regular graph has at least two vertices.
+For a disconnected graph, the bounds on smaller components give a strict inequality because
+$\sum_i2^{n_i}<2^{\sum_i n_i}$.
+The two-vertex connected graph has four parallel edges and six cycles, as required.
+We can assume that $G$ is connected and $n\ge3$.
+
+The $2^{n+1}$ even edge sets form $2^n$ complementary pairs.
+A pair containing two cycles must consist of two Hamilton cycles: their degrees sum to four at every vertex.
+If no such pair exists, then $c(G)\le2^n$, which is strict for the desired bound.
+Thus assume that $G$ has a Hamilton decomposition.
+It is four-edge-connected, and every multiplicity is at most two.
+
+Suppose a vertex $w$ has only two distinct neighbours $u,v$.
+Each Hamilton cycle uses one edge to each neighbour at $w$, so both multiplicities are two.
+For $n=3$, the graph is the doubled triangle.
+For $n>3$, no $uv$ edge exists: such an edge would close a triangle in its Hamilton cycle.
+Suppress $w$ and replace its four edges by a doubled $uv$ edge.
+The resulting smaller graph satisfies the theorem by induction.
+Lemma~\ref{lem:expansion} handles the original graph, including equality.
+Thus the remaining underlying simple graph has minimum degree at least three.
+Every vertex then meets at most one doubled pair.
+
+If there are no doubled pairs, the reduction is complete.
+Otherwise define $F,J,k,t$ as in Lemma~\ref{lem:parity}.
+Each Hamilton cycle uses exactly one edge from every doubled pair.
+Its restriction to a component of $F$ shows that the number of incident matching endpoints is even.
+Thus $J$ is Eulerian.
+The parity lemma disposes of $k-t\ge2$ with strict inequality.
+Assume $k-t\le1$.
+
+If $t>1$, every vertex of $J$ has positive even non-loop degree.
+Some vertex has non-loop degree two; otherwise $k\ge2t>t+1$.
+Its two non-loop edges form a cut with connected shores.
+Indeed, each component on the complementary shore needs a positive even number of these two cut edges.
+The corresponding cut of $G$ consists of two doubled pairs with four distinct endpoints.
+Close each shore by a new doubled pair between its boundary vertices.
+This produces smaller connected loopless four-regular graphs, with connected shores after deletion of the new pair.
+Apply induction and Lemma~\ref{lem:gluing}, including its equality conclusion.
+We may therefore assume $t=1$.
+Now $k-t\le1$ gives $k\le2$.
+\end{proof}
+
+\section{The degree-sequence input}
+
+We use Theorem~7 of~\cite{dmnnp}:
+for a simple graph $T$ and distinct terminals $s,t$,
+\[
+ P_{st}(T)\le a(\deg_T(s))\prod_{v\ne s}b(\deg_T(v)).
+\]
+The functions are nonnegative and the theorem permits disconnected graphs.
+Only the following values are needed:
+\[
+ \rho=(4/3)^{1/4},\quad b(1)=1,\quad b(2)=\rho,\quad
+ b(3)=(2\rho)^{1/2},\quad b(4)=2/\rho,\quad b(5)=(24\rho)^{1/4},
+\]
+\[
+ a(1)=\sqrt{2/\rho^5},\quad a(2)=2/\rho^2,\quad a(3)=6/(\rho^4b(5)).
+\]
+Put
+\[
+ \kappa=\frac{a(3)b(3)}{b(4)^2}=\frac{3^{19/16}}{2^{17/8}},\qquad
+ \delta=\rho^{-2},\qquad
+ \chi=\frac2{\sqrt3}+\frac38(\rho/6)^{1/4}.
+\]
+For a four-regular graph with $k$ matching doubled pairs, put
+\[
+ B=b(4)^n\rho^k=2^n(3/4)^{(n-k)/4}.
+\]
+Subdividing one edge from each doubled pair produces a simple graph with degree product $B$.
+Subdivision preserves cycles and paths between original terminals.
+
+\begin{lemma}[Edge frequencies]\label{lem:frequency}
+Let $T$ be simple with all degrees in $\{2,3,4\}$.
+Put $Q=\prod_vb(\deg_T(v))$.
+If no edge joins two degree-two vertices, then $c_e(T)\le\delta Q$ for every edge $e$.
+Without that restriction, $c_e(T)\le\delta_2Q$, where $\delta_2=\sqrt{2/\rho^9}$.
+For a simple four-regular graph, the sharper bound is $c_e(G)\le\kappa B$.
+\end{lemma}
+
+\begin{proof}
+For endpoint degrees $d,e$, delete the edge and apply the path theorem in either orientation.
+Its cycle frequency is at most
+\[
+ \frac{\min\{a(d-1)b(e-1),a(e-1)b(d-1)\}}{b(d)b(e)}Q.
+\]
+The following coefficients suffice:
+\[
+\begin{array}{c|rrrrrr}
+(d,e)&(2,2)&(2,3)&(2,4)&(3,3)&(3,4)&(4,4)\\\hline
+\text{coefficient}&\delta_2&\rho^{-3}&\rho^{-2}&\rho^{-2}&\kappa/\rho&\kappa.
+\end{array}
+\]
+All coefficients except the first are at most $\delta$, and $\delta<\delta_2$.
+\end{proof}
+
+\begin{lemma}[Deleting one vertex]\label{lem:deletion}
+Suppose $G$ is four-regular, its doubled pairs form a matching, and all other edges are single.
+Write $N=G-u$.
+If $k=0$, choose any $u$; then
+\[
+ c(G)-c(N)\le2\kappa B,\qquad
+ \sum_{C\subseteq N}|E(C)|\le(2n-4)\frac\rho6B.
+\]
+If $k\ge1$, choose $u$ incident with a doubled pair; then
+\[
+ c(G)-c(N)\le1+\chi B,\qquad
+ \sum_{C\subseteq N}|E(C)|\le(2n-4)\frac{\rho^3}{8}B.
+\]
+In the latter case, $N$ has $k-1$ doubled pairs.
+\end{lemma}
+
+\begin{proof}
+For $k=0$, each cycle through $u$ uses two incident edges, so their number is at most $2\kappa B$.
+The graph $N$ has four vertices of degree three and $n-5$ of degree four.
+Its product is $Q=b(3)^4b(4)^{n-5}=(\rho^7/8)B$.
+Apply Lemma~\ref{lem:frequency} to its $2n-4$ edges, using $\delta\rho^7/8=\rho/6$.
+
+For $k\ge1$, let $uv$ be the doubled pair, and let $x,y$ be the other neighbours of $u$.
+These four vertices are distinct.
+In $N$, the degrees at $v,x,y$ are $2,3,3$; all other original degrees are four.
+Subdivide one edge from every remaining doubled pair.
+The resulting simple graph $T$ has
+\[
+ Q=b(3)^2b(4)^{n-4}\rho^k=\frac{\rho^5}{8}B.
+\]
+Its degree-two vertices are $v$ and the subdivision vertices, with no edges between them.
+For each original doubled pair, its unsubdivided representative has the same cycle frequency as either original edge.
+Thus every original edge of $N$ has frequency at most $\delta Q$.
+Their sum gives the length bound because $\delta\rho^5/8=\rho^3/8$.
+
+The cycles through $u$ satisfy
+\[
+ c(G)-c(N)=1+2P_{vx}(N)+2P_{vy}(N)+P_{xy}(N).
+\]
+Apply the path theorem to $T$ to bound this expression by
+\[
+ 1+\bigl(4a(2)b(3)^2+a(3)\rho b(3)\bigr)b(4)^{n-4}\rho^{k-1}.
+\]
+The coefficient of $B$ is
+\[
+ \frac{4a(2)b(3)^2+a(3)\rho b(3)}{b(4)^4\rho}
+ =\rho^2+\frac{3b(3)}{8b(5)}=\chi.
+\]
+\end{proof}
+
+\begin{lemma}[Short cycles]\label{lem:short}
+Let $W$ have maximum degree at most four, with $m$ vertices and $j$ doubled pairs forming a matching.
+Assume that all other edges are single.
+For $\ell\ge3$,
+\[
+ c_\ell(W)\le\frac{(6m+2j)3^{\ell-3}}\ell.
+\]
+\end{lemma}
+
+\begin{proof}
+A starting vertex outside the doubled matching gives at most $4\cdot3^{\ell-2}$ directed cycle representations.
+There are four first-edge choices, at most three intermediate choices, and at most one closing edge.
+At a starting vertex incident with a doubled pair, cycles using two single edges give at most $2\cdot3^{\ell-2}$ representations.
+If the first edge is doubled, there are two first-edge choices and at most two second-edge choices.
+The closing edge must be single, giving at most $4\cdot3^{\ell-3}$ representations.
+Reversal gives the same count when only the closing edge is doubled.
+The total at such a vertex is at most $14\cdot3^{\ell-3}$.
+Sum over the $m-2j$ and $2j$ starting vertices and divide by $2\ell$.
+\end{proof}
+
+\section{All reduced graphs of order at least eleven}
+
+\begin{proposition}\label{prop:large}
+If $G$ is four-regular, $n\ge11$, and its only parallel classes are at most two matching doubled pairs, then $c(G)<2^n$.
+\end{proposition}
+
+\begin{proof}
+First consider $k=0,n\ge12$, or $k\in\{1,2\},n\ge11$.
+Put $g=\lfloor(n+3)/2\rfloor$, $j=\max\{k-1,0\}$, and
+\[
+ F_g=\sum_{\ell=3}^{g-1}(1-\ell/g)\frac{3^{\ell-3}}\ell.
+\]
+Apply the length cutoff to $N=G-u$ from Lemma~\ref{lem:deletion}.
+Every cycle contributes its length divided by $g$, supplemented by $1-\ell/g$ when its length is less than $g$.
+Lemma~\ref{lem:short} yields
+\begin{equation}\label{eq:analytic-bound}
+ \frac{c(G)}{2^n}\le A_{n,k}+T_{n,k}(3/4)^{(n-k)/4},
+\end{equation}
+where
+\[
+ A_{n,k}=2^{-n}\left({\bf1}_{k\ge1}+(1-2/g)j+(6(n-1)+2j)F_g\right)
+\]
+and
+\[
+ T_{n,k}=\begin{cases}
+ 2\kappa+(2n-4)\rho/(6g),&k=0,\\
+ \chi+(2n-4)\rho^3/(8g),&k\ge1.
+ \end{cases}
+\]
+Use these rational upper bounds:
+\begin{equation}\label{eq:rational-constants}
+ \kappa<\frac{845071}{10^6},\quad
+ \rho<\frac{1074570}{10^6},\quad
+ \rho^3<\frac{1240807}{10^6},\quad
+ \chi<\frac{1398653}{10^6}.
+\end{equation}
+Write $\overline T_{n,k}$ for the resulting rational coefficient.
+For the six base pairs below, exact arithmetic verifies
+\[
+ A_{n,k}<1,\qquad
+ \overline T_{n,k}^{\,4}(3/4)^{n-k}<(1-A_{n,k})^4.
+\]
+The final column gives a rounded-up upper bound from~\eqref{eq:analytic-bound}.
+\[
+\begin{array}{c|c|c|c}
+ n&k&g&\text{upper ratio}\\\hline
+ 12&0&7&.956\\
+ 13&0&8&.891\\
+ 11&1&7&.926\\
+ 12&1&7&.863\\
+ 11&2&7&.993\\
+ 12&2&7&.926
+\end{array}
+\]
+
+We show that the bound decreases under $n\mapsto n+2$ with $k$ fixed.
+Then $g\mapsto g+1$.
+For $g\ge6$, we have $F_{g+1}\le3F_g$.
+To verify this, shift the index of $3F_g$ by one and compare terms with indices $4,\ldots,g$.
+Each term dominates the corresponding term of $F_{g+1}$.
+The excess at index $g$ alone is
+\[
+ \frac{2\cdot3^{g-3}}{g(g^2-1)}
+ \ge\frac{g-2}{3(g+1)},
+\]
+which covers its missing index-three term.
+The inequality is equivalent to $2\cdot3^{g-2}\ge g(g-1)(g-2)$.
+It holds at $g=6$ and persists because the right-hand growth ratio is $(g+1)/(g-2)<3$.
+
+The coefficient of $F_g$ increases by at most $(n+1)/(n-1)$.
+The other nonnegative terms in the numerator of $A_{n,k}$ increase by a factor at most three.
+Consequently,
+\[
+ A_{n+2,k}\le\frac{3(n+1)}{4(n-1)}A_{n,k}<A_{n,k}\qquad(n\ge11).
+\]
+For the long term, write $\overline T=a+b(n-2)/g$, where $a>1$ and $0<b<1$.
+Then
+\[
+ \overline T_{n+2,k}-\overline T_{n,k}
+ =b\frac{2g-n+2}{g(g+1)}\le\frac5{56}<\frac1{10}.
+\]
+Thus $\overline T_{n+2,k}<(11/10)\overline T_{n,k}$.
+The exponential factor decreases by $\sqrt3/2$, and $(11/10)^2(3/4)=363/400<1$.
+Both terms therefore decrease, proving all these orders from the six base cases.
+
+It remains to treat a simple graph on eleven vertices.
+Choose adjacent $u,v$, and put $N=G-u$, $H=G-\{u,v\}$.
+Cycles through $u$ contribute at most $2\kappa B$.
+In $N$, the vertex $v$ has degree three and $\delta Q_N=(\rho/6)B$.
+Thus cycles through $v$ in $N$ contribute at most $(\rho/4)B$.
+
+If $u,v$ have $r$ common neighbours, then $0\le r\le3$.
+The degrees in $H$ are two at $r$ vertices, three at $6-2r$ vertices, and four at $3+r$ vertices.
+Consequently,
+\[
+ \frac{Q_H}{B}=\frac{\rho^r b(3)^{6-2r}}{b(4)^{8-r}}
+ =\frac{\rho^{11-r}}{32}\le\frac{\rho^3}{18}.
+\]
+There are fifteen edges in $H$.
+Lemma~\ref{lem:frequency} gives their total cycle frequency at most $(5/6)\delta_2\rho^3B$.
+Apply cutoff six in $H$, using Lemma~\ref{lem:short} with $m=9,j=0$.
+This gives
+\[
+ c(G)\le\left(2\kappa+\frac\rho4+\frac5{36}\delta_2\rho^3\right)B
+       +\sum_{\ell=3}^{5}(1-\ell/6)\frac{18\cdot3^{\ell-2}}\ell.
+\]
+Use~\eqref{eq:rational-constants} and $\delta_2<1023197/10^6$.
+An exact fourth-power comparison gives $c(G)/2^{11}<.987$.
+This completes the proof.
+\end{proof}
+
+The constant comparisons above use only rational powers.
+For clarity, $\kappa^{16}=3^{19}/2^{34}$ and $\delta_2^8=16(3/4)^9$.
+For $\chi$, use $1/\sqrt3<577351/10^6$ and
+$\frac38(\rho/6)^{1/4}<243951/10^6$, verified by squares and sixteenth powers.
+The supplied certificate script checks all seven base cases and the induction constants exactly.
+It also records seventeen additional finite checks that are not needed for the induction.
+
+\section{Finite verification and completion of the proof}
+
+The remaining graphs have minimum underlying degree three, at most two matching doubled pairs, and $n\le10$.
+For each $k\in\{0,1,2\}$, remove one edge from every doubled pair.
+The resulting connected simple graph has $2n-k$ edges, degree three at exactly $2k$ vertices, and degree four elsewhere.
+Conversely, every desired multigraph arises by doubling a perfect matching of existing edges among these degree-three vertices.
+For $k=1$ there is at most one choice; for $k=2$ there are at most three.
+
+We generated all such underlying graphs with
+\begin{verbatim}
+geng -c -d3 -D4 n (2*n-k)
+\end{verbatim}
+where the last argument is evaluated as an integer.
+For each graph, the checker tries every permitted matching and counts all cycles exactly.
+One implementation uses vertex-simple cyclic orders and multiplies edge multiplicities.
+The other constructs a fundamental binary cycle basis and retains precisely the connected nonzero degree-two edge sets.
+These methods distinguish the parallel edges in the same way.
+
+The following table records each nonempty class.
+Entries are the maximum cycle count and, in parentheses, the number of matching instances.
+Different matchings may produce isomorphic multigraphs; duplicates do not affect completeness.
+\[
+\begin{array}{c|rrr}
+ n&k=0&k=1&k=2\\\hline
+ 4&-&-&19\ (3)\\
+ 5&37\ (1)&-&32\ (2)\\
+ 6&63\ (1)&60\ (1)&52\ (2)\\
+ 7&108\ (2)&102\ (3)&97\ (5)\\
+ 8&204\ (6)&177\ (10)&165\ (22)\\
+ 9&333\ (16)&325\ (41)&286\ (90)\\
+ 10&593\ (59)&534\ (200)&526\ (461)
+\end{array}
+\]
+All $925$ instances satisfy $c(G)\le2^n+n$.
+The only equality instance is $K_5$.
+The generator considered $3234$ underlying graphs, including those without a permitted matching.
+The two counting methods also agree on all $5012$ matching instances through order eleven.
+Only the $925$ instances through order ten are needed for the proof.
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Use induction on $n$.
+The empty case is strict; no one-vertex loopless four-regular graph exists.
+The two-vertex graph has four parallel edges and six cycles.
+Proposition~\ref{prop:reduction} handles disconnected graphs, graphs without a Hamilton decomposition,
+doubled-edge expansions, and the parity and gluing cases.
+Each reduction either gives a strict bound or identifies a doubled cycle when equality holds.
+
+The remaining graphs have at most two matching doubled pairs and minimum underlying degree three.
+Proposition~\ref{prop:large} gives a strict bound for $n\ge11$.
+The finite verification handles all smaller remaining graphs, with equality only for $K_5$.
+Finally, a doubled cycle has $2^n+n$ cycles, and
+\[
+ c(K_5)=\binom53+3\binom54+\frac{4!}{2}=10+15+12=37=2^5+5.
+\]
+This proves both the inequality and its equality classification.
+\end{proof}
+
+
+\section{The graphs above the one-half bound}
+
+Let $D$ be $K_4$ with two opposite edges doubled.
+It has $19$ cycles: two digons, eight triangles, and nine Hamilton cycles.
+For either doubled pair, exactly twelve cycles use one edge from that pair.
+Indeed, deleting the pair leaves six paths between its endpoints.
+
+\begin{theorem}\label{thm:above-half}
+For a loopless four-regular multigraph $G$ on $n$ vertices,
+\[
+ c(G)>2^n
+\]
+holds if and only if $G$ is a doubled cycle, $K_5$, or $D$.
+\end{theorem}
+
+\begin{proof}
+These three families have the stated cycle counts.
+For the converse, use induction on the order and the reductions from Proposition~\ref{prop:reduction}.
+A disconnected graph has $c(G)<2^n$.
+Indeed, Theorem~\ref{thm:main} applies to each component, and
+$2^a+2^b+a+b<2^{a+b}$ for integers $a,b\ge2$.
+A graph without a Hamilton decomposition also has $c(G)\le2^n$.
+
+Consider an expansion of a smaller graph $H$, with $A=2^{|V(H)|}$ and the notation of Lemma~\ref{lem:expansion}.
+If $H$ is a doubled cycle, its expansion is also a doubled cycle.
+If $H=D$, then $c(G)=19+12+1=32=2^5$.
+The graph $K_5$ has no doubled pair and cannot occur here.
+Every other $H$ has $c(H)\le A$ by induction.
+By Lemma~\ref{lem:paths}, its even integer $a$ is at most $A-2$.
+Therefore $c(G)\le2A-1<2^{|V(G)|}$.
+
+The parity case gives $c(G)\le(27/32)2^n-1+k<2^n$.
+Here $k\le n/2$, and the displayed strict inequality follows from $2^n\ge4n$ for $n\ge4$.
+It remains to check the gluing reduction.
+Keep $A_i,a_i$ from Lemma~\ref{lem:gluing} and write $c_i=c(H_i)$.
+Then
+\[
+ c(G)=a_1a_2+c_1+c_2-a_1-a_2.
+\]
+Call a shore ordinary if $c_i\le A_i$.
+An ordinary shore is not a doubled cycle, so $a_i\le A_i-2$.
+The other possibilities are doubled cycles and $D$, because a shore must have a chosen parallel pair.
+
+Two ordinary shores give $c(G)\le A_1A_2$ by the same monotonicity used in Lemma~\ref{lem:gluing}.
+A doubled cycle on $s_1$ vertices and an ordinary shore give
+\[
+ c(G)\le(A_1-1)(A_2-2)+A_2+s_1
+       =A_1A_2-2A_1+s_1+2<A_1A_2.
+\]
+A $D$ shore and an ordinary shore give $c(G)\le12A_2+7<16A_2$.
+A $D$ shore and a doubled cycle give $c(G)=12A_2+s_2+7<16A_2$.
+Two $D$ shores give $c(G)=158<256$.
+Two doubled-cycle shores glue to a doubled cycle.
+This completes the gluing cases.
+
+The remaining reduced graphs have $k\le2$.
+Proposition~\ref{prop:large} puts every order at least eleven strictly below $2^n$.
+The finite table shows that only $K_5$ and $D$ exceed $2^n$ at the remaining orders.
+This proves the classification.
+\end{proof}
+
+\section{Consequences for Eulerian graphs}
+
+\begin{corollary}\label{cor:eulerian}
+Let $G$ be a connected loopless Eulerian multigraph of cycle rank $r\ge1$.
+Then
+\[
+ c(G)\le2^{r-1}+r-1.
+\]
+For $r\ge3$, equality holds precisely for subdivisions of doubled cycles and of $K_5$.
+The $K_5$ case has rank six.
+At $r=1$, the graph is a single cycle and equality holds.
+At $r=2$, the maximum is two cycles, so the displayed bound is strict.
+Moreover, for $r\ge3$,
+\[
+ c(G)>2^{r-1}
+\]
+holds precisely for subdivisions of doubled cycles, $K_5$, or $D$.
+\end{corollary}
+
+\begin{proof}
+Since $G$ is Eulerian, complementation pairs its $2^r$ even edge sets.
+If $c(G)>2^{r-1}$, one pair consists of two cycles $C_1,C_2$ partitioning $E(G)$.
+Every vertex then has degree two or four.
+The degree-four vertices are exactly the common vertices of $C_1,C_2$.
+If their number is $s$, then $|E(G)|=|V(G)|+s$ and $r=s+1$.
+
+Connectedness implies $s\ge1$.
+If $s=1$, the graph consists of two cycles meeting only at their common vertex.
+It has exactly two cycles, contradicting $c(G)>2^{r-1}=2$.
+Hence $s\ge2$ whenever the one-half bound is exceeded.
+Suppress every degree-two vertex.
+Each $C_i$ meets all $s$ common vertices exactly once.
+Its segments therefore have distinct endpoints, so suppression creates no loops.
+The resulting graph $H$ is loopless and four-regular on $s=r-1$ vertices.
+Suppression preserves all cycles.
+
+Theorem~\ref{thm:main} gives
+$c(G)=c(H)\le2^{r-1}+r-1$.
+If the one-half bound was not exceeded, the same inequality already holds.
+For $r\ge3$, equality in the new bound exceeds the one-half bound, so its classification follows from Theorem~\ref{thm:main}.
+The classification above the one-half bound follows from Theorem~\ref{thm:above-half}.
+Conversely, subdivision preserves cycle rank and cycle count, so every listed subdivision has the stated property.
+
+At rank one, a connected Eulerian graph is a cycle.
+At rank two, more than two cycles would trigger the same complementary-pair argument with $s=1$, a contradiction.
+Two cycles meeting at one vertex attain the value two.
+\end{proof}
+
+\section{Reproducibility and proof status}
+
+The mathematical proof uses the published path theorem~\cite{dmnnp} and a finite computer verification.
+The computation is not a Lean certificate.
+The relevant files beside this manuscript are:
+\begin{itemize}
+\item \nolinkurl{four_regular_vertex_deletion_certificates.py} verifies the exact rational analytic inequalities.
+Its output is \nolinkurl{four-regular-vertex-deletion-results.json}.
+\item \nolinkurl{check_four_regular_finite.cpp} counts cycles by vertex-simple orders.
+\item \nolinkurl{verify_four_regular_theorem.py} generates the graphs and independently counts their binary cycle spaces.
+\item \nolinkurl{four-regular-theorem-certificate.json} records the complete finite verification.
+\end{itemize}
+The latter record includes generator commands and implementation hashes.
+The nauty source archive is
+\url{https://pallini.di.uniroma1.it/nauty2_8_9.tar.gz}, with SHA-256
+\begin{verbatim}
+c97ab42bf48796a86a598bce3e9269047ca2b32c14fc23e07208a244fe52c4ee
+\end{verbatim}
+Build its \texttt{geng} target, then compile the checker with a C++17 compiler.
+The runner accepts explicit paths through \texttt{--geng} and \texttt{--checker}.
+The default maximum order ten reproduces the exact small-core table.
+The optional \texttt{--max-n 11} also checks the next order independently.
+This runner uses no analytic graph-count certificate; it compares both exact cycle counts on every instance.
+
+\begin{thebibliography}{9}
+\bibitem{aacst}
+A. Alahmadi, R. E. L. Aldred, R. dela Cruz, P. Sol\'e, and C. Thomassen,
+\emph{The maximum number of minimal codewords in long codes},
+arXiv:1201.6043, Section~6, Open Problem~2.
+\url{https://arxiv.org/abs/1201.6043}.
+\bibitem{dmnnp}
+Z. Dvo\v r\'ak, N. Morrison, J. A. Noel, S. Norin, and L. Postle,
+\emph{Bounding the number of cycles in a graph in terms of its degree sequence},
+arXiv:1907.12091, Theorem~7.
+\url{https://arxiv.org/abs/1907.12091}.
+\bibitem{nauty}
+B. D. McKay and A. Piperno,
+\emph{nauty and Traces}, version~2.8.9, including the \texttt{geng} graph generator.
+\url{https://pallini.di.uniroma1.it/}.
+\end{thebibliography}
+\end{document}

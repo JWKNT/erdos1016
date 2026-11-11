@@ -1,0 +1,139 @@
+\section{A packing bound independent of the positive excess}
+\label{sec:four-high-connectivity-excess-free-packing}
+
+The absence of a moderate cut with two large-rank shores bounds the number of small cyclic regions.
+The bound below assumes only that the forest probability exceeds one half.
+It does not depend on the amount of that excess.
+
+\begin{lemma}[Terminal bipartitions along a forest]
+\label{lem:four-terminal-bipartition}
+Let $Q$ be a connected loopless multigraph and let $S$ be a nonempty proper vertex set.
+For each vertex $v$, let $L_v$ be the span of its incident coordinate forms on $\mathcal Z(Q)$.
+Put $U=\sum_{s\in S}L_s$ and $B=|\delta_QS|$.
+Among vertices $v\notin S$ with $L_v\cap U\ne0$, at most $2B$ are exceptional.
+The others form at most $2B$ ordered classes.
+Within each class, the vertices are articulation vertices of one component of $Q-S$ and give the same bipartition of its boundary terminals.
+Here each edge to $S$ supplies one distinct terminal.
+\end{lemma}
+
+\begin{proof}
+Exclude the at most $B$ vertices adjacent to $S$.
+In each component of $Q-S$, choose a spanning tree, attach a leaf for each boundary terminal, and retain the union of paths between those leaves.
+This forest has at most $B$ leaves and at most $B$ branching vertices.
+Exclude its branching vertices and suppress its degree-two vertices.
+The resulting forest has at most $2B$ edges.
+
+To justify that these edges contain every other relevant vertex, fix such a vertex $v$ and choose $0\ne a\in L_v\cap U$.
+Represent $a$ both by a subset of the star at $v$ and by edges incident with $S$.
+Their symmetric difference annihilates the cycle space, so it is a cut.
+In the component $K$ of $Q-S$ containing $v$, the star subset therefore joins $v$ to a union of components of $K-v$.
+Its functional equals the sum of the terminal coordinates in that union.
+The sum of all terminal coordinates of $K$ is zero.
+Since $a\ne0$, at least two components of $K-v$ contain terminals.
+Every spanning tree must connect those groups through $v$.
+After the branching exceptions, exactly two terminal-bearing components remain.
+Their terminal sets are the two sides of one edge of the suppressed forest.
+Thus vertices on the same edge give the same actual terminal bipartition, as asserted.
+\end{proof}
+
+\begin{proposition}
+\label{prop:four-excess-free-cycle-packing}
+Let $G$ be connected and cubic, and let $P$ be a marked vertex set.
+Fix integers $d\ge2$ and $H\ge1$.
+Assume that no cut of order at most $2d$ has two connected shores, each of rank at least $H$.
+If
+\[
+ \Pr(\xi_G-P\text{ is a forest})>\frac12,
+\]
+then every family of $q$ vertex-disjoint connected cyclic regions avoiding $P$, each with boundary at most $d$, satisfies
+\[
+ q<\bigl[1+(4H+6)d\bigr]2^d.
+\]
+\end{proposition}
+
+\begin{proof}
+The case $q=0$ is immediate, so assume $q>0$.
+Contract each region to one marked vertex.
+Also contract every connected component outside the regions, and discard loops.
+Call the resulting connected loopless quotient $Q$.
+Its $q$ marked vertices have degree at most $d$.
+Let $L_v$ be the span of the incident edge-coordinate forms in $\mathcal Z(Q)^*$.
+Write $I_v$ for the indicator that this star is zero in a uniform even state of $Q$.
+
+Conditional on the quotient state, the internal cycle-space choices in the contracted regions are independent.
+Whenever a region's boundary is zero, its internal even state must be empty for the forest event to hold.
+Since that region is cyclic, this has conditional probability at most one half.
+Consequently
+\[
+ \Pr(\xi_G-P\text{ is a forest})
+ \le\mathbb E\prod_v(1-I_v/2).
+\]
+No $L_v$ can be zero, since that would make the right side at most one half.
+Also $\dim L_v\le d-1$, by even star parity.
+
+Take a maximal family of these local spaces forming a direct sum.
+Let $S$ be its vertex set and $t=|S|$.
+The zero-star events for this family are independent, with probabilities at least $2^{1-d}$.
+Thus
+\[
+ \Pr(\xi_G-P\text{ is a forest})
+ \le(1-2^{-d})^t.
+\]
+If $t\ge2^d$, this is at most $e^{-1}<1/2$.
+Hence $1\le t<2^d$.
+If $S$ contains every marked vertex, the conclusion follows immediately.
+Otherwise put $U=\sum_{s\in S}L_s$ and $B=|\delta_Q S|\le dt$.
+Maximality gives $L_v\cap U\ne0$ at every remaining marked vertex.
+
+Use the terminal-forest construction from Lemma~\ref{lem:four-terminal-bipartition}.
+In each component of $Q-S$, choose a spanning tree and attach a terminal leaf for each edge to $S$.
+Prune to paths between terminal leaves, and suppress degree-two vertices.
+Except for at most $2B$ marked vertices, all remaining marked vertices lie internally on at most $2B$ resulting tree edges.
+Each such vertex is an articulation of $Q-S$ separating its two terminal-bearing sides.
+The interior of one resulting tree edge has no branching node and no terminal attachment.
+All vertices in that class induce the same bipartition of the attached terminals.
+
+We claim that each such class contains at most $2H+2$ marked vertices.
+Suppose a class contains $v_1,\ldots,v_m$ in tree order, with $m\ge2H+3$.
+Let $R$ be the component of
+\[
+ (Q-S)-\{v_1,v_{H+2}\}
+\]
+containing $v_2,\ldots,v_{H+1}$.
+Those vertices belong to the same component because the intervening tree path avoids both deleted vertices.
+The articulation property prevents later class vertices from belonging to $R$.
+
+The component $R$ has no neighbor in $S$.
+Otherwise it would contain an attached terminal leaf.
+That terminal would lie after $v_1$ but before $v_{H+2}$ in their ordered terminal separations.
+Their induced terminal bipartitions would then differ, contradicting their membership in the same class.
+It follows that every edge of $Q$ leaving $R$ ends at $v_1$ or $v_{H+2}$.
+Their combined degree is at most $2d$.
+
+Lift $R$ to $G$ by replacing each contracted vertex by its connected original vertex set.
+The lift is connected and contains the $H$ disjoint cyclic regions corresponding to $v_2,\ldots,v_{H+1}$.
+Its rank is therefore at least $H$.
+On the other side, the later tree segment connects at least $H$ further cyclic regions without entering $R$.
+Its lift contains a connected subgraph of rank at least $H$.
+Prune leaves from each of these two connected subgraphs, preserving their ranks and obtaining disjoint connected cyclic cores.
+The cut around the lift of $R$ separates these cores and has at most $2d$ edges.
+Lemma~\ref{lem:random-protected-core-cut} gives a cut of no larger order with connected shores of ranks at least $H$.
+This contradicts the hypothesis and proves the claim.
+
+Counting the selected vertices, exceptional vertices, and classes gives
+\[
+ q\le t+2B+2B(2H+2)
+   =t+(4H+6)B
+   \le\bigl[1+(4H+6)d\bigr]t.
+\]
+Since $t<2^d$, the proposition follows.
+\end{proof}
+
+For disjoint cycles of length at most $d$ in a cubic graph, the boundary condition holds automatically.
+Their total vertex count is therefore less than
+\[
+ d\bigl[1+(4H+6)d\bigr]2^d.
+\]
+For each fixed $C$, the fixed-ratio quarter theorem supplies the forbidden-cut hypothesis in an above-half family when $d\le Cg$ and $H=H_{2C}$.
+The resulting packing bound is independent of the positive forest excess.
+It does not yet supply a common-connected-complement packing or a bound at a girth scale whose ratio to $g$ grows without limit.

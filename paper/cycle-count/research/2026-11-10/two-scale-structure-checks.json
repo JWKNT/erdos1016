@@ -1,0 +1,16 @@
+{
+  "status": "all exact two-scale structural checks passed",
+  "far_antisymmetry": {
+    "disjoint_cycle_pairs": 9759,
+    "one_way_far_pairs": 335,
+    "exact_weighted_antisymmetry_checks": 200
+  },
+  "full_slab_restoration": {
+    "exact_slab_boundaries": 3015,
+    "nonadjacent_block_pairs": 1763,
+    "restored_medium_vertices": 3568,
+    "blocks_with_strict_deficit_reduction": 521,
+    "clean_zero_deficit_blocks": 521,
+    "nested_chains": 160
+  }
+}

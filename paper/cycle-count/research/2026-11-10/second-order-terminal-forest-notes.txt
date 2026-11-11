@@ -1,0 +1,25 @@
+ROOT PARTIAL RESULT — 19:51 EST, 10 November 2026
+
+The safe exponential cut lemma is in second-order-structural-notes.tex.
+Root independently verified its series-class splitting mechanism.
+The companion second-order-terminal-forest.tex improves the rate to
+
+  p <= 1/2 + 2 exp(-k / (2 d 4^d)).
+
+Here k disjoint cyclic regions each have boundary size at most d>=2.
+Both proofs are new working drafts. Independent audits are pending.
+
+KEY NEW STEP
+Choose a maximal direct-sum family of local star spaces, with t<2^d vertices.
+If there are 2^d independent spaces, the probability is already below 1/2.
+Delete those t vertices and attach one terminal for each boundary edge.
+A remaining star space intersects their span only at a terminal separator.
+Apart from O(dt) adjacent or branching exceptions, such separators lie on
+O(dt) degree-two chains of a terminal spanning forest.
+Every chain gives one common nonzero functional.
+The common-functional splitting lemma gives exponential decay along that chain.
+
+Immediate consequences should include an exponential second-order saving in
+every fixed proper minor-closed class, using the earlier linear region packing.
+The unrestricted consequence is still being investigated.
+The existing long-cycle second-moment argument remains a bottleneck.

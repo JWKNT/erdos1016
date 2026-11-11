@@ -1,0 +1,176 @@
+\section{Four-edge cuts with two large-rank shores}
+\label{sec:four-cut-large-shores}
+
+\begin{theorem}\label{thm:four-cut-large-shores}
+There are absolute constants $H_0,K$ with the following property.
+Join two connected loopless cubic four-poles of ranks $h,k\ge H_0$
+by a matching of their four distinct ports.
+The resulting graph has rank $r=h+k+3$ and satisfies
+\[
+ c(G)\le2^{r-1}+Kr^8 2^{r/2}.
+\]
+\end{theorem}
+
+\begin{proof}
+Use the exact gluing identity~\eqref{eq:four-cut-exact}.
+For a rank-$h$ shore, normalize its six path counts and three forest counts:
+\[
+ a_{ij}=2^{-h}P_{ij},\qquad u_\alpha=2^{-h}f_\alpha,
+ \qquad F=\sum_\alpha u_\alpha.
+\]
+Every $a_{ij}$ and $F$ lies in $[0,1]$.
+For two normalized states $(a,u),(b,v)$, the crossing contribution divided
+by $2^{h+k}$ is
+\begin{equation}\label{eq:four-cut-bilinear}
+ \mathcal B((a,u),(b,v))
+ =\sum_{i<j}a_{ij}b_{ij}+FJ-\sum_\alpha u_\alpha v_\alpha.
+\end{equation}
+Define the auxiliary quantity
+\[
+ E(a,u)=\sum_{i<j}a_{ij}^2+F^2.
+\]
+Then $\mathcal B\le(E(a,u)+E(b,v))/2$.
+
+Fix $\tau=51/100$.
+Call a pair high when $a_{ij}>\tau$, and form its graph on the four ports.
+Theorem~\ref{thm:three-pole-two-high}, after suppressing the fourth port,
+gives an absolute constant $C$ such that
+\begin{equation}\label{eq:four-cut-small-wedge}
+ a_{ij},a_{jk}>\tau\quad\Longrightarrow\quad
+ a_{ik}\le\rho_h:=C2^{-h/2}.
+\end{equation}
+If that suppression produced a loop, all paths between the other ports
+would avoid its cycle and have density at most one half.
+Thus this exceptional suppression cannot occur under the displayed hypothesis.
+
+Corollary~\ref{cor:four-pole-cross-sum-forest} also supplies an absolute $C'$.
+For every division of the ports into two sides, it gives
+\begin{equation}\label{eq:four-cut-small-forest}
+ \sum_{\mathrm{cross}}a_{ij}\ge201/100
+ \quad\Longrightarrow\quad
+ F\le\sigma_h:=C'(h+3)^4 2^{-h/2}.
+\end{equation}
+Increase $H_0$ whenever necessary below.
+Both $\rho_h$ and $\sigma_h$ tend uniformly to zero for $h\ge H_0$.
+In particular, the high-pair graph is triangle-free.
+
+We classify three exceptional types of shore.
+Type S has a three-edge star of high pairs, all with density one.
+Type Q has a high $K_{2,2}$, all four of whose densities are one.
+Type M has exactly two disjoint high pairs, both with density one.
+Every other shore is called ordinary.
+We claim that, for sufficiently large $H_0$,
+\begin{equation}\label{eq:four-cut-energy-gap}
+ E\le3.94\quad\hbox{for ordinary shores},\qquad
+ E\le4.05\quad\hbox{for all shores}.
+\end{equation}
+
+Here are all cases of this finite classification.
+A high $K_{2,2}$ has cross sum greater than $4\tau>2.01$.
+Its two other pairs have density at most $\rho_h$, and $F\le\sigma_h$.
+If one of its four high pairs is not full, the path gap bounds it by $15/16$.
+Thus $E\le3+(15/16)^2+2\rho_h^2+\sigma_h^2$ in the ordinary case.
+For type Q, the corresponding bound is $4+2\rho_h^2+\sigma_h^2$.
+
+A three-edge high graph is a star or a path.
+For a star, all three remaining pairs have density at most $\rho_h$.
+An ordinary star gives $E\le2+(15/16)^2+3\rho_h^2+1$.
+Type S gives $E\le4+3\rho_h^2$.
+For a high path, use its bipartition as the division into two sides.
+Its two diagonals are at most $\rho_h$, and its fourth cross pair is at most $\tau$.
+If the cross sum is at least $2.01$, then
+$E\le3+\tau^2+2\rho_h^2+\sigma_h^2$.
+Otherwise use $a_{ij}^2\le a_{ij}$ on the cross pairs to get
+$E\le2.01+2\rho_h^2+1$.
+
+Two adjacent high pairs force their third pair below $\rho_h$.
+Consequently $E\le2+3\tau^2+\rho_h^2+1$ in that case.
+For two disjoint high pairs, if one is not full, then
+\[
+ E\le1+(15/16)^2+4\tau^2+1=3.91930625.
+\]
+For type M, the upper bound is $2+4\tau^2+1=4.0404$.
+With at most one high pair, one has $E\le1+5\tau^2+1=3.3005$.
+These cases prove~\eqref{eq:four-cut-energy-gap}.
+
+If either shore is ordinary, the crossing contribution is at most
+$3.995\,2^{h+k}$.
+The trivial internal-cycle bound contributes less than $2^h+2^k$.
+For large $H_0$, its normalized value $2^{-h}+2^{-k}$ is below $0.005$.
+Thus such a graph has fewer than $2^{r-1}$ cycles.
+
+We next record a restriction on type M.
+Let its full matching be $\alpha=ij|kl$.
+Add an edge $kl$ to the shore, obtaining a normalized two-pole $N$ of rank $h+1$.
+Its terminals are $i,j$, and its counts satisfy
+\[
+ P_{ij}(N)=2^h\bigl(1+F-u_\alpha\bigr),\qquad c(N)\ge2^h.
+\]
+The first identity separates paths using the added edge from those avoiding it.
+If $F-u_\alpha\ge1/100$, Theorem~\ref{thm:high-path-cycle-tradeoff}
+would give $c(N)\le K_{1/200}2^{(h+1)/2}$.
+This contradicts $c(N)\ge2^h$ for sufficiently large $h$.
+Hence every type M shore in the present range satisfies
+\begin{equation}\label{eq:four-cut-M-concentration}
+ F-u_\alpha<1/100.
+\end{equation}
+
+It remains to pair exceptional types.
+If two type M shores have the same full matching, their path dot product
+is at most $2+4\tau^2=3.0404$.
+Their off-diagonal forest term is below $2/100$ by
+\eqref{eq:four-cut-M-concentration}.
+Indeed, $FJ-u_\alpha v_\alpha
+=F(J-v_\alpha)+v_\alpha(F-u_\alpha)<2/100$.
+If their matchings differ, their path dot product is at most
+$4\tau+2\tau^2=2.5602$, and their forest term is at most one.
+Both cases have a fixed deficit from four.
+
+For types M and S, the full matching and the full star share exactly one edge.
+Their path dot product is at most
+$1+2\tau+(1+2\tau)\rho_k$,
+where $k$ is the star's rank.
+The forest term is at most one, so the total stays below four by a fixed margin.
+For types M and Q, the full matching has either two or zero edges in the
+full $K_{2,2}$.
+The path dot product is at most $2+2\tau+2\tau\rho_k$ or
+$4\tau+2\rho_k$, respectively.
+The forest term is at most $\sigma_k$.
+These cases again have a fixed deficit.
+
+Two type S shores with different star centers have path dot product at most
+$1+2\rho_h+2\rho_k+\rho_h\rho_k$.
+The forest term is at most one.
+A star and a $K_{2,2}$ share exactly two full pairs.
+Their path dot product is at most $2+2\rho_h+\rho_k+\rho_h\rho_k$,
+with $h$ denoting the star's rank, and their forest term is at most $\sigma_k$.
+Two different $K_{2,2}$ supports share exactly two edges.
+Their path dot product is at most $2+2\rho_h+2\rho_k$,
+and their forest term is at most $\sigma_h\sigma_k$.
+All these cases have fixed deficits for large $H_0$.
+The trivial internal bounds are then absorbed, as for an ordinary shore.
+
+Only equal type S supports and equal type Q supports remain.
+For equal stars, the normalized crossing contribution is at most
+\[
+ 4+3\rho_h\rho_k.
+\]
+For equal $K_{2,2}$ supports, it is at most
+\[
+ 4+2\rho_h\rho_k+\sigma_h\sigma_k.
+\]
+Each of these shores has a full terminal pair.
+Suppressing its other two ports preserves its rank and cycle count.
+The saturated two-pole cycle bound therefore gives
+$c(X)\le10\,2^{h/2}$ and $c(Y)\le10\,2^{k/2}$.
+The displayed crossing errors, after multiplication by $2^{h+k}$, are
+at most a constant times
+$(h+3)^4(k+3)^4 2^{(h+k)/2}$.
+The internal counts fit the same bound.
+Since $r=h+k+3$, this proves the theorem.
+\end{proof}
+
+\paragraph{Role of the rank threshold.}
+The threshold $H_0$ is absolute but very large.
+Theorem~\ref{thm:all-four-cut-half-exponent} completes the bounded-rank
+shore cases and covers every cyclic cut of size at most four.

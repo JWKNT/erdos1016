@@ -1,0 +1,212 @@
+\section{A local star obstruction for critical seven-pole profiles}
+\label{sec:path-seven-star-obstruction}
+
+The star-cap inequalities exclude one possible equality profile for a seven-cut.
+This does not yet exclude every critical seven-pole profile.
+
+\begin{lemma}[Two disjoint triangle covers on five vertices]
+\label{lem:path-seven-triangle-covers}
+Let $H$ be a graph on five vertices, with $d=10-|E(H)|$ missing edges.
+For each edge $e$, let $x_e,y_e\in[0,1]$ satisfy $x_ey_e=0$.
+Suppose every triangle $Q$ of $H$ satisfies
+\[
+ \sum_{e\in E(Q)}x_e\ge1,
+ \qquad
+ \sum_{e\in E(Q)}y_e\ge1.
+\]
+Then
+\[
+ \sum_{e\in E(H)}(x_e+y_e)\ge L(d),
+ \qquad
+ L(0)=10,\quad L(1)=6,\quad L(2)=4,\quad L(3)=3,
+\]
+where $L(d)=0$ for $d\ge4$.
+In particular, the sum is at least $10-4d$.
+\end{lemma}
+
+\begin{proof}
+First consider a triangle on vertices $u,v,w$.
+The disjoint-support condition implies that one of its two covers has only one positive edge.
+After exchanging the covers and relabeling the triangle, write
+\[
+ x_{uv}=1,\qquad x_{uw}=x_{vw}=y_{uv}=0,
+ \qquad y_{uw}+y_{vw}\ge1.
+\]
+If another vertex $a$ is adjacent to all three triangle vertices, the triangles $auw$ and $avw$ require
+\[
+ x_{au}+x_{aw}\ge1,\qquad x_{av}+x_{aw}\ge1.
+\]
+If $x_{aw}<1$, both $x_{au},x_{av}$ are positive.
+Then $y_{au}=y_{av}=0$, contradicting the $y$-cover of $auv$.
+Hence $x_{aw}=1$.
+The triangle $auv$ also gives $y_{au}+y_{av}\ge1$.
+Thus the three edges from $a$ to the triangle have total mass at least two.
+
+If $d=1$, take $a,b$ as the endpoints of the missing edge.
+Their other three vertices form the triangle above.
+Its mass is at least two, and each of $a,b$ contributes at least two.
+This proves the lower bound six.
+
+If $d=0$, the same argument gives $x_{aw}=x_{bw}=1$ and therefore $y_{ab}=1$.
+The triangles $abu$ and $abv$ then require
+\[
+ x_{au}+x_{bu}\ge1,\qquad x_{av}+x_{bv}\ge1.
+\]
+Neither $a$ nor $b$ can have positive $x$-mass toward both $u$ and $v$, because its $y$-mass toward them is at least one.
+Consequently these positive $x$-edges form a perfect matching between $\{a,b\}$ and $\{u,v\}$, with both weights one.
+Assume that this matching is $au,bv$.
+Then $y_{av}=y_{bu}=1$.
+The triangles $auw$ and $bvw$ force $y_{uw}=y_{vw}=1$.
+Every edge now has total mass one, proving the lower bound ten.
+
+If $d=2$, the two missing edges are adjacent or disjoint.
+For missing edges $01,02$, use the edge-disjoint triangles $034$ and $123$.
+For missing edges $01,23$, use the edge-disjoint triangles $024$ and $134$.
+Each triangle has total mass at least two, proving the bound four.
+
+If $d=3$, the graph has at least two triangles.
+To see this, a triangle-free graph on five vertices has at most six edges.
+Indeed, a vertex of degree at least three has independent neighbors, and the remaining edges give this bound directly.
+If there were exactly one triangle, each of the other two vertices could have at most one neighbor on it.
+The graph would again have at most six edges.
+
+Choose two triangles.
+If they are edge-disjoint, their combined mass is at least four.
+Otherwise they share one edge, on which one cover has mass zero.
+That cover needs mass at least two on their disjoint remaining edges.
+The other cover needs mass at least one in their union.
+Their combined mass is therefore at least three.
+For $d\ge4$, nonnegativity completes the asserted bounds.
+\end{proof}
+
+\begin{proposition}[A critical seven-cut needs a six-terminal sector]
+\label{prop:path-seven-critical-six-sector}
+Consider two limiting normalized seven-pole forest profiles obtained from shore ranks tending to infinity inside cubic graphs without cyclic cuts of size at most four.
+If their normalized crossing functional equals $32$, at least one six-terminal forest total is nonzero.
+\end{proposition}
+
+\begin{proof}
+The fixed-port aggregate bound is $32$ on each shore, and every limiting path mass is at most $1/2$.
+For a profile, let $S$ be its total path mass and let
+\[
+ E=\sum_e a_e^2+\sum_{|T|=4}U_T^2+\sum_{|T|=6}W_T^2.
+\]
+Every forest total is at most one, so $E\le32-S/2$.
+The crossing functional is at most the inner product of the two sector-total vectors, hence at most their average energy.
+Equality at $32$ forces all path masses to vanish and all forest totals to be zero or one.
+It also forces the two shores to have the same active sectors, exactly thirty-two of them.
+For each active four-sector, corresponding pairing masses on opposite shores have disjoint supports.
+Indeed, equal four-terminal pairings are precisely the incompatible pairs in that sector's crossing formula.
+
+Suppose every six-terminal total is zero.
+Then exactly thirty-two of the thirty-five four-terminal sectors are active.
+Call the other three sectors missing.
+Fix a terminal pair $e$ and form a graph $H_e$ on the other five ports.
+An edge $f$ belongs to $H_e$ when the four-sector $e\cup f$ is active.
+Let $x_f,y_f$ be the two shores' pairing masses for $e|f$.
+They have disjoint supports.
+
+If $Q$ is a triangle of $H_e$, all three relevant four-sector totals equal one.
+The star-cap inequality on $e$ and $V(Q)$ gives
+\[
+ \sum_{f\in E(Q)}x_f\ge1,
+ \qquad
+ \sum_{f\in E(Q)}y_f\ge1.
+\]
+Thus Lemma~\ref{lem:path-seven-triangle-covers} applies.
+Write $d_e=10-|E(H_e)|$.
+Each missing four-sector contributes to $d_e$ for its six terminal pairs, so
+\[
+ \sum_e d_e=18.
+\]
+Summing the local lower bound gives
+\[
+ \sum_e\sum_{f\in E(H_e)}(x_f+y_f)
+ \ge21\cdot10-4\cdot18=138.
+\]
+However, each pairing coordinate appears twice in this sum, once for each of its pairs.
+Each active four-sector has total one on each shore.
+Therefore the same sum equals $4\cdot32=128$, a contradiction.
+\end{proof}
+
+The stronger proposed local bound $10-2d$ is false.
+For $K_5$ with one missing edge, two disjoint triangle covers can have total mass six.
+The exploratory script \texttt{path-six-seven-local-star.py} records such a zero-one witness and checks all thirty-four graph types on five vertices numerically.
+The proof above does not depend on that numerical search.
+
+\subsection{One active six-terminal sector is also impossible}
+
+\begin{lemma}[Four missing sectors with a sparse vertex]
+\label{lem:path-seven-four-missing-cost}
+Let $A_1,A_2,A_3,A_4$ be distinct four-subsets of a seven-element set.
+Suppose some element $v$ belongs to at most one of them.
+For each pair $e$, let $d_e$ count the sets $A_i$ containing $e$.
+Then
+\[
+ \sum_e L(d_e)\ge126,
+\]
+where $L$ is defined in Lemma~\ref{lem:path-seven-triangle-covers}.
+\end{lemma}
+
+\begin{proof}
+Define
+\[
+ f(d)=L(d)-10+4d,
+ \qquad (f(0),f(1),f(2),f(3),f(4))=(0,0,2,5,6).
+\]
+Since $\sum_e d_e=4\binom42=24$, it suffices to prove
+\[
+ \sum_e f(d_e)\ge12.
+\]
+
+Relabel the sets so that $A_1,A_2,A_3$ omit $v$.
+Their complements in the other six elements form the three edges of a graph $H$.
+For a pair $e=ab$ on those six elements, its codegree in $A_1,A_2,A_3$ is
+\[
+ q_e=3-\deg_H(a)-\deg_H(b)+\mathbf1_{ab\in E(H)}.
+\]
+The five possible types of $H$, with isolated vertices omitted from their names, give
+\[
+\begin{array}{c|ccccc}
+ H&3K_2&P_3+K_2&P_4&K_{1,3}&K_3\\\hline
+ \sum_e f(q_e)&6&10&13&17&15
+\end{array}
+\]
+These values follow by substituting the degree sequence and the three edges into the displayed formula.
+
+Put $D=A_4\setminus\{v\}$, so $|D|$ is three or four.
+Adding $A_4$ changes $q_e$ to $q_e+1$ exactly for the pairs in $D$.
+Pairs containing $v$ contribute zero to $f$, whether or not $A_4$ contains $v$.
+The increments
+\[
+ f(q+1)-f(q)=0,2,3,1\qquad(q=0,1,2,3)
+\]
+are all nonnegative.
+
+If $H=3K_2$, every increment is at least two.
+Any three-element subset of $D$ therefore adds at least six to the base value six.
+If $H=P_3+K_2$, exactly two pair increments are zero.
+They join the center of $P_3$ to the two endpoints of $K_2$.
+All other pair increments are at least two.
+Thus every three-element subset of $D$ has total increment at least two, which raises the base value ten to at least twelve.
+For the other three types, the base value already exceeds twelve.
+This proves the lemma.
+\end{proof}
+
+\begin{corollary}[At least two active six-terminal sectors]
+\label{cor:path-seven-critical-two-six-sectors}
+Under the limiting-profile hypotheses of Proposition~\ref{prop:path-seven-critical-six-sector}, crossing equality at $32$ requires at least two active six-terminal sectors.
+\end{corollary}
+
+\begin{proof}
+Proposition~\ref{prop:path-seven-critical-six-sector} excludes zero active six-terminal sectors.
+Suppose exactly one such sector is active, on the six-set $T$.
+There are then thirty-one active four-sectors and four missing four-sectors.
+Lemma~\ref{lem:four-seven-active-six-three-missing} says that at least three of the missing four-sectors lie inside $T$.
+Thus the omitted port belongs to at most one missing sector.
+
+Apply Lemma~\ref{lem:path-seven-four-missing-cost} to the four missing sectors.
+Summing the local triangle-cover bounds gives total pairing mass at least $126$.
+The actual total is $4\cdot31=124$, by the same double-counting used above.
+This contradiction excludes exactly one active six-terminal sector.
+\end{proof}

@@ -1,0 +1,78 @@
+\section{A transfer family that cannot violate the rank-distance scale}
+\label{sec:four-high-connectivity-path-transfers}
+
+The proposed general bound
+\[
+ P_{uv}(N)-2^{b-1}
+ \le \operatorname{poly}(b)\,2^{(b+\operatorname{dist}(u,v))/2}
+\]
+remains open in these notes.
+Repeated triangle expansion is one natural fixed-width test family.
+Its exact recurrence gives a faster-decaying excess, rather than a counterexample.
+
+\begin{proposition}[Repeated expansion beside a fixed edge]
+\label{prop:four-triangle-path-transfer}
+Let $N$ be a loopless normalized two-pole of rank $b$, with terminals $u,v$.
+Let $x$ be a nonterminal vertex and let $f$ be an incident edge.
+Partition its terminal paths into three classes, of sizes
+\[
+ Q=\#\{P:f\in P\},\qquad
+ Z=\#\{P:x\in P,\ f\notin P\},\qquad
+ A=\#\{P:x\notin P\}.
+\]
+Replace $x$ by a triangle, attaching its three former edges to distinct triangle vertices.
+Repeat at the new vertex incident with $f$.
+After $j$ expansions, the rank is $b+j$ and the path count is exactly
+\[
+ P_j=2^jQ+A+(j+1)Z.
+\]
+If $f$ is not a bridge, then $Q\le2^{b-1}$.
+If this inequality is strict, the normalized path count is eventually below one half.
+If equality holds, its excess is
+\[
+ \frac{P_j}{2^{b+j}}-\frac12
+ =\frac{A+(j+1)Z}{2^{b+j}}.
+\]
+\end{proposition}
+
+\begin{proof}
+A simple terminal path enters a replacement triangle through exactly two external edges, or avoids it entirely.
+There are only three external incidences, and neither terminal is inside the triangle.
+Thus no path can have two separate segments inside the triangle.
+Each path using the old vertex has two possible internal arcs after expansion.
+
+Write $Q_j,Z_j,A_j$ for the three counts relative to the current vertex incident with $f$.
+Paths using $f$ have two lifts.
+A path using the other two incidences has one lift through the distinguished vertex and one avoiding it.
+Therefore
+\[
+ Q_{j+1}=2Q_j,\qquad Z_{j+1}=Z_j,\qquad A_{j+1}=A_j+Z_j.
+\]
+Starting from $Q_0=Q,Z_0=Z,A_0=A$ gives the displayed formula.
+Each expansion adds two vertices and three edges, increasing rank by one.
+
+If $f$ is not a bridge, its coordinate is nonconstant on the cycle space.
+Exactly $2^{b-1}$ terminal joins use $f$.
+Since each terminal path is a join, $Q\le2^{b-1}$.
+If the inequality is strict, the exponential deficit $2^j(2^{b-1}-Q)$ eventually exceeds $A+(j+1)Z$.
+The equality case follows by subtraction.
+\end{proof}
+
+If $A+Z>0$, these graphs have a terminal path of bounded length throughout the expansion.
+An original path avoiding $x$ remains unchanged.
+If only $Z$ is positive, choose its lift that avoids the distinguished vertex after the first expansion.
+That lift remains unchanged thereafter.
+Thus even at bounded terminal distance, this critical transfer has excess only $O(j2^{-j})$ after normalization.
+
+The equality case has a useful four-terminal interpretation.
+Suppose $f=ab$ has endpoints distinct from $u,v$ and is not a bridge.
+Then $K=N-f$ is a connected normalized four-pole of rank $b-1$.
+The equality $Q=2^{b-1}$ holds precisely when every $\{u,v,a,b\}$-join in $K$ is a forest and none has pairing $uv\mid ab$.
+Indeed, adding $ab$ turns either other pairing into one terminal path.
+The excluded pairing instead gives a terminal path and a separate cycle.
+Any existing cycle component also prevents the result from being a single path.
+
+This identifies a narrower structural problem for future transfer arguments.
+It does not classify such saturated four-poles or bound their residual terminal-path count.
+The existing Horak--Kim construction already requires a linear polynomial factor at the half exponent.
+The triangle recurrence supplies no stronger obstruction.

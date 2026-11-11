@@ -1,0 +1,7 @@
+{
+  "seed": 101620261110,
+  "cases": 180,
+  "max_rank": 10,
+  "exact_rational_checks": true,
+  "status": "PASS"
+}

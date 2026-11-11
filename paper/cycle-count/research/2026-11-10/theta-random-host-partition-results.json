@@ -1,0 +1,8 @@
+{
+  "status": "all exact checks passed",
+  "q_values": [
+    1,
+    1000
+  ],
+  "theta_blocks_checked": 1000000
+}

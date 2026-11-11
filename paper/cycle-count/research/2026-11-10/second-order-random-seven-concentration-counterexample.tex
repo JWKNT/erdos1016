@@ -1,0 +1,61 @@
+\section{A limitation of pairing concentration}
+\label{sec:random-seven-concentration-counterexample}
+
+Vanishing terminal-path densities do not force four-terminal forest mass into one pairing.
+The following example explains why a restriction on cyclic cuts is necessary.
+
+\begin{proposition}
+\label{prop:random-seven-concentration-counterexample}
+For every integer $b\ge2$, there is a connected simple normalized four-pole $X_b$ of rank $h=4b+1$ such that
+\[
+ F_{\{1,2,3,4\}}(X_b)=2^h,
+ \qquad
+ f_{12|34}(X_b)=f_{14|23}(X_b)=2^{h-1},
+ \qquad
+ f_{13|24}(X_b)=0,
+\]
+and
+\[
+ P_{ij}(X_b)=2^{2b+1}
+ \qquad(1\le i<j\le4).
+\]
+In particular, all normalized path densities tend to zero, while two forest-pairing densities remain equal to $1/2$.
+\end{proposition}
+
+\begin{proof}
+Let $Q_b$ be a saturated simple two-pole of rank $b$.
+For example, use the capped singleton ladder with $b-1$ rung positions.
+It has $2^b$ simple paths between its two terminals.
+
+Start with a cycle $v_1v_2v_3v_4v_1$.
+For each $i$, take a disjoint copy of $Q_b$, with terminals $a_i,t_i$.
+Add the bridge $v_ia_i$.
+Use $t_1,t_2,t_3,t_4$ as the four ports.
+Every other vertex now has degree three.
+Bridges do not change cycle rank, so the resulting rank is $h=1+4b$.
+
+A join with odd boundary at all four ports must use all four bridges.
+Its restriction to each $Q_b$ is an $a_i$--$t_i$ path, since that two-pole is saturated.
+The restriction to the central four-cycle has odd degree at each vertex.
+There are exactly two possibilities: its two alternating matchings.
+Each gives a forest and has $2^{4b}$ independent choices in the four attached two-poles.
+The stated forest counts follow.
+
+A simple $t_i$--$t_j$ path uses exactly the two attached poles at $i,j$.
+It cannot enter another attached pole, because that would require traversing its bridge twice.
+There are $2^b$ choices in each used pole and two arcs between $v_i,v_j$ in the central cycle.
+Thus its count is $2^{2b+1}$, as required.
+\end{proof}
+
+Consequently, no absolute constant $C$ can satisfy
+\[
+ f_\alpha(X)f_\beta(X)
+ \le C\,2^{\beta(X)}\sum_{i<j}P_{ij}(X)
+ \qquad(\alpha\ne\beta)
+\]
+for all normalized four-poles.
+For the displayed family, the ratio of the two sides without $C$ is $2^{2b}/24$.
+
+Each attached pole gives a cyclic two-edge cut in every cubic completion.
+Its boundary consists of its attachment bridge and its filled port edge.
+Therefore this example leaves the corresponding concentration question open for graphs without small cyclic cuts.

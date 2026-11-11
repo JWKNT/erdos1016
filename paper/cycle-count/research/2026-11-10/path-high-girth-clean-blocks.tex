@@ -1,0 +1,127 @@
+\section{Conditional forest bounds in large clean blocks}
+\label{sec:path-high-girth-clean-blocks}
+
+The last step of the forest argument can use two conditional probability bounds instead of an inverse second moment.
+This requires only that a block's girth be much larger than the logarithm of its boundary bound.
+All logarithms have base two.
+
+\begin{lemma}[A conditional bound with rank larger than the port scale]
+\label{lem:path-clean-core-affine-forest}
+There is an absolute constant $C_0$ with the following property.
+Let $L\ge4$, and let $N$ be a connected normalized $k$-pole of rank $h$ such that
+\[
+ h\ge L,\qquad k\le2L,
+ \qquad\operatorname{girth}(N)\ge D\ge C_0\log(L+2).
+\]
+Then every even port subset $T$ has affine forest proportion at most $3/5$.
+The assertion also permits $k=0,1$, when the only even port subset is empty.
+\end{lemma}
+
+\begin{proof}
+If $k\le1$, the only relevant class is the even space.
+Its only forest is the empty state, of proportion $2^{-h}\le1/16$.
+Assume $k\ge2$.
+Since $h\ge L\ge4$ and $k\le2L\le2h$, the stationary branching entropy satisfies
+\[
+ \sigma=\frac{3(h-1)}{3(h-1)+k}\ge\frac12.
+\]
+The entropy Moore bound and $n=2h+k-2\le4h$ give
+\[
+ D\le4+4\log n\le12+4\log h,
+ \qquad h\ge2^{D/4-3}.
+\]
+
+Put $s=\lfloor D/8\rfloor$.
+The radius-$s$ balls about all ports contain at most $3k2^s\le6L2^{D/8}$ vertices.
+For a sufficiently large absolute $C_0$, the hypothesis on $D$ makes this less than $n\ge h\ge2^{D/4-3}$.
+There is therefore a radius-$s$ ball avoiding every port.
+Since $2s<D$, its cubic breadth-first expansion has at least $2^s\ge2^{D/8-1}$ vertices.
+Relative to any fixed root, this ball meets at most $2s+1\le D$ distance layers.
+One layer consequently has at least
+\[
+ \frac{2^{D/8-1}}D
+\]
+vertices.
+
+If an affine forest proportion were greater than $3/5$, the BFS marker and Lemma~\ref{lem:path-thin-marker-layer-width}, with $\varepsilon=1/10$, would bound every layer by
+\[
+ K\left[100(\log40)^{11}+(k+1)^2\right]
+ \le K_2(L+2)^2
+\]
+for an absolute $K_2$.
+Increasing $C_0$ makes the preceding lower bound larger than this upper bound whenever $D\ge C_0\log(L+2)$.
+To verify uniformity, $2^{D/8}/D$ is increasing for $D\ge16$, and at $D=C_0\log(L+2)$ its ratio to $(L+2)^2$ is
+\[
+ \frac{(L+2)^{C_0/8-2}}{C_0\log(L+2)}.
+\]
+This can be made arbitrarily large uniformly for $L\ge4$ by increasing $C_0$.
+The contradiction proves the lemma.
+\end{proof}
+
+\begin{lemma}[A large block contains a suitable core]
+\label{lem:path-clean-block-core}
+Let $G$ be connected and cubic, and let $R$ be a nonempty proper vertex set with
+\[
+ |R|\ge8L^2,
+ \qquad |\delta_G R|\le2L,
+ \qquad L\ge4.
+\]
+Then a connected component of $G[R]$ has a connected two-core of rank at least $L$ and at most $2L$ degree-two vertices.
+Its other vertices have degree three.
+\end{lemma}
+
+\begin{proof}
+Write $n=|R|$, $d=|\delta_G R|$, and $c=\operatorname{comp}(G[R])$.
+Every component has a boundary edge, so $1\le c\le d\le2L$.
+The degree sum gives
+\[
+ \beta(G[R])=\frac{n-d}{2}+c.
+\]
+The average component rank is therefore at least
+\[
+ \frac{n-d}{2d}+1
+ \ge\frac{8L^2-2L}{4L}+1>L.
+\]
+Choose a component of rank at least $L$.
+Pruning its degree-one vertices preserves rank and leaves a nonempty connected two-core.
+The core has minimum degree two and maximum degree three.
+
+At each pruning step, a removed leaf has two incidences outside the current core candidate and one incidence inside it.
+Its removal decreases the boundary by one.
+Thus the final core has boundary at most the original component boundary, which is at most $2L$.
+Every degree-two core vertex has exactly one boundary incidence, since $G$ is cubic; degree-three vertices have none.
+The asserted port bound follows.
+\end{proof}
+
+\begin{proposition}[Two clean blocks force probability below one half]
+\label{prop:path-two-clean-blocks}
+Let $G$ be connected and cubic, and let $P$ be any marked set.
+Suppose $G-P$ contains two vertex-disjoint sets $R_1,R_2$ such that, for $i=1,2$,
+\[
+ |R_i|\ge8L^2,
+ \qquad |\delta_G R_i|\le2L,
+ \qquad\operatorname{girth}(G[R_i])\ge D,
+\]
+where $L\ge4$ and $D\ge C_0\log(L+2)$.
+Then
+\[
+ \Pr(\xi_G-P\text{ is a forest})\le\frac9{25}<\frac12.
+\]
+In particular, these hypotheses hold eventually for any sequence with $D/\log(L+2)\to\infty$.
+\end{proposition}
+
+\begin{proof}
+Choose cores $K_i$ by Lemma~\ref{lem:path-clean-block-core}.
+They are vertex-disjoint, avoid $P$, and retain girth at least $D$.
+Condition on every edge outside $E(K_1)\cup E(K_2)$.
+For every conditioning of positive probability, the two remaining edge sets are independent uniform members of their respective affine parity classes.
+Indeed, each boundary parity is fixed, and the solution set is the direct product of the two affine internal cycle spaces.
+Only degree-two core vertices can have odd prescribed parity.
+Their odd sets have even cardinality.
+
+Lemma~\ref{lem:path-clean-core-affine-forest} bounds each conditional forest probability by $3/5$.
+The forest event outside $P$ implies that both core restrictions are forests.
+Its conditional probability is therefore at most $(3/5)^2$.
+Averaging over the conditioned edges gives the result.
+Edges between the two cores cause no difficulty, since they are among the conditioned edges.
+\end{proof}

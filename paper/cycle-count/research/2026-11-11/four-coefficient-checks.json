@@ -1,0 +1,103 @@
+{
+  "status": "all exact checks passed",
+  "counts": {
+    "closed_graphs": 456,
+    "even_states": 527520,
+    "open_chains": 86,
+    "integer_optimization_cases": 62491
+  },
+  "small_rank_ring_maxima": [
+    {
+      "rank": 4,
+      "max_cycles": 15,
+      "witness_word": [
+        1,
+        1,
+        1
+      ],
+      "HK_cycles": 14
+    },
+    {
+      "rank": 5,
+      "max_cycles": 29,
+      "witness_word": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "HK_cycles": 28
+    },
+    {
+      "rank": 6,
+      "max_cycles": 56,
+      "witness_word": [
+        1,
+        2,
+        2
+      ],
+      "HK_cycles": 56
+    },
+    {
+      "rank": 7,
+      "max_cycles": 107,
+      "witness_word": [
+        2,
+        2,
+        2
+      ],
+      "HK_cycles": 107
+    },
+    {
+      "rank": 8,
+      "max_cycles": 199,
+      "witness_word": [
+        1,
+        2,
+        2,
+        2
+      ],
+      "HK_cycles": 199
+    },
+    {
+      "rank": 9,
+      "max_cycles": 380,
+      "witness_word": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "HK_cycles": 380
+    },
+    {
+      "rank": 10,
+      "max_cycles": 696,
+      "witness_word": [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      "HK_cycles": 696
+    },
+    {
+      "rank": 11,
+      "max_cycles": 1345,
+      "witness_word": [
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "HK_cycles": 1345
+    }
+  ],
+  "four_port_endpoint_profiles": {
+    "feasible_endpoint_profiles": 1059,
+    "maximum_path_sum_outside_full_K22": "1583/400"
+  },
+  "scope": "Cycle spaces, path pairs, and integer profile bounds; no asymptotic inference from enumeration."
+}

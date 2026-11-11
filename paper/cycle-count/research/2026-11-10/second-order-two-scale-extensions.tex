@@ -1,0 +1,118 @@
+\section{The critical marked-set scale and a direct cycle transfer}
+\label{sec:two-scale-extensions}
+
+This section records extensions separately from the audited two-scale proof.
+Retain its absolute constants $A,t,\kappa$.
+
+\begin{theorem}[Several marked components at the critical scale]
+\label{thm:two-scale-critical-marking}
+Let $\Gamma$ be a connected multigraph of rank $r$ and maximum degree at most three.
+Let $P$ be a nonempty vertex set containing every vertex of degree less than three.
+Suppose
+\[
+ |P|\le\frac{r}{1000A\log r},\qquad
+ c:=\operatorname{comp}(\Gamma[P])\le\frac{\log r}{10000}.
+\]
+For a uniform even subgraph $\xi$, let $\mathcal F$ mean that its restriction to $\Gamma-P$ is a forest.
+For all sufficiently large $r$,
+\[
+ \Pr(\mathcal F)\le\frac12+r^{-\kappa}.
+\]
+\end{theorem}
+
+\begin{proof}
+Use the two nested short-cycle deletions and the same parameters as in Theorem~\ref{thm:two-scale-polynomial-forest}.
+We verify the three changes required by the new hypotheses.
+
+First, the marked-set deficit causes a fixed small spectral loss.
+For $J_1$, one has $v_1=2r+o(r)$ and
+\[
+ d_1\le\frac{3r}{1000Ax}+o(r/x),\qquad x=\log r.
+\]
+Consequently,
+\[
+ \frac{Ld_1}{2v_1}\le\frac3{4000}+o(1)<\frac1{500}.
+\]
+For each even length $6x\le\ell\le L$, the normalized Perron contribution is at least $1-1/500$.
+The even harmonic sum tends to $\tfrac14\ln(A/6)=42$.
+The repeated-walk error remains $o(\mu_1)$.
+Thus $\mu_1>20$ for large $r$.
+This uses a fixed spectral margin, rather than a vanishing spectral loss.
+
+Second, the link bound has $c$ in place of one.
+Its other terms are unchanged, and
+\[
+ c+\frac{2L}{t}+8t2^t\ln(2r^\kappa)+(8L/D_0)^2
+ \le x/1000
+\]
+for large $r$.
+Both inverse moment bounds therefore remain valid.
+
+Third, fix one connected component $P_0$ of $\Gamma[P]$.
+Use $P_0$ as the anchor in the definitions of main and far components.
+The far relation remains antisymmetric, since $P_0$ is connected.
+The same weighted averaging gives a long chain of cycles separating one vertex $u$ from $P_0$.
+Every cycle in this chain avoids all of $P$.
+
+Form the full blocks $V(a,b)$ in $\Gamma-V(C)$, as before.
+Each connected component of $\Gamma[P]$ can meet at most one block.
+Indeed, each block boundary ends on its two separator cycles, both disjoint from $P$.
+A connected set inside $P$ cannot cross such a boundary.
+Discard every block meeting $P$, losing at most $c$ blocks.
+Every retained block has no neighbor in $P$ for the same boundary reason.
+
+Now discard blocks meeting $N(C)$ and blocks meeting $S_0$ or a neighbor of $S_0$.
+The additional loss is at most $L+4|S_0|$.
+The total loss is still negligible compared with $\Omega(r^{1/20}/x^4)$.
+Every retained block has zero deficit in $J_0$, boundary at most $2L$, and the previous volume lower bound.
+The multi-mode trace argument again contradicts
+$\mu_0\le(1+o(1))r^\kappa/4$.
+\end{proof}
+
+The coefficient $1/(1000A)$ is deliberately small.
+This theorem reaches the order $r/\log r$ with a polynomial error above one half.
+It does not assert the same bound for every fixed coefficient at that scale.
+
+\begin{proposition}[Direct transfer through a cubic extremizer]
+\label{prop:two-scale-direct-cycle-transfer}
+The polynomial forest theorem alone implies
+\[
+ \psi(r)\le2^{r-1}+(1+o(1))2^r r^{-\kappa}.
+\]
+This transfer needs no marked cubic reduction.
+\end{proposition}
+
+\begin{proof}
+Choose a connected rank-$r$ graph attaining $\psi(r)$.
+Such a graph exists, since cycle counts are integers bounded by $2^r-1$.
+Multigraphs have the same extremal value, since uniform subdivision makes them simple without changing rank or cycle count.
+Delete leaves and suppress degree-two vertices, preserving rank and cycle count.
+For $r\ge2$, the resulting connected multigraph has minimum degree at least three.
+
+Replace each vertex of degree $d\ge4$ by a trivalent tree with $d$ external incidences and $d-2$ vertices.
+This adds $d-3$ vertices and $d-3$ edges, so it preserves rank.
+Every original cycle has a unique simple lift through the replacement trees.
+Contracting those trees recovers the original cycle, so the lift is injective.
+The resulting cubic multigraph still attains $\psi(r)$.
+
+Its order is $2r-2$.
+It has a cycle $W$ of length $O(\log r)$ by the elementary breadth-first-search girth bound.
+A loop or a parallel pair already gives such a cycle.
+Otherwise, a girth greater than $2k+1$ would force more than $2^k$ vertices in a depth-$k$ breadth-first tree.
+
+Take $P=V(W)$ and apply Theorem~\ref{thm:two-scale-polynomial-forest} directly.
+For any edge $e$ of $W$, map each cycle $C$ containing $e$ to the two even sets
+\[
+ C,\qquad C\mathbin\triangle W.
+\]
+All these sets are distinct, since toggling $W$ changes the status of $e$.
+Their restrictions to the graph outside $P$ are forests.
+Indeed, removing $P$ removes at least one vertex from each cycle $C$, and toggling $W$ changes no outside edge.
+Hence
+\[
+ 2c_e\le\Pr(\mathcal F)2^r,
+ \qquad c_e\le2^{r-2}+2^{r-1}r^{-\kappa}.
+\]
+Deleting $e$ preserves connectedness and reduces rank by one.
+The same edge recurrence and geometric summation as before give the stated bound.
+\end{proof}

@@ -1,0 +1,68 @@
+\section{Small support on one side of a six-terminal sector}
+\label{sec:path-six-matching-support}
+
+Two six-terminal matchings are compatible precisely when they have no common pair.
+The next finite observation reduces the possible supports of two compatible forest profiles.
+
+\begin{lemma}[Three matchings have at most two common partners]
+\label{lem:path-six-three-common-partners}
+Let $M_1,M_2,M_3$ be distinct perfect matchings on six vertices.
+At most two perfect matchings have no pair in common with any of them.
+\end{lemma}
+
+\begin{proof}
+Distinct perfect matchings on six vertices have either zero or one common pair.
+Let $t$ be the sum of these three pairwise intersection sizes.
+
+If $t=0$, the union of $M_1,M_2,M_3$ is a simple cubic graph.
+Its complement in $K_6$ is a simple two-regular graph.
+It is either a six-cycle or two triangles.
+These graphs have two or zero perfect matchings, respectively.
+
+If $t=3$, the three matchings have a common pair.
+Indeed, three distinct pairwise shared pairs would be disjoint and would force all three matchings to be equal.
+The remaining four vertices then use all three perfect matchings of $K_4$.
+The allowed-edge graph is $K_{2,4}$ and has no perfect matching.
+
+It remains to check $t=1,2$.
+Relabel a pair of intersecting matchings as
+\[
+ M_1=01|23|45,\qquad M_2=01|24|35.
+\]
+For $t=2$, relabel the one additional shared pair as $45$.
+The two possible pairings on the other four vertices are equivalent under the symmetries of $M_1,M_2$.
+For $t=1$, the third matching avoids both displayed matchings.
+It must use one of $25,34$, with its two other pairs joining $0,1$ to the remaining vertices.
+These four choices are also equivalent under those symmetries.
+Thus the complete cases are
+\[
+\begin{array}{c|c|c}
+ t&M_3&\text{common compatible matchings}\\\hline
+ 2&02|13|45&03|14|25,\quad05|12|34\\
+ 1&02|15|34&03|14|25,\quad04|13|25
+\end{array}
+\]
+The last column follows by choosing the partner of vertex $0$ among its allowed neighbors, then completing the matching.
+Each case has exactly two choices.
+\end{proof}
+
+\begin{corollary}[One support has size at most two]
+\label{cor:path-six-small-cross-support}
+Let $\mathcal A,\mathcal B$ be nonempty families of six-terminal perfect matchings.
+Suppose every matching in $\mathcal A$ is compatible with every matching in $\mathcal B$.
+Then
+\[
+ \min\{|\mathcal A|,|\mathcal B|\}\le2.
+\]
+\end{corollary}
+
+\begin{proof}
+If $\mathcal A$ contains three distinct matchings, Lemma~\ref{lem:path-six-three-common-partners} gives $|\mathcal B|\le2$.
+Otherwise $|\mathcal A|\le2$ already.
+\end{proof}
+
+For a critical pair of seven-pole profiles, the positive matching supports on an active six-terminal sector satisfy this corollary.
+One shore therefore uses one or two matchings on that sector.
+With one fixed matching, the other shore has at most eight possible matching states.
+With two fixed distinct matchings, it has at most four.
+This is a support reduction, not a bound on the number of active four-terminal sectors.

@@ -1,0 +1,54 @@
+{
+  "status": "all numerical operator checks passed",
+  "precision_note": "Numerical checks supplement, and do not replace, the exact proof.",
+  "cases": [
+    {
+      "vertices": 112,
+      "test_sets": 3,
+      "theta": 0.5,
+      "pencil_nonpositive_eigenvalues": 7,
+      "nonbacktracking_real_eigenvalues_in_interval": 7,
+      "even_trace_checks": [
+        {
+          "power": 20,
+          "normalized_trace": 6.690032958984533,
+          "claimed_lower_bound": -0.318611364183198
+        },
+        {
+          "power": 30,
+          "normalized_trace": 5.557037025690259,
+          "claimed_lower_bound": -0.009718159979489955
+        },
+        {
+          "power": 40,
+          "normalized_trace": 4.85929163973216,
+          "claimed_lower_bound": -0.0002902648148275875
+        }
+      ]
+    },
+    {
+      "vertices": 256,
+      "test_sets": 2,
+      "theta": 0.1,
+      "pencil_nonpositive_eigenvalues": 9,
+      "nonbacktracking_real_eigenvalues_in_interval": 9,
+      "even_trace_checks": [
+        {
+          "power": 20,
+          "normalized_trace": 15.291503906250005,
+          "claimed_lower_bound": -0.03302815518291624
+        },
+        {
+          "power": 30,
+          "normalized_trace": 12.701798915863,
+          "claimed_lower_bound": 0.40584002788587453
+        },
+        {
+          "power": 40,
+          "normalized_trace": 11.106952319387291,
+          "claimed_lower_bound": 0.25629189125520624
+        }
+      ]
+    }
+  ]
+}

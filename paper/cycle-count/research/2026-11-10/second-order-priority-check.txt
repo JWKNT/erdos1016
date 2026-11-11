@@ -1,0 +1,40 @@
+Priority check for the terminal-path gap, 10 November 2026.
+
+Status: incomplete. No novelty claim is supported by this search alone.
+
+Primary source checked:
+R. E. L. Aldred and C. Thomassen, On the maximum number of cycles in a planar
+graph, Journal of Graph Theory 57(3) (2008), 255--264.
+DOI: https://doi.org/10.1002/jgt.20290
+Publisher page: https://onlinelibrary.wiley.com/doi/10.1002/jgt.20290
+Author-institution record:
+https://orbit.dtu.dk/en/publications/on-the-maximum-number-of-cycles-in-a-planar-graph/
+Other author-institution record:
+https://ourarchive.otago.ac.nz/esploro/outputs/journalArticle/On-the-maximum-number-of-cycles/9926517911801891
+
+The abstract proves the older cycle bound c(G)<=(15/16)2^r, and the planar
+asymptotic half bound. Both institutional records link only to the DOI.
+The publisher PDF link redirects to its abstract. No primary full PDF was
+found by title, DOI, author, or targeted institutional searches.
+The full paper must still be checked for a terminal-path dichotomy or an
+equivalent statement. The matching constant 15/16 makes this a priority.
+
+Additional primary source read:
+A. Alahmadi, R. E. L. Aldred, R. dela Cruz, P. Sole, and C. Thomassen,
+The maximum number of minimal codewords in long codes,
+https://arxiv.org/pdf/1201.6043v2
+Section 3 states the older Aldred--Thomassen cycle bound, but does not state
+the terminal-path gap or reproduce the older proof. Its path bound in Lemma 1
+uses the numbers of vertices and edges through balanced multipaths.
+
+No search result stated the terminal-path dichotomy
+  P_st=2^b or P_st<=(15/16)2^b.
+Absence from search results does not establish novelty.
+
+The present proof is self-contained and has independent internal audits.
+Its mathematical status and its publication-priority status are separate.
+
+Further access check: the OpenAlex DOI record reports closed access,
+no repository full text, and no PDF URL at either indexed location.
+This is only an access-finding aid, not mathematical evidence.
+Query: https://api.openalex.org/works/https://doi.org/10.1002/jgt.20290

@@ -1,0 +1,61 @@
+{
+  "permutation_checks": [
+    {
+      "ladder_order": 2,
+      "tested": 2,
+      "saturated": 2
+    },
+    {
+      "ladder_order": 3,
+      "tested": 6,
+      "saturated": 3
+    },
+    {
+      "ladder_order": 4,
+      "tested": 24,
+      "saturated": 5
+    },
+    {
+      "ladder_order": 5,
+      "tested": 120,
+      "saturated": 8
+    },
+    {
+      "ladder_order": 6,
+      "tested": 720,
+      "saturated": 13
+    },
+    {
+      "ladder_order": 7,
+      "tested": 5040,
+      "saturated": 21
+    }
+  ],
+  "independent_search_checks": [
+    {
+      "rank": 7,
+      "paths": 82,
+      "excess": 18
+    },
+    {
+      "rank": 8,
+      "paths": 157,
+      "excess": 29
+    },
+    {
+      "rank": 9,
+      "paths": 295,
+      "excess": 39
+    },
+    {
+      "rank": 10,
+      "paths": 577,
+      "excess": 65
+    },
+    {
+      "rank": 11,
+      "paths": 1094,
+      "excess": 70
+    }
+  ]
+}

@@ -1,0 +1,198 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,booktabs,microtype,xcolor}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\PP}{\mathbb P}
+\newcommand{\EE}{\mathbb E}
+\newcommand{\Z}{\mathcal Z}
+\newcommand{\cO}{\mathcal O}
+\newcommand{\comp}{\operatorname{comp}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\half}{\tfrac12}
+\setlength{\emergencystretch}{3em}
+\title{The unrestricted sharp-order cycle bound}
+\author{Collaborative research working draft}
+\date{11 November 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Let $\psi(r)$ be the maximum number of cycles in a finite graph of cycle rank $r$.
+We prove that an absolute constant $K$ satisfies
+\[
+ \psi(r)\le 2^{r-1}+Kr2^{r/2}\qquad(r\ge1).
+\]
+The known cyclic-square examples have excess $\Theta(r2^{r/2})$, so this error order is necessary.
+
+The new step removes the dependence on a positive forest excess from repeated short-cycle packing.
+Two disjoint clean regions have uniformly bounded conditional affine-forest probabilities.
+Conditioning on the other edges makes these probabilities multiply.
+This controls every stage of cycle removal and turns a nested-chain argument into an exact half bound at sufficiently large fixed girth.
+The established sharp bound for cuts of size at most four, the bounded-girth deficit, and induction on rank complete the proof.
+
+The local estimates use only the original qualitative marked-cycle forest theorem at a fixed error.
+The stronger polynomial-error theorem is not required.
+\end{abstract}
+
+\section*{Proof status and contributions}
+The complete assembly has separate line audits by the root, path-stability, and four-regular agents.
+The random-host agent assembled it and independently reviewed the supporting proofs and the exposition refactor.
+The new theorem has not been formalized in Lean or externally peer reviewed.
+Publication priority has not been established.
+The constants and rank thresholds are very large.
+
+The proof builds on the existing research programme of the shared directory.
+Fable 5.2 supplied the parallel-link lemma and the nested-chain and restoration machinery.
+The present continuation adds the uniform affine-forest estimates, the iterative packing argument without an excess parameter, and the exact-half assembly.
+The lower-bound construction is due to Horak and Kim~\cite{HK}.
+
+\clearpage
+\tableofcontents
+
+\section{Conventions and three established inputs}
+Rank means $\beta(G)=|E(G)|-|V(G)|+\comp(G)$.
+The binary cycle space $\mathcal Z(G)$ consists of all even edge sets and has order $2^{\beta(G)}$.
+Write $\xi_G$ for its uniform random element and $c(G)$ for the number of simple cycles.
+Loops and parallel edges are allowed and remain distinct.
+A loop is a cycle of length one, and a parallel pair is a cycle of length two.
+Subdivision preserves rank and cycle count, so multigraphs and simple graphs have the same extremal value.
+
+For a vertex set $P$, the notation $\xi_G-P$ means the restriction to the edges of $G-P$.
+The notation $\xi_G\setminus E(W)$ instead removes only the specified edges.
+These two operations are kept distinct throughout the proof.
+A cyclic cut has a cycle on each shore.
+A normalized $k$-pole is connected, has $k$ degree-two vertices called ports, and has degree three elsewhere.
+All logarithms have base two, unless written as $\ln$.
+
+The following three results were proved independently before the new assembly.
+Their sources are specified so that the dependency chain can be checked.
+
+\begin{theorem}[Established qualitative marked-cycle estimate]
+\label{thm:sharp-qualitative-forest-input}
+There is an absolute rank threshold $R_*$ such that the following holds.
+Let $H$ be a connected simple graph of rank $\rho\ge R_*$.
+If a marked cycle $W$ satisfies
+\[
+ |E(W)|\le \frac{\rho}{(\log\rho)^2},
+\]
+then
+\[
+ \Pr\bigl(\xi_H\setminus E(W)\text{ is a forest}\bigr)\le\frac{11}{20}.
+\]
+\end{theorem}
+
+This is the one-cycle case of Theorem \texttt{thm:forest} and Remark \texttt{rem:range} in the original \nolinkurl{pancyclic-paper.tex}.
+That theorem gives $1/2+20/\log^{(3)}\rho$, where $\log^{(3)}$ is the third iterated logarithm.
+Choose a finite threshold with $\log^{(3)}\rho\ge400$ and $\log\rho\ge100$.
+The remark permits the displayed marked-cycle size.
+For the multigraph caps used below, subdividing only edges outside the marked cycle gives the same conclusion.
+This preserves rank and the forest event, and leaves the marked cycle unchanged.
+
+\begin{theorem}[Established sharp bound for small cyclic cuts]
+\label{thm:sharp-order-four-cut-error}
+There is an absolute constant $K_4$ such that every connected loopless cubic multigraph of rank $r$ with a cyclic cut of size at most four satisfies
+\[
+ c(G)\le2^{r-1}+K_4r2^{r/2}.
+\]
+\end{theorem}
+
+The proof is the theorem ``Sharp-order four-cut error in \nolinkurl{small-cut-sharp-bound.pdf}.
+It combines the four-pole profile classification with the linear two-cycle packing bound.
+In the aligned saturated case, the largest cap product cancels in the exact gluing identity.
+This input does not assume an unrestricted sharp-order estimate.
+
+\begin{corollary}[Established deficit at bounded girth]
+\label{cor:path-unbounded-girth-reduction}
+For every fixed integer $g_0\ge2$, there is a rank threshold $R(g_0)$ such that the following holds.
+A connected loopless cubic multigraph $G$ with rank at least $R(g_0)$, girth at most $g_0$, and no cyclic cut of size at most four satisfies
+\[
+ c(G)<2^{\beta(G)-1}.
+\]
+\end{corollary}
+
+This is proved in \nolinkurl{path-fixed-girth.tex} and the separate bounded-girth and structural-reduction packets.
+Its proof partitions terminal paths by their first departure from a shortest cycle.
+After a prefix of $p$ vertices is removed, the target component has rank at most $r-1-p$.
+The previously proved high-density path theorem and the asymptotic cycle bound yield, at each fixed girth $g\ge5$,
+\[
+ c(G)\le2^{r-1}-2^{r-g-1}+o_g(2^r).
+\]
+At sufficiently large rank, a cycle of length at most four itself gives a cyclic cut of size at most four.
+Thus the displayed corollary covers every bounded girth.
+Its proof does not use the new sharp-order conclusion.
+
+The next two sections derive all new local inputs from the first established theorem.
+The walk, link, chain, and assembly sections then prove the unrestricted result using the other two inputs.
+
+\input{path-qualitative-affine-bootstrap}
+\input{four-unrestricted-iterative-packing}
+\input{unrestricted-sharp-foundations}
+\input{unrestricted-sharp-parallel-links}
+\input{second-order-unrestricted-sharp-bootstrap}
+
+\section{The matching lower-order examples}
+For completeness, we give the exact count in the known cyclic-square family~\cite{HK}.
+For $q\ge2$, use indices modulo $q$.
+Block $i$ has vertices $a_i,b_i,c_i,d_i$ and all four edges between $\{a_i,b_i\}$ and $\{c_i,d_i\}$.
+Join consecutive blocks by the edges $c_i a_{i+1}$ and $d_i b_{i+1}$.
+The resulting simple cubic graph $G_q$ has $4q$ vertices, $6q$ edges, and rank $2q+1$.
+
+A cycle uses either one edge at every interface, or zero or two at every interface.
+In the first case there are $2^q$ choices of interfaces and two local paths in every square, giving $4^q$ cycles.
+If no interface is used, there are $q$ square cycles.
+If a nonempty proper subset of interfaces is used, connectedness makes it a cyclic interval.
+For an interval of $d$ interfaces, the two end blocks each have two caps and each inner block has two matchings.
+There are $q2^{d+1}$ such cycles for each $1\le d\le q-1$.
+
+When all interfaces are used twice, each square supplies one of two matchings.
+Their composition must be the transposition to give one cycle.
+This gives $2^{q-1}$ cycles.
+Adding the cases yields
+\[
+ \begin{aligned}
+ c(G_q)
+ &=4^q+q+q\sum_{d=1}^{q-1}2^{d+1}+2^{q-1}\\
+ &=2^{2q}+\left(2q+\frac12\right)2^q-3q.
+ \end{aligned}
+\]
+With $r=2q+1$, the excess is $\Theta(r2^{r/2})$.
+Therefore no uniform $o(r2^{r/2})$ error can replace the proved upper order.
+
+\section{Verification and formalization status}
+The proof does not infer an asymptotic theorem from finite enumeration.
+Exact checks instead test the finite identities at the new interfaces between the arguments.
+The iterative-packing checker verifies 5,572 selected-star sets, 636 middle intervals, and 114 disjoint segment pairs.
+It also checks 4,482 core prunings and all 4,163 conditional affine fibers from 421 disjoint-core pairs.
+The fibers are checked as complete Cartesian products, including adjacent cores.
+
+The localization checker compares the complete restriction laws in 1,193 cases, including 265 disconnected regions and 56 padded cap cycles.
+It enumerates 93,632 even states.
+The shortest-cycle checker verifies 292 prefix deletions and the associated path partitions.
+The cyclic-square formula has an independent cycle-space check for $2\le q\le7$.
+The earlier spectral and parallel-link checks are preserved with their source packets.
+
+A separate verification record lists the final source hashes, build results, check records, and audit files:
+\begin{center}
+\nolinkurl{verification-unrestricted-sharp-2026-11-11.json}.
+\end{center}
+All new work remains separate from the original manuscript and the root Lean imports.
+Fable's existing Lean modules cover several earlier link, moment, separation, and transfer steps.
+They do not yet formalize the new affine bounds, iterative packing, or complete sharp-order assembly.
+
+The shared \nolinkurl{CODEX-TO-FABLE-LIVE.txt} records the partial results and the completed mathematical argument.
+The new proof settles the requested error order within this research programme.
+It does not determine the optimal absolute constant or the exact value of $\psi(r)$.
+
+\begin{thebibliography}{9}
+\bibitem{HK}
+P. Horak and D. Kim,
+\emph{Connected cubic graphs with the maximum number of perfect matchings},
+Journal of Graph Theory 99 (2022), no. 4, 671--690.
+Updated author version: \url{https://arxiv.org/abs/2006.13459}.
+\end{thebibliography}
+\end{document}

@@ -1,0 +1,70 @@
+{
+  "checks": [
+    {
+      "positions": 1,
+      "subdivision_checks": 5,
+      "side_rank_checks": 80
+    },
+    {
+      "positions": 2,
+      "subdivision_checks": 16,
+      "side_rank_checks": 256
+    },
+    {
+      "positions": 3,
+      "subdivision_checks": 33,
+      "side_rank_checks": 528
+    },
+    {
+      "positions": 4,
+      "subdivision_checks": 70,
+      "side_rank_checks": 1120
+    },
+    {
+      "positions": 5,
+      "subdivision_checks": 136,
+      "side_rank_checks": 2176
+    },
+    {
+      "positions": 6,
+      "subdivision_checks": 260,
+      "side_rank_checks": 4160
+    },
+    {
+      "positions": 7,
+      "subdivision_checks": 483,
+      "side_rank_checks": 7728
+    },
+    {
+      "positions": 8,
+      "subdivision_checks": 884,
+      "side_rank_checks": 14144
+    },
+    {
+      "positions": 9,
+      "subdivision_checks": 1595,
+      "side_rank_checks": 25520
+    },
+    {
+      "positions": 10,
+      "subdivision_checks": 2848,
+      "side_rank_checks": 45568
+    }
+  ],
+  "maximum_observed_excess": [
+    2.9375,
+    {
+      "blocks": [
+        1,
+        2,
+        2,
+        2,
+        2
+      ],
+      "edge": 2,
+      "rank": 10,
+      "left_paths": 94,
+      "right_paths": 1024
+    }
+  ]
+}

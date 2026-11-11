@@ -1,0 +1,125 @@
+\section{Three full arms and an isolated fifth port}
+\label{sec:three-arm-isolated-port}
+
+The estimate below does not require positive density for the fourth arm.
+It excludes a limiting profile with three full arms and negligible paths from the remaining port.
+
+\begin{theorem}[Three full arms control the four-leaf forest sector]
+\label{thm:three-full-arms-forest-control}
+There is an absolute constant $C$ with the following property.
+Let $T$ be a normalized five-pole of rank $h$, with ports $c,a_1,a_2,a_3,a_4$.
+Suppose
+\[
+ P_{ca_1}(T)=P_{ca_2}(T)=P_{ca_3}(T)=2^h.
+\]
+Let $F_{1234}(T)$ count forests with odd-degree vertex set exactly
+$\{a_1,a_2,a_3,a_4\}$.
+Then
+\begin{equation}\label{eq:three-arm-forest-control}
+ F_{1234}(T)
+ \le C\sum_{i=1}^3P_{a_4a_i}(T)+C2^{h/2}.
+\end{equation}
+In particular, if $h\to\infty$ and all three normalized path counts on the right tend to zero, then $F_{1234}(T)/2^h\to0$.
+\end{theorem}
+
+\begin{proof}
+Suppress $a_2,a_3,a_4$ and call the resulting two-pole $N$.
+Its rank remains $h$, and its $c$--$a_1$ path count remains $2^h$.
+No loop can occur, since it would be avoided by every terminal path.
+By Lemma~\ref{lem:full-two-pole-classification}, its bridges join saturated bridgeless pieces in series.
+Orient this chain from $c$ to $a_1$.
+Let $K$ be its final piece, with rank $b$ and right terminal $a_1$.
+
+We first locate the restored ports $a_2,a_3$.
+For either port, suppress the other two extra ports and use the local subdivision table in Lemma~\ref{lem:one-full-tripole-sum}.
+Suppose its edge belongs to a nonempty capped-ladder piece.
+Write $q$ for the suffix position count and $R$ for the total rank of all later pieces.
+For an interface or singleton rung, its normalized path count from $c$ equals
+\[
+ 2^{-R}\frac{1+B_q}{2^{q+1}},
+\]
+where $B_0=1$ and $B_q\le2^q$.
+For a square edge, it equals
+\[
+ 2^{-R}\frac{4+3B_q}{2^{q+3}}.
+\]
+The first expression equals one only when $R=q=0$.
+The second is always strictly below one.
+For a digon piece, the normalized count is $2^{-R}$.
+For a bridge subdivision, it is $2^{-R}<1$, since the right shore has positive rank.
+
+Consequently, both $a_2,a_3$ subdivide edges of $K$.
+If $K$ is a nonempty ladder, those edges are right-cap edges or the rung of the final singleton block.
+Several restored ports may subdivide the same edge, with their original order retained.
+Thus both ports lie within a bounded terminal tail of $K$.
+
+If $b\le5$, the entire piece $K$, with these restored ports, has bounded size.
+When $a_4$ is outside this piece, every counted forest contains an $a_4$--$a_i$ path for some $i\le3$.
+Its other path lies in $K$ and has only a bounded number of choices.
+This proves the first term of~\eqref{eq:three-arm-forest-control}.
+When $a_4$ lies inside this piece, both forest paths stay there.
+Their count is bounded by an absolute constant.
+Increasing $C$ therefore handles every case with $b\le5$.
+
+Assume henceforth that $b\ge6$.
+Write the ladder positions of $K$ as $1,\ldots,b-1$.
+The left terminal has distance layer zero, and $a_1$ has distance layer $b$.
+Each intermediate layer has exactly two vertices.
+These are the distance layers from the left terminal: every edge changes its position by at most one, and each rail realizes the stated distance.
+Set $d=b-4$.
+The tail consisting of layers $d,\ldots,b$ has nine vertices before subdivisions.
+It contains both endpoints of every edge containing $a_2$ or $a_3$.
+
+First suppose $a_4$ is outside $K$, or subdivides an edge whose endpoints both lie below layer $d$.
+Each counted forest consists of two vertex-disjoint paths.
+One joins $a_4$ to a port $a_i$, and the other joins the remaining two leaf ports.
+The first path must meet layer $d$.
+If the second path visited a layer below $d$, it would use both vertices of layer $d$.
+Indeed, its two endpoints lie above that layer, and its two passages are vertex-disjoint.
+This is impossible because the first path also needs a vertex there.
+Therefore the second path stays in the bounded tail, with the two restored ports included.
+The number of its possible edge sets is bounded by an absolute constant.
+Summing over $i$ proves
+\[
+ F_{1234}(T)\le C\sum_{i=1}^3P_{a_4a_i}(T)
+\]
+in this case.
+This reasoning also covers an $a_4$ subdivision of the bridge entering $K$.
+
+It remains to consider an edge containing $a_4$ with at least one endpoint in the tail.
+Its other endpoint lies in layer at least $d-1$.
+All four leaf ports therefore lie in layers at least $d-1$, with at most three restored vertices.
+Every counted forest stays in $K$ with these subdivisions.
+A path with both endpoints there cannot leave through a bridge and return.
+
+Here is the required bounded-tail count.
+Mark every vertex in layers at least $d-1$, all restored vertices, and the left terminal.
+This marks an absolute number of vertices.
+If a forest uses an earlier layer, also mark its minimum layer, which adds at most two vertices.
+Fix the forest edges incident with marked vertices.
+There are only an absolute number of choices for these edge sets.
+
+Choose the path component that reaches the minimum layer $j$.
+Both endpoints lie in the marked tail.
+In every unmarked layer between $j$ and that tail, this path uses both vertices, with one backward and one forward edge each.
+No other path component can use these vertices.
+Across each cut between consecutive unmarked layers, the selected edges therefore form a perfect matching.
+There are at most two choices.
+Two-choice cuts arise only inside square blocks and cannot be consecutive.
+For fixed minimum layer $j$, the number of choices is consequently
+\[
+ O(1)2^{(b-j)/2}.
+\]
+This bound also covers the constant number of edges beside the marked layers.
+Forests wholly inside the marked tail have only $O(1)$ choices.
+The geometric sum over all possible minimum layers gives
+\[
+ F_{1234}(T)
+ \le O(1)\left(1+\sum_{j=0}^{b-1}2^{(b-j)/2}\right)
+ =O(2^{b/2})\le O(2^{h/2}).
+\]
+Increasing the same absolute constant $C$ proves the theorem.
+\end{proof}
+
+The proof uses the saturated two-pole classification and its exact local subdivision formulas.
+It requires no uniform lower bound for any path involving $a_4$.

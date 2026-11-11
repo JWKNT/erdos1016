@@ -1,0 +1,118 @@
+\section{A sharper packing estimate reduces the logarithmic factor}
+\label{sec:parallel-links-log-five-half}
+
+The stronger branch of the exponential cut proof improves the endpoint parameters by one half-power of $\log r$.
+We record this refinement separately from the preceding audited parameter choices.
+
+\begin{lemma}[Packing bound above one half]
+\label{lem:endpoint-sharp-packing}
+Suppose $k$ disjoint connected cyclic regions avoid the marked set and have boundaries at most an integer $d\ge2$.
+If the forest probability exceeds $1/2+\varepsilon$, with $0<\varepsilon<1/2$, then
+\[
+ k<2^{d+1}\max\left\{5d+1,\ln\frac1{2\varepsilon}\right\}.
+\]
+\end{lemma}
+
+\begin{proof}
+The proof of Theorem~\ref{thm:sharper-exponential-cuts} gives the stronger implication
+\[
+ k\ge2(5d+1)2^d
+ \quad\Longrightarrow\quad
+ \Pr(\mathcal F)-\frac12
+ \le\frac12\exp\left(-\frac{k}{2^{d+1}}\right).
+\]
+The cyclic-region version follows from the same quotient and conditional internal-cycle-space argument.
+If the threshold fails, the first term in the maximum gives the asserted bound.
+Otherwise, compare the displayed exponential estimate with $\varepsilon$ and take logarithms.
+\end{proof}
+
+\begin{theorem}[The improved endpoint forest bound]
+\label{thm:parallel-links-log-five-half-forest}
+Under the hypotheses of Theorem~\ref{thm:parallel-links-endpoint-forest}, there is an absolute constant $M$ such that
+\[
+ \Pr(\mathcal F)
+ \le\frac12+M\frac{(\log r)^{11/2}}{\sqrt r}
+\]
+for all sufficiently large $r$.
+One may take
+\[
+ A=6e^{168},\qquad B=\lceil\log(10^6A)\rceil,
+ \qquad M=64A^5 2^{B/2}.
+\]
+\end{theorem}
+
+\begin{proof}
+Keep $x=\log r$, $z=\log x$, and the parameters
+\[
+ L=\lfloor Ax\rfloor,\quad
+ t=\lfloor z-2\log z\rfloor,\quad
+ D_0=\left\lceil\frac{8Ax}{z}\right\rceil.
+\]
+Replace only the large girth scale and the assumed excess by
+\[
+ D_1=\lfloor x-3z-B\rfloor,
+ \qquad \varepsilon=Mx^{11/2}/\sqrt r.
+\]
+Construct the two nested disjoint short-cycle packings as before.
+For both scales, $D_j\le x$ and $\ln(1/(2\varepsilon))\le x$ for large $r$.
+Lemma~\ref{lem:endpoint-sharp-packing} therefore gives
+\[
+ |\mathcal Q_j|<12x2^{D_j},\qquad
+ |S_j|<12x^22^{D_j}.
+\]
+In particular,
+\[
+ |S_0|=r^{o(1)},\qquad
+ |S_1|\le12\,2^{-B}r/x.
+\]
+
+As before, $v_1=2r+o(r)$ and $d_1\le3(|P|+|S_1|)$.
+For large $r$, the fixed spectral loss satisfies
+\[
+ \frac{Ld_1}{2v_1}
+ \le\frac{3A}{2x}+18A2^{-B}<\frac1{100}.
+\]
+The initial cycle supply therefore remains $\mu_1>20$.
+The link bound is unchanged, since it contains no forest-excess term.
+It gives at most $3Ax/z$ links at either scale.
+Thus the exceptional-pair error remains $O(L^32^{-Ax/z})=o(1)$.
+Both conclusions of Lemma~\ref{lem:endpoint-two-link-moment} still apply.
+
+The large-scale girth now gives
+\[
+ 2^{s_1}\ge2^{-B/2-2}\frac{\sqrt r}{x^{3/2}}.
+\]
+The same weighted averaging and maximal-disjointness argument produce a nested chain of size at least
+\[
+ T\ge\frac{2^{1-B/2}}{A^3}\frac{\sqrt r}{x^{9/2}}.
+\]
+Use separator intervals with $q=\lceil16A^2x\rceil+2$ gaps and the same full block definition.
+Each block has at least $8L^2$ vertices and boundary at most $2L$.
+Discarding blocks meeting $P$, $S_0$, or a neighbor of the anchor cycle loses only $r^{o(1)}$ blocks.
+The retained block count is at least
+\[
+ m\ge c_B\frac{\sqrt r}{x^{11/2}},
+ \qquad c_B=\frac{2^{-B/2}}{64A^5}.
+\]
+The one-block spectral supply gives $\mu_0\ge m$.
+The inverse moment bound instead gives
+\[
+ \mu_0\le\frac{1+o(1)}{4\varepsilon}
+ =(1+o(1))\frac{c_B}{4}\frac{\sqrt r}{x^{11/2}},
+\]
+since $M=1/c_B$.
+These inequalities contradict each other for large $r$.
+\end{proof}
+
+\begin{corollary}[Unrestricted cycle bound]
+\label{cor:parallel-links-log-five-half-cycles}
+There is an absolute constant $M$ such that
+\[
+ \psi(r)
+ \le2^{r-1}+(M+o(1))\frac{2^r(\log r)^{11/2}}{\sqrt r}.
+\]
+\end{corollary}
+
+\begin{proof}
+Apply the direct cubic-extremizer transfer and its geometric rank summation, now with exponent $11/2$ on the logarithm.
+\end{proof}

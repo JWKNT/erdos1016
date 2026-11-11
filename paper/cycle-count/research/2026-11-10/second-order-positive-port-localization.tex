@@ -1,0 +1,137 @@
+\section{Positive path density near a saturated terminal}
+\label{sec:positive-port-localization}
+
+\begin{lemma}[A positive-density port lies near the far terminal]
+\label{lem:positive-port-clustering}
+Let $T$ be a normalized three-pole of rank $h$, with ports $a,b,c$.
+Suppose $P_{ac}(T)=2^h$.
+For every $0<\delta\le1$, the implication
+\[
+ P_{ab}(T)\ge\delta2^h
+ \quad\Longrightarrow\quad
+ \operatorname{dist}_T(b,c)
+ \le2\log_2\!\left(\frac3{2\delta}\right)+3
+\]
+holds.
+Moreover,
+\begin{equation}\label{eq:one-full-product-tradeoff}
+ P_{ab}(T)P_{bc}(T)\le7\,2^{3h/2}.
+\end{equation}
+In particular, $P_{ab}(T)\ge\delta2^h$ gives
+$P_{bc}(T)\le(7/\delta)2^{h/2}$.
+\end{lemma}
+
+\begin{proof}
+Suppress $b$ and use the saturated two-pole classification.
+Orient its series chain from $a$ to $c$.
+Suppose first that $b$ subdivides an edge inside a nonempty capped-ladder piece.
+Let $p,q$ be its prefix and suffix position counts, and let $L,R$ be the sums of the ranks of earlier and later pieces.
+The active piece has rank $p+q+d$, where $d\in\{1,2,3\}$ is the corresponding row parameter in the local subdivision table.
+The prefix-cap estimates in Lemma~\ref{lem:one-full-tripole-small-adjacent} give
+\[
+ \frac{P_{ab}}{2^h}\le\frac32\,2^{-R-q/2},\qquad
+ \frac{P_{bc}}{2^h}\le\frac32\,2^{-L-p/2}.
+\]
+The first inequality and $P_{ab}\ge\delta2^h$ imply
+\[
+ q+2R\le2\log_2\!\left(\frac3{2\delta}\right).
+\]
+Inside the active piece, a route from $b$ to its right terminal has length at most $q+3$.
+Each later saturated piece has a terminal path whose length equals its rank.
+The number of intervening bridges is at most the sum $R$ of those positive ranks.
+Hence $\operatorname{dist}_T(b,c)\le q+2R+3$, proving the distance bound.
+
+Multiplying the two normalized estimates gives
+\[
+ \frac{P_{ab}P_{bc}}{2^{2h}}
+ \le\frac94\,2^{-(L+R)-(p+q)/2}
+ \le\frac94\,2^{3/2}2^{-h/2}<7\,2^{-h/2}.
+\]
+Here $h=L+R+p+q+d$ and $d\le3$.
+
+If the active piece is a digon, the normalized counts are $2^{-R}$ and $2^{-L}$, with $h=L+R+1$.
+Its contribution to the distance from $b$ to the right terminal is at most two.
+Both stated inequalities follow immediately.
+If $b$ subdivides a bridge, the normalized counts are $2^{-R},2^{-L}$ with $h=L+R$.
+The route from $b$ to $c$ has length at most $2R+1$.
+Again both inequalities follow.
+\end{proof}
+
+\begin{theorem}[Three full arms and a positive fourth arm]
+\label{thm:partial-five-star-return}
+For each fixed $0<\delta\le1$, there is a constant $D_\delta$ with the following property.
+Let $T$ be a normalized five-pole of rank $h$, with ports $c,a_1,a_2,a_3,a_4$.
+Suppose
+\[
+ P_{ca_1}=P_{ca_2}=P_{ca_3}=2^h,
+ \qquad P_{ca_4}\ge\delta2^h.
+\]
+Then the number of forests with odd-degree vertex set $\{a_1,a_2,a_3,a_4\}$ is at most
+\[
+ D_\delta2^{h/2}.
+\]
+\end{theorem}
+
+\begin{proof}
+First assume that $T$ is bridgeless.
+Suppress $a_2,a_3$ and apply Lemma~\ref{lem:positive-port-clustering} to the ports $c,a_4,a_1$.
+Restoring the two suppressed vertices increases the distance bound by at most two.
+Thus
+\[
+ \operatorname{dist}_T(a_4,a_1)
+ \le2\log_2\!\left(\frac3{2\delta}\right)+5=:d_\delta.
+\]
+Full terminal-path saturation forces every $c$--$a_i$ path, for $i\le3$, to have at least $h$ edges.
+The triangle inequality therefore gives
+\[
+ \operatorname{dist}_T(c,a_i)\ge h-d_\delta
+ \qquad(1\le i\le4).
+\]
+
+Use the bridgeless proof of Theorem~\ref{thm:far-terminal-forests}.
+That proof uses the high path densities only to obtain a far-tail distance bound and a bounded residual rank for one normalized two-pole.
+The displayed distance bounds supply the first condition, with constant $d_\delta$.
+The full pair $c,a_1$ supplies the second condition, with additive-stability constant $C_{1/2}$.
+Choose the layer cutoff using the larger of these two constants.
+All marked sets still have bounded size depending only on $\delta$.
+The same single-minimum-layer encoding proves the claimed bound.
+
+Now suppose that $T$ has a bridge.
+Both shores contain cycles, by the degree count used in Theorem~\ref{thm:far-terminal-forests}.
+The three full pairs force $c$ onto one shore and $a_1,a_2,a_3$ onto the other.
+Neither $c$ nor those three leaf ports can be a bridge endpoint.
+Call the two ranks $h_L,h_R$, with $c$ on the left.
+
+If $a_4$ is a bridge endpoint, every $c$--$a_4$ path avoids the cyclic part of the right shore.
+Thus $P_{ca_4}\le2^{h_L}$ and $2^{h_R}\le1/\delta$.
+If $a_4$ is the left endpoint, each counted forest uses the bridge, has no left-shore edge, and gives a four-terminal forest on the right.
+If $a_4$ is the right endpoint, each counted forest stays on the right.
+In both cases, the forest count is at most $2^{h_R}\le1/\delta$.
+
+Otherwise, if $a_4$ lies on the right, retain the right shore and make its bridge attachment the new center.
+Full path counts factor across the bridge, so all three full pairs remain full there.
+The fourth normalized density remains at least $\delta$.
+Every counted forest stays in that shore.
+Induction on rank proves the result.
+
+Finally, suppose that $a_4$ lies on the left and is not the bridge endpoint.
+The left shore is a normalized three-pole with ports $c,a_4,z$, where $z$ is its bridge attachment.
+Full path factorization gives $P_{cz}=2^{h_L}$.
+Every counted forest uses the bridge exactly once.
+Its left part is an $a_4$--$z$ path, and its right part is a four-terminal forest.
+The latter has at most $2^{h_R}$ choices.
+Equation~\eqref{eq:one-full-product-tradeoff} gives
+\[
+ P_{a_4z}\,P_{ca_4}\le7\,2^{3h_L/2}.
+\]
+Since $P_{ca_4}\ge\delta2^{h_L+h_R}$, the total forest count is at most
+\[
+ 2^{h_R}P_{a_4z}
+ \le\frac7\delta\,2^{h_L/2}
+ \le\frac7\delta\,2^{h/2}.
+\]
+Increasing $D_\delta$ covers every bridge case.
+\end{proof}
+
+This theorem excludes a five-pole profile with three full star arms, a fixed positive fourth arm, and a full four-leaf forest sector.
+It does not impose a fixed lower bound on the fourth arm when that arm tends to zero with rank.

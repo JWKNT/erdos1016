@@ -1,0 +1,96 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,microtype,xcolor}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\setlength{\emergencystretch}{3em}
+\title{A strict cycle-count deficit at bounded girth}
+\author{Collaborative research working draft}
+\date{11 November 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Fix $g\ge5$.
+Every connected loopless cubic multigraph of rank $r$, girth $g$, and no cyclic cut of size at most four satisfies
+\[
+ c(G)\le2^{r-1}-2^{r-g-1}+o_g(2^r).
+\]
+The proof partitions terminal paths by their first departure from a shortest cycle.
+Its complement may be disconnected.
+Every exterior component contains a cycle, which gives the required rank decrease after each prefix deletion.
+Consequently, every remaining above-half sequence without small cyclic cuts has girth tending to infinity.
+The argument also settles bounded-rank shores for every fixed cut size.
+The unrestricted $O(r2^{r/2})$ error remains open.
+\end{abstract}
+
+\section*{Status and inputs}
+The proof has passed four independent full mathematical reviews within the research team.
+It is not formalized in Lean, and publication priority has not been established.
+The geometric prefix argument and first-divergence count are proved here.
+The preceding research packets supply the following analytic inputs.
+
+Rank means $|E|-|V|+\operatorname{comp}$.
+A normalized $k$-pole has $k$ distinct degree-two ports and all other degrees three.
+A cyclic cut has a cycle on each shore.
+Parallel edges remain distinct, and a parallel pair is a cycle.
+Write $\psi(r)$ for the maximum cycle count at rank $r$.
+
+\section{Established analytic inputs}
+\begin{theorem}[Asymptotic cycle bound]
+Uniformly over connected graphs of rank $r$,
+\[
+ c(G)\le(1/2+o(1))2^r.
+\]
+The stronger unrestricted estimate proved in the accompanying packet is
+\[
+ \psi(r)\le2^{r-1}+O\!\left(2^r(\log_2 r)^{11/2}/\sqrt r\right).
+\]
+\end{theorem}
+
+\begin{theorem}[High-density paths force a small cyclic cut]\label{thm:high-density-pair-small-cyclic-cut}
+For $0<\varepsilon\le1/2$, let $C_\varepsilon$ be the established additive terminal-path stability constant.
+Let $X$ be a normalized $k$-pole of rank at least
+\[
+ (k+1)\bigl(9\lceil C_\varepsilon\rceil+8k+9\bigr).
+\]
+If some terminal pair has at least $(1/2+\varepsilon)2^{\beta(X)}$ paths, then $X$ contains two disjoint cyclic vertex sets.
+They avoid all ports and have boundary at most four in every cubic completion.
+\end{theorem}
+
+\begin{theorem}[Protected version]\label{thm:high-density-protected-cyclic-sets}
+For any fixed number $m$ of protected vertices, the preceding conclusion can also avoid those vertices.
+A sufficient rank threshold is
+\[
+ (k+m+1)\bigl(9\lceil C_\varepsilon\rceil+8k+4m+9\bigr).
+\]
+\end{theorem}
+
+The path-stability proof appears in \nolinkurl{terminal-path-stability.pdf}.
+The small-cut and protected refinements appear in \nolinkurl{small-cut-sharp-bound.pdf}.
+The unrestricted quantitative estimate appears in \nolinkurl{polynomial-cycle-error.pdf}.
+These inputs are not re-proved here.
+
+\input{path-fixed-girth}
+
+\section{Independent finite verification}
+The standard-library script \texttt{check\_root\_shortest\_cycle\_prefix.py} checks the finite identities on seventy-two random simple cubic graphs of girth at least five.
+It also checks an explicit shortest five-cycle with two cyclic exterior components.
+There are 292 prefix checks in total.
+For each graph, independent cycle-space enumeration verifies that deleting the selected edge removes exactly the counted terminal paths.
+A separate path enumeration verifies their first-divergence partition.
+The checks include the final pendant-target reduction, all port degrees, and the component-rank inequalities.
+
+For the disconnected-complement example, the four branch counts are $812,406,0,28$.
+Together with the cycle path, they give $1,247$ cycles through the selected edge.
+The zero branch confirms that the target-component restriction is needed.
+The graph has rank thirteen and girth five.
+
+These finite checks do not establish the asymptotic estimate.
+That conclusion follows from the proof and the analytic inputs stated above.
+The second growth condition still depends on $C_\varepsilon$; no useful polynomial estimate for that constant is claimed.
+\end{document}

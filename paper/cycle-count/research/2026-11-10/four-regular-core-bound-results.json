@@ -1,0 +1,1901 @@
+{
+  "summary": {
+    "status": "all exact inequalities passed",
+    "finite_orders": [
+      19,
+      32
+    ],
+    "finite_cases": 189,
+    "tail_base_orders": [
+      33,
+      39
+    ],
+    "tail_base_cases": 7,
+    "maximum_finite_display_ratio": 0.9836118852305963,
+    "maximum_tail_base_display_ratio": 0.9814652742378407,
+    "remaining_possible_minimum_counterexample_orders": [
+      11,
+      18
+    ],
+    "small_matching_cases": 12,
+    "small_matching_cutoffs": {
+      "0": 14,
+      "1": 15,
+      "2": 16
+    },
+    "maximum_small_matching_display_ratio": 0.9732702654700565,
+    "kappa_sixteenth": "1162261467/17179869184",
+    "kappa_upper": "423/500"
+  },
+  "finite": [
+    {
+      "n": 19,
+      "parallel_pairs": 0,
+      "length_cutoff": 10,
+      "short_normalized": "67127/14680064",
+      "long_normalized_fourth_power": "4849307376042775959686187/10737418240000000000000000",
+      "remaining_allowance_fourth_power": "45598446594584194399234508961/46442094286315594375512457216",
+      "display_only_upper_ratio": 0.8243482130985386
+    },
+    {
+      "n": 19,
+      "parallel_pairs": 1,
+      "length_cutoff": 11,
+      "short_normalized": "2725505/242221056",
+      "long_normalized_fourth_power": "361740101646222833769/959512576000000000000",
+      "remaining_allowance_fourth_power": "3289953809343955547815133298547201/3442290931132604749837631798378496",
+      "display_only_upper_ratio": 0.794837829100644
+    },
+    {
+      "n": 19,
+      "parallel_pairs": 2,
+      "length_cutoff": 11,
+      "short_normalized": "5545901/484442112",
+      "long_normalized_fourth_power": "451848219878598471957843/982540877824000000000000",
+      "remaining_allowance_fourth_power": "52597560734369869975271252718823441/55076654898121675997402108774055936",
+      "display_only_upper_ratio": 0.834942106352448
+    },
+    {
+      "n": 19,
+      "parallel_pairs": 3,
+      "length_cutoff": 12,
+      "short_normalized": "144867/5046272",
+      "long_normalized_fourth_power": "106107079096722244401/268435456000000000000",
+      "remaining_allowance_fourth_power": "577141571812406097224700625/648459150739618890048864256",
+      "display_only_upper_ratio": 0.8216217897093141
+    },
+    {
+      "n": 19,
+      "parallel_pairs": 4,
+      "length_cutoff": 12,
+      "short_normalized": "4713299/161480704",
+      "long_normalized_fourth_power": "824937383885812587/1717986918400000000",
+      "remaining_allowance_fourth_power": "603980723180744546427511877700625/679958702445946617251877886099456",
+      "display_only_upper_ratio": 0.8616229076762397
+    },
+    {
+      "n": 19,
+      "parallel_pairs": 5,
+      "length_cutoff": 13,
+      "short_normalized": "234369229/3148873728",
+      "long_normalized_fourth_power": "49433199932990306169/116985856000000000000",
+      "remaining_allowance_fourth_power": "72153752145270019970714955069463482001/98315271284078324260112601793488224256",
+      "display_only_upper_ratio": 0.8806825384644934
+    },
+    {
+      "n": 19,
+      "parallel_pairs": 6,
+      "length_cutoff": 13,
+      "short_normalized": "22681419/299892736",
+      "long_normalized_fourth_power": "3825782580530322550323/7487094784000000000000",
+      "remaining_allowance_fourth_power": "5905325278839684253231978747011121/8088421699524648619463092171964416",
+      "display_only_upper_ratio": 0.9211086566913032
+    },
+    {
+      "n": 19,
+      "parallel_pairs": 7,
+      "length_cutoff": 13,
+      "short_normalized": "252183382861/3780222910464",
+      "long_normalized_fourth_power": "72110782745509853601/116985856000000000000",
+      "remaining_allowance_fourth_power": "154929375043904547719514057914674926256023516020881/204206536532203868958495091525329169168539756527616",
+      "display_only_upper_ratio": 0.952778554312959
+    },
+    {
+      "n": 19,
+      "parallel_pairs": 8,
+      "length_cutoff": 14,
+      "short_normalized": "4065814372737287/36305260832096256",
+      "long_normalized_fourth_power": "347059467180561779307/629407744000000000000",
+      "remaining_allowance_fourth_power": "1080314750689930212973642891111311429564450430086306800140791047521/1737313702510955862555314238625950754266946564727992179908249911296",
+      "display_only_upper_ratio": 0.9737132084530735
+    },
+    {
+      "n": 19,
+      "parallel_pairs": 9,
+      "length_cutoff": 14,
+      "short_normalized": "30282414873739447/370616204327649280",
+      "long_normalized_fourth_power": "2541865828329/3841600000000",
+      "remaining_allowance_fourth_power": "13415914371096851731542033480807052281205550705863938034131422056476321/18866772629629744291733613338037409905608090668271842385237439938560000",
+      "display_only_upper_ratio": 0.9836118852305963
+    },
+    {
+      "n": 20,
+      "parallel_pairs": 0,
+      "length_cutoff": 11,
+      "short_normalized": "469835/80740352",
+      "long_normalized_fourth_power": "111631449483416547441/393016351129600000000",
+      "remaining_allowance_fourth_power": "41516835246942182634615689449521/42497418902871663578242367881216",
+      "display_only_upper_ratio": 0.7358545967201133
+    },
+    {
+      "n": 20,
+      "parallel_pairs": 1,
+      "length_cutoff": 11,
+      "short_normalized": "5732911/968884224",
+      "long_normalized_fourth_power": "5481421451219786327012187/15720654045184000000000000",
+      "remaining_allowance_fourth_power": "860553913710631285432104165891312961/881226478369946815958433740384894976",
+      "display_only_upper_ratio": 0.7743493849658083
+    },
+    {
+      "n": 20,
+      "parallel_pairs": 2,
+      "length_cutoff": 12,
+      "short_normalized": "2394965/161480704",
+      "long_normalized_fourth_power": "1295739197658049818969/4294967296000000000000",
+      "remaining_allowance_fourth_power": "640508649502538793079196444606641/679958702445946617251877886099456",
+      "display_only_upper_ratio": 0.7559528134419988
+    },
+    {
+      "n": 20,
+      "parallel_pairs": 3,
+      "length_cutoff": 12,
+      "short_normalized": "695355/46137344",
+      "long_normalized_fourth_power": "6339822450419549997603/17179869184000000000000",
+      "remaining_allowance_fourth_power": "4264119125117570068800330806641/4531170028794313151199519440896",
+      "display_only_upper_ratio": 0.7944784294583669
+    },
+    {
+      "n": 20,
+      "parallel_pairs": 4,
+      "length_cutoff": 13,
+      "short_normalized": "30240319/787218432",
+      "long_normalized_fourth_power": "38266346098379999601/116985856000000000000",
+      "remaining_allowance_fourth_power": "328347179892605290168204038480111361/384044028453430954141064850755813376",
+      "display_only_upper_ratio": 0.7946737553116643
+    },
+    {
+      "n": 20,
+      "parallel_pairs": 5,
+      "length_cutoff": 13,
+      "short_normalized": "37801265/968884224",
+      "long_normalized_fourth_power": "76392358116147087147/191669626470400000000",
+      "remaining_allowance_fourth_power": "751542443464914568146329685771053761/881226478369946815958433740384894976",
+      "display_only_upper_ratio": 0.8335706025390709
+    },
+    {
+      "n": 20,
+      "parallel_pairs": 6,
+      "length_cutoff": 14,
+      "short_normalized": "19252057/190840832",
+      "long_normalized_fourth_power": "907112984396898046329/2517630976000000000000",
+      "remaining_allowance_fourth_power": "866873037060988585820632500390625/1326432654911459690959011290546176",
+      "display_only_upper_ratio": 0.8756404219574008
+    },
+    {
+      "n": 20,
+      "parallel_pairs": 7,
+      "length_cutoff": 14,
+      "short_normalized": "18922354191535/211692482985984",
+      "long_normalized_fourth_power": "4402391997547163602323/10070523904000000000000",
+      "remaining_allowance_fourth_power": "1380889572423484814963419520749198937764462383715411387201/2008268366699812820456844143625483612871327561411813441536",
+      "display_only_upper_ratio": 0.902514505899063
+    },
+    {
+      "n": 20,
+      "parallel_pairs": 8,
+      "length_cutoff": 14,
+      "short_normalized": "888535548410569/12966164582891520",
+      "long_normalized_fourth_power": "5204348711496780561/9834496000000000000",
+      "remaining_allowance_fourth_power": "21277801072369265955065257956817176470690347790129154687951088801/28264813204637323357378993105508621965244731438853475438428160000",
+      "display_only_upper_ratio": 0.9214379601594067
+    },
+    {
+      "n": 20,
+      "parallel_pairs": 9,
+      "length_cutoff": 15,
+      "short_normalized": "329781413048997583/2964929634621194240",
+      "long_normalized_fourth_power": "4965926377171709547/10240000000000000000",
+      "remaining_allowance_fourth_power": "48219221406447997698879666379470247002606699507681036842787933850628971201/77278300690963432618940880232601230973370739377241466409932553988341760000",
+      "display_only_upper_ratio": 0.9457249764602338
+    },
+    {
+      "n": 20,
+      "parallel_pairs": 10,
+      "length_cutoff": 15,
+      "short_normalized": "3522557227279059485/43584465628931555328",
+      "long_normalized_fourth_power": "149550471020889/256000000000000",
+      "remaining_allowance_fourth_power": "2575885382243321372270703836737637416693862469589790506326679819432648099861201/3608501603322690167333334342976816452223800755034553960691709337032827187757056",
+      "display_only_upper_ratio": 0.9550740381660078
+    },
+    {
+      "n": 21,
+      "parallel_pairs": 0,
+      "length_cutoff": 12,
+      "short_normalized": "695223/92274688",
+      "long_normalized_fourth_power": "804081330629049391217523/4398046511104000000000000",
+      "remaining_allowance_fourth_power": "70338387564715392757902954750625/72498720460709010419192311054336",
+      "display_only_upper_ratio": 0.6614323232652795
+    },
+    {
+      "n": 21,
+      "parallel_pairs": 1,
+      "length_cutoff": 12,
+      "short_normalized": "1236029/161480704",
+      "long_normalized_fourth_power": "24774944801135847201/109951162777600000000",
+      "remaining_allowance_fourth_power": "659377959973521984699713344140625/679958702445946617251877886099456",
+      "display_only_upper_ratio": 0.6966289542557357
+    },
+    {
+      "n": 21,
+      "parallel_pairs": 2,
+      "length_cutoff": 12,
+      "short_normalized": "5021671/645922816",
+      "long_normalized_fourth_power": "76214910940851075606027/274877906944000000000000",
+      "remaining_allowance_fourth_power": "168719076617886901884663743836550625/174069427826162334016480738841460736",
+      "display_only_upper_ratio": 0.7334207846425824
+    },
+    {
+      "n": 21,
+      "parallel_pairs": 3,
+      "length_cutoff": 13,
+      "short_normalized": "7559875/381681664",
+      "long_normalized_fourth_power": "7406255943741269527929/29948379136000000000000",
+      "remaining_allowance_fourth_power": "19590792722831414916312544351791441/21222922478583355055344180648738816",
+      "display_only_upper_ratio": 0.724997084575265
+    },
+    {
+      "n": 21,
+      "parallel_pairs": 4,
+      "length_cutoff": 13,
+      "short_normalized": "506523091/25190989824",
+      "long_normalized_fourth_power": "581311659738168617403843/1916696264704000000000000",
+      "remaining_allowance_fourth_power": "371274393896215973416331525991431623637521/402699351179584816169421216946127766552576",
+      "display_only_upper_ratio": 0.7622098798376951
+    },
+    {
+      "n": 21,
+      "parallel_pairs": 5,
+      "length_cutoff": 14,
+      "short_normalized": "81820355/1574436864",
+      "long_normalized_fourth_power": "11119475454865879280481/40282095616000000000000",
+      "remaining_allowance_fourth_power": "4963556424545488082083975742583220561/6144704455254895266257037612093014016",
+      "display_only_upper_ratio": 0.7768095305929016
+    },
+    {
+      "n": 21,
+      "parallel_pairs": 6,
+      "length_cutoff": 14,
+      "short_normalized": "442796219/8396996608",
+      "long_normalized_fourth_power": "86958210751013664747/257805411942400000000",
+      "remaining_allowance_fourth_power": "4003004806926310193707129954610097245041/4971596928143022421844706382050960080896",
+      "display_only_upper_ratio": 0.8148198443762633
+    },
+    {
+      "n": 21,
+      "parallel_pairs": 7,
+      "length_cutoff": 15,
+      "short_normalized": "3659847005533/30241783283712",
+      "long_normalized_fourth_power": "49944420207845289/160000000000000000",
+      "remaining_allowance_fourth_power": "499282622055599487017710754341259338416720831803593681/836429973635907047253995894887748276914338842737115136",
+      "display_only_upper_ratio": 0.8684860760506801
+    },
+    {
+      "n": 21,
+      "parallel_pairs": 8,
+      "length_cutoff": 15,
+      "short_normalized": "1927776200484451/20745863332626432",
+      "long_normalized_fourth_power": "62245033767422029683/163840000000000000000",
+      "remaining_allowance_fourth_power": "125401260042482180125205267194632957265154892360575658237776218321/185236279817911162354918969216261304911427871957670136633282789376",
+      "display_only_upper_ratio": 0.8780165589262985
+    },
+    {
+      "n": 21,
+      "parallel_pairs": 9,
+      "length_cutoff": 15,
+      "short_normalized": "28954110034065507/423561376374456320",
+      "long_normalized_fourth_power": "1181184426783501921/2560000000000000000",
+      "remaining_allowance_fourth_power": "24247128415435849590426023720136835438684776530978208557692051963338961/32185881170746952361074918880716880871874527020925225493516265717760000",
+      "display_only_upper_ratio": 0.892533711745398
+    },
+    {
+      "n": 21,
+      "parallel_pairs": 10,
+      "length_cutoff": 16,
+      "short_normalized": "4253197951563745843/38316013739720048640",
+      "long_normalized_fourth_power": "463752967994784917307/1073741824000000000000",
+      "remaining_allowance_fourth_power": "1346239048905314807487803202048299035015281424528660559956219064702094838657681/2155367258205183510844043712811304433451837893516488186262802459995049820160000",
+      "display_only_upper_ratio": 0.9216780082258804
+    },
+    {
+      "n": 22,
+      "parallel_pairs": 0,
+      "length_cutoff": 12,
+      "short_normalized": "231741/58720256",
+      "long_normalized_fourth_power": "181599561320744630120409/1099511627776000000000000",
+      "remaining_allowance_fourth_power": "11702600507968960963353132300625/11889176137296792160131189047296",
+      "display_only_upper_ratio": 0.6414444017031893
+    },
+    {
+      "n": 22,
+      "parallel_pairs": 1,
+      "length_cutoff": 13,
+      "short_normalized": "506487055/50381979648",
+      "long_normalized_fourth_power": "72778010568125990562555363/490674243764224000000000000",
+      "remaining_allowance_fourth_power": "6187978442131167576009420220628895195595201/6443189618873357058710739471138044264841216",
+      "display_only_upper_ratio": 0.6306385913551037
+    },
+    {
+      "n": 22,
+      "parallel_pairs": 2,
+      "length_cutoff": 13,
+      "short_normalized": "128514599/12595494912",
+      "long_normalized_fourth_power": "8371769346801/45697600000000",
+      "remaining_allowance_fourth_power": "24157116552429942503796368544324850164961/25168709448724051010588826059132985409536",
+      "display_only_upper_ratio": 0.6644339887070887
+    },
+    {
+      "n": 22,
+      "parallel_pairs": 3,
+      "length_cutoff": 13,
+      "short_normalized": "173876579/16793993216",
+      "long_normalized_fourth_power": "6928932734807879850914187/30667140235264000000000000",
+      "remaining_allowance_fourth_power": "76302061029572549770019176713258404273361/79545550850288358749515302112815361294336",
+      "display_only_upper_ratio": 0.6997963395129329
+    },
+    {
+      "n": 22,
+      "parallel_pairs": 4,
+      "length_cutoff": 14,
+      "short_normalized": "96258257/3598712832",
+      "long_normalized_fourth_power": "133315937791878290838489/644513529856000000000000",
+      "remaining_allowance_fourth_power": "150483902652552236297511853287937890625/167721512361343113773186679277854130176",
+      "display_only_upper_ratio": 0.7011401213648352
+    },
+    {
+      "n": 22,
+      "parallel_pairs": 5,
+      "length_cutoff": 14,
+      "short_normalized": "1366878575/50381979648",
+      "long_normalized_fourth_power": "655596960349187924751843/2578054119424000000000000",
+      "remaining_allowance_fourth_power": "5771910790403419520188296912669108985266241/6443189618873357058710739471138044264841216",
+      "display_only_upper_ratio": 0.737257633861661
+    },
+    {
+      "n": 22,
+      "parallel_pairs": 6,
+      "length_cutoff": 15,
+      "short_normalized": "74475501/1049624576",
+      "long_normalized_fourth_power": "9701010243023759361/40960000000000000000",
+      "remaining_allowance_fourth_power": "904240703639698132256493047719140625/1213768781284917583458180269055410176",
+      "display_only_upper_ratio": 0.7685669180871009
+    },
+    {
+      "n": 22,
+      "parallel_pairs": 7,
+      "length_cutoff": 15,
+      "short_normalized": "41860603358017/604835665674240",
+      "long_normalized_fourth_power": "1217085804155241387/4194304000000000000",
+      "remaining_allowance_fourth_power": "100451547271184637403608327373152065389889932447214445661441/133828795781745127560639343182039724306294214837938421760000",
+      "display_only_upper_ratio": 0.8031579327920713
+    },
+    {
+      "n": 22,
+      "parallel_pairs": 8,
+      "length_cutoff": 16,
+      "short_normalized": "41394772857817/325680743055360",
+      "long_normalized_fourth_power": "1177380763035610810329/4294967296000000000000",
+      "remaining_allowance_fourth_power": "6531632019472840385663603457955254023320654478740311448801/11250409252896258929067436818741548897426995197153116160000",
+      "display_only_upper_ratio": 0.8506868264767625
+    },
+    {
+      "n": 22,
+      "parallel_pairs": 9,
+      "length_cutoff": 16,
+      "short_normalized": "18117682822648295/193628057771180032",
+      "long_normalized_fourth_power": "5748558495048134956323/17179869184000000000000",
+      "remaining_allowance_fourth_power": "948879744763212845163793197782100084087578699337921873035008697134561/1405636923552567943313889801760374180637513704518687598795889706008576",
+      "display_only_upper_ratio": 0.854131779056623
+    },
+    {
+      "n": 22,
+      "parallel_pairs": 10,
+      "length_cutoff": 16,
+      "short_normalized": "30318369059490059/444739445193179136",
+      "long_normalized_fourth_power": "427420130572085121/1048576000000000000",
+      "remaining_allowance_fourth_power": "29496286062843017235299816640873882977037659289361879182103018650101041/39122139724800237763338820617754373180268936809728492370028355456598016",
+      "display_only_upper_ratio": 0.8672023317135207
+    },
+    {
+      "n": 22,
+      "parallel_pairs": 11,
+      "length_cutoff": 17,
+      "short_normalized": "420800783750799505951/3772037388976621879296",
+      "long_normalized_fourth_power": "532065132430691111307/1368408064000000000000",
+      "remaining_allowance_fourth_power": "126130571792284790972026706669304115727218037541917862929506274157081682872215445450625/202443555183351886899546107887801710491914455397351477776915365300360199952614561939456",
+      "display_only_upper_ratio": 0.9012127822358326
+    },
+    {
+      "n": 23,
+      "parallel_pairs": 0,
+      "length_cutoff": 13,
+      "short_normalized": "173864567/33587986432",
+      "long_normalized_fourth_power": "843454524281996791415795787/7850787900227584000000000000",
+      "remaining_allowance_fourth_power": "1246580154852787381899741117460164069150625/1272728813604613739992244833805045780709376",
+      "display_only_upper_ratio": 0.5776917041237023
+    },
+    {
+      "n": 23,
+      "parallel_pairs": 1,
+      "length_cutoff": 13,
+      "short_normalized": "37797503/7197425664",
+      "long_normalized_fourth_power": "1022191353034679861616969/7666785058816000000000000",
+      "remaining_allowance_fourth_power": "2627615834471807726115690573716653770241/2683544197781489820370986868445666082816",
+      "display_only_upper_ratio": 0.609519715456473
+    },
+    {
+      "n": 23,
+      "parallel_pairs": 2,
+      "length_cutoff": 14,
+      "short_normalized": "1366842539/100763959296",
+      "long_normalized_fourth_power": "81079901872957471274241363/659981854572544000000000000",
+      "remaining_allowance_fourth_power": "97610187600834559238132096028669158448308401/103091033901973712939371831538208708237459456",
+      "display_only_upper_ratio": 0.6055969639758892
+    },
+    {
+      "n": 23,
+      "parallel_pairs": 3,
+      "length_cutoff": 14,
+      "short_normalized": "115508793/8396996608",
+      "long_normalized_fourth_power": "2508785986721555930481/16499546364313600000000",
+      "remaining_allowance_fourth_power": "4703633434622119469918675876085739350625/4971596928143022421844706382050960080896",
+      "display_only_upper_ratio": 0.6382063000066416
+    },
+    {
+      "n": 23,
+      "parallel_pairs": 4,
+      "length_cutoff": 14,
+      "short_normalized": "1405368493/100763959296",
+      "long_normalized_fourth_power": "3228559605508870161387/17179869184000000000000",
+      "remaining_allowance_fourth_power": "97458942174959717797264419194125799682366481/103091033901973712939371831538208708237459456",
+      "display_only_upper_ratio": 0.6723583786833697
+    },
+    {
+      "n": 23,
+      "parallel_pairs": 5,
+      "length_cutoff": 15,
+      "short_normalized": "1837055351/50381979648",
+      "long_normalized_fourth_power": "28158962038780329/160000000000000000",
+      "remaining_allowance_fourth_power": "5553609160310491375515131378507981810635681/6443189618873357058710739471138044264841216",
+      "display_only_upper_ratio": 0.6841629474854152
+    },
+    {
+      "n": 23,
+      "parallel_pairs": 6,
+      "length_cutoff": 15,
+      "short_normalized": "1241257349/33587986432",
+      "long_normalized_fourth_power": "9096101776732802121603/41943040000000000000000",
+      "remaining_allowance_fourth_power": "1094766462563791213521407567615998880350321/1272728813604613739992244833805045780709376",
+      "display_only_upper_ratio": 0.7193708476044637
+    },
+    {
+      "n": 23,
+      "parallel_pairs": 7,
+      "length_cutoff": 16,
+      "short_normalized": "1017158993153/10800636887040",
+      "long_normalized_fourth_power": "14163501595427370014481/68719476736000000000000",
+      "remaining_allowance_fourth_power": "9161636828877353470925034819145811260920151791375361/13608099060871561446630243500230182035387905474560000",
+      "display_only_upper_ratio": 0.7679629439846718
+    },
+    {
+      "n": 23,
+      "parallel_pairs": 8,
+      "length_cutoff": 16,
+      "short_normalized": "58832093342111/769790847221760",
+      "long_normalized_fourth_power": "111338192746103749947/439804651110400000000",
+      "remaining_allowance_fourth_power": "255492186982546185450595749278324076095117513085596666966401/351148625008641542269620996358256816402609012855286005760000",
+      "display_only_upper_ratio": 0.7857524158100722
+    },
+    {
+      "n": 23,
+      "parallel_pairs": 9,
+      "length_cutoff": 17,
+      "short_normalized": "151667022556581403/1175598922182164480",
+      "long_normalized_fourth_power": "83324176964493464169/342102016000000000000",
+      "remaining_allowance_fourth_power": "1099219168071380454534475615979482542213212540569967453044086172456109041/1910014731687871381610516941717451907099674974540316973055359487836160000",
+      "display_only_upper_ratio": 0.8315247228085665
+    },
+    {
+      "n": 23,
+      "parallel_pairs": 10,
+      "length_cutoff": 17,
+      "short_normalized": "10342416681938508859/109971935538677022720",
+      "long_normalized_fourth_power": "6527082446665015258323/21894529024000000000000",
+      "remaining_allowance_fourth_power": "98526290482099036394836689681807882866821597810744375276474255506723460948637041/146260641978966972596052634922708956577133635186500655992648790425427572162560000",
+      "display_only_upper_ratio": 0.8329633287545408
+    },
+    {
+      "n": 23,
+      "parallel_pairs": 11,
+      "length_cutoff": 17,
+      "short_normalized": "23848293136848073169/348675725031452442624",
+      "long_normalized_fourth_power": "124593230991426707601/342102016000000000000",
+      "remaining_allowance_fourth_power": "11132963733265199689390257686907708519758181469134751752022344362545799084858850625/14780422567209738925397337468833040188308687892621533022993241444486460161052901376",
+      "display_only_upper_ratio": 0.8452423575678791
+    },
+    {
+      "n": 24,
+      "parallel_pairs": 0,
+      "length_cutoff": 13,
+      "short_normalized": "22677987/8396996608",
+      "long_normalized_fourth_power": "732413940060695967760401/7666785058816000000000000",
+      "remaining_allowance_fourth_power": "4918106427079362213452248612777332572881/4971596928143022421844706382050960080896",
+      "display_only_upper_ratio": 0.5586508461850268
+    },
+    {
+      "n": 24,
+      "parallel_pairs": 1,
+      "length_cutoff": 14,
+      "short_normalized": "1405332457/201527918592",
+      "long_normalized_fourth_power": "933548636677559519087573787/10559709673160704000000000000",
+      "remaining_allowance_fourth_power": "1603926364360461272529706809318243423051150625/1649456542431579407029949304611339331799351296",
+      "display_only_upper_ratio": 0.5522554902708525
+    },
+    {
+      "n": 24,
+      "parallel_pairs": 2,
+      "length_cutoff": 14,
+      "short_normalized": "712297717/100763959296",
+      "long_normalized_fourth_power": "18134900488293975855771129/164995463643136000000000000",
+      "remaining_allowance_fourth_power": "100206806506284032152799652775349256509644081/103091033901973712939371831538208708237459456",
+      "display_only_upper_ratio": 0.5828545650602741
+    },
+    {
+      "n": 24,
+      "parallel_pairs": 3,
+      "length_cutoff": 15,
+      "short_normalized": "1241245337/67175972864",
+      "long_normalized_fourth_power": "1112007128724443926835523/10737418240000000000000000",
+      "remaining_allowance_fourth_power": "18899784979327582794425362569012544803561441/20363661017673819839875917340880732491350016",
+      "display_only_upper_ratio": 0.5857633359113676
+    },
+    {
+      "n": 24,
+      "parallel_pairs": 4,
+      "length_cutoff": 15,
+      "short_normalized": "943349339/50381979648",
+      "long_normalized_fourth_power": "2154689217987068961/16777216000000000000",
+      "remaining_allowance_fourth_power": "5974006911208329455414195719296133669701361/6443189618873357058710739471138044264841216",
+      "display_only_upper_ratio": 0.6173645684732583
+    },
+    {
+      "n": 24,
+      "parallel_pairs": 5,
+      "length_cutoff": 15,
+      "short_normalized": "49650113/2617245696",
+      "long_normalized_fourth_power": "106738378988745720294027/671088640000000000000000",
+      "remaining_allowance_fourth_power": "43461676973551357010032954751373592321/46922157955881524077246952962372141056",
+      "display_only_upper_ratio": 0.6504875609809587
+    },
+    {
+      "n": 24,
+      "parallel_pairs": 6,
+      "length_cutoff": 16,
+      "short_normalized": "1294460731/25836912640",
+      "long_normalized_fourth_power": "167070087200013679590489/1099511627776000000000000",
+      "remaining_allowance_fourth_power": "362803772817467055620814666314664228206961/445617735234975575082190691434139484160000",
+      "display_only_upper_ratio": 0.6744463307881444
+    },
+    {
+      "n": 24,
+      "parallel_pairs": 7,
+      "length_cutoff": 16,
+      "short_normalized": "102262508629/2015279185920",
+      "long_normalized_fourth_power": "825288340925272508697843/4398046511104000000000000",
+      "remaining_allowance_fourth_power": "13392912286414669009626580857721129184193407939761/16494565424315794070299493046113393317993512960000",
+      "display_only_upper_ratio": 0.7089111541302239
+    },
+    {
+      "n": 24,
+      "parallel_pairs": 8,
+      "length_cutoff": 17,
+      "short_normalized": "378037452535789/3598772210761728",
+      "long_normalized_fourth_power": "15164299180141281/83521000000000000",
+      "remaining_allowance_fourth_power": "107601875432021316988588550164360154550152496432417567207021841/167732582255135066577376079719744016830626149256676070450528256",
+      "display_only_upper_ratio": 0.7578109356507473
+    },
+    {
+      "n": 24,
+      "parallel_pairs": 9,
+      "length_cutoff": 17,
+      "short_normalized": "369236096951627439/4702395688728657920",
+      "long_normalized_fourth_power": "125291707388925257547/560499943014400000000",
+      "remaining_allowance_fourth_power": "352548392013344147323404411474952727388032889688934462523446923665312832321/488963771312095073692292337079667688217516793482321145102172028886056960000",
+      "display_only_upper_ratio": 0.7661221473098603
+    },
+    {
+      "n": 24,
+      "parallel_pairs": 10,
+      "length_cutoff": 18,
+      "short_normalized": "19337494081642936697/148125464194952724480",
+      "long_normalized_fourth_power": "229228437440256489/1048576000000000000",
+      "remaining_allowance_fourth_power": "275106715925668312914187901711549272916508518600587309695553546966032835322797921/481414201243272032760425449163428686590668847785753699266866061645808045916160000",
+      "display_only_upper_ratio": 0.8143292570148646
+    },
+    {
+      "n": 24,
+      "parallel_pairs": 11,
+      "length_cutoff": 18,
+      "short_normalized": "6756527677631920329269/71129847906416298295296",
+      "long_normalized_fourth_power": "1125152755258356243/4194304000000000000",
+      "remaining_allowance_fourth_power": "17172109078838736008712166153523180186138931105196357623563764496881045660341878574363643441/25598087560220132604886270167420608592636447651801878484143846403451198660611903857105043456",
+      "display_only_upper_ratio": 0.8146660937780646
+    },
+    {
+      "n": 24,
+      "parallel_pairs": 12,
+      "length_cutoff": 18,
+      "short_normalized": "20063212226704337291011/290446878951199884705792",
+      "long_normalized_fourth_power": "1345954239188001/4096000000000000",
+      "remaining_allowance_fourth_power": "5344681294916526146307243573677787570419211006585070569409025197568484352148690132837616317521/7116506595546131397607107211970316928792399019075767789702494689933539423702457753054736285696",
+      "display_only_upper_ratio": 0.8262020453418276
+    },
+    {
+      "n": 25,
+      "parallel_pairs": 0,
+      "length_cutoff": 14,
+      "short_normalized": "481274125/134351945728",
+      "long_normalized_fourth_power": "27126442224470221028163/432525708212662435840000",
+      "remaining_allowance_fourth_power": "321175026521984398373344603858586220498772881/325818576282781117438014677454091719861600256",
+      "display_only_upper_ratio": 0.5040143682256218
+    },
+    {
+      "n": 25,
+      "parallel_pairs": 1,
+      "length_cutoff": 14,
+      "short_normalized": "182885669/50381979648",
+      "long_normalized_fourth_power": "86072688470225417266881/1099511627776000000000000",
+      "remaining_allowance_fourth_power": "6350143145612166670545062827200900818058481/6443189618873357058710739471138044264841216",
+      "display_only_upper_ratio": 0.5325821302341216
+    },
+    {
+      "n": 25,
+      "parallel_pairs": 2,
+      "length_cutoff": 15,
+      "short_normalized": "49649645/5234491392",
+      "long_normalized_fourth_power": "12724377765620465737371627/171798691840000000000000000",
+      "remaining_allowance_fourth_power": "722673319368245820007877461361956216081/750754527294104385235951247397954256896",
+      "display_only_upper_ratio": 0.5311650802082121
+    },
+    {
+      "n": 25,
+      "parallel_pairs": 3,
+      "length_cutoff": 15,
+      "short_normalized": "49649795/5167382528",
+      "long_normalized_fourth_power": "967216497858313354089/10485760000000000000000",
+      "remaining_allowance_fourth_power": "685978345949980909394318105953758205521/712988376375960920131505106294623174656",
+      "display_only_upper_ratio": 0.560708984831501
+    },
+    {
+      "n": 25,
+      "parallel_pairs": 4,
+      "length_cutoff": 16,
+      "short_normalized": "102262148269/4030558371840",
+      "long_normalized_fourth_power": "99793333618638747460863363/1125899906842624000000000000",
+      "remaining_allowance_fourth_power": "238131538536756732975296848200707855394505375345681/263913046789052705124791888737814293087896207360000",
+      "display_only_upper_ratio": 0.5710044665500899
+    },
+    {
+      "n": 25,
+      "parallel_pairs": 5,
+      "length_cutoff": 16,
+      "short_normalized": "2588917997/100763959296",
+      "long_normalized_fourth_power": "3099574033968779967681/28147497671065600000000",
+      "remaining_allowance_fourth_power": "92897573552488178333257953540012743645974801/103091033901973712939371831538208708237459456",
+      "display_only_upper_ratio": 0.6017500256035195
+    },
+    {
+      "n": 25,
+      "parallel_pairs": 6,
+      "length_cutoff": 16,
+      "short_normalized": "34950430497/1343519457280",
+      "long_normalized_fourth_power": "9615037230427943359892187/70368744177664000000000000",
+      "remaining_allowance_fourth_power": "2932152446795182442753365120508928288209537569921/3258185762827811174380146774540917198616002560000",
+      "display_only_upper_ratio": 0.6339989847401138
+    },
+    {
+      "n": 25,
+      "parallel_pairs": 7,
+      "length_cutoff": 17,
+      "short_normalized": "2374473259027/34259746160640",
+      "long_normalized_fourth_power": "11635585445581911871929/87578116096000000000000",
+      "remaining_allowance_fourth_power": "1033619165858931609993106230854186143512714737367129361/1377642598804279436545483958704436723312136195932160000",
+      "display_only_upper_ratio": 0.6730454755238481
+    },
+    {
+      "n": 25,
+      "parallel_pairs": 8,
+      "length_cutoff": 17,
+      "short_normalized": "5078732382827771/82257650531696640",
+      "long_normalized_fourth_power": "921536188757812535295843/5604999430144000000000000",
+      "remaining_allowance_fourth_power": "35480909706475105636587886324914793973903130292518213982139584183921/45783100835787304136671881551491644677267452385195847367954268160000",
+      "display_only_upper_ratio": 0.6985141254161502
+    },
+    {
+      "n": 25,
+      "parallel_pairs": 9,
+      "length_cutoff": 18,
+      "short_normalized": "95853090238064573/881699191636623360",
+      "long_normalized_fourth_power": "2712008079217988721/16777216000000000000",
+      "remaining_allowance_fourth_power": "381373060354170753067752085289193645191462620069286102576784850765454161/604340598698115554337702626090287517480756534913147167255797337948160000",
+      "display_only_upper_ratio": 0.7427921752648534
+    },
+    {
+      "n": 25,
+      "parallel_pairs": 10,
+      "length_cutoff": 18,
+      "short_normalized": "66012774864316459379/829502599491735257088",
+      "long_normalized_fourth_power": "21417072886818027/107374182400000000",
+      "remaining_allowance_fourth_power": "339791893489840796386722301818048452745761988538506652743421108046265849888593039761/473446603647015383309427303809594276456118642087360361242519721579145264433029185536",
+      "display_only_upper_ratio": 0.7478713066458048
+    },
+    {
+      "n": 25,
+      "parallel_pairs": 11,
+      "length_cutoff": 19,
+      "short_normalized": "21337574838577844263597/160888941693084484239360",
+      "long_normalized_fourth_power": "25797328239628089/130321000000000000",
+      "remaining_allowance_fourth_power": "379259421620998149650874717356116249136315621649568106087892699591706920515503492345496044561/670046248278962642318165000390546893960916830891914049029072531335034748865571203485532160000",
+      "display_only_upper_ratio": 0.7996448865542402
+    },
+    {
+      "n": 25,
+      "parallel_pairs": 12,
+      "length_cutoff": 19,
+      "short_normalized": "7099642684898667203118367/73579876000970637458800640",
+      "long_normalized_fourth_power": "8318549941822815112323/34162868224000000000000",
+      "remaining_allowance_fourth_power": "19533053511674275784846697407171733604212822068678874143084844994738815588962058130783761461111496147841/29311375993305043432851146871188027179524874510695447201874767343781255624259255208639092542836572160000",
+      "display_only_upper_ratio": 0.7989517110690356
+    },
+    {
+      "n": 26,
+      "parallel_pairs": 0,
+      "length_cutoff": 14,
+      "short_normalized": "19250965/10334765056",
+      "long_normalized_fourth_power": "2324274949119281948356090329/42238838692642816000000000000",
+      "remaining_allowance_fourth_power": "11323052125280447941785455482067326550961/11407814022015374722104081700713970794496",
+      "display_only_upper_ratio": 0.48619554041434293
+    },
+    {
+      "n": 26,
+      "parallel_pairs": 1,
+      "length_cutoff": 15,
+      "short_normalized": "3922309319/806111674368",
+      "long_normalized_fourth_power": "367703644601709112563/7036874417766400000000",
+      "remaining_allowance_fourth_power": "414102259571350701688652763658548749665767304801/422260874862484328199667021980502868940633931776",
+      "display_only_upper_ratio": 0.4829775928407953
+    },
+    {
+      "n": 26,
+      "parallel_pairs": 2,
+      "length_cutoff": 15,
+      "short_normalized": "496496333/100763959296",
+      "long_normalized_fourth_power": "175351610975340850210161/2684354560000000000000000",
+      "remaining_allowance_fourth_power": "101074151696650981830753258847064867754518161/103091033901973712939371831538208708237459456",
+      "display_only_upper_ratio": 0.5104812268561852
+    },
+    {
+      "n": 26,
+      "parallel_pairs": 3,
+      "length_cutoff": 16,
+      "short_normalized": "34950310377/2687038914560",
+      "long_normalized_fourth_power": "1135189119799666911334379787/18014398509481984000000000000",
+      "remaining_allowance_fourth_power": "49471162713210704748809918911620292386453114105121/52130972205244978790082348392654675177856040960000",
+      "display_only_upper_ratio": 0.5140351325001714
+    },
+    {
+      "n": 26,
+      "parallel_pairs": 4,
+      "length_cutoff": 16,
+      "short_normalized": "53072751371/4030558371840",
+      "long_normalized_fourth_power": "22126268269231430295039129/281474976710656000000000000",
+      "remaining_allowance_fourth_power": "250284798636786822289323096775505057804827281161521/263913046789052705124791888737814293087896207360000",
+      "display_only_upper_ratio": 0.5426689717414909
+    },
+    {
+      "n": 26,
+      "parallel_pairs": 5,
+      "length_cutoff": 17,
+      "short_normalized": "4806856241581/137038984642560",
+      "long_normalized_fourth_power": "110280447496291917185799363/1434879854116864000000000000",
+      "remaining_allowance_fourth_power": "305736967390160491624085089782549346484455178406959550481/352676505293895535755643893428335801167906866158632960000",
+      "display_only_upper_ratio": 0.5616036805016166
+    },
+    {
+      "n": 26,
+      "parallel_pairs": 6,
+      "length_cutoff": 17,
+      "short_normalized": "57913953467/1631416483840",
+      "long_normalized_fourth_power": "13403631602196508401/140124985753600000000",
+      "remaining_allowance_fourth_power": "6130131383284526881160708984339001320492540918641/7083687346343753048089448114234484208288399360000",
+      "display_only_upper_ratio": 0.5916296984156627
+    },
+    {
+      "n": 26,
+      "parallel_pairs": 7,
+      "length_cutoff": 17,
+      "short_normalized": "57913975775/1612223348736",
+      "long_normalized_fourth_power": "10663559411693193805718187/89679990882304000000000000",
+      "remaining_allowance_fourth_power": "5836464708032364798842342688279893584892468365441/6756173997799749251194672351688045903050142908416",
+      "display_only_upper_ratio": 0.6231429165340688
+    },
+    {
+      "n": 26,
+      "parallel_pairs": 8,
+      "length_cutoff": 18,
+      "short_normalized": "21026422904465029/246772951595089920",
+      "long_normalized_fourth_power": "31528915727393111049/268435456000000000000",
+      "remaining_allowance_fourth_power": "2597073994636848079693803871800002183966755053975995941718828278658161/3708431167698771635070422405670823218858663643200863636804295720960000",
+      "display_only_upper_ratio": 0.6706251825530203
+    },
+    {
+      "n": 26,
+      "parallel_pairs": 9,
+      "length_cutoff": 18,
+      "short_normalized": "528860323734325283/8061249752106270720",
+      "long_normalized_fourth_power": "156373545447665950563/1073741824000000000000",
+      "remaining_allowance_fourth_power": "3219074743682684995837227308796977375686317277096211837183112554658123498961/4222887447699959786790243191038729355634497388442070497642082128688578560000",
+      "display_only_upper_ratio": 0.683359660670035
+    },
+    {
+      "n": 26,
+      "parallel_pairs": 10,
+      "length_cutoff": 19,
+      "short_normalized": "8271832903850497109/74623813401245122560",
+      "long_normalized_fourth_power": "1240635518870843756241/8540717056000000000000",
+      "remaining_allowance_fourth_power": "19382757464012843723220707238395987619722235667522953028777930372922306925466801/31010570340712455154899936608057765530782474215073068496228757251262733352960000",
+      "display_only_upper_ratio": 0.7282056472362681
+    },
+    {
+      "n": 26,
+      "parallel_pairs": 11,
+      "length_cutoff": 19,
+      "short_normalized": "207944682866109493544027/2574223067089351747829760",
+      "long_normalized_fourth_power": "157090389691991202747/874569426534400000000",
+      "remaining_allowance_fourth_power": "31351862514351876377407902954943650045444669255850805247125031391558833791326807131393450655649521/43912150927210095726963261465594881242622645429332479117169297413572837301654074391627835637760000",
+      "display_only_upper_ratio": 0.7317913461045423
+    },
+    {
+      "n": 26,
+      "parallel_pairs": 12,
+      "length_cutoff": 20,
+      "short_normalized": "284649508245206307268161/2102282171456303927394304",
+      "long_normalized_fourth_power": "1894202733676884088329/10485760000000000000000",
+      "remaining_allowance_fourth_power": "10915018441974238666227587448565717024939765220435594394987498551945947522258656519459345522489601/19532778671090407951920797581799601619008662730992384640982768742211582256899128835411306983981056",
+      "display_only_upper_ratio": 0.787338750207684
+    },
+    {
+      "n": 26,
+      "parallel_pairs": 13,
+      "length_cutoff": 20,
+      "short_normalized": "32792452617248066459115247/332807439142851806352113664",
+      "long_normalized_fourth_power": "9341357163183984664323/41943040000000000000000",
+      "remaining_allowance_fourth_power": "8101618666051055877065205164538625658267633777773272465404097348002111055746581108498849146558698315680321/12267952944521822421456944321954352125666615047425767201056548967502482067735166179171829150616726919970816",
+      "display_only_upper_ratio": 0.7855024101999132
+    },
+    {
+      "n": 27,
+      "parallel_pairs": 0,
+      "length_cutoff": 15,
+      "short_normalized": "1340531991/537407782912",
+      "long_normalized_fourth_power": "1601789286912742081491996987/43980465111040000000000000000",
+      "remaining_allowance_fourth_power": "82580423466515934453929799792599313338021794081/83409555528391966064131757428247480284569665536",
+      "display_only_upper_ratio": 0.43934851648210277
+    },
+    {
+      "n": 27,
+      "parallel_pairs": 1,
+      "length_cutoff": 15,
+      "short_normalized": "2035628659/806111674368",
+      "long_normalized_fourth_power": "7664589571258770408729/167772160000000000000000",
+      "remaining_allowance_fourth_power": "418011756922863302701099765951613563635003407761/422260874862484328199667021980502868940633931776",
+      "display_only_upper_ratio": 0.46484478680972247
+    },
+    {
+      "n": 27,
+      "parallel_pairs": 2,
+      "length_cutoff": 16,
+      "short_normalized": "107439713993/16122233487360",
+      "long_normalized_fourth_power": "32632193899693874419443/737869762948382064640000",
+      "remaining_allowance_fourth_power": "65778717552507705569405382482396876372785592691522721/67561739977997492511946723516880459030501429084160000",
+      "display_only_upper_ratio": 0.46524568667704713
+    },
+    {
+      "n": 27,
+      "parallel_pairs": 3,
+      "length_cutoff": 16,
+      "short_normalized": "1294455781/191931351040",
+      "long_normalized_fourth_power": "249353139945314138266987281/4503599627370496000000000000",
+      "remaining_allowance_fourth_power": "1320771915499131829274013382364930334070680561/1357011979520121272128341013969561515458560000",
+      "display_only_upper_ratio": 0.4918248129551644
+    },
+    {
+      "n": 27,
+      "parallel_pairs": 4,
+      "length_cutoff": 17,
+      "short_normalized": "57913903703/3224446697472",
+      "long_normalized_fourth_power": "1247457733458377613159407787/22958077665869824000000000000",
+      "remaining_allowance_fourth_power": "100539323901636191474834574784052528428282557580321/108098783964795988019114757627008734448802286534656",
+      "display_only_upper_ratio": 0.5007667934332126
+    },
+    {
+      "n": 27,
+      "parallel_pairs": 5,
+      "length_cutoff": 17,
+      "short_normalized": "2490298832201/137038984642560",
+      "long_normalized_fourth_power": "1522036841087686189962969/22419997720576000000000000",
+      "remaining_allowance_fourth_power": "327731239704086576944759727903438650887447349722894272161/352676505293895535755643893428335801167906866158632960000",
+      "display_only_upper_ratio": 0.5286153662568354
+    },
+    {
+      "n": 27,
+      "parallel_pairs": 6,
+      "length_cutoff": 18,
+      "short_normalized": "13369201359529/274077969285120",
+      "long_normalized_fourth_power": "18529671813017882372883/274877906944000000000000",
+      "remaining_allowance_fourth_power": "4619793344746094907524060586694774649057189854618337916961/5642824084702328572090302294853372818686509858538127360000",
+      "display_only_upper_ratio": 0.5583231549151041
+    },
+    {
+      "n": 27,
+      "parallel_pairs": 7,
+      "length_cutoff": 18,
+      "short_normalized": "230503504123/4671783567360",
+      "long_normalized_fourth_power": "577508026941581121/6871947673600000000",
+      "remaining_allowance_fourth_power": "389074386275185434176227950744544995023433718312561/476355143531634768629978317119131952173191004160000",
+      "display_only_upper_ratio": 0.587757477055445
+    },
+    {
+      "n": 27,
+      "parallel_pairs": 8,
+      "length_cutoff": 18,
+      "short_normalized": "13592718804395707/282026230394388480",
+      "long_normalized_fourth_power": "1797833623798881638667/17179869184000000000000",
+      "remaining_allowance_fourth_power": "5192146418731855857182607723764074795611439141676460892515915819561841/6326419851267875309141378664567968306724317485443872326676549468160000",
+      "display_only_upper_ratio": 0.6169610555865469
+    },
+    {
+      "n": 27,
+      "parallel_pairs": 9,
+      "length_cutoff": 19,
+      "short_normalized": "930941894220707991/10210916352667942912",
+      "long_normalized_fourth_power": "895436702288162501769/8540717056000000000000",
+      "remaining_allowance_fourth_power": "7416297169832034467356339917582932497746451297822518558608561315130200290081/10870734124873214012331679662209545646531226353761166801446198224055787585536",
+      "display_only_upper_ratio": 0.660201207010617
+    },
+    {
+      "n": 27,
+      "parallel_pairs": 10,
+      "length_cutoff": 19,
+      "short_normalized": "1009496716747239318397/15010047038421876080640",
+      "long_normalized_fourth_power": "1139031420857684307741843/8745694265344000000000000",
+      "remaining_allowance_fourth_power": "38422040686866386547379869445644780265680355746094990233348104707516920239282547699320401/50760771352580615499317980191192053271661776774464869791896514424270372946397269852160000",
+      "display_only_upper_ratio": 0.6679930781760597
+    },
+    {
+      "n": 27,
+      "parallel_pairs": 11,
+      "length_cutoff": 20,
+      "short_normalized": "329361325907097797219/2912017044218723696640",
+      "long_normalized_fourth_power": "22080194501155441232481/167772160000000000000000",
+      "remaining_allowance_fourth_power": "44490374873655421167773974331153952912853649306398573062379964752164238556732546128081/71907741812878776401076894898504193298400503326966337772020397923587811228946268160000",
+      "display_only_upper_ratio": 0.7154151264198363
+    },
+    {
+      "n": 27,
+      "parallel_pairs": 12,
+      "length_cutoff": 20,
+      "short_normalized": "865777998502789933420151/10511410857281519636971520",
+      "long_normalized_fourth_power": "175087856651133640347/1073741824000000000000",
+      "remaining_allowance_fourth_power": "8656112845602585549550060798169153678128760785248301715979705310065105864057116330936091431687253921/12207986669431504969950498488624751011880414206870240400614230463882238910561955522132066864988160000",
+      "display_only_upper_ratio": 0.7178267376840128
+    },
+    {
+      "n": 27,
+      "parallel_pairs": 13,
+      "length_cutoff": 21,
+      "short_normalized": "500732884386622866882943593/3605413924047561235481231360",
+      "long_normalized_fourth_power": "1632408194130492249/9834496000000000000",
+      "remaining_allowance_fourth_power": "92911176136072387734802466804284381300270801370940703799770592267735527787729848928923728148304857961703071521/168974249637580907686743724334171610272552176104131624724814860658197526203985378686017849330036814024540160000",
+      "display_only_upper_ratio": 0.7771752573722971
+    },
+    {
+      "n": 28,
+      "parallel_pairs": 0,
+      "length_cutoff": 16,
+      "short_normalized": "1294451491/383862702080",
+      "long_normalized_fourth_power": "1758525870085731018592722801/72057594037927936000000000000",
+      "remaining_allowance_fourth_power": "21420800674878886101962758177498784921391180241/21712191672321940354053456223512984247336960000",
+      "display_only_upper_ratio": 0.3986179617079613
+    },
+    {
+      "n": 28,
+      "parallel_pairs": 1,
+      "length_cutoff": 16,
+      "short_normalized": "22005699371/6448893394944",
+      "long_normalized_fourth_power": "141483616913370499224989137947/4611686018427387904000000000000",
+      "remaining_allowance_fourth_power": "1706093562162166367714062113625035763959265863192241/1729580543436735808305836122032139751180836584554496",
+      "display_only_upper_ratio": 0.4219278782610802
+    },
+    {
+      "n": 28,
+      "parallel_pairs": 2,
+      "length_cutoff": 16,
+      "short_normalized": "55661534233/16122233487360",
+      "long_normalized_fourth_power": "2776654586843873423798386329/72057594037927936000000000000",
+      "remaining_allowance_fourth_power": "66633541065042021168870594913595534911451685234140641/67561739977997492511946723516880459030501429084160000",
+      "display_only_upper_ratio": 0.4465104115578113
+    },
+    {
+      "n": 28,
+      "parallel_pairs": 3,
+      "length_cutoff": 17,
+      "short_normalized": "1679502462643/182718646190080",
+      "long_normalized_fourth_power": "35679944983198994749683/940362861194027991040000",
+      "remaining_allowance_fourth_power": "1074211870889926803555724841541491376103360641281832482961/1114631917965892063622775761946345248135606885637160960000",
+      "display_only_upper_ratio": 0.4505407713610064
+    },
+    {
+      "n": 28,
+      "parallel_pairs": 4,
+      "length_cutoff": 17,
+      "short_normalized": "57913900427/6229044756480",
+      "long_normalized_fourth_power": "798078369436087041/16777216000000000000",
+      "remaining_allowance_fourth_power": "1450303924356020517257030023368146206384958346738481/1505517490667882725546598138055528145139961692160000",
+      "display_only_upper_ratio": 0.47631302174237417
+    },
+    {
+      "n": 28,
+      "parallel_pairs": 5,
+      "length_cutoff": 18,
+      "short_normalized": "41029610994349/1644467815710720",
+      "long_normalized_fourth_power": "208482670376771131794267/4398046511104000000000000",
+      "remaining_allowance_fourth_power": "6610113380759294201368599625794798813286312861824085315748881/7313100013774217829429031774129971173017716776665413058560000",
+      "display_only_upper_ratio": 0.49155846625982835
+    },
+    {
+      "n": 28,
+      "parallel_pairs": 6,
+      "length_cutoff": 18,
+      "short_normalized": "461006929349/18271864619008",
+      "long_normalized_fourth_power": "4076030604737913101289/68719476736000000000000",
+      "remaining_allowance_fourth_power": "100632748511541270396379688502423231696867156707310961/111463191796589206362277576194634524813560688563716096",
+      "display_only_upper_ratio": 0.5187329726650383
+    },
+    {
+      "n": 28,
+      "parallel_pairs": 7,
+      "length_cutoff": 19,
+      "short_normalized": "7803217845413/114450141020160",
+      "long_normalized_fourth_power": "133711759789077614898921363/2238897731928064000000000000",
+      "remaining_allowance_fourth_power": "129358008620786360711934745151027348678449149483169252081/171579472581542913155927052818613814241392195912335360000",
+      "display_only_upper_ratio": 0.5625292647481575
+    },
+    {
+      "n": 28,
+      "parallel_pairs": 8,
+      "length_cutoff": 19,
+      "short_normalized": "59584326342620917/893083062915563520",
+      "long_normalized_fourth_power": "260874632253040994241/3498277706137600000000",
+      "remaining_allowance_fourth_power": "482636078296935509234024585737530143425458745215924857139301693106840881/636161544318735168335350006902131325386280693688681238800011267932160000",
+      "display_only_upper_ratio": 0.5892874652432719
+    },
+    {
+      "n": 28,
+      "parallel_pairs": 9,
+      "length_cutoff": 19,
+      "short_normalized": "1584728828410832743/29174046721908408320",
+      "long_normalized_fourth_power": "13015438338454588236620187/139931108245504000000000000",
+      "remaining_allowance_fourth_power": "579380471960159456306440037475422519974113770261400221436469481394786271619041/724413769254358284870082776323834778610993842816237687726527161952905461760000",
+      "display_only_upper_ratio": 0.6065703325218306
+    },
+    {
+      "n": 28,
+      "parallel_pairs": 10,
+      "length_cutoff": 20,
+      "short_normalized": "282120457398592950187/3002009407684375216128",
+      "long_normalized_fourth_power": "253369537977677606844489/2684354560000000000000000",
+      "remaining_allowance_fourth_power": "54727384205971572484104008302224641691730872781438054462508228512607094985713792861361/81217234164128984798908768305907285234658842839143791667034423078832596714235631763456",
+      "display_only_upper_ratio": 0.6482564685145329
+    },
+    {
+      "n": 28,
+      "parallel_pairs": 11,
+      "length_cutoff": 20,
+      "short_normalized": "20193132899907416966389/294196921953068771180544",
+      "long_normalized_fourth_power": "1261193214334178303589843/10737418240000000000000000",
+      "remaining_allowance_fourth_power": "5636717558250057560321931905096472407243899997098249652078461748012565031706573677268614200625/7491219083625678971163745063018601981248744509727023509534587347188435717933156547609646596096",
+      "display_only_upper_ratio": 0.6540620384150847
+    },
+    {
+      "n": 28,
+      "parallel_pairs": 12,
+      "length_cutoff": 21,
+      "short_normalized": "448659937427892851832141/3872625052682665129410560",
+      "long_normalized_fourth_power": "1181184426783501921/9834496000000000000",
+      "remaining_allowance_fourth_power": "137441322380839872819984493063711499440736442259822354742062884053743094437242063232438309794072721/224916751661704893554002400773382856021093104800419327674547980323825443514546812936050924584960000",
+      "display_only_upper_ratio": 0.7045506440775475
+    },
+    {
+      "n": 28,
+      "parallel_pairs": 13,
+      "length_cutoff": 21,
+      "short_normalized": "2433651366456667318449005961/28843311392380489883849850880",
+      "long_normalized_fourth_power": "2402335731374868987/16112838246400000000",
+      "remaining_allowance_fourth_power": "486464599936865025379937365355229045225306334827876793276808100073431084557110519278977645334320747568046322466721/692118526515531397884902294872766915676373713322523134872841669255977067331524111097929110855830790244516495360000",
+      "display_only_upper_ratio": 0.7057665452901024
+    },
+    {
+      "n": 28,
+      "parallel_pairs": 14,
+      "length_cutoff": 22,
+      "short_normalized": "303281377929334901660778592361/2119983387339966006462964039680",
+      "long_normalized_fourth_power": "2355862737523694602329/15352201216000000000000",
+      "remaining_allowance_fourth_power": "10892681025568849335037485712617263894812162509032409880691530876759979189287637815038766222480431990427208771895534393121/20198998217237263460170055836573159290556503973360435620342843421828162134507302481356104983215946239376418368399605760000",
+      "display_only_upper_ratio": 0.7689437911616297
+    },
+    {
+      "n": 29,
+      "parallel_pairs": 0,
+      "length_cutoff": 16,
+      "short_normalized": "37539093239/21496311316480",
+      "long_normalized_fourth_power": "1554067391820207314320632539043/73786976294838206464000000000000",
+      "remaining_allowance_fourth_power": "212040822252938417386361695088567910656852386304134561/213528462152683433124177299016313549528498343772160000",
+      "display_only_upper_ratio": 0.3827003000234547
+    },
+    {
+      "n": 29,
+      "parallel_pairs": 1,
+      "length_cutoff": 17,
+      "short_normalized": "14478457703/3114522378240",
+      "long_normalized_fourth_power": "30588276448824444916782219441/1469316970615668736000000000000",
+      "remaining_allowance_fourth_power": "92357333858099041040228696633738569996870355720161/94094843166742670346662383628470509071247605760000",
+      "display_only_upper_ratio": 0.38449672242479577
+    },
+    {
+      "n": 29,
+      "parallel_pairs": 2,
+      "length_cutoff": 17,
+      "short_normalized": "5154332961103/1096311877140480",
+      "long_normalized_fourth_power": "154001385953584773654464269947/5877267882462674944000000000000",
+      "remaining_allowance_fourth_power": "1417587381560394548991812256828347371159730659481710507880641/1444562965683796114455117387482463441583746523785760604160000",
+      "display_only_upper_ratio": 0.4070360309609399
+    },
+    {
+      "n": 29,
+      "parallel_pairs": 3,
+      "length_cutoff": 17,
+      "short_normalized": "173741627025/36543729238016",
+      "long_normalized_fourth_power": "189133477945036871975876169/5739519416467456000000000000",
+      "remaining_allowance_fourth_power": "1749736343063875348870515401455762077056736238132330561/1783411068745427301796441219114152397016971017019457536",
+      "display_only_upper_ratio": 0.43081675881319126
+    },
+    {
+      "n": 29,
+      "parallel_pairs": 4,
+      "length_cutoff": 18,
+      "short_normalized": "461006790221/36142149795840",
+      "long_normalized_fourth_power": "5934515852824650243/180143985094819840000",
+      "remaining_allowance_fourth_power": "1620895558639469286367888954814653515410956409443531921/1706302103772067552045191952585719133960330920591360000",
+      "display_only_upper_ratio": 0.43878655535207217
+    },
+    {
+      "n": 29,
+      "parallel_pairs": 5,
+      "length_cutoff": 18,
+      "short_normalized": "10603157639293/822233907855360",
+      "long_normalized_fourth_power": "45472019190390012025521/1099511627776000000000000",
+      "remaining_allowance_fourth_power": "433944282942898621856547078223394293012458833468469583383121/457068750860888614339314485883123198313607298541588316160000",
+      "display_only_upper_ratio": 0.4638535568016548
+    },
+    {
+      "n": 29,
+      "parallel_pairs": 6,
+      "length_cutoff": 19,
+      "short_normalized": "241899738285203/6943308555223040",
+      "long_normalized_fourth_power": "11485205812755740484747/274877906944000000000000",
+      "remaining_allowance_fourth_power": "2016807514686289357123242826753062250861180630728376220951167761/2324159138899728313974140161161754545316486799089927255490560000",
+      "display_only_upper_ratio": 0.48695511525542867
+    },
+    {
+      "n": 29,
+      "parallel_pairs": 7,
+      "length_cutoff": 19,
+      "short_normalized": "366751234257631/10414962832834560",
+      "long_normalized_fourth_power": "7154508324476513463849/136651472896000000000000",
+      "remaining_allowance_fourth_power": "10194245497093814491178731653793989280478151519339702197388823681/11766055640679874589494084565881382385664714420392756730920960000",
+      "display_only_upper_ratio": 0.5135590218595222
+    },
+    {
+      "n": 29,
+      "parallel_pairs": 8,
+      "length_cutoff": 20,
+      "short_normalized": "2707359514858769/29161895931936768",
+      "long_normalized_fourth_power": "146737415589690204637107363/2748779069440000000000000000",
+      "remaining_allowance_fourth_power": "489779520666690093065561587974807491860099697299440423994835688001/723207669587772899568007604292638697164313070678093028120095358976",
+      "display_only_upper_ratio": 0.5735125265353985
+    },
+    {
+      "n": 29,
+      "parallel_pairs": 9,
+      "length_cutoff": 20,
+      "short_normalized": "1104744920596413653/14587023360954204160",
+      "long_normalized_fourth_power": "4587572890896545232081/68719476736000000000000",
+      "remaining_allowance_fourth_power": "33040998888036566172057136103114565876079542306177558947626143491342622068401/45275860578397392804380173520239673663187115176014855482907947622056591360000",
+      "display_only_upper_ratio": 0.5840414148321585
+    },
+    {
+      "n": 29,
+      "parallel_pairs": 10,
+      "length_cutoff": 20,
+      "short_normalized": "486475108014983140597/8577169736241072046080",
+      "long_normalized_fourth_power": "14327544297708941471696187/171798691840000000000000000",
+      "remaining_allowance_fourth_power": "4284925136574845272552153795033245011285076432199014658961518881802383720518620882697521/5412227182949036887890630124508607096020580947214913230622868676640239681081924648960000",
+      "display_only_upper_ratio": 0.5941054552711867
+    },
+    {
+      "n": 29,
+      "parallel_pairs": 11,
+      "length_cutoff": 21,
+      "short_normalized": "330747564628505399630457/3432297422785802330439680",
+      "long_normalized_fourth_power": "215559525045073129209/2517630976000000000000",
+      "remaining_allowance_fourth_power": "92536925846422619887871954417132452403134563564560710047064030212967583493177292135913347445785441/138784081942787463038303641175213451828535768270482896962905433800921559866956086966132418805760000",
+      "display_only_upper_ratio": 0.6372967024803412
+    },
+    {
+      "n": 29,
+      "parallel_pairs": 12,
+      "length_cutoff": 21,
+      "short_normalized": "23627661026915616036251307/336365147433008628383088640",
+      "long_normalized_fourth_power": "17196636753723719619603/161128382464000000000000",
+      "remaining_allowance_fourth_power": "9565766267368444273313155578419203812254598989642471423582985450952285808645156650060943463639558922246321/12801001829885809755370813903208186917033517207383169198314467322895782547881413073575154145021824860160000",
+      "display_only_upper_ratio": 0.641812031228052
+    },
+    {
+      "n": 29,
+      "parallel_pairs": 13,
+      "length_cutoff": 22,
+      "short_normalized": "2062219159342569659896064687/17305986835428293930309910528",
+      "long_normalized_fourth_power": "27098434515063771716481/245635219456000000000000",
+      "remaining_allowance_fourth_power": "53996956895798103814038717012943494704749083823681260241774146605973485490396610977567045479619223920625513392961/89698561036412869165883337415510592271658033246598998279520280335574627926165524798291612766915670415689337798656",
+      "display_only_upper_ratio": 0.6954817846407884
+    },
+    {
+      "n": 29,
+      "parallel_pairs": 14,
+      "length_cutoff": 22,
+      "short_normalized": "736088043326635388668841295961/8479933549359864025851856158720",
+      "long_normalized_fourth_power": "14730956420480667/107374182400000000",
+      "remaining_allowance_fourth_power": "3596058266125229524066894164186440012419356129775380669544677402899188709985821733552057777947803101887789579001016488910561/5170943543612739445803534294162728778382465017180271518807767915988009506433869435227162875703282237280363102310299074560000",
+      "display_only_upper_ratio": 0.6954046655631887
+    },
+    {
+      "n": 30,
+      "parallel_pairs": 0,
+      "length_cutoff": 17,
+      "short_normalized": "173741422821/73087458476032",
+      "long_normalized_fourth_power": "533929762304247360497332329/37614514447761119641600000000",
+      "remaining_allowance_fourth_power": "28264216718381377271889851607546173899193139596537491441/28534577099926836828743059505826438352271536272311320576",
+      "display_only_upper_ratio": 0.3475464760085373
+    },
+    {
+      "n": 30,
+      "parallel_pairs": 1,
+      "length_cutoff": 17,
+      "short_normalized": "57913830047/24094766530560",
+      "long_normalized_fourth_power": "1684679905786263966044213843043/94036286119402799104000000000000",
+      "remaining_allowance_fourth_power": "333818505402279485271932313763937036286081928585522561/337047329140161491762013225202117359794633268264960000",
+      "display_only_upper_ratio": 0.36825562608019863
+    },
+    {
+      "n": 30,
+      "parallel_pairs": 2,
+      "length_cutoff": 18,
+      "short_normalized": "10603153044703/1644467815710720",
+      "long_normalized_fourth_power": "19764635006894780265201/1099511627776000000000000",
+      "remaining_allowance_fourth_power": "7126303586205424838163309432940112099355466975607060816315521/7313100013774217829429031774129971173017716776665413058560000",
+      "display_only_upper_ratio": 0.3726089045131097
+    },
+    {
+      "n": 30,
+      "parallel_pairs": 3,
+      "length_cutoff": 18,
+      "short_normalized": "14291208275291/2192623754280960",
+      "long_normalized_fourth_power": "25504034627503394586766827/1125899906842624000000000000",
+      "remaining_allowance_fourth_power": "22516284160175999532961456746716224025877301044359121683028721/23113007450940737831281878199719415065339944380572169666560000",
+      "display_only_upper_ratio": 0.39446921518905015
+    },
+    {
+      "n": 30,
+      "parallel_pairs": 4,
+      "length_cutoff": 18,
+      "short_normalized": "21667318736467/3288935631421440",
+      "long_normalized_fourth_power": "501762306115031919684489/17592186044416000000000000",
+      "remaining_allowance_fourth_power": "113956526549841005051902848945782357140058018412161655835111441/117009600220387485270864508386079538768283468426646608936960000",
+      "display_only_upper_ratio": 0.4175432141344268
+    },
+    {
+      "n": 30,
+      "parallel_pairs": 5,
+      "length_cutoff": 19,
+      "short_normalized": "7803216902933/438524750856192",
+      "long_normalized_fourth_power": "42410747877639478359363/1467284017596376023040000",
+      "remaining_allowance_fourth_power": "34418056212572622257347471772065288820180500465200909808561/36980811921505180530051005119551064104543911008915471466496",
+      "display_only_upper_ratio": 0.43011997457640777
+    },
+    {
+      "n": 30,
+      "parallel_pairs": 6,
+      "length_cutoff": 19,
+      "short_normalized": "15606434571631/867913569402880",
+      "long_normalized_fourth_power": "20336305236869165367955041/559724432982016000000000000",
+      "remaining_allowance_fourth_power": "527696843141619488250812887251546124848161849232313413800001/567421664770441482903842812783631480790157909934064271360000",
+      "display_only_upper_ratio": 0.4545722199525985
+    },
+    {
+      "n": 30,
+      "parallel_pairs": 7,
+      "length_cutoff": 20,
+      "short_normalized": "2035902588688769/41659851331338240",
+      "long_normalized_fourth_power": "1634575864801449621190991787/43980465111040000000000000000",
+      "remaining_allowance_fourth_power": "2465079969119643568292525827358036140561588584520733778113447585281/3012110244014047894910485648865633890730166891620545723115765760000",
+      "display_only_upper_ratio": 0.48794223534760583
+    },
+    {
+      "n": 30,
+      "parallel_pairs": 8,
+      "length_cutoff": 20,
+      "short_normalized": "146920807940639/2975703666524160",
+      "long_normalized_fourth_power": "32046717035887141793325129/687194767360000000000000000",
+      "remaining_allowance_fourth_power": "64032203426254645841048405181973648617635245079336782940868481/78407701062423154282342920888838866376774440119235363471360000",
+      "display_only_upper_ratio": 0.5140769481105156
+    },
+    {
+      "n": 30,
+      "parallel_pairs": 9,
+      "length_cutoff": 21,
+      "short_normalized": "2250532385127532017/21217488525024296960",
+      "long_normalized_fourth_power": "1983856096876016027321523/41248865910784000000000000",
+      "remaining_allowance_fourth_power": "129416770961514959229377076339900294077288194210917025134298609043989757976001/202663670436845265680476678630040793196546054243242235429810481207506370560000",
+      "display_only_upper_ratio": 0.5743700983599732
+    },
+    {
+      "n": 30,
+      "parallel_pairs": 10,
+      "length_cutoff": 21,
+      "short_normalized": "159078831564062143395/2001339605122916810752",
+      "long_normalized_fourth_power": "15164299180141281/251763097600000000",
+      "remaining_allowance_fourth_power": "11518725261564818805808952434845300000794212582251575616875294660219701454866210971601/16042910452173626626944941887586624243883228215139514403364824311868167252194692694016",
+      "display_only_upper_ratio": 0.574887961452207
+    },
+    {
+      "n": 30,
+      "parallel_pairs": 11,
+      "length_cutoff": 21,
+      "short_normalized": "114305099061290183821053/1961312813020458474536960",
+      "long_normalized_fourth_power": "80915062825702375227/1073741824000000000000",
+      "remaining_allowance_fourth_power": "11637905785189364669255975145306708068478605638474114273209039667240709354316442198117916740357201/14797469794816155992422212470160201444441964463658318043525110809261107590979074661944980930560000",
+      "display_only_upper_ratio": 0.5822208821502005
+    },
+    {
+      "n": 30,
+      "parallel_pairs": 12,
+      "length_cutoff": 22,
+      "short_normalized": "33309948600239312699801351/336365147433008628383088640",
+      "long_normalized_fourth_power": "307311587065173395346489/3930163511296000000000000",
+      "remaining_allowance_fourth_power": "8435036272167953597538018800799034784534134007075649539178136785058628782153609989758806149467902906969441/12801001829885809755370813903208186917033517207383169198314467322895782547881413073575154145021824860160000",
+      "display_only_upper_ratio": 0.6278299022837827
+    },
+    {
+      "n": 30,
+      "parallel_pairs": 13,
+      "length_cutoff": 22,
+      "short_normalized": "7137221902860833881884814597/98891353345304536744628060160",
+      "long_normalized_fourth_power": "1534721980840297514535843/15720654045184000000000000",
+      "remaining_allowance_fourth_power": "70876540913889514995963045567660683756440538780311471472566041286919025374841292884770080854407323443648847979406961/95638615682306099568788564674596883055162251191709052726185721640596021445640876086475022358727245424475095695360000",
+      "display_only_upper_ratio": 0.6311439975099205
+    },
+    {
+      "n": 30,
+      "parallel_pairs": 14,
+      "length_cutoff": 23,
+      "short_normalized": "3180043881556058226661650271/25846603715250049376436879360",
+      "long_normalized_fourth_power": "1869147396695502254241/18339659776000000000000",
+      "remaining_allowance_fourth_power": "263962628424526799038947547255588419943393446380929502562851460401525010513310022891090454357214321732668680346241/446286692149030821406211325815558525432640658345915049667026580456217490783480272465594143197782805703724892160000",
+      "display_only_upper_ratio": 0.688054292314342
+    },
+    {
+      "n": 30,
+      "parallel_pairs": 15,
+      "length_cutoff": 23,
+      "short_normalized": "333038010563716859678506340887/3715018507338607097039860793344",
+      "long_normalized_fourth_power": "238431755609436813147/1877981161062400000000",
+      "remaining_allowance_fourth_power": "130823087678252207379185920149925121221799415179573745887678447736602754777445856965412310691934625151442381958637021248801/190477607128800217259678503887616167709061457199121022977174764029786017905209185933634415954627261464137970945175003856896",
+      "display_only_upper_ratio": 0.686569260512229
+    },
+    {
+      "n": 31,
+      "parallel_pairs": 0,
+      "length_cutoff": 17,
+      "short_normalized": "1795328035817/1461749169520640",
+      "long_normalized_fourth_power": "18262790667147438022735438881867/1504580577910444785664000000000000",
+      "remaining_allowance_fourth_power": "4543143980941900883390016004209159950038480994083547567486241/4565532335988293892598889520932230136363445803569811292160000",
+      "display_only_upper_ratio": 0.33315164499938416
+    },
+    {
+      "n": 31,
+      "parallel_pairs": 1,
+      "length_cutoff": 18,
+      "short_normalized": "21667309547287/6577871262842880",
+      "long_normalized_fourth_power": "5499012748354057361529/450359962737049600000000",
+      "remaining_allowance_fourth_power": "1847607945947077606259810723496011683637604134971879666762279201/1872153603526199764333832134177272620292535494826345742991360000",
+      "display_only_upper_ratio": 0.3357094483755203
+    },
+    {
+      "n": 31,
+      "parallel_pairs": 2,
+      "length_cutoff": 18,
+      "short_normalized": "8759126348327/2631148505137152",
+      "long_normalized_fourth_power": "277908469605701929244531763/18014398509481984000000000000",
+      "remaining_allowance_fourth_power": "47292111951969993919052194650830266792478497883808145500390625/47927132250270713966946102634938179079488908667554451020578816",
+      "display_only_upper_ratio": 0.35575709277976375
+    },
+    {
+      "n": 31,
+      "parallel_pairs": 3,
+      "length_cutoff": 19,
+      "short_normalized": "31212864293417/3471654277611520",
+      "long_normalized_fourth_power": "35969127670284341807642247441/2292631277494337536000000000000",
+      "remaining_allowance_fourth_power": "140105978274442775919197750250058533905395937999902806161294881/145259946181233019623383760072609659082280424943120453468160000",
+      "display_only_upper_ratio": 0.36290573748556537
+    },
+    {
+      "n": 31,
+      "parallel_pairs": 4,
+      "length_cutoff": 19,
+      "short_normalized": "756911996701661/83319702662676480",
+      "long_normalized_fourth_power": "181509819356004551438677783947/9170525109977350144000000000000",
+      "remaining_allowance_fourth_power": "46466231913100882631881849474692308720159092199456253562757773383121/48193763904224766318567770381850142251682670265928731569852252160000",
+      "display_only_upper_ratio": 0.38416665182463683
+    },
+    {
+      "n": 31,
+      "parallel_pairs": 5,
+      "length_cutoff": 19,
+      "short_normalized": "54622517882951/5951407333048320",
+      "long_normalized_fourth_power": "13965400197210897421160409/559724432982016000000000000",
+      "remaining_allowance_fourth_power": "1209096932503302098125413283819025538916539154470632415879757921/1254523216998770468517486734221421862028391041907765815541760000",
+      "display_only_upper_ratio": 0.4066164424440178
+    },
+    {
+      "n": 31,
+      "parallel_pairs": 6,
+      "length_cutoff": 20,
+      "short_normalized": "62966058098571/2524839474626560",
+      "long_normalized_fourth_power": "46112629830631102870803/1801439850948198400000000",
+      "remaining_allowance_fourth_power": "36733547787946870623227174328558505748644742076399335588942641/40638258285522194411404950567407223796258494677072698408960000",
+      "display_only_upper_ratio": 0.4249294647386122
+    },
+    {
+      "n": 31,
+      "parallel_pairs": 7,
+      "length_cutoff": 20,
+      "short_normalized": "104943431986651/4165985133133824",
+      "long_normalized_fourth_power": "354217419066297189755149281/10995116277760000000000000000",
+      "remaining_allowance_fourth_power": "271988033097447322282015936697644175985086981237908238427341041/301211024401404789491048564886563389073016689162054572311576576",
+      "display_only_upper_ratio": 0.4488506026386608
+    },
+    {
+      "n": 31,
+      "parallel_pairs": 8,
+      "length_cutoff": 21,
+      "short_normalized": "1911519825366687/27773234220892160",
+      "long_normalized_fourth_power": "21996206329550275943049627/659981854572544000000000000",
+      "remaining_allowance_fourth_power": "447331256725212094138749695100730556031023655776958189096680365441/594984739558330448377379881257409163601020620567021377405583360000",
+      "display_only_upper_ratio": 0.4960974931334331
+    },
+    {
+      "n": 31,
+      "parallel_pairs": 9,
+      "length_cutoff": 21,
+      "short_normalized": "847463825376245967/13728963163251015680",
+      "long_normalized_fourth_power": "26988127444404885155049/644513529856000000000000",
+      "remaining_allowance_fourth_power": "27533768849258770425231477474622955059147858409454493449094244499771595412161/35526380178228847054367872173733878344256304165123855903639267434047733760000",
+      "display_only_upper_ratio": 0.5140891977987387
+    },
+    {
+      "n": 31,
+      "parallel_pairs": 10,
+      "length_cutoff": 22,
+      "short_normalized": "1534816089279726542017/13723471577985715273728",
+      "long_normalized_fourth_power": "175619724898900879626729363/4024487435567104000000000000",
+      "remaining_allowance_fourth_power": "22071060828596202505497995040395320642372061925049870615811428919883213052944641309725441/35469572066174808148480033583979607464480479295667655348210032159229474773938501379424256",
+      "display_only_upper_ratio": 0.5688908321806474
+    },
+    {
+      "n": 31,
+      "parallel_pairs": 11,
+      "length_cutoff": 22,
+      "short_normalized": "18563504573124286665041/226305324579283670138880",
+      "long_normalized_fourth_power": "5506143741817612459281/100612185889177600000000",
+      "remaining_allowance_fourth_power": "1862497628574349285679782138896129857211168782616455050494525626582781004246930061993215122241/2622884031940645975688437051580337516630630758631358674253207992433190615851390549213839360000",
+      "display_only_upper_ratio": 0.5656986801010315
+    },
+    {
+      "n": 31,
+      "parallel_pairs": 12,
+      "length_cutoff": 22,
+      "short_normalized": "135383809867748444805113/2261278302070646241230848",
+      "long_normalized_fourth_power": "17246779457454467481098187/251530464722944000000000000",
+      "remaining_allowance_fourth_power": "20425223951366640937569245700814574000731319957090140352804776666769993766064729502038300730550625/26146650518648302277996575824965160688285393113837065518853569992570546364633376888573295975202816",
+      "display_only_upper_ratio": 0.5715868982110354
+    },
+    {
+      "n": 31,
+      "parallel_pairs": 13,
+      "length_cutoff": 23,
+      "short_normalized": "61565068853267310105717503/602836238256560918400860160",
+      "long_normalized_fourth_power": "82349635663348020009/1146228736000000000000",
+      "remaining_allowance_fourth_power": "85834045244074715166912439919481797576406991119400913776609223056985800659571743137157731537726053724083201/132067940249831843979800501976487217041172942321700766465884770246135928167359988589190868169322250895360000",
+      "display_only_upper_ratio": 0.6198488584541186
+    },
+    {
+      "n": 31,
+      "parallel_pairs": 14,
+      "length_cutoff": 23,
+      "short_normalized": "24187535033389045062931441601/324928732420286335018063626240",
+      "long_normalized_fourth_power": "1687076004420772479633843/18779811610624000000000000",
+      "remaining_allowance_fourth_power": "8180346468445646215837949179233488989533881115191789155876237541787000098147330681079720476077862699491533315213623041/11146857913849321619920600052937886860074826961990442742169320503800929295031065558065496348141853847076441172213760000",
+      "display_only_upper_ratio": 0.6219101742361023
+    },
+    {
+      "n": 31,
+      "parallel_pairs": 15,
+      "length_cutoff": 24,
+      "short_normalized": "14503272528064795449396559859451/113772441787244842346845736796160",
+      "long_normalized_fourth_power": "406506729864021178401/4294967296000000000000",
+      "remaining_allowance_fourth_power": "97108567997654218558324023645378648525585237933449322390646219441606902621861252370278177012849543305774139461079904773263963761/167551498421282138253602889845250483890589171985313426571630868050182261017756320233062990528816404955402227637133149323919360000",
+      "display_only_upper_ratio": 0.6821363033752064
+    },
+    {
+      "n": 32,
+      "parallel_pairs": 0,
+      "length_cutoff": 18,
+      "short_normalized": "461006520941/274077969285120",
+      "long_normalized_fourth_power": "9042147408156740342721/1099511627776000000000000",
+      "remaining_allowance_fourth_power": "5604954237963138033274111303146919232968133744589910609681/5642824084702328572090302294853372818686509858538127360000",
+      "display_only_upper_ratio": 0.30282167535175164
+    },
+    {
+      "n": 32,
+      "parallel_pairs": 1,
+      "length_cutoff": 18,
+      "short_normalized": "44717638657397/26311485051371520",
+      "long_normalized_fourth_power": "3001958832175948576991207547/288230376151711744000000000000",
+      "remaining_allowance_fourth_power": "476021440273785596121159355842608010010386121377836053513785038641/479271322502707139669461026349381790794889086675544510205788160000",
+      "display_only_upper_ratio": 0.32115937068632094
+    },
+    {
+      "n": 32,
+      "parallel_pairs": 2,
+      "length_cutoff": 19,
+      "short_normalized": "54622509568931/11902814666096640",
+      "long_normalized_fourth_power": "623184759518080907312165529/58691360703855040921600000000",
+      "remaining_allowance_fourth_power": "19706448205565996031037426215834600118621800761653293335625719761/20072371471980327496279787747542749792454256670524253048668160000",
+      "display_only_upper_ratio": 0.32559320197930686
+    },
+    {
+      "n": 32,
+      "parallel_pairs": 3,
+      "length_cutoff": 19,
+      "short_normalized": "23409648109839/5049678949253120",
+      "long_normalized_fourth_power": "1970425441171939058590359701043/146728401759637602304000000000000",
+      "remaining_allowance_fourth_power": "638238525031610122988010132157804245933294607109278800092291521/650212132568355110582479209078515580740135914833163174543360000",
+      "display_only_upper_ratio": 0.34505303692383305
+    },
+    {
+      "n": 32,
+      "parallel_pairs": 4,
+      "length_cutoff": 20,
+      "short_normalized": "104943426166837/8331970266267648",
+      "long_normalized_fourth_power": "2431959590520358867989288801/175921860444160000000000000000",
+      "remaining_allowance_fourth_power": "4581119879936653984212476750290462529768017430178076497449313841/4819376390422476631856777038185014225168267026592873156985225216",
+      "display_only_upper_ratio": 0.35548867952708846
+    },
+    {
+      "n": 32,
+      "parallel_pairs": 5,
+      "length_cutoff": 20,
+      "short_normalized": "2119857245816917/166639405325352960",
+      "long_normalized_fourth_power": "196570092078452387376166165947/11258999068426240000000000000000",
+      "remaining_allowance_fourth_power": "732605258265071873256492199243464971030193337997128980223404502426801/771100222467596261097084326109602276026922724254859705117636034560000",
+      "display_only_upper_ratio": 0.376221223657933
+    },
+    {
+      "n": 32,
+      "parallel_pairs": 6,
+      "length_cutoff": 20,
+      "short_normalized": "20988685963697/1633719660052480",
+      "long_normalized_fourth_power": "3876097754803186656860728329/175921860444160000000000000000",
+      "remaining_allowance_fourth_power": "6764687025035886444312910111398080888510251280866364863945921/7123774135347163568173032904986879510554478760635305820160000",
+      "display_only_upper_ratio": 0.39812031327887304
+    },
+    {
+      "n": 32,
+      "parallel_pairs": 7,
+      "length_cutoff": 21,
+      "short_normalized": "1949371688115021/55546468441784320",
+      "long_normalized_fourth_power": "617922524250431282403/27032856763291402240000",
+      "remaining_allowance_fourth_power": "8252111015661084715715186561427440724207745856039810855877432262801/9519755832933287174038078100118546617616329929072342038489333760000",
+      "display_only_upper_ratio": 0.42392510703743735
+    },
+    {
+      "n": 32,
+      "parallel_pairs": 8,
+      "length_cutoff": 21,
+      "short_normalized": "18925938835467/534100658094080",
+      "long_normalized_fourth_power": "7731504798927006321/268435456000000000000",
+      "remaining_allowance_fourth_power": "70439809440495340824376980211550423010053813188414752045361/81375271835710525330840662482467509727127439483558952960000",
+      "display_only_upper_ratio": 0.4473960910588883
+    },
+    {
+      "n": 32,
+      "parallel_pairs": 9,
+      "length_cutoff": 22,
+      "short_normalized": "16179394658056988621/186713899020213813248",
+      "long_normalized_fourth_power": "132403778050896437183307/4398046511104000000000000",
+      "remaining_allowance_fourth_power": "845763723144190841561638548580057148950474799083884369834295134340016950212778641/1215364628015452788665491067626466202906882367559806799432849512595087675952726016",
+      "display_only_upper_ratio": 0.5031966897063592
+    },
+    {
+      "n": 32,
+      "parallel_pairs": 10,
+      "length_cutoff": 22,
+      "short_normalized": "4591746359758569189823/68617357889928576368640",
+      "long_normalized_fourth_power": "38102961920405969102343129/1006121858891776000000000000",
+      "remaining_allowance_fourth_power": "16804087760799687659783154932755850235504519285357206370268209929084616942640158437782821121/22168482541359255092800020989987254665300299559792284592631270099518421733711563362140160000",
+      "display_only_upper_ratio": 0.5080587544391914
+    },
+    {
+      "n": 32,
+      "parallel_pairs": 11,
+      "length_cutoff": 23,
+      "short_normalized": "1374849204467415049777/11866159635100430499840",
+      "long_normalized_fourth_power": "191563719741655714128165363/4807631772319744000000000000",
+      "remaining_allowance_fourth_power": "12114875370443451572378687517800516280579928868147636392588449753815901937735791920352961/19826257680168513591965327155187422315950180022473750428611275893861985240946688655360000",
+      "display_only_upper_ratio": 0.5626448735059167
+    },
+    {
+      "n": 32,
+      "parallel_pairs": 12,
+      "length_cutoff": 23,
+      "short_normalized": "545113396792866289673739/6444313528495792130621440",
+      "long_normalized_fourth_power": "375875122166775772641/7511924644249600000000",
+      "remaining_allowance_fourth_power": "1211079129010375667091765995990593472632690537672647785388575718495505805836473247099637749607530801/1724672530133755897157611145298667610334895367544609487554398389826921120102946785703184260136960000",
+      "display_only_upper_ratio": 0.5575468397262298
+    },
+    {
+      "n": 32,
+      "parallel_pairs": 13,
+      "length_cutoff": 23,
+      "short_normalized": "233761319474500313475096989/3789256354755525772805406720",
+      "long_normalized_fourth_power": "18863311643779037005424187/300476985769984000000000000",
+      "remaining_allowance_fourth_power": "159808658619412616337284687759386011239253484411893038395661956074468020644822484452116262231150092753220954321/206165480457573400705253786862167360367826797344522014155650497218017945781078427234982064232388192957890560000",
+      "display_only_upper_ratio": 0.5622454117956028
+    },
+    {
+      "n": 32,
+      "parallel_pairs": 14,
+      "length_cutoff": 24,
+      "short_normalized": "51774049207596784353019251785/489892550418277858950311313408",
+      "long_normalized_fourth_power": "4560990348335343420969/68719476736000000000000",
+      "remaining_allowance_fourth_power": "36843966026225207196916121529233015927337861487009845995086258875066457510702077521337929561423037559865419043619668641/57597461286529952311554263320887763299130397995865772821288165324973977998797807256789300240872917065463077194008887296",
+      "display_only_upper_ratio": 0.6132531935118547
+    },
+    {
+      "n": 32,
+      "parallel_pairs": 15,
+      "length_cutoff": 24,
+      "short_normalized": "40073275163629980904365493851701/520102591027404993585580511068160",
+      "long_normalized_fourth_power": "22845695474122134993603/274877906944000000000000",
+      "remaining_allowance_fourth_power": "53097129588136825982044388092794761311496868776884476441201201538647943353150706237551248542089282919314803695329937233947202739761/73173877554599891462478094053466626987113049397614332186911457349682596638465160868264997233129608764063242918298429481665167360000",
+      "display_only_upper_ratio": 0.613976894422321
+    },
+    {
+      "n": 32,
+      "parallel_pairs": 16,
+      "length_cutoff": 25,
+      "short_normalized": "22158870223042952779682866671618227/167245489427249918249863233090355200",
+      "long_normalized_fourth_power": "8830805763312474561/100000000000000000000",
+      "remaining_allowance_fourth_power": "443107849751833388250528030819156136664648946572267546363534291715528451220817460130853031737873783626254576143407401549549378993585205047441/782379846976909610428071636316059766174191402892586529718987001810912586282912348635064226299444185483679251000665981248100516862361600000000",
+      "display_only_upper_ratio": 0.6776230812718979
+    }
+  ],
+  "tail": [
+    {
+      "n": 33,
+      "length_cutoff": 18,
+      "short_normalized": "16033540587963/531545152552960",
+      "long_normalized_eighth_power": "1266963840816259668589633588803/1888946593147858085478400000000",
+      "remaining_allowance_eighth_power": "4987783774967409115198821125339120094984145271132736845402758388566532423220952222121963315742582995663464761760366561/6372668030702814840358503023060197772572630530107023928842450436124786301366899358792022620196656922255530393600000000",
+      "display_only_upper_ratio": 0.9814652742378407
+    },
+    {
+      "n": 34,
+      "length_cutoff": 19,
+      "short_normalized": "15111527546081/343940981063680",
+      "long_normalized_eighth_power": "811531538632835024459344518075511689/1958071505481495753713621401600000000",
+      "remaining_allowance_eighth_power": "136699109585091517830419557200662073728313792573965176802078113477360383832914000262986343088030852180107035189139201/195826474701807085486566927042081076592777929942959789852430922674576288772242778587500987133598267812190617600000000",
+      "display_only_upper_ratio": 0.9396818390553742
+    },
+    {
+      "n": 35,
+      "length_cutoff": 20,
+      "short_normalized": "814537780280579/12696335643836416",
+      "long_normalized_eighth_power": "2011961223570634463165067670167387/7737125245533626718119526400000000",
+      "remaining_allowance_eighth_power": "397243937623465328070990742346535372226966096791739306256712580471984481901296788144493544113810512810786867998083134222024905121/675191801469142922198772807044659403281220679138730914484020180058375399259269557683156949903467846090570639129284279566384234496",
+      "display_only_upper_ratio": 0.9092006571572696
+    },
+    {
+      "n": 36,
+      "length_cutoff": 20,
+      "short_normalized": "7330840022525211/222185873767137280",
+      "long_normalized_eighth_power": "45070940065683304000702597510555281/184467440737095516160000000000000000",
+      "remaining_allowance_eighth_power": "4541133445857310183026201481218739814821969556296003443258918480118583023015175306634307202518276366547739876435079122578249059150570172641/5939249225312983073477794917028594318687414935790458853986196926911472412147882698671601666199434421708324754368800573926653139353600000000",
+      "display_only_upper_ratio": 0.87148267916795
+    },
+    {
+      "n": 37,
+      "length_cutoff": 21,
+      "short_normalized": "85754205786017891/1777486990137098240",
+      "long_normalized_eighth_power": "1681595553943780062285647323207754163/10889401209125365439023965798400000000",
+      "remaining_allowance_eighth_power": "67089433572032709827237197795165035976309753092082035137000118610826071472987101368289154371684410809293015866237243418154058934273109194699287201/99644067130908584628080836526690805060991596859382658932438886861329985536646051978276374219787810370835653402192310889691427876013447577600000000",
+      "display_only_upper_ratio": 0.8399975887966679
+    },
+    {
+      "n": 38,
+      "length_cutoff": 21,
+      "short_normalized": "2317681237459943/93551946849320960",
+      "long_normalized_eighth_power": "24392584618243158770614349943028569/170146893892583834984749465600000000",
+      "remaining_allowance_eighth_power": "4800249869184344204254035767424139068053657687951308800072000018402088381447567464408248249723783240234276294646100874280783991551381441/5867088483750904141509868496073891957886694716887626909621154499021356771648588952782418339173509025445472387562488683889793433600000000",
+      "display_only_upper_ratio": 0.8092043242516084
+    },
+    {
+      "n": 39,
+      "length_cutoff": 22,
+      "short_normalized": "19837130488202949/546919073888337920",
+      "long_normalized_eighth_power": "151299384509990242510927219645506438191307/1658521509789438471167804103353958400000000",
+      "remaining_allowance_eighth_power": "5956965822961104752999932934855461008929910879543924651368130508470924480013057195652915281894206187656261847194924396724595041765055332692961/8005428035719675932354527202627211830210260392750982264153705802805141541469094263091165915360951497697835731463245070632588590815641600000000",
+      "display_only_upper_ratio": 0.7776056903923169
+    }
+  ],
+  "small_matching": [
+    {
+      "n": 14,
+      "parallel_pairs": 0,
+      "length_cutoff": 10,
+      "short_normalized": "3533/32768",
+      "long_normalized_fourth_power": "367664074361705254329/655360000000000000000",
+      "remaining_allowance_fourth_power": "730486833833300625/1152921504606846976",
+      "display_only_upper_ratio": 0.9732702654700565
+    },
+    {
+      "n": 15,
+      "parallel_pairs": 0,
+      "length_cutoff": 10,
+      "short_normalized": "52995/917504",
+      "long_normalized_fourth_power": "37210483161138849147/67108864000000000000",
+      "remaining_allowance_fourth_power": "558570602988982602388561/708650120335626134880256",
+      "display_only_upper_ratio": 0.9206815968113509
+    },
+    {
+      "n": 16,
+      "parallel_pairs": 0,
+      "length_cutoff": 11,
+      "short_normalized": "93967/1261568",
+      "long_normalized_fourth_power": "1378166043005142561/3748096000000000000",
+      "remaining_allowance_fourth_power": "1858565336837532447230401/2533043557576636289253376",
+      "display_only_upper_ratio": 0.8531888380174513
+    },
+    {
+      "n": 17,
+      "parallel_pairs": 0,
+      "length_cutoff": 12,
+      "short_normalized": "3939597/40370176",
+      "long_normalized_fourth_power": "4263178002882685623603/17179869184000000000000",
+      "remaining_allowance_fourth_power": "1761425561975763997551209608081/2656088681429478973640147992576",
+      "display_only_upper_ratio": 0.8033815348551694
+    },
+    {
+      "n": 18,
+      "parallel_pairs": 0,
+      "length_cutoff": 12,
+      "short_normalized": "2085669/40370176",
+      "long_normalized_fourth_power": "1004683045350748926969/4294967296000000000000",
+      "remaining_allowance_fourth_power": "2148286680241644034810959836401/2656088681429478973640147992576",
+      "display_only_upper_ratio": 0.7471158376503878
+    },
+    {
+      "n": 15,
+      "parallel_pairs": 1,
+      "length_cutoff": 10,
+      "short_normalized": "81301/1376256",
+      "long_normalized_fourth_power": "27111982176810398169/40960000000000000000",
+      "remaining_allowance_fourth_power": "2812021956472881726600625/3587541234199107307831296",
+      "display_only_upper_ratio": 0.9610611472275548
+    },
+    {
+      "n": 16,
+      "parallel_pairs": 1,
+      "length_cutoff": 11,
+      "short_normalized": "657901/8650752",
+      "long_normalized_fourth_power": "43430817379893876747/98254087782400000000",
+      "remaining_allowance_fourth_power": "4081378461859875121841456401/5600353581731252521471574016",
+      "display_only_upper_ratio": 0.8914346664391837
+    },
+    {
+      "n": 17,
+      "parallel_pairs": 1,
+      "length_cutoff": 12,
+      "short_normalized": "3923/39424",
+      "long_normalized_fourth_power": "80572813607367130401/268435456000000000000",
+      "remaining_allowance_fourth_power": "1588409025561642001/2415698583199154176",
+      "display_only_upper_ratio": 0.8396876014610389
+    },
+    {
+      "n": 18,
+      "parallel_pairs": 1,
+      "length_cutoff": 12,
+      "short_normalized": "386263/7340032",
+      "long_normalized_fourth_power": "4887666100052597331603/17179869184000000000000",
+      "remaining_allowance_fourth_power": "2338196673670812163211340321/2902630892894724648469528576",
+      "display_only_upper_ratio": 0.7829563076047732
+    },
+    {
+      "n": 16,
+      "parallel_pairs": 2,
+      "length_cutoff": 11,
+      "short_normalized": "2350099/30277632",
+      "long_normalized_fourth_power": "508462335950820268329/959512576000000000000",
+      "remaining_allowance_fourth_power": "608317477965565328068860955921/840403059358546081503328075776",
+      "display_only_upper_ratio": 0.9308206454209188
+    },
+    {
+      "n": 17,
+      "parallel_pairs": 2,
+      "length_cutoff": 12,
+      "short_normalized": "4094707/40370176",
+      "long_normalized_fourth_power": "622225197823743387/1717986918400000000",
+      "remaining_allowance_fourth_power": "1731618210042248441416108741521/2656088681429478973640147992576",
+      "display_only_upper_ratio": 0.8771971429835267
+    },
+    {
+      "n": 18,
+      "parallel_pairs": 2,
+      "length_cutoff": 12,
+      "short_normalized": "38629/720896",
+      "long_normalized_fourth_power": "5792616351552401361/16777216000000000000",
+      "remaining_allowance_fourth_power": "216679319535903294785521/270078779983181545209856",
+      "display_only_upper_ratio": 0.8201315806995738
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+\section{Iterated cycle removal without an excess parameter}
+\label{sec:four-iterative-packing}
+
+This argument uses the all-terminal forest estimate in clean regions.
+It needs no lower bound on a positive excess above one half.
+The marked vertex set must be connected or empty.
+
+Fix $H=H_4$ from Proposition~\ref{prop:four-fixed-ratio-shore-rank}.
+Choose an integer $D_*\ge3$ so large that Corollary~\ref{cor:four-fixed-ratio-terminal-forests} gives forest probability at most $3/5$ in every affine terminal class of every normalized pole with
+\[
+ h\ge H,\qquad 2\le k\le4D,\qquad \operatorname{girth}\ge D\ge D_*.
+\]
+These are absolute constants.
+
+\begin{lemma}[Two clean regions]
+\label{lem:four-two-clean-regions}
+Let $G$ be connected and cubic, let $P$ be connected or empty, and let $S$ be disjoint from $P$.
+Suppose $G-(P\cup S)$ has girth at least $D\ge D_*$.
+If $R_1,R_2$ are disjoint connected vertex sets avoiding $P\cup S$, each of rank at least $H$ and boundary at most $4D$, then
+\[
+ \Pr(\xi_G-(P\cup S)\text{ is a forest})\le\frac9{25}.
+\]
+\end{lemma}
+
+\begin{proof}
+Prune leaves from each induced graph $G[R_i]$.
+The resulting connected core has the same rank and no larger boundary.
+Indeed, removing a leaf in a cubic ambient graph reduces the boundary by one.
+Each core is a normalized pole: its vertices have internal degrees two or three, and each degree-two vertex has one boundary edge.
+
+Condition on every edge outside the two core interiors.
+For every feasible conditioning, the internal states are independent and uniform in their respective affine parity classes.
+This follows because the fiber is the product of two affine translates of their cycle spaces.
+Each boundary pattern has even size and is supported on the degree-two ports.
+If a core has at least two ports, its conditional forest probability is at most $3/5$ by the choice of $D_*$.
+With zero or one port, the only feasible boundary pattern is empty, and its forest probability is $2^{-h}\le3/5$.
+The global forest event requires both internal states to be forests.
+Their conditional independence gives the bound $(3/5)^2$.
+\end{proof}
+
+\begin{proposition}[Packing after a previous deletion]
+\label{prop:four-packing-after-deletion}
+Under the preceding notation, suppose
+\[
+ \Pr(\xi_G-(P\cup S)\text{ is a forest})>\frac12,
+ \qquad s=|S|.
+\]
+Let $2\le d\le2D$.
+Every family of $q$ disjoint connected cyclic regions in $G-(P\cup S)$, each with boundary in $G$ at most $d$, satisfies
+\[
+ q<(6H+15)d(s+1)2^d.
+\]
+\end{proposition}
+
+\begin{proof}
+The case $q=0$ is immediate.
+Contract the regions and the connected components outside them, discarding loops, to obtain a connected quotient $Q$.
+As in Proposition~\ref{prop:four-excess-free-cycle-packing}, the forest probability is at most
+\[
+ \mathbb E\prod_v(1-I_v/2),
+\]
+where $I_v$ indicates a zero star at a marked quotient vertex.
+No local star space is zero.
+A maximal direct-sum family of local spaces has a vertex set $A$ with
+\[
+ 1\le t=|A|<2^d.
+\]
+If it includes all marked vertices, the result follows.
+Otherwise put $B=|\delta_QA|\le dt$.
+Lemma~\ref{lem:four-terminal-bipartition} gives at most $2B$ exceptional remaining vertices and at most $2B$ ordered classes with identical terminal bipartitions.
+
+Consider one class $v_1,\ldots,v_m$ in its tree order.
+Every consecutive block of $H+2$ class vertices gives a middle component after deleting its first and last vertices from $Q-A$.
+That component contains its $H$ interior marked vertices.
+It has no neighbor in $A$, since the first and last vertices give the same actual terminal bipartition.
+Its boundary in $Q$ therefore ends only at these two vertices and has size at most $2d$.
+The middle components from disjoint consecutive blocks are disjoint.
+Their lifts to $G$ are connected and have rank at least $H$.
+
+The connected set $P$ lies within one component outside all marked regions, hence within one quotient vertex.
+Thus at most one of these disjoint lifts meets $P$.
+At most $s$ further lifts meet $S$.
+If $m\ge(H+2)(s+3)$, there are at least $s+3$ middle components and at least two clean lifts.
+Each has boundary at most $2d\le4D$.
+Lemma~\ref{lem:four-two-clean-regions} would give forest probability at most $9/25$, a contradiction.
+Consequently each class has fewer than $(H+2)(s+3)$ members.
+
+It follows that
+\begin{align*}
+ q&\le t+2B+2B(H+2)(s+3)\\
+  &\le t+(6H+14)(s+1)B\\
+  &\le(6H+15)d(s+1)t
+   <(6H+15)d(s+1)2^d.
+\end{align*}
+\end{proof}
+
+\begin{theorem}[An excess-free girth-raising bound]
+\label{thm:four-excess-free-girth-raising}
+There is an absolute constant $K$ with the following property.
+Let $G$ be connected and cubic and let $P$ be connected or empty.
+Assume
+\[
+ \Pr(\xi_G-P\text{ is a forest})>\frac12,
+ \qquad \operatorname{girth}(G-P)\ge D_*.
+\]
+For every integer $D\ge D_*$, there is $S\subseteq V(G)\setminus P$ such that $G-(P\cup S)$ has girth greater than $D$ and
+\[
+ |S|+1\le 2^{\,2D+K\log^2(D+2)}.
+\]
+Moreover, $S$ is the union of a vertex-disjoint family of cycles of length at most $D$, maximal among such cycles outside $P$.
+For two target scales $D_0<D_1$, they can be chosen nested with the respective logarithmic bounds
+\[
+ 2D_0+K\log^2(D_0+2),\qquad
+ 2D_1+2D_0+2K\log^2(D_1+2).
+\]
+\end{theorem}
+
+\begin{proof}
+Deletion can only increase the probability of the forest event.
+Starting with $S=\varnothing$, repeatedly raise the scale from $a$ to $b\le2a$ by taking a maximal disjoint family of cycles of length at most $b$ in $G-(P\cup S)$ and adding their vertices to $S$.
+The remaining graph has girth greater than $b$.
+If the family is nonempty, its cycles have boundary at most $b$ in the cubic ambient graph.
+Proposition~\ref{prop:four-packing-after-deletion}, with $d=b$, gives
+\[
+ s_{\mathrm{new}}+1
+ \le (6H+16)b^2 2^b(s+1).
+\]
+The same inequality holds when the family is empty.
+
+Choose the scales backwards from $D$, using $\lceil D/2^j\rceil$ until reaching a value between $D_*$ and $2D_*$.
+Read them in increasing order, starting from the available girth $D_*$.
+If $D=D_*$, perform one deletion at that same scale.
+Each forward step at most doubles the previous scale.
+The sum of the new scales is at most $2D+O(\log(D+2))$, and there are $O(\log(D+2))$ steps.
+Taking logarithms of the recurrence gives
+\[
+ \log(s+1)
+ \le2D+O\!\left(\sum_b\log(b+2)\right)
+ \le2D+K\log^2(D+2).
+\]
+The fixed initial scale is absorbed into $K$.
+Each new family avoids all earlier deletions, so the combined cycles are vertex-disjoint.
+Their lengths are at most $D$, and the final girth assertion is exactly their maximality outside $P$.
+For two targets, first carry out the construction through $D_0$.
+Retain those deletions, then use the backwards-planned scales for $D_1$ down to the first value between $D_0$ and $2D_0$.
+The second sum of new scales is at most $2D_1+O(\log(D_1+2))$.
+Adding the two logarithmic bounds gives the stated nested version.
+\end{proof}
+
+\paragraph{Scope.}
+The theorem starts above the fixed girth threshold $D_*$.
+It does not bound the number of short cycles below that threshold.
+Its two-scale consequence is $|S_0|=r^{o(1)}$ at $D_0=\log r/\log\log r$ and $|S_1|\le r^{2\alpha+o(1)}$ at $D_1=\alpha\log r$, for any fixed $0<\alpha<1/2$.
+
+\paragraph{Independent checks.}
+The mathematical proof has passed independent line audits by the root, path-stability, and random-host agents.
+The standard-library checker \texttt{four-high-connectivity-iterative-packing-check.py} additionally verifies actual terminal partitions, 636 middle intervals, 114 disjoint segment pairs, 4482 core prunings, and 4163 exact conditional affine fibers.
+Its results are recorded in \texttt{four-high-connectivity-iterative-packing-checks.json}.
+These finite checks test the structural assertions and conditional product law; they do not replace the high-girth theorem.

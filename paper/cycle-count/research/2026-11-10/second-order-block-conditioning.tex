@@ -1,0 +1,153 @@
+% New refinement. Root and path_stability independently audited all steps and constants.
+\section{Conditioning on terminal data block by block}
+\label{sec:second-order-block-conditioning}
+
+A block is a maximal two-connected subgraph, with each bridge counted as a block.
+An isolated vertex is a degenerate block when needed.
+The cycle space of a graph is the direct sum of its block cycle spaces.
+The block-cut graph of each connected component is a tree.
+Its nodes are the blocks and the articulation vertices, with incidence as adjacency.
+
+\begin{lemma}[Weighted conditional block estimate]\label{lem:weighted-block-conditioning}
+Let $Q$ be a connected loopless multigraph, and let $S$ be a nonempty proper vertex set.
+For each vertex $v$, let $L_v$ be its local edge-coordinate space in $\mathcal Z(Q)^*$.
+Put
+\[
+ U=\sum_{s\in S}L_s,\qquad B=|\delta_Q(S)|.
+\]
+Let $\mathcal V\subseteq V(Q)\setminus S$ consist of vertices with $L_v\cap U\ne0$.
+Write $I_v$ for the indicator that $v$ is closed, and put
+$p_v=\mathbb P(I_v=1)=2^{-\dim L_v}$.
+For arbitrary $0\le\eta_v\le1$, there is a set $E\subseteq\mathcal V$ with $|E|\le5B$ such that
+\begin{equation}\label{eq:weighted-block-conditioning}
+ \mathbb E\prod_{v\in\mathcal V}(1-\eta_v I_v)
+ \le\frac12+\frac12\exp\!\left(-\sum_{v\in\mathcal V\setminus E}\eta_v p_v\right).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Put $H=Q-S$.
+In its block-cut forest, attach one distinct terminal leaf for each edge of $\delta_Q(S)$.
+Attach that leaf to the articulation node of its endpoint in $H$, if that endpoint is an articulation.
+Otherwise attach it to the unique block containing its endpoint.
+Thus terminals at nonarticulation vertices are also retained.
+Prune each tree to the union of paths between terminal leaves.
+Components with fewer than two terminals contribute nothing.
+Call the resulting forest $T$.
+It has at most $B$ leaves.
+
+Exclude the vertices of $\mathcal V$ adjacent to $S$, of which there are at most $B$.
+The cut-space argument in Lemma~\ref{lem:local-terminal-intersection} applies to every remaining vertex.
+It shows that such a vertex is an articulation separating at least two terminal-bearing components of $H-v$.
+Its articulation node therefore has degree at least two in $T$.
+
+Also exclude articulation nodes of degree at least three in $T$.
+There are at most $B$ of these.
+Finally exclude articulation nodes adjacent in $T$ to a block node of degree at least three.
+The sum of the degrees of all branching nodes in a forest with at most $B$ leaves is at most $3B$.
+This last exclusion therefore removes at most $3B$ further vertices.
+Let $E$ be the union of the excluded vertices.
+
+Each remaining vertex $v$ has exactly two terminal-bearing incident blocks in $H$.
+All other incident blocks lie in branches containing no terminal.
+The two terminal sides give the same nonzero functional $a_v\in U$.
+The cut-space argument also shows
+\begin{equation}\label{eq:block-intersection-line}
+ L_v\cap U=\{0,a_v\}.
+\end{equation}
+Indeed, a local cut can only select a union of the components of $H-v$.
+Terminal-free components contribute zero.
+The two terminal-bearing components have complementary terminal sets, whose total functional is zero.
+
+Join two remaining vertices when they belong to a common block of $H$.
+Any shared block lies on the terminal forest between their articulation nodes.
+It has degree two there, since neighbors of branching block nodes were excluded.
+The resulting conflict graph is therefore a forest of paths.
+Its two color classes contain no pair of vertices incident with the same block.
+Choose a color class $J$ with
+\[
+ \sum_{v\in J}\eta_vp_v
+ \ge\frac12\sum_{v\in\mathcal V\setminus E}\eta_vp_v.
+\]
+
+Condition on the evaluation of all functionals in $U$.
+This determines every edge incident with $S$.
+The remaining edge set in $H$ is a uniform member of an affine translate of $\mathcal Z(H)$.
+Its random choices in different blocks are independent.
+
+For clarity, zero-star feasibility can also be checked within each block.
+At an articulation $v$, each incident block has a prescribed star parity, determined by the terminal data on its side.
+The terminal-free sides have parity zero.
+The other two sides have parity $a_v$.
+Deleting $v$ from a nondegenerate block leaves it connected.
+Hence, whenever the prescribed parity at $v$ is zero, a compatible edge set avoiding its star exists in that block.
+This follows by joining its remaining odd vertices inside the connected graph obtained after deletion.
+For a bridge block, parity zero simply forces its edge to be absent.
+Thus the full star at $v$ can be zero exactly when $a_v=0$.
+
+Equation~\eqref{eq:block-intersection-line} gives the exact conditional probability
+\[
+ \mathbb P(I_v=1\mid U)=2p_v\,\mathbf1_{\{a_v=0\}}.
+\]
+The indicators for $v\in J$ are conditionally independent, because their incident block sets are disjoint.
+Ignoring the other factors and using $1-x\le e^{-x}$ gives
+\[
+ \mathbb E\!\left[\prod_{v\in\mathcal V}(1-\eta_vI_v)\,\middle|\,U\right]
+ \le\exp\!\left(-2\sum_{v\in J}\eta_vp_v\mathbf1_{\{a_v=0\}}\right).
+\]
+
+Put $W=\sum_{v\in J}\eta_vp_v\mathbf1_{\{a_v=0\}}$ and $A=\sum_{v\in J}\eta_vp_v$.
+Each $a_v$ is a nonzero functional, so $\mathbb EW=A/2$, while $0\le W\le A$.
+If $A=0$, the claimed bound is trivial.
+Otherwise the chord bound for the convex function $e^{-2x}$ gives
+\[
+ \mathbb E e^{-2W}\le\frac12+\frac12e^{-2A}.
+\]
+The choice of $J$ now proves~\eqref{eq:weighted-block-conditioning}.
+No independence among the functionals $a_v$ is required.
+\end{proof}
+
+\begin{theorem}[A sharper exponential cut constant]\label{thm:sharper-exponential-cuts}
+Let $Q$ be a connected loopless multigraph with $k\ge1$ marked vertices of degree at most $d\ge2$.
+For a uniform even subgraph, let $Z$ count the closed marked vertices.
+Then
+\begin{equation}\label{eq:sharper-exponential-cuts}
+ \mathbb E2^{-Z}\le\frac12+2\exp\!\left(-\frac{k}{8d2^d}\right).
+\end{equation}
+The same bound holds for simultaneous forest restrictions to $k$ disjoint connected cyclic regions with boundaries of size at most $d$.
+\end{theorem}
+
+\begin{proof}
+A zero local space gives an expectation at most one half.
+A direct sum of $2^d$ local spaces gives an expectation below one half, as before.
+Otherwise choose a maximal direct-sum family with vertex set $S$ and size $t<2^d$.
+Every other marked local space meets $U=\sum_{s\in S}L_s$ nontrivially.
+
+Suppose first that $k\ge2(5d+1)2^d$.
+Then $S$ is nonempty and proper.
+Its boundary has size $B\le dt$.
+Apply Lemma~\ref{lem:weighted-block-conditioning} with $\eta_v=1/2$ to the marked vertices outside $S$.
+At least $k-t-5B$ marked vertices remain outside its exceptional set.
+Each has $p_v\ge2^{1-d}$, so
+\[
+ \mathbb E2^{-Z}-\frac12
+ \le\frac12\exp\!\left(-2^{-d}(k-t-5B)\right)
+ \le\frac12\exp\!\left((5d+1)-\frac{k}{2^d}\right)
+ \le\frac12\exp\!\left(-\frac{k}{2^{d+1}}\right).
+\]
+This is stronger than~\eqref{eq:sharper-exponential-cuts}.
+
+If $k<2(5d+1)2^d$, then
+\[
+ \frac{k}{8d2^d}<\frac{5d+1}{4d}\le\frac{11}{8}<\ln4.
+\]
+The right side of~\eqref{eq:sharper-exponential-cuts} therefore exceeds one.
+This proves the bound for all $k$.
+The cyclic-region statement follows from the same quotient and internal-cycle-space argument as before.
+\end{proof}
+
+\paragraph{Weighted scope.}
+Lemma~\ref{lem:weighted-block-conditioning} retains the exact closure probabilities $p_v$.
+It loses only the weighted mass on its exceptional vertices and one half of the remaining mass in the path coloring.
+Its bound depends on no maximum degree after the exceptional set has been chosen.
+This identifies a possible route to a weighted estimate for regions with unequal boundaries.

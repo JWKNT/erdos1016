@@ -1,0 +1,74 @@
+INDEPENDENT AUDIT: UNIVERSAL TERMINAL-PATH SATURATION GAP
+10 November 2026. Auditor: path_stability agent.
+
+STATUS: PASS.
+
+Audited source: second-order-path-gap.tex.
+Also checked the permutation argument in second-order-four-poles.tex.
+The theorem states that P_st/2^beta is either one or at most 15/16.
+It concerns full saturation, not the open second-order excess above one half.
+
+CLASSIFICATION
+For subcubic graphs with degree-two terminals, every affine terminal join is
+one terminal path together with vertex-disjoint cycles.
+Thus saturation excludes a cycle disjoint from any terminal path.
+The bridge-shore degree count is integral and positive.
+Every bridge consequently lies on the terminal route.
+A terminal cannot itself touch a bridge in a saturated graph.
+Otherwise, every terminal path immediately crosses that bridge and avoids
+a cycle on its starting shore.
+The same obstruction excludes coincident attachment vertices inside a piece.
+These observations justify the two-terminal normalization of every piece.
+
+In a bridgeless piece, two internally disjoint terminal paths exist.
+Unused edges form a forest with degrees one and three, apart from isolated terminals.
+A component with two leaves on either path produces a cycle avoiding the other path.
+Hence every nonempty component is a matching edge between the two path interiors.
+The forbidden 231, 312, and 321 patterns give disjoint terminal paths and cycles.
+Their avoidance implies a concatenation of singletons and adjacent transpositions.
+The argument remains valid with common endpoints at both ladder ends.
+
+THREE-TERMINAL LEMMA
+Suppressing the third terminal cannot create a loop in a saturated network.
+Earlier bridge pieces cause a normalized loss of at least one half.
+For the first piece, the prefix has rank p, giving A_p <= 2^p.
+Its suffix transfer count is exactly 2^q.
+The interface and singleton formulas give (1+A_p)/2^(p+1).
+These ratios are one for p=0 and at most 3/4 otherwise.
+For a square edge, the listed four cap-free paths and three cap-using paths
+are complete and distinct.
+The ratio is (4+3A_p)/2^(p+3).
+It equals 7/8 for p=0 and is at most 5/8 for p>=1.
+All square edges have the required symmetry.
+No additional paths can leave and re-enter a suffix through its two-edge interface.
+Such a path would use both interface edges and could not terminate on the right.
+
+GENERAL INDUCTION
+Off-route cyclic blocks lose a rank unit without adding terminal choices.
+Multiple cyclic route blocks reduce by multiplication and induction.
+In a two-connected block, deleting any vertex leaves a connected graph.
+This gives uniform incident parity patterns with equal extension counts.
+An internal degree at least four bounds the density by 7/8.
+A terminal degree at least three bounds it by 3/4.
+Suppressing unmarked degree-two vertices preserves rank and all terminal paths.
+Adjacent terminals give at most 1+2^(b-1), which is at most (3/4)2^b for b>=2.
+Otherwise, deleting one degree-two terminal leaves three distinct degree-two terminals.
+Both branch counts have rank b-1.
+If both are nonfull, induction applies to each.
+If one is full, the three-terminal lemma bounds the other by 7/8 or makes it full.
+This gives the sharp factor 15/16.
+Loops may be treated as off-route cyclic blocks in the initial reduction.
+
+INDEPENDENT FINITE CHECK
+check_path_gap_independent.py uses vertex DFS and an independent ladder constructor.
+It checks all 874 matching permutations through six positions.
+Full saturation holds exactly for the claimed block permutations in those cases.
+It also checks all 522 edge subdivisions of the saturated examples.
+Every resulting third-terminal count is full or at most 7/8.
+The script includes the parallel-edge piece.
+Results are saved in path-gap-independent-checks.json.
+These finite checks support the proof but do not replace its general arguments.
+
+No mathematical correction is required.
+For maximal explicitness, the classification proof could state why an original
+terminal cannot touch a bridge, as explained above.

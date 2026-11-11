@@ -1,0 +1,164 @@
+% Independently audited by path_stability and random_hosts.
+% Exact certificates: four-regular-five-pairing-dual-checks.json.
+\section{The sharp error order for cyclic cuts of size at most five}
+\label{sec:five-cut-universal-crossing}
+
+The five-port crossing bound has a short distinct-representative proof.
+It uses the protected small-cut theorem and the exact five-cut identity.
+No terminal-state profile classification or aggregate estimate is needed.
+
+\begin{lemma}[Distinct representatives for five pairings]
+\label{lem:five-pairing-distinct-representatives}
+For each four-element subset $S\subset[5]$, choose a pairing $\alpha_S$ of $S$.
+Regard $\alpha_S$ as two disjoint edges of $K_5$.
+One can select an edge $e_S\in\alpha_S$ for each $S$ so that the five selected edges are distinct.
+\end{lemma}
+
+\begin{proof}
+Form an auxiliary graph whose vertices are the ten edges of $K_5$.
+Two auxiliary vertices are adjacent when their corresponding edges are disjoint.
+This graph is the Petersen disjointness graph $KG(5,2)$.
+The five chosen pairings give five distinct auxiliary edges.
+Indeed, the union of the two endpoints determines the four-set $S$.
+
+The auxiliary graph has no triangle, since three disjoint two-sets require six points.
+It has no four-cycle either.
+Two distinct two-sets have a union of size at least three, so there is at most one two-set disjoint from both.
+Thus two distinct auxiliary vertices cannot have two common neighbors.
+
+A five-edge subgraph of this auxiliary graph is therefore a forest, unless all five edges form one five-cycle.
+For each tree component, choose a root and assign every edge to its endpoint farther from the root.
+For a five-cycle, orient the cycle and assign each edge to its head.
+These assignments use distinct auxiliary vertices.
+They give the required distinct representative edges of $K_5$.
+\end{proof}
+
+\begin{lemma}[A universal five-port functional]
+\label{lem:universal-five-port-functional}
+Let $a_e\ge0$ be indexed by the ten pairs of $[5]$.
+For each four-set $S$, let $u_{S,\alpha}\ge0$ be indexed by its three pairings, and put $U_S=\sum_\alpha u_{S,\alpha}$.
+Suppose
+\[
+ a_e\le\tfrac12+\eta_1,
+ \qquad
+ a_e+U_S-u_{S,\alpha}\le1+\eta_2
+ \quad(e\in\alpha),
+\]
+where $\eta_1,\eta_2\ge0$.
+Then
+\[
+ \sum_e a_e+\sum_S\max_\alpha(U_S-u_{S,\alpha})
+ \le\frac{15}{2}+5\eta_1+5\eta_2.
+\]
+\end{lemma}
+
+\begin{proof}
+For each $S$, choose a maximizing pairing $\alpha_S$.
+Apply Lemma~\ref{lem:five-pairing-distinct-representatives} and choose distinct $e_S\in\alpha_S$.
+Summing the five corresponding augmented inequalities gives
+\[
+ \sum_S\bigl(U_S-u_{S,\alpha_S}\bigr)
+ +\sum_S a_{e_S}\le5+5\eta_2.
+\]
+Exactly five path coordinates remain.
+Their total is at most $5/2+5\eta_1$.
+Adding them proves the stated inequality.
+\end{proof}
+
+\begin{proposition}[A uniform deficit across a five-edge cut]
+\label{prop:five-cut-universal-deficit}
+Let $G$ have no cyclic edge cut of size at most four.
+Suppose $G$ is obtained by joining the ports of normalized five-poles $X,Y$ of ranks $h,k$.
+If $k\to\infty$, then their normalized crossing contribution is at most
+\[
+ \frac{15}{2}+o(1).
+\]
+The estimate is uniform in $X$ and its rank $h$.
+\end{proposition}
+
+\begin{proof}
+Normalize the states of $Y$ by $2^k$ and write them as $a_e,u_{S,\alpha},U_S$.
+Corollaries~\ref{cor:cyclic-five-path-density} and~\ref{cor:five-pole-unconditional-added-edge} give the hypotheses of Lemma~\ref{lem:universal-five-port-functional}, with errors tending to zero as $k\to\infty$.
+
+Normalize the path coordinates of $X$ by $2^h$ and write them as $b_e$.
+They all lie in $[0,1]$.
+Write its normalized pairing coordinates as $v_{S,\alpha}\ge0$.
+For each $S$, their sum is at most one.
+The exact crossing contribution is
+\[
+ \mathcal B(X,Y)
+ =\sum_e b_ea_e
+  +\sum_S\sum_\alpha v_{S,\alpha}
+       (U_S-u_{S,\alpha}).
+\]
+Every coefficient $U_S-u_{S,\alpha}$ is nonnegative.
+The coordinate bounds on $X$ therefore give
+\[
+ \mathcal B(X,Y)
+ \le\sum_ea_e+\sum_S\max_\alpha(U_S-u_{S,\alpha})
+ \le\frac{15}{2}+o(1).
+\]
+All errors concern only the rank of $Y$.
+This proves the stated uniformity.
+\end{proof}
+
+\begin{theorem}[Sharp-order five-cut error]
+\label{thm:sharp-order-five-cut-error}
+There is an absolute constant $K_5$ such that every connected loopless cubic multigraph of rank $r$ with a cyclic edge cut of size at most five satisfies
+\[
+ c(G)\le2^{r-1}+K_5r2^{r/2}.
+\]
+The factor $r$ cannot be replaced by $o(r)$ throughout this class.
+Moreover, for all sufficiently large $r$, a graph with a cyclic five-edge cut and no smaller cyclic cut satisfies
+\[
+ c(G)<2^{r-1}.
+\]
+\end{theorem}
+
+\begin{proof}
+If $G$ has a cyclic cut of size at most four, apply Theorem~\ref{thm:sharp-order-four-cut-error}.
+Suppose no such cut exists, and choose a cyclic five-edge cut.
+
+Both shores are connected.
+Indeed, any component containing a cycle must have at least five boundary edges, since its complement contains the opposite shore's cycle.
+It uses all five cut edges.
+Any other component on its shore would have no edge to its complement, contrary to the connectedness of $G$.
+
+No vertex has two or more incidences in the cut.
+Such a vertex has internal degree at most one.
+Moving it to the opposite shore preserves a cycle on both sides and reduces the boundary to at most four.
+This would contradict the hypothesis.
+Thus the two shores are normalized five-poles $X,Y$.
+Write their ranks as $h,k\ge1$ and assume $h\le k$.
+Then
+\[
+ r=h+k+4,\qquad k\ge(r-4)/2.
+\]
+
+The uniform crossing bound gives
+\[
+ \frac{c(G)}{2^{h+k}}
+ \le\frac{15}{2}+o(1)
+    +\frac{c(X)+c(Y)}{2^{h+k}}.
+\]
+The affine-space bound gives $c(X)\le2^h-1$.
+The asymptotic cycle bound gives $c(Y)\le(1/2+o(1))2^k$.
+Since $h\ge1$, their normalized total is at most
+\[
+ 2^{-k}+(1/2+o(1))2^{-h}
+ \le\frac14+o(1).
+\]
+Consequently,
+\[
+ \frac{c(G)}{2^{h+k}}\le\frac{31}{4}+o(1)<8
+\]
+for all sufficiently large $r$.
+This proves the strict one-half bound in the absence of smaller cyclic cuts.
+
+The remaining bounded ranks are absorbed into $K_5$, using $c(G)\le2^r-1$.
+The cyclic-square examples already have a cyclic four-edge cut and excess $\Theta(r2^{r/2})$.
+They also belong to the present class, so the polynomial factor is sharp.
+\end{proof}
+
+The unresolved sharp-order case is now confined to cubic kernels with no cyclic edge cut of size at most five.
+The unrestricted polynomial-error theorem applies to those kernels, but does not give the half-exponent error there.

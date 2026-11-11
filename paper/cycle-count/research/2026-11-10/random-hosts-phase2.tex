@@ -1,0 +1,669 @@
+% Phase-two research fragment. Uses the theorem environments and packages
+% of research-progress.tex. The first-moment kernel estimate is restated here.
+\section{A coefficient-one random-host lower bound}
+\label{sec:rhost-phase-two}
+
+\paragraph{Status.}
+This section improves the lower coefficient from $2/3$ to $1$.
+It uses a weighted pseudoforest argument and the same random-host kernel count.
+The proof is not formalised in Lean.
+We have not established publication priority.
+
+All logarithms are natural, except $\log_2$.
+A pseudoforest is a graph whose components contain at most one cycle each.
+All graphs in this section are finite and simple.
+Isolated vertices may be retained in every spanning subgraph.
+
+\begin{lemma}[Cycles and pseudoforests]
+\label{lem:rhost-pseudoforest-cycles}
+Let $W$ be a graph, let $P\subseteq W$ be a spanning pseudoforest,
+and let $\mathcal C$ be a family of $k$ distinct cycles of $W$.
+Then
+\[
+ \sum_{C\in\mathcal C}|E(C)\setminus E(P)|
+ \ge 2\bigl(k-\beta(W)\bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+Let $u$ be the number of unicyclic components of $P$.
+Let $a$ count omitted edges whose endpoints lie in the same component of $P$.
+Let $b$ count the remaining omitted edges.
+If $c_P$ and $c_W$ are the component counts, then $b\ge c_P-c_W$.
+Consequently,
+\[
+ \beta(W)=u+a+b-c_P+c_W\ge u+a.
+\]
+
+Write $n_j$ for the number of selected cycles using exactly $j$ omitted edges.
+A unicyclic component has only one cycle, so $n_0\le u$.
+A tree has at most one simple path between two fixed vertices.
+A unicyclic graph has at most two.
+Thus each of the $a$ internal omitted edges belongs to at most two cycles counted by $n_1$.
+An omitted edge between different components belongs to none.
+It follows that
+\[
+ 2n_0+n_1\le2u+2a\le2\beta(W).
+\]
+Therefore
+\[
+ \sum_{C\in\mathcal C}|E(C)\setminus E(P)|
+ =\sum_{j\ge0}jn_j
+ \ge2k-2n_0-n_1
+ \ge2(k-\beta(W)).
+\]
+\end{proof}
+
+\begin{lemma}[Balanced pseudoforest cover]
+\label{lem:rhost-balanced-cover}
+Let $R\ge2$ be an integer.
+Suppose every nonempty edge set $A\subseteq E(W)$ satisfies
+\[
+ (R-1)|A|\le R|V(A)|,
+\]
+where $V(A)$ is the set of endpoints of edges in $A$.
+Then there are $R$ spanning pseudoforests $P_1,\ldots,P_R$ of $W$
+such that each edge of $W$ is absent from exactly one $P_i$.
+\end{lemma}
+
+\begin{proof}
+Form a bipartite graph.
+Its left side has $R-1$ copies of every edge of $W$.
+Its right side has $R$ copies of every vertex.
+Each edge-copy is adjacent to all copies of both endpoints.
+For a set $X$ of left vertices, let $A$ be the original edges represented in $X$.
+Then
+\[
+ |X|\le(R-1)|A|\le R|V(A)|=|N(X)|.
+\]
+Hall's theorem gives a matching that covers every left vertex.
+
+Forget the copy labels after recording the matched incidences.
+This gives a bipartite multigraph with sides $E(W)$ and $V(W)$.
+Its edge-vertices have degree $R-1$, and its original vertices have degree at most $R$.
+Colour its edges properly with $R$ colours.
+For completeness, such a colouring follows again from Hall's theorem.
+Add dummy vertices and edges to make both sides equally large and every degree equal to $R$.
+A regular bipartite multigraph has a perfect matching by Hall's theorem.
+Remove one perfect matching at a time to obtain the $R$ colours.
+
+For colour $i$, retain every original edge incident with an incidence of that colour.
+Each retained edge has an assigned endpoint, and no two retained edges have the same assigned endpoint.
+Every component therefore has at most as many edges as vertices.
+The retained graph is a pseudoforest.
+The $R-1$ incidences at each edge-vertex have distinct colours.
+Thus each original edge is absent from exactly one colour.
+\end{proof}
+
+\begin{proposition}[Weighted cycle-length bound]
+\label{prop:rhost-weighted-cycles}
+Under the hypotheses of Lemma~\ref{lem:rhost-balanced-cover}, every family
+$\mathcal C$ of distinct cycles satisfies
+\[
+ \boxed{\quad
+ \beta(W)\ge\sum_{C\in\mathcal C}
+ \left(1-\frac{|E(C)|}{2R}\right).
+ \quad}
+\]
+
+In particular, one may sum over all cycles of length less than $2R$.
+\end{proposition}
+
+\begin{proof}
+Apply Lemma~\ref{lem:rhost-pseudoforest-cycles} to every $P_i$ from
+Lemma~\ref{lem:rhost-balanced-cover}.
+Every edge is omitted exactly once, so
+\[
+ \sum_{i=1}^{R}\sum_{C\in\mathcal C}|E(C)\setminus E(P_i)|
+ =\sum_{C\in\mathcal C}|E(C)|.
+\]
+The same sum is at least $2R(|\mathcal C|-\beta(W))$.
+Rearrange this inequality.
+\end{proof}
+
+This deterministic inequality allows dependencies between the selected cycles.
+It therefore avoids the theta obstruction to their complete independence.
+
+\begin{lemma}[Local sparsity of the random host]
+\label{lem:rhost-phase-two-sparsity}
+Let $G\sim G(n,D/n)$, with $D\ge2$.
+Put
+\[
+ R=\left\lfloor\frac{\ln n-40\ln\ln n}{\ln D}\right\rfloor,
+ \qquad S=\lceil8(\ln n)^2\rceil.
+\]
+Assume $R\ge3$.
+With probability $1-O((\ln n)^{-17})$, every subgraph $W$ with at most $S$ edges
+satisfies the hypothesis of Lemma~\ref{lem:rhost-balanced-cover}.
+\end{lemma}
+
+\begin{proof}
+The kernel enumeration in Lemma~\ref{lem:rhost-kernel} applies with this $S$ and $R$.
+It bounds the probability of a connected subgraph $F$ satisfying
+\[
+ \delta(F)\ge2,\qquad q=|E(F)|-|V(F)|\ge1,
+ \qquad |E(F)|\le\min\{S,Rq\}
+\]
+by
+\[
+ S\sum_{q=1}^{S}
+ \left(\frac{(2S)^{10}D^R}{n}\right)^q
+ =O((\ln n)^{-17}).
+\]
+Indeed, $D^R\le n/(\ln n)^{40}$ and $(2S)^{10}\le(\ln n)^{21}$ for large $n$.
+Assume no such $F$ occurs.
+
+Consider a connected component of an edge set $A\subseteq E(W)$.
+Write $e$ and $v$ for its edge and vertex counts.
+If $e\le v$, then $(R-1)e\le Rv$ immediately.
+If $q=e-v\ge1$, repeatedly remove vertices of degree one.
+The remaining nonempty core is connected, has minimum degree at least two, and retains the same $q$.
+If the original component had $e\le Rq$, then its core would be forbidden.
+Thus $e>Rq$, which implies $(R-1)e<Rv$.
+Sum these inequalities over the components of $A$.
+\end{proof}
+
+\begin{theorem}[Coefficient-one lower bound]
+\label{thm:rhost-coefficient-one}
+Let $G\sim G(n,D/n)$, and let $R$ be as in Lemma~\ref{lem:rhost-phase-two-sparsity}.
+Assume $D\ge2$ and $R\ge3$.
+With probability $1-O((\ln n)^{-17})$, every spanning pancyclic subgraph $H$ satisfies
+\[
+ \boxed{\quad
+ |E(H)|-n
+ \ge\log_2(n-2)+R-3-\log_2(2R^2-R-3).
+ \quad}
+\]
+In particular, if $D\sim\ln n$, then with high probability
+\[
+ \operatorname{Pex}(G)
+ \ge\log_2 n+
+ \frac{\ln n}{\ln D}
+ -2\log_2\!\left(\frac{\ln n}{\ln D}\right)-O(1).
+\]
+Consequently,
+\[
+ \operatorname{Pex}(G)
+ \ge\log_2 n+(1-o(1))\frac{\ln n}{\ln\ln n}.
+\]
+\end{theorem}
+
+\begin{proof}
+Choose in $H$ one cycle of every length $3,\ldots,2R-1$.
+Let $W$ be their union.
+Its number of edges is at most
+\[
+ M=\sum_{j=3}^{2R-1}j=2R^2-R-3\le S.
+\]
+On the event in Lemma~\ref{lem:rhost-phase-two-sparsity},
+Proposition~\ref{prop:rhost-weighted-cycles} gives
+\[
+ \beta(W)\ge(2R-3)-\frac{2R^2-R-3}{2R}
+ =R-\frac52+\frac{3}{2R}.
+\]
+Since $\beta(W)$ is an integer, $\beta(W)\ge R-2$.
+
+Put $r=\beta(H)$.
+The outside-part length count yields
+\[
+ n-2\le |E(W)|2^{r-\beta(W)}\le M2^{r-R+2}.
+\]
+The graph $H$ is connected, so $|E(H)|-n=r-1$.
+Taking binary logarithms proves the finite bound.
+If $D\sim\ln n$, then $R=\ln n/\ln D-O(1)$.
+Also, $\log_2(2R^2-R-3)=2\log_2(\ln n/\ln D)+O(1)$.
+\end{proof}
+
+At the explicit probability $p_*$ from Theorem~\ref{thm:rhost-scale},
+this improves the proved interval to
+\[
+ \log_2n+(1-o(1))\frac{\ln n}{\ln\ln n}
+ \le\operatorname{Pex}(G(n,p_*))
+ \le\log_2n+(2+o(1))\frac{\ln n}{\ln\ln n}.
+\]
+The upper bound and its probability range remain unchanged.
+
+\paragraph{Scope of the improvement.}
+The weighted inequality is deterministic and has no independence hypothesis on the cycles.
+The random input only ensures the local edge-density condition.
+The outside-part count then adds the rank cost of the short lengths to $\log_2n$.
+This proof does not determine the sharp correction constant or extend the upper bound below $p_*$.
+
+\subsection{Replacing individual short cycles by theta blocks}
+\label{subsec:rhost-theta-upper}
+
+\begin{lemma}[A theta block with prescribed lengths]
+\label{lem:rhost-theta-block}
+Let $s,x,y$ be integers at least three, with $x<y$.
+Suppose
+\[
+ s+x+y\equiv0\pmod2,\qquad y-x<s<x+y.
+\]
+Set
+\[
+ \alpha=\frac{s+x-y}{2},\qquad
+ \gamma=\frac{s+y-x}{2},\qquad
+ z=\frac{x+y-s}{2}.
+\]
+An $s$-cycle with an additional internally disjoint path of length $z$
+between two vertices at cyclic distance $\alpha$ contains cycles of lengths $s,x,y$.
+Its rank is two.
+It has a spanning path whose endpoints can be specified before the added path is embedded.
+\end{lemma}
+
+\begin{proof}
+The three internally disjoint paths between the branch vertices have lengths
+$\alpha,\gamma,z$.
+Their pairwise sums are $s,x,y$.
+Write the base cycle as $v_0v_1\cdots v_{s-1}v_0$, with branch vertices
+$u=v_0$ and $v=v_\alpha$.
+Delete the base edges $v_0v_1$ and $v_\alpha v_{\alpha+1}$.
+Retain the full added path between $u$ and $v$.
+The result is a spanning path with endpoints $v_1$ and $v_{\alpha+1}$.
+This also applies when $\alpha=1$.
+\end{proof}
+
+\begin{lemma}[Packing the short length interval]
+\label{lem:rhost-theta-interval}
+Let $d,b$ be positive integers with $b=o(d)$ along the sequence under consideration.
+Put
+\[
+ T=2(d+b+1),\qquad H=d+5,\qquad
+ J=\left\lfloor\frac{T-H+1}{8}\right\rfloor.
+\]
+For all sufficiently large $d$, one can cover every length $3,\ldots,T$
+with disjoint abstract blocks of total rank
+\[
+ T-2-4J\le\frac32d+b+5.
+\]
+Each block is either a cycle or a theta graph.
+Every theta block has a base cycle of length at most $4J+2$,
+and its additional path has length at least $d+4$ and at most $O(d)$.
+\end{lemma}
+
+\begin{proof}
+For $0\le j<J$, write $h=H+8j$ and use the following four triples $(s,x,y)$:
+\[
+ \begin{array}{c|c|c|c}
+ s&x&y&z=(x+y-s)/2\\ \hline
+ 4j+3&h+4&h+5&H+6j+3\\
+ 4j+4&h&h+2&H+6j-1\\
+ 4j+5&h+6&h+7&H+6j+4\\
+ 4j+6&h+1&h+3&H+6j-1
+ \end{array}
+\]
+Each row satisfies Lemma~\ref{lem:rhost-theta-block}.
+These blocks cover exactly the two disjoint sets
+\[
+ \{3,\ldots,4J+2\}\quad\text{and}\quad\{H,\ldots,H+8J-1\}.
+\]
+Their disjointness follows from $b=o(d)$.
+Use one cycle for every remaining length in $\{3,\ldots,T\}$.
+There are $4J$ theta blocks and $T-2-12J$ single-cycle blocks.
+Their total rank is $8J+(T-2-12J)=T-2-4J$.
+The claimed estimate follows from the definition of $J$.
+\end{proof}
+
+\begin{theorem}[An upper coefficient of three halves]
+\label{thm:rhost-three-halves}
+For the same $p_*$ as in Theorem~\ref{thm:rhost-scale}, and every $p\ge p_*$,
+with high probability
+\[
+ \operatorname{Pex}(G(n,p))
+ \le\log_2n+\left(\frac32+o(1)\right)\frac{\ln n}{\ln\ln n}.
+\]
+\end{theorem}
+
+\begin{proof}
+Keep $p_1,\ldots,p_5,\beta,a,d,K_0,K,L_0$ from the audited construction above.
+Keep the two-digit gadget with $b=\lceil\sqrt{2\ln n}\rceil$.
+Its shortest represented length is $T+1$, where $T=2(d+b+1)$.
+We replace the individual short chords by the blocks in Lemma~\ref{lem:rhost-theta-interval}.
+Write $A=4J$ for the number of theta blocks and $B=T-2-8J$ for the number of all short blocks.
+Their total rank is $A+B=T-2-4J$.
+
+\emph{Initial components.}
+Split the $G_1$ exposure into four independent subexposures with equal edge probability
+$q_1=1-(1-p_1)^{1/4}$.
+Then $nq_1\to\infty$.
+Use the first subexposure for the original binary base cycles $C_0,\ldots,C_{K_0}$.
+Use the second for one base cycle of each short block.
+Use the third for the two-digit base cycle $C_{\rm short}$.
+The cycle-length input used in the original construction applies to each subexposure.
+
+All requested lengths are at most the largest original binary base-cycle length, for sufficiently large $n$.
+The original short-cycle separation estimate therefore makes all distinct selected cycles vertex-disjoint.
+Cycles selected from different subexposures are also distinct with high probability.
+Indeed, each pairwise intersection has edge probability $q_1^2$ and $nq_1^2=o(1)$.
+Its expected total number of cycles is $o(1)$.
+Finally, choose an edge $f$ in the fourth subexposure outside all selected vertices.
+This is possible with high probability, conditionally on the earlier selections.
+
+For each theta base cycle, fix its branch vertices and its spanning-path endpoints from
+Lemma~\ref{lem:rhost-theta-block}.
+For each single-cycle block, delete a designated edge to specify its spanning-path endpoints.
+All these endpoints are now fixed, before $G_2$ is exposed.
+
+\emph{The main cycle and the chain of short blocks.}
+Build the binary base cycle $C_*$ through the designated edges of
+$C_0,\ldots,C_{K_0}$ and through the extra edge $f$.
+Use $K_0+2$ internally disjoint $G_2$ paths, each of length $d+2$.
+Thus
+\[
+ |C_*|=(K_0+2)(d+3)=(1+o(1))\log_2n.
+\]
+Reserve $f$ as the connector edge.
+The exact parameter estimates still give $|C_*|-K\to\infty$.
+There are therefore enough other edges for the remaining binary detours.
+
+Join one endpoint of $f$ to one endpoint of the designated edge $e_{\rm short}$
+through all $B$ short blocks, in a fixed order.
+Use $B+1$ additional $G_2$ paths of length $d+2$ between the fixed spanning-path endpoints.
+Their interiors avoid every initial component and every earlier connecting path.
+The total number of $G_2$ requests is $O(d)$.
+Their total vertex cost is $O(d^2)$.
+
+Here the corrected exposure argument remains valid for this larger number of requests.
+For a first endpoint query, inspect $h_0=\lceil\beta n/100\rceil$ unused candidate edges.
+Its failure probability is at most $(\ln n)^{-1}$.
+The leaf query has at least $\beta n/80$ unused candidates and failure probability at most $(\ln n)^{-5/4}$.
+Only the selected endpoint of $f$ appears in two requests.
+In its first request, use it for the bounded first-endpoint query.
+In its second request, use it for the leaf query.
+All other endpoints appear once.
+The total failure probability is
+\[
+ O\!\left(d\bigl((\ln n)^{-1}+(\ln n)^{-5/4}\bigr)\right)=o(1).
+\]
+The expansion and rooted-tree inputs are those proved above.
+
+\emph{The additional paths in $G_3$.}
+Embed the original binary detours and the two-digit detours with the audited procedure.
+For every theta block, embed its additional path of length $z$ from the table.
+This requires a rooted depth-$d$ tree with a stem of length $z-d-2\ge2$.
+The new path uses $O(d)$ vertices, and all such paths use $O(d^2)$ vertices together.
+Their endpoints lie in distinct base cycles and were fixed before $G_3$ was exposed.
+The first-endpoint and leaf failure bounds above apply.
+There are $O(d)$ such requests, so their total failure probability also tends to zero.
+Expose only reservoir edges before querying these endpoint edges.
+
+The total number of used vertices remains at most
+\[
+ L_0+O(d^2+b^3)=L_0+o(L_0)<2L_0.
+\]
+Thus the corrected robust expansion statement applies at every stage.
+
+\emph{Hamilton completion and the edge count.}
+Replace each short block by its fixed spanning path.
+Their connecting chain joins one endpoint of $f$ to one endpoint of $e_{\rm short}$.
+In the main binary unit, delete $f$ and replace every binary shortcut edge by its detour.
+In the two-digit unit, delete $e_{\rm short}$ and replace every designated edge by its detour.
+These replacements and the short-block chain form one spanning path of the exposed construction.
+Its two endpoints are the unused endpoints of $f$ and $e_{\rm short}$.
+Apply the unchanged $G_4$ Hamilton-path completion to these endpoints and the remaining vertices.
+
+The resulting graph contains a Hamilton cycle.
+Its edges outside that Hamilton cycle number
+\[
+ (K+1)+2+2b+(A+B)
+ =K+2b+(T-2-4J)+3.
+\]
+Here a single-cycle block contributes one edge, and a theta block contributes two.
+All short lengths $3,\ldots,T$ are present by Lemma~\ref{lem:rhost-theta-interval}.
+The two-digit unit supplies $[T+1,T+b^2]$, which reaches $|C_*|$.
+The binary unit supplies $[|C_*|,|C_*|+L_0]$ and $[n-L_0,n]$.
+Its vertices remain on one contiguous interval of the Hamilton cycle.
+The original long interval-covering argument in $G_5$ therefore applies without change.
+It uses at most $m=\lfloor n2^{-K}\rfloor=O(\sqrt{\ln n})$ further chords.
+
+The final excess is at most
+\[
+ K+2b+(T-2-4J)+m+3
+ \le K+\frac32d+3b+m+8
+ \le\log_2n+\frac32d+O(\sqrt{\ln n}).
+\]
+Since $d=(1+o(1))\ln n/\ln\ln n$, this proves the claim at $p_*$.
+Monotonicity gives the result for $p\ge p_*$.
+\end{proof}
+
+Together, Theorems~\ref{thm:rhost-coefficient-one} and~\ref{thm:rhost-three-halves}
+give, with high probability at $p=p_*$,
+\[
+ \boxed{\quad
+ \log_2n+(1-o(1))\frac{\ln n}{\ln\ln n}
+ \le\operatorname{Pex}(G(n,p_*))
+ \le\log_2n+\left(\frac32+o(1)\right)\frac{\ln n}{\ln\ln n}.
+ \quad}
+\]
+
+\subsection{Embedding whole theta blocks}
+\label{subsec:rhost-whole-theta}
+
+\begin{lemma}[Overlap estimate for a subdivided theta graph]
+\label{lem:rhost-theta-moments}
+Let $Q$ be a simple theta graph with $v$ vertices and $e=v+1$ edges.
+Write $\ell_1,\ell_2,\ell_3$ for its three cycle lengths.
+Let $J\sim G(n,D/n)$, with $D\ge54$ and $v^2/n=o(1)$.
+Let $X$ count the copies of $Q$ in $J$.
+Let $Y$ count ordered pairs of copies with a common vertex, including identical pairs.
+Put
+\[
+ \mu=\mathbb E X=\frac{(n)_v}{|\operatorname{Aut}(Q)|}(D/n)^e,
+ \qquad
+ \varepsilon_Q=\frac{v^2}{n}
+ +\sum_{i=1}^{3}\ell_iD^{-\ell_i}+nD^{-e}.
+\]
+There is an absolute constant $C$ such that
+\[
+ \operatorname{Var}(X)\le C\mu^2\varepsilon_Q,
+ \qquad \mathbb E Y\le C\mu^2\varepsilon_Q.
+\]
+\end{lemma}
+
+\begin{proof}
+Use labelled embeddings first.
+For two embeddings, their common vertices and common edges give a partially identified subgraph of $Q$.
+An overlap with $u$ vertices and $f$ edges has normalized weight
+\[
+ (1+O(v^2/n))n^{-u}(n/D)^f.
+\]
+This follows by choosing the unshared vertices of the second embedding outside the first.
+We sum over all possible overlap subgraphs and their injective maps into $Q$.
+Allowing extra maps only increases the bound.
+
+A connected tree overlap with $k$ edges has normalized weight $n^{-1}D^{-k}$.
+There are at most $v9^k$ rooted tree subgraphs in the first copy.
+A canonical depth-first traversal gives this bound, since the maximum degree is three.
+There are at most $v3^k$ injective maps of each tree into the second copy.
+The total contribution of one tree component is therefore at most
+\[
+ \frac{v^2}{n}\sum_{k\ge0}(27/D)^k\le\frac{2v^2}{n}.
+\]
+Allowing an unordered collection of tree components gives an exponential factor
+$\exp(2v^2/n)$.
+The nonempty forest overlaps contribute $O(v^2/n)$.
+
+A proper connected overlap containing a cycle is unicyclic.
+Its cycle is one of the three cycles of $Q$.
+Outside that cycle, it contains only initial segments of the remaining theta path, from either endpoint.
+For a cycle of length $\ell$, its image has at most three choices and at most $2\ell$ orientations and shifts.
+Once this image is fixed, each additional initial segment has at most one possible image.
+Summing their lengths gives a factor at most $(1-D^{-1})^{-2}$.
+Thus these connected overlaps contribute at most
+\[
+ \frac{6}{(1-D^{-1})^2}\sum_{i=1}^{3}\ell_iD^{-\ell_i}.
+\]
+At most one unicyclic component can occur, since every two cycles of $Q$ meet.
+Other components are trees and supply the same exponential factor as before.
+
+An overlap with two independent cycles contains every edge of $Q$.
+It contributes at most $12nD^{-e}$, because $|\operatorname{Aut}(Q)|\le12$.
+These cases prove the bound for intersecting pairs of labelled embeddings.
+Passing to unlabelled copies divides both pair counts and squared means by the same factor.
+
+The contribution of vertex-disjoint pairs to $\mathbb E X^2$ is at most $\mu^2$.
+Indeed, their vertex-placement factor is $(n-v)_v/(n)_v\le1$.
+The remaining contribution is $\mathbb E Y$.
+This also proves the variance bound.
+\end{proof}
+
+\begin{lemma}[Simultaneous disjoint theta embeddings]
+\label{lem:rhost-theta-list}
+Let $d\to\infty$, with $d=O(\ln n)$, and let $D=\Theta(d)$.
+Assume $nD^{-d}$ tends to zero faster than every fixed negative power of $d$.
+Consider $A=\Theta(d)$ simple theta graphs $Q_1,\ldots,Q_A$.
+Suppose their numbers of edges lie between $d$ and $Cd$, for a fixed constant $C$.
+Suppose their shortest cycle lengths are exactly $3,\ldots,A+2$,
+and every other cycle has length at least $A+3$.
+Then, with high probability, $G(n,D/n)$ contains vertex-disjoint copies of all $Q_i$.
+They can also avoid any prescribed set of $O(d^2)$ vertices, even if that set is chosen after the graph is observed.
+\end{lemma}
+
+\begin{proof}
+Choose $M=C_0d^2$, with $C_0$ larger than the total required vertex budget and the prescribed forbidden-set bound.
+We show that every $Q_i$ has more than $M$ pairwise vertex-disjoint copies.
+This permits a greedy choice of one copy of each type.
+
+For one type, use $X,Y,\mu,\varepsilon_Q$ from Lemma~\ref{lem:rhost-theta-moments}.
+Chebyshev's inequality bounds $\mathbb P(X<\mu/2)$ by $4C\varepsilon_Q$.
+Markov's inequality bounds $\mathbb P(Y>\mu^2/(8M))$ by $8CM\varepsilon_Q$.
+On the complementary event, form the graph whose vertices are the copies of $Q$.
+Join two copies when they share a vertex.
+It has an independent set of size at least $X^2/Y\ge2M$.
+This bound follows by taking a random vertex order and retaining vertices earlier than all their neighbours.
+Cauchy--Schwarz gives an expected retained size at least $X^2/Y$.
+
+The sum of the error parameters over all types is
+\[
+ O\!\left(\frac{d^3}{n}+D^{-3}+d\,nD^{-d}\right).
+\]
+Here the distinct short cycle lengths give
+$\sum_{s\ge3}sD^{-s}=O(D^{-3})$.
+The longer cycle lengths give a smaller contribution.
+After multiplication by $M=O(d^2)$, this sum tends to zero.
+Indeed, $d^5/n=o(1)$ and $d^2D^{-3}=O(1/d)$.
+The hypothesis handles the final term.
+
+Each forbidden vertex can meet at most one member of a vertex-disjoint family of copies.
+At every greedy step, fewer than $M$ vertices have been excluded.
+An available copy therefore remains.
+\end{proof}
+
+\begin{lemma}[A denser packing of the required lengths]
+\label{lem:rhost-whole-theta-interval}
+Put $T=2(d+b+1)$, where $b\to\infty$ and $b=o(d)$.
+Set
+\[
+ J=\left\lfloor\frac{T-2}{12}\right\rfloor,\qquad A=4J.
+\]
+There are $A$ theta blocks covering exactly the lengths $3,\ldots,3A+2$.
+Their shortest cycle lengths are $3,\ldots,A+2$.
+Their other cycle lengths are at least $A+3$.
+Each block has between $d$ and $O(d)$ edges.
+With one single-cycle block for each remaining length through $T$,
+the total rank is at most
+\[
+ \frac43d+\frac43b+4.
+\]
+\end{lemma}
+
+\begin{proof}
+For $0\le j<J$, put $q=J-j-1$ and $h=A+3+8j$.
+Use the four triples
+\[
+ (4q+3,h+4,h+5),\quad (4q+4,h,h+2),\quad
+ (4q+5,h+6,h+7),\quad (4q+6,h+1,h+3).
+\]
+Lemma~\ref{lem:rhost-theta-block} gives the required theta graphs.
+The low triples run through $3,\ldots,A+2$ in reverse blocks.
+The high triples run through every length $A+3,\ldots,3A+2$ once.
+The four edge counts in block $j$ are
+\[
+ 6J+6j+7,\quad6J+6j+4,\quad6J+6j+10,\quad6J+6j+6.
+\]
+Their minimum is at least $6J+4\ge d+b-1\ge d$.
+Their maximum is $O(d)$.
+There are at most eleven remaining lengths through $T$.
+The total rank is
+\[
+ 2A+(T-2-3A)=T-2-A
+ \le\frac23(T-2)+4=\frac43d+\frac43b+4.
+\]
+\end{proof}
+
+\begin{theorem}[An upper coefficient of four thirds]
+\label{thm:rhost-four-thirds}
+For the same $p_*$ as in Theorem~\ref{thm:rhost-scale}, and every $p\ge p_*$,
+with high probability
+\[
+ \operatorname{Pex}(G(n,p))
+ \le\log_2n+\left(\frac43+o(1)\right)\frac{\ln n}{\ln\ln n}.
+\]
+\end{theorem}
+
+\begin{proof}
+Split $G_2$ into two independent subexposures of probability
+$q_2=1-\sqrt{1-p_2}$.
+Their union has the original probability $p_2$.
+Replace the expansion parameter by
+\[
+ \beta=\frac{4(\ln\ln n)^2}{\ln n},\qquad
+ a=\left\lfloor(5\beta)^{-1}\right\rfloor,
+ \qquad d=\left\lfloor\log_a(n/200)\right\rfloor.
+\]
+The remaining parameters retain their previous values.
+The depth satisfies $d=(1+o(1))\ln n/\ln\ln n$, and the second $G_2$ subexposure obeys
+\[
+ q_2\beta n\ge100\ln\ln n.
+\]
+Thus the corrected expansion and endpoint-query bounds retain their stated constants.
+They also hold in $G_3$, whose edge probability is larger.
+
+Prepare the binary base cycles, the two-digit base cycle, the reserve edge $f$,
+and the at most eleven single-cycle blocks in $G_1$, as above.
+Use the first $G_2$ subexposure to embed the complete theta list from
+Lemma~\ref{lem:rhost-whole-theta-interval}, avoiding these initial vertices.
+This is justified by Lemma~\ref{lem:rhost-theta-list}.
+Indeed, $D=nq_2=\Theta(d)$, and
+\[
+ \ln D-\ln a\ge\ln(500\ln\ln n).
+\]
+Consequently,
+\[
+ nD^{-d}
+ \le\exp\!\left(-\Omega\!\left(
+ \frac{\ln n\,\ln\ln\ln n}{\ln\ln n}\right)\right).
+\]
+This is smaller than every fixed negative power of $d$.
+
+All short blocks now exist before the second $G_2$ subexposure.
+Choose their spanning-path endpoints and join them into the same connector chain as before.
+Construct the binary base cycle through $f$ in this second subexposure as well.
+There are $O(d)$ endpoint requests, with total failure probability $o(1)$.
+Embed the binary and two-digit detours in $G_3$.
+No additional theta path is needed there.
+The vertex budget is still $L_0+O(d^2+b^3)<2L_0$.
+
+Use the same $G_4$ Hamilton completion and $G_5$ long interval-covering chords.
+The short blocks cover $3,\ldots,T$.
+Their total rank is at most $4d/3+4b/3+4$.
+Thus the excess is at most
+\[
+ K+2b+\left(\frac43d+\frac43b+4\right)+m+3
+ \le\log_2n+\frac43d+O(\sqrt{\ln n}).
+\]
+The five original exposure probabilities have not increased.
+This proves the claim at $p_*$, and monotonicity gives the remaining range.
+\end{proof}
+
+Combining the coefficient-one lower bound with the whole-theta construction gives
+\[
+ \boxed{\quad
+ \log_2n+(1-o(1))\frac{\ln n}{\ln\ln n}
+ \le\operatorname{Pex}(G(n,p_*))
+ \le\log_2n+\left(\frac43+o(1)\right)\frac{\ln n}{\ln\ln n}
+ \quad}
+\]
+with high probability.
+This construction leaves the sharp coefficient and the full-threshold question unresolved.
+Both are treated further in the later sections.

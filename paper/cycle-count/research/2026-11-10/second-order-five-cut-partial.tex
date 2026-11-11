@@ -1,0 +1,132 @@
+\section{Five-edge cuts: exact identities and partial restrictions}
+\label{sec:five-cut-partial}
+
+This section records exact identities and initial restrictions for the five-edge-cut analysis.
+The later universal functional completes the sharp-order cycle bound.
+
+Let $X,Y$ be connected normalized five-poles of ranks $h,k$.
+Join corresponding ports by five edges, to obtain $G$ of rank $r=h+k+4$.
+For each pair $e=ij$, write $P_e,Q_e$ for the terminal-path counts.
+For each four-element port set $S$, and each of its three pairings $\alpha$, write
+$f_{S,\alpha},g_{S,\alpha}$ for the counts of two vertex-disjoint paths with that pairing.
+Put $F_S=\sum_\alpha f_{S,\alpha}$ and $J_S=\sum_\alpha g_{S,\alpha}$.
+The fifth port has even degree in each counted forest.
+
+\begin{proposition}[Five-cut gluing]
+\label{prop:five-cut-gluing}
+One has the exact identity
+\[
+ c(G)=c(X)+c(Y)+\sum_{|e|=2}P_eQ_e
+ +\sum_{|S|=4}\left(F_SJ_S-\sum_\alpha f_{S,\alpha}g_{S,\alpha}\right).
+\]
+\end{proposition}
+\begin{proof}
+A cycle uses zero, two, or four edges of the cut.
+The zero-edge and two-edge cases give the first three terms.
+For a fixed four-edge set, each shore supplies a pairing forest.
+Equal pairings give two cycles, while distinct pairings give one cycle.
+Thus the four-edge contribution has the displayed form.
+\end{proof}
+
+Normalize all shore counts by $2^h$ or $2^k$ as appropriate.
+Write $a_e=2^{-h}P_e$, $u_{S,\alpha}=2^{-h}f_{S,\alpha}$, and $U_S=\sum_\alpha u_{S,\alpha}$.
+Every coordinate $a_e$ and every sum $U_S$ lies in $[0,1]$.
+Define the shore energy
+\[
+ E(X)=\sum_e a_e^2+\sum_S U_S^2.
+\]
+The normalized crossing contribution is at most $(E(X)+E(Y))/2$.
+The leading one-half threshold for that contribution is $8$.
+This energy estimate drops the nonnegative equal-pairing subtraction, so it can lose important information.
+
+\begin{proposition}[Capping three ports]
+\label{prop:five-pole-three-cap}
+Choose three ports $A$ and let $d,e$ be the other two.
+Add a new vertex adjacent to the three ports of $A$.
+The resulting two-pole $N$ has rank $h+2$, and
+\[
+ P_{de}(N)=P_{de}(X)+\sum_{\{a,b\}\subset A}
+ \left(F_{\{d,e,a,b\}}-f_{\{d,e,a,b\},de|ab}\right),
+\]
+\[
+ c(N)=c(X)+\sum_{\{a,b\}\subset A}P_{ab}(X).
+\]
+For any fixed $\delta,\eta>0$, if some $a_{ab}\ge\delta$ with $a,b\in A$, then, for all sufficiently large $h$,
+\[
+ a_{de}+\sum_{\{a,b\}\subset A}
+ \left(U_{\{d,e,a,b\}}-u_{\{d,e,a,b\},de|ab}\right)\le2+\eta.
+\]
+\end{proposition}
+\begin{proof}
+A terminal path avoids the new vertex or traverses two of its incident edges.
+In the latter case, deleting the new vertex gives either of the two pairings other than $de|ab$.
+A cycle through the new vertex gives an $a$--$b$ path in $X$.
+This proves the identities.
+If the last inequality failed, $N$ would have normalized terminal-path density greater than $1/2+\eta/4$.
+The fixed-density path--cycle tradeoff would give $c(N)=O_\eta(2^{h/2})$.
+This contradicts $c(N)\ge\delta2^h$ for large $h$.
+\end{proof}
+
+\begin{proposition}[Adding one edge]
+\label{prop:five-pole-added-edge}
+Choose two ports $i,j$ and let $R$ be the other three.
+Adding edge $ij$ gives a tripole $T$ of rank $h+1$.
+For each pair $e\subset R$,
+\[
+ 2^{-h}P_e(T)=a_e+U_{\{i,j\}\cup e}-u_{\{i,j\}\cup e,ij|e}.
+\]
+Consequently,
+\[
+ \sum_{e\subset R}\left(a_e+U_{\{i,j\}\cup e}-u_{\{i,j\}\cup e,ij|e}\right)
+ \le4+O(2^{-h/2}).
+\]
+If two of the three summands exceed $1+\eta$ for fixed $\eta>0$, the third is $O_\eta(2^{-h/2})$.
+\end{proposition}
+\begin{proof}
+Separate paths that use the added edge from those that avoid it.
+Apply the universal tripole path-sum estimate at rank $h+1$.
+For the last assertion, divide all three counts by $2^{h+1}$ and apply the two-high-pairs tripole theorem.
+\end{proof}
+
+\begin{proposition}[A gap when all path coordinates are positive]
+\label{prop:five-pole-positive-energy-gap}
+For all sufficiently large $h$, a normalized five-pole with $a_e\ge1/100$ for all ten pairs satisfies
+\[
+ E(X)\le7.9483<8.
+\]
+\end{proposition}
+\begin{proof}
+Call a pair high if $a_e>51/100$.
+The two-high-pairs tripole theorem, after suppressing the unused ports, implies that a wedge of high pairs has its third pair $O(2^{-h/2})$.
+Thus the high-pair graph is a matching for large $h$, and it has at most two edges.
+
+Apply the four-pole added-edge constraint to each four-port set, with $\delta=1/100$ and $\eta=1/1000$.
+Unused degree-two ports may be suppressed.
+If suppression creates a loop, that loop is at a nonterminal vertex.
+Every path in the added-edge two-pole avoids it.
+Its normalized path count is then at most one half, which gives the same constraint directly.
+Summing its six oriented constraints gives
+\[
+ \sum_{e\subset S}a_e+4U_S\le6(1+\eta).
+\]
+Summing over the five four-port sets counts each pair three times, so
+\[
+ 3\sum_ea_e+4\sum_SU_S\le30(1+\eta).
+\]
+Since $U_S^2\le U_S$,
+\[
+ E(X)\le\frac{15}{2}(1+\eta)+\sum_e(a_e^2-3a_e/4).
+\]
+The summand is at most $1/4$ on a high pair.
+For a nonhigh pair it is at most $-0.0074$, by convexity on $[0.01,0.51]$.
+There are at most two high pairs.
+Therefore
+\[
+ E(X)\le7.5(1.001)+2(0.25)-8(0.0074)=7.9483.
+\]
+\end{proof}
+
+The independent script \texttt{check\_five\_cut\_states.py} verifies 1,920 complete five-cut gluings and 40 three-port cappings on four small shores.
+The checks include a shore with a bridge.
+The files \texttt{explore\_five\_cut\_profiles.py} and \texttt{five-cut-profile-lp-exploration.json} contain numerical relaxations only; they are not proof certificates.
+The universal functional proved later resolves both sparse profiles and bounded shores for the cycle bound.

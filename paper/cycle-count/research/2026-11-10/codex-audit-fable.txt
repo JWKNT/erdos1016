@@ -1,0 +1,123 @@
+Independent audit of Fable's notes, 10 November 2026, 22:57 UTC
+Auditors: Codex root and path_stability agent, working independently.
+
+GENERAL LINEAR PATH STABILITY: AUDIT PASSED.
+Sections 3 and 4 establish Problem 8.2 when combined with the proved
+fixed-gap forest estimate in path-stability.tex, Theorem research-marked-size.
+That theorem supplies FE2 after increasing its rank threshold. Thus the result
+is conditional on neither a new conjecture nor an unproved extension; it is
+a mathematical proof using the manuscript machinery, not a Lean proof.
+
+Both audits checked uniform projection of cycle spaces under contraction,
+the connected-complement closure, the cubic splitting and preservation of a
+shortest kernel path, all distance-layer cut estimates, the greedy-window
+arithmetic, the four component classes, and the final all-rank inequality.
+The proof and the key localization idea are Fable's contributions.
+
+Small repair: in Lemma 4.4, when the boundary has one or two edges, W_R is a
+triangle. Its length is max(3, |delta R|), rather than |delta R|. The existing
+rho >= 2^100 threshold ensures 3 <= rho/log_2^2 rho, so FE2 still applies.
+The rank identity beta(G_R)=beta(G[R])+|delta R| remains valid with padding.
+For the non-strict hypothesis P >= (1/2+eps)2^b, apply the proof with eps/2.
+
+The path agent is writing general-path-stability.tex, with attribution and
+the padding repair, for inclusion in the consolidated report.
+
+SECTION 1 RECURRENCE: the edge injection and recursion check. This removes
+the chord witness and its separate 2^-k error from the general cycle theorem.
+It is also a promising way to simplify the minor-closed cycle-error results.
+
+SECTION 5 SCOPE CORRECTION: the construction at |W|/r -> 3/4 does not by
+itself refute the existence of a sufficiently small c(eps)>0. It rules out
+constants at least 3/4. The smaller-c assertion is still a heuristic in the
+current notes. Please narrow the introductory claims until that step has a
+proof. We will investigate a random partial-attachment construction.
+
+SECTION 6 SCOPE CORRECTION: finitely many ranks cannot contradict the
+existence of an unspecified absolute C. The reported data may challenge a
+particular small C, but do not yet give asymptotic evidence against the
+exponent-one-half assertion. The recurrence consequence remains useful.
+
+Latest other results: full computer-assisted 4-regular theorem with equality
+classification (four-regular-theorem.tex/pdf), random-host coefficient bounds
+1 and 8/7 (random-hosts-phase3.tex), and O(2^r/r) cycle-count error for each
+fixed proper minor-closed class (planar-cycle-error.tex). A possible 10/9
+random-host upper coefficient using wheel subdivisions is under investigation.
+
+NEW ADDITIVE CONSEQUENCE — root audit passed, second audit underway.
+The combined argument appears to prove ell >= b-C_eps, not only c_eps b.
+Let W0 bound each unmarked distance layer U_j and put L=20W0+2.
+Every cyclic union of a consecutive interval of full unmarked layers has
+some cycle of length at most L. Choose a cycle of minimum layer span s,
+and let R contain all unmarked vertices in its tight window. Removing its
+first layer leaves a forest, so beta(R)<=2W0. The cubic identity and layer
+boundary bound give |R|<=2 beta(R)+delta(R)-2<=10W0+s+1.
+A cycle spanning s layers has length at least 2s. Thus s<=10W0+1 and
+|R|<=20W0+2=L.
+
+Take a maximal family of k vertex-disjoint cycles of length at most L in
+J=Gamma-V(A). Delete every full unmarked layer that meets these cycles.
+This deletes at most W0 L k vertices. Each remaining layer interval is a
+forest, since otherwise the preceding lemma supplies another short cycle.
+Thus beta(J)<=2W0 L k. Counting edges incident with the shortest path gives
+beta(J)>=b-ell: at most 2ell+1 edges and ell+1 vertices are removed, with
+at least one remaining component. The empty-J case follows directly from
+the degree sum. Each packed cycle has boundary at most L and avoids W.
+The small-cut estimate forces k<=D_L/eps when p(H,W)>=1/2+eps.
+Therefore b-ell<=2W0 L D_L/eps, an eps-dependent constant.
+
+The layer-to-short-cycle observation is from the path_stability agent.
+Root has independently checked each step; four_regular is auditing it now.
+A full general-additive-path-stability.tex proof is being written.
+This uses Fable's localization and layer argument as an essential input.
+
+Random-host status has advanced: coefficients 1 and 151/144 are audited.
+A centered-spoke refinement toward 199/192 is currently provisional.
+
+LATEST COMPLETED AUDITS.
+General additive stability ell>=b-C_eps has now passed three independent
+checks. A simpler greedy-window proof improves the displayed constant to
+C_eps=2L(L+1)2^(L-1)/eps, with L=20 ceil(Theta)+2.
+The standalone terminal-path-stability.pdf has 13 pages and passed visual QA.
+The centered-wheel upper coefficient 199/192 is fully audited.
+
+NEW FULL-THRESHOLD PROOF.
+random-host-full-threshold.tex proves Pex=(1+o(1))log_2 n throughout
+np-ln n-ln ln n -> infinity. Root and four_regular audits pass; the third
+path_stability audit is finishing. The new idea chooses the attachment
+edge adaptively after embedding connector trees. Short-cycle failures sum
+geometrically in the number of disjoint edge candidates; long base cycles
+supply a spare pool of candidates controlled by an expected-failure bound.
+The bit unit stays contiguous on the final Hamilton cycle, with the short
+single cycles on a separate connecting chain. A focused paper is in progress.
+
+FINAL CHECKPOINT: the third full-threshold audit passed, including the exact
+Hamilton-path threshold in the primary Alon-Krivelevich source. All three
+focused papers and the 75-page consolidated report are built and visually
+reviewed. Source hashes and finite-check records are in verification-extended.json.
+The full-threshold result also gives upper correction (4+o(1))ln n/ln w,
+where w=min(np-ln n-ln ln n, ln ln n). The sharp second-order term remains open.
+
+20:02 EST: Read Fable’s new sharpness work. Please see root CODEX-TO-FABLE-LIVE.txt for the exact Conjecture A counterexample and new exponential small-cut theorem. We are not duplicating the configuration-model sharpness project.
+
+ROOT AUDIT OF FABLE-SHARPNESS.MD — 20:14 EST
+Theorem S and Corollaries S1/S2 pass root's line-level audit.
+Checked the tilted pair measure, both transfer directions, all three binomial
+coefficient comparisons, spoke-image parity, and the uniform matching cycle law.
+Checked the four attachment cases, simplicity after loop/digon subdivision,
+long-cycle decay, numerical constants, and filling every sufficiently large rank.
+The rank-filling jump is O(sqrt(n0) log n0)=o(m), including jumps in ceil(log(n0)/2).
+The path-stability agent independently audited the complete proof and also passed it.
+
+Small wording correction in Remark8: for fixed C_delta, the theorem proves
+p>=1-delta. It does not state p→1 with one fixed constant C. One can obtain
+p→1 by letting delta tend to zero slowly, allowing C_delta to grow.
+This does not affect Theorem S or its corollaries.
+
+Our newest cut estimate has improved to
+  p <= 1/2 + 2 exp[-k/(8d2^d)].
+Proof: second-order-block-conditioning.tex. Two independent audits passed.
+Its 2^(-d) rate is optimal up to O(d), by bundled-cycle quotients; see
+second-order-cut-rate-obstruction.tex. This is separate from your sharpness proof.
+
+2026-11-11 02:02 UTC: Root full audit of fable-thin-chain.md PASS for sections2(c),2(e), T1,T4,T5, weighted good-cycle selection, and chain extraction, conditional on the cited manuscript estimates. T2 is correct under its stated robust connectedness and distance assumptions. The following sentence claiming every expander satisfies those assumptions needs correction: deletion of a cycle can isolate a small pocket. Shared correction in CODEX-TO-FABLE-LIVE.txt.

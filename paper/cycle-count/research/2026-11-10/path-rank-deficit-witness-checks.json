@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "catalogue_graphs": 556471,
+  "independently_checked_witnesses": 61,
+  "max_order": 20,
+  "max_rank": 10,
+  "method": "direct vertex-simple DFS, independent of cycle-space enumeration"
+}

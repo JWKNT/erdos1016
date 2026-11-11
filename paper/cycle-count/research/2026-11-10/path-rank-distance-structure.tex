@@ -1,0 +1,121 @@
+\section{Rank-distance experiments and switching constraints}
+\label{sec:path-rank-distance-structure}
+
+The following observations concern the unresolved quantitative target
+\[
+ P_{uv}(N)\le2^{b-1}+\operatorname{poly}(b)\,2^{(b+\ell)/2},
+ \qquad \ell=\operatorname{dist}_N(u,v).
+\]
+The Horak--Kim construction in Proposition~\ref{prop:hk-short-path-obstruction} rules out replacing the polynomial by an absolute constant.
+The observations below do not prove this target.
+
+\begin{lemma}[An exact path-complement identity]
+\label{lem:path-complement-partition}
+Let $N$ be a normalized two-pole of rank $b$, with terminals $u,v$.
+Then
+\[
+ \sum_{Q\text{ a simple }u\text{--}v\text{ path}}
+ 2^{\beta(N-V(Q))}=2^b.
+\]
+In particular,
+\[
+ P_{uv}(N)-2^{b-1}
+ =\sum_Q\left(1-2^{\beta(N-V(Q))-1}\right).
+\]
+\end{lemma}
+
+\begin{proof}
+Every $\{u,v\}$-join has selected degree one at the two terminals and selected degree zero or two elsewhere.
+Thus it consists of one terminal path $Q$ and an even subgraph of $N-V(Q)$.
+Conversely, every such pair gives a unique terminal join.
+There are $2^b$ terminal joins, and the even space of the complementary graph has $2^{\beta(N-V(Q))}$ states.
+This proves the first identity.
+Subtract half that identity from the number of paths to obtain the second.
+\end{proof}
+
+Only paths with forest complement make a positive contribution in the second identity.
+Discarding the negative contributions is potentially costly: the positive class includes Hamilton terminal paths.
+A proof at the half exponent must retain sufficient cancellation or use another structural restriction.
+
+\begin{lemma}[A switching upper bound for the excess]
+\label{lem:path-switching-excess}
+Let $\mathcal A$ be the set of terminal paths, viewed as a subset of the affine terminal-join space of size $2^b$.
+For an even edge set $F$, write
+\[
+ R_F=|\mathcal A\cap(\mathcal A\mathbin\triangle F)|.
+\]
+Then
+\[
+ P_{uv}(N)-2^{b-1}\le R_F/2.
+\]
+Consequently, if the path density exceeds one half, every even edge set is the symmetric difference of two terminal paths.
+More quantitatively, it has at least $2P_{uv}(N)-2^b$ ordered representations of that form.
+\end{lemma}
+
+\begin{proof}
+Both $\mathcal A$ and its translate lie in the same affine space and have the same size.
+Inclusion--exclusion gives $R_F\ge2|\mathcal A|-2^b$.
+Each member of the intersection determines its unique translated partner.
+\end{proof}
+
+Thus the rank-distance target would follow by finding one even set $F$ with
+\[
+ R_F\le\operatorname{poly}(b)\,2^{(b+\ell)/2}.
+\]
+This is a sufficient condition, not an established estimate.
+An arbitrary subset of a binary affine space need not have such a sparse overlap with any translate; graph structure is essential.
+
+\begin{proposition}[A necessary threading condition for a spanning cycle packing]
+\label{prop:path-factor-threading}
+Let $N$ be a normalized two-pole, let $G=N+uv$, and write $e$ for the added edge.
+Suppose $F\subseteq E(N)$ is a spanning union of vertex-disjoint cycles.
+Contract each cycle of $F$ in $G$ and delete the contracted cycle edges, retaining loops and parallel edges.
+If $P_{uv}(N)>2^{b-1}$, the resulting quotient has a connected spanning even subgraph containing the image of $e$.
+\end{proposition}
+
+\begin{proof}
+The switching lemma supplies terminal paths $Q_1,Q_2$ with $Q_1\mathbin\triangle Q_2=F$.
+Put $C_i=Q_i\cup\{e\}$ and $M=C_1\cap C_2$.
+Since $F$ spans every vertex and has degree two at every vertex, $E(G)\setminus F$ is a perfect matching.
+Hence $M$ is a subset of that matching and contains $e$.
+
+Every cycle of $F$ contains an edge of each $C_i$.
+Otherwise it is a cycle contained entirely in one $C_i$, forcing that $C_i$ to equal it, contrary to $e\in C_i$.
+The image of the connected cycle $C_1$ after contraction therefore meets every quotient vertex and consists exactly of the edges of $M$.
+It is connected and spanning.
+At each contracted cycle, a cycle crosses its boundary an even number of times.
+Thus the image of $M$ is even and contains $e$.
+\end{proof}
+
+The quotient condition can rule out path density above one half for a specified spanning cycle packing.
+It does not yet supply a bound on the positive excess when the condition holds.
+
+\subsection{Finite catalogue checks}
+
+The program \texttt{check\_path\_rank\_deficit.cpp} enumerates the cycle space of every connected simple cubic graph in the catalogue through order twenty.
+For each edge $e=uv$, cycles containing $e$ count terminal paths in $G-e$ exactly.
+A separate breadth-first search gives the terminal distance.
+The catalogue contains 556,471 graphs in this range.
+The largest values at each terminal rank $b$ of
+\[
+ \left(P/2^b-\frac12\right)2^{(b-\ell)/2}
+\]
+are listed below.
+\[
+\begin{array}{c|rrrrrrrrr}
+ b&2&3&4&5&6&7&8&9&10\\ \hline
+ \text{maximum}&.500000&.530330&.625000&.687500&.839689&1.000000&1.259534&1.421875&1.800913
+\end{array}
+\]
+At $b=10$, the maximum has $\ell=3$ and $P=675$.
+The direct path-search program \texttt{check\_path\_rank\_deficit\_witnesses.py} independently verifies all 61 distinct recorded extremal witnesses, using no cycle-space enumeration or third-party package.
+Its result is \texttt{path-rank-deficit-witness-checks.json}.
+The full catalogue results are \texttt{path-rank-deficit-catalog-results.json}.
+These checks are finite evidence only.
+
+A tempting stronger decomposition would assert that every above-half path family has a full slice obtained by fixing one edge coordinate.
+The edge-deleted Petersen graph is a finite obstruction to that assertion.
+Its rank is five, its terminal distance is four, and it has 28 paths among 32 joins.
+For each of the fourteen remaining edges, both coordinate values occur among its four bad joins.
+Thus none of those slices is full.
+This does not refute the rank-distance target, since $b-\ell=1$ in this example.

@@ -1,0 +1,181 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,microtype,xcolor}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\setlength{\emergencystretch}{3em}
+\title{Structural reductions for the second-order cycle bound}
+\author{Collaborative research working draft}
+\date{11 November 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+The unrestricted conjectural error $O(r2^{r/2})$ remains open.
+This report proves it for every fixed cyclic cut order and confines a sufficiently large minimal counterexample to a much smaller structural class.
+Its girth $g$ and minimum cyclic cut order $k$ must satisfy
+\[
+ \frac12\log_2\log_2r-\frac{11}{2}\log_2\log_2\log_2r-O(1)
+ <k=g
+ <2\log_2\log_2r+2\log_2\log_2\log_2r+O(1),
+\]
+and every minimum cyclic cut must isolate a shortest cycle.
+The minimal-counterexample statement explicitly assumes the sharp bound at all smaller ranks.
+
+The main new tools are disconnected-region localization, quantitative terminal-path stability, and a uniform affine-forest estimate for high-girth poles.
+If a minimum cut has two noncycle shores, the latter gives
+\[
+ c(G)\le\left(\frac14+O(g^{13/2}2^{-g/4})\right)2^r.
+\]
+At logarithmic girth, the established nested-chain argument works without any short-cycle deletions or lower bound on the positive forest excess.
+Its two large shores force the same quarter-space conclusion and yield an exact edge-count dichotomy.
+The report also gives explicit growing-cut and growing-girth ranges and records the limitations of several proposed shortcuts.
+\end{abstract}
+
+\section*{Status and scope}
+The fixed-cut induction, the fixed-girth proof, quantitative localization, the high-girth terminal-forest theorem, and the stated refinements have passed four independent full mathematical audits.
+The new theorems are not formalized in Lean.
+Publication priority has not been established.
+All constants may be very large.
+The subscript in $O_K$ is essential: this report does not prove a constant uniform over unbounded cut orders.
+
+The earlier six-cut classification remains a separate independent proof.
+The induction below also covers both large shores of every fixed seven-cut, without solving the auxiliary terminal-state relaxation.
+Numerical searches of that relaxation are not used here.
+
+Rank means $|E|-|V|+\operatorname{comp}$.
+Paths and cycles are simple, with parallel edges distinguished.
+A cyclic cut has a cycle on each shore.
+A normalized $k$-pole has $k$ distinct degree-two ports and all other degrees three.
+Write $\psi(r)$ for the maximum cycle count at rank $r$.
+
+\section{Inputs from the preceding research packets}
+The following statements are inputs, not new claims of this report.
+Their proofs appear in the accompanying path-stability, small-cut, and polynomial-error packets.
+
+\begin{theorem}[Established cycle bounds]\label{thm:sharp-order-five-cut-error}
+Uniformly over graphs of rank $r$, one has $c(G)\le(1/2+o(1))2^r$.
+For connected loopless cubic multigraphs with a cyclic cut of size at most five,
+\[
+ c(G)\le2^{r-1}+C r2^{r/2}
+\]
+with an absolute constant $C$.
+The unrestricted quantitative estimate is
+\[
+ \psi(r)\le2^{r-1}+O\!\left(2^r(\log_2r)^{11/2}/\sqrt r\right).
+\]
+\end{theorem}
+
+\begin{proposition}[Established genuine five-cut deficit]\label{prop:five-cut-universal-deficit}
+Let $G$ have a cyclic five-cut and no smaller cyclic cut.
+Its shores are normalized five-poles of ranks $h\le l$.
+Their crossing-cycle contribution, divided by $2^{h+l}$, is at most $15/2+o(1)$ as $l\to\infty$, uniformly in $h\ge1$.
+Their internal-cycle contribution in the same normalization is at most $1/4+o(1)$.
+Consequently $c(G)/2^{h+l}\le31/4+o(1)$.
+\end{proposition}
+
+The crossing bound uses five matching-augmentation inequalities and distinct representatives in the Petersen graph.
+The internal bound follows from $c(X)\le2^h-1$ and $c(Y)\le(1/2+o(1))2^l$.
+The full proof appears in \nolinkurl{small-cut-sharp-bound.pdf}.
+
+\begin{theorem}[Established high-density path theorem]\label{thm:high-density-pair-small-cyclic-cut}
+For $0<\varepsilon\le1/2$, let $C_\varepsilon$ be the additive terminal-path stability constant.
+Set
+\[
+ B_{k,\varepsilon}=(k+1)\bigl(9\lceil C_\varepsilon\rceil+8k+9\bigr).
+\]
+A normalized $k$-pole of rank at least $B_{k,\varepsilon}$ with terminal-path density at least $1/2+\varepsilon$ contains two disjoint cyclic vertex sets.
+They avoid all ports and have boundary at most four in every cubic completion.
+\end{theorem}
+
+\begin{theorem}[Established protected version]\label{thm:high-density-protected-cyclic-sets}
+The preceding cyclic sets can avoid any fixed $m$ protected vertices if the rank is at least
+\[
+ (k+m+1)\bigl(9\lceil C_\varepsilon\rceil+8k+4m+9\bigr).
+\]
+\end{theorem}
+
+The stability constant is supplied by \nolinkurl{terminal-path-stability.pdf}.
+The high-density refinements are proved in \nolinkurl{small-cut-sharp-bound.pdf}.
+The unrestricted estimate is proved in \nolinkurl{polynomial-cycle-error.pdf}.
+The new quantitative bound on $C_\varepsilon$ below still falls short of the unrestricted sharp error.
+
+\begin{theorem}[Established marked forest endpoint]
+\label{thm:parallel-links-log-five-half-forest}
+There is an absolute constant $M$ such that the following holds for all sufficiently large ranks $\rho$.
+Let $H$ be a connected subcubic multigraph, and let $P$ be a nonempty connected marked vertex set containing every vertex of degree below three.
+If
+\[
+ |P|\le\rho/(\log_2\rho)^2,
+\]
+then a uniform even subgraph of $H$ is a forest on $V(H)\setminus P$ with probability at most
+\[
+ \frac12+M\frac{(\log_2\rho)^{11/2}}{\sqrt\rho}.
+\]
+\end{theorem}
+
+This is the connected-marked-set case of the endpoint theorem in \nolinkurl{polynomial-cycle-error.pdf}.
+Its proof does not depend on additive path stability, so its use below is noncircular.
+
+We also recall the precise part of the path-stability proof that will be reused.
+A connected terminal network with path density above one half has a rank-preserving cubic expansion $\Gamma$.
+Its terminals have degree one or two; all other vertices have degree three.
+A shortest terminal path $A$ has length no greater than the original terminal distance.
+Add a new terminal path of length two to obtain $H$, and mark its union $W$ with $A$.
+The path injection bounds the original path density by the forest probability outside $W$.
+
+For a threshold $\Theta\ge2^{36}$, call a set $R\subseteq V(\Gamma)\setminus V(A)$ good if
+\[
+ |R|\ge\Theta,\qquad |\delta_\Gamma R|\le |R|/(4\log_2^2|R|).
+\]
+The growing-window lemma says that, if no good set exists, each distance layer has fewer than $\Theta$ vertices outside $A$.
+The additive layer argument then gives the constant
+\[
+ C_\varepsilon=\frac{2L(L+1)2^{L-1}}{\varepsilon},
+ \qquad L=20\lceil\Theta\rceil+2.
+\]
+These are the cubic reduction, growing-window lemma, and additive estimate in the preceding terminal-path stability packet.
+Only the old argument excluding good sets is replaced below.
+
+\input{path-fixed-cut-induction}
+\input{path-fixed-girth}
+\input{path-quantitative-localization}
+\input{four-high-connectivity-moore-paths}
+\input{four-high-connectivity-entropy-moore}
+\input{path-high-girth-terminal-forests}
+\input{second-order-random-girth-window}
+\input{second-order-random-larger-marker}
+\input{path-girth-surplus-cuts}
+\input{second-order-random-terminal-forest-girth}
+\input{four-high-connectivity-weighted-kernel}
+\input{second-order-random-no-deletion-chain}
+
+\section{Checks and the remaining unrestricted question}
+Each written argument has four independent full mathematical reviews.
+The shortest-cycle identities also have exact finite checks on seventy-two random cubic graphs and a graph whose shortest five-cycle has two cyclic exterior components.
+The checker verifies 292 prefix deletions, the terminal-path partitions, and independent cycle-space counts.
+The cut-smoothing proof uses an explicit shore-partition lift and exact cycle bijections; it does not rely on numerical optimization.
+An independent checker exhausts all cyclic vertex cuts of the Petersen and Heawood graphs and checks all 198 minimum-cut edge incidences.
+The localization checker compares the complete restriction distributions in 1,193 cases, including 265 disconnected regions and 56 padded boundary cycles.
+It enumerates 93,632 even states and verifies the rank formulas exactly.
+The Moore geometry checker verifies 35,568 geodesics, 20,694 disjoint packed balls, and 10,579 port-free Moore-ball counts on 49 normalized-pole fixtures.
+The affine-forest checker verifies translations and the exact saturation criterion on 247 fixtures and 8,312 affine states.
+
+The unrestricted $O(r2^{r/2})$ bound is not proved.
+A counterexample sequence after removal of the sharp four-cut class must have cyclic connectivity tending to infinity.
+It must also have girth tending to infinity.
+The finite recurrences and the quantitative localization theorem cover the displayed double-logarithmic range.
+The remaining cyclic connectivity can still grow up to order $\log r$.
+The high-girth affine-forest theorem forces each minimum cyclic cut in an above-half family to isolate a shortest cycle.
+The no-deletion chain and the unconditional girth window reduce any sufficiently large minimal counterexample to the double-logarithmic range stated in the abstract.
+For every fixed $C$, a remaining above-half family also has no cut of size at most $Cg$ with two connected shores whose ranks exceed the explicit constant $H_C$ in Section~\ref{sec:four-high-connectivity-weighted-kernel}.
+A separate construction shows that an edge of a minimum cyclic cut need not lie on a short cycle: even a unique fixed-order minimum cut can have all its edges on cycles of length proportional to rank.
+Thus a short-cycle selection argument would need an additional cycle-count hypothesis; minimum-cut geometry alone is insufficient.
+
+The shared files \nolinkurl{CODEX-TO-FABLE-LIVE.txt} and \nolinkurl{RESEARCH-STATUS-2026-11-11.txt} record the current checkpoint and partial investigations.
+The earlier formal modules are unchanged.
+\end{document}

@@ -1,0 +1,162 @@
+\section{A direct cycle deficit in a growing girth window}
+\label{sec:random-girth-window}
+
+Moore-ball packing makes the shortest-cycle prefix argument quantitative.
+The estimate below does not require a restriction on cyclic cuts.
+All logarithms are binary.
+
+\begin{lemma}[A direct bound for the large prefix branches]
+\label{lem:random-girth-prefix-path}
+There are absolute constants $C,R$ with the following property.
+Let $r\ge R$, put $x=\log r$, $z=\log x$, and set
+\[
+ g_0=\left\lceil4z+2\log z+12\right\rceil.
+\]
+Let $N$ be a normalized $k$-pole with rank $b\in[r/2,r]$, girth at least $g_0$, and $k\le3x$.
+For any distinct ports $u,v$,
+\[
+ P_{uv}(N)\le
+ \left(\frac12+C\frac{x^{11/2}}{\sqrt r}\right)2^b.
+\]
+\end{lemma}
+
+\begin{proof}
+The order of $N$ is $n=2b+k-2$.
+Apply Lemma~\ref{lem:four-pole-moore-geodesic} with the integer girth lower bound $g_0$.
+The terminal distance $\ell$ satisfies
+\[
+ \ell+1<g_0\left(k+1+n2^{-g_0/2}\right).
+\]
+For sufficiently large $r$,
+\[
+ g_0\le8z,\qquad
+ 2^{-g_0/2}\le\frac1{64x^2z},\qquad
+ n\le3b.
+\]
+Hence
+\[
+ \ell+2\le8z(3x+1)+\frac{3b}{8x^2}+1
+ \le\frac{b}{2x^2}.
+\]
+The last comparison is uniform for $b\ge r/2$.
+
+Suppress every degree-two vertex other than $u,v$.
+This preserves rank and terminal-path count, and it can only shorten terminal distance.
+Call the resulting two-pole $N'$.
+Parallel edges or loops do not affect these assertions or the multigraph forest theorem.
+Add a new two-edge $u$--$v$ path to $N'$, obtaining a subcubic graph $H$ of rank $\rho=b+1$.
+Let $A$ be a shortest terminal path in $N'$ and let $W$ be its union with the new path.
+Then $W$ is a cycle and
+\[
+ |V(W)|\le\ell+2\le\frac{b}{2x^2}
+ \le\frac{\rho}{(\log\rho)^2}.
+\]
+For the final inequality, use $\rho\le r+1$ and take $r$ sufficiently large.
+Every vertex outside $W$ is cubic.
+
+Each terminal path $Q$ of $N'$ gives two even subgraphs of $H$:
+its union with the new path, and $Q\mathbin{\triangle}A$.
+These $2P_{uv}(N')$ subgraphs are distinct.
+Outside $V(W)$, each is a subgraph of $Q$ and is therefore a forest.
+Consequently
+\[
+ \frac{P_{uv}(N)}{2^b}
+ \le
+ \Pr\bigl(\xi_H-V(W)\text{ is a forest}\bigr).
+\]
+The endpoint forest theorem, Theorem~\ref{thm:parallel-links-log-five-half-forest}, bounds the right side by
+\[
+ \frac12+O\!\left(\frac{(\log\rho)^{11/2}}{\sqrt\rho}\right)
+ \le\frac12+C\frac{x^{11/2}}{\sqrt r}.
+\]
+All constants are absolute.
+\end{proof}
+
+\begin{theorem}[The quantitative girth window]
+\label{thm:random-girth-window}
+There are absolute constants $C,R$ such that every connected loopless cubic multigraph $G$ of rank $r\ge R$ and girth $g$ satisfying
+\[
+ \left\lceil4\log\log r+2\log\log\log r+12\right\rceil
+ \le g
+\]
+obeys
+\[
+ c(G)\le
+ 2^{r-1}-2^{r-g-1}
+ +C\,2^r\frac{(\log r)^{11/2}}{\sqrt r}.
+\]
+No hypothesis on cyclic connectivity is required.
+\end{theorem}
+
+\begin{proof}
+Choose a shortest cycle $C=v_0\cdots v_{g-1}v_0$.
+The cubic Moore bound gives $g\le2\log(2r-2)+2\le3\log r$ for sufficiently large $r$.
+Delete its edge $e=v_0v_{g-1}$ and write $b=r-1$.
+Partition the remaining terminal paths by first divergence from the fixed path $C-e$.
+Lemma~\ref{lem:path-shortest-cycle-prefix} gives, for each $1\le p\le g-1$, either no branch or a normalized pole of rank
+\[
+ b_p\le b-p.
+\]
+Its two terminals are distinct ports.
+It has at most $g$ ports and girth at least $g$.
+The last branch includes the pendant-endpoint deletion stated in that lemma.
+
+Put $\varepsilon_r=C_1(\log r)^{11/2}/\sqrt r$, with $C_1$ from Lemma~\ref{lem:random-girth-prefix-path}.
+If $b_p\ge r/2$, that lemma bounds the branch count by
+\[
+ (1/2+\varepsilon_r)2^{b_p}
+ \le(1/2+\varepsilon_r)2^{b-p}.
+\]
+If $b_p<r/2$, the parity-class bound gives at most $2^{r/2}$ paths.
+Including the fixed path $C-e$ and summing the geometric series therefore gives
+\begin{align*}
+ P_{v_0v_{g-1}}(G-e)
+ &\le1+(1/2+\varepsilon_r)\sum_{p=1}^{g-1}2^{b-p}
+       +(g-1)2^{r/2}\\
+ &=1+(1/2+\varepsilon_r)(2^b-2^{b-g+1})
+       +(g-1)2^{r/2}.
+\end{align*}
+
+The unrestricted endpoint cycle bound applies to the connected graph $G-e$:
+\[
+ c(G-e)\le2^{b-1}
+ +O\!\left(2^b\frac{(\log b)^{11/2}}{\sqrt b}\right).
+\]
+Add this estimate to the terminal-path count.
+The two half terms give $2^{r-1}-2^{r-g-1}$.
+Since $g\le3\log r$, the term $1+(g-1)2^{r/2}$ is absorbed by the displayed endpoint error.
+Increasing the absolute constant proves the theorem.
+\end{proof}
+
+\begin{corollary}[A strict deficit up to half the rank logarithm]
+\label{cor:random-girth-window-strict}
+There is an absolute constant $C_0$ such that, for sufficiently large $r$, every connected loopless cubic multigraph of rank $r$ and girth in the interval
+\[
+ \left\lceil4\log\log r+2\log\log\log r+12\right\rceil
+ \le g
+ \le\frac12\log r-\frac{11}{2}\log\log r-C_0
+\]
+satisfies
+\[
+ c(G)\le2^{r-1}-2^{r-g-2}<2^{r-1}.
+\]
+More generally, within the theorem's girth range, if
+\[
+ 2^g\frac{(\log r)^{11/2}}{\sqrt r}\longrightarrow0,
+\]
+then the negative term is $(1-o(1))2^{r-g-1}$.
+\end{corollary}
+
+\begin{proof}
+Choose $C_0$ so that $C2^{-C_0}\le1/4$, where $C$ is the theorem's error constant.
+The upper girth bound then gives
+\[
+ C\frac{(\log r)^{11/2}}{\sqrt r}
+ \le2^{-g-2}.
+\]
+Subtract this error from $2^{-g-1}$ after normalizing by $2^r$.
+The limiting assertion follows from the same comparison.
+\end{proof}
+
+The remaining unrestricted problem includes girths between the available double-logarithmic ranges and girths above this window.
+This theorem supplies a quantitative exclusion range; it does not prove the unrestricted sharp-order error.

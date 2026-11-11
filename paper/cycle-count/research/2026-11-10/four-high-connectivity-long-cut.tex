@@ -1,0 +1,86 @@
+\section{An explicit minimum-cut distance obstruction}
+\label{sec:four-high-connectivity-long-cut}
+
+The proposed short-cycle rule for minimum cyclic cuts is false, already at cut order five.
+The following construction uses an explicit cubic Cayley graph.
+Its only external input is a published cyclic-connectivity theorem.
+
+\begin{proposition}
+\label{prop:four-honeycomb-long-cut}
+For every integer $M\ge10$, there is a connected simple cubic graph $G_M$ of rank
+\[
+ r_M=40M+6
+\]
+with a unique minimum cyclic cut of size five.
+Every cycle containing an edge of that cut has length at least
+\[
+ 2M+2=\frac{r_M-6}{20}+2.
+\]
+The graph has girth six.
+\end{proposition}
+
+\begin{proof}
+Put $L=5M$ and $A=\mathbb Z_L\times\mathbb Z_4$.
+Let $H_M$ have vertices $A\times\{0,1\}$.
+For each $z\in A$, join $(z,0)$ to
+\[
+ (z,1),\qquad (z+(1,0),1),\qquad (z+(0,1),1).
+\]
+This graph is simple, cubic, and connected.
+Translations of $A$ preserve its edges.
+The map $(z,s)\mapsto(-z,1-s)$ also preserves its edges.
+These automorphisms act transitively on the vertices.
+
+The graph is bipartite.
+The six nonzero ordered differences of $0,(1,0),(0,1)$ are distinct in $A$.
+Thus two vertices in the same bipartition class have at most one common neighbor, excluding four-cycles.
+The following sequence is a six-cycle:
+\[
+ ((0,0),0),\ ((1,0),1),\ ((1,-1),0),\
+ ((1,-1),1),\ ((0,-1),0),\ ((0,0),1).
+\]
+Hence $H_M$ has girth six.
+Theorem~17 of Nedela and \v{S}koviera identifies the cyclic connectivity of a cubic vertex-transitive graph with its girth.
+Therefore $H_M$ has cyclic connectivity six.
+The primary source is
+\href{https://dml.cz/bitstream/handle/10338.dmlcz/132921/MathSlov_45-1995-5_3.pdf}{\emph{Atoms of cyclic connectivity in cubic graphs}, Mathematica Slovaca 45 (1995), 481--499}, page~498.
+
+Subdivide the five edges
+\[
+ ((jM,0),0)((jM,0),1),\qquad 0\le j\le4,
+\]
+once each, with new vertices $p_0,\ldots,p_4$.
+Call the resulting normalized five-pole $X_M$.
+Subdivision preserves its rank and internal cyclic connectivity.
+In particular,
+\[
+ |V(X_M)|=40M+5,\qquad \beta(X_M)=20M+1.
+\]
+Assign each $p_j$ the first coordinate $jM$.
+Along every edge, that coordinate moves by at most one in the cycle $\mathbb Z_L$.
+Distinct ports therefore have distance at least $M\ge10$.
+
+Take two disjoint copies of $X_M$ and join corresponding ports by five edges.
+Lemma~\ref{lem:random-distant-port-gluing} applies with $k=5$.
+It shows that the five new edges form the unique cyclic cut of size at most five.
+The order of the resulting cubic graph is $80M+10$, giving the stated rank.
+
+Every cycle meeting the joining cut uses at least two joining edges.
+It includes at least two internal segments between distinct ports.
+Each segment has length at least $M$, proving the claimed lower bound.
+All other cycles lie within one subdivided core and have length at least six.
+An unchanged six-cycle exists away from the five subdivided edges, so the girth remains six.
+\end{proof}
+
+For sufficiently large $M$, every edge of the unique minimum cyclic cut avoids every cycle of length at most $r_M/(\log r_M)^2$.
+Thus neither minimum-cut selection nor minimum-cut atoms alone can supply the proposed short cycle.
+This explicit example has bounded girth.
+Corollary~\ref{cor:random-long-cut-diagonal} gives a stronger qualitative obstruction using the arbitrary-fixed-cut construction.
+It chooses the graph order sufficiently large at each cut order.
+Both cyclic connectivity and girth then tend to infinity, while the same short-cycle rule still fails.
+This does not exclude a statement with a specified growth rate for either parameter.
+
+The exact finite checker is \texttt{four-high-connectivity-long-cut-check.py}.
+It checks the graph definition, automorphisms, girth, port distances, and shortest cycles through all five joining edges.
+It also checks every possible small-cut pattern after the published cyclic-connectivity reduction.
+Its output is \texttt{four-high-connectivity-long-cut-checks.json}.

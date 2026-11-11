@@ -1,0 +1,297 @@
+Second-order constructions: checkpoint 1, 2026-11-10
+
+Status: symbolic proof below; independent finite checker passed.
+The path-stability agent independently audited the proof and found no gap.
+
+The proposed additive path bound with a constant C is false.
+The counterexample uses the known Horak--Kim graph MC_(2q).
+Delete one edge inside one of its q square blocks.
+The resulting network N has rank b=2q and terminal distance ell=3.
+Its exact path count is
+
+  P_uv(N) = 2^(2q-1) + (q-3/4) 2^q + 1.
+
+Thus (P_uv-2^(b-1))/2^((b+ell)/2) grows linearly in q.
+This does not refute the proposed cycle error O(r 2^(r/2)).
+The parent graph itself is the known lower-bound construction at that scale.
+
+Primary source: Horak and Kim, arXiv:2006.13459v2, Section 5.
+https://arxiv.org/pdf/2006.13459
+Theorem 5.1 gives the total cycle count. The marked-edge formula above
+is a separate elementary count, not a quotation of that theorem.
+
+Definition and proof.
+
+For i modulo q, use four vertices a_i,b_i,c_i,d_i.
+Put all four edges between {a_i,b_i} and {c_i,d_i} in block i.
+Add c_i a_(i+1) and d_i b_(i+1) between consecutive blocks.
+The graph is simple and cubic for q>=2. Its rank is 2q+1.
+Fix the square edge e=a_0 c_0.
+
+Every cycle uses an odd number of edges at every two-edge interface,
+or an even number at every interface. This follows from cut parity.
+
+Odd case: choose one interface edge independently at every interface.
+Inside each square there are two paths between the selected endpoints.
+This gives 4^q cycles. Exactly half contain e.
+Indeed, among the four endpoint pairs and two local paths, four use e.
+The contribution to c_e is therefore 2^(2q-1).
+
+Even case, no used interface: only the square containing e contributes.
+Its contribution is 1.
+
+Even case, d used consecutive interfaces, 1<=d<=q-1:
+The cycle occupies d+1 blocks. Each endpoint block has two possible caps.
+Each internal block has two possible matchings. Thus there are 2^(d+1)
+cycles for each interval. There are d+1 intervals containing block 0.
+In each such interval, exactly half the cycles contain e.
+The contribution is sum_(d=1)^(q-1) (d+1) 2^d = (q-1)2^q.
+
+Even case, all q interfaces used:
+Each block supplies one of its two matchings. A single cycle results
+exactly when their product is the transposition. There are 2^(q-1)
+such cycles. Half use e, so their contribution is 2^(q-2).
+
+Adding gives the claimed formula. Deleting e converts these cycles
+bijectively into simple paths between its endpoints. The other three
+edges of its square form a terminal path. Bipartiteness gives distance 3.
+
+Additional formula: if e is an interface edge, then
+  c_e = 2^(2q-1) + (2q-7/2)2^q + 4.
+For a proper interval of d interfaces, there are d positions containing e;
+each contributes 2^(d+1). The all-interface case contributes 2^(q-1).
+The interface-edge terminal distance need not stay bounded as q grows.
+
+Consequences for future targets.
+
+1. A constant-C bound with exactly exponent (b+ell)/2 cannot hold.
+2. A polynomial factor, at least linear in b for ell=3, is necessary.
+3. The weaker exponential-gap conjecture remains consistent with this family.
+4. The cycle error O(r2^(r/2)) remains open; this example matches its scale.
+
+Reproducible check:
+  python3 check_second_order_constructions.py
+It counts terminal paths directly for q=2,...,9 and both edge types.
+The output is second-order-constructions-results.json.
+
+Checkpoint 2: series extension and four-terminal block structure.
+
+Append t two-terminal triangles in series to N_q. Each triangle has two
+terminal paths and terminal distance one. The new simple graph has
+  b=2q+t, ell=3+t,
+  excess = 2^t ((q-3/4)2^q+1).
+Thus a factor of order b-ell is necessary beside 2^((b+ell)/2).
+This holds throughout the possible gap range, not only at distance three.
+
+A new structural proposition is saved in second-order-four-poles.tex.
+Let K have four degree-two ports L1,L2,R1,R2 and all other degrees three.
+Write h=beta(K). Suppose that every cross count P_(Li,Rj) equals 2^h.
+If two vertex-disjoint cross paths exist, then K is a permutation ladder.
+Its matching permutation consists only of singleton blocks and adjacent swaps.
+If there are a swaps, then its number of through pairs is exactly 2^a.
+In particular it is at most 2^floor((h+1)/2).
+
+The proof first shows that every cross path meets every cycle.
+For two disjoint cross paths P,Q, all unused edges form a forest.
+A forest component cannot meet either path twice. Otherwise its two
+attachments produce a cycle disjoint from the other cross path.
+The unused edges therefore form a perfect matching P-to-Q, with no unused
+vertices. The graph is a permutation ladder. Patterns 231,312,321 each
+give a two-rung cycle disjoint from a cross path. Avoiding these patterns
+forces the claimed blocks. Local through choices then give 2^a.
+
+The independent checker exhausts all permutations of orders 2 through 7.
+It verifies both the saturation criterion and the exact through-pair count.
+There are 2,3,5,8,13,21 saturated permutations, respectively.
+This is a restricted construction barrier, not a general second-order theorem.
+It does not classify saturated blocks whose through-pair count is zero.
+
+Heuristic fixed-distance-two search, independently recounted in Python:
+  rank b     7   8    9    10    11
+  paths     82 157  295   577  1094
+  excess    18  29   39    65    70
+These extend Fable's local-search evidence. They do not certify maxima.
+The witnesses are all connected and have the stated degrees and ranks.
+The output is second-order-four-pole-search.jsonl.
+The reusable code is search_second_order_four_poles.cpp.
+
+Greedy square insertion into the b=7 and b=8 witnesses loses positive
+excess after a few steps. It does not produce an asymptotic counterexample.
+The corresponding output files are second-order-four-pole-extensions-*.jsonl.
+
+A separate enumeration considers four-poles with a specified Hamilton cycle.
+It is exhaustive only in that class. Up to rank 7 it found no through growth
+above the half exponent among saturated port splits. This is consistent
+with the structural proposition. That class excludes long HK square chains.
+Its script is enumerate_second_order_four_poles.cpp; its output is
+second-order-saturated-four-poles.jsonl.
+
+Checkpoint 3: exact saturated-block bounds and a general saturation gap.
+
+The exact three-pole maximum is now proved in second-order-saturated-blocks.tex.
+For three degree-two terminals a,b,c, with all other vertices cubic and rank h,
+assume P_ac=P_bc=2^h. Then
+  P_ab <= M(h),
+  M(2j)=3*2^j-2,  M(2j+1)=4*2^j-2.
+Simple equality families exist for every h. The proof allows parallel edges.
+The independent search and exact equality-family checks agree through h=12.
+
+This gives c(N)<=10*2^(b/2) for saturated cubic two-terminal networks.
+It also bounds caps and through pairs in every saturated four-terminal block.
+For any cyclic chain of saturated four-terminal blocks, the cycle count lies
+between 2^(r-1) and 2^(r-1)+20*r*2^(r/2).
+The initial ring proof omitted a state with one double-cap block.
+The independent audit found it. The corrected proof includes that state and
+bounds its contribution by 3*(r-1)*2^((r-1)/2).
+Both the exact three-pole theorem and corrected ring proof passed the
+four-regular agent's independent audit.
+
+The principal new result is in second-order-path-gap.tex:
+  Every connected graph or multigraph of rank b has either exactly 2^b
+  simple terminal paths, or at most (15/16)*2^b.
+The constant is sharp for a simple rank-four graph with fifteen paths.
+
+Proof structure:
+1. A saturated bridgeless cubic two-pole consists of two terminal paths,
+   with a perfect matching between their interiors. The matching permutation
+   has only singleton and adjacent-swap blocks. Bridges join these pieces.
+2. Subdivide any edge of such a full network to make a third terminal b.
+   If the original terminal pair a,c remains full, the count from b to c
+   is either full or at most 7/8 of full. Exact local formulas prove this.
+3. Split a general cubic two-pole at one terminal. Each branch has rank b-1.
+   If both branches are nonfull, use induction. If one is full, use step 2.
+4. For general graphs, use the block route. In a two-connected block,
+   a terminal of degree at least three gives density at most 3/4.
+   An internal vertex of degree at least four gives density at most 7/8.
+   Uniform incident parity patterns prove both statements.
+
+The full general gap proof passed both the four-regular and path-stability
+agents' line-by-line audits. The root's line-by-line audit also passed.
+The independent checker passed 6330 subdivision formulas on all 231 capped
+ladders with at most ten positions. It also checked the simple sharp witness.
+The files are check_second_order_path_gap.py and second-order-path-gap-checks.json.
+The path-stability agent also ran an independent checker with 874 matching
+permutations and 522 saturated edge subdivisions; every assertion passed.
+
+Consequence for the construction search: if all four cross-path densities
+of a block tend to one, they eventually exceed 15/16 and are exactly full.
+Thus vanishing defects cannot evade the saturated-ring half-exponent barrier.
+No construction exceeding the general cycle scale r*2^(r/2) was found.
+
+Checkpoint 4: arbitrary rings and four-terminal forest searches.
+
+The new fragment second-order-general-rings.tex treats arbitrary four-pole
+rings with at least eleven blocks. If any block is not cross-saturated, the
+total cycle count is strictly below 2^(r-1). Otherwise the audited saturated
+ring bound applies. The proof combines the path gap with a transfer trace.
+One nonfull entry loses at least 1/64 of the odd-interface sector.
+The entire even sector has relative size at most
+  (2k+1)*2^(-k)+k*2^(-2k+1),
+which is below 1/64 for k>=11. The key all-used-interface estimate is
+D_i+C_i<=2^h_i, where D_i counts through pairs and C_i double caps.
+The independent audit found a missing s=k interval, which omits one
+interface but visits every block. The proof now includes that case.
+It changes the safe block threshold from ten to eleven.
+The corrected full proof passed the four-regular agent's independent audit.
+
+Fixed four-terminal affine-join forests behave differently in small ranks.
+Hamiltonian four-poles attain nonfull forest counts 7,15,31,63,127 at ranks
+3,4,5,6,7. This is finite evidence, NOT an infinite family or gap refutation.
+The initial rank-three witness has cycle 0..7, chords36 and57, and terminals
+0,1,2,4. Its only cyclic join contains the triangle567.
+Every natural extension was tested: subdivide two distinct edges, then join
+their new vertices. Retain exactly those graphs with one cyclic join.
+Starting at this witness, the counts were 8,44,132,192 at ranks4..7.
+There were no retained rank-eight extensions. Counts include labelled repeats.
+The width limit20000 was never reached, so every such extension was tested.
+No fixed-four-terminal gap has been proved or refuted.
+Scripts:
+  enumerate_second_order_four_poles.cpp
+  extend_second_order_four_terminal_forests.cpp
+Outputs:
+  second-order-four-terminal-forest-search.jsonl
+  second-order-four-terminal-extension-wide-search.jsonl
+
+Checkpoint 5: one-full tripole sum.
+
+The new fragment second-order-one-full-tripole.tex proves:
+  P_ac=2^h implies P_ab+P_bc<=2^h+6*2^(h/2)
+for connected cubic three-poles, allowing parallel edges.
+Suppress b and use the full two-pole classification.
+Prefix cap counts obey A_p<=3*2^(p/2)-2.
+For interface and singleton edges, the normalized terms are
+f_p=(1+A_p)/2^(p+1), and f_p<=1/2 for p>=3.
+For square edges, use g_p=(4+3A_p)/2^(p+3), with g_p<=1/2 for p>=2.
+When both ends are long, the sum is at most full.
+Otherwise the short prefix gives a half-exponent bound for the opposite count.
+Series bridge chains preserve the bound through
+  A+lambda*B <= lambda*2^t+6*2^(t/2).
+If both sides have positive rank, each count is at most half of full.
+The proof passed both the four-regular and path-stability independent audits.
+The root is using it in the universal tripole sum and three-edge-cut theorem.
+Independent DFS checks passed 6330 capped-ladder subdivisions through ten
+positions, plus all one-sided bridge weights with side ranks one through eight.
+The reusable checker is check_second_order_one_full_tripole.py.
+
+Checkpoint 6: four-edge cuts.
+
+The exact gluing identity is in second-order-four-cut-states.tex.
+For four-pole shores of ranks h,k, the total rank is h+k+3.
+The crossing cycles are the dot product of six path states, plus
+F_X*F_Y minus the dot product of the three forest-pairing states.
+Equal forest pairings give two cycles, so their contribution must be removed.
+
+The same fragment extends the thin-layer encoding to unions of at most
+two vertex-disjoint cycles. It gives O_epsilon(b^4*2^(b/2)) such unions
+in a two-pole whose path density exceeds one half by epsilon.
+Capping both sides of a four-pole maps all its terminal forests injectively
+to these unions. Thus a cross-path sum above(2+epsilon)*2^h bounds the
+forest count by O_epsilon(h^4*2^(h/2)).
+The path-stability agent independently audited this complete argument.
+
+second-order-four-cut-large-shores.tex proves the half-exponent estimate
+O(r^8*2^(r/2)) when both shore ranks exceed an absolute threshold.
+Both the four-regular and path-stability agents independently audited it.
+Its finite profile classification has three exceptional supports:
+three full pairs forming a star; four full pairs forming K2,2; and two
+disjoint full pairs. An added-edge argument concentrates the last type's
+forest mass on the corresponding pairing. All nonaligned cases have a fixed
+deficit. Aligned stars and K2,2 have half-exponent errors.
+
+second-order-one-full-tripole.tex now also proves
+  P_ac=2^h implies min(P_ab,P_bc)<=3*2^(3h/4).
+The four-regular agent independently verified this uniform minimum bound.
+
+second-order-all-four-cuts.tex completes the bounded-shore argument.
+It proves the universal aggregate
+  sum of six path counts + total four-terminal forests
+  <=4*2^h+O(h^4*2^(h/2)).
+The proof uses the added-edge coupling and the new minimum bound.
+The C4 shore requires its exact forest coefficients(1/2,1/2,1), which
+give the needed crossing deficit when the large shore has low path counts.
+The resulting theorem covers every CYCLIC cut of size at most four.
+Cyclicity cannot be dropped: every cubic graph has an acyclic two-vertex
+shore with four boundary edges.
+The final fragment passed the root, four-regular, and path-stability audits.
+The added-edge lemma's rank-threshold assumption is now explicit.
+The exact finite checker verifies the gluing identity, the added-edge path
+identity, and the capping map on individual forest edge sets.
+
+Separately, the full two-scale polynomial unrestricted proof passed my
+independent line-by-line audit. Details are in
+two-scale-polynomial-random-host-audit.txt.
+
+Checkpoint 7: the sharp order for cyclic cuts of size at most four.
+
+The four-regular agent refined the two-cycle packing factor from b^4 to b.
+Its proof sums bounded-overlap layer intervals with their geometric weights.
+The same-side cap product cancels for aligned saturated K2,2 shores.
+Together these prove
+  c(G)<=2^(r-1)+K*r*2^(r/2)
+for every connected loopless cubic graph with a cyclic cut of size at most four.
+The cyclic-square examples have excessTheta(r*2^(r/2)), so the rank factor
+is necessary in this structural class.
+The unrestricted sharp-order question remains open on cyclically
+five-edge-connected cubic kernels.
+Both refinement fragments passed my independent full audit.
+See four-cut-sharp-order-random-host-audit.txt for details.

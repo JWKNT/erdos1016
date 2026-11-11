@@ -1,0 +1,113 @@
+\section{Seven-cuts with a bounded-rank shore}
+\label{sec:path-seven-bounded-shores}
+
+The eleven missing four-terminal sectors give the exact deficit needed for a bounded seven-pole shore.
+This argument does not address two seven-pole shores whose ranks both tend to infinity.
+
+\begin{proposition}[A bounded seven-pole of girth at least seven]
+\label{prop:path-seven-bounded-quantum}
+Fix an integer $H\ge2$.
+Let $X,Y$ be normalized seven-poles of ranks $2\le h\le H$ and $k$, respectively.
+Assume that $X$ has girth at least seven.
+Join corresponding ports to form a cubic graph $G$ of rank $r=h+k+6$.
+Then $c(G)<2^{r-1}$ for all sufficiently large $k$, uniformly in these choices.
+\end{proposition}
+
+\begin{proof}
+A normalized seven-pole has $n=2h+5$ vertices and degree sum $2e=3n-7$.
+If it were planar, the girth inequality $2e\le14(n-2)/5$ would give $n\le7$, contrary to $h\ge2$.
+Thus $X$ is nonplanar.
+Theorem~\ref{thm:path-seven-eleven-missing-sectors} supplies eleven distinct four-port sets whose forest totals are at most $2^h-1$.
+
+Put $\delta=2^{-h}$ and fix eleven such sets, denoted by $\mathcal D$.
+The saturated-pair planarity lemma excludes every full terminal pair in $X$.
+Integrality therefore bounds each normalized path coordinate by $1-\delta$.
+It also bounds the normalized forest total for each member of $\mathcal D$ by $1-\delta$.
+All other normalized forest totals are at most one.
+
+For $Y$, write $a_e$ for its path masses, $U_S$ for its four-terminal forest totals, and $W_T$ for its six-terminal forest totals.
+All these quantities are normalized by $2^k$.
+Set
+\[
+ A_Y=\sum_{|e|=2}a_e+\sum_{|S|=4}U_S+\sum_{|T|=6}W_T,
+ \qquad
+ T_Y=\sum_{\substack{|S|=4\\S\notin\mathcal D}}U_S+\sum_{|T|=6}W_T.
+\]
+There are $35-11=24$ four-terminal terms and seven six-terminal terms in $T_Y$.
+Hence $T_Y\le31$.
+The fixed-port aggregate theorem gives $A_Y\le32+\eta_k$, where $\eta_k\to0$ uniformly.
+
+Normalize the crossing-cycle count by $2^{h+k}$ and call it $\mathcal B(X,Y)$.
+For any fixed even terminal set, compatible pairing masses contribute at most the product of its two forest totals.
+Dropping the incompatible-pairing restrictions therefore gives
+\[
+ \mathcal B(X,Y)
+ \le(1-\delta)A_Y+\delta T_Y
+ \le32-\delta+(1-\delta)\eta_k.
+\]
+The asymptotic cycle bound gives $c(Y)\le(1/2+\theta_k)2^k$, with $\theta_k\to0$ uniformly.
+Also $c(X)\le2^h-1$.
+Consequently
+\[
+ \frac{c(G)}{2^{h+k}}
+ \le32-\frac\delta2+(1-\delta)\eta_k+\delta\theta_k+2^{-k}.
+\]
+Since $\delta\ge2^{-H}$, the right side is strictly below $32$ for sufficiently large $k$, uniformly over $h\le H$.
+The identity $2^{r-1}=32\cdot2^{h+k}$ completes the proof.
+\end{proof}
+
+\begin{theorem}[A cyclic seven-cut with one bounded shore]
+\label{thm:path-seven-bounded-shore}
+Fix an integer $H\ge1$.
+There is a rank threshold $R_H$ with the following property.
+Let $G$ be a connected loopless cubic multigraph of rank $r\ge R_H$.
+Assume that $G$ has no cyclic cut of size at most six.
+If $G$ has a cyclic seven-edge cut with one shore of rank at most $H$, then
+\[
+ c(G)<2^{r-1}.
+\]
+\end{theorem}
+
+\begin{proof}
+Both shores of the seven-cut are connected.
+Otherwise a cyclic component of a disconnected shore has boundary at most six and gives a smaller cyclic cut.
+No shore vertex has two or more cut incidences.
+Such a vertex has internal degree at most one and lies on no cycle in its shore.
+Moving it across the cut preserves a cycle on each side and reduces the cut size to at most six.
+Thus the two shores are normalized seven-poles.
+Write their ranks as $1\le h\le H$ and $k=r-h-6$.
+
+At sufficiently large rank, $G$ has girth at least seven.
+Indeed, deleting the vertices of a cycle of length at most six decreases rank by at most twelve.
+Its complement therefore contains a cycle when $r>12$.
+The cycle's vertex boundary has at most six edges, contradicting the cut assumption.
+
+If $h\ge2$, apply Proposition~\ref{prop:path-seven-bounded-quantum}.
+If $h=1$, the normalized seven-pole has seven vertices, all of degree two.
+It is therefore a seven-cycle.
+Since $G$ now has girth exactly seven, Theorem~\ref{thm:path-fixed-girth-deficit} gives the strict inequality.
+The independent seven-cycle cap certificate gives the same conclusion.
+All thresholds are uniform for $h\le H$, which proves the theorem.
+\end{proof}
+
+\begin{corollary}[Sharp error for bounded-shore seven-cuts]
+\label{cor:path-seven-bounded-sharp}
+Fix $H\ge1$.
+There is a constant $K_H$ such that
+\[
+ c(G)\le2^{r-1}+K_H r2^{r/2}
+\]
+for every connected loopless cubic multigraph $G$ of rank $r$ in either of these classes:
+\begin{enumerate}
+\item $G$ has a cyclic cut of size at most six;
+\item $G$ has a cyclic seven-cut with one shore of rank at most $H$.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+Use the established sharp bound for cuts of size at most six.
+For the second class without a smaller cyclic cut, use Theorem~\ref{thm:path-seven-bounded-shore} above its rank threshold.
+Increase $K_H$ to cover the remaining bounded ranks, using $c(G)\le2^r-1$.
+\end{proof}
+
+The unrestricted sharp bound and the case of two large seven-cut shores remain open in this argument.

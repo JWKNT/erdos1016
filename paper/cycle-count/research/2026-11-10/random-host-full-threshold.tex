@@ -1,0 +1,214 @@
+% Independently audited by root, four_regular, and path_stability.
+\section{Adaptive attachments at the full pancyclicity threshold}
+\label{sec:rhost-full-threshold}
+
+The endpoint failure probability need not be small enough for a direct union bound.
+We instead select the attachment edges after exposing each connector tree.
+Long base cycles supply spare candidate edges.
+For the short cycles, the number of candidates grows with their length.
+
+\begin{theorem}[The leading term at the full threshold]\label{thm:rhost-full-threshold}
+Suppose
+\[
+ np-\ln n-\ln\ln n\longrightarrow\infty.
+\]
+Then with high probability
+\[
+ \operatorname{Pex}(G(n,p))=(1+o(1))\log_2 n.
+\]
+\end{theorem}
+
+\begin{proof}
+Put
+\[
+ w=\min\{np-\ln n-\ln\ln n,\ln\ln n\},\qquad D=w/100000.
+\]
+Expose five independent graphs with
+\[
+ p_1=p_2=p_3=p_5=D/n,\qquad
+ p_4=(\ln n+\ln\ln n+w/2)/n.
+\]
+Their union is dominated by $G(n,p)$.
+We have $D\to\infty$, without any specified rate.
+
+Use
+\[
+ \beta=20\ln D/D,\quad a=\lfloor(5\beta)^{-1}\rfloor,\quad
+ M=\lfloor n/1000\rfloor,\quad d=\lceil\log_a M\rceil.
+\]
+Thus $d\sim\ln n/\ln D=o(\ln n)$.
+Lemmas~\ref{lem:rhost-threshold-expansion} and~\ref{lem:rhost-threshold-trees} supply the robust expanders and equal-depth leaf trees.
+In particular, every permitted reservoir contains an induced expander of size $n-o(n)$.
+It contains the required rooted trees and two-tree structures.
+Each leaf tree has exactly $M$ leaves at depth $d$ and fewer than $3M$ vertices.
+Write $H=\lfloor n/4000\rfloor$ and $\delta=\exp(-D/5000)=o(1)$.
+A fresh endpoint has a neighbour in any specified $H$-vertex subset with failure at most $\delta$.
+The same bound holds for a specified leaf set after at most $2H$ earlier endpoint queries.
+
+Set
+\[
+ K_0=\lceil\log_2(4d)\rceil,\quad
+ \ell_*=(K_0+2)(d+3),\quad b=\lceil\sqrt{2\ell_*}\rceil,
+\]
+\[
+ c=8b+5,\qquad T=c+4d+3=4d+8b+8,
+\]
+\[
+ K=\left\lfloor\log_2\frac{nw}{100\ln n}\right\rfloor,
+ \qquad L_0=2^{K+1}-1,\qquad m=\lfloor n2^{-K}\rfloor.
+\]
+These parameters are fixed before exposure.
+They satisfy
+\[
+ T,b,d,m=o(\ln n),\quad \ell_*=o(L_0),\quad L_0\gg n^{0.9},
+ \quad 2L_0\le\frac{nw}{25\ln n}.
+\]
+Also, $\ell_*/K\to\infty$, since $D\le\ln\ln n$ and $\ln d\sim\ln\ln n$.
+
+\emph{Initial cycles.}
+In $G_1$, select vertex-disjoint bit cycles $C_i$ of lengths $2^i+2$, for $0\le i\le K_0$.
+Select a digit base cycle $C_{\rm short}$ of length $c$.
+Select one further cycle $S_j$ of each length $3\le j\le T$.
+Lemma~\ref{lem:rhost-cycle-list} applies: all lengths are $O(\ln n)$, and their multiplicities are at most three.
+The selected cycles use $O(T^2+d)$ vertices.
+Also select an edge $f$ outside their vertices.
+Such an edge exists with high probability: $G_1$ has $\Omega(nD)$ edges and maximum degree at most $(\ln n)^2$,
+while the selected vertices number only $O((\ln n)^2)$.
+Let $H_1$ contain all these cycles and $f$.
+
+\emph{An adaptive chain of cycles.}
+We describe a connector procedure in $G_2$.
+Expose first only edges with both endpoints outside $H_1$.
+The universal robust-expansion event then determines every required reservoir expander.
+Edges from vertices of $H_1$ to the reservoir remain independent until queried.
+
+Start at a specified endpoint outside the reservoir.
+Query at most $H$ fresh candidate neighbours in the current expander.
+If a neighbour $z$ exists, embed a leaf tree rooted at $z$.
+This first step fails with probability at most $\delta$.
+Suppose the next object is an untouched cycle $Q$ of length $j$.
+Take a matching of $\lfloor j/2\rfloor$ candidate edges in $Q$.
+For a candidate edge $xy$, first query the edges from $x$ to the previous leaf set.
+If one exists, it gives an incoming path of length $d+2$ from the preceding endpoint to $x$.
+Temporarily exclude this path's internal vertices from the next reservoir.
+Then query at most $H$ fresh edges from $y$ to the resulting expander.
+If this succeeds, retain the incoming path, select $xy$, and embed the next leaf tree at the chosen neighbour of $y$.
+If either query fails, discard that candidate edge and retain no part of its tentative incoming path.
+The previous leaf tree remains available for the next candidate.
+
+Each candidate has two endpoints unused in any previous candidate.
+The reservoir was exposed before all these endpoint queries.
+Even after conditioning on earlier failures and on the tentative incoming path, the edges from the new endpoint $y$ remain fresh.
+Thus each conditional candidate failure probability is at most $2\delta$.
+A cycle of length $j$ fails with probability at most $(2\delta)^{\lfloor j/2\rfloor}$.
+For any list with bounded multiplicity of cycle lengths, their total failure probability is at most
+\[
+ O\!\left(\sum_{j\ge3}(2\delta)^{\lfloor j/2\rfloor}\right)=o(1).
+\]
+At the end, one fixed target endpoint attaches to the final leaf set with failure at most $\delta$.
+Only the chosen paths, not the unused tree vertices or failed queries, enter the constructed subgraph.
+
+Apply this procedure first to the bit cycles, starting at one endpoint of $f$ and ending at the other.
+The selected edge of $C_i$ is denoted $e_i$.
+Together with $f$ and the $K_0+2$ connectors, these edges form a cycle $C_*$ of length $\ell_*$.
+Each other arc of $C_i$ replaces $e_i$ with gain exactly $2^i$.
+
+Fix an edge $e_{\rm short}$ of $C_{\rm short}$.
+Apply the procedure again to $S_3,\ldots,S_T$.
+Start at the endpoint of $f$ used for the first bounded query, and end at one endpoint of $e_{\rm short}$.
+The starting endpoint has only $H$ earlier queries, so another $H$ fresh candidate edges remain available.
+This second chain is disjoint from the first construction except at its designated endpoint.
+It contains all single-cycle blocks needed for the short lengths.
+
+\emph{Adaptive binary and digit detours.}
+Expose the $G_3$ reservoir edges outside the entire graph constructed so far.
+All its base-cycle endpoint edges remain fresh.
+For each $i>K_0$, embed two depth-$d$ leaf trees whose roots are joined by a stem of length
+\[
+ 2^i+1-2d-2=2^i-2d-1>0.
+\]
+The total tree size is below $n/50$.
+Choose an unused candidate edge $xy$ of $C_*$, and query its two endpoints against the two leaf sets.
+If both attachments succeed, the resulting detour has length $2^i+1$.
+Its replacement gain over $xy$ is $2^i$.
+If an attachment fails, abandon that candidate edge and try another with two fresh endpoints.
+
+Preselect $2(K-K_0)$ pairwise vertex-disjoint candidate edges of $C_*$,
+avoiding $f$ and all endpoints of $e_0,\ldots,e_{K_0}$.
+There are enough because $\ell_*/K\to\infty$.
+Every conditional failure probability is at most $2\delta$.
+The expected number of failures in this entire candidate pool is at most $4\delta(K-K_0)$.
+If the pool is exhausted before completing all detours, at least $K-K_0$ candidates have failed.
+Markov's inequality shows that this event has probability at most $4\delta=o(1)$.
+After each success, retain only its detour path and re-form the next reservoir.
+
+The digit base cycle has at least $4b$ pairwise vertex-disjoint candidate edges avoiding the endpoints of $e_{\rm short}$.
+Use them to obtain $2b$ successful detours, in two groups of $b$.
+The desired detour lengths are
+\[
+ 2d+3+j,\qquad 2d+3+jb\qquad(0\le j<b).
+\]
+The two-tree stems have lengths $1+j$ and $1+jb$, so they are positive.
+The same expected-failures argument succeeds with probability $1-o(1)$.
+The designated edges need not be consecutive on the base cycle.
+Choosing one detour from each group gives every cycle length in
+\[
+ [T+1,T+b^2].
+\]
+Indeed, the length is $c-2+(2d+3+j_0)+(2d+3+bj_1)=T+1+j_0+bj_1$.
+This interval overlaps $[\ell_*,\ell_*+L_0]$, since $T=o(\ell_*)$ and $b^2\ge2\ell_*$.
+
+\emph{Hamilton completion and final coverage.}
+Delete $f$, $e_{\rm short}$, and the selected edge of each $S_j$ when choosing a spanning path through the constructed blocks.
+Use every bit detour, every digit detour, and the long arc of each $S_j$ in this path.
+The separate short-cycle chain joins one end of the binary path to one end of the digit path.
+Thus all constructed vertices lie on one spanning path.
+The binary path is a contiguous segment of it.
+All deleted edges remain present as chords in the constructed subgraph.
+
+The total used vertex count is at most $2L_0$.
+The binary detours contribute $L_0+O(\ell_*)$ vertices.
+The short-cycle chain and digit gadget contribute only a polynomial in $\ln n$.
+For the remaining vertex set $X$,
+\[
+ |X|p_4-\ln|X|-\ln\ln|X|
+ \ge(1/2-1/25-o(1))w\longrightarrow\infty.
+\]
+Lemma~\ref{lem:rhost-threshold-hamilton} therefore joins the two remaining endpoints through all vertices of $X$.
+This is the completion input from Alon--Krivelevich Lemma~2.1 and Claim~4.7.
+Its endpoint failure probability is $o(1)$.
+This gives a Hamilton cycle.
+
+The bit cycles give every length in $[\ell_*,\ell_*+L_0]$.
+Replacing bit detours on the Hamilton cycle gives every length in $[n-L_0,n]$.
+The individual cycles $S_j$ and the digit gadget cover all lengths below the first interval.
+Use $G_5$ only for the long interval-covering chords.
+Lemma~\ref{lem:rhost-threshold-windows} applies because the binary segment is contiguous, has length $L_0+\ell_*-1$,
+and $\ell_*=o(n^{0.9})=o(L_0)$.
+Each required window has at least $n^{1.8}/100$ candidate edges.
+The failure probability is at most $m\exp(-Dn^{0.8}/100)=o(1)$.
+Their overlapping length intervals cover the remaining gap.
+
+The constructed graph has excess at most
+\[
+ K+2b+T+m+O(1)=\log_2 n+o(\ln n).
+\]
+The short-cycle chain contributes $T-2$ to cycle rank.
+Failed queries contribute no retained edges.
+The universal cycle-count lower bound gives the asserted equality to leading order.
+\end{proof}
+
+\begin{corollary}[A quantitative full-threshold error]\label{cor:rhost-full-threshold-error}
+Write $\omega=np-\ln n-\ln\ln n\to\infty$ and $w=\min\{\omega,\ln\ln n\}$.
+Then with high probability
+\[
+ \operatorname{Pex}(G(n,p))
+ \le\log_2n+(4+o(1))\frac{\ln n}{\ln w}.
+\]
+\end{corollary}
+
+\begin{proof}
+The preceding construction has $\ln a=(1+o(1))\ln w$, so $d\sim\ln n/\ln w$.
+Moreover, $b/d=O(\sqrt{K_0/d})=o(1)$ and $m/d=O(\ln w/w)=o(1)$.
+Therefore $T=4d+o(d)$, and the displayed excess bound gives the result.
+\end{proof}

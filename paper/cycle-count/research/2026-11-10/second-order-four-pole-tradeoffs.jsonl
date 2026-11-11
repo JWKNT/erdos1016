@@ -1,0 +1,6 @@
+{"rank":1,"vertices":4,"tested":1,"saturated_port_splits":3,"max_saturated_through_pairs":2,"max_all_through":2,"max_2T_minus_D":4,"tradeoff_D":0,"tradeoff_T":2}
+{"rank":2,"vertices":6,"tested":6,"saturated_port_splits":2,"max_saturated_through_pairs":1,"max_all_through":4,"max_2T_minus_D":6,"tradeoff_D":2,"tradeoff_T":4}
+{"rank":3,"vertices":8,"tested":55,"saturated_port_splits":4,"max_saturated_through_pairs":2,"max_all_through":8,"max_2T_minus_D":10,"tradeoff_D":6,"tradeoff_T":8}
+{"rank":4,"vertices":10,"tested":610,"saturated_port_splits":6,"max_saturated_through_pairs":2,"max_all_through":16,"max_2T_minus_D":16,"tradeoff_D":14,"tradeoff_T":15}
+{"rank":5,"vertices":12,"tested":7980,"saturated_port_splits":10,"max_saturated_through_pairs":4,"max_all_through":32,"max_2T_minus_D":27,"tradeoff_D":33,"tradeoff_T":30}
+{"rank":6,"vertices":14,"tested":120274,"saturated_port_splits":16,"max_saturated_through_pairs":4,"max_all_through":64,"max_2T_minus_D":37,"tradeoff_D":75,"tradeoff_T":56}

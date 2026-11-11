@@ -1,0 +1,103 @@
+% Independent research fragment. Root derivation; independent audits passed.
+\section{A terminal-forest improvement to the cut constant}
+\label{sec:terminal-forest-cut-constant}
+
+The common-functional lemma gives a much better constant when the local spaces come from a graph.
+The following argument replaces a vector-space pigeonhole by a forest with few terminals.
+
+\begin{lemma}[A local intersection in a terminal forest]
+\label{lem:local-terminal-intersection}
+Let $Q$ be a connected loopless multigraph, and let $S$ be a nonempty proper vertex set.
+Write $L_v$ for the span of the edge-coordinate functionals at $v$ in $\mathcal Z(Q)^*$.
+Put $U=\sum_{v\in S}L_v$ and $B=|\delta_Q(S)|$.
+Let $\mathcal V$ be a set of vertices outside $S$ with $L_v\cap U\ne0$.
+Except for at most $2B$ members, $\mathcal V$ can be partitioned into at most $2B$ classes.
+Each class has a common nonzero functional in all its spaces $L_v$.
+\end{lemma}
+
+\begin{proof}
+At most $B$ vertices outside $S$ have a neighbor in $S$.
+Exclude those vertices.
+Choose a spanning tree in each component of $Q-S$.
+For each edge of $\delta_Q(S)$, attach a distinct terminal leaf to its endpoint outside $S$.
+Let $T$ be the union of paths between terminal leaves in these trees.
+Components with fewer than two terminals contribute nothing.
+The forest $T$ has at most $B$ leaves.
+It has at most $B$ vertices of degree at least three.
+After suppressing its degree-two vertices, it has at most $2B$ edges.
+Exclude the members of $\mathcal V$ at branching vertices of $T$.
+
+We show that every remaining member lies internally on one of these edges.
+Fix $v\in\mathcal V$ with no neighbor in $S$, and choose $0\ne a\in L_v\cap U$.
+Represent $a$ both by a subset $A$ of the star at $v$ and by a subset of edges incident with $S$.
+The symmetric difference of these two representing sets annihilates $\mathcal Z(Q)$.
+It is therefore a cut of $Q$.
+Let $H$ be the component of $Q-S$ containing $v$.
+Every component of $H-v$ lies entirely on one side of this cut.
+Consequently, $A$ consists of the edges from $v$ to a union of components of $H-v$.
+As a functional, $a$ equals the sum of the boundary-terminal coordinates attached to that union.
+
+The sum of all terminal coordinates of $H$ is zero, because $\delta_Q(H)$ is a cut.
+Since $a\ne0$, at least two components of $H-v$ contain terminals.
+Every spanning tree of $H$ must connect these terminal groups through $v$.
+Thus $v$ has degree at least two in $T$.
+It has degree exactly two after the branching exceptions have been removed.
+There are exactly two terminal-bearing components of $H-v$.
+Their terminal sets are the two sides of the corresponding edge of the suppressed forest.
+The sum of the terminal coordinates on either side is $a$.
+In particular, this common functional is nonzero.
+
+All remaining members on the same suppressed edge give the same terminal bipartition.
+They therefore contain the same nonzero functional in their local spaces.
+The adjacent and branching exceptions number at most $2B$.
+The number of classes is at most $2B$, as required.
+\end{proof}
+
+\begin{theorem}[An explicit exponential cut estimate]
+\label{thm:terminal-forest-cut-estimate}
+Let $Q$ be a connected loopless multigraph with $k$ distinct marked vertices of degree at most $d\ge2$.
+Let $Z$ count the marked vertices closed in a uniform even subgraph.
+Then
+\[
+ \mathbb E2^{-Z}\le\frac12+2\exp\!\left(-\frac{k}{2d4^d}\right).
+\]
+The same bound applies to the probability that a uniform even subgraph is a forest in each of $k$ disjoint cyclic regions.
+Each region must have an edge boundary of size at most $d$.
+\end{theorem}
+
+\begin{proof}
+Use the local spaces $L_v$ from Theorem~\ref{thm:exponential-closed-stars}.
+A zero local space gives an expectation at most one half.
+If $2^d$ local spaces form a direct sum, that theorem's independence argument also gives an expectation below one half.
+
+Otherwise take a maximal direct-sum family, with vertex set $S$ and size $t<2^d$.
+Every remaining local space meets $U=\sum_{v\in S}L_v$ nontrivially.
+Suppose first that $k>(1+2d)2^d$.
+Then $S$ is nonempty and proper, and $B=|\delta_Q(S)|\le dt$.
+Lemma~\ref{lem:local-terminal-intersection} gives a common nonzero functional for at least
+\[
+ \ell\ge\frac{k-t-2B}{2B}
+ \ge\frac{k}{2d2^d}-2
+\]
+marked vertices.
+The common-functional lemma, with $q=1-2^{1-d}\ge1/2$, gives
+\[
+ \mathbb E2^{-Z}-\frac12
+ \le\frac12q^{\lfloor\ell/2\rfloor}
+ \le e^{-2^{-d}\ell}
+ \le e^{2^{1-d}}\exp\!\left(-\frac{k}{2d4^d}\right)
+ \le2\exp\!\left(-\frac{k}{2d4^d}\right).
+\]
+If $k\le(1+2d)2^d$, the asserted right side exceeds one, so the result is trivial.
+The quotient argument in Corollary~\ref{cor:exponential-small-cuts} transfers this estimate to cyclic regions.
+\end{proof}
+
+\paragraph{Status and scope.}
+The proof has passed independent mathematical audits, including an audit by Fable 5.2.
+It is not formalized in Lean.
+Its rate is $1/(2d4^d)$, instead of the earlier rate $2^{-O(d2^d)}$.
+For an error margin $\varepsilon>0$, more than one half plus that margin forces
+\[
+ k<2d4^d\ln(2/\varepsilon).
+\]
+This improves the dependence on $\varepsilon$ from inverse-linear to logarithmic.

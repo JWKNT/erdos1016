@@ -1,0 +1,58 @@
+Critical seven-shore state analysis.
+10 November 2026.
+
+Scope: these are limiting-state necessary conditions, not graph realizations.
+The numerical solver supplies exploration, not an exact infeasibility proof.
+
+The critical profile has zero path coordinates on both shores.
+Each of 35 four-terminal sectors and 7 six-terminal sectors has common total
+zero or one. Their 42 totals sum to 32.
+The two shores have disjoint pairing supports in every four-sector.
+Positive six-pairing supports across shores must have no common pair.
+Each shore satisfies all current matching, star, binary-tree and
+star-plus-edge cap constraints.
+
+The script four-seven-boolean-feasibility.py encodes these conditions.
+It imports the audited generic cap rows from random_seven_cycle_dual.py.
+The original unsplit model had 777 variables, 357 binary, and 3848 rows.
+Its 300-second run found neither a feasible point nor an infeasibility result.
+The complete solver log is four-seven-boolean-feasibility.log.
+
+A new exact cut helps the split models.
+If a six-sector is active, at least three contained four-sectors are inactive.
+To see this, choose positive matchings beta and gamma on opposite shores.
+They are disjoint, so their union is a six-cycle.
+Their common compatible matchings are the four perfect matchings of the
+triangular prism complementary to that cycle in K6.
+For any common compatible alpha, all three corresponding four-sectors
+cannot be active: the three augmented path inequalities would require
+two positive pairing slots on each shore among three disjoint slots.
+Thus the inactive sectors, viewed as complementary pairs in this six-set,
+must meet every one of the prism's four perfect matchings.
+Each triangular-prism matching uses either all three spokes or one spoke
+and one edge from each triangle. Two edges cannot hit all four matchings.
+Therefore at least three inactive sectors are necessary.
+The valid linear cut is sum(z_four inside S)+3*z_six(S)<=15.
+
+The exact checker four-seven-prism-cuts.py tests all 120 compatible ordered
+matching pairs and every possible two-edge blocker. It also lists all
+minimum three-edge blockers by degree sequence.
+
+Split models fix the number m of active six-sectors.
+Port permutation makes any chosen m six-subsets equivalent.
+The cases m=0,1,2 were numerically infeasible after 24.66, 25.56, and 16.76 seconds.
+The m=3 run stopped after 180 seconds without a conclusion.
+The m=7 run stopped after 300 seconds without a conclusion.
+No feasible critical profile was found in these runs.
+All searches were bounded and are now stopped.
+
+The cases m=0,1 now also have independent elementary proofs.
+See path-six-seven-star-obstruction.tex, together with the prism lemma in
+four-seven-prism-obstruction.tex. These proofs do not use the solver.
+The m=2 solver result remains numerical evidence without an exact certificate.
+
+The global missing-sector lookup search uses the exploratory numerical local
+cost table from path-six-seven-local-star-results.json.
+Its code and results are four-seven-missing-patterns.cpp/.jsonl.
+The root agent later replaced this input with an exact support-cover table.
+Use that exact replacement for any theorem or finite certificate.

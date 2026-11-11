@@ -1,0 +1,156 @@
+% Independent mathematical audits passed: root, path_stability, and random_hosts.
+\section{A linear factor for two-cycle packings}
+\label{sec:linear-two-cycle-packings}
+
+This refinement improves the fourth-degree polynomial in Lemma~\ref{lem:high-path-two-cycle-packings} to a linear factor.
+It uses the same marked layers and matching choices.
+The improvement comes from summing the possible cycle intervals with their geometric weights.
+
+\begin{lemma}[Two intervals with bounded overlap]
+\label{lem:bounded-overlap-interval-sum}
+Fix a nonnegative integer $B$.
+There is a constant $c_B$ such that, for every integer $D\ge0$,
+\[
+ \sum_{\substack{I,J\text{ nonempty integer intervals in }[0,D]\\
+                  |I\cap J|\le B}}
+ 2^{(|I|+|J|)/2}
+ \le c_B(D+1)2^{D/2}.
+\]
+The intervals in this sum are ordered.
+\end{lemma}
+
+\begin{proof}
+Put $u=\sqrt2$.
+The one-interval sum satisfies
+\[
+ \sum_{0\le i\le j\le D}u^{j-i+1}
+ \le\frac{u}{(1-u^{-1})^2}u^D<17u^D.
+\]
+Order the left endpoints, at a cost of at most two.
+There are three cases.
+
+First suppose that the intervals are disjoint, with the first before the second.
+Let their outer endpoints be $i,l$, and let $g$ count the intervening unused positions.
+Their total length is $l-i+1-g$.
+For fixed $i,l,g$, there are at most $D+1$ choices of the split position.
+Summing the geometric factor $u^{-g}$ gives a bound
+\[
+ \frac{17}{1-u^{-1}}(D+1)u^D.
+\]
+
+Next suppose that the intervals overlap without one containing the other.
+Let $q\le B$ be their overlap length.
+Their total length is the outer span plus $q$.
+For fixed outer endpoints and $q$, there are at most $D+1$ meeting positions.
+The resulting bound is
+\[
+ 17\left(\sum_{q=1}^{B}u^q\right)(D+1)u^D.
+\]
+Finally, if one interval contains the other, the inner interval has length at most $B$.
+For each outer interval and inner length, there are at most $D+1$ placements.
+The same bound applies.
+Adding the three cases proves the lemma.
+\end{proof}
+
+\begin{theorem}[Linear two-cycle packing bound]
+\label{thm:linear-high-path-two-cycle-packings}
+For every fixed $0<\varepsilon\le1/2$, there is a constant $B_\varepsilon$ such that the following holds.
+Let $N$ be a normalized two-pole of rank $b$ with
+\[
+ P(N)\ge(1/2+\varepsilon)2^b.
+\]
+The number of nonempty unions of at most two vertex-disjoint cycles in $N$ is at most
+\[
+ B_\varepsilon(b+1)2^{b/2}.
+\]
+\end{theorem}
+
+\begin{proof}
+First suppose that $N$ is bridgeless.
+Use the shortest terminal path and initial whole-layer marking from Lemma~\ref{lem:thin-layer-cycle-count}.
+Additive stability bounds both $\Delta$ and $H$ by $C_\varepsilon$.
+Thus the initial marked set has at most $10C_\varepsilon+2$ vertices and meets at most that many layers.
+Write $D$ for the maximum distance layer, so $D\le b+2C_\varepsilon$.
+
+Each cycle has a nonempty interval of distance layers.
+Consider two vertex-disjoint cycles with intervals $I,J$.
+Any layer strictly inside both intervals must contain at least two vertices from each cycle.
+An initially ordinary layer has only two vertices, so it cannot have this property.
+At most four layers are interval endpoints.
+Consequently,
+\[
+ |I\cap J|\le \lceil10C_\varepsilon+2\rceil+4=:B.
+\]
+
+Fix the two intervals, and mark all their endpoint layers.
+This adds at most eight vertices to the initial marked set.
+Fix all selected edges incident with marked vertices, at a cost bounded by a constant depending only on $\varepsilon$.
+Every remaining ordinary layer is unused or carries the two through strands of exactly one cycle.
+The intervals determine which possibility applies.
+Across consecutive occupied ordinary layers, the selected edges form a perfect matching.
+Two-choice cuts cannot be consecutive, by the same cubic degree argument as before.
+Their number is at most $(|I|+|J|)/2$.
+The interval data, marked incidences, and matching choices determine the union of cycles.
+
+Lemma~\ref{lem:bounded-overlap-interval-sum} now bounds two-cycle unions by
+\[
+ O_\varepsilon((D+1)2^{D/2})
+ =O_\varepsilon((b+1)2^{b/2}).
+\]
+The one-cycle contribution is $O_\varepsilon(2^{b/2})$ by Theorem~\ref{thm:high-path-cycle-tradeoff}.
+This proves the bridgeless case.
+
+For a general normalized two-pole, use its series decomposition into bridgeless pieces.
+Let their positive ranks be $b_1,\ldots,b_q$, with sum $b$.
+Every piece retains the required normalized path density.
+Packings contained in one piece contribute at most
+\[
+ B'_\varepsilon\sum_i(b_i+1)2^{b_i/2}
+ \le B'_\varepsilon(b+2)2^{b/2}.
+\]
+Here we used $\sum_i2^{b_i/2}\le2\,2^{b/2}$.
+
+Packings with one cycle in each of two pieces contribute at most
+\[
+ K_\varepsilon^2\sum_{i<j}2^{(b_i+b_j)/2}.
+\]
+For $q\ge2$,
+\[
+ \frac{\sum_{i<j}2^{(b_i+b_j)/2}}{2^{b/2}}
+ \le\binom q2\,2^{-(q-2)/2}\le4.
+\]
+The last bound follows by checking $2\le q\le6$ and then taking successive ratios.
+Increasing $B_\varepsilon$ absorbs both contributions.
+\end{proof}
+
+\begin{corollary}[Linear cross-sum forest bound]
+\label{cor:linear-four-pole-cross-sum-forest}
+For each fixed $\eta>0$, there is a constant $A_\eta$ such that every connected four-pole $K$ of rank $h$ satisfies
+\[
+ \sum_{i,j=1}^2P_{L_iR_j}(K)\ge(2+\eta)2^h
+ \quad\Longrightarrow\quad
+ F(K)\le A_\eta(h+3)2^{h/2}.
+\]
+Here $F(K)$ counts all vertex-disjoint path pairs connecting its four ports.
+\end{corollary}
+
+\begin{proof}
+Cap the two sides by new terminals, as in Corollary~\ref{cor:four-pole-cross-sum-forest}.
+The resulting two-pole has rank $h+2$ and normalized path density at least $1/2+\eta/4$.
+Each four-terminal forest maps injectively to one cycle or two vertex-disjoint cycles in this two-pole.
+Apply Theorem~\ref{thm:linear-high-path-two-cycle-packings}.
+\end{proof}
+
+The linear factor in the packing theorem is necessary.
+Take a capped ladder consisting of $m$ square blocks.
+Its terminal paths are saturated and its rank is $b=2m+1$.
+Count two disjoint cycles, one through each cap terminal.
+If the left cycle turns in square $i$ and the right cycle turns in square $j>i$, their number is $2^{m+i-j+1}$.
+Summing these choices gives
+\[
+ \sum_{1\le i<j\le m}2^{m+i-j+1}
+ =(m-2)2^{m+1}+4
+ =\Theta(b2^{b/2}).
+\]
+The turns must occur in different squares because two same-square caps cannot be vertex-disjoint.
+Thus a bound $O_\varepsilon(2^{b/2})$ without a rank factor would fail even at full terminal-path density.

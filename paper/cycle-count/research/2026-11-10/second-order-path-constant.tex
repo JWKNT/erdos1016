@@ -1,0 +1,191 @@
+\section{A quantitative improvement from paired spectral powers}
+\label{sec:paired-spectral-powers}
+
+This argument improves the constant in the unrestricted cycle-count error.
+It does not change its triple-logarithmic order.
+The improvement uses consecutive spectral powers and a longer range of counted cycles.
+The proof is mathematical and has not been formalized in Lean.
+
+All logarithms are binary unless denoted by $\ln$.
+Put $\log^{(3)}r=\log\log\log r$.
+
+\begin{lemma}[Paired powers]\label{lem:paired-spectral-powers}
+Let $J$ be a simple graph of maximum degree three, with $v$ vertices and deficit
+\[
+ d=\sum_{u\in V(J)}(3-\deg_J u).
+\]
+Let $B$ be its non-backtracking matrix.
+Suppose $d<v$, and put $q=1-d/(2v)$.
+If $a$ is even and $b$ is odd, with $2\le a<b$, then
+\[
+ \sum_{j=a}^b\frac{\operatorname{tr}B^j}{2j2^j}
+ \ge q^b\sum_{j=a}^b\frac1{2j}
+       -3v\sum_{j=a}^b\frac{2^{-j/2}}{2j}.
+\]
+\end{lemma}
+
+\begin{proof}
+The manuscript's spectral lemma gives a positive real eigenvalue at least $2-d/v$.
+Every nonreal eigenvalue has modulus at most $\sqrt2$.
+Every eigenvalue has modulus at most two, since the row sums of $B$ are at most two.
+The trace of each power is the sum of the corresponding eigenvalue powers, with multiplicity.
+
+Positive real eigenvalues contribute nonnegative terms.
+The specified positive eigenvalue contributes at least the first term in the asserted bound.
+For a negative real eigenvalue $\lambda=-2t$, where $0\le t\le1$, consecutive powers give
+\[
+ \frac{t^{2i}}{4i}-\frac{t^{2i+1}}{2(2i+1)}\ge0.
+\]
+Thus every negative real eigenvalue contributes nonnegatively over the paired interval.
+There are at most $2|E(J)|\le3v$ nonreal eigenvalues.
+Their total contribution is bounded below by the stated error.
+\end{proof}
+
+\begin{theorem}[An improved unrestricted forest constant]
+\label{thm:paired-forest-constant}
+Uniformly over connected simple graphs $G$ of rank $r$ and nonempty unions of cycles $W$ satisfying
+\[
+ |E(W)|\le\frac{r}{\log^2r},\qquad
+ \operatorname{comp}(W)\le\frac{\log r}{100},
+\]
+one has
+\[
+ p(G,W)\le\frac12+
+ \frac{1/(2\ln2)+o(1)}{\log^{(3)}r}.
+\]
+An explicit, deliberately generous version is
+\[
+ r\ge 2^{\,2^{\,2^{100}}}
+ \quad\Longrightarrow\quad
+ p(G,W)\le\frac12+\frac1{\log^{(3)}r}.
+\]
+\end{theorem}
+
+\begin{proof}
+Use the manuscript's subcubic reduction, cut lemmas, walk estimate, and second-moment variable.
+Write
+\[
+ x=\log r,\quad y=\log x,\quad z=\log y,
+ \quad D=\lfloor x/10\rfloor,\quad s=\lfloor(D-1)/2\rfloor,
+\]
+\[
+ L=\lfloor xy/1000\rfloor,\qquad t=\lfloor y/2\rfloor.
+\]
+The reduction gives a subcubic graph $\Gamma$ and marked vertices $P$.
+Every vertex outside $P$ has degree three, $|P|\le2r/x^2$, and
+$\operatorname{comp}(\Gamma[P])\le x/100$.
+Let $\mathcal F$ be the event that the uniform even subgraph is a forest on $\Gamma-P$.
+
+First prove the explicit assertion.
+Suppose $z\ge100$ and $\mathbb P(\mathcal F)>1/2+1/z$.
+Choose a maximal disjoint family $\mathcal Q$ of cycles of length at most $D$ in $\Gamma-P$.
+The small-cut lemma gives
+\[
+ |\mathcal Q|<(D+1)2^{D-1}z.
+\]
+Its vertex union $S$ therefore satisfies
+\[
+ |S|\le x^2z r^{1/10}.
+\]
+Put $J=\Gamma-(P\cup S)$ and $v=|V(J)|$.
+Then $J$ is simple, has girth greater than $D$, and satisfies
+\[
+ r\le v\le3r,\qquad
+ d\le\frac{6r}{x^2}+3x^2z r^{1/10}.
+\]
+For $z\ge100$, these estimates give
+\[
+ \frac{Ld}{2v}\le\frac1{100},\qquad
+ \frac32 L^2 2^{-s}\le\frac1{100}.
+\]
+All numerical comparisons below follow from $y=2^z$, $x=2^y$, and $r=2^x$.
+The threshold is intentionally much larger than necessary.
+
+Let $a$ be the least even integer at least $6x$.
+Let $b$ be the greatest odd integer at most $L$.
+Lemma~\ref{lem:paired-spectral-powers} gives
+\[
+ \sum_{j=a}^b\frac{\operatorname{tr}B^j}{2j2^j}
+ \ge\frac{99}{200}\ln(y/10000)-r^{-1}.
+\]
+Indeed, $a\le7x$, $b+1\ge xy/1001$, and the nonreal-eigenvalue error is at most $r^{-1}$.
+Let $\mathcal C$ contain the cycles of $J$ of length at most $L$, and put
+\[
+ \mu=\sum_{C\in\mathcal C}2^{-|C|}.
+\]
+The manuscript's repeated-vertex walk estimate applies without change.
+Every trace is nonnegative, so it gives
+\[
+ \frac{101}{100}\mu
+ \ge\frac{99}{200}\ln(y/10000)-r^{-1}.
+\]
+For $z\ge100$, the right side implies $\mu\ge29z/100$.
+
+For two disjoint cycles of $\mathcal C$, the manuscript's link argument gives
+\[
+ \ell(C,C')\le\operatorname{comp}(\Gamma[P])
+  +\frac{2L}{t}+(t+1)2^{t-1}z+(8L/D)^2.
+\]
+For $z\ge100$, its four terms are at most $x/100,x/200,x/200,x/200$, respectively.
+Consequently,
+\[
+ \ell(C,C')\le x/40,
+ \qquad 2^{x/40}L^3 2^{-s}\le1/100.
+\]
+The exceptional-partner argument therefore bounds their extra contribution by $\mu/100$.
+The weighted variable $Z$ from the manuscript satisfies
+\[
+ \mathbb EZ=\mu,\qquad
+ \mathbb EZ^2\le2\mu^2+\frac{101}{100}\mu.
+\]
+Since $\mathcal F$ implies $Z=0$, the second-moment inequality gives
+\[
+ \mathbb P(\mathcal F)
+ \le\frac12+\frac{101}{400\mu}
+ \le\frac12+\frac{101}{116z}
+ <\frac12+\frac1z.
+\]
+This is the required contradiction.
+
+For the asymptotic constant, repeat the argument under
+\[
+ \mathbb P(\mathcal F)>\frac12+
+ \frac{1/(2\ln2)+\eta}{z}
+\]
+for any fixed $\eta>0$.
+The short-cycle deletion remains $O(x^2z r^{1/10})$.
+The deficit, repeated-walk, and exceptional-partner errors now tend to zero.
+The paired spectral sum gives
+\[
+ \mu\ge\left(\frac12-o(1)\right)\ln y.
+\]
+The same second moment then yields
+\[
+ \mathbb P(\mathcal F)
+ \le\frac12+\frac{1+o(1)}{4\mu}
+ \le\frac12+\frac{1/(2\ln2)+o(1)}{z},
+\]
+which contradicts the fixed $\eta$ margin.
+The reduction transfers both conclusions to $p(G,W)$.
+\end{proof}
+
+\begin{corollary}[The unrestricted cycle constant]
+\label{cor:paired-cycle-constant}
+Let $\psi(r)$ be the largest number of cycles in a graph of rank $r$.
+Then
+\[
+ \psi(r)\le2^{r-1}+
+ \left(\frac1{2\ln2}+o(1)\right)
+ \frac{2^r}{\log^{(3)}r}.
+\]
+\end{corollary}
+
+\begin{proof}
+The short-cycle edge recurrence requires the forest estimate for one cycle of length $O(\log r)$.
+This length lies in the range of Theorem~\ref{thm:paired-forest-constant}.
+The recurrence transfers its asymptotic constant unchanged.
+\end{proof}
+
+The original proof gives every constant larger than $2/\ln2$.
+The longer cycle range gains a factor two, and the paired powers gain another factor two.
+Neither change removes the logarithmic restriction imposed by the current link estimate.

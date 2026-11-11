@@ -1,0 +1,59 @@
+Four-terminal forest saturation: independent counterexample search.
+10 November 2026.
+
+Status: the existence of a positive uniform saturation gap remains open.
+This search proves only an upper bound on any such gap.
+
+A simple normalized four-pole of rank eight has 255 forest states among
+its 256 affine terminal joins. Exactly one state contains a cycle.
+The complete graph is in four-forest-gap-switch-rank8.jsonl.
+The independent Python checker enumerates all 256 states and checks parity.
+Its output is four-forest-gap-independent-checks.json.
+Thus any uniform gap must be at most 1/256, improving the previous 1/128.
+
+The bridge-and-diamond operation preserves this density at arbitrarily
+large ranks. Each operation adds a full rank-two terminal-path component.
+Every affine join uses the bridge and restricts to one of four paths there.
+Both forest and total state counts therefore multiply by four.
+The independent checker verifies the first three extensions.
+This operation does not give densities tending to one.
+
+The witness came from a degree-preserving two-edge-switch walk.
+The rank-eight walk used 250000 proposals and accepted 56094 states.
+It found the unique-bad-state witness at proposal 94408.
+Each printed witness receives a complete exact affine-space count.
+The search is not exhaustive and gives no maximum-density certificate.
+Rank-ten and rank-twelve walks also found density255/256.
+
+All 300 extensions of this rank-eight witness were checked.
+An extension subdivides two different edges and joins the new vertices.
+None had exactly one bad state. This excludes only those 300 extensions.
+It does not exclude other rank-nine graphs or different constructions.
+Further walks used 2 million rank-nine proposals and 1 million rank-eleven
+proposals. Neither improved the deficit 1/256. Those runs are stopped.
+The rank-eight witness has girth four. The larger scaled witnesses have
+girth three. They do not test a possible gap under large-girth assumptions.
+
+A separate finite census deletes every pair of nonincident edges from two
+explicit cubic graphs. Their girths are checked directly by breadth-first
+search. The girth-six graph has14 vertices and gives168 four-poles of rank6.
+Their largest forest density is61/64. The girth-seven graph has24 vertices
+and gives558 four-poles of rank11. Their largest density is457/512.
+These classes are not exhaustive among graphs of their rank or girth.
+See four-forest-gap-high-girth.cpp/.jsonl for the graphs and exact counts.
+
+Reproduction:
+  clang++ -O3 -std=c++17 four-forest-gap-switch.cpp -o /tmp/four-forest-gap-switch
+  python3 four-forest-gap-verify.py
+  clang++ -O3 -std=c++17 four-forest-gap-extend.cpp -o /tmp/four-forest-gap-extend
+  /tmp/four-forest-gap-extend four-forest-gap-rank8-seed.txt 16 10000
+
+Potential structural direction, not a theorem:
+Join two saturated two-poles through a bridge between subdivided interior
+edges. With the four original terminals, every terminal join is a forest.
+Its bridge is absent, since each shore contains two terminals.
+If the attachments lie deep inside long saturated ladders, none of the
+six terminal-path coordinates must have positive limiting density.
+Thus a full forest sector need not give a full terminal-path coordinate.
+Adding another connection could create rare bad states. This needs an exact
+state calculation; no asymptotic near-full construction is claimed.

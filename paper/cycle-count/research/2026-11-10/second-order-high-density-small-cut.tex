@@ -1,0 +1,134 @@
+\section{A high path density forces a small cyclic cut}
+\label{sec:high-density-small-cut}
+
+The saturated-pair conclusion extends to every fixed path density above one half.
+The proof uses additive path stability and a local property of distance layers.
+No classification of saturated two-poles is needed.
+
+\begin{lemma}[Four consecutive layers]
+\label{lem:four-thin-layers-short-cycle}
+Let $N$ be a bridgeless normalized two-pole, with distance layers from one terminal.
+Suppose four consecutive internal layers each have exactly two vertices.
+Then their union contains a cycle of length at most four.
+\end{lemma}
+
+\begin{proof}
+Every vertex in these layers has degree three and a neighbor in the preceding layer.
+Edges join vertices in the same layer or consecutive layers.
+Each of the three cuts between these layers has size at least two, since $N$ is bridgeless.
+Each cut has size at most four, because its earlier layer has two predecessor incidences.
+
+A parallel pair inside these four layers already gives a digon.
+Assume no such pair occurs.
+A cut of size four then induces $K_{2,2}$ and gives a four-cycle.
+Assume instead that all three cut sizes belong to $\{2,3\}$.
+Write them as $e_1,e_2,e_3$.
+For either middle layer, let $r_i\in\{0,1\}$ indicate its internal edge.
+Its degree sum gives
+\[
+ e_1+e_2+2r_2=6,\qquad e_2+e_3+2r_3=6.
+\]
+These identities force $e_1=e_2=e_3$.
+
+If all sizes are two, both middle layers have an internal edge.
+Each vertex in either middle layer has one preceding and one following edge.
+The cut between them is therefore a perfect matching.
+Together with their two internal edges, it forms a four-cycle.
+
+If all sizes are three, both middle layers have no internal edge.
+Use the first three layers.
+In the first cut, one middle-layer vertex $u$ has two predecessors and the other vertex $v$ has one.
+Call the predecessor of $v$ in the first layer $x$.
+Since $u$ has both possible predecessors, $xu$ is also an edge.
+The cubic degree condition makes $u$ have one successor and $v$ have two successors.
+Call the successor of $u$ in the third layer $y$.
+Then $vy$ is also an edge, so $xuyvx$ is a four-cycle.
+\end{proof}
+
+\begin{theorem}[A fixed-density pair inside a fixed-order pole]
+\label{thm:high-density-pair-small-cyclic-cut}
+Fix $k\ge2$ and $0<\varepsilon\le1/2$.
+Let $C_\varepsilon$ be the additive path-stability constant, and put
+\[
+ B_{k,\varepsilon}
+ =(k+1)\bigl(9\lceil C_\varepsilon\rceil+8k+9\bigr).
+\]
+Let $X$ be a connected normalized $k$-pole of rank $h$.
+If one terminal pair satisfies
+\[
+ P_{st}(X)\ge(1/2+\varepsilon)2^h,
+ \qquad h\ge B_{k,\varepsilon},
+\]
+then every cubic completion of $X$ has a cyclic edge cut of size at most four.
+\end{theorem}
+
+\begin{proof}
+Suppress every port except $s,t$, obtaining a normalized two-pole $N$ of the same rank and terminal-path count.
+It has no loop, since an independent loop coordinate would force path density at most one half.
+Every shore of a bridge contains a cycle, by the degree count for a normalized two-pole.
+Therefore every bridge separates $s$ from $t$.
+Otherwise, all terminal paths would avoid a cyclic shore and have density at most one half.
+The same argument excludes original terminals at bridge endpoints and cyclic parts outside the terminal route.
+
+Thus the positive-rank bridgeless pieces form a series chain, with ranks $b_1,\ldots,b_q$ satisfying $\sum b_i=h$.
+Their attachment vertices are distinct, since coincident attachments would leave a cyclic part outside every terminal path.
+Each piece is a normalized two-pole.
+Path counts multiply across the chain.
+Each piece consequently has normalized terminal-path density at least $1/2+\varepsilon$.
+
+Suppose first that $q\ge k+2$.
+Exclude the first and last pieces and every piece containing an internal subdivision by a restored port.
+At most $k$ pieces are excluded, so at least two remain.
+Each remaining whole piece contains a cycle and has boundary at most two in every completion.
+Subdivisions of its boundary edges do not enlarge that boundary.
+One piece supplies a cyclic cut, and the other supplies a cycle in its complement.
+
+Assume henceforth that $q\le k+1$.
+Some bridgeless piece $M$ has rank
+\[
+ b\ge\frac h{k+1}\ge9\lceil C_\varepsilon\rceil+8k+9.
+\]
+Write $C=\lceil C_\varepsilon\rceil$.
+Additive path stability gives terminal distance $\ell\ge b-C$ in $M$.
+The graph $M$ has $2b$ vertices.
+It is two-connected, because a bridgeless subcubic graph cannot have a cut vertex.
+Hence each internal distance layer $L_i$, $1\le i<\ell$, has at least two vertices.
+There are at most $2(b-\ell)\le2C$ such layers with more than two vertices.
+
+Call those larger layers bad.
+Also call a layer bad if it contains an endpoint of an edge subdivided by a restored port.
+There are at most $2(k-2)$ additional bad layers.
+Partition $L_1,\ldots,L_{\ell-1}$ into consecutive groups of four, discarding the final incomplete group.
+The number of groups without a bad layer is at least
+\[
+ \left\lfloor\frac{\ell-1}{4}\right\rfloor-2C-2(k-2)
+ \ge\left\lfloor\frac{b-C-1}{4}\right\rfloor-2C-2k+4
+ \ge2.
+\]
+The displayed rank threshold has ample slack for the last inequality.
+
+Choose two such groups.
+Lemma~\ref{lem:four-thin-layers-short-cycle} supplies one cycle of length at most four in each group.
+The cycles are vertex-disjoint.
+Neither cycle uses an edge subdivided by a restored port.
+Both therefore survive unchanged in $X$ and in every completion.
+
+In a cubic graph, the vertex set of a cycle of length at most four has boundary at most four.
+Choose one of these two cycle vertex sets.
+The other cycle lies in its complement, so its boundary is a cyclic edge cut.
+This proves the theorem.
+\end{proof}
+
+\begin{corollary}[Path density inside a cyclically five-connected completion]
+\label{cor:cyclic-five-path-density}
+Fix $k\ge2$ and $\varepsilon>0$.
+For all sufficiently large ranks, every normalized $k$-pole inside a cubic graph without a cyclic cut of size at most four satisfies
+\[
+ P_{st}<(1/2+\varepsilon)2^h
+\]
+for every pair of its ports.
+The rank threshold depends only on $k,\varepsilon$.
+\end{corollary}
+
+Unlike the saturated-pair bound $h>5k$, this threshold uses the additive stability constant.
+It gives a stronger asymptotic density conclusion, with a much larger rank threshold.

@@ -1,0 +1,85 @@
+Independent audit of second-order-two-scale-polynomial.tex.
+Auditor: random_hosts research agent. Date: 10 November 2026.
+Status: PASS. No mathematical gap found in the current full proof.
+
+1. Parameters and uniformity.
+All constants A,t,kappa are fixed, positive, and independent of r.
+Their enormous size only increases the eventual threshold.
+The short-cycle cut bound is O(x^2 r^(1/100)) or O(x^2 r^(1/10)).
+Multiplication by the cycle length gives the stated deletion sizes.
+The marked-set bound makes L*d_j/v_j=O(A/x)+o(1), which tends to zero.
+The smaller-scale exceptional-pair error is bounded by a constant times
+x^3*r^(1/1000-1/200), so it tends to zero uniformly.
+The fixed tree-link threshold eventually satisfies 2t+D_j/2<=D_j.
+
+2. Nested cycle deletions.
+The first maximal disjoint family can be extended to the second.
+Each residual graph is simple and has the claimed girth.
+For either family, a tree component in the link proof cannot meet a deleted
+cycle. Each deleted cycle is connected, avoids the two tested cycles, and
+would otherwise lie entirely in that tree component.
+Thus the original high-girth tree-link argument remains valid at both scales.
+
+3. Moments.
+The normalized cycle variables have the stated means and second moments.
+The exceptional-partner lemma gives a uniform o(mu_j) remainder.
+Subtracting the ordered one-link weight is valid.
+Cauchy--Schwarz gives both
+  Lambda_j < (1+eta_r)mu_j
+and
+  mu_j <= (1+eta_r)/(4 epsilon).
+The stronger factor1-2epsilon can safely be discarded in the latter bound.
+The spectral supply is at least21-o(1), so the stated lower bound20 holds.
+
+4. Weighted extraction and nesting.
+The far relation is antisymmetric: a path from P to its first vertex of C
+avoids every far component behind C. The connected cycle C then lies in the
+P-component after deleting a disjoint far cycle C'.
+Intersecting and adjacent partners have total ordered weight o(mu_1).
+The remaining weighted average is at least mu_1/2-1-o(1), hence exceeds8.
+The pigeonhole over at mostL neighbors is valid.
+A maximal disjoint separator family covers every separator cycle, so the
+local mass estimate gives the stated polynomial lower bound on its size.
+The connected-separator argument gives a linear order and nested U_i.
+
+5. Full blocks and the two-scale restoration.
+Each full block U_b minus(U_a union C_a) has boundary only on C_a,C_b in H.
+It contains all intermediate separator cycles and avoids P and its neighbors.
+Blocks separated by an unused separator cycle are nonadjacent.
+At mostL blocks meet N(C). At most4|S0| blocks meet S0 or its neighbors.
+This loss is o(r^(1/20)/x^4).
+All surviving blocks lie in J0 and have zero degree deficit there.
+Vertices of S1 minus S0 inside a block are restored, so their deleted
+incidences do not create the old deficit obstruction.
+
+6. Spectral test.
+The displayed quadratic-form identity is exact.
+The condition delta+3boundary<=theta*volume makes it nonpositive for
+theta<=1/2. Nonadjacency eliminates every off-diagonal test-space term.
+M(2) is positive semidefinite, and M'(lambda) is positive definite above3/2.
+Thus the count of real roots includes multiplicity correctly.
+The kernel-to-nonbacktracking map is injective for these roots.
+The nonreal eigenvalue contribution has the stated uniform lower bound.
+The block volume leaves a large margin in the theta condition.
+The even window6x..24x gives a fixed multiple greater thanm/16 before the
+vanishing repeated-walk correction. The nonreal error is o(1).
+The polynomial lower bound onmu0 contradicts its O(r^kappa) upper bound.
+
+7. Transfer to arbitrary cycle counts.
+Suppressing degree-two vertices and deleting irrelevant trees preserves
+rank and cycle count. A positive-rank core of minimum degree three has at
+most2r-2 vertices and a cycle of lengthO(log r).
+Uniform subdivision into three edges makes loops and parallel edges simple.
+It preserves rank, cycle count, and the O(log r) witness length.
+The marked cubic reduction has connected nonemptyP with sizeO(log r).
+Flipping the witness cycle pairs forest-outside configurations with opposite
+values on any chosen witness edge. Hence the through-edge cycle count is
+at most half of the forest-configuration count.
+The chosen edge is nonbridging, so deletion preserves connectedness and
+decreases rank by one. The edge recurrence and geometric convolution give
+the stated leading error coefficient1+o(1).
+
+Editorial suggestion only: specify subdivision into three edges explicitly.
+One subdivision does not remove a loop's parallel-edge representation.
+The current phrase 'if necessary, subdivide uniformly to work with a simple
+graph' permits the valid three-edge operation and is not a proof gap.

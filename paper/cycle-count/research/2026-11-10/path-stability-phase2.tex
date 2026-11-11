@@ -1,0 +1,507 @@
+\section{Linear path stability for planar graphs and bounded genus}
+\label{sec:path-phase-two}
+
+This section gives quantitative bounds for planar graphs, using the small-cut lemma and a reduction adapted to one path.
+The same argument gives a bound with an additive genus term.
+A separator argument also proves linear stability for every fixed proper minor-closed class.
+These results are not formalized in Lean.
+
+Write $P_{uv}(N)$ for the number of simple paths between distinct vertices $u,v$.
+Write $b=\beta(N)$.
+The orientable genus of a planar graph is zero.
+
+\begin{theorem}[Linear stability with a genus term]
+\label{thm:path-genus}
+Let $N$ be a connected simple graph that embeds in an orientable surface of genus at most $g$.
+Let $A$ be a $u$--$v$ path of length $\ell$.
+Suppose that
+\[
+ P_{uv}(N)\ge(1/2+\varepsilon)2^b,
+ \qquad 0<\varepsilon\le1/2.
+\]
+For every integer $L\ge6$,
+\begin{equation}\label{eq:path-genus-explicit}
+ (L-5)b
+ \le 2(L+3)\ell+2(L+1)g+(L+1)
+ +\frac{3L(L+1)(L-1)2^{L-2}}{\varepsilon}.
+\end{equation}
+In particular,
+\[
+ b\le10\ell+8g+4+\frac{16128}{\varepsilon}.
+\]
+For every fixed $\eta>0$, a constant $C_\eta$ gives the stronger asymptotic form
+\[
+ b\le(2+\eta)(\ell+g)+\frac{C_\eta}{\varepsilon}.
+\]
+\end{theorem}
+
+\begin{corollary}[The planar case]
+\label{cor:path-planar}
+Under the same density hypothesis, if $N$ is planar, then
+\[
+ \ell\ge\frac{b-4-16128/\varepsilon}{10}.
+\]
+For all ranks, the positive linear bound
+\[
+ \ell\ge\frac{\varepsilon}{14\varepsilon+16128}\,b
+\]
+also holds.
+For each fixed $\varepsilon>0$ and each $\eta>0$, one has
+$\ell\ge b/(2+\eta)-O_{\eta,\varepsilon}(1)$.
+\end{corollary}
+
+\begin{proof}[Derivation of the corollary]
+Set $g=0$ and $L=7$ in Theorem~\ref{thm:path-genus}.
+Since $\ell\ge1$, its upper bound for $b$ is at most
+$(14+16128/\varepsilon)\ell$.
+The last assertion uses the theorem's final inequality.
+\end{proof}
+
+\subsection{A reduction that preserves a short marked path}
+
+\begin{lemma}\label{lem:path-planar-split}
+Let $N,A,u,v$ be as above, without a path-density assumption.
+There is a connected multigraph $\Gamma$ on the same surface and a terminal path $A'$ such that
+\begin{enumerate}
+\item $\beta(\Gamma)=b$ and $P_{uv}(N)\le P_{u'v'}(\Gamma)$;
+\item every vertex outside $A'$ has degree three;
+\item every internal vertex of $A'$ has degree two or three, and its endpoints have degree one or two;
+\item $a:=|V(A')|\le2\ell$ and $|V(\Gamma)|\le2b+a$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+First delete leaves other than the terminals, until no such leaves remain.
+This preserves the rank and the terminal paths.
+It preserves $A$ as well.
+
+Replace each vertex by a tree inside a small disk in the fixed surface embedding.
+The external edges retain their cyclic order around that disk.
+At a vertex outside $A$, use a tree whose vertices have degree three, counting external edges.
+A degree-two vertex can instead remain unsplit at this stage.
+
+Consider an internal vertex of $A$.
+Its two path edges divide the other incident edges into two intervals in the cyclic order.
+If both intervals are nonempty, use two marked vertices joined by one edge.
+Attach one path edge to each marked vertex.
+Attach the two intervals through two rooted trees, one at each marked vertex.
+Each marked vertex has degree three.
+If only one interval is nonempty, one marked vertex suffices, with both path edges and one rooted tree.
+If both intervals are empty, retain the degree-two vertex.
+These trees lie in the disk and respect its boundary order.
+Their unmarked vertices have degree three.
+
+At each terminal, use one marked vertex.
+Its incident path edge is one branch.
+Attach all its remaining incident edges through one rooted tree in the other branch.
+This marked vertex has degree two, or degree one when there are no remaining edges.
+All unmarked vertices of the rooted tree have degree three.
+For a rooted tree with only one external edge, use that edge directly.
+
+Replacing a vertex by a tree does not change the rank.
+Each original terminal path has a unique lift through these trees.
+That lift is simple, since the original path visits each original vertex at most once.
+Distinct original paths have distinct lifts.
+There can be additional paths after splitting, so the required comparison is an inequality.
+
+The lifted path uses at most two vertices for each original internal path vertex and one for each endpoint.
+Thus $a\le2(\ell-1)+2=2\ell$.
+Suppress every degree-two vertex outside the lifted path.
+This preserves the rank, the embedding, and the path count.
+It gives the required multigraph $\Gamma$ and path $A'$.
+
+Write $n=|V(\Gamma)|$.
+Every vertex outside $A'$ has degree three.
+The internal marked vertices have degree at least two, and the two endpoints have degree at least one.
+Therefore
+\[
+ 2(n+b-1)=2|E(\Gamma)|\ge3(n-a)+2(a-2)+2=3n-a-2.
+\]
+This gives $n\le2b+a$.
+\end{proof}
+
+The use of two marked vertices is important.
+For arbitrary cyclic orders, grouping both path edges at one marked cubic vertex need not preserve the embedding.
+
+\subsection{Short faces supply disjoint cyclic regions}
+
+\begin{lemma}\label{lem:path-face-packing}
+Let $\Gamma,A',a,b,g$ satisfy Lemma~\ref{lem:path-planar-split}.
+For each integer $L\ge6$, there are $k$ pairwise vertex-disjoint cycles outside $V(A')$, each of length at most $L$, with
+\begin{equation}\label{eq:path-packing}
+ k\ge
+ \frac{(L-5)b-(L+3)a-2(L+1)g-(L+1)}{3L(L+1)}.
+\end{equation}
+A negative right side imposes no requirement.
+Each chosen vertex set is a cyclic region whose edge boundary in $\Gamma$ has size at most $L$.
+\end{lemma}
+
+\begin{proof}
+Let $J=\Gamma-V(A')$.
+The marked vertices have degree at most three and contain the $a-1$ edges of $A'$.
+Thus at most $3a-(a-1)=2a+1$ edges disappear.
+If $J$ is nonempty, this gives
+\[
+ \beta(J)\ge b-a-1.
+\]
+The inequality also holds when $J$ is empty.
+In that case subcubicity gives $b\le a/2+1\le a+1$.
+The total number of face-boundary edge occurrences is at most
+\[
+ 2|E(J)|\le2|E(\Gamma)|
+ =2(|V(\Gamma)|+b-1)\le6b+2a-2.
+\]
+
+In the planar case there are exactly $\beta(J)$ bounded faces.
+For a surface of genus $g$, take a regular neighborhood of each component and cap its boundary curves.
+This gives cellular embeddings with total genus at most $g$.
+Discard one face from each component.
+Euler's formula leaves at least $\beta(J)-2g$ faces.
+Each remaining face has a boundary containing a cycle.
+Tree components contribute no remaining faces.
+These statements permit repeated boundary edges and parallel edges.
+
+Call a retained face short when its total boundary length is at most $L$.
+Every other retained face has at least $L+1$ boundary occurrences.
+The number $f_L$ of short faces therefore satisfies
+\[
+ \begin{split}
+ f_L&\ge b-a-1-2g-\frac{6b+2a}{L+1}\\
+ &=\frac{(L-5)b-(L+3)a-2(L+1)g-(L+1)}{L+1}.
+ \end{split}
+\]
+If this bound is positive, choose a cycle in a short face boundary.
+Delete from the list every short face incident to a vertex of that cycle.
+Repeat until the list is empty.
+
+Every chosen cycle has at most $L$ vertices.
+Each such vertex is incident to at most three faces, since its degree in $J$ is at most three.
+Thus each choice removes at most $3L$ faces from the list.
+The selected cycles are vertex-disjoint, so $k\ge f_L/(3L)$.
+This proves \eqref{eq:path-packing}.
+
+Every selected vertex has degree three in $\Gamma$ and uses two incidences in its cycle.
+Its cyclic region therefore has at most $|C|\le L$ boundary edges.
+\end{proof}
+
+\subsection{The probability estimate}
+
+We use a slightly sharper constant in the manuscript's small-cut lemma.
+For disjoint proper cyclic regions with boundary at most $L$, the cut formula gives $p_i\ge2^{-L}$.
+The exceptional-partner proof bounds the partners with at least three links by $L-2$.
+Consequently, for $Z=\sum_i\mathbf1_{E_i}$ and $\mu=\mathbb EZ$,
+\[
+ \mu\ge k2^{-L},\qquad
+ \mathbb EZ^2\le2\mu^2+(L-1)\mu.
+\]
+The same Cauchy--Schwarz argument gives
+\begin{equation}\label{eq:path-small-cuts}
+ \Pr\bigl(\text{the even subgraph is a forest in every region}\bigr)
+ \le\frac12+\frac{(L-1)2^{L-2}}{k}.
+\end{equation}
+Here $k\ge1$, and every region in our application is proper because it avoids $A'$.
+
+\begin{proof}[Proof of Theorem~\ref{thm:path-genus}]
+Apply Lemma~\ref{lem:path-planar-split}.
+Add a new two-edge terminal path to $\Gamma$, and let $H$ be the resulting graph.
+Let $W$ be its union with $A'$.
+The path injection from the first research note gives
+\[
+ \frac12+\varepsilon
+ \le\frac{P_{uv}(N)}{2^b}
+ \le\frac{P_{u'v'}(\Gamma)}{2^b}
+ \le p(H,W).
+\]
+The genus of $H$ is irrelevant.
+The regions supplied by Lemma~\ref{lem:path-face-packing} lie in the embedded graph $\Gamma-V(A')$.
+Their cuts are unchanged when the new path is added.
+On the forest event outside $W$, the even subgraph is a forest inside each such region.
+Thus \eqref{eq:path-small-cuts} yields
+\[
+ k\le\frac{(L-1)2^{L-2}}{\varepsilon}.
+\]
+Combine this with \eqref{eq:path-packing} and $a\le2\ell$.
+If the right side of \eqref{eq:path-packing} is nonpositive, the desired inequality already holds.
+Otherwise the displayed upper bound on $k$ proves \eqref{eq:path-genus-explicit}.
+
+For $L=7$, division by $L-5=2$ gives the stated numerical bound.
+For the last assertion, choose $L$ so large that $16/(L-5)\le\eta$.
+Then
+\[
+ \frac{2(L+3)}{L-5}\le2+\eta,
+ \qquad
+ \frac{2(L+1)}{L-5}\le2+\eta.
+\]
+Absorb the remaining constant into $C_\eta/\varepsilon$.
+\end{proof}
+
+\subsection{Restrictions on a possible general proof}
+
+If the path family has more than half of its affine join space, every even edge set is the difference of two paths.
+Indeed, a set and each of its translates must intersect when both have size greater than half the ambient space.
+This is necessary, but it does not supply a quantitative length bound.
+The chain-with-a-shortcut examples satisfy this condition at arbitrarily large rank.
+
+There is also a useful local restriction.
+In a two-connected block, the restriction of a uniform even subgraph to the edges at a vertex is uniform over all even patterns.
+Any such pattern extends by a join in the connected graph obtained after deleting that vertex.
+For a terminal join, the terminal patterns are instead uniform over all odd patterns.
+Thus path density above one half forces internal block degrees at most five and terminal block degrees at most three.
+The relevant local probabilities are
+\[
+ \frac{1+\binom d2}{2^{d-1}}\quad\text{and}\quad
+ \frac{d}{2^{d-1}},
+\]
+which are at most one half for $d\ge6$ and $d\ge4$, respectively.
+Ranks and normalized path counts factor over the blocks on the terminal route.
+Therefore this observation applies separately to each such block.
+It still permits large cubic blocks.
+
+The tempting general bound $P_{uv}\le2^{b-1}+2^\ell-1$ is false.
+Start with $K_{3,3}$ on parts $\{0,1,2\}$ and $\{3,4,5\}$, and delete the edge $03$.
+Add a vertex $6$ and edges $63,64$.
+For terminals $0,6$, the resulting simple graph has rank four and distance two.
+It has eight paths ending through $36$ and five ending through $46$, for thirteen paths in total.
+The proposed upper bound would be $8+4-1=11$.
+The following family rules out that broader form as well.
+
+\begin{proposition}[Unbounded excess at distance two]
+\label{prop:path-distance-two-obstruction}
+For each integer $b\ge3$, there is a connected simple planar graph of rank $b$, terminal distance two, and
+\[
+ P_{uv}=2^{b-1}+b.
+\]
+Consequently, there is no bound $P_{uv}\le2^{b-1}+f(\ell)$ for all connected simple graphs, for any finite-valued function $f$.
+In particular, $2^{C\ell}$ cannot serve as an additive error for any fixed $C$.
+\end{proposition}
+
+\begin{proof}
+Take the ladder on columns $(x_i,y_i)$, $0\le i\le b-1$.
+Its edges are the two rails $x_ix_{i+1},y_iy_{i+1}$ and all rungs $x_iy_i$.
+It has rank $b-1$.
+Each $x_0$--$x_{b-1}$ path crosses every two-edge cut between consecutive columns exactly once.
+The choices of upper or lower rail at the $b-1$ cuts determine the path uniquely.
+All $2^{b-1}$ choices give simple paths.
+
+Add the edge $x_0x_{b-1}$, and call the resulting planar graph $G$.
+Its rank is $b$.
+The old cycles are rectangles between two columns.
+Exactly $b-1$ of these contain $x_0$.
+Every new cycle uses the added edge and corresponds to one of the $2^{b-1}$ terminal paths.
+Hence
+\[
+ c_{x_0}(G)=2^{b-1}+b-1.
+\]
+
+The vertex $x_0$ has degree three.
+Replace it by three vertices $p_0,p_1,p_2$ joined as a path.
+Assign one of its three former incident edges to each new vertex.
+This local tree replacement preserves planarity and rank.
+Use $p_0,p_2$ as the terminals.
+Their distance is two.
+
+The path $p_0p_1p_2$ is one terminal path.
+Every other terminal path has exactly one segment outside these three vertices.
+Its endpoints are two of the three ports.
+Contracting the replacement tree turns that segment into a cycle through $x_0$.
+Conversely, every such cycle gives one terminal path, using zero or one of the replacement edges as needed.
+Thus the terminal path count is $1+c_{x_0}(G)=2^{b-1}+b$.
+\end{proof}
+
+The normalized gap in this family is $b/2^b$, which tends to zero.
+It therefore does not contradict fixed-gap linear stability.
+It shows that a successful general error bound must retain some rank dependence.
+
+The planar proof isolates its extra input: many short faces give many bounded-cut cyclic regions.
+General high-girth cubic graphs have no corresponding face count.
+The argument above therefore does not settle the unrestricted linear problem.
+Theorem~\ref{thm:general-linear-path-stability} settles that problem through localization and shortest-path layers.
+
+\section{Linear path stability with a fixed excluded minor}
+\label{sec:path-minor-stability}
+
+The following extension uses the Alon--Seymour--Thomas separator theorem.
+It does not require vertex splitting, which can change an excluded-minor condition.
+
+\begin{theorem}[Fixed excluded minor]\label{thm:path-excluded-minor}
+Fix an integer $h\ge2$ and a real number $\eta>0$.
+There is a constant $C_{h,\eta}$ with the following property.
+Let $N$ be a connected simple graph with no $K_h$ minor and rank $b$.
+If
+\[
+ P_{uv}(N)\ge(1/2+\varepsilon)2^b,
+ \qquad 0<\varepsilon\le1/2,
+\]
+then every $u$--$v$ path of length $\ell$ satisfies
+\begin{equation}\label{eq:path-minor-linear}
+ b\le(3+\eta)\ell+\frac{C_{h,\eta}}{\varepsilon}.
+\end{equation}
+In particular, for fixed $h$ and $\varepsilon$, every such path has length $\Omega_{h,\varepsilon}(b)$.
+The conclusion applies to every fixed proper minor-closed class.
+\end{theorem}
+
+\subsection{Degree and rank restrictions from path density}
+
+\begin{lemma}\label{lem:path-route-reduction}
+Suppose that $P_{uv}(N)>2^{b-1}$, and fix a terminal path $A$ of length $\ell$.
+There is a connected loopless multigraph $\Gamma$ with the following properties.
+\begin{enumerate}
+\item Its underlying simple graph is a minor of $N$.
+\item Its rank and terminal path count equal those of $N$, and it retains $A$.
+\item Every vertex outside $A$ has degree between three and five.
+\item It has at most $2b+\ell+1$ vertices, and $\beta(\Gamma-V(A))\ge b-3\ell$.
+\end{enumerate}
+Degrees count parallel edges separately.
+\end{lemma}
+
+\begin{proof}
+The blocks on the terminal route have ranks $b_i$ and terminal path counts $P_i$.
+Let $s$ be the sum of the ranks of all other blocks.
+The affine join bound gives $P_i\le2^{b_i}$, and
+\[
+ \frac{P_{uv}(N)}{2^b}=2^{-s}\prod_i\frac{P_i}{2^{b_i}}.
+\]
+The strict density assumption implies $s=0$ and $P_i/2^{b_i}>1/2$ for every route block.
+Delete all edges outside the terminal route.
+These edges belong to trees, so their deletion preserves both the rank and the terminal paths.
+
+Consider a two-connected route block $B$, with its two route terminals.
+Deleting any vertex leaves a connected graph.
+Thus every incident edge pattern with the required parity extends to a terminal join.
+The restriction of a uniform join to the incident edges is consequently uniform among those patterns.
+At an internal vertex of degree $d$, a simple terminal path uses zero or two incident edges.
+At a terminal, it uses exactly one.
+The corresponding probability bounds are
+\[
+ \frac{1+\binom d2}{2^{d-1}},\qquad \frac{d}{2^{d-1}}.
+\]
+The first is at most one half for $d\ge6$, and the second for $d\ge4$.
+Therefore internal block degrees are at most five and terminal block degrees are at most three.
+Bridge blocks also satisfy these bounds.
+
+Every articulation on the terminal route lies on $A$.
+Consequently, all vertices outside $A$ have degree at most five.
+Suppress degree-two vertices outside $A$ until none remain.
+Suppression preserves the rank and gives a bijection on terminal paths.
+It is an edge contraction, with parallel edges retained.
+It therefore preserves the required minor exclusion for the underlying simple graph.
+No loop arises, since each cyclic route block retains its two distinct terminals.
+The resulting graph is $\Gamma$.
+
+Write $n=|V(\Gamma)|$ and $a=|V(A)|=\ell+1$.
+The degree lower bounds give
+\[
+ 2(n+b-1)\ge3(n-a)+2(a-2)+2=3n-a-2.
+\]
+Hence $n\le2b+\ell+1$.
+
+For the rank bound, consider one route block after suppression.
+Let its part of $A$ have length $t\ge1$.
+The sum of degrees at its $t+1$ marked vertices is at most $5(t-1)+6=5t+1$.
+These vertices contain the $t$ path edges.
+At most $4t+1$ edges therefore disappear when the marked vertices are deleted.
+If an unmarked vertex remains, the surviving rank is at least
+\[
+ \beta(B)+(t+1)-(4t+1)=\beta(B)-3t.
+\]
+If no unmarked vertex remains, then
+$\beta(B)\le(5t+1)/2-t\le3t$, giving the same conclusion.
+After the marked vertices are removed, the route blocks become vertex-disjoint.
+Their ranks add, and their marked path lengths sum to $\ell$.
+Thus $\beta(\Gamma-V(A))\ge b-3\ell$.
+\end{proof}
+
+\subsection{Bounded components from separators}
+
+We use the following form of the Alon--Seymour--Thomas theorem.
+An $m$-vertex graph with no $K_h$ minor has a vertex set of size at most $h^{3/2}\sqrt m$.
+After its deletion, every component has at most $m/2$ vertices.
+This is statement (1.4) of their original paper.\footnote{N. Alon, P. Seymour, and R. Thomas,
+\emph{A separator theorem for nonplanar graphs}, Journal of the American Mathematical Society 3 (1990), 801--808.
+The original paper is available at \url{https://thomas.math.gatech.edu/PAP/nonplsep.pdf}.}
+
+\begin{lemma}\label{lem:path-small-components}
+Let $J$ have $m$ vertices, and suppose its underlying simple graph has no $K_h$ minor.
+For every integer $K\ge1$, there is a set $S$ such that
+\[
+ |S|\le\frac{4h^{3/2}m}{\sqrt K},
+\]
+and every component of $J-S$ has at most $K$ vertices.
+\end{lemma}
+
+\begin{proof}
+Apply the separator theorem repeatedly to components with more than $K$ vertices.
+Let $S$ contain all separators used in this recursion.
+For a processed component of order $q$, charge $h^{3/2}/\sqrt q$ to each of its vertices.
+The total charge covers its separator size.
+For any fixed vertex, the orders of successive components containing it decrease by a factor of at least two.
+Read that sequence in reverse order.
+Its smallest order exceeds $K$, so the vertex's total charge is at most
+\[
+ \frac{h^{3/2}}{\sqrt K}\sum_{j\ge0}2^{-j/2}
+ =\frac{(2+\sqrt2)h^{3/2}}{\sqrt K}
+ <\frac{4h^{3/2}}{\sqrt K}.
+\]
+Sum over the vertices to obtain the stated bound.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:path-excluded-minor}]
+Choose
+\[
+ \delta=\frac{\eta}{28+8\eta},\qquad
+ K=\left\lceil\frac{16h^3}{\delta^2}\right\rceil,
+ \qquad D=3K.
+\]
+Then $0<\delta<1/8$.
+Apply Lemma~\ref{lem:path-route-reduction}, and put $J=\Gamma-V(A)$.
+Lemma~\ref{lem:path-small-components} gives a set $S$ with
+\[
+ |S|\le\delta|V(J)|\le\delta(2b+\ell+1)
+\]
+such that every component of $J-S$ has at most $K$ vertices.
+Deleting one vertex of degree at most five decreases rank by at most four.
+Thus
+\begin{equation}\label{eq:path-minor-surviving-rank}
+ \beta(J-S)\ge (1-8\delta)b-(3+4\delta)\ell-4\delta.
+\end{equation}
+
+Every component of $J-S$ has maximum degree at most five and rank at most $2K$.
+Choose one cycle from every cyclic component, obtaining $k$ vertex-disjoint cycles.
+Their vertex sets lie outside $A$, and
+\[
+ 2Kk\ge\beta(J-S).
+\]
+Each selected vertex has degree at most five in $\Gamma$ and uses two incidences in its cycle.
+Every chosen cyclic region therefore has boundary at most $3K=D$.
+
+Add a new two-edge terminal path to $\Gamma$, and mark its union with $A$.
+The path injection and \eqref{eq:path-small-cuts} give
+\[
+ k\le\frac{(D-1)2^{D-2}}{\varepsilon}.
+\]
+For $k=0$, the same inequality holds trivially.
+Combining these estimates with \eqref{eq:path-minor-surviving-rank} gives
+\[
+ (1-8\delta)b
+ \le(3+4\delta)\ell+4\delta
+ +\frac{2K(D-1)2^{D-2}}{\varepsilon}.
+\]
+The definition of $\delta$ gives
+$(3+4\delta)/(1-8\delta)=3+\eta$.
+Since $\varepsilon\le1/2$, one may take
+\[
+ C_{h,\eta}
+ =\frac{2\delta+2K(D-1)2^{D-2}}{1-8\delta}.
+\]
+This proves \eqref{eq:path-minor-linear}.
+Since $\ell\ge1$, it also gives
+\[
+ \ell\ge\frac{\varepsilon b}{(3+\eta)\varepsilon+C_{h,\eta}}.
+\]
+Finally, a proper minor-closed class omits some fixed finite graph $H$.
+It then omits $K_{|V(H)|}$, because that complete graph contains $H$ as a minor.
+\end{proof}
+
+The constants above are deliberately explicit and are not optimized.
+The proof establishes a structural consequence of the existing small-cut estimate and the classical separator theorem.
+It does not provide a separator argument for arbitrary graphs.

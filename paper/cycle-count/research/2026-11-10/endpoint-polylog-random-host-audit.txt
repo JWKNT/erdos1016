@@ -1,0 +1,103 @@
+Independent parameter audit: random_hosts agent, 2026-11-10
+
+RESULT: PASS for the proposed logarithmic endpoint retunings.
+This note audits the parameter argument. The complete new fragment is
+being written by path_stability and should receive a separate line audit.
+
+Use x=log_2 r, y=log_2 x, A=6 exp(168), L=floor(Ax),
+  D0=ceil(8Ax/y), t=floor(y-2log_2 y).
+For connected P, the parallel-link bound is
+  ell_max <= (2A+o(1))x/y+O(x/y^2+y^2).
+Since s0>=4Ax/y-O(1), the exceptional-pair error is at most
+  O(x^3)2^{-(2A-o(1))x/y}=o(1).
+The tree-link condition holds because D0 is much larger than t.
+The small deletion has size r^{o(1)}.
+
+LOGARITHMIC POWER SEVEN
+Take D1=floor(x-5y), eps=x^7/sqrt(r).
+The exponential cut estimate gives |S1|=O(r/x^2).
+Thus the global spectral deficit vanishes when |P|<=r/x^2.
+Also 2^{s1}=Theta(sqrt(r)/x^{5/2}).
+The chain has Omega(sqrt(r)/x^{11/2}) cycles. Grouping Theta(x)
+consecutive cycles gives Omega(sqrt(r)/x^{13/2}) clean blocks.
+Their local cycle mass beats the inverse-moment bound O(sqrt(r)/x^7).
+
+LOGARITHMIC POWER SIX
+Fix B with 2^B>=10^6 A and take
+  D1=floor(x-4y-B), eps=Mx^6/sqrt(r), M>=1.
+For all sufficiently large r, ln(2/eps)<=x uniformly in every fixed M>=1.
+The exponential cut estimate therefore gives
+  |Q1|<=8*2^{-B}r/x^2,
+  |S1|<=8*2^{-B}r/x.
+The retained graph has v1=2r+o(r) and
+  d1<=3|P|+24*2^{-B}r/x.
+Hence
+  Ld1/(2v1)<=(6+o(1))A2^{-B}<.01.
+The normalized Perron term is at least .99 for every ell<=L.
+The even harmonic sum and repeated-walk bound still give mu1>20.
+
+Here 2^{s1}=Theta_B(sqrt(r)/x^2). The chain length is
+Omega_{A,B}(sqrt(r)/x^5). Choose q=Theta(A^2 x) large enough that
+(q-1)(D1+1)>=8L^2. This leaves at least
+  c0(A,B)sqrt(r)/x^6
+blocks. Discarding N(C), S0, and P loses a negligible number.
+The local supply lemma gives
+  mu0>=c(A,B)sqrt(r)/x^6
+for a fixed c>0.
+
+Choose M only after fixing this c, with 1/(4M)<c/2. This choice is
+not circular: all preceding deletion bounds used only M>=1. The inverse
+second-moment bound then contradicts the displayed lower bound.
+
+The cycle recurrence sums a geometric sequence with slowly varying factor
+(log r)^6/sqrt(r). It therefore gives an unrestricted cycle error
+  O(2^r (log r)^6/sqrt(r)).
+This is a polynomial relative error with logarithmic factors. It is not
+the separate conjectured sharp-order error O(r2^{r/2}).
+
+LOGARITHMIC POWER ELEVEN HALVES
+The strong branch inside the existing exponential-cut proof gives a
+better inversion than its displayed uniform bound. If q cyclic regions
+have boundary at most D and forest probability exceeds 1/2+eps, then
+  q<2^{D+1} max(5D+1, ln(1/(2eps))).
+Indeed, below q=2(5D+1)2^D the first term applies. Above that threshold,
+the proof already gives excess<=.5 exp(-q/2^{D+1}), giving the second.
+
+For eps=Mx^{11/2}/sqrt(r), M>=1, and D<=x, this gives q<=12x2^D
+for all sufficiently large x. Thus S<=12x^2 2^D. Take
+  D1=floor(x-3log_2 x-B).
+Then |S1|<=12*2^{-B}r/x and
+  Ld1/(2v1)<=(9+o(1))A2^{-B}<.01
+under the same safe choice 2^B>=10^6 A.
+
+Now 2^{s1}=Theta_B(sqrt(r)/x^{3/2}). The chain has
+Omega(sqrt(r)/x^{9/2}) cycles, so grouping Theta(x) consecutive cycles
+gives c(A,B)sqrt(r)/x^{11/2} clean blocks. Choose M after this constant,
+exactly as above. All D0, link, exceptional-pair, and small-deletion
+estimates remain valid. This proves the parameter-level improvement to
+  O(2^r (log r)^{11/2}/sqrt(r)).
+No new cut theorem is required; only the stronger branch of the audited
+proof is retained when the short-cycle family size is inverted.
+
+FINAL SOURCE AUDIT
+The complete saved fragments now received a full line-by-line audit:
+  second-order-parallel-links-endpoint.tex
+  second-order-parallel-links-log-five-half.tex
+Result: PASS, including all displayed constants and the explicit M.
+
+The refined moment lemma's empty-family edge case was repaired during
+audit. It now states a nonstrict W2 inequality, with strictness when
+mu>0, and dispatches mu=0 separately. Every application has mu>=mu1>20.
+The retained-order expression is now the correct v1=2r+o(r).
+
+The component allowance comp(Gamma[P])<=x/(log_2 x)^2 is also valid.
+Its contribution is o(x/log_2 x) in the link estimate and negligible in
+the clean-block count. No connectedness assumption on the full marked
+set is required; one connected component is used as the anchor.
+
+The final clean-block constant c_B=2^{-B/2}/(64A^5) has ample slack after
+rounding separator intervals and discarding contaminated blocks. Taking
+M=1/c_B yields a factor-four contradiction against the inverse moment.
+
+No mathematical blockers remain in the logarithmic-power-eleven-halves
+forest theorem or its unrestricted cycle-count corollary.

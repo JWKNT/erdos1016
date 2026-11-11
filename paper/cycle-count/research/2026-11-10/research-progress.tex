@@ -1,0 +1,85 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,booktabs,array}
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage{microtype,xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{remark}[theorem]{Remark}
+\setlength{\emergencystretch}{3em}
+\title{Further results from the cycle-space machinery}
+\author{Research note prepared by Codex and collaborating agents}
+\date{10 November 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We develop several consequences of the November 10 manuscript.
+The general fixed-gap path bound improves from order $b/\log^2 b$ to order $b/\log b$.
+For two-terminal series-parallel networks, a sharp additive estimate gives length at least $b-O_\varepsilon(1)$.
+A small-cut inverse theorem describes pair correlations and conditional concentration near the one-half bound.
+For random graphs at the Alon--Krivelevich density, the pancyclicity excess above $\log_2 n$ has order $\ln n/\ln\ln n$.
+The lower coefficient is $2/3-o(1)$ and the upper coefficient is $2+o(1)$.
+The upper proof refines the published construction and corrects several intermediate statements.
+For four-regular multigraphs, we prove a doubled-edge reduction and verify the exact conjectured bound through nine vertices.
+The general linear path and exact four-regular questions remain unresolved here.
+\end{abstract}
+
+\section*{Scope and verification status}
+
+The source is \emph{The number of cycles in a graph and the minimum number of edges in a pancyclic graph}, dated November 10, 2026.
+Its local source is \texttt{paper/cycle-count/pancyclic-paper.tex} at repository revision \texttt{a965788}.
+We use its definitions of rank, outside parts, and forest probability $p(G,W)$.
+Rank means $\beta(G)=|E(G)|-|V(G)|+\operatorname{comp}(G)$.
+An even subgraph is an edge set of even degree at every vertex.
+A cycle is connected and two-regular.
+
+This note gives mathematical proofs and reproducible finite checks.
+Its new results have not been formalized in Lean.
+Existing formalized theorems and the main manuscripts were not changed.
+The finite checks support the stated identities and constructions.
+They do not establish the asymptotic theorems.
+Publication priority for the refinements has not been established.
+
+\begin{center}
+\small
+\begin{tabular}{p{0.23\linewidth}p{0.68\linewidth}}
+\toprule
+Direction & Result in this note\\
+\midrule
+Path stability & $\Omega_\varepsilon(b/\log b)$ in general; $b-O_\varepsilon(1)$ for terminal series-parallel networks.\\[3pt]
+Near-half structure & Quantitative two-link pair mass and concentration, given many disjoint bounded-cut cyclic regions.\\[3pt]
+Sparse random hosts & Matching order $\ln n/\ln\ln n$ for the second-order excess at the stated $p_*$.\\[3pt]
+Four-regular graphs & A smaller remaining class; exact doubled-edge deficit; verification through order nine.\\[3pt]
+Other targets & An edge-frequency corollary and explicit limits of the present arguments.\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\input{path-stability}
+\input{link-stability}
+\input{random-hosts}
+\input{four-regular}
+\input{remaining-directions}
+
+\section{Reproducible checks and handoff}
+
+The following scripts accompany this note.
+Run them with Python 3 from the repository root.
+The JSON files record their completed checks.
+
+\begin{itemize}
+\item \texttt{check\_path\_stability.py}: terminal series-parallel recurrence states, the terminal-pair counterexample, and sharp examples.
+\item \texttt{check\_link\_stability.py}: exact rational link identities, moment bounds, and stability inequalities on 180 multigraphs.
+\item \texttt{check\_random\_host\_encoding.py}: explicit cycle construction and rank in the two-digit short-length gadget.
+\item \texttt{check\_four\_regular.py}: exhaustive Hamilton-pair enumeration through order nine, with independent cycle-space counts through order eight.
+\end{itemize}
+
+The shared repository-root handoff is \texttt{RESEARCH-HANDOFF-CODEX-2026-11-10.txt}.
+It records the active files, proof status, source corrections, and remaining questions for Fable 5.2.
+Parallel work should use separate files to avoid overwriting these fragments.
+
+\end{document}

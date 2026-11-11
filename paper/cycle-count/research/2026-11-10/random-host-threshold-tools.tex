@@ -1,0 +1,193 @@
+\section{Inputs for the threshold construction}
+\label{sec:rhost-threshold-tools}
+
+All graphs are simple.
+A path's length is its number of edges.
+The neighbourhood $N_J(A)$ is external: it contains vertices outside $A$ adjacent to $A$.
+The cycle rank of a connected graph is $|E|-|V|+1$.
+We write $\ln$ for the natural logarithm and $\log_2$ for the binary logarithm.
+An event holds with high probability if its probability tends to one as $n\to\infty$.
+
+\begin{lemma}[Uniform robust expansion]\label{lem:rhost-threshold-expansion}
+Suppose $D\to\infty$, $D\le(\ln n)^B$ for a fixed $B$, and $\beta=20\ln D/D$.
+Let $R\subseteq[n]$ have size $n-o(n)$ and expose $J\sim G(R,D/n)$.
+For any prescribed $r_n=o(n)$, with high probability every $U\subseteq R$ of size at least $n-r_n$
+contains a set $U'$ with
+\[
+ |U'|>|U|-\beta n,\qquad
+ |N_{J[U']}(A)|\ge\frac{|A|}{3\beta}
+ \quad(0<|A|\le\beta n).
+\]
+The assertion also holds conditionally on a random $R$ chosen independently of $J$.
+\end{lemma}
+
+\begin{proof}
+Put $s=\lceil\beta n\rceil$.
+The probability that two disjoint $s$-sets in $R$ have no joining edge is at most
+\[
+ \binom ns^2e^{-Ds^2/n}
+ \le\exp\{s[2\ln(en/s)-Ds/n]\}=o(1).
+\]
+Indeed, $Ds/n\sim20\ln D$ whereas $\ln(en/s)\sim\ln D$.
+Assume no such pair exists.
+Starting from $U$, repeatedly remove a nonempty set of at most $\beta n$ vertices that violates the desired expansion.
+If the total removed set $B$ first reaches size $\beta n$, then $\beta n\le|B|<2\beta n$.
+Its external neighbourhood in the original $J[U]$ has size less than $|B|/(3\beta)<2n/3$.
+Thus $U\setminus(B\cup N_{J[U]}(B))$ has at least $n/3-r_n-2\beta n$ vertices.
+For large $n$, this exceeds $s$.
+Taking $s$ vertices there and $s$ vertices in $B$ gives the forbidden pair.
+Hence the deletion process removes fewer than $\beta n$ vertices and proves the assertion.
+The probability estimate is uniform in $R$.
+\end{proof}
+
+The rooted tree theorem below is the form of Haxell's embedding result used in the construction.
+It is stated as Theorem~2.2 by Alon and Krivelevich,
+\href{https://doi.org/10.1137/23M1598969}{\emph{Sparse Pancyclic Subgraphs of Random Graphs}} (2025).
+That statement follows from Haxell, \emph{Tree embeddings}, Journal of Graph Theory 36 (2001), 121--130,
+and Balogh, Csaba, Pei, and Samotij,
+\href{https://doi.org/10.37236/278}{\emph{Large bounded degree trees in expanding graphs}} (2010).
+
+\begin{theorem}[Rooted tree embedding, external]\label{thm:rhost-rooted-tree}
+Let $N,\Delta,k$ be positive integers.
+Suppose a graph $J$ satisfies
+\[
+ |N_J(A)|\ge\Delta|A|+1\quad(0<|A|\le k),
+\]
+\[
+ |N_J(A)|\ge\Delta|A|+N\quad(k<|A|\le2k).
+\]
+Then every tree with at most $N$ vertices and maximum degree at most $\Delta$
+embeds in $J$ with any specified root mapped to any specified vertex of $J$.
+\end{theorem}
+
+\begin{lemma}[Trees with many leaves at one depth]\label{lem:rhost-threshold-trees}
+Use $\beta$ from Lemma~\ref{lem:rhost-threshold-expansion} and set
+\[
+ a=\lfloor(5\beta)^{-1}\rfloor,\quad M=\lfloor n/1000\rfloor,
+ \quad d=\lceil\log_a M\rceil.
+\]
+Every expander $J[U']$ supplied by that lemma contains, rooted at any prescribed vertex,
+a tree with exactly $M$ leaves at depth $d$, fewer than $3M$ vertices, and maximum degree at most $a+1$.
+It also contains a tree formed by joining the roots of two such trees with any positive-length $o(n)$ stem.
+\end{lemma}
+
+\begin{proof}
+Take $k=\lfloor\beta n/2\rfloor$, $\Delta=\lfloor1/(4\beta)\rfloor$, and $N=\lfloor n/50\rfloor$.
+For $0<|A|\le k$, the expansion surplus over $\Delta|A|$ is at least $|A|/(12\beta)>1$.
+For $k<|A|\le2k$, it exceeds $n/24>N$.
+Thus Theorem~\ref{thm:rhost-rooted-tree} applies.
+For sufficiently large $n$, we have $a\ge3$ and $a+1\le\Delta$.
+
+Build complete $a$-ary levels through depth $d-1$.
+Give the $a^{d-1}$ vertices at that depth between one and $a$ children each, with exactly $M$ children in total.
+This is possible because $a^{d-1}\le M\le a^d$.
+All leaves have depth $d$.
+The earlier levels have fewer than $2M$ vertices, so the whole tree has fewer than $3M$ vertices.
+Two such trees, joined at their roots by a positive-length $o(n)$ stem, have fewer than $6M+o(n)<N$ vertices.
+Their maximum degree is at most $a+1$.
+Apply the rooted embedding theorem to each required tree.
+\end{proof}
+
+\begin{lemma}[A short list of disjoint cycles]\label{lem:rhost-cycle-list}
+Fix constants $A,B>0$.
+Suppose $D\to\infty$ and $D\le(\ln n)^B$.
+In $G(n,D/n)$, with high probability, one can select vertex-disjoint cycles from any fixed list of $O(\ln n)$ lengths,
+all between $3$ and $A\ln n$, provided each length has bounded multiplicity.
+\end{lemma}
+
+\begin{proof}
+Let $X_\ell$ count cycles of length $\ell=O(\ln n)$ and let $Y_\ell$ count ordered intersecting pairs, including identical copies.
+Write $\mu_\ell=\mathbb EX_\ell$.
+We first establish
+\[
+ \operatorname{Var}X_\ell,\ \mathbb EY_\ell
+ \le C\mu_\ell^2\left(\frac{\ell^2}n+\ell D^{-\ell}\right).
+\]
+Every proper overlap is a union of paths and isolated vertices.
+An overlap with $u$ vertices and $f$ edges has normalized weight $(1+O(\ell^2/n))n^{-u}(n/D)^f$.
+An isolated vertex has at most $\ell^2$ descriptions.
+A path with $j\ge1$ edges has at most $4\ell^2$ descriptions, each of weight $n^{-1}D^{-j}$.
+For several components, division by their order factorial bounds the total by the exponential of the one-component sum.
+Thus all proper nonempty overlaps contribute $O(\ell^2/n)$.
+The full overlap contributes $(1+O(\ell^2/n))2\ell D^{-\ell}$.
+Vertex-disjoint pairs contribute at most $\mu_\ell^2$, proving the variance bound as well.
+
+Put $q=\lfloor\ln n/(10\ln D)\rfloor$.
+Chebyshev's inequality, summed over $3\le\ell\le q$, shows that every required short length has any fixed number of copies.
+Indeed, $\sum_{\ell\ge3}\ell D^{-\ell}=O(D^{-3})$, and $\mu_\ell\to\infty$ uniformly.
+With high probability, all distinct cycles of lengths at most $q$ are vertex-disjoint.
+The same proper-overlap enumeration for two possibly different lengths bounds the expected number of intersecting pairs by
+\[
+ n^{-1}(\ln n)^{O(1)}D^{2q}=o(1).
+\]
+Choose all prescribed cycles in this range first.
+
+For $q<\ell\le A\ln n$, put $\varepsilon_\ell=C(\ell^2/n+\ell D^{-\ell})\le n^{-1/10+o(1)}$.
+Let $M_0=\lceil(\ln n)^3\rceil$.
+Chebyshev's inequality gives $X_\ell\ge\mu_\ell/2$ except with probability $O(\varepsilon_\ell)$.
+Markov's inequality gives $Y_\ell\le\mu_\ell^2/(8M_0)$ except with probability $O(M_0\varepsilon_\ell)$.
+In the graph whose vertices are copies and whose edges join intersecting copies, the elementary independent-set bound is $X_\ell^2/Y_\ell$.
+Thus at least $2M_0$ copies are pairwise vertex-disjoint.
+A union bound gives this simultaneously for all required lengths.
+The prescribed list uses only $O((\ln n)^2)$ vertices in total.
+Greedily choose the remaining cycles: each previously used vertex excludes at most one member of any disjoint-copy family.
+\end{proof}
+
+The Hamilton-path input below is Lemma~2.1 in the cited Alon--Krivelevich paper.
+It follows from the Hamiltonicity threshold and rotation-extension arguments; see Section~4 of
+Krivelevich, \href{https://arxiv.org/abs/1507.00205}{\emph{Long paths and Hamiltonicity in random graphs}} (2016).
+
+\begin{lemma}[Hamilton completion, external input]\label{lem:rhost-threshold-hamilton}
+If $Nq-\ln N-\ln\ln N\to\infty$, then $G(N,q)$ has, with high probability,
+a set $S$ of at least $N/4$ vertices such that every $s\in S$ has a set $T_s$ of at least $N/4$ vertices,
+and each $t\in T_s$ is joined to $s$ by a Hamilton path.
+Consequently, two external vertices with fresh independent $q$-edges to this graph can be joined through all $N$ vertices with high probability.
+\end{lemma}
+
+\begin{proof}[Proof of the consequence]
+Expose the induced graph first.
+The first external vertex has a neighbour $s\in S$ except with probability at most $e^{-qN/4}$.
+Condition on that neighbour.
+The second external vertex has a neighbour in $T_s$ with the same failure bound.
+These two edges and the stated Hamilton path give the required path.
+\end{proof}
+
+\begin{lemma}[Long interval chords]\label{lem:rhost-threshold-windows}
+Let a Hamilton cycle on $n$ vertices contain a distinguished arc of length
+$2s-1+\ell-1$, where $s\gg n^{0.9}$ and $\ell=o(n^{0.9})$.
+Suppose replacing paths inside this arc permits every length reduction from $0$ through $2s-1$.
+Let $m=\lfloor n/s\rfloor\ge3$.
+In an independent $G(n,D/n)$ with $D\to\infty$, with high probability $m-2$ additional edges
+supply cycle intervals that, together with
+\[
+ [\ell,\ell+2s-1]\quad\text{and}\quad[n-2s+1,n],
+\]
+cover every integer from $\ell$ through $n$.
+\end{lemma}
+
+\begin{proof}
+Write $W=n^{0.9}$ and let the distinguished arc have length $b_0=2s+\ell-2$.
+For each $3\le i\le m$, there are at least $W^2/100$ vertex pairs whose joining arc contains the distinguished arc
+and has length $a_i\in[is-W,is+W]$.
+To see this, extend the two ends of the distinguished arc by distances $u,v\ge0$.
+Put $t_i=\min\{is-b_0,n-b_0-W/2\}$.
+Vary each distance independently in a window of width $W/4$ centered at $t_i/2$.
+The lower bound $is-b_0\ge s-o(s)\gg W$ keeps both distances positive.
+The upper adjustment leaves a complementary arc of length at least $W/4$.
+All these pairs are distinct non-cycle edges and satisfy the required length window.
+
+The probability that some window has no random edge is at most
+\[
+ m\exp(-Dn^{0.8}/100)=o(1).
+\]
+Choose one edge from each window.
+It closes a cycle on the arc of length $a_i$, and the allowed reductions give
+$[a_i+1-(2s-1),a_i+1]$.
+Consecutive intervals overlap because $s\gg W$.
+The first overlaps $[\ell,\ell+2s-1]$, and the last overlaps $[n-2s+1,n]$ because $ms>n-s$.
+This proves the assertion.
+\end{proof}
+
+Finally, every connected pancyclic graph with $n+k$ edges has cycle rank $k+1$.
+Its distinct cycles give distinct nonzero vectors in its binary cycle space.
+Hence $n-2\le2^{k+1}-1$, so $k\ge\log_2(n-1)-1$.

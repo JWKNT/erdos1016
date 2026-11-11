@@ -1,0 +1,194 @@
+% New research fragment. The general weighted statement remains open.
+\section{Weighted terminal paths and short-cycle averaging}
+\label{sec:path-edge-half-weighted}
+
+Let $N$ be a connected simple graph with three degree-two terminals.
+Every other vertex has degree three.
+Write $c=c(N)$, and let $p_{ij}$ count simple paths between terminals $i,j$.
+For an edge $e$, use $c_e$ and $p_{ij}(e)$ for the corresponding counts through $e$.
+The proposed weighted inequality is
+\begin{equation}\label{eq:path-edge-half-target}
+ 2c_e+2\sum_{i<j}w_{ij}p_{ij}(e)
+ \le c+1+\sum_{i<j}w_{ij}p_{ij},\qquad w_{ij}\ge0.
+\end{equation}
+The edge may depend on the weights.
+The statements below do not prove this inequality for arbitrary $N$.
+
+\subsection{An equivalent finite convex problem}
+
+\begin{lemma}\label{lem:path-edge-half-dual}
+Inequality~\eqref{eq:path-edge-half-target} holds for every nonnegative weight triple if and only if there is a probability distribution $(\alpha_e)_{e\in E(N)}$ such that
+\[
+ \sum_e\alpha_ec_e\le\frac{c+1}{2},\qquad
+ \sum_e\alpha_ep_{ij}(e)\le\frac{p_{ij}}2
+ \quad(1\le i<j\le3).
+\]
+\end{lemma}
+
+\begin{proof}
+Set
+\[
+ v_e=\bigl(2c_e-c-1,
+ 2p_{12}(e)-p_{12},2p_{13}(e)-p_{13},2p_{23}(e)-p_{23}\bigr).
+\]
+The desired distribution exists exactly when the convex hull of the $v_e$ meets the nonpositive orthant.
+If these sets are disjoint, strict separation gives a nonzero vector $\lambda\ge0$ with $\lambda\cdot v_e>0$ for every edge.
+If $\lambda_0=0$, add a sufficiently small positive amount to that coordinate.
+The inequalities remain strict because there are finitely many edges.
+After dividing by $\lambda_0$, the remaining coordinates give weights that violate~\eqref{eq:path-edge-half-target}.
+Conversely, the displayed distribution makes the weighted mean of the left side minus the right side nonpositive.
+At least one edge therefore satisfies the required inequality.
+\end{proof}
+
+\subsection{Exact identities on a triangle or square}
+
+For a vertex set $U$, let $p_{ij}^{\neg U}$ count terminal paths disjoint from $U$.
+This count is zero if $U$ contains either endpoint.
+
+\begin{proposition}\label{prop:path-edge-half-short-rim}
+Suppose $W$ is a cycle of length $q\in\{3,4\}$ in $N$.
+Then
+\begin{align}
+ \sum_{e\in E(W)}c_e
+ &=\frac q2\bigl(c+1-c(N-V(W))\bigr),\label{eq:path-edge-half-rim-cycles}\\
+ \sum_{e\in E(W)}p_{ij}(e)
+ &=\frac q2\bigl(p_{ij}-p_{ij}^{\neg V(W)}\bigr)
+ \quad(1\le i<j\le3).\label{eq:path-edge-half-rim-paths}
+\end{align}
+Consequently, the uniform distribution on $E(W)$ satisfies Lemma~\ref{lem:path-edge-half-dual}.
+In particular, the weighted inequality holds for all nonnegative weights.
+\end{proposition}
+
+\begin{proof}
+First suppose that $W$ has a chord.
+Then $q=4$, and the chord forms a triangle in $N$.
+For the conclusion about weighted inequalities, this triangle suffices.
+For the identities, however, retain the original square and regard its chord as an outside edge.
+
+Fix the edges outside $E(W)$ of a terminal path.
+Their parity, together with the prescribed terminal pair, determines an even subset $J\subseteq V(W)$.
+The selected rim edges have odd-degree set $J$ within the rim.
+Every rim vertex has at most one outside incidence.
+A terminal on the rim has none.
+
+If $|J|=2$, the two rim solutions are complementary arcs.
+Both complete the fixed outside edges to a simple terminal path.
+Indeed, the interior vertices of either arc have no selected outside incidence or terminal condition.
+The two paths use $q$ rim edges in total.
+If $|J|=4$, then $q=4$, and each feasible rim solution is a two-edge matching.
+One or both solutions may give a single path.
+Each valid solution still uses exactly $q/2$ rim edges.
+If $J$ is empty, a terminal path uses no rim edge.
+It then avoids every rim vertex, by the degree restrictions above.
+These cases prove~\eqref{eq:path-edge-half-rim-paths}.
+
+Apply the same partition to cycles.
+The cases $|J|=2$ and $|J|=4$ again have mean rim usage $q/2$.
+For $J$ empty, the only cycle using rim edges is $W$ itself.
+Every other cycle in this case avoids $V(W)$.
+The cycle $W$ contributes $q$ rim edges.
+This proves~\eqref{eq:path-edge-half-rim-cycles}.
+\end{proof}
+
+The identities give the more precise weighted conclusion
+\[
+ \min_{e\in E(W)}\left(2c_e+2\sum_{i<j}w_{ij}p_{ij}(e)\right)
+ \le c+1+\sum_{i<j}w_{ij}p_{ij}
+       -c(N-V(W))-\sum_{i<j}w_{ij}p_{ij}^{\neg V(W)}.
+\]
+Thus the unresolved weighted case has girth at least five.
+
+\subsection{Scope of the proposed inequality}
+
+Let $G$ be simple and cubic, and suppose $G-v$ is connected.
+Take $N=G-v$, with terminals the three neighbours of $v$.
+Every cycle through $v$ corresponds to exactly one terminal path in $N$.
+With all three weights equal to one,~\eqref{eq:path-edge-half-target} would therefore imply
+\[
+ \min_{e\not\ni v}2c_e(G)\le c(G)+1.
+\]
+This would prove the edge-half inequality whenever $c(G)$ is even.
+For odd $c(G)$, it gives the integer upper bound $(c(G)+1)/2$.
+The weighted statement therefore extends beyond graphs with nontrivial three-edge cuts.
+
+For positive weights, define
+\[
+ \lambda_1=\sqrt{w_{12}w_{13}/w_{23}},\quad
+ \lambda_2=\sqrt{w_{12}w_{23}/w_{13}},\quad
+ \lambda_3=\sqrt{w_{13}w_{23}/w_{12}}.
+\]
+Then $w_{ij}=\lambda_i\lambda_j$.
+Adding a new vertex adjacent to the terminals interprets the weighted expression as a cycle count with three star-edge weights.
+All internal edges retain weight one.
+This reformulation supplies no additional restriction on a positive weight triple.
+
+\subsection{The exact pentagon obstruction}
+
+Suppose now that $W$ is an induced five-cycle.
+Partition cycles, and each terminal-path family, by their selected edges outside $E(W)$.
+For each such outside edge set, there are at most two rim completions.
+When the required odd-degree set on the rim has four vertices, one completion has two edges and the other has three.
+Call these the short and long completions, respectively.
+
+Let $L_c,S_c$ count outside edge sets with exactly one valid cycle completion, which is long or short, respectively.
+For terminal pair $i,j$, define $L_{ij},S_{ij}$ in the same way, requiring a single terminal path.
+Only the four-vertex odd-degree cases enter these counts.
+Then
+\begin{align}
+ \sum_{e\in E(W)}c_e
+ &=\frac52\bigl(c+1-c(N-V(W))\bigr)+\frac12(L_c-S_c),
+ \label{eq:path-edge-half-pentagon-cycles}\\
+ \sum_{e\in E(W)}p_{ij}(e)
+ &=\frac52\bigl(p_{ij}-p_{ij}^{\neg V(W)}\bigr)
+       +\frac12(L_{ij}-S_{ij}).
+ \label{eq:path-edge-half-pentagon-paths}
+\end{align}
+Indeed, two valid complementary completions have mean rim length $5/2$.
+A single short or long completion differs from that mean by $-1/2$ or $1/2$.
+The zero- and two-vertex odd-degree cases behave exactly as in the short-rim proof.
+
+Consequently, uniform averaging on this pentagon proves the weighted inequality if and only if
+\begin{equation}\label{eq:path-edge-half-pentagon-target}
+ (L_c-S_c)+\sum_{i<j}w_{ij}(L_{ij}-S_{ij})
+ \le5\left(c(N-V(W))+\sum_{i<j}w_{ij}p_{ij}^{\neg V(W)}\right).
+\end{equation}
+This is an exact criterion for that averaging distribution.
+It is not a necessary condition for the existence of a good individual edge elsewhere.
+
+The defect terms have a concrete switching interpretation.
+A long-only terminal path becomes one terminal path and one vertex-disjoint cycle after symmetric difference with $E(W)$.
+The resulting pair uses precisely the two short rim edges.
+Conversely, every such pair whose complementary rim completion is connected supplies one long-only path.
+The short-only case has the analogous three-edge rim description.
+For cycles, the invalid completion consists of two vertex-disjoint cycles.
+These descriptions are bijections because symmetric difference with $E(W)$ is an involution.
+They do not yet compare the positive and negative defect counts.
+
+\subsection{The terminal-local criterion and actual shore restrictions}
+
+For a terminal $i$, let $c_i$ count cycles containing that vertex.
+Let $v_i$ count paths between the other terminals $j,k$ that visit $i$.
+Put
+\[
+ A_i=2c_i-c-1,\qquad B_i=2v_i-p_{jk}.
+\]
+Average the two incident-edge coefficient vectors in Lemma~\ref{lem:path-edge-half-dual}.
+Each path ending at $i$ uses exactly one of these edges.
+Each path between $j,k$ uses both or neither.
+Each cycle uses both or neither.
+The averaged weighted surplus is exactly
+\[
+ A_i+w_{jk}B_i.
+\]
+Thus $A_i\le0$ and $B_i\le0$ give one distribution that works for every weight triple.
+The girth-five Petersen subdivision example in the companion computational notes disproves this sufficient condition in general.
+
+When a pole is one shore of a three-edge cut in a three-edge-connected cubic graph, its capped graph is three-edge-connected.
+Equivalently, for every nonempty proper vertex subset $U$ of the pole, with $t$ terminals in $U$,
+\[
+ |\delta_N(U)|\ge\max\{t,3-t\}.
+\]
+In particular, the pole has no bridge, and every two-edge cut separates one terminal from the other two.
+If the capped graph also has girth at least five, the pole has girth at least five and its terminals have pairwise distance at least three.
+These are genuine structural restrictions on opposite shores.
+The general weighted statement does not assume them.

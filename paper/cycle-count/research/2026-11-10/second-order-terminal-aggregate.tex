@@ -1,0 +1,90 @@
+\section{An aggregate bound for a fixed number of ports}
+\label{sec:terminal-aggregate}
+
+The unrestricted polynomial forest estimate constrains the entire terminal-state vector of a pole.
+It applies before a cut-state classification.
+
+\begin{theorem}[All even terminal forest sectors]
+\label{thm:fixed-port-aggregate}
+Fix an integer $k\ge2$.
+Let $T$ be a connected normalized $k$-pole of rank $h$.
+For each even subset $S$ of its ports, let $F_S(T)$ count the forests whose odd-degree vertex set is exactly $S$.
+Then, with $\kappa=2^{-145}$ and for all sufficiently large $h$,
+\[
+ \sum_{S\text{ even}}F_S(T)
+ \le 2^{h+k-2}+2^{h+k-1}(h+k-1)^{-\kappa}.
+\]
+In particular, for a five-pole,
+\[
+ 2^{-h}\left(\sum_{|S|=2}F_S(T)+\sum_{|S|=4}F_S(T)\right)
+ \le8+16(h+4)^{-\kappa}-2^{-h}.
+\]
+The two-terminal sector counts are the simple terminal-path counts.
+\end{theorem}
+
+\begin{proof}
+Take a tree $Q$ with $k$ leaves and degree three at every nonleaf vertex.
+For $k=2$, use a single edge.
+Add one edge from each leaf of $Q$ to a different port of $T$.
+Call the resulting graph $\Gamma$, and put $P=V(Q)$.
+Then $\Gamma$ is connected and subcubic, every vertex outside $P$ has degree three, and $\Gamma[P]$ is a tree.
+Moreover,
+\[
+ \beta(\Gamma)=h+k-1,
+ \qquad |P|=2k-2.
+\]
+The marked-set hypotheses of the polynomial forest theorem hold for sufficiently large $h$.
+
+Every even subgraph of $\Gamma$ restricts to an edge set of $T$ whose odd vertices form an even port set $S$.
+Conversely, any such edge set has a unique even extension to $\Gamma$.
+Its port parities determine the $k$ attachment edges.
+The tree edges are then uniquely determined by parity across each tree cut.
+An extension exists because $|S|$ is even.
+Thus each even port pattern has exactly $2^h$ preimages, and all $2^{k-1}$ patterns occur.
+
+The restriction to $T=\Gamma-P$ is a forest exactly in the event estimated by the marked forest theorem.
+Therefore
+\[
+ \frac{\sum_{S\text{ even}}F_S(T)}{2^{h+k-1}}
+ \le\frac12+(h+k-1)^{-\kappa}.
+\]
+This proves the first assertion.
+For $k=5$, the only sector sizes are zero, two, and four.
+The zero sector contains only the empty forest, so its count is one.
+The other sectors consist of one path or two vertex-disjoint paths, respectively.
+\end{proof}
+
+\begin{corollary}[Five-pole energy and nearly Boolean profiles]
+\label{cor:five-pole-nearly-boolean}
+Use the ten normalized path coordinates $a_e$ and the five normalized four-terminal forest totals $U_S$.
+Let $z$ range over these fifteen coordinates.
+Put
+\[
+ \xi_h=16(h+4)^{-\kappa},\qquad E(T)=\sum_z z^2.
+\]
+Then
+\[
+ E(T)\le8+\xi_h-\sum_z z(1-z).
+\]
+In particular, if any coordinate lies in $[\delta,1-\delta]$, for fixed $0<\delta<1/2$, then
+\[
+ E(T)\le8-\delta(1-\delta)/2
+\]
+for all sufficiently large $h$.
+Any sequence of poles whose ranks tend to infinity and whose energies tend to at least eight therefore has all its coordinates tending to $\{0,1\}$, with exactly eight coordinates tending to one after passage to a subsequence.
+Every path coordinate tending to one is eventually exactly one, by the terminal-path saturation gap.
+\end{corollary}
+
+\begin{proof}
+Every coordinate lies in $[0,1]$.
+Subtract $\sum_z z(1-z)$ from the aggregate bound and discard the negative term $-2^{-h}$.
+The fixed-gap claim follows as $\xi_h\to0$.
+For the sequence assertion, take a convergent subsequence of the fifteen coordinates in the compact cube $[0,1]^{15}$.
+The limit has sum at most eight and squared sum at least eight.
+Thus every limiting coordinate is zero or one, and exactly eight are one.
+The universal path gap makes any path coordinate converging to one eventually saturated.
+\end{proof}
+
+This reduction is qualitative at the profile-classification stage.
+The polynomial aggregate error is much larger than $h2^{-h/2}$.
+A sharp-order cut theorem still needs exact structure or pairing cancellation in every nearly Boolean exceptional profile.

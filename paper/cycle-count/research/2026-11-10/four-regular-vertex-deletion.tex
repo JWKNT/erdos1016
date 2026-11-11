@@ -1,0 +1,245 @@
+\section{Sharper bounds after deleting vertices}
+\label{sec:four-vertex-deletion}
+
+This section uses the degree-sequence theorem from Section~\ref{sec:four-finite} a second time.
+It excludes every reduced graph with at most two doubled pairs and at least eleven vertices.
+Its finite arithmetic checks do not enumerate graphs.
+
+Retain $\rho$, $a$, $b$, $\kappa$, and $B$ from Section~\ref{sec:four-finite}.
+We also use
+\[
+ a(1)=\sqrt{2/\rho^5},\qquad
+ \delta=\rho^{-2}=\frac{\sqrt3}{2},\qquad
+ \chi=\frac2{\sqrt3}+\frac38(\rho/6)^{1/4}.
+\]
+These are values from the same published theorem, or explicit combinations of those values.
+
+\begin{lemma}[An edge bound after deletion]\label{lem:four-deleted-edge}
+Let $T$ be a simple graph with degrees in $\{2,3,4\}$.
+Assume that no edge joins two degree-two vertices.
+Put $Q=\prod_{v\in V(T)}b(\deg_T(v))$.
+Then every edge $e$ satisfies $c_e(T)\le\delta Q$.
+\end{lemma}
+
+\begin{proof}
+Let $d,e\in\{2,3,4\}$ be the endpoint degrees of an edge.
+Delete that edge and apply the path theorem in either orientation.
+Its cycle count is at most
+\[
+ \frac{\min\{a(d-1)b(e-1),a(e-1)b(d-1)\}}{b(d)b(e)}Q.
+\]
+For the possible unordered degree pairs, the following upper coefficients suffice:
+\[
+\begin{array}{c|ccccc}
+(d,e)&(2,3)&(2,4)&(3,3)&(3,4)&(4,4)\\\hline
+\text{coefficient}&\rho^{-3}&\rho^{-2}&\rho^{-2}&\kappa/\rho&\kappa.
+\end{array}
+\]
+Each coefficient is at most $\delta$.
+The omitted pair $(2,2)$ cannot occur by hypothesis.
+\end{proof}
+
+\begin{lemma}[One-vertex deletion]\label{lem:four-one-vertex}
+Let $G$ be a connected loopless four-regular graph on $n$ vertices.
+Assume that its $k$ doubled pairs form a matching and all other edges are single.
+For a vertex $u$, write $N=G-u$.
+
+If $k=0$, choose any $u$.
+Then
+\[
+ c(G)-c(N)\le2\kappa B,
+ \qquad \sum_{C\subseteq N}|E(C)|\le(2n-4)\frac\rho6 B.
+\]
+If $k\ge1$, choose $u$ incident with a doubled pair.
+Then
+\[
+ c(G)-c(N)\le1+\chi B,
+ \qquad \sum_{C\subseteq N}|E(C)|\le(2n-4)\frac{\rho^3}{8}B.
+\]
+In the second case, $N$ has exactly $k-1$ doubled pairs.
+\end{lemma}
+
+\begin{proof}
+First let $k=0$.
+Every cycle through $u$ uses exactly two incident edges.
+Lemma~\ref{lem:core-edge-frequency} therefore gives
+\[
+ c(G)-c(N)=\frac12\sum_{e\ni u}c_e(G)\le2\kappa B.
+\]
+The graph $N$ has four vertices of degree three and $n-5$ vertices of degree four.
+Its degree product satisfies
+\[
+ Q=b(3)^4b(4)^{n-5}=\frac{\rho^7}{8}B.
+\]
+Apply Lemma~\ref{lem:four-deleted-edge} to its $2n-4$ edges.
+Since $\delta\rho^7/8=\rho/6$, this gives the first length-sum bound.
+
+Now suppose that $u$ is joined twice to $v$.
+Write $x,y$ for its two other neighbours.
+The matching hypothesis makes $u,v,x,y$ distinct.
+The graph $N$ has degree two at $v$, degree three at $x,y$, and degree four at every other vertex.
+Subdivide one edge in each of its $k-1$ remaining doubled pairs.
+The resulting simple graph $T$ has degree product
+\[
+ Q=b(3)^2b(4)^{n-4}\rho^k
+   =\frac{\rho^5}{8}B.
+\]
+Its degree-two vertices are $v$ and the new subdivision vertices.
+No two such vertices are adjacent.
+Indeed, each subdivision vertex lies on a doubled pair disjoint from $v$.
+
+Every original single edge has the same cycle count in $N$ and $T$.
+For each doubled pair, use its unsubdivided edge in $T$.
+Its parallel mate has the same cycle count in $N$.
+Lemma~\ref{lem:four-deleted-edge} therefore bounds every original edge frequency by $\delta Q$.
+There are $2n-4$ original edges.
+Since $\delta\rho^5/8=\rho^3/8$, their sum gives the second length-sum bound.
+
+A cycle through $u$ is its doubled-edge cycle or uses two distinct neighbours of $u$.
+Consequently,
+\[
+ c(G)-c(N)=1+2P_{vx}(N)+2P_{vy}(N)+P_{xy}(N).
+\]
+Apply the path theorem to $T$.
+Subdivision preserves these terminal paths, so
+\[
+ P_{vx}(N),P_{vy}(N)
+ \le a(2)b(3)^2b(4)^{n-4}\rho^{k-1},
+\]
+\[
+ P_{xy}(N)\le a(3)b(2)b(3)b(4)^{n-4}\rho^{k-1}.
+\]
+The resulting coefficient of $B$ equals
+\[
+ \frac{4a(2)b(3)^2+a(3)\rho b(3)}{b(4)^4\rho}
+ =\rho^2+\frac{3b(3)}{8b(5)}
+ =\frac2{\sqrt3}+\frac38(\rho/6)^{1/4}
+ =\chi.
+\]
+This proves the remaining inequality.
+\end{proof}
+
+\begin{theorem}[Small matching cutoff]\label{thm:four-deletion-cutoff}
+Under the hypotheses of Lemma~\ref{lem:four-one-vertex}, we have $c(G)<2^n$ whenever
+\[
+ k=0,\ n\ge12;\qquad\text{or}\qquad
+ 1\le k\le2,\ n\ge11.
+\]
+\end{theorem}
+
+\begin{proof}
+Theorem~\ref{thm:four-core-cutoff} covers all $n\ge19$.
+It remains to check $12\le n\le18$ for $k=0$, and $11\le n\le18$ for $k=1,2$.
+Put
+\[
+ g=\lfloor(n+3)/2\rfloor,\qquad k'=\max\{k-1,0\}.
+\]
+The elementary proof of Lemma~\ref{lem:core-short-cycles} only uses upper bounds on degrees.
+It therefore also applies to $N=G-u$, giving
+\[
+ c_2(N)=k',\qquad
+ c_\ell(N)\le\frac{(6(n-1)+2k')3^{\ell-3}}\ell\quad(\ell\ge3).
+\]
+Apply the length cutoff to $N$ and then add the bound for cycles through $u$.
+Lemma~\ref{lem:four-one-vertex} yields
+\[
+ \frac{c(G)}{2^n}\le A+T(3/4)^{(n-k)/4},
+\]
+where
+\[
+ A=2^{-n}\left({\bf1}_{k\ge1}+(1-2/g)k'
+       +\sum_{\ell=3}^{g-1}(1-\ell/g)
+          \frac{(6(n-1)+2k')3^{\ell-3}}\ell\right),
+\]
+and
+\[
+ T=\begin{cases}
+ 2\kappa+(2n-4)\rho/(6g),&k=0,\\
+ \chi+(2n-4)\rho^3/(8g),&k\ge1.
+ \end{cases}
+\]
+
+For exact rational verification, use
+\[
+ \kappa<\frac{845071}{10^6},\quad
+ \rho<\frac{1074570}{10^6},\quad
+ \rho^3<\frac{1240807}{10^6},\quad
+ \chi<\frac{1398653}{10^6}.
+\]
+The first three comparisons follow from powers sixteen, four, and four.
+For the last comparison, use
+\[
+ \frac1{\sqrt3}<\frac{577351}{10^6},\qquad
+ \frac38(\rho/6)^{1/4}<\frac{243951}{10^6}.
+\]
+Their squares and sixteenth powers are rational.
+Substitute these rational upper bounds into $T$ to obtain $\overline T$.
+For all twenty-three stated pairs $(n,k)$, exact arithmetic gives
+\[
+ A<1,\qquad \overline T^4(3/4)^{n-k}<(1-A)^4.
+\]
+The largest displayed upper ratio is less than $.993$, attained at $(n,k)=(11,2)$.
+This proves every remaining case.
+\end{proof}
+
+
+
+\begin{proposition}[Two deletions at order eleven]\label{prop:four-eleven-simple}
+Every simple four-regular graph $G$ on eleven vertices satisfies $c(G)<2^{11}$.
+\end{proposition}
+
+\begin{proof}
+Choose adjacent vertices $u,v$.
+Put $N=G-u$ and $H=G-\{u,v\}$.
+The cycles through $u$ contribute at most $2\kappa B$.
+In $N$, the vertex $v$ has degree three.
+The first case of Lemma~\ref{lem:four-one-vertex} gives $\delta Q_N=(\rho/6)B$.
+Thus the cycles through $v$ in $N$ contribute at most
+\[
+ \frac12\sum_{e\ni v}c_e(N)\le\frac32\delta Q_N=\frac\rho4 B.
+\]
+
+Let $r$ be the number of common neighbours of $u,v$ in $G$.
+Then $0\le r\le3$.
+The graph $H$ has $r$ vertices of degree two, $6-2r$ of degree three, and $3+r$ of degree four.
+Its degree product satisfies
+\[
+ \frac{Q_H}{B}
+ =\frac{\rho^r b(3)^{6-2r}}{b(4)^{8-r}}
+ =\frac{\rho^{11-r}}{32}
+ \le\frac{\rho^{11}}{32}=\frac{\rho^3}{18}.
+\]
+Allowing the additional degree pair $(2,2)$ in Lemma~\ref{lem:four-deleted-edge} gives
+\[
+ c_e(H)\le\delta_2Q_H,\qquad
+ \delta_2=\frac{a(1)}{\rho^2}=\sqrt{2/\rho^9}.
+\]
+Indeed, all other degree pairs have coefficient at most $\delta<\delta_2$.
+Since $H$ has fifteen edges,
+\[
+ \sum_{C\subseteq H}|E(C)|\le\frac56\delta_2\rho^3B.
+\]
+
+Use cutoff $g=6$ for the cycles of $H$.
+This graph is simple, has nine vertices, and has maximum degree at most four.
+Hence $c_\ell(H)\le18\cdot3^{\ell-2}/\ell$ for every $\ell\ge3$.
+It follows that
+\[
+ c(G)\le\left(2\kappa+\frac\rho4+
+                   \frac5{36}\delta_2\rho^3\right)B
+      +\sum_{\ell=3}^{5}(1-\ell/6)
+                   \frac{18\cdot3^{\ell-2}}\ell.
+\]
+The short-cycle sum is rational.
+Use the previous rational bounds for $\kappa,\rho,\rho^3$, together with
+\[
+ \delta_2<\frac{1023197}{10^6}.
+\]
+The last comparison follows by eighth powers, since $\delta_2^8=16(3/4)^9$.
+An exact fourth-power comparison gives $c(G)/2^{11}<.987$.
+The certificate script records that comparison without rounded arithmetic.
+\end{proof}
+
+The file \texttt{four\_regular\_vertex\_deletion\_certificates.py} verifies all constant comparisons and twenty-four finite inequalities.
+Its output is \texttt{four-regular-vertex-deletion-results.json}.
+Together with Theorem~\ref{thm:four-deletion-cutoff}, Proposition~\ref{prop:four-eleven-simple} excludes every order at least eleven when $k\le2$.

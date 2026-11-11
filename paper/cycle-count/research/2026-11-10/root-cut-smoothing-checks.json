@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "graphs": [
+    {
+      "name": "Petersen",
+      "rank": 6,
+      "minimum_cyclic_cut": 5,
+      "minimum_cuts": 6,
+      "cut_edge_checks": 30,
+      "independently_enumerated_deletions": 15,
+      "cycles": 57,
+      "path_counts": [
+        28
+      ]
+    },
+    {
+      "name": "Heawood",
+      "rank": 8,
+      "minimum_cyclic_cut": 6,
+      "minimum_cuts": 28,
+      "cut_edge_checks": 168,
+      "independently_enumerated_deletions": 21,
+      "cycles": 213,
+      "path_counts": [
+        104
+      ]
+    }
+  ],
+  "scope": "All cyclic vertex cuts in these graphs; every minimum-cut smoothing; exact cycle-space and path-DFS identities."
+}

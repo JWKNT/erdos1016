@@ -1,0 +1,38 @@
+Checkpoint: quantitative path rank-distance investigation.
+
+The unrestricted conjectural scale is
+positive normalized excess <= poly(b)*2^(-(b-dist)/2).
+The Horak--Kim construction in second-order-constructions.tex proves that
+an absolute constant prefactor is impossible. Its linear obstruction is
+already audited; do not claim it as a new result here.
+
+New exact transfer calculation is in
+four-high-connectivity-path-transfers.tex.
+Repeated triangle expansion at the vertex incident with a fixed edge f
+has count P_j=2^j Q+A+(j+1)Z. The affine-coordinate bound Q<=2^(b-1)
+means this family either eventually falls below half or has only
+O(j*2^-j) normalized excess. It cannot refute the conjectured half
+exponent at bounded terminal distance.
+
+The critical case is equivalent to a connected four-pole K=N-f whose
+entire four-terminal affine class is forest, with one pairing absent.
+Adding f then gives one fully saturated half of the terminal-join class.
+The remaining path count in K is the correction term. A structural
+classification of these saturated slices could be useful, but no such
+classification is proved here.
+
+Finite diagnostic, not a general theorem:
+I independently decoded the maximum-scaled-excess witnesses in the
+path agent's complete cubic catalogue through order20. Their best
+two-poles at ranks2,3,4 have a disjoint edge f with a saturated
+f=1 path slice. The selected maxima at ranks5 through10 have none.
+Thus the exact saturated-slice class alone does not explain all current
+small-order extremal witnesses. No larger enumeration is warranted yet.
+
+An exact affine decomposition supplied by path_stability is
+sum over terminal paths P of 2^beta(N-V(P)) = 2^b.
+It implies positive excess is at most half the number of paths with
+forest complement. Counting those paths alone may lose the needed
+cancellation: Hamilton paths are included, and cubic Hamilton-path
+families can already exceed the half-exponent count. This is a warning
+about that approach, not a counterexample to the signed excess bound.

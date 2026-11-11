@@ -1,0 +1,55 @@
+Four-terminal affine-join forests: finite witnesses and open gap question.
+10 November 2026.
+
+For a connected graph G and an even terminal set T, its affine T-join space
+has 2^beta(G) elements. Let F_T(G) count its acyclic elements.
+The proven two-terminal theorem gives either F_T=2^beta or
+F_T<=(15/16)*2^beta when |T|=2.
+
+For four terminals, simple graphs attain
+  F_T=2^h-1 at h=3,4,5,6,7.
+These are exact finite witnesses, not certified global maxima.
+The witnesses are Hamiltonian four-poles: terminal degrees are two, and
+all other degrees are three. The JSON files contain complete edge lists.
+An independent affine cycle-basis enumeration checks every join.
+It gives the unique cyclic join explicitly for each witness.
+
+Any four-terminal uniform gap must be at most 1/128.
+This restriction persists at arbitrarily large rank. Start with the rank-seven
+witness, choose a terminal t, and take a disjoint diamond K4 minus ab.
+Join t to its degree-two terminal a by a bridge. Replace t in T by b.
+Every new T-join uses the bridge, since the diamond shore has one terminal.
+Its restriction to the diamond is an a-b join. All four such joins are paths.
+Thus the rank increases by two, and both forest and total join counts multiply
+by four. Repetition preserves forest density 127/128 in simple cubic four-poles.
+
+This does not refute a positive gap depending only on |T|.
+The natural rank-increasing extension search stopped at rank-seven.
+Each step subdivides two edges and joins the two new vertices.
+Keep the extension only when it has exactly one cyclic T-join.
+The retained labelled counts were 8,44,132,192 at ranks 4,5,6,7.
+No rank-eight extension survived. The search width limit was never reached.
+This only describes extensions of the chosen rank-three witness.
+It does not exclude unrelated witnesses or other extension operations.
+
+Reproduce the independent audit:
+  python3 check_second_order_four_terminal_forests.py
+The checked output is second-order-four-terminal-forest-checks.json.
+
+Open question: for each fixed even t, is there a delta_t>0 such that
+F_T(G)=2^beta or F_T(G)<=(1-delta_t)*2^beta whenever |T|=t?
+The present work proves delta_2=1/16 sharply and forces delta_4<=1/128.
+It proves no lower bound for delta_4.
+
+Six-terminal side experiment.
+The same extension search starts from the rank-three witness after replacing
+one path edge by a three-edge path and marking its two new vertices.
+This changes four terminals to six without changing rank or the unique bad join.
+A width1000 search found exactly-one-cyclic-join witnesses through rank10.
+No rank11 extension of the retained rank10 beam survived.
+The beam bound was reached, so this is not exhaustive beyond its initial ranks.
+Independent Python enumeration checked every join in each printed witness.
+In particular, any six-terminal uniform gap is at most1/1024.
+The bridge-plus-diamond extension preserves that density at larger ranks.
+Files: second-order-six-terminal-extension-search.jsonl and
+second-order-six-terminal-forest-checks.json.

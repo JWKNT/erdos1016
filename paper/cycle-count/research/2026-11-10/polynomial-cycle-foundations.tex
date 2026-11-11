@@ -1,0 +1,222 @@
+% Source proofs adapted from pancyclic-paper.tex, Section6.
+% Original source is unchanged. This file makes the new draft self-contained.
+\section{Cycle-space, walk, and spectral estimates}
+\label{sec:polynomial-foundations}
+
+A region is a nonempty connected vertex set.
+For a region $U$, let $\delta U$ be its edge boundary.
+Write $\mathcal O_U$ for the event that a uniform even subgraph avoids $\delta U$.
+For disjoint regions $U,V$, their links are the edges between them and the components of $G-U-V$ adjacent to both.
+The number of links is $\ell(U,V)$.
+The following proofs are adapted from Section6 of the existing manuscript.
+They are included to expose every dependency of the polynomial argument.
+
+\begin{lemma}[Link formula]\label{lem:link}
+Let $A$ and $B$ be disjoint regions of a connected graph $G$. Then
+$\PP(\cO_A)=2^{\comp(G-A)-|\delta A|}\ge2^{-|\delta A|}$ and
+\[
+  \PP(\cO_A\cap\cO_B)=2^{\ell(A,B)-1}\,\PP(\cO_A)\,\PP(\cO_B).
+\]
+Conditionally on $\cO_A$, the set $\xi\cap E(G[A])$ is uniform on $\Z(G[A])$; conditionally on
+$\cO_A\cap\cO_B$, the sets $\xi\cap E(G[A])$ and $\xi\cap E(G[B])$ are independent and uniform on
+$\Z(G[A])$ and $\Z(G[B])$.
+\end{lemma}
+
+\begin{proof}
+The even subgraphs that avoid $\delta A$ are the sums of an even subgraph of $G[A]$ and an even
+subgraph of $G-A$. So $\PP(\cO_A)=2^{\beta(G[A])+\beta(G-A)-\beta(G)}$, and counting edges and
+vertices shows that the exponent is $\comp(G-A)-|\delta A|$. In the same way
+\[
+  \PP(\cO_A\cap\cO_B)=2^{\beta(G[A])+\beta(G[B])+\beta(G-A-B)-\beta(G)}
+     =2^{\comp(G-A-B)+1-|\delta A|-|\delta B|+e(A,B)},
+\]
+where $e(A,B)$ is the number of edges between $A$ and $B$. Let $a$, $b$ and $k$ be the numbers of
+components of $G-A-B$ that are joined to $A$ only, to $B$ only, and to both. Then
+$\comp(G-A-B)=a+b+k$, while $\comp(G-A)=a+1$ and $\comp(G-B)=b+1$, and the formula follows since
+$\ell(A,B)=k+e(A,B)$. The conditional laws are read off from the two direct sum decompositions.
+\end{proof}
+
+So two cut events are independent when there is one link. They are correlated by a factor of
+exactly two when there are two links. The correlation is stronger only for pairs with at least
+three links, and the next lemma says that such pairs are rare.
+
+\begin{lemma}[Exceptional partners]\label{lem:exc}
+Let $A$ be a region of a connected graph $G$, and let $B_1,\dots,B_k$ be pairwise disjoint regions,
+disjoint from $A$, with $\ell(A,B_i)\ge3$ for all $i$. Then $k\le|\delta A|$.
+\end{lemma}
+
+\begin{proof}
+Contract $A$ to a vertex $a$ and each $B_i$ to a vertex $b_i$, and delete the loops that arise.
+This changes neither $d=|\delta A|$ nor the numbers $\ell(A,B_i)$, because the sets $B_j$ with
+$j\ne i$ are connected and are contracted inside components of $G-(A\cup B_i)$. Let $F$ be a spanning forest of
+$G-a$, and for every edge $e=au$ at $a$ attach a new leaf $\tau_e$ to $u$. Call the resulting forest
+$F^{+}$ and its $d$ new leaves \emph{terminals}.
+
+Fix $i$. Every link between $a$ and $b_i$ yields a path of $F^{+}$ from $b_i$ to a terminal. For an
+edge $e=ab_i$ it is the edge $b_i\tau_e$. For a component $Y$ of $G-\{a,b_i\}$ joined to both, choose
+an edge $e=au$ with $u\in Y$ and take the path of $F^{+}$ from $b_i$ to $\tau_e$; after its first
+vertex it stays in $Y\cup\{\tau_e\}$. Paths that come from different links therefore start with
+different edges at $b_i$, and the union of any two of them is a path between two terminals. Let
+$F^{\circ}\subseteq F^{+}$ be the union of all paths between terminals. As $\ell(a,b_i)\ge3$, the
+vertex $b_i$ has degree at least $3$ in $F^{\circ}$. All leaves of $F^{\circ}$ are terminals, and a
+forest with at most $d$ leaves has at most $d-2$ vertices of degree at least $3$. Hence $k\le d-2$ if $k\ge1$.
+\end{proof}
+
+
+\subsection{Walks and normalized traces}
+Let $J$ be a simple graph of maximum degree three and girth greater than $D\ge3$.
+Put $s=\lfloor(D-1)/2\rfloor$ and let $L>D$.
+Let $N_\ell(u,w)$ count non-backtracking walks of length $\ell$ from $u$ to $w$.
+Write $v=|V(J)|$ and $d_J=\sum_u(3-\deg_Ju)$.
+For the spectral supply estimate below, assume $d_J/v<1$.
+
+\begin{lemma}\label{lem:walks}
+If $\ell>s$, then $N_\ell(u,w)\le3\cdot2^{\ell-s-1}$ for all $u,w$. Consequently, for every vertex
+$u$ of $J$, the cycles $C$ of $J$ through $u$ with $|C|\le L$ satisfy $\sum_C2^{-|C|}\le L\,2^{-s}$.
+\end{lemma}
+
+\begin{proof}
+There are at most $3\cdot2^{\ell-s-1}$ ways to choose the first $\ell-s$ steps. The last $s$ steps
+form a non-backtracking walk of length $s$ between two given vertices. Such a walk is a path,
+because $s$ is less than the girth, and there is at most one such path, because two of them would
+give a cycle of length at most $2s<D$. For the second statement, a cycle of length $\ell$ through $u$
+can be traversed from $u$ in two directions, so there are at most $\half N_\ell(u,u)$ of them, and
+$\ell>D>s$.
+\end{proof}
+
+Let $B$ be the non-backtracking matrix of $J$. Its rows and columns are indexed by the directed
+edges $(i\to j)$ of $J$, two for each edge. The entry in row $(i\to j)$ and column $(j'\to k)$ is
+$1$ if $j'=j$ and $k\ne i$, and it is $0$ otherwise.
+
+\begin{lemma}\label{lem:spectrum}
+For every even $\ell\ge2$,
+\[
+  \tr B^{\ell}\;\ge\;\bigl(2-d_J/v\bigr)^{\ell}-3v\,2^{\ell/2}.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $A$ be the adjacency matrix of $J$ and $\Delta$ the diagonal matrix of its degrees, and put
+$M(\lambda)=\lambda^{2}I-\lambda A+\Delta-I$.
+
+(1) \emph{If $M(\lambda)g=0$ for a real $\lambda>1$ and a vector $g\ne0$, then $\lambda$ is an
+eigenvalue of $B$.} A direct computation shows that $f(i\to j)=\lambda g(j)-g(i)$ satisfies
+$Bf=\lambda f$; and $f=0$ would give $g(i)=\lambda g(j)=\lambda^{2}g(i)$ along every edge, hence
+$g=0$ (at an isolated vertex, $M(\lambda)g=0$ already says $(\lambda^{2}-1)g=0$).
+
+(2) \emph{If $Bf=\lambda f$ with $f\ne0$ and $\lambda^{2}\ne1$, then $M(\lambda)g=0$ for
+$g(j)=\sum_{k\sim j}f(j\to k)$, and $g\ne0$.} The eigenvalue equation at $(i\to j)$ and at
+$(j\to i)$ reads $\lambda f(i\to j)=g(j)-f(j\to i)$ and $\lambda f(j\to i)=g(i)-f(i\to j)$.
+Eliminating $f(j\to i)$ gives $(\lambda^{2}-1)f(i\to j)=\lambda g(j)-g(i)$. This shows that
+$g\ne0$. Summing it over the neighbours $j$ of $i$ gives $M(\lambda)g=0$.
+
+(3) \emph{$B$ has a real eigenvalue $\lambda_1\ge2-d_J/v$.} The matrix
+$M(2)=2(\Delta-A)+(3I-\Delta)$ is positive semidefinite, while
+$\mathbf{1}^{\!\top}M(\lambda)\mathbf{1}=(\lambda-1)(v\lambda-2v+d_J)$ vanishes at
+$\lambda^{*}=2-d_J/v>1$. The smallest eigenvalue of the symmetric matrix $M(\lambda)$ is continuous
+in $\lambda$, at most $0$ at $\lambda^{*}$ and at least $0$ at $2$. So $M(\lambda_1)$ is singular for
+some $\lambda_1\in[\lambda^{*},2]$, and (1) applies.
+
+(4) \emph{Every non-real eigenvalue $\lambda$ of $B$ satisfies $|\lambda|\le\sqrt2$.} With $g$ as
+in~(2), $g^{*}M(\lambda)g=0$ is a quadratic equation $a\lambda^{2}-b\lambda+c'=0$ with real
+coefficients $a=g^{*}g>0$, $b=g^{*}Ag$ and $c'=g^{*}(\Delta-I)g\le2a$. Its roots are $\lambda$ and
+$\bar\lambda$, so $|\lambda|^{2}=c'/a\le2$.
+
+Now $\tr B^{\ell}$ is the sum of the $\ell$th powers of the $2|E(J)|\le3v$ eigenvalues of $B$. For
+even $\ell$ the real eigenvalues contribute nonnegative terms, one of which is at least
+$(2-d_J/v)^{\ell}$, and the non-real ones contribute at least $-3v\,2^{\ell/2}$ in total.
+\end{proof}
+
+The argument uses the same matrix-pencil proof as the existing manuscript.
+It needs no expansion assumption.
+
+
+\begin{lemma}[Repeated closed walks]\label{lem:polynomial-repeated-walks}
+Let $\mathcal C$ contain the cycles of $J$ with length at most $L$ and put $\mu=\sum_{C\in\mathcal C}2^{-|C|}$.
+Then
+\[
+ \mu\le T:=\sum_{\ell\le L}\frac{\operatorname{tr}B^\ell}{2\ell2^\ell}
+ \le\left(1+\tfrac32L^2 2^{-s}\right)\mu.
+\]
+\end{lemma}
+\begin{proof}
+$\tr B^{\ell}$ is the number of closed walks $u_0u_1\cdots u_\ell=u_0$ in $J$ with
+$u_{i+1}\ne u_{i-1}$ for all $i$ modulo $\ell$. A cycle of length $\ell$ gives $2\ell$ of them; let
+$n_\ell$ be the number of the others. Then
+\[
+  T:=\sum_{\ell\le L}\frac{\tr B^{\ell}}{2\ell\,2^{\ell}}=\mu+\sum_{\ell\le L}\frac{n_\ell}{2\ell\,2^{\ell}} .
+\]
+Consider a walk counted by $n_\ell$, and let $j$ be the least index with
+$u_j\in\{u_0,\dots,u_{j-1}\}$, say $u_j=u_i$. Then $j<\ell$, the walk $C=u_iu_{i+1}\cdots u_j$ is a
+cycle, of length $q$ say, and $u_ju_{j+1}\cdots u_\ell u_1\cdots u_i$ is a non-backtracking closed
+walk of length $\ell-q>0$ from $u_i$ to itself. It contains a cycle, so $\ell-q>D>s$. The original
+walk is determined by $C$, by the vertex $u_i$ and a direction on $C$ ($2q$ choices), by the
+complementary walk (at most $3\cdot2^{\ell-q-s-1}$ choices, by Lemma~\ref{lem:walks}), and by the
+position of $u_0$ on the latter (at most $\ell$ choices). Hence
+\[
+  \sum_{\ell\le L}\frac{n_\ell}{2\ell\,2^{\ell}}
+  \;\le\;\sum_{\ell\le L}\ \sum_{C\in\mathcal{C}}\tfrac32\,|C|\,2^{-|C|-s}
+  \;\le\;\tfrac32\,L^{2}\,2^{-s}\,\mu,
+\]
+as required.
+
+
+\end{proof}
+
+In particular, suppose $v=O(r)$, $x=\log_2r$, $L=\lfloor Ax\rfloor$, and $A>6$ is fixed.
+If $Ld_J=o(v)$ and $L^2 2^{-s}=o(1)$, then
+\[
+ \mu\ge(1/4-o(1))\ln(A/6).
+\]
+Indeed, sum the even trace bound over $6x\le\ell\le L$.
+Its normalized leading term is $1-o(1)$, and its nonreal error is $O(r^{-2})$.
+The even harmonic sum is $(1/4-o(1))\ln(A/6)$.
+The repeated-walk error is $o(\mu)$.
+
+\subsection{The uniform bound on links}
+Suppose $\Gamma$ is connected and subcubic, $\Gamma[P]$ is connected, and every vertex outside $P$ has degree three.
+Let $\mathcal Q$ be a maximal disjoint family of cycles of length at most $D$ in $\Gamma-P$.
+Write $S$ for its vertex union and $J=\Gamma-(P\cup S)$.
+Assume the probability of a forest outside $P$ exceeds $1/2+\varepsilon$.
+For disjoint cycles $C,C'$ of $J$ with lengths at most $L$, and an integer $t$ with $2t+D/2\le D$,
+\begin{equation}\label{eq:polynomial-foundation-links}
+ \ell(C,C')\le1+\frac{2L}{t}+8t2^t\ln(2/\varepsilon)+(8L/D)^2.
+\end{equation}
+
+To prove this, let $U=V(C)\cup V(C')$.
+At most one component of $\Gamma-U$ meets $P$.
+At most $2L/t$ other components have more than $t$ boundary edges.
+The exponential cut estimate bounds the number of cyclic components with at most $t$ boundary edges by $8t2^t\ln(2/\varepsilon)$.
+
+A remaining tree component $Y$ has $|Y|=|\delta Y|-2\le t-2$.
+It contains no chosen short cycle, since every chosen cycle avoids $U$ and is connected.
+Thus $Y\subseteq J$.
+If $Y$ is adjacent to both cycles, it supplies a connecting path of length at most $t$.
+Direct edges between the cycles are also such paths.
+Subcubic degree makes these paths vertex-disjoint, including their endpoints.
+Divide each cycle into at most $8L/D$ arcs with at most $D/4$ consecutive vertices.
+Two connecting paths with the same pair of endpoint arcs would produce a cycle of length at most $2t+D/2\le D$ in $J$.
+There is therefore at most one path per pair of arcs.
+This proves \eqref{eq:polynomial-foundation-links}.
+
+\subsection{Component variables and exceptional pairs}
+For a cycle $C\subseteq J$, put $a_C=2^{-|C|}$ and let $I_C$ mean that $C$ is a component of the uniform even subgraph $\xi$ of $\Gamma$.
+Set $p_C=\Pr(I_C)$ and $X_C=(a_C/p_C)\mathbf1_{I_C}$.
+The condition $E(C)\subseteq\xi$ is feasible and imposes at most $|C|$ binary linear equations.
+Hence $p_C\ge a_C$, so $\mathbb EX_C=a_C$ and $\mathbb EX_C^2\le a_C$.
+The link formula gives
+\[
+ \mathbb E(X_CX_{C'})=a_Ca_{C'}2^{\ell(C,C')-1}
+\]
+for disjoint cycles.
+Distinct intersecting cycles cannot both be components.
+
+Fix $C$ and choose a maximal disjoint family of partners with at least three links to $C$.
+The exceptional-partner lemma bounds its size by $L$.
+Its vertex union has size at most $L^2$ and meets every exceptional partner.
+The local walk bound therefore bounds their total weight by $L^3 2^{-s}$.
+If all link counts are at most $b$, their total normalized joint contribution is at most
+\[
+ a_C2^bL^3 2^{-s}.
+\]
+These estimates apply to each of the two graph deletions in the next section.

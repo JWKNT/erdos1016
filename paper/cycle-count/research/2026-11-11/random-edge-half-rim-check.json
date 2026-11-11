@@ -1,0 +1,9 @@
+{
+  "status": "all exact short-rim identities passed",
+  "fixtures": 101,
+  "rim_cases": 213,
+  "chorded_square_cases": 1,
+  "rims_containing_terminals": 123,
+  "separately_checked_cycle_and_path_identities": 852,
+  "states": 17679
+}

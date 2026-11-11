@@ -1,0 +1,44 @@
+Independent audit by random_hosts, 2026-11-11
+
+PASS: path-high-girth-terminal-forests.tex.
+PASS: four-high-connectivity-entropy-moore.tex, including the appended
+exponential-rank and near-Moore corollaries.
+
+The stationary directed-edge entropy is sigma=3(h-1)/(3h+k-3).
+Nonbacktracking walks of length t=floor((g-1)/2) have distinct ordered
+endpoint pairs, giving the stated entropy Moore inequality. Two cycles
+either are edge-disjoint or contain a theta, so g<=2m/3. Under k<=g
+this implies k<=6(h-1), and hence h>=1+2^((g-22)/6).
+The bootstrap at g>=120 then gives h>=2^(g/2-5).
+
+The BFS-tree union joins all ports and has at most k marked vertices
+in any root-distance layer. It supports a join for every even subset
+of ports. Translation agrees outside the marker and preserves the
+uniform affine law, so the forest comparison is valid.
+
+The good-set closure contains the original set, avoids the connected
+marker, and has connected complement even when the retained set is
+disconnected. Its rank and boundary satisfy the previously audited
+localization theorem. The probability comparison therefore excludes
+every good set once its size is at least 2R_(epsilon/2).
+
+For a window of unmarked layers, boundary <=3m_left+3m_right+
+3k(span+3). The stopping rule gives fewer than67L^3 extensions, with
+L=log(mu). The threshold2^100(k+1)^2 makes
+24kL^2(67L^3+3)<=2000kL^5<=2^L
+uniformly valid. Thus full layer width is bounded by an absolute
+multiple of epsilon^-2 log^11(4/epsilon)+(k+1)^2.
+
+The union of radius-s port balls, s=floor(g/2-log k-10), occupies
+fewer than n vertices. A ball centered outside that union has no
+ports and has at least2^s vertices, since2s<g. It meets at most g
+root layers, giving layer width at least2^(g/2)/(2^11 k g).
+
+For epsilon=C g^(13/2)2^(-g/4), the layer upper bound is at most
+2^(-12)2^(g/2)/g^2 after choosing C and then g sufficiently large.
+The lower bound is2^(-11)2^(g/2)/g^2. This is a strict contradiction.
+The constants are absolute and the proof is uniform in rank and in
+all2^(k-1) even terminal subsets.
+
+The rank-one cycle exception is essential and correctly stated.
+No unresolved mathematical issue found.

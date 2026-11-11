@@ -1,0 +1,361 @@
+{
+  "created_utc": "2026-11-11T06:15:17.315383+00:00",
+  "claim": "For an absolute K and every finite graph of rank r>=1: c(G)<=2^(r-1)+K*r*2^(r/2). The known cyclic-square examples show this order is necessary.",
+  "status": "Mathematical working proof, internally audited; not a complete Lean formalization or external peer review.",
+  "main_sources": [
+    {
+      "path": "paper/cycle-count/research/2026-11-10/four-unrestricted-iterative-packing.tex",
+      "bytes": 10705,
+      "sha256": "4b0a70fcb5fc2f546f5699a0e909b727424125d70a959efb2152d24591553352"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/path-qualitative-affine-bootstrap.tex",
+      "bytes": 13939,
+      "sha256": "94bf2620a8068f9037b6a7ac1a7df092e7c01a3cfc003aa7403b02b17cbf4be7"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/second-order-unrestricted-sharp-bootstrap.tex",
+      "bytes": 9350,
+      "sha256": "df48fe29a61fd1bcc3402457e13afb74774b636aeecc24e7c79041dab83d294d"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/unrestricted-sharp-cycle-bound.tex",
+      "bytes": 10308,
+      "sha256": "b5b6fbbaa772a7d4050d0e049a73d5f25c7e95a3f26da055b06bb990bd00b9db"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/unrestricted-sharp-foundations.tex",
+      "bytes": 10539,
+      "sha256": "0fffa35eb66797886a3eccd2523d9eefdc43eec50bb142971a58b7ab88d7ba36"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/unrestricted-sharp-parallel-links.tex",
+      "bytes": 8353,
+      "sha256": "76bf7b0020e76eb3e643c7d6a09d70c4e2576e279ed12bc877bbb6f5deccf30f"
+    }
+  ],
+  "established_input_roots": [
+    "paper/cycle-count/pancyclic-paper.tex",
+    "paper/cycle-count/research/2026-11-10/small-cut-sharp-bound.tex",
+    "paper/cycle-count/research/2026-11-10/bounded-girth-cycle-deficit.tex",
+    "paper/cycle-count/research/2026-11-10/terminal-path-stability.tex"
+  ],
+  "established_input_sources": [
+    {
+      "path": "paper/cycle-count/pancyclic-paper.tex",
+      "bytes": 90803,
+      "sha256": "2624d54c2ba8b3a79215f62436bdb3d0d948751eda96a6919113246ee0885d71"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/bounded-girth-cycle-deficit.tex",
+      "bytes": 4615,
+      "sha256": "708e7ed26bd836b6f0b4fc4528a2435dbfb7a9f59039506b1f0849043b1a615f"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/general-additive-path-stability.tex",
+      "bytes": 6989,
+      "sha256": "ac4e59321077d240bfbd549a1798761a7ed1008ace135987edf41bcefe8cc7c0"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/general-path-stability.tex",
+      "bytes": 16035,
+      "sha256": "3e25ab49dc778f621eb9f2d56490f776b85096cb2377e216fe2baae9049434d8"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/path-fixed-girth.tex",
+      "bytes": 9872,
+      "sha256": "423b5f10d86d8c930e1347cb93f72079b6c8726d04ad0a1aed02fbb7ce1f8995"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/path-stability.tex",
+      "bytes": 11019,
+      "sha256": "f3b411283bc27ac6bd39b47297914596ea660680859741e87f5f1c9577f783e1"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/second-order-all-four-cuts.tex",
+      "bytes": 9289,
+      "sha256": "cac6c0fbfe8f5a0909cae50472e009738d24535b7ab53e84583d93f58629ad61"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/second-order-constructions.tex",
+      "bytes": 3389,
+      "sha256": "f7fac5046ee26a069806096911b8f2cfc580e580a569345f20a72e659f130e27"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/second-order-five-cut-partial.tex",
+      "bytes": 5600,
+      "sha256": "da2b3fd414c4c564f51448a2b43ee8889abf462be32852cd787cf43dda7a0d6b"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/second-order-five-cut-universal-crossing.tex",
+      "bytes": 6453,
+      "sha256": "1447aecbc6d79b4e7a7ae2861e1d32199530db19267d8bc8c3297e3ba3055af2"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/second-order-four-cut-large-shores.tex",
+      "bytes": 7268,
+      "sha256": "4006c38738da1f4019b2ee0dd3a23cf32a5dd094dd6203d0591fe43a4cf2a113"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/second-order-four-cut-sharp-order.tex",
+      "bytes": 5165,
+      "sha256": "83468ba03e3471a7ab6672ee35a9b26447a81b898f47ea7bb7c29df5a8f68500"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/second-order-four-cut-states.tex",
+      "bytes": 5148,
+      "sha256": "6ed0670a7da5c87d37bbf2157f1406f9ee9d3d9c6119a0a857c99f6f899da602"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/second-order-four-poles.tex",
+      "bytes": 4626,
+      "sha256": "c7fcd83d9f230ce6e061b3eb031826999a48949461c06d02f2cbeeeb32dcf428"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/second-order-high-density-protected-cuts.tex",
+      "bytes": 5095,
+      "sha256": "729ceef3650e31c8258bb54f600abbce9d3c4ef9dd22ce94f29f35200e5d26ba"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/second-order-high-density-small-cut.tex",
+      "bytes": 6275,
+      "sha256": "96284efcbe8abc549e3d3fb36028fef9344a2f1af807985a38ed3501b88baea1"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/second-order-high-path-cycle-tradeoff.tex",
+      "bytes": 11485,
+      "sha256": "d172ecd829406935eb167f8da91f803b1ab1dca63f33645f310a6447162e4588"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/second-order-one-full-tripole.tex",
+      "bytes": 5174,
+      "sha256": "fa942410e64bb6f6a811ce7de05d5902333c021e11e5021954d8f28fb46d4ea7"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/second-order-path-gap.tex",
+      "bytes": 9926,
+      "sha256": "701e4081698af2ab37c31038f753f75eb932abbf3c30ece20150e4fd397a4b47"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/second-order-saturated-blocks.tex",
+      "bytes": 12886,
+      "sha256": "2b44c50b6f53efdc0d57aaf3aa88f8585d0cc9c4c024026623d7c6e693efcc81"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/second-order-three-pole-tradeoff.tex",
+      "bytes": 12391,
+      "sha256": "a2aa3140d754bd3535db975000ea44994331e6b5692be4a50ff422345eff428e"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/second-order-two-cycle-packing-refinement.tex",
+      "bytes": 6324,
+      "sha256": "a168b814cabb58118e9010d70d713eec766aa3960e4c0d7e076cb75cc33fed9a"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/small-cut-sharp-bound.tex",
+      "bytes": 4913,
+      "sha256": "5fa840b79a2252edde7d40b14396b1f8e3e77e598876a2bb22881bcb5404cd7a"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/terminal-path-stability.tex",
+      "bytes": 2631,
+      "sha256": "4ce21391e020cfcbcb676850c32d10ffe54248b6153b640122c69b01a578f815"
+    }
+  ],
+  "noncircularity": "Focused proof uses the original qualitative marked-cycle theorem at error .05, the established sharp cyclic-cut<=4 theorem, and the bounded-girth deficit. It does not require the newer polynomial-error theorem or assume the sharp conclusion.",
+  "pdf": {
+    "path": "paper/cycle-count/research/2026-11-10/unrestricted-sharp-cycle-bound.pdf",
+    "bytes": 167253,
+    "sha256": "7bc0f3fdae4aa8cb49f6ea0effafb8182edebf891763d8249532f49e8fde9c17",
+    "pages": 20,
+    "build_command": "/opt/homebrew/bin/tectonic --keep-logs unrestricted-sharp-cycle-bound.tex",
+    "warnings": [],
+    "unresolved_reference_pages": [],
+    "visual_review": {
+      "root": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "path_stability": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "four_regular": [
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "result": "All final rendered pages passed; no requested changes."
+    }
+  },
+  "audits": [
+    {
+      "path": "paper/cycle-count/research/2026-11-10/root-unrestricted-sharp-audit.txt",
+      "bytes": 4010,
+      "sha256": "40aedc46ccc506977067f12e5342639ce6a84d30a23e6541b9e31eede6de44f2"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/four-unrestricted-sharp-bootstrap-audit.txt",
+      "bytes": 4734,
+      "sha256": "7e8afcdeddfe99c548896e65167f65c5481f054e9afbad4d0212ca31d567337c"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/path-sharp-bootstrap-independent-audit.txt",
+      "bytes": 3703,
+      "sha256": "dd9d0e3558f135da0ed9b7714a478eb8d40effc76400e68609dce07434ac085f"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/random-unrestricted-focused-audit.txt",
+      "bytes": 4543,
+      "sha256": "18ecbb82d6fb5b42fda1f272d30196f51478bd2ff3b8efff339d537a7ecc0296"
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/sharp-bootstrap-audit-handoff.txt",
+      "bytes": 3830,
+      "sha256": "358590d9b5415973784ca4ad669fc04e6c1f363939c0de29d0f8683324b6d0ec"
+    }
+  ],
+  "exact_checks": [
+    {
+      "path": "paper/cycle-count/research/2026-11-10/four-high-connectivity-iterative-packing-checks.json",
+      "bytes": 874,
+      "sha256": "5de16629e0f74469ca385332f3422791869a68f08402361ad1da0e1fd67d3c38",
+      "status": "all exact checks passed",
+      "rerun_at_final_verification": true,
+      "counts": {
+        "selected_vertex_sets": 5572,
+        "small_quotient_graphs": 108,
+        "actual_articulation_partitions": 503,
+        "terminal_classes": 371,
+        "largest_terminal_class": 21,
+        "middle_interval_separations": 636,
+        "long_quotient_fixtures": 8,
+        "disjoint_segment_pairs": 114,
+        "core_prunings": 4482,
+        "cubic_graphs": 30,
+        "affine_product_fibers": 4163,
+        "disjoint_core_pairs": 421
+      }
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/root-disconnected-localization-checks.json",
+      "bytes": 322,
+      "sha256": "ee737ed1514e3c1371be5541e229f4dbd544412f2ec408d6864bfac17356ec52",
+      "status": "PASS",
+      "rerun_at_final_verification": false,
+      "checks": 1193,
+      "disconnected_checks": 265,
+      "padded_checks": 56,
+      "enumerated_states": 93632
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/root-shortest-cycle-prefix-checks.json",
+      "bytes": 15208,
+      "sha256": "49691bd3fb7f0950a3fa6e8aa2ea8a075cfccd7a34166db1298923bb9478ea81",
+      "status": "exact finite identities passed; no asymptotic numerical claim",
+      "rerun_at_final_verification": false,
+      "branch_checks": 292
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/root-cut-smoothing-checks.json",
+      "bytes": 672,
+      "sha256": "fae2c070ae5e1903d152bde5642131589677cb48d71f27a838350a5e6bc1ed57",
+      "status": "PASS",
+      "rerun_at_final_verification": false
+    },
+    {
+      "path": "paper/cycle-count/research/2026-11-10/four-cut-sharp-order-checks.json",
+      "bytes": 1606,
+      "sha256": "352927b1b7e1ad8570c497d39aa88c43d712105728830c3ca67e232b0dc56869",
+      "status": "all exact sharp-order family checks passed",
+      "rerun_at_final_verification": false
+    }
+  ],
+  "check_limitation": "Finite checks validate identities, restriction laws, product fibers, and counts. They do not numerically establish the analytic thresholds.",
+  "formalization": {
+    "complete_new_theorem": false,
+    "fable_directory_edited": false,
+    "remaining": [
+      "uniform affine-core lemmas",
+      "terminal-bipartition interval lemma",
+      "iterative packing recurrence",
+      "exact-half forest assembly and final sharp-order assembly"
+    ]
+  },
+  "fable": {
+    "last_observed_handoff_utc": "2026-11-11T03:11:00.665094+00:00",
+    "last_update": "UPDATE 10; stopped at usage limit",
+    "new_results_observed_this_continuation": false,
+    "source_snapshot": [
+      {
+        "path": "Erdos1016/PolynomialBound/Averaging.lean",
+        "bytes": 10475,
+        "sha256": "042a081ab0f19e2c61d7eb932225dc4f3468df4e2c2a126f7e448f91f76b0dcb"
+      },
+      {
+        "path": "Erdos1016/PolynomialBound/Chain.lean.wip",
+        "bytes": 9122,
+        "sha256": "a29bcfa426cf4d3fdb0f5a9b043b6d7f002f1e8eb972c4cbdcfd5d857124ce9b"
+      },
+      {
+        "path": "Erdos1016/PolynomialBound/CycleBound.lean",
+        "bytes": 11199,
+        "sha256": "d98756a74ed1e0f4cf7e47857aa95dcc371dd5b499ed4518f828fd60466287fb"
+      },
+      {
+        "path": "Erdos1016/PolynomialBound/ForestStatement.lean",
+        "bytes": 4618,
+        "sha256": "6ada6b53eb96dcda738f7ccfcf6045824f367d266ba57c51749c6c7f45047318"
+      },
+      {
+        "path": "Erdos1016/PolynomialBound/LinkBound.lean",
+        "bytes": 5663,
+        "sha256": "4fa00a6835395ec819c770c0c17a84449ad0720c9a2f8ff08705f1575a51a5e8"
+      },
+      {
+        "path": "Erdos1016/PolynomialBound/ParallelLinks.lean",
+        "bytes": 21342,
+        "sha256": "a6d4954b86873bfe4d0d2918b9f24e7805a99e96200c78fa97406321c1f4b9ff"
+      },
+      {
+        "path": "Erdos1016/PolynomialBound/Separation.lean",
+        "bytes": 17059,
+        "sha256": "e8750fbfbd8b8dea396f084f7881c37a0844de6a702b6c518a442308a6c9d7ed"
+      },
+      {
+        "path": "Erdos1016/PolynomialBound/Statement.lean",
+        "bytes": 5053,
+        "sha256": "093833378ea61e71f8fcbd88293b4070057f4ffe94cd90b191f4d10f740e5a16"
+      },
+      {
+        "path": "Erdos1016/PolynomialBound/TwoLinkMoment.lean",
+        "bytes": 11528,
+        "sha256": "386a81937abf5bdeac8cfe21cd356b7cf85c6f41e7462e113e901dfaba8d3978"
+      }
+    ]
+  },
+  "workspace": {
+    "head": "a9657883c223e394214450bb0a09c5867290a07c",
+    "tracked_changes": [],
+    "commit_created": false,
+    "publication_performed": false
+  },
+  "shared_notes": [
+    "CODEX-TO-FABLE-LIVE.txt",
+    "RESEARCH-STATUS-2026-11-11.txt"
+  ],
+  "historical_packets": "Earlier open-status statements in all-fixed-cut-cycle-bound.pdf and polynomial-cycle-error.pdf are preserved as historical checkpoints; the current primary packet supersedes their unrestricted status."
+}

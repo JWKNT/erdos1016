@@ -1,0 +1,162 @@
+\section{Minimum cyclic cuts can avoid every short cycle}
+\label{sec:random-long-minimum-cut}
+
+A minimum cyclic cut need not contain an edge on a short cycle.
+The obstruction persists at any fixed cyclic connectivity.
+This concerns a proposed proof strategy, not the sharp cycle-count conjecture.
+
+\begin{lemma}[Joining poles with distant ports]
+\label{lem:random-distant-port-gluing}
+Let $X,Y$ be connected normalized $k$-poles, where $k\ge2$.
+Assume that each has rank at least $k$, and that distinct ports in each pole have distance at least $2k$.
+Join their corresponding ports by $k$ edges, obtaining a cubic graph $G$.
+\begin{enumerate}
+\item If both poles have no internal cyclic cut of size below $k$, then $\lambda_c(G)=k$.
+\item If both poles have no internal cyclic cut of size at most $k$, then the joining cut is the unique cyclic cut of size at most $k$.
+\end{enumerate}
+Uniqueness identifies a cut with its unordered pair of shores.
+\end{lemma}
+
+\begin{proof}
+Consider a cyclic cut $\delta_G S$ of size $d$.
+For the first assertion suppose $d<k$; for the second suppose $d\le k$.
+Its restriction to either pole has internal boundary at most $d$.
+By the corresponding connectivity hypothesis, the two restricted shores cannot both contain cycles.
+They cannot both be forests either.
+Indeed, if their component counts are $c_1,c_2$, then the pole rank would be
+\[
+ |\delta_X(S\cap X)|-c_1-c_2+1
+ \le d-1<k.
+\]
+The empty-shore cases also exclude two forest sides, since the whole pole is cyclic.
+Thus each restricted partition has a unique acyclic side.
+
+Every component $B$ of such an acyclic side contains at most one port.
+Otherwise a path in $B$ between two ports has length at least $2k$, so $|B|\ge2k+1$.
+If $t_B$ counts its ports, the degree identity gives
+\[
+ |\delta_X B|=|B|+2-t_B\ge2k+3-k>k.
+\]
+This contradicts $|\delta_X B|\le d$.
+In particular, an acyclic side containing $\alpha$ ports has internal boundary at least $2\alpha$.
+
+Call the other restricted side the cyclic side.
+If both poles' cyclic sides lie on the same side of $\delta_G S$, the opposite side is a forest.
+Each of its tree components before the joining edges are restored has at most one port.
+The joining edges can therefore only join two distinct tree components in pairs.
+They cannot create a cycle.
+This contradicts the cyclicity of the chosen cut.
+
+The cyclic sides must therefore lie on opposite sides.
+Let $\alpha,\beta$ count the ports in the two acyclic sides.
+Relative to the joining cut, moving these ports can remove at most $\alpha+\beta$ crossing joining edges.
+The new internal boundaries contribute at least $2\alpha+2\beta$.
+Consequently
+\[
+ d\ge k-\alpha-\beta+2\alpha+2\beta
+   =k+\alpha+\beta.
+\]
+This excludes $d<k$.
+If $d\le k$, equality forces $\alpha=\beta=0$ and both internal boundaries to vanish.
+Connectedness of the poles then makes both acyclic sides empty.
+The cut is exactly the joining cut.
+\end{proof}
+
+\begin{theorem}[Long cycles through every minimum-cut edge]
+\label{thm:random-long-minimum-cut}
+For every fixed integer $k\ge5$, there are a constant $c_k>0$ and arbitrarily large connected simple cubic graphs $G$ such that
+\[
+ \lambda_c(G)=k,\qquad \operatorname{girth}(G)\ge k+1,
+\]
+the minimum cyclic cut is unique, and every cycle containing any edge of that cut has length at least
+\[
+ c_k\,\beta(G).
+\]
+\end{theorem}
+
+\begin{proof}
+Put $K=k+1$.
+Choose a sufficiently large simple cubic graph $H$ with cyclic connectivity at least $K$ and girth at least $K$.
+Such graphs exist at arbitrarily large orders.
+For example, Wormald's random-regular connectivity theorem supplies them for every fixed $K$:
+\href{https://doi.org/10.1016/S0095-8956(81)80021-4}{N.~C.~Wormald, \emph{The asymptotic connectivity of labelled regular graphs}, JCTB 31 (1981), 156--167}.
+The theorem states that, asymptotically, random regular graphs conditioned on the required fixed girth have the corresponding cyclic connectivity.
+
+Choose $2K+1$ edges of $H$ whose endpoint sets have pairwise distance at least $8K$.
+A greedy choice is possible when $H$ is sufficiently large, since cubic balls of fixed radius have bounded size.
+Divide these edges into a left set and a right set of size $K$, and one extra edge.
+Also choose $H$ large enough that $\beta(H)\ge K$.
+Write $n_0=|V(H)|$.
+
+Construct a chain $B_L$ of $L$ copies of $H$.
+Between consecutive copies, subdivide the right reserved edges of the earlier copy and the left reserved edges of the later copy.
+Join the resulting $K$ ports by an arbitrary matching.
+Each intermediate graph has cyclic connectivity at least $K$, by the first part of Lemma~\ref{lem:random-distant-port-gluing}.
+The required port distances hold at every step.
+A path between two new ports either stays within their end block or first reaches an earlier attachment port.
+In either case the reserved-edge separation gives length at least $8K$.
+Subdivisions cannot reduce these distances.
+
+All edges of $B_L$ lie within a block or between consecutive blocks.
+It has
+\[
+ |V(B_L)|=L n_0+2K(L-1)
+\]
+vertices.
+Its girth is at least $K$.
+Indeed, an old cycle remains at least as long, and a cycle crossing a newly added joining cut uses two distinct ports in each participating side.
+The port-distance bound makes such a cycle longer than $K$.
+
+Put
+\[
+ t=\left\lfloor\frac{L-1}{k-1}\right\rfloor.
+\]
+In blocks $1,1+t,\ldots,1+(k-1)t$, subdivide the extra reserved edge.
+These $k$ new vertices form the ports of a normalized $k$-pole $X_L$.
+Any path between different ports must traverse at least $t$ consecutive block boundaries.
+Thus their pairwise distances are at least $t$.
+The internal cyclic connectivity remains at least $K$, since subdivision preserves cyclic cuts and cycles.
+
+For $L$ large enough that $t\ge2k$, join two disjoint copies of $X_L$ through their corresponding ports.
+The second part of Lemma~\ref{lem:random-distant-port-gluing} makes this joining cut the unique minimum cyclic cut, of order $k$.
+Any cycle meeting it uses at least two joining edges.
+Between consecutive joining edges, it contains a path between distinct ports of one pole.
+Hence its length is at least $2t+2$.
+All other cycles lie in a copy of $X_L$ and have length at least $K$.
+
+The rank of the final graph is
+\[
+ r=L(n_0+2K)-k-1.
+\]
+Since $k,n_0,K$ are fixed and $2t+2$ grows linearly with $L$, the claimed constant $c_k>0$ exists.
+\end{proof}
+
+In particular, no universal rule can select an edge of a minimum cyclic cut that lies on a polylogarithmic cycle.
+The same construction rules out a uniform upper bound $r/(\log r)^2$ for that cycle length.
+These statements already fail at each fixed $k\ge5$.
+The graphs above are covered by the fixed-cut sharp bound, so this construction does not contradict that theorem.
+It also leaves open a short-cycle selection rule under an additional near-extremal cycle-count hypothesis.
+
+\begin{corollary}[The obstruction with growing connectivity and girth]
+\label{cor:random-long-cut-diagonal}
+There is a sequence of connected simple cubic graphs $G_k$ such that
+\[
+ \lambda_c(G_k)=k\longrightarrow\infty,
+ \qquad
+ \operatorname{girth}(G_k)\ge k+1\longrightarrow\infty,
+\]
+and every edge of their unique minimum cyclic cut lies on no cycle of length at most
+\[
+ \frac{r_k}{(\log r_k)^2},
+ \qquad r_k=\beta(G_k).
+\]
+\end{corollary}
+
+\begin{proof}
+For the fixed-$k$ family in Theorem~\ref{thm:random-long-minimum-cut}, choose a rank $r_k$ so large that
+\[
+ c_k(\log r_k)^2>1.
+\]
+Every cycle through a minimum-cut edge then has length at least $c_k r_k>r_k/(\log r_k)^2$.
+Choose the ranks increasing with $k$.
+\end{proof}

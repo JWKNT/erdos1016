@@ -1,0 +1,48 @@
+{
+  "source": "Fable exhaustive22-vertex census; this file independently checks witnesses only",
+  "full_census_repeated_by_codex": false,
+  "records": [
+    {
+      "graph6": "U????A?O@?A?B?o_T??o_Ca@CG?HG?B_?BA?GP??",
+      "cycles": 2876,
+      "min_edge": 1392,
+      "max_edge": 1416,
+      "edge_path_checks": 33,
+      "cpp_cycle_space": {
+        "order": 22,
+        "rank": 12,
+        "graphs": 1,
+        "cycle_space_states": 4096,
+        "max_cycles": 2876,
+        "max_cycles_graph6": "U????A?O@?A?B?o_T??o_Ca@CG?HG?B_?BA?GP??",
+        "max_min_edge_count": 1392,
+        "max_min_edge_graph6": "U????A?O@?A?B?o_T??o_Ca@CG?HG?B_?BA?GP??",
+        "max_nonfull_edge_count": 1416,
+        "nonfull_denominator": 2048,
+        "nonfull_graph6": "U????A?O@?A?B?o_T??o_Ca@CG?HG?B_?BA?GP??",
+        "nonfull_edge_index": 4
+      }
+    },
+    {
+      "graph6": "U????A?O@?Q?B??o@_QO_Oc?cG@_O?`GA@_??oO?",
+      "cycles": 2066,
+      "min_edge": 1026,
+      "max_edge": 2048,
+      "edge_path_checks": 33,
+      "cpp_cycle_space": {
+        "order": 22,
+        "rank": 12,
+        "graphs": 1,
+        "cycle_space_states": 4096,
+        "max_cycles": 2066,
+        "max_cycles_graph6": "U????A?O@?Q?B??o@_QO_Oc?cG@_O?`GA@_??oO?",
+        "max_min_edge_count": 1026,
+        "max_min_edge_graph6": "U????A?O@?Q?B??o@_QO_Oc?cG@_O?`GA@_??oO?",
+        "max_nonfull_edge_count": 1028,
+        "nonfull_denominator": 2048,
+        "nonfull_graph6": "U????A?O@?Q?B??o@_QO_Oc?cG@_O?`GA@_??oO?",
+        "nonfull_edge_index": 3
+      }
+    }
+  ]
+}

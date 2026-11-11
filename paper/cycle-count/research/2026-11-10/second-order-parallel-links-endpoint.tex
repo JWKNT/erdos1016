@@ -1,0 +1,374 @@
+\section{Parallel links and an endpoint-scale unrestricted error}
+\label{sec:parallel-links-endpoint}
+
+Fable's parallel-link lemma removes the forest excess from the link bound.
+This section combines that lemma with two-scale restoration and a separate spectral estimate inside each clean block.
+The endpoint parameters below give a relative error $O((\log r)^6/\sqrt r)$.
+The argument is mathematical, with independent audits of its constituent estimates.
+
+All logarithms in this section have base two unless written as $\ln$.
+
+\begin{lemma}[Fable's parallel-link estimate]
+\label{lem:endpoint-parallel-links}
+Let $A,B$ be disjoint connected vertex sets in a connected multigraph $\Gamma$.
+Let $P$ be a vertex set, and let $\xi$ be a uniform even subgraph.
+Suppose its restriction outside $P$ is a forest with probability greater than one half.
+For every integer $t\ge0$, at most $2^{t+1}$ components of $\Gamma-(A\cup B)$ satisfy all four conditions below:
+\begin{enumerate}
+\item They have an edge to each of $A,B$.
+\item They avoid $P$.
+\item They contain a cycle.
+\item Their boundary has at most $t$ edges.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+If there is no component joining $A$ to $B$, the assertion is immediate.
+Otherwise retain one such component $Q_0$.
+The set $A\cup B\cup Q_0$ is connected.
+For any two other complementary components $Q_i,Q_j$, the graph $\Gamma-Q_i-Q_j$ is connected.
+It contains the retained connected set, and every other complementary component has an edge to that set.
+No edge joins $Q_i$ and $Q_j$.
+
+Thus the two regions have exactly one link.
+The cycle-space pair law makes their zero-boundary events independent.
+Conditional on both zero-boundary events, their internal even edge sets are independent and uniform.
+This also follows from the direct product of the cycle spaces after deleting the two boundaries.
+
+For each eligible component other than $Q_0$, let $E_i$ mean that its boundary is zero and its internal even edge set is nonzero.
+The events $E_i$ are pairwise independent.
+The zero-boundary condition imposes at most $t$ linear equations, so its probability is at least $2^{-t}$.
+The cyclic internal graph has a nonzero even edge set with conditional probability at least one half.
+Consequently $p_i:=\Pr(E_i)\ge2^{-t-1}$.
+
+If there are $m$ such components, put $N=\sum_i\mathbf1_{E_i}$ and $\nu=\mathbb EN$.
+Pairwise independence gives
+\[
+ \mathbb EN^2\le\nu^2+\nu,\qquad
+ \Pr(N=0)\le\frac1{1+\nu},\qquad
+ \nu\ge m2^{-t-1}.
+\]
+The forest event implies $N=0$.
+Its probability exceeds one half, so $m<2^{t+1}$.
+Including $Q_0$, if it was eligible, gives at most $2^{t+1}$ components.
+\end{proof}
+
+We recall the walk and moment estimates needed below.
+Let $J$ have maximum degree three and girth greater than $D$.
+Put $s=\lfloor(D-1)/2\rfloor$, and let $\mathcal C$ contain its cycles of length at most $L$.
+For $a_C=2^{-|C|}$ and $\mu=\sum_Ca_C$, the local walk bound gives
+\begin{equation}\label{eq:endpoint-local-weight}
+ \sum_{C\ni v}a_C\le L2^{-s}.
+\end{equation}
+The repeated-walk estimate and the even spectral trace estimate give
+\begin{equation}\label{eq:endpoint-trace-estimates}
+ \mu\le\sum_{\ell\le L}\frac{\operatorname{tr}B_J^\ell}{2\ell2^\ell}
+ \le(1+\tfrac32L^22^{-s})\mu,
+ \qquad
+ 2^{-\ell}\operatorname{tr}B_J^\ell
+ \ge\left(1-\frac{d_J}{2v_J}\right)^\ell-3v_J2^{-\ell/2}
+\end{equation}
+for even $\ell$, where $d_J=\sum_v(3-\deg_Jv)$ and $d_J<v_J$.
+These are the established non-backtracking walk estimates from Section~\ref{sec:polynomial-foundations}.
+
+Suppose $J=\Gamma-(P\cup S)$, where $S$ comes from a maximal disjoint packing of cycles of length at most $D$ outside $P$.
+Write $c=\operatorname{comp}(\Gamma[P])$.
+The usual link decomposition, with Lemma~\ref{lem:endpoint-parallel-links} replacing its cyclic-region term, gives
+\begin{equation}\label{eq:endpoint-link-estimate}
+ \ell(C,C')
+ \le c+\frac{2L}{t+1}+2^{t+1}+578(L/D)^2
+\end{equation}
+whenever $8\le D\le L$ and $2(t+2\lfloor D/8\rfloor)\le D$.
+Components meeting $P$ contribute at most $c$.
+Components with more than $t$ boundary edges contribute at most $2L/(t+1)$.
+The new lemma handles the other cyclic components.
+Small tree components and direct edges are bounded by the unchanged girth argument.
+
+\begin{lemma}[The refined second moment]
+\label{lem:endpoint-two-link-moment}
+Suppose every disjoint pair in $\mathcal C$ has at most $b$ links.
+Put
+\[
+ \eta=\tfrac32\,2^bL^32^{-s}.
+\]
+Let $W_2$ be the total weight $a_Ca_{C'}$ of ordered disjoint pairs with exactly two links.
+If the forest probability exceeds $1/2+\varepsilon$, then
+\begin{equation}\label{eq:endpoint-moment-conclusions}
+ W_2\ge\mu^2-(1+\eta)\mu,
+ \qquad
+ \mu\le\frac{1+\eta}{4\varepsilon}.
+\end{equation}
+The first inequality is strict when $\mu>0$.
+\end{lemma}
+
+\begin{proof}
+If $\mu=0$, both conclusions hold immediately.
+Assume $\mu>0$.
+For each $C$, let $I_C$ mean that it is a component of $\xi$.
+Put $p_C=\Pr(I_C)$ and $X_C=(a_C/p_C)\mathbf1_{I_C}$.
+The cycle-component equations give $p_C\ge a_C$, so
+\[
+ \mathbb EX_C=a_C,\qquad \mathbb EX_C^2\le a_C.
+\]
+Distinct intersecting cycles have zero joint contribution.
+For disjoint cycles, the pair law gives
+\[
+ \mathbb E(X_CX_{C'})=a_Ca_{C'}2^{\ell(C,C')-1}.
+\]
+The exceptional-partner bound and~\eqref{eq:endpoint-local-weight} make the total contribution from pairs with at least three links at most $\eta\mu$.
+Thus, for $Z=\sum_CX_C$,
+\[
+ \mathbb EZ^2\le\mu^2+W_2+(1+\eta)\mu
+ \le2\mu^2+(1+\eta)\mu.
+\]
+The forest event implies $Z=0$.
+Cauchy--Schwarz gives
+\[
+ \mu^2\le\Pr(Z>0)\mathbb EZ^2
+ <(1/2-\varepsilon)\mathbb EZ^2.
+\]
+The first displayed moment bound yields the strict lower bound on $W_2$.
+The second yields the upper bound on $\mu$.
+\end{proof}
+
+\begin{lemma}[Cycle supply in one clean block]
+\label{lem:endpoint-block-supply}
+Fix $A=6e^{168}$.
+Put $x=\log r$, $L=\lfloor Ax\rfloor$, and $s_0=\lfloor(D_0-1)/2\rfloor$.
+Suppose $L^22^{-s_0}=o(1)$.
+Let $J$ be a simple graph of maximum degree three, girth greater than $D_0$, and order $v$ satisfying
+\[
+ 8L^2\le v\le3r,
+ \qquad d_J\le2L.
+\]
+For sufficiently large $r$, its cycles of length at most $L$ have total weight at least one.
+The threshold is uniform over all such graphs $J$.
+\end{lemma}
+
+\begin{proof}
+For every even $\ell$ with $6x\le\ell\le L$, Bernoulli's inequality gives
+\[
+ \left(1-\frac{d_J}{2v}\right)^\ell
+ \ge1-\frac{Ld_J}{2v}\ge\frac78.
+\]
+The nonreal spectral error in~\eqref{eq:endpoint-trace-estimates} is at most $9r^{-2}$.
+The even harmonic sum over this interval tends to $\tfrac14\ln(A/6)$.
+The repeated-walk factor tends uniformly to one.
+Therefore the total cycle weight is at least
+\[
+ \left(\frac7{32}-o(1)\right)\ln(A/6)>1.
+\]
+No connectedness or eigenvalue multiplicity estimate is required.
+\end{proof}
+
+\begin{theorem}[An endpoint-scale forest error]
+\label{thm:parallel-links-endpoint-forest}
+Let $\Gamma$ be connected and subcubic, with rank $r$.
+Let $P$ contain every vertex of degree less than three.
+Put $x=\log r$ and $z=\log x$, and assume
+\[
+ |P|\le r/x^2,
+ \qquad \operatorname{comp}(\Gamma[P])\le x/z^2.
+\]
+For a uniform even subgraph, let $\mathcal F$ be the event that its restriction to $\Gamma-P$ is a forest.
+There is an absolute constant $M$ such that, for all sufficiently large $r$,
+\begin{equation}\label{eq:endpoint-forest-log-six}
+ \Pr(\mathcal F)\le\frac12+M\frac{x^6}{\sqrt r}.
+\end{equation}
+Separately, the more conservative parameter choice gives
+\begin{equation}\label{eq:endpoint-forest-log-seven}
+ \Pr(\mathcal F)\le\frac12+\frac{x^7}{\sqrt r}
+\end{equation}
+for all sufficiently large $r$.
+\end{theorem}
+
+\begin{proof}
+If $P$ is empty, the forest event contains only the empty even edge set, so its probability is $2^{-r}$.
+Assume $P$ is nonempty and fix one connected component $P_0$ as an anchor.
+Keep $A=6e^{168}$, and put
+\[
+ L=\lfloor Ax\rfloor,
+ \quad t=\lfloor z-2\log z\rfloor,
+ \quad D_0=\left\lceil\frac{8Ax}{z}\right\rceil.
+\]
+We prove both bounds with the following two parameter rows:
+\[
+\begin{array}{c|c|c|c}
+ &a&B&\varepsilon\\ \hline
+ \text{conservative}&5&0&x^7/\sqrt r\\
+ \text{endpoint}&4&\lceil\log(10^6A)\rceil&Mx^6/\sqrt r
+\end{array}
+\qquad
+ D_1=\lfloor x-az-B\rfloor.
+\]
+The constant $M\ge1$ is chosen at the end, independently of $r$.
+Suppose, for a contradiction, that $\Pr(\mathcal F)>1/2+\varepsilon$.
+For large $r$, one has $8\le D_0<D_1\le L$ and $t\ge1$.
+
+Choose a maximal disjoint family $\mathcal Q_0$ of cycles of length at most $D_0$ outside $P$.
+Extend it to a maximal disjoint family $\mathcal Q_1$ for length $D_1$.
+Let $S_j$ be their vertex unions and put $J_j=\Gamma-(P\cup S_j)$.
+Then $S_0\subseteq S_1$, and $J_j$ is simple with girth greater than $D_j$.
+
+Each chosen cycle is a cyclic region with boundary at most its length.
+The exponential small-cut bound gives
+\[
+ |\mathcal Q_j|<8D_j2^{D_j}\ln(2/\varepsilon).
+\]
+Since $M\ge1$, both parameter rows have $\ln(2/\varepsilon)\le x$ for large $r$.
+Consequently,
+\begin{equation}\label{eq:endpoint-deletion-sizes}
+ |S_0|\le8D_0^22^{D_0}x=r^{o(1)},\qquad
+ |S_1|\le8\,2^{-B}\frac r{x^{a-3}}.
+\end{equation}
+
+Write $v_1=|V(J_1)|$ and $d_1=\sum_{v\in J_1}(3-\deg_{J_1}v)$.
+The degree sum in $\Gamma$ gives $|V(\Gamma)|=2r+O(|P|)$, and hence $v_1=2r+o(r)$.
+Also $d_1\le3(|P|+|S_1|)$.
+For the conservative row, $Ld_1=o(v_1)$.
+For the endpoint row, $v_1\ge r$ for large $r$, and
+\[
+ \frac{Ld_1}{2v_1}
+ \le\frac{3A}{2x}+12A2^{-B}<\frac1{100}.
+\]
+Thus the usual even trace sum over $6x\le\ell\le L$ supplies cycle weight
+\begin{equation}\label{eq:endpoint-initial-mass}
+ \mu_1:=\sum_{\substack{C\subseteq J_1\\|C|\le L}}2^{-|C|}
+ \ge\left(\frac{99}{400}-o(1)\right)\ln(A/6)>20.
+\end{equation}
+Here $L^22^{-s_1}=o(1)$ controls repeated walks, with $s_j=\lfloor(D_j-1)/2\rfloor$.
+
+At either girth scale, the hypotheses of~\eqref{eq:endpoint-link-estimate} hold for large $r$.
+The components meeting $P$ contribute at most $x/z^2$.
+Furthermore,
+\[
+ \frac{2L}{t+1}=(2A+o(1))\frac{x}{z},\quad
+ 2^{t+1}\le\frac{2x}{z^2},\quad
+ 578(L/D_j)^2\le578(z/8)^2.
+\]
+It follows that every link count is at most
+\[
+ b_r:=3Ax/z.
+\]
+Since $s_0\ge4Ax/z-2$, the exceptional-pair error satisfies
+\[
+ \eta_j\le O(L^32^{-Ax/z})=o(1)
+ \qquad(j=0,1).
+\]
+Lemma~\ref{lem:endpoint-two-link-moment} therefore gives
+\begin{equation}\label{eq:endpoint-upper-weight}
+ \mu_0\le\frac{1+o(1)}{4\varepsilon},
+ \qquad W_{2,1}>\mu_1^2-(1+o(1))\mu_1.
+\end{equation}
+
+We next obtain a nested chain at the larger girth scale.
+For disjoint cycles $C,C'$, call $C'$ far behind $C$ if it lies outside the $P_0$-component of $\Gamma-V(C)$.
+This relation is antisymmetric.
+A path from $P_0$ to its first vertex on $C$ avoids that far component and hence avoids $C'$.
+Connectedness then puts all of $C$ in the $P_0$-component after deleting $C'$.
+Thus ordered far pairs have total weight at most $\mu_1^2/2$.
+The weight of pairs joined by an edge is at most $\mu_1L^22^{-s_1}=o(\mu_1)$.
+
+Equations~\eqref{eq:endpoint-initial-mass} and~\eqref{eq:endpoint-upper-weight} therefore give a cycle $C$ with partners of total weight at least eight satisfying three conditions.
+They lie in the $P_0$-component of $H:=\Gamma-V(C)$, have exactly two links to $C$, and have no edge to $C$.
+For each partner, one of the two exterior linking components avoids $P_0$.
+It contains a neighbor $u$ of $C$, and the partner separates $u$ from $P_0$ in $H$.
+There are at most $L$ choices of $u$.
+For one choice, the separating cycles have total weight at least $8/L$.
+
+Take a maximal vertex-disjoint subfamily of these cycles, of size $T$.
+Its vertices meet every separating cycle in the family.
+The local weight estimate gives
+\begin{equation}\label{eq:endpoint-chain-size}
+ T\ge\frac{8\,2^{s_1}}{L^3}
+ \ge\frac{2^{1-B/2}}{A^3}\frac{\sqrt r}{x^{a/2+3}}.
+\end{equation}
+The cycles are nested between $u$ and $P_0$ in $H$.
+Indeed, two disjoint connected separators cannot cross one another's sides.
+Rerouting a $u$--$P_0$ path through the first separator shows that the second lies entirely on one side.
+The separation property then gives a consistent order.
+Write the ordered cycles as $C_1,\ldots,C_T$, and let $U_i$ be the $u$-component of $H-V(C_i)$.
+Then $U_i\subseteq U_{i+1}$ and $C_i\subseteq U_{i+1}$.
+
+Put $q=\lceil16A^2x\rceil+2$.
+Choose disjoint intervals $[a',b']$ of indices with $b'-a'=q$, leaving a separator between successive intervals.
+For each interval, use the full vertex set
+\[
+ V(a',b')=U_{b'}\setminus(U_{a'}\cup V(C_{a'})).
+\]
+It contains all $q-1$ intermediate cycles.
+Thus, since $D_1+1\ge x/2$ for large $r$,
+\[
+ |V(a',b')|\ge(q-1)(D_1+1)\ge8L^2.
+\]
+Every edge of $H$ leaving this set ends on $C_{a'}$ or $C_{b'}$.
+Its boundary in $H$ is at most $2L$.
+The chosen full sets are pairwise disjoint.
+
+Discard blocks meeting a neighbor of $C$, a vertex of $S_0$, or a vertex of $P$.
+At most $L+|S_0|+c$ blocks are discarded.
+For the last term, each connected component of $\Gamma[P]$ can meet at most one block.
+It cannot cross a block boundary because every such boundary ends on a separator cycle disjoint from $P$.
+
+Each retained block avoids $P\cup S_0$ and has no neighbor in either set.
+An edge to either set would leave the block and end on a separator cycle, which avoids both sets.
+The discarded neighbors of $C$ remove the only edges missing from this boundary description in $\Gamma$.
+Thus the induced graph on each retained block has girth greater than $D_0$, and degree deficit at most $2L$.
+Its order is at most $|V(\Gamma)|\le3r$.
+Lemma~\ref{lem:endpoint-block-supply} gives cycle weight at least one in each retained block.
+
+The losses in~\eqref{eq:endpoint-deletion-sizes} are negligible compared with the number of blocks.
+Using~\eqref{eq:endpoint-chain-size} and $q+1\le18A^2x$, for large $r$ their number $m$ satisfies
+\begin{equation}\label{eq:endpoint-clean-block-count}
+ m\ge c_B\frac{\sqrt r}{x^{a/2+4}},
+ \qquad c_B:=\frac{2^{-B/2}}{64A^5}.
+\end{equation}
+Cycles in different blocks are distinct cycles of $J_0$.
+Consequently $\mu_0\ge m$.
+
+For the conservative row, this contradicts
+\[
+ c_0\frac{\sqrt r}{x^{13/2}}
+ \le\mu_0\le(1+o(1))\frac{\sqrt r}{4x^7}.
+\]
+For the endpoint row, choose the absolute constant
+\[
+ M=\frac1{c_B}=64A^5 2^{B/2}.
+\]
+Then it contradicts
+\[
+ c_B\frac{\sqrt r}{x^6}
+ \le\mu_0\le(1+o(1))\frac{c_B}{4}\frac{\sqrt r}{x^6}.
+\]
+This proves both forest estimates.
+\end{proof}
+
+\begin{corollary}[Unrestricted endpoint-scale cycle error]
+\label{cor:parallel-links-endpoint-cycles}
+There is an absolute constant $M$ such that
+\[
+ \psi(r)\le2^{r-1}+(M+o(1))\frac{2^r(\log r)^6}{\sqrt r}.
+\]
+In particular, for every fixed $\kappa<1/2$,
+\[
+ \psi(r)\le2^{r-1}+(1+o(1))2^r r^{-\kappa}.
+\]
+\end{corollary}
+
+\begin{proof}
+Use the direct cubic-extremizer transfer of Proposition~\ref{prop:two-scale-direct-cycle-transfer}.
+A shortest cycle gives a connected marked set of size $O(\log r)$, satisfying the new hypotheses.
+The cycle-flip injection bounds some cyclic edge count by
+\[
+ c_e\le2^{r-2}+\frac M2\frac{2^r(\log r)^6}{\sqrt r}.
+\]
+Deleting that edge gives the same rank recurrence as before.
+The geometric tail satisfies
+\[
+ \sum_{j\le r}2^{j-1}\frac{(\log j)^6}{\sqrt j}
+ =(1+o(1))\frac{2^r(\log r)^6}{\sqrt r}.
+\]
+This proves the first bound.
+For each fixed $\kappa<1/2$, one has $(\log r)^6/\sqrt r=o(r^{-\kappa})$.
+The second bound follows.
+\end{proof}

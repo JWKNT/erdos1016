@@ -1,0 +1,151 @@
+% Depends on the full two-pole classification and its audited local formulas.
+\section{The sum bound when one terminal pair is full}
+\label{sec:one-full-tripole-sum}
+
+\begin{lemma}[One full pair]
+\label{lem:one-full-tripole-sum}
+Let $T$ be a connected loopless multigraph of rank $h$.
+Its three distinct terminals $a,b,c$ have degree two.
+Every other vertex has degree three.
+If $P_{ac}(T)=2^h$, then
+\[
+ P_{ab}(T)+P_{bc}(T)\le2^h+6\,2^{h/2}.
+\]
+\end{lemma}
+
+\begin{proof}
+Suppress $b$ to an edge of a two-terminal network $N$.
+Its rank remains $h$, and $P_{ac}(N)=2^h$.
+The graph $N$ has no loop, since every terminal path would avoid that loop.
+Lemma~\ref{lem:full-two-pole-classification} therefore applies.
+Its positive-rank bridgeless pieces form a series chain.
+Each piece is a capped ladder with singleton and square blocks.
+
+First suppose $N$ consists of one such piece.
+For a prefix with $p$ ladder positions, write $A_p$ for its cap count.
+The empty prefix has $A_0=1$.
+Adding a singleton replaces $A$ by $A+1$.
+Adding a square replaces $A$ by $2A+2$.
+These recurrences give
+\begin{equation}\label{eq:tripole-prefix-cap}
+ A_p\le3\,2^{p/2}-2\qquad(p\ge0).
+\end{equation}
+The singleton step uses
+$3(\sqrt2-1)2^{p/2}\ge1$.
+The square step preserves equality in the bound.
+The same estimate holds for a suffix cap count $B_q$.
+
+Let $p$ and $q$ count positions strictly before and after the block containing
+the subdivided edge. For an interface, they count the positions on its two sides.
+The subdivision formulas in Lemma~\ref{lem:one-full-three-pole-gap} give
+the following table:
+\[
+\begin{array}{c|c|c|c}
+\text{edge type}&h&P_{bc}&P_{ab}\\ \hline
+\text{interface}&p+q+1&(1+A_p)2^q&(1+B_q)2^p\\
+\text{singleton rung}&p+q+2&2(1+A_p)2^q&2(1+B_q)2^p\\
+\text{square edge}&p+q+3&(4+3A_p)2^q&(4+3B_q)2^p
+\end{array}
+\]
+The two parallel edges form the rank-one empty-ladder case.
+Subdividing one gives $P_{ab}=P_{bc}=2$, which satisfies the conclusion.
+
+For the first two rows, divide the path counts by $2^h$.
+Their sum is bounded by $f_p+f_q$, where
+\[
+ f_j=\frac{1+A_j}{2^{j+1}}.
+\]
+Here the suffix uses its own cap count in the second summand.
+Equation~\eqref{eq:tripole-prefix-cap} gives $f_j\le1/2$ for $j\ge3$.
+Thus the required sum is at most $2^h$ if both $p,q\ge3$.
+Otherwise reverse the piece if necessary and assume $p\le2$.
+Bound $P_{bc}$ by $2^h$ using the affine path count.
+In the interface row, the other term is at most
+\[
+ 3\,2^{p+q/2}=3\,2^{(p-1)/2}2^{h/2}
+ \le3\sqrt2\,2^{h/2}.
+\]
+In the singleton row, it is at most
+\[
+ 6\,2^{p+q/2}=6\,2^{(p-2)/2}2^{h/2}
+ \le6\,2^{h/2}.
+\]
+
+For a square edge, the normalized counts use
+\[
+ g_j=\frac{4+3A_j}{2^{j+3}}.
+\]
+Equation~\eqref{eq:tripole-prefix-cap} gives $g_j\le1/2$ for $j\ge2$.
+If both $p,q\ge2$, their sum is at most one.
+Otherwise assume $p\le1$ and again bound $P_{bc}$ by $2^h$.
+Since $4+3B_q\le9\,2^{q/2}$, the remaining term is at most
+\[
+ 9\,2^{p+q/2}=9\,2^{(p-3)/2}2^{h/2}
+ \le\frac92\,2^{h/2}.
+\]
+This proves the bound for one piece.
+
+Now suppose the subdivided edge lies inside a piece of rank $t$.
+Let $L$ and $R$ be the sums of the piece ranks before and after this piece.
+Write $A$ and $B$ for its paths from $b$ to its left and right endpoints.
+The series decomposition gives
+\[
+ h=L+t+R,\qquad P_{ab}=2^L A,\qquad P_{bc}=2^R B.
+\]
+If $L,R\ge1$, each count is at most $2^{h-1}$.
+If exactly one side has positive rank, reverse the chain and write $L=0$.
+The one-piece result and $B\le2^t$ give
+\[
+ A+2^R B
+ =(A+B)+(2^R-1)B
+ \le2^{t+R}+6\,2^{t/2}
+ \le2^h+6\,2^{h/2}.
+\]
+The case $L=R=0$ was already proved.
+
+Finally, suppose the subdivided edge is a bridge of $N$.
+Its two sides have positive ranks $L,R$ with $h=L+R$.
+All terminal paths on each side are full, so
+\[
+ P_{ab}+P_{bc}=2^L+2^R\le2^{L+R}=2^h.
+\]
+This completes the proof.
+\end{proof}
+
+\begin{lemma}[One full pair leaves a small adjacent pair]
+\label{lem:one-full-tripole-small-adjacent}
+Under the hypotheses of Lemma~\ref{lem:one-full-tripole-sum},
+\[
+ \min\{P_{ab},P_{bc}\}\le3\,2^{3h/4}.
+\]
+\end{lemma}
+
+\begin{proof}
+Use the same full two-pole decomposition and local table.
+Suppose first that the subdivided edge lies in a nonempty capped piece.
+Its rank is $t=p+q+c$, where $c=1,2,3$ for the three table rows.
+Equation~\eqref{eq:tripole-prefix-cap} bounds the two normalized local counts by
+\[
+ \frac32\,2^{-q/2},\qquad \frac32\,2^{-p/2},
+\]
+respectively. The square row actually has the smaller coefficient $9/8$.
+Let $L,R$ be the sums of the ranks before and after this piece.
+The two global normalized counts are therefore at most
+\[
+ \frac32\,2^{-R-q/2},\qquad \frac32\,2^{-L-p/2}.
+\]
+The sum of these two exponents is
+\[
+ L+R+\frac{p+q}{2}
+ =h-\frac t2-\frac c2\ge\frac h2-\frac c2.
+\]
+At least one exponent is at least $h/4-c/4$.
+Since $(3/2)2^{3/4}<3$, the smaller normalized count is at most
+$3\,2^{-h/4}$.
+
+If the active piece is a digon, both local counts are full.
+The two global normalized counts are $2^{-R},2^{-L}$, with $L+R=h-1$.
+Their minimum is at most $2^{-(h-1)/2}\le3\,2^{-h/4}$.
+If the subdivided edge is a bridge, the same argument uses $L+R=h$.
+Multiplication by $2^h$ proves the result.
+\end{proof}

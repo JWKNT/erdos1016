@@ -1,0 +1,13 @@
+{
+  "status": "all endpoint-avoidance and forest-concentration checks passed",
+  "checks": {
+    "endpoint_avoidance_checks": 5682,
+    "full_two_poles": 144,
+    "exact_forest_concentration_checks": 3442,
+    "five_pole_subdivisions": 1721,
+    "full_K22_four_poles": 101
+  },
+  "maximum_fraction_of_paths_using_other_terminal": "1/2",
+  "maximum_off_cap_forest_mass_over_corresponding_path_sum": "1",
+  "limits": "Finite checks supplement the symbolic proof; they are not an exhaustive graph classification."
+}

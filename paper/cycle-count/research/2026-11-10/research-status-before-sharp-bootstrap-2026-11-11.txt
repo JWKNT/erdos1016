@@ -1,0 +1,154 @@
+SECOND-ORDER CYCLE RESEARCH: CURRENT CHECKPOINT
+11 November 2026, 05:45 UTC
+
+The unrestricted O(r*2^(r/2)) bound remains OPEN.
+The new results below are mathematical drafts with independent proof audits.
+They are not new Lean formalizations, and publication priority is not established.
+
+MAIN NEW STRUCTURAL REDUCTION
+For an absolute K_* and every K>=K_*, a sufficiently large connected loopless
+cubic minimal-rank counterexample to
+  c(G) <= 2^(r-1) + K*r*2^(r/2)
+must have girth g and minimum cyclic cut order k satisfying
+  .5 log_2 log_2 r -5.5 log_2 log_2 log_2 r -C3 < k=g
+      <2 log_2 log_2 r +2 log_2 log_2 log_2 r +C4.
+Every minimum cyclic cut must isolate a shortest cycle.
+The minimal-counterexample statement explicitly assumes the proposed bound
+for ALL connected graphs of smaller rank. It is a reduction, not a proof
+that such a counterexample cannot exist.
+Primary packet: paper/cycle-count/research/2026-11-10/all-fixed-cut-cycle-bound.tex/.pdf.
+The title inside the packet is "Structural reductions for the second-order cycle bound".
+
+SHARP ERROR FOR EVERY FIXED CYCLIC CUT ORDER
+For every fixed K, connected loopless cubic multigraphs with a cyclic cut of
+size at most K satisfy
+  c(G) <= 2^(r-1) + O_K(r*2^(r/2)).
+For fixed minimum cyclic cut order k>=5, the stronger estimate is
+  c(G) <= 2^(r-1) - 2^(r-k-1) + o_k(2^r).
+The K-dependence cannot be dropped from the proved statement.
+Proof: path-fixed-cut-induction.tex. Delete one edge of a minimum cut and
+suppress its endpoints. The minimum cyclic order drops by exactly one;
+the exact cycle identity and uniform terminal-path estimate halve the known
+five-cut deficit at each step.
+The separate six-cut proof is preserved in six-cut-sharp-bound.tex/.pdf.
+It covers both large shores and every bounded-shore case independently.
+
+QUANTITATIVE LOCALIZATION AND PATH STABILITY
+The retained region in Fable's localization construction need not be connected;
+only its complement must be connected. Its localized rank is
+  beta(R)+boundary(R)-components(R)+1 = (|R|+boundary(R))/2+1
+when R is cubic. Closing around the connected marker now excludes every good
+set directly, avoiding the old exponential component-packing step.
+Consequently the additive terminal-path constant can be chosen with
+  C_epsilon <= exp(O(epsilon^-2 * log^11(1/epsilon))).
+The normalized edge-deletion path excess in cubic completions with no cyclic
+cut <=4 is
+  O((log log r)^(11/2)/sqrt(log r)).
+This proves a strict below-half bound through minimum cut orders
+  k <= .5 log log r -5.5 log log log r -C.
+Proof: path-quantitative-localization.tex.
+
+UNIFORM HIGHER-TERMINAL FOREST STABILITY
+For a connected normalized k-pole of rank h>=2 and girth g>=k, every even
+terminal subset T has affine forest density at most
+  1/2 + C*g^(13/2)*2^(-g/4).
+The estimate is uniform in h,k,T. A cycle pole of rank one is an essential
+exception. The proof uses a connected BFS-tree marker with at most k vertices
+per distance layer, disconnected localization, a generalized growing-window
+bound, and a port-free cubic ball supplied by an elementary entropy-Moore bound.
+Proofs: path-high-girth-terminal-forests.tex and
+four-high-connectivity-entropy-moore.tex.
+If a minimum cyclic cut has two noncycle shores, this yields
+  c(G)/2^r <= 1/4 + O(g^(13/2)*2^(-g/4)).
+Hence every above-half sequence without cyclic <=4 cuts eventually has k=g,
+and all its minimum cuts isolate shortest cycles.
+A weighted-kernel extension shows that, for every fixed C, an above-half family
+with growing girth cannot have a cut <=C*g with two connected shores of ranks
+at least H_C=ceil(64(C+1)log_2(16(C+1)))+1.
+Proof: four-high-connectivity-weighted-kernel.tex.
+
+GIRTH WINDOWS AND THE NO-DELETION CHAIN
+A Moore-ball argument bounds a normalized k-pole geodesic by
+  g*(k+1+n*2^(-g/2)).
+The endpoint forest theorem remains valid for a connected marker of size
+  a*r/log_2 r, with a=1/(1000*6*exp(168)).
+These facts make the shortest-cycle prefix argument quantitative. Without
+any cyclic-connectivity assumption, sufficiently large cubic graphs satisfy
+  c(G) <= half -2^(r-g-1) + O(2^r*(log r)^(11/2)/sqrt(r))
+when g>=2 log log r+2 log log log r+C. Thus they lie strictly below half for
+  g <= .5 log r -5.5 log log r -C'.
+Proofs: four-high-connectivity-moore-paths.tex,
+second-order-random-girth-window.tex, second-order-random-larger-marker.tex.
+A separate selected-edge argument extends the cut induction up to logarithmic
+cut orders when girth exceeds the cut order by (2+eta)log log r.
+Proof: path-girth-surplus-cuts.tex.
+
+At girth >=c log r, Fable's nested-chain argument works with no short-cycle
+packing or deletion. A positive marked-forest excess, however small, supplies
+a polynomial-size chain. A middle separator gives two large cyclic cores;
+a minimum cut separating these cores has connected normalized shores and
+preserves both rank lower bounds. Uniform affine forest bounds then force
+cycle density at most1/4+o(1).
+Therefore, if c(G)>=half, every edge of a shortest cycle has at most2^(r-2)
+cycles. The predecessor-rank induction excludes logarithmic-girth minimal
+counterexamples. Together with the girth window, this proves the main
+structural reduction above.
+Proof: second-order-random-no-deletion-chain.tex.
+
+BEST PROVED UNRESTRICTED ERROR (UNCHANGED)
+  psi(r) <= 2^(r-1) + O(2^r*(log_2 r)^(11/2)/sqrt(r)).
+Primary packet: polynomial-cycle-error.tex/.pdf (24 pages, previously reviewed).
+Final endpoint fragments: second-order-parallel-links-endpoint.tex and
+second-order-parallel-links-log-five-half.tex.
+The decisive inputs include Fable's parallel-link independence, nested-chain,
+and block-local spectral arguments; Codex's exponential cut estimate,
+two-scale restoration, and endpoint parameter refinement complete the proof.
+The constants and thresholds are very large.
+
+FAILED SHORTCUTS AND EXPLORATORY NOTES
+A minimum cyclic cut need not contain an edge on a short cycle. For every
+fixed k>=5 there are arbitrarily large simple cubic graphs of girth>=k+1,
+with a unique minimum cyclic k-cut whose edges only lie on cycles of length
+Omega_k(r). An explicit k=5 honeycomb construction has rank40M+6 and minimum
+cut-edge cycle length at least2M+2. The primary external inputs are cited
+inside second-order-random-long-minimum-cut.tex and
+four-high-connectivity-long-cut.tex.
+The existing Horak-Kim path construction rules out a constant-prefactor
+2^((b+distance)/2) path error; a linear rank factor is necessary.
+The general polynomial-prefactor exponential rank-distance bound remains open.
+Numerical terminal-state optimization, transfer experiments, and quotient
+interlace models remain exploratory. They are not proofs of the sharp bound.
+A further excess-free packing extraction is being investigated; do not treat
+an unfinished extraction argument as an unrestricted theorem.
+
+EXACT CHECKS IN THIS CONTINUATION
+- Six-cut planarity: 3,003 port assignments, 48,048 affine states, and 500
+  outside-attachment fixtures.
+- Shortest-cycle prefixes: 72 random cubic graphs plus a C5 with two cyclic
+  exterior components; 292 prefix checks and independent cycle/path counts.
+- Disconnected localization: 1,193 full restriction-law checks, including265
+  disconnected regions and56 padded caps; 93,632 even states.
+- Cut smoothing: all198 minimum-cut edge incidences in Petersen and Heawood;
+  36 independent graph-deletion cycle-space/path-DFS identities.
+- Moore geometry: 49 fixtures, 35,568 geodesics, 20,694 packed balls,
+  10,579 port-free ball counts, and40 terminal-sphere bounds.
+- Terminal-forest translations/saturation: 247 fixtures and8,312 affine states.
+- Explicit long-cut obstruction: 9,013,248 reduced small-cut patterns.
+- Path catalogue witness validation: 61 independent DFS checks.
+These checks support finite identities; the asymptotic proofs are separate.
+The growing primary PDF is being compiled and visually reviewed. Do not use
+an old page count as its current status. Final verification will be recorded
+in verification-fixed-cut-2026-11-11.json when the packet is stable.
+
+FABLE AND FORMAL STATUS
+Latest observed Fable handoff: UPDATE10, stopped at usage limit; mtime
+11 November03:11 UTC. No newer result was seen during this continuation.
+CODEX-TO-FABLE-LIVE.txt contains the partial discoveries, proof outlines,
+corrections, and audit exchanges.
+Fable's eight completed PolynomialBound modules were independently built in
+the preceding continuation: ForestStatement, CycleBound, Statement,
+Separation, ParallelLinks, LinkBound, Averaging, TwoLinkMoment.
+Their checked axioms are propext, Classical.choice, Quot.sound.
+The full marked-forest assembly is not formalized; Chain.lean.wip is unfinished.
+No Fable-owned Lean source, root import, tracked manuscript, or site was edited.
+No commit or publication was made.

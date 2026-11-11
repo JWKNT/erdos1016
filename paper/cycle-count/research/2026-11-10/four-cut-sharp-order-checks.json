@@ -1,0 +1,85 @@
+{
+  "status": "all exact sharp-order family checks passed",
+  "cyclic_square_cycle_counts": [
+    {
+      "squares": 2,
+      "rank": 5,
+      "cycles": 28,
+      "excess": 12
+    },
+    {
+      "squares": 3,
+      "rank": 7,
+      "cycles": 107,
+      "excess": 43
+    },
+    {
+      "squares": 4,
+      "rank": 9,
+      "cycles": 380,
+      "excess": 124
+    },
+    {
+      "squares": 5,
+      "rank": 11,
+      "cycles": 1345,
+      "excess": 321
+    },
+    {
+      "squares": 6,
+      "rank": 13,
+      "cycles": 4878,
+      "excess": 782
+    },
+    {
+      "squares": 7,
+      "rank": 15,
+      "cycles": 18219,
+      "excess": 1835
+    }
+  ],
+  "capped_square_two_cycle_packings": [
+    {
+      "square_blocks": 1,
+      "rank": 3,
+      "cycles": 7,
+      "disjoint_terminal_cap_cycles": 0,
+      "all_two_cycle_unions": 0
+    },
+    {
+      "square_blocks": 2,
+      "rank": 5,
+      "cycles": 22,
+      "disjoint_terminal_cap_cycles": 4,
+      "all_two_cycle_unions": 9
+    },
+    {
+      "square_blocks": 3,
+      "rank": 7,
+      "cycles": 55,
+      "disjoint_terminal_cap_cycles": 20,
+      "all_two_cycle_unions": 63
+    },
+    {
+      "square_blocks": 4,
+      "rank": 9,
+      "cycles": 124,
+      "disjoint_terminal_cap_cycles": 68,
+      "all_two_cycle_unions": 270
+    },
+    {
+      "square_blocks": 5,
+      "rank": 11,
+      "cycles": 265,
+      "disjoint_terminal_cap_cycles": 196,
+      "all_two_cycle_unions": 918
+    },
+    {
+      "square_blocks": 6,
+      "rank": 13,
+      "cycles": 550,
+      "disjoint_terminal_cap_cycles": 516,
+      "all_two_cycle_unions": 2727
+    }
+  ]
+}

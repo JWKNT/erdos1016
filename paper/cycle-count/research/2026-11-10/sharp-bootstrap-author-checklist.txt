@@ -1,0 +1,49 @@
+Sharp bootstrap assembly, 2026-11-11
+Author/assembler: random_hosts. This is not an independent author audit.
+
+Main source: second-order-unrestricted-sharp-bootstrap.tex.
+Independent full line audits: four_regular PASS; path_stability PASS.
+Root full line audit also passed. Status: audited mathematical working proof.
+
+The key new assertion is an exact marked-forest probability <=1/2
+for connected cubic G of sufficiently large rank, connected marker
+|P|<=3log r, and girth(G-P)>=an absolute D_*.
+
+Dependency chain:
+1. Established qualitative/polynomial marked-forest theorem gives
+   localized forest bounds at a fixed epsilon.
+2. Connected BFS marker + generalized window gives layer width
+   O(epsilon^-2 log^11(4/epsilon)+(k+1)^2).
+3. Weighted cubic-kernel Moore bound isolates constant-rank
+   exceptions for k<=4g.
+4. High-girth all-sector forest bound <=3/5 beyond a fixed rank.
+5. Direct-sum local star spaces + ordered terminal bipartitions
+   produce many disjoint middle regions from a large packing.
+6. At most |S|+1 middle regions meet prior deletion S or connected P.
+   Two clean regions have independent affine restrictions after
+   conditioning outside, giving probability <=9/25.
+7. Hence packing is bounded by O(D H (|S|+1) 2^(2D)),
+   independently of positive excess size.
+8. Common forward dyadic recurrence gives log(|S(D)|+1)
+   <=2D+O(log^2 D).
+9. D0~sqrt(log r), D1 in[log r/16,log r/8):
+   S0=r^o(1), S1<=r^(1/4+o(1)).
+10. Established spectral/parallel-link/moment/anchor estimates give
+    T>=2r^(1/32)/(A^3(log r)^3) nested separators.
+11. Full blocks with q=ceil(128 A^2 log r)+2 gaps have >=8L^2
+    vertices and boundary <=2L. Discard <=L+|S0|+1 blocks.
+12. Two surviving blocks satisfy the uniform conditional3/5 bound,
+    because D0/log L tends to infinity. Contradiction.
+
+The final unrestricted theorem uses general-rank induction.
+The finite cubic extremizer reduction preserves rank and injects
+cycles. Loops are deleted directly (only one containing cycle).
+Loopless <=4 cyclic cuts use the established sharp-order theorem.
+No-small-cut bounded-girth graphs are strictly below half.
+High girth uses exact-half forest on a shortest cycle, giving
+c_e<=2^(r-2), then induction on G-e as a general connected graph.
+The cyclic-square family proves necessity of r2^(r/2) on odd ranks.
+
+No inverse moment bound at D0 is used. No positive lower bound on
+the forest excess is used anywhere in the new girth raising or
+final exact-half argument.

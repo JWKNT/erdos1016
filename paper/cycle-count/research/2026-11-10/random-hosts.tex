@@ -1,0 +1,407 @@
+% Research fragment. Include in a document with amsmath, amssymb, amsthm,
+% hyperref, and theorem environments. This file does not change the main paper.
+\section{The second-order scale in a sparse random host}
+\label{sec:research-random-hosts}
+
+\paragraph{Status.}
+The lower bound below has a complete first-moment proof.
+The upper bound is a parameter refinement of the published Alon--Krivelevich construction.
+Its proof uses their expansion and Hamilton-path inputs.
+Neither result is formalised in Lean.
+We have not established publication priority for these refinements.
+
+All logarithms in this section are natural, except $\log_2$.
+Put $D=np$.
+For a pancyclic graph $G$ on $n$ vertices, define
+\[
+ \operatorname{Pex}(G)
+ =\min\{|E(H)|-n:H\subseteq G\text{ is spanning and pancyclic}\}.
+\]
+If $G$ is not pancyclic, set this quantity to $+\infty$.
+
+\begin{theorem}[Second-order bounds in the Alon--Krivelevich range]
+\label{thm:rhost-scale}
+Define
+\[
+ p_1=p_5=\frac{2\ln\ln n}{n},\qquad
+ p_2=p_3=\frac{50\ln n}{n\ln\ln n},\qquad
+ p_4=\frac{\ln n+10\sqrt{\ln n}}{n},
+ \qquad p_* =1-\prod_{i=1}^{5}(1-p_i).
+\]
+For $G\sim G(n,p_*)$, with probability tending to one,
+\[
+ \log_2 n+\left(\frac23-o(1)\right)\frac{\ln n}{\ln\ln n}
+ \ \le\ \operatorname{Pex}(G)
+ \ \le\ \log_2 n+(2+o(1))\frac{\ln n}{\ln\ln n}.
+\]
+Consequently,
+\[
+ \operatorname{Pex}(G)-\log_2 n
+ =\Theta\!\left(\frac{\ln n}{\ln\ln n}\right)
+ \qquad\text{with high probability.}
+\]
+The upper bound also holds for every $p\ge p_*$.
+The lower bound holds whenever $np\sim\ln n$, including values arbitrarily close above the pancyclicity threshold.
+\end{theorem}
+
+The last lower-bound assertion does not supply a finite upper bound below $p_*$.
+Thus this theorem does not settle the full-threshold question.
+
+\subsection{A uniform count of small subgraphs}
+
+\begin{lemma}[Kernel count]
+\label{lem:rhost-kernel}
+Let $G\sim G(n,D/n)$, with $D\ge2$.
+Let $S\ge2$ be an integer, and let $R>0$.
+The probability that $G$ contains a connected subgraph $F$ satisfying
+\[
+ \delta(F)\ge2,\qquad
+ q:=|E(F)|-|V(F)|\ge1,\qquad
+ |E(F)|\le\min\{S,Rq\}
+\]
+is at most
+\[
+ S\sum_{q=1}^{S}
+ \left(\frac{(2S)^{10}D^R}{n}\right)^q.
+\]
+\end{lemma}
+
+\begin{proof}
+Write $e=|E(F)|$.
+Suppress each maximal path whose internal vertices have degree two.
+The resulting connected multigraph has $t$ vertices and $t+q$ edges.
+Every vertex has degree at least three.
+The degree identity gives $1\le t\le2q$, and hence $t+q\le3q$.
+
+Label the kernel vertices and order its edges.
+There are at most $(2q)^{6q}$ lists of edge endpoints.
+There are at most $(S+1)^{3q}$ lists of positive path lengths.
+There are at most $n^{e-q}$ assignments of distinct host vertices to a fixed subdivision.
+These bounds can count invalid or repeated descriptions, which only increases the upper bound.
+
+Each described simple subgraph has occurrence probability $(D/n)^e$.
+After summing over $t$, its expected count is at most
+\[
+ 2q(2q)^{6q}(S+1)^{3q}n^{-q}D^e
+ \le (2S)^{10q}n^{-q}D^{Rq}.
+\]
+There are at most $S$ possible values of $e$ for each $q$.
+Sum these bounds and apply Markov's inequality.
+\end{proof}
+
+\begin{lemma}[Independence of a small family of short cycles]
+\label{lem:rhost-independence}
+Let $G\sim G(n,D/n)$, with $D\ge2$, and put
+\[
+ L=\left\lfloor
+ \frac{2(\ln n-40\ln\ln n)}{3\ln D}
+ \right\rfloor.
+\]
+Assume $L\ge3$.
+With probability $1-O((\ln n)^{-17})$, every family of at most $L$ distinct cycles,
+each of length at most $L$, is linearly independent over $\mathbb F_2$.
+\end{lemma}
+
+\begin{proof}
+Set $S=\lceil(\ln n)^2\rceil$ and $R=3L/2$.
+For sufficiently large $n$,
+\[
+ D^R\le\frac{n}{(\ln n)^{40}},\qquad
+ (2S)^{10}\le(\ln n)^{21}.
+\]
+Lemma~\ref{lem:rhost-kernel} shows that the probability of a forbidden subgraph is
+\[
+ O\!\left((\ln n)^2(\ln n)^{-19}\right)
+ =O((\ln n)^{-17}).
+\]
+
+Suppose a family of at most $L$ short cycles is dependent.
+Choose a minimal dependent subfamily $C_1,\ldots,C_k$, and let $F$ be its union.
+Then $3\le k\le L$.
+Minimality gives $\dim\langle C_1,\ldots,C_k\rangle=k-1$.
+Each edge occurs an even positive number of times in the family.
+Thus, with $e=|E(F)|$,
+\[
+ e\le\frac12\sum_{i=1}^k|C_i|\le\frac{kL}{2}\le S.
+\]
+The union is connected.
+Otherwise, each component would give a proper dependent subfamily.
+Also, $\delta(F)\ge2$ and
+\[
+ q=e-|V(F)|=\beta(F)-1\ge k-2\ge1.
+\]
+Since $k\le3(k-2)$ for $k\ge3$,
+\[
+ e\le\frac{kL}{2}\le\frac{3L}{2}(k-2)\le Rq.
+\]
+This contradicts the absence of a forbidden subgraph.
+\end{proof}
+
+The lemma concerns families of at most $L$ cycles.
+It does not assert independence of the entire family of short cycles.
+This distinction avoids an unjustified bound on a minimal dependency's size.
+
+\subsection{The improved lower bound}
+
+\begin{proposition}[Finite lower bound]
+\label{prop:rhost-lower}
+Under the hypotheses of Lemma~\ref{lem:rhost-independence}, with the same probability,
+every spanning pancyclic subgraph $H$ of $G$ satisfies
+\[
+ |E(H)|-n
+ \ge \log_2(n-2)+L-3
+ -\log_2\!\left(\frac{L(L+1)}2-3\right).
+\]
+In particular, if $D\sim\ln n$, then with high probability
+\[
+ \operatorname{Pex}(G)
+ \ge\log_2 n+\frac{2\ln n}{3\ln D}-O(\ln\ln n).
+\]
+\end{proposition}
+
+\begin{proof}
+Choose in $H$ one cycle of each length $3,\ldots,L$.
+Let $W$ be their union, and write $r=\beta(H)$, $t=\beta(W)$, and $M=|E(W)|$.
+Lemma~\ref{lem:rhost-independence} gives
+\[
+ t\ge L-2,\qquad M\le\frac{L(L+1)}2-3.
+\]
+The outside-part length count gives
+\[
+ n-2\le M2^{r-t}.
+\]
+The Hamilton cycle makes $H$ connected, so $r=|E(H)|-n+1$.
+Taking binary logarithms proves the finite bound.
+For $D\sim\ln n$, the rounding and the $40\ln\ln n$ margin change $L$ by only $O(1)$.
+Also, $\log_2 M=O(\ln\ln n)$.
+\end{proof}
+
+The denominator $\ln D$ matters for a quantitative error term.
+The assumption $D\sim\ln n$ permits replacement by $\ln\ln n$ with a relative $o(1)$ error.
+It does not always permit replacement with only an additive $O(\ln\ln n)$ error.
+
+The coefficient $2/3$ improves the disjoint-cycle coefficient $1/2$ in the proposed research list.
+The proof requires independence, rather than vertex-disjointness.
+A theta graph explains the first obstruction to this argument.
+Its three cycles are dependent, and their total length is twice its number of edges.
+At lengths near $\frac23\log_D n$, its occurrence threshold becomes relevant.
+This observation limits the independence method, not the true pancyclicity excess.
+
+\subsection{A two-digit refinement of the upper construction}
+
+The primary source is Alon and Krivelevich,
+\emph{Sparse Pancyclic Subgraphs of Random Graphs},
+SIAM Journal on Discrete Mathematics 39 (2025), 562--574,
+\href{https://doi.org/10.1137/23M1598969}{doi:10.1137/23M1598969}.
+We checked the authors' \href{https://www.math.tau.ac.il/~krivelev/pancyclic-rg.pdf}{29 November 2024 manuscript}.
+Their Theorem~1 gives the threshold $p_*$ used above.
+The following proof changes the short-length encoding parameters in Sections~3--5.
+
+\begin{lemma}[Corrected robust expansion statement]
+\label{lem:rhost-expansion}
+Set
+\[
+ \beta=\frac{2(\ln\ln n)^2}{\ln n},\qquad
+ q_0=\frac{50\ln n}{n\ln\ln n},\qquad
+ L_0=\Theta(n/\sqrt{\ln n}).
+\]
+With high probability, every vertex set $U$ of size at least $n-2L_0$ in $J\sim G(n,q_0)$ contains a set $U'$ satisfying
+\[
+ |U'|>|U|-\beta n,\qquad
+ |N_{J[U']}(A)|\ge\frac{|A|}{3\beta}
+ \quad(0<|A|\le\beta n).
+\]
+\end{lemma}
+
+\begin{proof}
+Let $s=\lceil\beta n\rceil$.
+With high probability, every two disjoint $s$-vertex sets have an edge between them.
+Indeed, the failure probability is at most
+\[
+ \binom ns^2e^{-q_0s^2}
+ \le\exp\!\left(s\left(2\ln(en/s)-q_0s\right)\right)=o(1),
+\]
+because $q_0s\sim100\ln\ln n$ and $\ln(en/s)\sim\ln\ln n$.
+Assume this property holds.
+
+Start with $U$ and repeatedly delete a nonempty set $A$ that violates the required expansion.
+Each deleted set has at most $\beta n$ vertices.
+Suppose the accumulated deleted set $B$ first reaches size at least $\beta n$.
+Then $\beta n\le|B|<2\beta n$.
+In the original induced graph $J[U]$, its external neighbourhood has size less than
+\[
+ \frac{|B|}{3\beta}<\frac{2n}{3}.
+\]
+Thus $U\setminus(B\cup N_{J[U]}(B))$ has at least
+$n/3-2L_0-2\beta n$ vertices.
+For large $n$, this number exceeds $s$.
+Choosing $s$ vertices there and $s$ vertices in $B$ contradicts the assumed edge property.
+Therefore fewer than $\beta n$ vertices are deleted before the procedure stops.
+The remaining set is the required $U'$.
+\end{proof}
+
+This corrects the size assertion in the source's Claim~4.3.
+Its printed bound $|U'|\ge(1-\beta)n$ can exceed $|U|$ when $|U|=n-2L_0$.
+The corrected bound gives $|U'|=n-o(n)$, which suffices for every exposure estimate below.
+It also supplies the same rooted-tree embedding conditions.
+For $k=\lfloor\beta n/2\rfloor$, take maximum degree $\lfloor1/(4\beta)\rfloor$ and tree size at most $\lfloor n/50\rfloor$.
+For $|A|\le k$, the expansion surplus is at least $|A|/(12\beta)>1$.
+For $k<|A|\le2k$, that surplus exceeds $n/50$ for sufficiently large $n$.
+These are the two hypotheses of the source's Theorem~2.2.
+
+\begin{proposition}[Refined upper bound]
+\label{prop:rhost-upper}
+Let $p\ge p_*$, with $p_*$ as in Theorem~\ref{thm:rhost-scale}.
+Then, with high probability,
+\[
+ \operatorname{Pex}(G(n,p))
+ \le \log_2 n+(2+o(1))\frac{\ln n}{\ln\ln n}.
+\]
+\end{proposition}
+
+\begin{proof}
+Use the five independent exposures from the cited construction.
+In $G_2$, first expose only edges with both endpoints outside the initial graph $H_1$.
+In $G_3$, first expose only edges with both endpoints outside $H_2$.
+The two-set estimate in Lemma~\ref{lem:rhost-expansion} applies within either reservoir.
+All path endpoints lie outside its corresponding reservoir.
+Thus endpoint edges remain independent until their designated queries.
+Keep its parameters
+\[
+ \beta=\frac{2(\ln\ln n)^2}{\ln n},\qquad
+ K_0=\left\lfloor\log_2\frac{\ln n}{6\ln\ln\ln n}\right\rfloor,
+ \qquad K=\left\lfloor\log_2\frac{n}{\sqrt{\ln n}}\right\rfloor,
+ \qquad L_0=2^{K+1}-1.
+\]
+For integral branching, put
+\[
+ a=\left\lfloor(5\beta)^{-1}\right\rfloor,
+ \qquad d=\left\lfloor\log_a(n/200)\right\rfloor.
+\]
+Then $d=(1+o(1))\ln n/\ln\ln n$.
+The change from real to integral branching has no effect on this estimate.
+
+Replace the short-length parameters by
+\[
+ t=2,\qquad b=\lceil\sqrt{2\ln n}\rceil.
+\]
+The short base cycle has length $2b+1$.
+Attach internally disjoint paths of lengths
+\[
+ d+2+j\quad\text{and}\quad d+2+jb
+ \qquad(0\le j<b)
+\]
+to its $2b$ designated edges, as in the cited construction.
+Choosing one path from each group produces every length in
+\[
+ [T+1,T+b^2],\qquad T=2(d+b+1).
+\]
+Indeed, each integer $0\le k<b^2$ has the form $k=j_0+bj_1$.
+The resulting cycle has length $T+1+k$.
+
+Here are the estimates needed to transfer the source's existence proof.
+
+\emph{Initial cycles.}
+The new length $2b+1$ is $o(\ln n/\ln\ln\ln n)$.
+It is therefore below the longest initial cycle used in Lemma~4.1.
+That lemma still supplies the required vertex-disjoint initial cycles.
+
+\emph{Vertex budgets.}
+The short gadget uses at most
+\[
+ O(bd+b^3)=O((\ln n)^{3/2})
+\]
+vertices.
+This is $o(L_0)$.
+The binary gadget, connectors, and short gadget together use at most $2L_0$ vertices.
+Thus Lemma~\ref{lem:rhost-expansion} applies at every step.
+Each remaining expander contains $n-o(n)$ vertices.
+
+\emph{Path embeddings.}
+Each additional stem has length at most $b(b-1)=O(\ln n)$.
+The rooted trees in Lemma~4.5 still have fewer than $n/50$ vertices.
+Their leaf sets have at least $\beta n/40$ vertices because
+\[
+ a^d>\frac{n}{200a}\ge\frac{\beta n}{40}.
+\]
+Process the short paths in their order around the base cycle.
+For the new endpoint, expose at most $h=\lceil\beta n/100\rceil$ candidate neighbours in the remaining expander.
+These edges have not appeared in any earlier exposure.
+The first-neighbour failure probability is at most
+\[
+ \exp(-p_3h)\le(\ln n)^{-1}.
+\]
+The other endpoint has previously exposed at most $h$ edges.
+At least $\beta n/40-h\ge\beta n/80$ leaves therefore have unexposed endpoint edges.
+The remaining-leaf failure probability is at most
+\[
+ \exp(-p_3\beta n/80)=(\ln n)^{-5/4}.
+\]
+There are $2b=O(\sqrt{\ln n})$ short paths.
+The sum of their failure probabilities tends to zero.
+The binary paths and the final connector retain their original estimates.
+The two-tree embeddings also remain below the size limit.
+For $a\ge3$, their two complete trees use at most $3n/200$ vertices together.
+The connecting stem has $O(L_0)=o(n)$ vertices.
+Their maximum degree is at most $a+1\le\lfloor1/(4\beta)\rfloor$.
+
+\emph{Length coverage.}
+The binary gadget starts at
+\[
+ \ell_*=(K_0+1)(d+3)=(1+o(1))\log_2 n.
+\]
+There are enough base edges for all designated binary detours and the reserved connector edge.
+Indeed, with $x=\ln\ln n$,
+\[
+ \ln a=x-2\ln x-\ln10+o(1),\qquad
+ K_0+1>\frac{x-\ln6-\ln\ln x}{\ln2}.
+\]
+These inequalities give $\ell_*-K\to\infty$.
+Since $b^2\ge2\ln n$, the short interval reaches $\ell_*$ for all sufficiently large $n$.
+The remaining interval-covering shortcuts from Lemma~4.8 are unchanged.
+Only the lengths $3,\ldots,T$ need individual short chords.
+Here $T=O(\ln n/\ln\ln n)$.
+Each missing-chord probability is at most $(1-p_5)^n\le(\ln n)^{-2}$.
+Their sum tends to zero, as required by the argument of Lemma~4.9.
+
+\emph{Hamilton completion.}
+The remaining vertex set still has size at least $n-2L_0$.
+Claim~4.7 therefore applies without a parameter change.
+The number of long interval-covering chords is at most
+\[
+ m=\lfloor n2^{-K}\rfloor=O(\sqrt{\ln n}).
+\]
+The final graph has a Hamilton cycle and at most
+\[
+ K+bt+m+T+O(1)
+ =K+2d+4b+m+O(1)
+ \le\log_2 n+2d+O(\sqrt{\ln n})
+\]
+additional edges.
+Since $\sqrt{\ln n}=o(\ln n/\ln\ln n)$, this proves the claimed upper bound.
+The conclusion for $p\ge p_*$ follows by monotonicity.
+\end{proof}
+
+\paragraph{Further notation corrections in the checked source.}
+These corrections do not require a new probabilistic input.
+First, the source writes $b^t\ge\ln n>\ell_*$, although $\ell_*\sim\log_2 n$.
+The choice $b^2\ge2\ln n$ gives the required overlap explicitly.
+Second, Lemma~4.4 states one extra edge in the binary replacement path.
+For a desired path length $\ell_i=2^i+1$, use a connecting stem of length $\ell_i-2d-2$.
+Its positivity follows from $i>K_0$.
+This gives the required gain $2^i$ when one cycle edge is replaced.
+The short-chord argument above covers every length through $T$.
+This also supplies the extra $t$ lengths omitted from the printed range in Lemma~4.9.
+
+The exposure budget in Lemma~4.5 also needs correction.
+The source first permits $n/\ln\ln n$ exposed edges at an endpoint.
+This exceeds the guaranteed $\beta n/40$ leaves, so its later fresh-leaf subtraction does not follow.
+The budget $h=\lceil\beta n/100\rceil$ repairs that step and supports the new union bound.
+
+\paragraph{What remains open in this note.}
+The lower and upper constants do not match.
+The upper construction still needs $p\ge p_*$.
+This fixed exposure scheme does not reach the full pancyclicity threshold range.
+The later adaptive construction addresses that separate question.
+The lower proof uses the outside-part length count, without the stronger forest probability estimate.
+

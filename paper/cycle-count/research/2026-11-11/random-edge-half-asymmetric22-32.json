@@ -1,0 +1,22 @@
+{
+  "scope": {
+    "min_order": 4,
+    "max_order": 16,
+    "girth_five": false,
+    "input": "paper/cycle-count/research/2026-11-11/random-edge-half-asymmetric.g6",
+    "name": "asymmetric22-32",
+    "stop": true
+  },
+  "status": "search complete",
+  "orders": [
+    {
+      "order": null,
+      "counts": {
+        "universal_edge": 12956
+      }
+    }
+  ],
+  "violations": [],
+  "exact_dual_certificates": [],
+  "seconds": 5.630555152893066
+}

@@ -1,0 +1,10 @@
+{
+  "six_active": 2,
+  "status": 2,
+  "message": "The problem is infeasible. (HiGHS Status 8: model_status is Infeasible; primal_status is None)",
+  "seconds": 11.066679954528809,
+  "variables": 147,
+  "constraints": 13469,
+  "max_deletion_cost_times_two": 8,
+  "scope": "Numerical relaxation only; no graph realization or exact infeasibility proof"
+}

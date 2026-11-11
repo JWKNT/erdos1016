@@ -1,0 +1,41 @@
+Date: 2026-11-10.
+Status: partial exact lemmas and numerical relaxations.
+
+Exact:
+second-order-random-seven-prism-blockers.tex proves the prism-blocker criterion.
+A missing-pair graph on six ports blocks every matching of some triangular
+prism exactly when it crosses every balanced partition into two triples.
+Equivalently, it contains a three-edge star, a four-vertex path, or three
+disjoint edges.
+The proof uses Hall's theorem and three explicit prism placements.
+path_stability independently audited the full proof.
+check_random_seven_prism_blockers.py verifies all32,768 edge subsets.
+It finds exactly ten maximal nonblocking graphs, each two disjoint triangles.
+
+Compact model:
+random_seven_compact_star.py has147 variables and13,469 constraints.
+It keeps the105 combined four-pairing masses and42 Boolean sector totals.
+The exact local-star table contributes the valid inequalities
+  sum(t_J) >= L(J)-4 sum(1-z).
+The table's maximum cost loss under one edge deletion is exactly4.
+The model also includes all70 balanced-prism inequalities.
+
+Numerical outcomes:
+With two active six-sectors, the model is infeasible after11.1 seconds.
+With three through seven active six-sectors, it has feasible abstract states.
+Every resulting state is saved in random-seven-compact-star-mN.json.
+These solver outcomes are not graph realizations or exact infeasibility proofs.
+
+Separate local-six model:
+four_regular's complete matching-plus-star model numerically permits at most
+nine active four-sectors inside one active six-sector.
+That result still needs an analytic or exact finite certificate.
+The support-only weakening permits twelve active sectors.
+Replacing four-pairing disjointness by x+y<=1 permits eleven.
+I independently reconstructed the eleven-sector witness using exact Fractions.
+All its matching and star inequalities hold, as does six-support compatibility.
+It has one pure six-shore and two matchings sharing an edge on the other shore.
+Thus maximal-biclique support restriction alone does not remove the need for
+four-pairing support disjointness.
+
+The unrestricted sharp bound and the complete two-large-seven-cut case remain open.

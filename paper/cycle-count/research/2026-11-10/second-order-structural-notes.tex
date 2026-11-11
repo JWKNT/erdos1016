@@ -1,0 +1,154 @@
+% New research fragment. Root and path_stability independently audited the safe exponential bound.
+% Do not merge into the previously audited manuscripts without a separate review.
+\section{Exponential decay for disjoint regions with bounded cuts}
+\label{sec:second-order-exponential-cuts}
+
+All cycle spaces below are over $\mathbb F_2$.
+Graphs may have parallel edges.
+For a graph $Q$, write $\mathcal Z(Q)$ for its binary cycle space.
+A uniform element of this space is denoted by $F$.
+A vertex is \emph{closed} when no incident edge belongs to $F$.
+Loops can be deleted when discussing this event, since it concerns the edge boundary of a vertex.
+
+\begin{lemma}[A common local functional]\label{lem:common-star-functional}
+Let $Q$ be a connected loopless multigraph.
+Let $v_1,\ldots,v_\ell$ be distinct vertices of degree at most $d$, where $d\ge2$.
+Suppose a nonzero functional $a\in\mathcal Z(Q)^*$ lies in the span of the incident edge-coordinate functionals at every $v_i$.
+If $Z$ counts the closed vertices among $v_1,\ldots,v_\ell$, then
+\[
+ \mathbb E\,2^{-Z}
+ \le\frac12+\frac12\left(1-2^{1-d}\right)^{\lfloor\ell/2\rfloor}.
+\]
+\end{lemma}
+
+\begin{proof}
+At $v_i$, choose an incident-edge subset $A_i$ whose coordinate sum represents $a$.
+It is nonempty and proper: the empty subset and the whole star both represent zero.
+Split $v_i$ into two vertices carrying $A_i$ and its complement, and join them by a new edge $h_i$.
+Perform all splits simultaneously, obtaining a connected graph $Q'$.
+Contracting the new edges identifies the two cycle spaces.
+Under this identification, the coordinate on every $h_i$ equals $a$.
+
+Deleting all $\ell$ new edges imposes exactly the one condition $a=0$.
+Thus
+\[
+ \beta\bigl(Q'-\{h_1,\ldots,h_\ell\}\bigr)=\beta(Q')-1.
+\]
+Keeping isolated vertices in the rank calculation shows that the remaining graph has exactly $\ell$ components.
+Contract these components.
+The resulting connected quotient has $\ell$ vertices and $\ell$ edges.
+An even subgraph with $a=1$ projects to its entire edge set.
+The quotient is therefore connected and two-regular, hence a cycle.
+For $\ell=1$ it is a loop, and for $\ell=2$ it consists of two parallel edges.
+
+Condition on $a=0$.
+The restrictions to the $\ell$ components are independent uniform even subgraphs.
+Choose a matching of $\lfloor\ell/2\rfloor$ edges in the quotient cycle.
+For each chosen $h_i$, its two split endpoints belong to distinct components.
+Different chosen edges use disjoint component pairs.
+
+Suppose the two parts of the original star have sizes $s_i$ and $t_i$.
+Their sum is $\deg_Q(v_i)\le d$.
+In its component, a vertex of degree $s_i$ has at most $s_i-1$ independent incident-edge coordinates.
+Its star is therefore zero with probability at least $2^{1-s_i}$.
+The corresponding bound at the other endpoint is $2^{1-t_i}$.
+Consequently, the original vertex $v_i$ is closed with conditional probability at least $2^{2-d}$.
+For the chosen matching, these events are independent.
+It follows that
+\[
+ \mathbb E[2^{-Z}\mid a=0]
+ \le\left(1-2^{1-d}\right)^{\lfloor\ell/2\rfloor}.
+\]
+When $a=1$, none of the selected original vertices is closed.
+Since $a$ is a nonzero functional, its two values have equal probability.
+This proves the result.
+For $\ell=1$, the displayed bound is the trivial bound one.
+\end{proof}
+
+\begin{theorem}[Exponential closed-star estimate]\label{thm:exponential-closed-stars}
+Let $Q$ be a connected loopless multigraph with $k\ge1$ distinct marked vertices of degree at most $d$.
+Let $Z$ count the marked vertices closed in a uniform even subgraph.
+For $d\ge2$, put
+\[
+ T_d=2^d,\qquad D_d=(d-1)(2^d-1),\qquad M_d=2^{D_d}-1.
+\]
+Then
+\begin{equation}\label{eq:exponential-closed-stars}
+ \mathbb E\,2^{-Z}
+ \le\frac12+\exp\!\left(-\frac{k}{2^d M_d}\right)
+ \le\frac12+\exp\!\left(-\frac{k}{2^{D_d+d}}\right).
+\end{equation}
+For $d\le1$, every marked vertex is closed and $\mathbb E2^{-Z}=2^{-k}$.
+\end{theorem}
+
+\begin{proof}
+Let $L_i\subseteq\mathcal Z(Q)^*$ be the span of the edge-coordinate functionals at marked vertex $i$.
+The parity equation at that vertex gives $\dim L_i\le d-1$.
+If some $L_i$ is zero, that vertex is always closed.
+The expectation is then at most one half, so assume every $L_i$ is nonzero.
+
+If $T_d$ of these spaces form a direct sum, their local patterns are independent.
+Each corresponding vertex is closed with probability at least $2^{1-d}$.
+Consequently,
+\[
+ \mathbb E2^{-Z}\le(1-2^{-d})^{T_d}\le e^{-1}<\frac12.
+\]
+
+Otherwise choose a maximal direct-sum family and let $U$ be its span.
+It has fewer than $T_d$ members, so $\dim U\le D_d$.
+Every unselected $L_i$ meets $U$ nontrivially, by maximality.
+Every selected $L_i$ also meets $U$ nontrivially, since it is nonzero and contained in $U$.
+There are at most $M_d$ nonzero vectors in $U$.
+Thus one nonzero functional $a$ belongs to at least $\ell\ge k/M_d$ of the spaces $L_i$.
+
+Apply Lemma~\ref{lem:common-star-functional} to those vertices and ignore the other marked factors.
+With $q=1-2^{1-d}\ge1/2$, one has
+\[
+ \frac12q^{\lfloor\ell/2\rfloor}
+ \le\frac1{2q}\exp\!\left(-\frac{(1-q)\ell}{2}\right)
+ \le\exp(-2^{-d}\ell).
+\]
+This proves~\eqref{eq:exponential-closed-stars}.
+The assertion for $d\le1$ follows directly from parity.
+\end{proof}
+
+\begin{corollary}[Disjoint cyclic regions]\label{cor:exponential-small-cuts}
+Let $G$ be a connected graph and let $U_1,\ldots,U_k$ be pairwise disjoint vertex sets.
+Suppose each $G[U_i]$ is connected and contains a cycle, and $|\delta_G(U_i)|\le d$.
+For a uniform even subgraph $F$ of $G$, let $\mathcal F$ be the event that every $F\cap E(G[U_i])$ is a forest.
+For $d\ge2$,
+\[
+ \Pr(\mathcal F)
+ \le\frac12+\exp\!\left(-\frac{k}{2^d(2^{(d-1)(2^d-1)}-1)}\right).
+\]
+For $d\le1$, one has $\Pr(\mathcal F)\le2^{-k}$.
+\end{corollary}
+
+\begin{proof}
+Contract each connected induced region to a marked vertex and delete the resulting internal loops.
+Retain all other vertices and edges, obtaining a connected quotient $Q$.
+Projection maps $\mathcal Z(G)$ onto $\mathcal Z(Q)$.
+Its kernel is the direct sum of the cycle spaces of the induced regions.
+Thus the quotient pattern is uniform.
+Conditional on that pattern, the internal choices in different regions are independent affine cycle-space choices.
+
+If a marked quotient vertex is closed, the corresponding internal choice is a uniform even subgraph of $G[U_i]$.
+Its only forest is the empty edge set.
+Since that region has positive rank, its forest probability is at most one half.
+For a nonclosed marked vertex, bound the conditional forest probability by one.
+If $Z$ is the number of closed marked vertices, these observations give
+\[
+ \Pr(\mathcal F\mid\text{quotient pattern})\le2^{-Z}.
+\]
+Any remaining quotient loops are at unmarked vertices.
+Delete them before applying the loopless closed-star theorem.
+Their independent coordinates do not change any marked closure event.
+Average and apply Theorem~\ref{thm:exponential-closed-stars}.
+\end{proof}
+
+\paragraph{Quantitative scope.}
+For each fixed cut bound $d$, the error decreases exponentially with the number of disjoint cyclic regions.
+The explicit constant is large: its binary logarithm is $O(d2^d)$.
+This theorem improves the previous inverse-linear dependence on the region count.
+It does not by itself establish a polynomial error for unrestricted cycle counts.
+When applying it with a growing cut bound, the dependence on $d$ must be retained.

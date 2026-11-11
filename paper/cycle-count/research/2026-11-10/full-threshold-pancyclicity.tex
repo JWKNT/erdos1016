@@ -1,0 +1,80 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage[colorlinks=true,allcolors=blue]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\title{Sparse pancyclic subgraphs at the full threshold}
+\author{Research draft}
+\date{10 November 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Let $\operatorname{Pex}(G)$ be the minimum number of edges above $|V(G)|$ in a spanning pancyclic subgraph of $G$.
+We prove that $\operatorname{Pex}(G(n,p))=(1+o(1))\log_2n$ with high probability whenever
+$np-\ln n-\ln\ln n\to\infty$.
+Writing $w=\min\{np-\ln n-\ln\ln n,\ln\ln n\}$, the construction gives the quantitative upper bound
+$\log_2n+(4+o(1))\ln n/\ln w$.
+The proof adapts the binary and mixed-radix architecture of Alon and Krivelevich.
+Adaptive choices of attachment edges replace endpoint union bounds that require a larger probability gap.
+A separate chain of short cycles preserves the binary segment used for long cycle lengths.
+\end{abstract}
+
+\paragraph{Scope and attribution.}
+Alon and Krivelevich proved the same leading excess bound above an explicit probability
+$p_*=(1+O(1/\ln\ln n))\ln n/n$.
+We retain their binary encoding, two-stage interval coverage, and independent Hamilton completion.
+The changes here are a uniform disjoint-cycle list, equal-depth trees with a fixed linear number of leaves,
+and adaptive endpoint selection when the auxiliary mean degree tends to infinity arbitrarily slowly.
+The separate short-cycle chain keeps all required short lengths while allowing the auxiliary exposure budget to fit the full threshold.
+The external inputs are the rooted tree theorem of Haxell and its stated corollary,
+and the Hamilton-path endpoint form of the classical Hamiltonicity threshold.
+Precise statements and sources appear below.
+
+This draft was developed in the present research session and underwent three independent internal audits.
+The audits checked probability conditioning, rollback after failed attachments, path lengths, Hamilton integration, and cycle-rank accounting.
+This is a mathematical research proof, not a Lean formalisation or a publication-priority determination.
+
+\input{random-host-threshold-tools.tex}
+\input{random-host-full-threshold.tex}
+
+\paragraph{Finite verification.}
+The script \texttt{check\_full\_threshold\_integration.py} checks the finite gadget topology,
+arbitrary disjoint choices of attachment edges, exact binary and digit length identities,
+and the final Hamilton cycle and excess count.
+It passes 16 gadget cases, 3072 binary-cycle checks, 1784 digit-cycle checks, and 16 spanning Hamilton-cycle checks.
+These checks do not replace the asymptotic probability proofs.
+
+\begin{thebibliography}{9}
+\bibitem{AK}
+Y. Alon and M. Krivelevich,
+\emph{Sparse Pancyclic Subgraphs of Random Graphs},
+SIAM Journal on Discrete Mathematics \textbf{39} (2025), 562--574.
+\href{https://doi.org/10.1137/23M1598969}{doi:10.1137/23M1598969}.
+The authors' checked manuscript is dated 29 November 2024:
+\url{https://www.math.tau.ac.il/~krivelev/pancyclic-rg.pdf}.
+
+\bibitem{Haxell}
+P. E. Haxell, \emph{Tree embeddings},
+Journal of Graph Theory \textbf{36} (2001), 121--130.
+\url{https://doi.org/10.1002/1097-0118(200103)36:3\%3C121::AID-JGT1000\%3E3.0.CO;2-U}.
+
+\bibitem{BCPS}
+J. Balogh, B. Csaba, M. Pei, and W. Samotij,
+\emph{Large bounded degree trees in expanding graphs},
+Electronic Journal of Combinatorics \textbf{17} (2010), Research Paper~6.
+\href{https://doi.org/10.37236/278}{doi:10.37236/278}.
+
+\bibitem{Krivelevich}
+M. Krivelevich, \emph{Long paths and Hamiltonicity in random graphs},
+in N. Fountoulakis and D. Hefetz (eds.),
+\emph{Random Graphs, Geometry and Asymptotic Structure},
+London Mathematical Society Student Texts \textbf{84}, Cambridge University Press, 2016, pp.~4--27.
+\url{https://arxiv.org/abs/1507.00205}.
+\end{thebibliography}
+\end{document}

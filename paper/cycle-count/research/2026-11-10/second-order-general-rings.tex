@@ -1,0 +1,102 @@
+% Standalone research fragment. Dependencies: the general terminal-path gap,
+% and the separately audited saturated-ring bound.
+\section{Rings with arbitrary four-terminal blocks}
+\label{sec:general-four-pole-rings}
+
+Let $K_1,\ldots,K_k$ be disjoint connected loopless multigraphs.
+Each block has two distinct left ports and two distinct right ports.
+The four ports have degree two, and all other vertices have degree three.
+Join consecutive blocks by a matching of size two between their corresponding
+right and left ports. Indices are cyclic. Put
+\[
+ h_i=\beta(K_i),\qquad H=\sum_{i=1}^k h_i,\qquad
+ W=H+k,\qquad r=\beta(G)=W+1.
+\]
+The degree sum gives $|V(K_i)|=2h_i+2$, so $h_i\ge1$.
+A block is \emph{cross-saturated} if every left-to-right terminal pair has
+exactly $2^{h_i}$ simple paths.
+
+\begin{proposition}[Arbitrary rings with at least eleven blocks]
+\label{prop:general-four-pole-ring}
+Suppose $k\ge11$. If at least one block is not cross-saturated, then
+\[
+ c(G)<2^{r-1}.
+\]
+Consequently every such ring satisfies
+\[
+ c(G)\le 2^{r-1}+20r2^{r/2}.
+\]
+The second conclusion uses the saturated-ring theorem when every block is
+cross-saturated.
+\end{proposition}
+
+\begin{proof}
+Let $P_i$ be the $2\times2$ matrix of cross-path counts in $K_i$.
+Every entry is at most $2^{h_i}$.
+If block $j$ is not cross-saturated, the terminal-path gap gives
+\[
+ \sum_{a,b}(P_j)_{ab}\le \left(4-\frac1{16}\right)2^{h_j}.
+\]
+Fixed interface matchings can be incorporated by permutation matrices.
+Cycles using one edge of every interface are counted by the corresponding
+matrix-product trace.
+Replacing every factor except $P_j$ by its entrywise upper bound gives
+\[
+ c_{\mathrm{odd}}(G)
+ \le 2^{H-h_j}2^{k-2}\sum_{a,b}(P_j)_{ab}
+ \le \frac{63}{64}2^W.
+\]
+
+All interface intersection sizes have the same parity.
+Indeed, each block has an even number of cycle edges in its boundary.
+It remains to bound cycles using zero or two edges of every interface.
+Cycles internal to one block contribute at most
+\[
+ \sum_i 2^{h_i}\le k2^{H-k+1}.
+\]
+
+If the used interfaces form a proper nonempty interval, the cycle meets a
+contiguous interval of $s$ blocks, where $2\le s\le k$.
+The case $s=k$ omits one interface and uses all blocks.
+It uses a cap in each end block and a through pair in every intermediate block.
+Each cap count is at most $2^{h_i}$ by the affine terminal-path bound.
+Each through-pair count is at most $2^{h_i}$ by the affine four-terminal
+join count. For each $s$, there are $k$ possible block intervals.
+The omitted blocks have total rank at least $k-s$.
+Thus their contribution is at most the first expression below:
+\[
+ k\sum_{s=2}^{k}2^{H-k+s}<2k2^H.
+\]
+
+For the remaining case, every interface is used twice.
+Write $D_i$ for the number of through pairs in block $i$.
+Write $C_i$ for its number of disjoint left and right caps.
+These are precisely the three pairing types of four-terminal forests.
+Their total satisfies
+\[
+ D_i+C_i\le2^{h_i}.
+\]
+A single global cycle uses through pairs everywhere, or double caps in
+exactly one block. Two double-cap blocks would separate the selected edges.
+Therefore this case contributes at most
+\[
+ \prod_iD_i+\sum_i C_i\prod_{j\ne i}D_j
+ \le\prod_i(D_i+C_i)\le2^H.
+\]
+
+Combining the even cases gives
+\[
+ \frac{c_{\mathrm{even}}(G)}{2^W}
+ <(2k+1)2^{-k}+k2^{-2k+1}<\frac1{64}
+ \qquad(k\ge11).
+\]
+The final expression decreases with $k$.
+At $k=11$, it equals $23/2048+22/4194304<1/64$.
+Adding the odd contribution proves the strict bound.
+The saturated case follows from the separately proved saturated-ring bound.
+\end{proof}
+
+\paragraph{Scope.}
+The proposition permits arbitrary block ranks and arbitrary cross-path defects.
+It reduces this construction class to saturated rings and rings with at most
+ten blocks. It does not bound arbitrary graphs by the half-exponent error.

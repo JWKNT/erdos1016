@@ -1,0 +1,103 @@
+FOCUSED SHARP-ORDER EXPOSITION AUDIT -- 2026-11-11
+
+Auditor: random_hosts.
+This is an independent audit of the other agents' exposition files.
+It is not an independent audit of the assembly authored by random_hosts.
+
+PASS: unrestricted-sharp-foundations.tex
+  Link probabilities and conditional product fibers.
+  Exceptional partners through the terminal spanning forest.
+  Local nonbacktracking walk counts.
+  The matrix-pencil spectral lower bound.
+  First-repeated-cycle encoding for nonsimple closed walks.
+  Normalized trace supply and exceptional weighted pairs.
+  One exposition clarification was reported to root:
+  explicitly introduce the ambient cubic graph before component variables.
+
+PASS: unrestricted-sharp-parallel-links.tex
+  Pairwise independence after retaining one linking component.
+  The strict-half parallel-component bound, including integer rounding.
+  Tree links, direct links, and the 17L/D arc partition.
+  The epsilon-free moment inequality when mu>0.
+  Far-pair antisymmetry and adjacent-pair weight.
+  Remaining weight >8mu and the chain length 8*2^s/L^3.
+  Pairwise ordering of the disjoint connected separators.
+
+PASS: path-qualitative-affine-bootstrap.tex
+  Subdivision extends the original simple-graph input to localized graphs.
+  New spokes cannot create outside-edge cycles.
+  Disconnected interior localization needs only connected exterior.
+  Closure, rank, marker size, and the fixed-error window argument.
+  Breadth-first marker translation for every even port subset.
+  Weighted cubic-kernel Moore counting and stationary edge weights.
+  Fixed-ratio absorption at H=256.
+  Both port-free ball comparisons and the boundary-scale threshold.
+  Core extraction and conditional affine product probabilities.
+
+PASS: four-unrestricted-iterative-packing.tex
+  Uniform quotient fibers and the zero-star product upper bound.
+  Maximal direct-sum spaces and terminal bipartition classes.
+  Middle lifts, their ranks, original-graph boundaries, and disjointness.
+  At most |S|+1 contaminated lifts.
+  Exact constants in the packing recurrence.
+  The common forward dyadic construction and maximal cycle families.
+
+ORIGINAL QUALITATIVE INPUT
+
+Source: paper/cycle-count/pancyclic-paper.tex.
+Theorem label thm:forest, lines 129--136:
+  Forest probability <=1/2+20/log^(3)(rho).
+  Its displayed statement permits marked size <=sqrt(rho).
+
+Remark label rem:range, lines 1102--1108:
+  The same proof works unchanged for marked size
+  <=rho/(log rho)^2.
+  The input remains a nonempty union of cycles with at most
+  (log rho)/100 components.
+
+For one marked cycle, choose a finite rank threshold above the
+original threshold, with log^(3)(rho)>=400 and log(rho)>=100.
+This gives forest probability <=11/20 for every
+|E(W)|<=rho/(log rho)^2.
+No explicit value for that finite threshold is needed.
+
+Thus the focused qualitative core and clean-block lemmas do not
+depend on the polynomial-error theorem, the r/log(r) marker
+extension, or quantitative entropy-Moore estimates.
+
+SCOPE
+
+The main assembly has independent full audits by root,
+four_regular, and path_stability. Its mathematical formulas
+remain frozen. Authorized later edits changed status prose,
+internal references, and the statement's finite-graph scope.
+Joining components with bridges preserves rank and cycle count.
+
+These are internal mathematical audits, not external peer review
+or a priority determination.
+
+WRAPPER AUDIT
+
+PASS: unrestricted-sharp-cycle-bound.tex.
+All three established input statements match their source scopes.
+The original qualitative-source derivation is exact.
+The finite-graph rank convention and bridge connection are valid.
+Loops and parallel edges have the stated cycle conventions.
+The cyclic-square count includes q=2 and intervals of q-1 interfaces.
+The all-interface sector has only the two through matchings per
+square; its opposite-port geometry permits no disjoint cap pair.
+The result depends on three established inputs and requires no
+polynomial forest estimate.
+
+Primary bibliographic verification:
+  https://arxiv.org/abs/2006.13459
+  https://arxiv.org/html/2006.13459v2
+Horak--Kim, Theorem 5.1, gives the displayed exact count with k=2q.
+The arXiv record confirms Journal of Graph Theory 99 (2022),
+no.4, pages671--690.
+
+Suggested wording precision, sent to root:
+  Name root/path/four as independent assembly auditors, and
+  random_hosts as the independent component/exposition auditor.
+The existing next sentence already distinguishes these roles,
+but the opening status sentence could state them directly.

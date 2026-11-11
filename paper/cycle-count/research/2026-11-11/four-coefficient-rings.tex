@@ -1,0 +1,138 @@
+\section{Exact optimization of square and single-rung rings}
+\label{sec:four-coefficient-rings}
+
+A square tile has two left vertices and two right vertices, with all four edges between the two pairs.
+A single-rung tile has two vertices joined by one edge; these vertices serve as both its left and right pair.
+Join the right pair of each tile to the next left pair by two matching edges, cyclically.
+Each interface matching may be straight or crossed.
+Let $a$ count square tiles and $s$ count single-rung tiles.
+Put $W=2a+s$ and $m=a+s$.
+The resulting cubic graph has rank $r=W+1$.
+We restrict to $W\ge7$, so the small one-tile and two-tile degeneracies do not arise.
+
+\begin{proposition}[Ordering the single-rung tiles]
+\label{prop:four-coefficient-ring-order}
+Suppose $a\ge1$.
+Among all cyclic orders of these tiles, the maximum cycle excess over $2^W$ is
+\[
+ E(a,s)=2^a\left(2a+4s+\binom s2+\frac12\right)
+        -3a-4s+\binom s2.
+\]
+It is attained when all single-rung tiles are consecutive.
+The count is independent of the interface twists.
+\end{proposition}
+
+\begin{proof}
+Assign weight $v_i=1/2$ to a square tile and $v_i=1$ to a single-rung tile.
+For ordered tile positions $i,j$, let $v[i,j)$ be the product along the forward cyclic interval from $i$ through the position before $j$.
+When $i=j$, use the empty interval and weight one.
+Define
+\[
+ Q=\sum_{i,j=1}^{m}v[i,j).
+\]
+
+Cut parity makes every interface count odd, or makes all of them even.
+The odd case uses one edge at each interface.
+There are $2^m$ interface choices and two local paths in each square, hence exactly $2^{m+a}=2^W$ cycles.
+A local path in a single-rung tile may have length zero when both interfaces choose the same vertex.
+
+An even-sector cycle with no used interface is one of the $a$ squares.
+If it uses every interface twice, each square has two through matchings.
+Exactly half their $2^a$ choices make one circuit, giving $2^{a-1}$ cycles.
+This remains true with any interface twists.
+
+Otherwise the used interfaces form one nonempty proper cyclic interval.
+Its two end tiles supply caps and its inner tiles supply through pairs.
+A square has two choices in either role, and a single-rung tile has one.
+The count is therefore $2^a$ times the product of the weights of the omitted tiles.
+The omitted intervals have lengths zero through $m-2$.
+The length-$m-1$ intervals, which are included in $Q$, have total weight
+\[
+ 2^{-a}\sum_i v_i^{-1}=2^{-a}(2a+s)=2^{-a}W.
+\]
+Thus the cycle excess is exactly
+\[
+ a+2^{a-1}+2^aQ-W
+ =2^a(Q+1/2)-m.
+\]
+
+Decompose $Q$ by the types of its two endpoints.
+The square--square contribution is $2a(1-2^{-a})$.
+For each single-rung tile, the two orders of mixed endpoints contribute
+$2(1-2^{-a})$ and $1-2^{-a}$.
+The equal single-rung endpoints contribute $s$.
+For two distinct single-rung positions, their two cyclic interval weights are $z$ and $2^{-a}/z$, with $2^{-a}\le z\le1$.
+Convexity gives
+\[
+ z+2^{-a}/z\le1+2^{-a}.
+\]
+Equality holds when one of those intervals contains no square.
+All these equalities hold together when the single-rung tiles are consecutive.
+Consequently
+\[
+ Q\le2a+4s+\binom s2
+       +2^{-a}\left(-2a-3s+\binom s2\right).
+\]
+Substitution proves the formula and attainment.
+\end{proof}
+
+\begin{theorem}[The exact ring maximum at fixed rank]
+\label{thm:four-coefficient-ring-maximum}
+For $r\ge8$, every square and single-rung ring of rank $r$ has at most $H(r)$ cycles, where
+\[
+ \begin{aligned}
+ H(2q+1)&=2^{2q}+(2q+1/2)2^q-3q,\\
+ H(2q+2)&=2^{2q+1}+(2q+9/2)2^q-3q-4.
+ \end{aligned}
+\]
+The maxima use no single-rung tile when $r$ is odd, and one when $r$ is even.
+These are the Horak--Kim rings.
+\end{theorem}
+
+\begin{proof}
+Fix $W=r-1\ge7$.
+For $a\ge2$, compare $E(a,s)$ with $E(a-1,s+2)$, keeping $2a+s=W$.
+Direct subtraction gives
+\[
+ E(a-1,s+2)-E(a,s)
+ =-2^{a-1}\left(W+\frac{s^2+s}{2}-\frac{13}{2}\right)+2s-4<0.
+\]
+For $s=0,1$, the last inequality is immediate.
+For $s\ge2$, the parenthesis exceeds $2s-4$ when $W\ge7$.
+Thus among rings with at least one square, the maximum has $s=0$ or $s=1$ according to the parity of $W$.
+Proposition~\ref{prop:four-coefficient-ring-order} gives the displayed formulas.
+
+If $a=0$, every proper interval of used interfaces has one completion.
+There are $W(W-1)$ such intervals.
+The all-used case contributes at most one additional cycle.
+Thus its excess is at most $W(W-1)+1$.
+The stated maximum exceeds this quantity at $W=7,8$.
+Its excess more than doubles when $W$ increases by two, whereas
+\[
+ (W+2)(W+1)+1<2\bigl(W(W-1)+1\bigr)\qquad(W\ge7).
+\]
+Induction on each parity proves the comparison for all $W\ge7$.
+\end{proof}
+
+\begin{remark}[A cap formula for open chains]
+For an open chain with the same tile types, the through count is $D=2^a$.
+Its disjoint left-cap/right-cap count is
+\[
+ C=2^a\sum_{i<j}2^{-a(i,j)},
+\]
+where $a(i,j)$ counts square tiles strictly between positions $i,j$.
+The turn tiles contribute their local cap counts; all tiles before the first turn and after the second turn contribute through counts.
+This gives the formula directly.
+In particular,
+\[
+ C\le2^a\left(2a-4+2^{2-a}+4s+\binom s2\right).
+\]
+The square--square sum is exact, each single-rung tile contributes at most four against all squares, and each pair of single-rung tiles contributes at most one.
+This sharpens the earlier bound to leading coefficient one when the number of single-rung tiles is minimal.
+\end{remark}
+
+\paragraph{Status.}
+These formulas are new deductions from the previously audited saturated-ladder classification.
+They have passed independent line audits by the root, path-stability, and random-host agents.
+The companion checker verifies 527520 even states in 456 rings, 86 open chains, and 62491 exact optimization inequalities.
+The proofs remain separate from the stable proof packet.

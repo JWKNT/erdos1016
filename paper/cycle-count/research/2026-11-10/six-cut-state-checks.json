@@ -1,0 +1,126 @@
+{
+  "status": "exact checks passed",
+  "shore_graphs": 4,
+  "gluing_checks": 960,
+  "two_edge_augmentation_checks": 180,
+  "relaxation_witness": {
+    "status": "exact feasible relaxation witness; no graph realization claimed",
+    "objective": 16,
+    "one_edge_constraints": 90,
+    "two_edge_constraints": 45,
+    "path_sum": "7/2",
+    "four_forest_sum": "12",
+    "six_forest_sum": "1/2",
+    "path_counts_times_two": [
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      0,
+      1,
+      0,
+      0,
+      0,
+      1,
+      0,
+      1
+    ],
+    "four_counts_times_two": [
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        0,
+        2
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        1,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        0,
+        1,
+        1
+      ],
+      [
+        0,
+        1,
+        0
+      ],
+      [
+        1,
+        0,
+        0
+      ],
+      [
+        1,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        1
+      ],
+      [
+        1,
+        0,
+        1
+      ]
+    ],
+    "six_counts_times_two": [
+      0,
+      0,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

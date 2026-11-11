@@ -1,0 +1,18 @@
+{
+  "status": "independent exact C7 cap certificate passed",
+  "actual_cycle_edge_subsets": 126,
+  "formal_rho_coordinates": 231,
+  "actual_forest_coordinates": 231,
+  "dual_rows": 42,
+  "dual_types": {
+    "matching_1": 2,
+    "matching_2": 24,
+    "matching_3": 9,
+    "star": 4,
+    "binary": 2,
+    "star_edge": 1
+  },
+  "exact_bound": "63/2",
+  "author_modules_imported": false,
+  "numerical_solver_used": false
+}

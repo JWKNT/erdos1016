@@ -1,0 +1,149 @@
+{
+  "status": "exact finite necessary-condition exploration; not a complete critical-profile classification",
+  "rows": [
+    {
+      "active_six": 0,
+      "missing_four": 3,
+      "admissible_families": 6545,
+      "exact_local_minimum_times_two": 284,
+      "available_mass_times_two": 256,
+      "witness": [
+        [
+          0,
+          1,
+          2,
+          3
+        ],
+        [
+          0,
+          1,
+          4,
+          5
+        ],
+        [
+          2,
+          3,
+          4,
+          6
+        ]
+      ]
+    },
+    {
+      "active_six": 1,
+      "missing_four": 4,
+      "admissible_families": 6315,
+      "exact_local_minimum_times_two": 252,
+      "available_mass_times_two": 248,
+      "witness": [
+        [
+          0,
+          1,
+          2,
+          3
+        ],
+        [
+          0,
+          1,
+          4,
+          5
+        ],
+        [
+          0,
+          2,
+          4,
+          6
+        ],
+        [
+          2,
+          3,
+          4,
+          5
+        ]
+      ]
+    },
+    {
+      "active_six": 2,
+      "missing_four": 5,
+      "admissible_families": 14986,
+      "exact_local_minimum_times_two": 220,
+      "available_mass_times_two": 240,
+      "witness": [
+        [
+          0,
+          1,
+          2,
+          3
+        ],
+        [
+          0,
+          1,
+          4,
+          5
+        ],
+        [
+          0,
+          2,
+          4,
+          6
+        ],
+        [
+          1,
+          3,
+          4,
+          6
+        ],
+        [
+          2,
+          3,
+          4,
+          5
+        ]
+      ]
+    },
+    {
+      "active_six": 3,
+      "missing_four": 6,
+      "admissible_families": 47538,
+      "exact_local_minimum_times_two": 192,
+      "available_mass_times_two": 232,
+      "witness": [
+        [
+          0,
+          1,
+          2,
+          4
+        ],
+        [
+          0,
+          1,
+          3,
+          5
+        ],
+        [
+          0,
+          2,
+          3,
+          6
+        ],
+        [
+          1,
+          2,
+          5,
+          6
+        ],
+        [
+          1,
+          3,
+          4,
+          6
+        ],
+        [
+          2,
+          3,
+          4,
+          5
+        ]
+      ]
+    }
+  ]
+}

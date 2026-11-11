@@ -1,0 +1,12 @@
+{
+  "status": "All exact checks passed",
+  "compatible_ordered_pairs": 120,
+  "common_matching_count": 4,
+  "minimum_blocker_size": 3,
+  "minimum_blocker_degree_histogram": {
+    "3,1,1,1,0,0": 720,
+    "2,2,1,1,0,0": 1440,
+    "1,1,1,1,1,1": 120
+  },
+  "consequence": "Each active six-sector needs at least three inactive contained four-sectors."
+}

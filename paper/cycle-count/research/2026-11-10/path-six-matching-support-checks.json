@@ -1,0 +1,12 @@
+{
+  "matching_states": 15,
+  "compatible_partners_per_state": 8,
+  "pair_common_partner_counts": {
+    "4": 105
+  },
+  "triple_common_partner_counts": {
+    "0": 35,
+    "2": 420
+  },
+  "all_checks_passed": true
+}

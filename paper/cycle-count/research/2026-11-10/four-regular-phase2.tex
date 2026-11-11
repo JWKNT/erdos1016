@@ -1,0 +1,310 @@
+\section{A finite reduction of the four-regular problem}\label{sec:four-finite}
+
+This section combines the doubled-edge reduction with a published degree-sequence bound.
+It proves that any minimum counterexample has between eleven and eighteen vertices.
+It does not decide whether such a counterexample exists.
+The upper cutoff uses exact rational arithmetic for finitely many numerical inequalities.
+It does not use an exhaustive graph search at those orders.
+
+\subsection{The degree-sequence input}
+
+We use Theorem~7 of Dvo\v r\'ak, Morrison, Noel, Norin, and Postle,
+\emph{Bounding the number of cycles in a graph in terms of its degree sequence},
+\url{https://arxiv.org/abs/1907.12091}.
+Their theorem gives, for every simple graph $F$ and distinct vertices $s,t$,
+\[
+ P_{st}(F)\le a(\deg_F(s))
+                \prod_{v\ne s}b(\deg_F(v)).
+\]
+Only the following values enter this argument:
+\[
+ \rho=(4/3)^{1/4},\quad b(2)=\rho,\quad
+ b(3)=(2\rho)^{1/2},\quad b(4)=(6\rho)^{1/3}=2/\rho,
+ \quad b(5)=(24\rho)^{1/4},
+\]
+\[
+ a(2)=2/\rho^2,\qquad a(3)=6/(\rho^4b(5)).
+\]
+The theorem permits disconnected graphs.
+The product still gives an upper bound when the terminals lie in different components.
+
+Let $G$ be a connected loopless four-regular graph on $n$ vertices.
+Assume that every multiplicity is at most two and its $k$ doubled pairs form a matching.
+Subdivide one edge from each doubled pair, using a distinct new vertex each time.
+The resulting graph $S$ is simple and has exactly the same cycles as $G$.
+Its degree product is
+\begin{equation}\label{eq:core-degree-product}
+ B=b(4)^n\rho^k=2^n\rho^{k-n}
+ \le2^n(3/4)^{n/8},
+\end{equation}
+since $k\le n/2$.
+
+\begin{lemma}\label{lem:core-edge-frequency}
+Set
+\[
+ \kappa=\frac{a(3)b(3)}{b(4)^2}
+        =\frac{3^{19/16}}{2^{17/8}}<\frac{423}{500}.
+\]
+Every edge of $G$ satisfies $c_e(G)\le\kappa B$.
+If $e$ belongs to a doubled pair, it also satisfies $c_e(G)\le1+B/2$.
+Consequently,
+\begin{equation}\label{eq:core-length-sum}
+ \sum_C|E(C)|
+ \le \bigl(2\kappa(n-k)+k\bigr)B+2k.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+First suppose that the edge survives unsubdivided in $S$.
+Its endpoints have degree four.
+Delete this edge and apply the path theorem to its endpoints.
+Their degrees become three, so
+\[
+ c_e(G)=c_e(S)=P_{uv}(S-e)
+ \le a(3)b(3)b(4)^{n-2}\rho^k=\kappa B.
+\]
+The two original edges in a doubled pair have equal cycle counts.
+Thus the same bound covers the edge that was subdivided.
+
+Now let $e$ belong to a doubled pair with ends $u,v$.
+Delete both edges to obtain $N$.
+Every cycle through $e$ is either the two-edge cycle or a path in $N$ closed by $e$.
+Subdivide one edge from every remaining doubled pair.
+The resulting simple graph has terminal degrees two, $n-2$ original degrees four, and $k-1$ additional degrees two.
+Hence
+\[
+ P_{uv}(N)\le a(2)\rho^k b(4)^{n-2}=B/2.
+\]
+This proves the second bound.
+Sum it over the $2k$ doubled edges.
+Use the first bound for the other $2n-2k$ edges.
+Each cycle is counted once for every edge it uses, proving \eqref{eq:core-length-sum}.
+\end{proof}
+
+\subsection{A short-cycle bound that records the doubled matching}
+
+Write $c_\ell(G)$ for the number of cycles of length $\ell$.
+There are exactly $k$ two-edge cycles.
+For $\ell\ge3$, define
+\begin{equation}\label{eq:core-U}
+ U_\ell(n,k)=\min\left\{
+  \frac{(6n+2k)3^{\ell-3}}\ell,
+  \frac{49}{81\ell}\left(n-\frac{2k}{9}\right)
+       \left(\frac{18}{7}\right)^\ell
+       \left(\frac76\right)^{n-2k}
+ \right\}.
+\end{equation}
+
+\begin{lemma}\label{lem:core-short-cycles}
+For every $\ell\ge3$, we have $c_\ell(G)\le U_\ell(n,k)$.
+\end{lemma}
+
+\begin{proof}
+First fix a starting vertex incident with no doubled pair.
+There are four first-edge choices, at most three intermediate choices, and at most one closing edge.
+This gives at most $4\cdot3^{\ell-2}$ directed cycle representations at that vertex.
+
+Now fix a starting vertex incident with a doubled pair.
+Classify its cycles by the two edges used there.
+If both are single, there are at most $2\cdot3^{\ell-2}$ directed representations.
+If the first edge is doubled, there are two first-edge choices and at most two second-edge choices.
+The closing edge must be single.
+This gives at most $4\cdot3^{\ell-3}$ representations.
+Reversal gives the same bound when only the closing edge is doubled.
+Thus each such starting vertex contributes at most $14\cdot3^{\ell-3}$ representations.
+
+There are $n-2k$ vertices of the first type and $2k$ of the second type.
+Sum these bounds and divide by $2\ell$.
+The result is the first bound in \eqref{eq:core-U}.
+
+For the second bound, call an edge doubled if it belongs to a doubled pair.
+Give each directed doubled edge weight $w=7/9$ and each other directed edge weight one.
+Put $\lambda=18/7$ and $R=7/6$.
+There are $h=n-2k$ vertices incident with no doubled pair.
+Call these vertices ordinary.
+
+Consider a vertex incident with a doubled pair.
+After arriving along a single edge, a vertex-simple walk has at most one single and two doubled choices.
+Their total weight is $1+2w=23/9\le\lambda$.
+After arriving along a doubled edge, returning along its parallel mate is forbidden.
+At most two single choices remain, with total weight $2=\lambda w$.
+At an ordinary vertex, at most three choices remain, and $3=\lambda R$.
+
+For completeness, these weighted inequalities can be multiplied along a branching search.
+At each partial vertex-simple walk, record its last-edge weight and the unused number of ordinary vertices.
+With $j$ steps remaining, multiply them by $\lambda^jR^h$, using the remaining value of $h$.
+The total of the children's quantities never exceeds the parent's quantity.
+Each ordinary vertex is charged at most once.
+
+At the final step, require closure to the fixed starting vertex.
+After a single arrival at a nonordinary vertex, closing edges have total weight at most $2w=14/9$.
+Relative to $\lambda$, this is $49/81$.
+After a doubled arrival, a closing edge must be single when $\ell\ge3$.
+Its relative factor is at most $1/(\lambda w)=1/2$.
+At an ordinary vertex the relative factor is at most $1/3$.
+Thus closure supplies a factor at most $49/81$ in every case.
+
+The total starting-edge weight is
+\[
+ W=(4n-4k)+4kw=4n-8k/9.
+\]
+The weighted count of closed vertex-simple walks is therefore at most
+\[
+ \frac{49}{81}W\lambda^{\ell-1}R^h.
+\]
+Every last edge has weight at least $w$.
+Divide by $w$ and then by $2\ell$.
+Since $\lambda w=2$, the result is the second bound in \eqref{eq:core-U}.
+\end{proof}
+
+\subsection{The explicit cutoff}
+
+\begin{theorem}\label{thm:four-core-cutoff}
+Let $G$ be a connected loopless four-regular graph whose doubled edges form a matching and whose other edges are single.
+If $|V(G)|\ge19$, then $c(G)<2^{|V(G)|}$.
+Consequently, a minimum counterexample to $c(G)\le2^n+n$ has $11\le n\le18$.
+\end{theorem}
+
+\begin{proof}
+First consider $19\le n\le32$.
+For $0\le k\le\lfloor n/2\rfloor$, put
+\[
+ g=\left\lfloor\frac{4n+3k}{7}\right\rfloor,
+ \qquad \bar\kappa=423/500.
+\]
+For every cycle length $\ell$, its contribution to $c(G)$ is at most $\ell/g$,
+except that a shorter cycle requires the additional contribution $1-\ell/g$.
+Apply Lemmas~\ref{lem:core-edge-frequency} and~\ref{lem:core-short-cycles}.
+The two-edge contributions simplify to $k$, giving
+\begin{equation}\label{eq:core-finite-bound}
+ \frac{c(G)}{2^n}\le A_{n,k}+T_{n,k}(3/4)^{(n-k)/4},
+\end{equation}
+where
+\[
+ A_{n,k}=2^{-n}\left(k+
+   \sum_{\ell=3}^{g-1}(1-\ell/g)U_\ell(n,k)\right),
+ \qquad T_{n,k}=\frac{2\bar\kappa(n-k)+k}{g}.
+\]
+Both quantities are rational.
+For every stated pair $(n,k)$, exact arithmetic gives
+\begin{equation}\label{eq:core-rational-certificate}
+ A_{n,k}<1,\qquad
+ T_{n,k}^4(3/4)^{n-k}<(1-A_{n,k})^4.
+\end{equation}
+Thus \eqref{eq:core-finite-bound} is less than one.
+The verification script records every rational inequality, rather than testing rounded approximations.
+For reference, the largest displayed bounds at each order are below the following rounded-up values:
+\[
+\begin{array}{c|rrrrrrr}
+n&19&20&21&22&23&24&25\\\hline
+\text{bound}&.984&.956&.922&.902&.846&.827&.800\\
+n&26&27&28&29&30&31&32\\\hline
+\text{bound}&.788&.778&.769&.696&.689&.683&.678
+\end{array}
+\]
+
+For $n\ge33$, a simpler bound gives an induction over all orders.
+Put $g=\lfloor4n/7\rfloor$ and $q=(3/4)^{1/8}$.
+Use $c_2(G)\le n/2$, the elementary bound $c_\ell(G)\le2n3^{\ell-1}/\ell$,
+and $\sum_C|E(C)|\le2n\kappa B$.
+Then
+\begin{equation}\label{eq:core-tail-bound}
+ \frac{c(G)}{2^n}
+ \le F_n:=\frac{n/2+2nS_g}{2^n}+
+              \frac{2n}{g}\frac{17}{20}q^n,
+ \qquad S_g=\sum_{\ell=3}^{g-1}\frac{3^{\ell-1}}\ell.
+\end{equation}
+Exact rational eighth-power tests show $F_n<1$ for $33\le n\le39$.
+These are the seven base cases for the induction.
+
+For $g\ge5$, we have $S_g\ge3^{g-1}/(2g)$.
+The claim holds at $g=5$, and its induction follows by adding $3^{g-1}/g$.
+It implies $S_{g+1}\le3S_g$, and hence $S_{g+4}\le81S_g$.
+Under $n\mapsto n+7$, the cutoff $g$ increases by four.
+The first term in \eqref{eq:core-tail-bound} decreases, since
+\[
+ \frac{81(n+7)}{128n}<1\qquad(n\ge33).
+\]
+The second term decreases because $7g\le4n$ gives $(n+7)/(g+4)\le n/g$, and $q<1$.
+This proves $F_n<1$ for all $n\ge33$.
+
+Finally, Section~\ref{sec:four-regular} reduces a minimum counterexample to the stated class.
+The Hamilton-pair enumeration now verifies all orders through ten.
+The analytic bound excludes every order at least nineteen.
+\end{proof}
+
+\paragraph{Certificates and scope.}
+The script \texttt{check\_four\_regular\_core\_bound.py} checks all finite inequalities with rational arithmetic.
+It also verifies $\kappa^{16}=3^{19}/2^{34}<(423/500)^{16}$.
+Its complete output is \texttt{four-regular-core-bound-results.json}.
+The independent graph enumeration through order ten is in \texttt{four-regular-phase2-results.json}.
+The new order contributes $181{,}440$ Hamilton-pair orderings.
+Its maximum is $1034=2^{10}+10$.
+The bounds and reductions above are not formalised in Lean.
+
+
+\subsection{Sharper cutoffs with at most two doubled pairs}
+
+The short-cycle count also gives useful cutoffs for a fixed small value of $k$.
+These do not require a Hamilton decomposition.
+
+\begin{corollary}\label{cor:small-matching-cutoffs}
+Under the hypotheses of Theorem~\ref{thm:four-core-cutoff}, we have $c(G)<2^n$ in each of these cases:
+\[
+ (k=0\text{ and }n\ge14),\qquad
+ (k=1\text{ and }n\ge15),\qquad
+ (k=2\text{ and }n\ge16).
+\]
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:four-core-cutoff} covers $n\ge19$.
+For the remaining orders, use \eqref{eq:core-finite-bound} with the following cutoffs:
+\[
+\begin{array}{c|ccccc}
+ n&14&15&16&17&18\\\hline
+ k=0&10&10&11&12&12\\
+ k=1&-&10&11&12&12\\
+ k=2&-&-&11&12&12
+\end{array}
+\]
+Each case satisfies the exact rational inequalities in \eqref{eq:core-rational-certificate}.
+The largest displayed upper ratio is less than $.974$.
+The certificate script records all twelve checks.
+\end{proof}
+
+If a separate structural reduction leaves only $k\le2$, these cutoffs leave the following orders to check:
+\[
+\begin{array}{c|ccc}
+ k&0&1&2\\\hline
+ n&11,12,13&11,12,13,14&11,12,13,14,15.
+\end{array}
+\]
+This conditional statement uses the exhaustive Hamilton-pair verification through order ten.
+It does not assert that these remaining graph classes have already been enumerated.
+
+\subsection{The unresolved contraction inequality}
+
+Let $u,v$ be joined by exactly two edges in a four-regular graph $G$ on $n$ vertices.
+Delete these edges to obtain $N$.
+Let $H$ identify $u,v$ in $N$.
+Thus $H$ is the four-regular graph obtained by contracting the doubled pair and deleting its two loops.
+Assume that $N$ is connected.
+Write $c_{uv}(N)$ for the number of cycles containing both terminals.
+Direct classification gives
+\[
+ c(G)=c(N)+2P_{uv}(N)+1,
+ \qquad c(H)=c(N)-c_{uv}(N)+P_{uv}(N).
+\]
+Consequently,
+\[
+ c(G)-c(H)-1=P_{uv}(N)+c_{uv}(N).
+\]
+Since $\beta(N)=n-1$, the proposed contraction inequality is exactly
+\[
+ P_{uv}(N)+c_{uv}(N)\le2^{\beta(N)}.
+\]
+The terminals have degree two, and every other vertex has degree four.
+When $G$ has a Hamilton decomposition, $N$ is the union of two Hamilton terminal paths.
+The inequality passed all doubled-edge contraction tests through order ten.
+It remains unproved and is not used in Theorem~\ref{thm:four-core-cutoff}.

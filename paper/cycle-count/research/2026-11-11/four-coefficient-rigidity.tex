@@ -1,0 +1,201 @@
+\section{Four-pole rigidity and the eventual small-cut maximum}
+\label{sec:four-coefficient-rigidity}
+
+This argument uses previously audited terminal inequalities.
+It does not change their proofs or constants.
+For a rank-$h$ four-pole, normalize all path and forest counts by $2^h$.
+Write $a_{ij}$ for its six path counts and $u_\alpha$ for its three forest-pairing counts.
+Put $S=\sum a_{ij}$ and $F=\sum u_\alpha$.
+Each path coordinate and $F$ belongs to $[0,1]$.
+
+We use the following established consequences, with absolute constants.
+\begin{enumerate}
+\item Every path coordinate is either one or at most $15/16$
+      (Theorem~\ref{thm:terminal-path-saturation-gap}).
+\item Two path coordinates sharing a terminal and exceeding $0.51$ force the third coordinate to be $O(2^{-h/2})$
+      (Theorem~\ref{thm:three-pole-two-high}).
+\item If $a_{12}=1$, then each of $\min(a_{13},a_{23})$ and $\min(a_{14},a_{24})$ is at most $3\,2^{-h/4}$
+      (Lemma~\ref{lem:one-full-tripole-small-adjacent}).
+\item A cross sum at least $2.01$ gives $F=O((h+1)2^{-h/2})$
+      (Corollary~\ref{cor:linear-four-pole-cross-sum-forest}).
+\item If both coordinates of an opposite pair $\alpha$ exceed $0.01$, then
+      $\max(a_{ij},a_{kl})+F-u_\alpha\le1.01$ for sufficiently large $h$
+      (Lemma~\ref{lem:four-pole-added-edge}).
+\end{enumerate}
+Suppressing unused ports gives these consequences for four-poles.
+A loop produced by suppression would force the relevant path densities to be at most one half, so it does not affect the high-density cases.
+
+\begin{lemma}[A fixed gap outside two saturated profiles]
+\label{lem:four-coefficient-aggregate-rigidity}
+There is an absolute $h_0$ such that every loopless normalized four-pole of rank $h\ge h_0$ with
+\[
+ S+F\ge3.99
+\]
+has either a full three-edge star or a full $K_{2,2}$ among its path coordinates.
+Here an edge is full when its path count equals $2^h$.
+\end{lemma}
+
+\begin{proof}
+Increase $h_0$ until every two-high small coordinate and every one-full minimum in the preceding list is at most $0.01$.
+Also require the forest bound in item four to be at most $0.01$.
+
+First suppose some cross sum is at least $2.01$.
+Then $F\le0.01$, so $S\ge3.98$.
+Form a graph on the four ports using edges with $a_{ij}>\tau=0.51$.
+It is triangle-free, since two such adjacent edges make the third coordinate at most $0.01$.
+
+If this high graph is $K_{2,2}$ but one edge is not full, then
+\[
+ S\le3+15/16+2(0.01)=3.9575<3.98.
+\]
+If it has three edges, it is a star or a path.
+Their sums are at most $3.03$ and $3+0.51+0.02=3.53$, respectively.
+Two adjacent high edges give $S\le2+0.01+3(0.51)=3.54$.
+At most one high edge gives $S\le1+5(0.51)=3.55$.
+
+The remaining case consists of two disjoint high edges.
+If neither is full, then
+\[
+ S\le2(15/16)+4(0.51)=3.915.
+\]
+If one is full, item three makes two distinct cross coordinates at most $0.01$.
+The other two cross coordinates are at most $0.51$.
+Thus $S\le2+2(0.51)+2(0.01)=3.04$.
+All alternatives contradict $S\ge3.98$.
+The four high edges must therefore form a full $K_{2,2}$.
+
+Now suppose every cross sum is less than $2.01$.
+The three cross sums add to $2S$, so $S<3.015$.
+The hypothesis gives $S\ge2.99$ and $F>0.975$.
+Every opposite pair of coordinates has sum greater than $2.99-2.01=0.98$.
+
+If no coordinate is full, each is at most $15/16$ and consequently greater than $0.98-15/16=0.0425$.
+Apply item five to all three opposite pairings.
+Their sum gives $S/2+2F\le3.03$, hence $S+4F\le6.06$.
+But $S\ge2.99$ and $F>0.975$ give $S+4F>6.89$, a contradiction.
+
+There is therefore a full coordinate, say $a_{12}=1$.
+Item three gives one small coordinate in each of $\{a_{13},a_{23}\}$ and $\{a_{14},a_{24}\}$.
+Each opposite coordinate exceeds $0.98-0.01=0.97$, so the saturation gap makes it full.
+The two small coordinates cannot be opposite, because their opposite-pair sum exceeds $0.98$.
+The three full coordinates therefore form a star.
+\end{proof}
+
+\begin{lemma}[Aligned saturated cross profiles]
+\label{lem:four-coefficient-aligned-rings}
+Glue two saturated four-poles across their four ports, with their full $K_{2,2}$ partitions aligned.
+If either pole has no through pair, the resulting cubic graph has a cyclic cut of size three.
+Otherwise the result is a square and single-rung ring.
+\end{lemma}
+
+\begin{proof}
+With positive through count, the saturated four-pole classification gives a chain of square and single-rung tiles.
+The two aligned chains close into the ring described in Section~\ref{sec:four-coefficient-rings}.
+
+For completeness, the zero-through alternative in the proof of Lemma~\ref{lem:saturated-four-pole-double-cap} gives a bridge inside that pole.
+It separates its left terminal pair from its right terminal pair, with positive rank on each side.
+One bridge shore has two external port edges in the glued graph.
+Its boundary thus consists of those two edges and the bridge.
+Both global shores are connected and cyclic.
+This is a cyclic three-edge cut.
+\end{proof}
+
+\begin{theorem}[Eventual exact maximum in the small-cut class]
+\label{thm:four-coefficient-eventual-small-cut}
+There is an absolute rank threshold $R$ such that every connected loopless cubic multigraph of rank $r\ge R$ with a cyclic cut of size at most four satisfies
+\[
+ c(G)\le H(r),
+\]
+where $H$ is the Horak--Kim count in Theorem~\ref{thm:four-coefficient-ring-maximum}.
+The bound is attained for every $r\ge R$.
+\end{theorem}
+
+\begin{proof}
+The established theorem for cyclic cuts of size at most three has error $O(2^{r/2})$.
+That error is eventually smaller than $H(r)-2^{r-1}$.
+We may therefore assume no such cut exists.
+
+Normalize a cyclic four-edge cut as in the previously audited four-cut proof.
+Its shores are connected four-poles with distinct ports and positive ranks $h\le k$.
+They satisfy $r=h+k+3$.
+Call the poles $X,Y$, with $Y$ of rank $k$.
+In particular $k\to\infty$ uniformly as $r\to\infty$.
+The exact normalized crossing count is
+\[
+ \mathcal B(X,Y)
+ =\sum_{i<j}a_{ij}(X)a_{ij}(Y)
+  +\sum_\alpha u_\alpha(Y)\bigl(F(X)-u_\alpha(X)\bigr).
+\]
+Every coefficient from $X$ is at most one, so $\mathcal B(X,Y)\le S(Y)+F(Y)$.
+
+First suppose all six path coordinates of $Y$ are at most $0.51$.
+The existing low-state lemma gives $S(Y)+F(Y)\le3.82$.
+The asymptotic cycle bound gives $c(Y)\le(9/16)2^k$ for large $k$.
+If $h\ge2$, then
+\[
+ \frac{c(G)}{2^{h+k}}
+ \le3.82+\frac9{16}2^{-h}+2^{-k}
+ \le3.960625+2^{-k}<4.
+\]
+If $h=1$, then $X=C_4$.
+Its exact forest vector instead gives the low-state bound $\mathcal B(X,Y)\le3.7$.
+Therefore
+\[
+ \frac{c(G)}{2^{h+k}}
+ \le3.7+\frac9{32}+2^{-k}<4
+\]
+for sufficiently large $k$.
+These bounds are uniform in the smaller rank.
+
+Now suppose a path coordinate of $Y$ exceeds $0.51$.
+The high-path cycle tradeoff gives $c(Y)\le C2^{k/2}$ for an absolute $C$.
+If $S(Y)+F(Y)<3.99$, then
+\[
+ \frac{c(G)}{2^{h+k}}
+ \le3.99+C2^{-h-k/2}+2^{-k}<4
+\]
+for large $k$, uniformly for every $h\ge1$.
+We may assume $S(Y)+F(Y)\ge3.99$ and apply the rigidity lemma.
+
+Suppose first that $Y$ has a full star.
+Its other three path coordinates are $O(2^{-k/2})$.
+If $X$ misses a full coordinate on this star, the saturation gap loses at least $1/16$ in the crossing sum.
+Since $F(Y)\le1$, this gives
+\[
+ \mathcal B(X,Y)\le4-1/16+O(2^{-k/2}).
+\]
+The same normalized internal-cycle bounds make $c(G)<2^{r-1}$ for large $k$.
+
+If $X$ is full on the same star, its three leaf-pair coordinates are $O(2^{-h/2})$.
+The three full path products contribute exactly three.
+The forest term is at most $F(X)F(Y)\le1$.
+The remaining path products contribute $O(2^{-(h+k)/2})$.
+Both poles have full paths, so their internal cycle counts are $O(2^{h/2})$ and $O(2^{k/2})$.
+Consequently
+\[
+ c(G)\le2^{r-1}+C'2^{r/2}
+\]
+with an absolute $C'$, including all bounded smaller ranks.
+This is eventually less than $H(r)$.
+
+Finally suppose $Y$ has a full $K_{2,2}$.
+Its remaining path coordinates are $O(2^{-k/2})$ and its forest total is $O((k+1)2^{-k/2})$.
+If $X$ misses any of these four full coordinates, then
+\[
+ \mathcal B(X,Y)\le4-1/16+O((k+1)2^{-k/2}).
+\]
+The internal counts again give $c(G)<2^{r-1}$ for large $k$, uniformly in $h$.
+Otherwise $X$ and $Y$ are aligned saturated cross poles.
+The zero-through case in Lemma~\ref{lem:four-coefficient-aligned-rings} contradicts the absence of a cyclic three-edge cut.
+The other case is a square and single-rung ring, so Theorem~\ref{thm:four-coefficient-ring-maximum} gives $c(G)\le H(r)$.
+
+All thresholds and implied constants used above are absolute.
+Their maximum supplies $R$.
+The Horak--Kim rings have cyclic four-edge cuts and attain $H(r)$ on both parities.
+\end{proof}
+
+\paragraph{Status.}
+This refinement has passed independent line audits by the root, path-stability, and random-host agents.
+Its proof treats the smaller shore without hiding its rank in a constant.
+The companion checker tests 1059 exact rational endpoint profiles; their maximum path sum outside a full $K_{2,2}$ is $1583/400=3.9575$.
+The eventual rank threshold is not made effective here.

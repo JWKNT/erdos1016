@@ -1,0 +1,42 @@
+{
+  "status": "all exact grid and counting-formula checks passed",
+  "compositions": 6435,
+  "four_token_subsets": 225225,
+  "minimum_bad": 11,
+  "equality_compositions": 36,
+  "row_profiles": {
+    "7,0,0": {
+      "cases": 108,
+      "maximum_good": 0
+    },
+    "6,1,0": {
+      "cases": 504,
+      "maximum_good": 0
+    },
+    "5,2,0": {
+      "cases": 756,
+      "maximum_good": 8
+    },
+    "4,3,0": {
+      "cases": 900,
+      "maximum_good": 15
+    },
+    "5,1,1": {
+      "cases": 567,
+      "maximum_good": 10
+    },
+    "4,2,1": {
+      "cases": 1620,
+      "maximum_good": 19
+    },
+    "3,3,1": {
+      "cases": 900,
+      "maximum_good": 21
+    },
+    "3,2,2": {
+      "cases": 1080,
+      "maximum_good": 24
+    }
+  },
+  "numerical_solver_used": false
+}

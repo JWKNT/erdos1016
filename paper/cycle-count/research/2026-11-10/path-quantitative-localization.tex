@@ -1,0 +1,270 @@
+\section{Disconnected localization and quantitative path stability}
+\label{sec:path-quantitative-localization}
+
+Localization does not require the retained vertex set to be connected.
+Removing that requirement avoids the component-counting step in the original stability proof.
+The endpoint forest estimate then gives a quantitative additive stability constant.
+All logarithms in this section have base two.
+
+\begin{lemma}[Localization on a disconnected shore]
+\label{lem:path-disconnected-localization}
+Let $G$ be a connected multigraph, and let $R$ be a nonempty proper vertex set such that $G-R$ is connected.
+Write
+\[
+ d=|\delta_G R|\ge1,\qquad c_R=\operatorname{comp}(G[R]).
+\]
+For each boundary edge, add a distinct new vertex and a spoke to its endpoint in $R$.
+Join the new vertices into a cycle $W_R$, padding it to length three when $d<3$.
+Let $G_R$ consist of $G[R]$, these spokes, and $W_R$.
+Then $G_R$ is connected and
+\[
+ |V(W_R)|=\max\{d,3\},
+ \qquad
+ \beta(G_R)=\beta(G[R])+d-c_R+1.
+\]
+For uniform even subgraphs,
+\[
+ \Pr\bigl(\xi_G\cap E(G[R])\text{ is a forest}\bigr)
+ =\Pr\bigl(\xi_{G_R}\cap E(G_R-V(W_R))\text{ is a forest}\bigr).
+\]
+If every vertex of $R$ has degree three in $G$, then
+\[
+ \beta(G_R)=\frac{|R|+d}{2}+1.
+\]
+\end{lemma}
+
+\begin{proof}
+Every component of $G[R]$ has a boundary edge, since $G$ is connected.
+The new cycle therefore connects all these components.
+Without padding, the construction adds $d$ vertices and $2d$ edges.
+Its rank is $|E(G[R])|+d-|R|+1$, giving the stated formula.
+Padding adds equally many edges and vertices and preserves this rank.
+
+Contract all edges of the connected graph $G-R$ in $G$.
+Separately, contract all edges of $W_R$ in $G_R$.
+The resulting multigraphs agree, including their restrictions to $E(G[R])$.
+Projection of a uniform cycle-space vector through a contraction is uniform on the image cycle space.
+For surjectivity, complete each prescribed even boundary by a join in a spanning tree of the contracted component.
+Thus the restrictions to $E(G[R])$ have the same law in both constructions.
+This proves the probability identity.
+
+Under the cubic assumption, $3|R|=2|E(G[R])|+d$.
+Substitution into the rank formula gives $(|R|+d)/2+1$.
+No connectedness assumption on $R$ was used.
+\end{proof}
+
+\begin{lemma}[A quantitative localized forest threshold]
+\label{lem:path-polynomial-local-threshold}
+There is an absolute constant $K_0$ with the following property.
+For $0<\delta\le1/4$, one can choose an integer $R_\delta\ge2^{100}$ satisfying
+\[
+ R_\delta\le K_0\delta^{-2}\bigl(\log(2/\delta)\bigr)^{11}.
+\]
+Whenever a connected subcubic multigraph has rank $\rho\ge R_\delta$ and a connected marked set $P$ containing every vertex of degree below three, with
+\[
+ |P|\le\frac{\rho}{(\log\rho)^2},
+\]
+the probability that its uniform even subgraph is a forest outside $P$ is at most $1/2+\delta$.
+\end{lemma}
+
+\begin{proof}
+Use the absolute constant $M$ and absolute rank threshold in Theorem~\ref{thm:parallel-links-log-five-half-forest}.
+Increase that threshold to at least $2^{100}$.
+At these ranks, a connected marked set satisfies its component bound.
+It is enough to require
+\[
+ M\frac{(\log\rho)^{11/2}}{\sqrt\rho}\le\delta.
+\]
+The left side decreases for all sufficiently large $\rho$.
+Choosing $\rho$ above a sufficiently large constant times
+\[
+ \delta^{-2}\bigl(\log(2/\delta)\bigr)^{11}
+\]
+ensures this inequality.
+Indeed, the logarithm of this expression is $O(\log(2/\delta))$.
+Choose the absolute constant large enough to cover both the endpoint threshold and the remaining compact range of $\delta$.
+Rounding upward gives the asserted integer $R_\delta$.
+\end{proof}
+
+\begin{lemma}[Every sufficiently large good set is excluded]
+\label{lem:path-direct-good-set}
+Use the cubic expansion $\Gamma$, shortest terminal path $A$, graph $H$, and marked cycle $W$ from the general stability proof.
+Let $\delta=\varepsilon/2$ and
+\[
+ \Theta=\max\{2^{36},2R_\delta\}.
+\]
+If the terminal-path density is at least $1/2+\varepsilon$, no set $R\subseteq V(\Gamma)\setminus V(A)$ can satisfy
+\[
+ |R|\ge\Theta,
+ \qquad
+ |\delta_\Gamma R|\le\frac{|R|}{4(\log|R|)^2}.
+\]
+\end{lemma}
+
+\begin{proof}
+Suppose such an $R$ exists, and put $m=|R|$.
+Let $C_0$ be the component of $H-R$ containing $W$.
+Set $R^+=V(H)\setminus V(C_0)$.
+Then $R^+\supseteq R$, its complement is connected, and it avoids $V(W)$.
+It need not be connected.
+Every boundary edge of $R^+$ already belongs to $\delta_H R$, because distinct components of $H-R$ have no edge between them.
+Hence, writing $d^+=|\delta_HR^+|$,
+\[
+ d^+\le|\delta_HR|=|\delta_\Gamma R|
+ \le\frac{m}{4(\log m)^2}.
+\]
+All vertices of $R^+$ are cubic in $H$.
+
+Apply Lemma~\ref{lem:path-disconnected-localization} to $R^+$.
+The resulting graph has rank
+\[
+ \rho=\frac{|R^+|+d^+}{2}+1\ge m/2\ge R_\delta.
+\]
+It is subcubic, and every vertex outside its marked cycle is cubic.
+The marked cycle is connected and has at most $\rho/(\log\rho)^2$ vertices.
+For $d^+\ge3$, this follows from the increasing function $\Phi(t)=t/(\log t)^2$ on $t\ge8$ and
+\[
+ d^+\le\Phi(m)/4\le\Phi(m/2)\le\Phi(\rho).
+\]
+For $d^+<3$, padding adds only three marked vertices, which also meets that bound.
+
+The terminal-path injection bounds $1/2+\varepsilon$ by the forest probability outside $W$ in $H$.
+That event implies the forest event on $H[R^+]$.
+The localization identity and Lemma~\ref{lem:path-polynomial-local-threshold} bound its probability by $1/2+\delta$.
+This contradicts $\delta=\varepsilon/2$.
+\end{proof}
+
+\begin{theorem}[A single-exponential additive stability constant]
+\label{thm:path-quantitative-additive}
+There is an absolute constant $K_1$ such that the following holds.
+Let $N$ be a connected graph of rank $b$ with distinct terminals $u,v$, and suppose
+\[
+ P_{uv}(N)\ge(1/2+\varepsilon)2^b,
+ \qquad 0<\varepsilon\le1/2.
+\]
+Then every terminal path has length at least $b-C_\varepsilon$, where one may choose
+\[
+ C_\varepsilon\le
+ 2^{K_1\varepsilon^{-2}(\log(2/\varepsilon))^{11}}.
+\]
+The cubic expansion in the stability proof has distance layers of size at most
+\[
+ K_1\varepsilon^{-2}(\log(2/\varepsilon))^{11}+1.
+\]
+\end{theorem}
+
+\begin{proof}
+Lemma~\ref{lem:path-direct-good-set} replaces the original good-set dichotomy.
+The unchanged growing-window lemma gives fewer than $\Theta$ unmarked vertices in each distance layer.
+Lemma~\ref{lem:path-polynomial-local-threshold} bounds
+\[
+ \Theta\le K_2\varepsilon^{-2}(\log(2/\varepsilon))^{11}
+\]
+for an absolute $K_2$.
+There is at most one marked path vertex in each layer.
+This proves the layer-width statement after increasing the final constant.
+
+Put $B=\lceil\Theta\rceil$ and $L=20B+2$.
+The minimum-span window argument and greedy deletion of whole windows remain unchanged.
+The already proved additive estimate therefore permits
+\[
+ C_\varepsilon=\frac{2L(L+1)2^{L-1}}{\varepsilon}.
+\]
+Taking logarithms, and using the displayed polynomial bound on $\Theta$, gives
+\[
+ \log C_\varepsilon
+ \le K_1\varepsilon^{-2}(\log(2/\varepsilon))^{11}
+\]
+after increasing $K_1$.
+The terminal reduction and rank-distance comparison then give the asserted path bound.
+\end{proof}
+
+\begin{corollary}[A quantitative edge-deletion path excess]
+\label{cor:path-logarithmic-deletion-excess}
+The function $q(s)$ from Proposition~\ref{prop:path-finite-cut-recurrence} satisfies
+\[
+ q(s)=O\!\left(\frac{(\log\log s)^{11/2}}{\sqrt{\log s}}\right).
+\]
+\end{corollary}
+
+\begin{proof}
+Put $x=\log s$, $z=\log x$, and choose a fixed $A\ge\max\{1,2\sqrt{K_1}\}$.
+Set $\varepsilon=A z^{11/2}/\sqrt x$.
+For sufficiently large $s$, this lies in $(0,1/2]$ and $\log(2/\varepsilon)\le z$.
+Theorem~\ref{thm:path-quantitative-additive} then gives
+\[
+ C_\varepsilon
+ \le2^{K_1\varepsilon^{-2}(\log(2/\varepsilon))^{11}}
+ \le2^{x/4}=s^{1/4}.
+\]
+Consequently
+\[
+ B_{2,\varepsilon}=3(9\lceil C_\varepsilon\rceil+25)<s-1
+\]
+for large $s$.
+The two-pole high-density small-cut theorem gives $q(s)\le\varepsilon$.
+This proves the stated rate.
+\end{proof}
+
+\begin{corollary}[Growing cyclic cut orders]
+\label{cor:path-loglog-growing-cut}
+Let connected loopless cubic multigraphs $G$ have ranks $r\to\infty$ and minimum cyclic cut orders $k=k(r)\ge5$.
+If
+\[
+ \frac{2^k(\log\log r)^{11/2}}{\sqrt{\log r}}\longrightarrow0,
+\]
+then
+\[
+ c(G)\le2^{r-1}-(1-o(1))2^{r-k-1}<2^{r-1}.
+\]
+In particular, this holds whenever
+\[
+ k\le(1/2-\eta)\log\log r
+\]
+for any fixed $\eta>0$.
+\end{corollary}
+
+\begin{proof}
+The assumed condition gives $k=O(\log\log r)$, so $r-k\to\infty$.
+Corollary~\ref{cor:path-logarithmic-deletion-excess} holds uniformly over the ranks from $r-k+6$ through $r$.
+Its bound changes by a factor $1+o(1)$ across this interval.
+Apply Proposition~\ref{prop:path-finite-cut-recurrence} and compare its error terms with $2^{-k-1}$.
+Both are negligible under the displayed assumption.
+For the final assertion, the ratio is at most
+\[
+ \frac{(\log\log r)^{11/2}}{(\log r)^\eta},
+\]
+which tends to zero.
+\end{proof}
+
+\begin{corollary}[The endpoint growing-order range]
+\label{cor:path-endpoint-loglog-cut}
+There is an absolute constant $C$ such that, for all sufficiently large $r$, every connected loopless cubic multigraph of rank $r$ with
+\[
+ 5\le\lambda_c(G)=k
+ \le\frac12\log\log r-\frac{11}{2}\log\log\log r-C
+\]
+satisfies
+\[
+ c(G)\le2^{r-1}-2^{r-k-2}.
+\]
+\end{corollary}
+
+\begin{proof}
+Choose an absolute $A_0$ such that the path-excess sum in Proposition~\ref{prop:path-finite-cut-recurrence} is at most
+\[
+ A_0\frac{(\log\log r)^{11/2}}{\sqrt{\log r}}
+\]
+throughout $k=O(\log\log r)$ at sufficiently large $r$.
+This follows from Corollary~\ref{cor:path-logarithmic-deletion-excess} and the sum of its geometric weights, which is less than one.
+Take $C$ so large that $A_0 2^{-C}\le1/8$.
+The displayed cut-order bound then makes the path-excess sum at most $2^{-k-3}$.
+For sufficiently large $r$, the base error satisfies $a_5(r-k+5)\le1/256$ uniformly in this range.
+Its contribution is also at most $2^{-k-3}$.
+Subtract these two errors from the deficit $2^{-k-1}$ in Proposition~\ref{prop:path-finite-cut-recurrence}.
+The remaining deficit is at least $2^{-k-2}$, as asserted.
+\end{proof}
+
+The new localization step removes an unnecessary exponential loss in the stability constants.
+It does not give the unrestricted half-exponent cycle error.
+The remaining cyclic connectivity can still grow between the displayed double-logarithmic range and the general logarithmic upper bound.

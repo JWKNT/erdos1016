@@ -1,0 +1,79 @@
+\section{What the exact-half forest theorem gives for edge frequencies}
+\label{sec:new-edge-half-reductions}
+
+Write $c(G)$ for the number of cycles and $c_e(G)$ for the number containing $e$.
+The edge-half conjecture asks for $2c_e(G)\le c(G)$ at some edge of each connected simple cubic graph, apart from $K_4$ and $K_{3,3}$.
+Its denominator is the actual cycle count, not the size of the cycle space.
+
+\begin{proposition}[High-girth graphs at or above half density]
+\label{prop:new-edge-half-dense-high-girth}
+There are absolute integers $D,R$ with the following property.
+Let $G$ be a connected cubic graph of rank $r\ge R$ and girth at least $D$.
+Every edge of every shortest cycle satisfies
+\[
+ c_e(G)\le2^{r-2}.
+\]
+If also $c(G)\ge2^{r-1}$, all those edges satisfy the edge-half inequality.
+\end{proposition}
+
+\begin{proof}
+The cubic Moore bound gives a shortest cycle $W$ with at most $3\log_2r$ vertices at these ranks.
+The established exact-half forest theorem applies to the connected marker $P=V(W)$.
+For each cycle $C$ containing a selected edge $e\in E(W)$, the two even states
+\[
+ E(C),\qquad E(C)\mathbin\triangle E(W)
+\]
+restrict to forests outside $P$.
+All $2c_e(G)$ states are distinct.
+Within each group this follows from injectivity, and the two groups differ in their $e$-coordinate.
+The forest theorem therefore gives $2c_e(G)\le2^{r-1}$.
+Comparison with $c(G)\ge2^{r-1}$ proves the relative assertion.
+\end{proof}
+
+\begin{corollary}[A below-half reduction without small cyclic cuts]
+\label{cor:new-edge-half-below-density}
+For all sufficiently large ranks, a connected simple cubic graph with no cyclic cut of size at most four and with $c(G)\ge2^{r-1}$ satisfies the edge-half conjecture.
+\end{corollary}
+
+\begin{proof}
+At girth at least $D$, apply Proposition~\ref{prop:new-edge-half-dense-high-girth}.
+For the finitely many smaller girths, the established bounded-girth deficit gives $c(G)<2^{r-1}$ at sufficiently large rank.
+This contradicts the hypothesis in the remaining cases.
+\end{proof}
+
+This reduction leaves genuine relative counting questions when $c(G)<2^{r-1}$.
+It also leaves all finite ranks below the stated threshold.
+There is no constant in the edge-half conjecture that can absorb those ranks.
+
+\begin{proposition}[The scope of the weighted tripole statement]
+\label{prop:new-tripole-near-half}
+Assume that every connected simple normalized three-pole $N$, for all weights $w_{ij}\ge0$, has an edge satisfying
+\[
+ 2c_e(N)+2\sum_{i<j}w_{ij}p_{ij}(e)
+ \le c(N)+1+\sum_{i<j}w_{ij}p_{ij}.
+\]
+Then every three-connected simple cubic graph $G$ has an edge with
+\[
+ 2c_e(G)\le c(G)+1.
+\]
+In particular, the edge-half conclusion holds whenever $c(G)$ is even.
+\end{proposition}
+
+\begin{proof}
+Delete any vertex $v$.
+The resulting graph $N$ is connected, and its three distinct neighbors become the degree-two terminals.
+Every cycle through $v$ is exactly one terminal path in $N$, completed by its two edges to $v$.
+Consequently
+\[
+ c(G)=c(N)+\sum_{i<j}p_{ij},\qquad
+ c_e(G)=c_e(N)+\sum_{i<j}p_{ij}(e)
+\]
+for each edge of $N$.
+Apply the assumed statement with all weights equal to one.
+If $c(G)$ is even, the integer $2c_e(G)$ cannot equal the odd integer $c(G)+1$.
+Thus it is at most $c(G)$.
+\end{proof}
+
+The weighted statement is still a research target.
+The proposition records a conditional implication, not a proof of that target.
+For $K_4$ and $K_{3,3}$, every edge attains $(c(G)+1)/2$, so the extra unit cannot be omitted from this general implication.

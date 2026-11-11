@@ -1,0 +1,62 @@
+Local six-sector and critical seven-cut checkpoint.
+10 November 2026.
+
+The all-fixed-cut theorem now follows from the independent deletion induction
+in path-fixed-cut-induction.tex. Its written proof passed our full audit.
+The local optimization below is no longer needed for that theorem.
+It remains a separate finite combinatorial lead.
+
+In the local model, each shore has six-terminal forest mass one.
+Corresponding four-terminal totals are common Boolean variables.
+Corresponding four-pairing supports are disjoint across the two shores.
+Positive six-pairings across shores have no common pair.
+All path coordinates vanish.
+
+Two canonical compatible six-matchings have mass at least1/15, one per shore.
+This is a valid symmetry reduction: choose a largest coordinate on each shore.
+Their positive pairings are compatible, and every compatible ordered pair is
+equivalent under a permutation of the six ports.
+
+Numerical optimization of the number of active four-sectors gave:
+  matching augmentation only:11;
+  matching plus star caps:9;
+  matching plus binary-tree caps:10;
+  matching, star and binary-tree caps:9.
+All four runs reported optimality within five seconds.
+These upper bounds are not certified by an exact dual or exhaustive proof.
+No theorem in this work relies on their numerical optimality.
+
+Every saved feasible witness passed an independent rational primal check.
+The checker uses standard-library Fraction arithmetic and reconstructs the
+matching, star, binary, compatibility and sector-total inequalities.
+Run python3 four-six-verify-local-witnesses.py.
+The output is four-six-local-witness-checks.json.
+It verifies seven witnesses, including the relaxations below.
+
+Relaxing four-pairing support disjointness to coordinatewise x+y<=1 gives
+maximum11 with star caps, and12 with matching augmentation alone.
+The first witness has one pure six-pairing and two pairings sharing an edge
+on the other shore. Their weights are1/2 each.
+Thus the relaxation fails even with a two-coordinate support reduction.
+
+A support-only Boolean model retains nonempty disjoint four-pairing supports,
+the required positive slots from matching augmentation, and star triangles.
+It has an exactly checked feasible assignment with12 active four-sectors.
+Therefore positive support alone cannot replace the quantitative cap bounds.
+See four-six-support-only.py/.json.
+
+When both six-terminal totals are zero, the star model permits all15 four
+sectors to be active. Six-terminal mass is essential to the local obstruction.
+
+For critical seven-pole profiles, the exact prism lemma forces at least three
+inactive four-sectors inside every active six-sector.
+Its proof and finite checker are four-seven-prism-obstruction.tex and
+four-seven-prism-cuts.py/.json.
+Together with the path agent's local triangle-cover proof, it excludes
+zero or one active six-terminal sector without numerical optimization.
+See path-six-seven-star-obstruction.tex.
+
+The hypothetical exact local bound of nine would exclude every remaining
+critical seven-pole profile by incidence counting. It remains unproved here.
+The all-fixed-cut deletion induction resolves the original graph application
+without requiring this stronger local statement.

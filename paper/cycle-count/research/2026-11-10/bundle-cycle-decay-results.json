@@ -1,0 +1,142 @@
+{
+  "status": "all exact rational checks passed",
+  "methods": [
+    "binary cycle-space enumeration",
+    "independent even-bundle emptiness sum",
+    "transfer-matrix trace"
+  ],
+  "cases": [
+    {
+      "vertices": 3,
+      "bundle_multiplicity": 1,
+      "degree": 2,
+      "rank": 1,
+      "cycle_space_states": 2,
+      "moment": [
+        9,
+        16
+      ]
+    },
+    {
+      "vertices": 4,
+      "bundle_multiplicity": 1,
+      "degree": 2,
+      "rank": 1,
+      "cycle_space_states": 2,
+      "moment": [
+        17,
+        32
+      ]
+    },
+    {
+      "vertices": 5,
+      "bundle_multiplicity": 1,
+      "degree": 2,
+      "rank": 1,
+      "cycle_space_states": 2,
+      "moment": [
+        33,
+        64
+      ]
+    },
+    {
+      "vertices": 3,
+      "bundle_multiplicity": 2,
+      "degree": 4,
+      "rank": 4,
+      "cycle_space_states": 16,
+      "moment": [
+        109,
+        128
+      ]
+    },
+    {
+      "vertices": 4,
+      "bundle_multiplicity": 2,
+      "degree": 4,
+      "rank": 5,
+      "cycle_space_states": 32,
+      "moment": [
+        417,
+        512
+      ]
+    },
+    {
+      "vertices": 5,
+      "bundle_multiplicity": 2,
+      "degree": 4,
+      "rank": 6,
+      "cycle_space_states": 64,
+      "moment": [
+        1597,
+        2048
+      ]
+    },
+    {
+      "vertices": 3,
+      "bundle_multiplicity": 3,
+      "degree": 6,
+      "rank": 7,
+      "cycle_space_states": 128,
+      "moment": [
+        981,
+        1024
+      ]
+    },
+    {
+      "vertices": 4,
+      "bundle_multiplicity": 3,
+      "degree": 6,
+      "rank": 9,
+      "cycle_space_states": 512,
+      "moment": [
+        7745,
+        8192
+      ]
+    },
+    {
+      "vertices": 5,
+      "bundle_multiplicity": 3,
+      "degree": 6,
+      "rank": 11,
+      "cycle_space_states": 2048,
+      "moment": [
+        61125,
+        65536
+      ]
+    },
+    {
+      "vertices": 3,
+      "bundle_multiplicity": 4,
+      "degree": 8,
+      "rank": 10,
+      "cycle_space_states": 1024,
+      "moment": [
+        8101,
+        8192
+      ]
+    },
+    {
+      "vertices": 4,
+      "bundle_multiplicity": 4,
+      "degree": 8,
+      "rank": 13,
+      "cycle_space_states": 8192,
+      "moment": [
+        129153,
+        131072
+      ]
+    },
+    {
+      "vertices": 5,
+      "bundle_multiplicity": 4,
+      "degree": 8,
+      "rank": 16,
+      "cycle_space_states": 65536,
+      "moment": [
+        2058901,
+        2097152
+      ]
+    }
+  ]
+}

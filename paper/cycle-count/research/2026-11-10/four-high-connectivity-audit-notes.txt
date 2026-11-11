@@ -1,0 +1,47 @@
+Independent audit by four_regular, 2026-11-10.
+
+PASS: second-order-random-long-minimum-cut.tex.
+
+The distant-port gluing lemma handles arbitrary disconnected restricted
+shores. If both are forests, the pole rank is internal-boundary minus
+their component counts plus one, contradicting rank at least k. Each
+component of the unique forest shore contains at most one port, since
+its boundary is order+2-number_of_ports and port distance is at least2k.
+Equal cyclic-bulk sides give an acyclic opposite global side. Opposite
+bulk sides give cut size at least k+alpha+beta. Equality then forces
+both forest shores empty. This proves uniqueness in the strict internal
+connectivity case.
+
+The iterative chain construction preserves cyclic connectivity K=k+1.
+Every new attachment is distant from all preceding attachment ports in
+its terminal block, so passing through the old chain cannot create a
+short path between new ports. Subdivision preserves internal cyclic
+connectivity. The final rank is
+L(n0+2K)-2K+k+1=L(n0+2K)-k-1,
+as stated. The only external existence input is the stated Wormald
+random-regular consequence; this audit does not independently verify
+that external paper. The explicit honeycomb k=5 construction avoids it.
+
+PASS: primary input for four-high-connectivity-long-cut.tex.
+Nedela and Skoviera, Atoms of cyclic connectivity in cubic graphs,
+Mathematica Slovaca45(1995),481-499, Theorem17 on printed page498:
+cubic vertex-transitive or edge-transitive graphs have cyclic
+connectivity equal to their girth (with the paper's harmless convention
+for the three exceptional cycle-inseparable cubic graphs).
+Primary PDF:
+https://dml.cz/bitstream/handle/10338.dmlcz/132921/MathSlov_45-1995-5_3.pdf
+Our honeycomb cores have girth6 and arbitrarily large rank, so none is
+exceptional. The proof uses only this cyclic-connectivity conclusion.
+
+Finite checker passed9,013,248 reduced small-cut patterns for M=10.
+The reduction itself uses the cited cyclic-connectivity theorem.
+Exactlyone cyclic cut of order at most5 remains. Distances and shortest
+cycles through joining edges also pass for M=11,20,50.
+
+Quantitative caveat for future work:
+The diagonal obstruction allows the cut order to grow arbitrarily
+slowly. It does not contradict a prescribed fast-growing girth bound.
+Moore-ball packing along a shortest terminal path in G-e gives
+distance O(r*g*2^(-g/2)), where g is the girth. Thus sufficiently large
+g relative to loglog r again guarantees sublinear edge-cycle lengths.
+This observation is a proof sketch, not a separately audited theorem.

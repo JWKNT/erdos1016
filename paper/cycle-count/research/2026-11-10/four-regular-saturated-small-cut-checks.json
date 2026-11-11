@@ -1,0 +1,10 @@
+{
+  "status": "all candidate, restoration, and cyclic-cut certificates passed",
+  "checks": {
+    "exact_piece_candidate_checks": 986,
+    "exact_cyclic_cut_certificates": 34598,
+    "completed_cubic_graphs": 800,
+    "restored_ports": 2800
+  },
+  "scope": "Structured saturated pieces and deterministic random port placements; exact cut certificates, not a numerical bound test."
+}

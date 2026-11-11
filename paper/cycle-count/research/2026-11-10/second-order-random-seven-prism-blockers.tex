@@ -1,0 +1,77 @@
+\section{A short criterion for six-port prism blockers}
+\label{sec:random-seven-prism-blockers}
+
+This criterion simplifies a necessary condition on critical seven-cut profiles.
+It does not establish the unrestricted seven-cut bound.
+
+\begin{lemma}[Prism-blocker criterion]
+\label{lem:random-seven-prism-blocker}
+Let $D$ be a graph on a fixed set of six vertices.
+The following conditions are equivalent.
+\begin{enumerate}
+\item There is a six-cycle $C$ in $K_6$ such that $D$ meets every perfect matching of $K_6-E(C)$.
+\item Every partition of the six vertices into two triples has an edge of $D$ between its parts.
+\item The graph $D$ contains a copy of $K_{1,3}$, $P_4$, or three disjoint edges.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+First suppose that $D$ has no edge across a partition into triples $A,B$.
+Fix any six-cycle $C$.
+The bipartite graph $K_{A,B}-E(C)$ has minimum degree at least one.
+If two vertices on one side had only one common available neighbor, the four deleted cross edges would form a four-cycle in $C$.
+This is impossible.
+Hall's condition therefore holds for subsets of sizes one, two, and three.
+There is a perfect matching across $A,B$ that avoids $C$.
+It also avoids $D$.
+This proves that the first condition implies the second.
+
+If a component of $D$ has at least four vertices, it contains a tree on four vertices.
+Such a tree is $K_{1,3}$ or $P_4$.
+Otherwise all components have at most three vertices.
+A component of order three immediately gives a partition into triples with no crossing edge.
+When all components have order at most two, such a partition exists unless their orders are $2,2,2$.
+The remaining case contains three disjoint edges.
+This proves that the second condition implies the third.
+
+Every triangular prism is the complement of a six-cycle in $K_6$.
+Its perfect matchings consist of all three spokes, or one spoke together with one edge from each triangle.
+Three disjoint edges meet all four matchings when used as the three spokes.
+A three-edge star meets all perfect matchings when used as the edges incident with one prism vertex.
+
+For a path $0\,1\,2\,3$, take prism triangles $\{0,1,5\}$ and $\{2,3,4\}$, with spokes $04,12,35$.
+The all-spoke matching and the matching with single spoke $12$ meet the path in edge $12$.
+The matching with single spoke $04$ contains edge $23$.
+The matching with single spoke $35$ contains edge $01$.
+Thus all three listed subgraphs give the first condition.
+\end{proof}
+
+\begin{corollary}[Ten inequalities for an active six-sector]
+\label{cor:random-seven-balanced-prism}
+Consider a critical seven-cut profile with common Boolean sector totals $z_Q$.
+Let $S$ be a six-port set and let $S=A\sqcup B$, where $|A|=|B|=3$.
+Then
+\[
+ \sum_{a\in A,\ b\in B}\bigl(1-z_{S\setminus\{a,b\}}\bigr)
+ \ge z_S.
+\]
+Equivalently,
+\[
+ \sum_{a\in A,\ b\in B}z_{S\setminus\{a,b\}}+z_S\le9.
+\]
+There are ten such inequalities for each six-sector.
+\end{corollary}
+
+\begin{proof}
+If $z_S=0$, the inequality follows from the Boolean bounds.
+Suppose that $z_S=1$.
+Choose positive six-terminal pairing masses on the two shores.
+Their matchings $\beta,\gamma$ are disjoint, so their union is a six-cycle.
+Each common compatible matching is a perfect matching of $K_6-(\beta\cup\gamma)$.
+The matching-augmentation constraints and disjoint four-pairing supports require every such matching to contain a pair whose complementary four-sector is inactive.
+Apply Lemma~\ref{lem:random-seven-prism-blocker} to these inactive complementary pairs.
+\end{proof}
+
+The criterion also shows that the maximal missing-pair sets failing this necessary condition are exactly the ten unions of two disjoint triangles.
+The compact numerical relaxation uses these seventy inequalities together with the local star-cover bounds.
+Numerical feasibility or infeasibility in that relaxation remains separate from a graph theorem.

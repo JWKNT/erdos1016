@@ -1,0 +1,254 @@
+% Independent audit: path_stability passed the geometric proof and its refinements.
+% Exact checks: check_high_path_cycle_layers.py; high-path-cycle-layers-results.json.
+\section{Few internal cycles at fixed terminal-path density}
+\label{sec:high-path-cycle-tradeoff}
+
+A \emph{normalized two-pole} is a connected loopless multigraph with two distinct degree-two terminals.
+Every other vertex has degree three.
+Its rank $b$ and order $n$ satisfy $n=2b$.
+Parallel edges remain distinct.
+
+\begin{lemma}[Counting cycles through thin distance layers]
+\label{lem:thin-layer-cycle-count}
+Let $N$ be a bridgeless normalized two-pole of rank $b$, with terminals $s,t$.
+Choose a shortest terminal path $A$, of length $\ell$.
+Put
+\[
+ \Delta=b-\ell,\qquad H=\beta(N-V(A)).
+\]
+Then $\Delta\ge0$, and
+\[
+ c(N)\le 2^{19\Delta+12H+24+b/2}.
+\]
+If $N$ is simple, the term $12H$ can be omitted.
+\end{lemma}
+
+\begin{proof}
+A connected bridgeless graph of maximum degree three has no cut vertex.
+Let $L_i$ be its distance-$i$ layer from $s$.
+For $1\le i<\ell$, the layer $L_i$ separates $s$ from $t$.
+Thus $|L_i|\ge2$.
+The endpoint layers each contain at least one vertex.
+Consequently, $2b=|V(N)|\ge2\ell$, proving $\Delta\ge0$.
+
+Mark all vertices outside the internal layers $L_1,\ldots,L_{\ell-1}$.
+Also mark every internal layer containing at least three vertices.
+The total excess above two vertices per internal layer, and one per endpoint layer, is $2\Delta$.
+For $w\ge3$, one has $w\le3(w-2)$.
+It follows that the marked set has at most $6\Delta+2$ vertices.
+Every remaining layer has exactly two vertices, including its vertex of $A$.
+
+Each vertex of an unmarked layer has a neighbor in the preceding layer and in the following layer.
+Otherwise, deleting the other vertex of its layer would separate $s$ from $t$.
+In particular, each such vertex has at most two incidences towards either neighboring layer.
+
+If $N$ has parallel edges, mark every layer containing an endpoint of a parallel pair outside $V(A)$.
+There are at most $H$ such pairs.
+Indeed, their digons have disjoint edge supports and are independent in the cycle space of $N-V(A)$.
+Parallel pairs have disjoint vertex sets, since the maximum degree is three.
+A triple edge would form an isolated cubic component, which is impossible here.
+No parallel pair has just one endpoint on $A$, because each vertex of $A$ has at most one incidence outside $A$.
+Every parallel pair with both endpoints on $A$ joins consecutive path vertices, by geodesicity.
+Each newly marked layer had two vertices, so at most $4H$ vertices are added.
+The marked set now has at most $6\Delta+4H+2$ vertices.
+
+Fix a cycle $C$ and its minimum and maximum distance layers $i\le j$.
+Mark their vertices as well, unless their layers were already marked.
+This adds at most four vertices.
+Write $B$ for the final marked set, so
+\[
+ |B|\le6\Delta+4H+6.
+\]
+Fix all edges of $C$ incident with $B$.
+There are at most $2^{3|B|}$ choices.
+
+Call each unmarked layer \emph{ordinary}.
+Consider an ordinary layer strictly between the two extreme layers of $C$.
+The cycle must use both vertices of that layer.
+Each vertex has one cycle edge to the preceding layer and one to the following layer.
+To see this, every prefix cut meets a cycle evenly.
+A layer with two vertices therefore carries two strands.
+A same-layer edge would leave an odd prefix crossing.
+Two separate caps at that layer would disconnect the cycle into a left part and a right part.
+Ordinary layers outside the two extreme layers contribute no cycle edges.
+
+Thus, across consecutive ordinary layers used by $C$, its edges form a perfect matching.
+Such a cut has at most four edges.
+For a simple cut, its perfect matching is unique unless the cut is $K_{2,2}$.
+That cut has two perfect matchings.
+The only other two-choice cut consists of a doubled edge of $A$ and one edge on the other strand.
+Indeed, a doubled cross-strand edge would give an $A$ vertex two incidences outside $A$.
+A doubled edge on the other strand has a marked endpoint.
+A four-edge cut containing parallel edges must contain two doubled pairs, so it also has a marked endpoint.
+
+Two cuts with two choices cannot be consecutive.
+A $K_{2,2}$ cut already uses two incidences at each adjacent vertex.
+An adjacent two-choice cut would force degree at least four at an $A$ vertex.
+Two consecutive doubled edges of $A$ also force degree four.
+Therefore each two-choice cut uses a disjoint pair of two-vertex layers.
+There are at most $j-i+1$ such layers, and hence at most $(j-i+1)/2$ two-choice cuts.
+
+The extreme layers, the edges incident with $B$, and these matching choices determine $C$ completely.
+Let $D$ be the largest distance layer in $N$.
+Every layer beyond $\ell$ consumes at least one of the $2\Delta$ excess vertices counted above.
+Thus $D\le\ell+2\Delta\le b+2\Delta$.
+The geometric interval sum satisfies
+\[
+ \sum_{0\le i\le j\le D}2^{(j-i+1)/2}
+ \le \frac{\sqrt2}{(1-1/\sqrt2)^2}\,2^{D/2}
+ <17\,2^{D/2}.
+\]
+Consequently,
+\[
+ c(N)<17\,2^{18\Delta+12H+18+(b+2\Delta)/2}
+ \le2^{19\Delta+12H+24+b/2}.
+\]
+For a simple graph, no extra markings for parallel pairs are needed.
+\end{proof}
+
+\begin{theorem}[A fixed-density cycle tradeoff]
+\label{thm:high-path-cycle-tradeoff}
+For every $0<\varepsilon\le1/2$, there is a constant $K_\varepsilon$ such that every normalized two-pole $N$ of rank $b$ satisfies
+\[
+ P_{st}(N)\ge(1/2+\varepsilon)2^b
+ \quad\Longrightarrow\quad
+ c(N)\le K_\varepsilon 2^{b/2}.
+\]
+One may take $K_\varepsilon=2^{31C_\varepsilon+25}$, where $C_\varepsilon$ is the additive-stability constant.
+For simple bridgeless two-poles, $2^{19C_\varepsilon+24}$ suffices.
+\end{theorem}
+
+\begin{proof}
+First suppose that $N$ is bridgeless.
+The additive path-stability proof gives
+\[
+ b-\ell\le C_\varepsilon,
+ \qquad \beta(N-V(A))\le C_\varepsilon
+\]
+for a shortest terminal path $A$.
+This application also permits a normalized multigraph.
+Subdivide parallel edges to obtain a simple graph before applying the reduction.
+Its suppression returns exactly $N$, and no cubic expansion is needed.
+Thus the proof's residual-rank bound applies to this same $N$ and $A$.
+Lemma~\ref{lem:thin-layer-cycle-count} proves the asserted estimate.
+
+For a general normalized two-pole, every cyclic block lies on the terminal block route.
+An off-route cyclic block would reduce the normalized path count to at most one half.
+Every bridge therefore separates the terminals.
+No bridge is incident with an original terminal, since its terminal shore would contain an off-route cycle.
+Deleting all bridges leaves normalized bridgeless two-poles with distinct attachment terminals.
+If two attachments coincided, the attached cyclic part would lie off the terminal route.
+Every bridge shore contains a cycle, by the cubic degree count.
+
+Write their ranks as $b_1,\ldots,b_q$.
+Ranks add, terminal-path counts multiply, and cycle counts add.
+Each factor's normalized path density is at least the product density, hence at least $1/2+\varepsilon$.
+Apply the bridgeless bound, with constant $K_\varepsilon/2$, to every factor.
+Since $b_i\ge1$ and $\sum_i b_i=b$, one has
+\[
+ \frac{\sum_i2^{b_i/2}}{2^{b/2}}
+ \le q2^{-(q-1)/2}\le2.
+\]
+Summing the internal cycle counts proves the stated bound.
+\end{proof}
+
+\begin{corollary}[Simple cubic graphs with a two-edge cut]
+\label{cor:simple-cubic-two-cut-error}
+There is an absolute constant $K$ such that every connected bridgeless simple cubic graph $G$ of rank $r$ with a two-edge cut satisfies
+\[
+ c(G)\le2^{r-1}+K2^{r/2}.
+\]
+One may take $K=K_{1/4}$ from Theorem~\ref{thm:high-path-cycle-tradeoff}.
+\end{corollary}
+
+\begin{proof}
+Deleting the cut leaves connected shores $N_1,N_2$.
+The two attachment vertices in each shore are distinct.
+Otherwise the shore's remaining incident edge would be a bridge of $G$.
+Thus the shores are simple normalized two-poles.
+Write $b_i=\beta(N_i)$, $p_i=P(N_i)$, and $c_i=c(N_i)$.
+Then $b_i\ge2$, since a simple normalized two-pole cannot have rank one.
+The exact decomposition is
+\[
+ r=b_1+b_2+1,\qquad c(G)=c_1+c_2+p_1p_2.
+\]
+Put $f_i=p_i/2^{b_i}$.
+Call a shore high if $f_i\ge3/4$.
+
+If both shores are high, the product term is at most $2^{r-1}$.
+Theorem~\ref{thm:high-path-cycle-tradeoff} bounds the remaining sum by $K2^{r/2}$, since
+$2^{b_1/2}+2^{b_2/2}\le2^{(b_1+b_2+1)/2}$.
+
+Suppose only $N_2$ is high.
+The crossing product has deficit at least $2^{b_1+b_2}/4$ from $2^{r-1}$.
+Since $b_2\ge2$, this deficit is at least $2^{b_1}$.
+It absorbs the trivial bound $c_1\le2^{b_1}-1$.
+The remaining excess is at most $c_2$, which has the required bound.
+
+Finally, suppose neither shore is high.
+The crossing deficit is at least $7\cdot2^{b_1+b_2}/16$.
+If $\max(b_1,b_2)\ge3$, then
+\[
+ 2^{-b_1}+2^{-b_2}\le3/8<7/16.
+\]
+The two trivial internal cycle bounds are therefore absorbed, and $c(G)<2^{r-1}$.
+The remaining case has $b_1=b_2=2$ and $r=5$.
+The trivial cycle bound is already smaller than the asserted estimate.
+\end{proof}
+
+The final corollary addresses a broad decomposable subclass.
+It does not prove the unrestricted half-exponent bound.
+In particular, no two-edge cut is available in a cyclically three-edge-connected cubic kernel.
+
+\begin{corollary}[All cubic two-edge cuts]
+\label{cor:cubic-multigraph-two-cut-error}
+There is an absolute constant $K'$ such that every connected loopless cubic multigraph with a two-edge cut satisfies
+\[
+ c(G)\le2^{r-1}+K'2^{r/2}.
+\]
+The same estimate holds for every connected cubic graph with a bridge.
+\end{corollary}
+
+\begin{proof}
+First suppose that $G$ has a bridge.
+Each shore contains a cycle, by the cubic degree count.
+Their positive ranks $r_1,r_2$ add to $r$.
+Thus
+\[
+ c(G)\le(2^{r_1}-1)+(2^{r_2}-1)\le2^{r-1}.
+\]
+
+Otherwise use the same two-pole decomposition as above.
+Call a shore high when its normalized path density is at least $2/3$.
+If both shores are high, apply Theorem~\ref{thm:high-path-cycle-tradeoff} with $\varepsilon=1/6$.
+If neither is high, both ranks are at least two: a rank-one normalized two-pole is a saturated digon.
+The crossing deficit is at least $(5/9)2^{b_1+b_2}$.
+It absorbs both trivial internal bounds, because $2^{-b_1}+2^{-b_2}\le1/2$.
+
+Suppose exactly one shore is high.
+If its rank is at least two, its crossing deficit absorbs the low shore's internal cycles.
+Indeed, $2^{b_{\rm high}}/3\ge1$.
+The high shore's remaining cycles have the required half-exponent bound.
+
+It remains to consider a high rank-one shore, which is a digon.
+Let $N$ be the low shore, of rank $b$.
+The exact formula gives
+\[
+ c(G)-2^{r-1}
+ =1+c(N)+2P(N)-2^{b+1}
+ \le1+c(N)-\frac23\,2^b.
+\]
+The asymptotic Erd\H{o}s--Simonovits bound supplies an absolute $b_0$ such that
+$c(N)\le(2/3)2^b$ whenever $b\ge b_0$.
+Thus the excess is at most one in this range.
+For $b<b_0$, increase $K'$ to cover the trivial bound at the finitely many possible ranks.
+\end{proof}
+
+Except for the two-vertex triple-edge graph, a parallel pair in a bridgeless cubic multigraph gives a two-edge cut.
+Consequently, the remaining cubic kernels for an unrestricted half-exponent bound are simple and three-edge-connected.
+This reduction does not resolve that remaining class.
+
+The exact checker reconstructs 878719 cycles on 11535 bridgeless two-poles.
+Its input includes edge deletions from all 621 connected simple cubic graphs through fourteen vertices.
+It also checks 94 capped-ladder and parallel-rail examples.
+These checks verify the layer encoding and matching choices, rather than only the numerically loose final bound.

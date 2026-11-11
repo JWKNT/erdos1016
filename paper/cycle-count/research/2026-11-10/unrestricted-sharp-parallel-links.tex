@@ -1,0 +1,186 @@
+\section{Parallel links, the exact-half moment, and a nested chain}
+\label{sec:sharp-parallel-links}
+
+The parallel-link argument is due to Fable 5.2.
+Its bound depends only on the strict inequality above one half.
+No positive lower bound on the excess is needed.
+
+\begin{lemma}[Fable's parallel-link estimate]
+\label{lem:endpoint-parallel-links}
+Let $A,B$ be disjoint connected vertex sets in a connected multigraph $\Gamma$.
+Let $P$ be a vertex set, and let $\xi$ be a uniform even subgraph.
+Suppose its restriction outside $P$ is a forest with probability greater than one half.
+For every integer $t\ge0$, at most $2^{t+1}$ components of $\Gamma-(A\cup B)$ satisfy all four conditions below:
+\begin{enumerate}
+\item They have an edge to each of $A,B$.
+\item They avoid $P$.
+\item They contain a cycle.
+\item Their boundary has at most $t$ edges.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+If there is no component joining $A$ to $B$, the assertion is immediate.
+Otherwise retain one such component $Q_0$.
+The set $A\cup B\cup Q_0$ is connected.
+For any two other complementary components $Q_i,Q_j$, the graph $\Gamma-Q_i-Q_j$ is connected.
+It contains the retained connected set, and every other complementary component has an edge to that set.
+No edge joins $Q_i$ and $Q_j$.
+
+Thus the two regions have exactly one link.
+The cycle-space pair law makes their zero-boundary events independent.
+Conditional on both zero-boundary events, their internal even edge sets are independent and uniform.
+This also follows from the direct product of the cycle spaces after deleting the two boundaries.
+
+For each eligible component other than $Q_0$, let $E_i$ mean that its boundary is zero and its internal even edge set is nonzero.
+The events $E_i$ are pairwise independent.
+The zero-boundary condition imposes at most $t$ linear equations, so its probability is at least $2^{-t}$.
+The cyclic internal graph has a nonzero even edge set with conditional probability at least one half.
+Consequently $p_i:=\Pr(E_i)\ge2^{-t-1}$.
+
+If there are $m$ such components, put $N=\sum_i\mathbf1_{E_i}$ and $\nu=\mathbb EN$.
+Pairwise independence gives
+\[
+ \mathbb EN^2\le\nu^2+\nu,\qquad
+ \Pr(N=0)\le\frac1{1+\nu},\qquad
+ \nu\ge m2^{-t-1}.
+\]
+The forest event implies $N=0$.
+Its probability exceeds one half, so $m<2^{t+1}$.
+Including $Q_0$, if it was eligible, gives at most $2^{t+1}$ components.
+\end{proof}
+
+
+\begin{lemma}[A uniform link bound]
+\label{lem:sharp-uniform-links}
+Let $G$ be connected and cubic, and let $P$ be a nonempty connected marked set.
+Assume that a uniform even subgraph is a forest outside $P$ with probability greater than one half.
+Let $S$ be the union of a maximal vertex-disjoint family of cycles of length at most $D$ outside $P$.
+Put $J=G-(P\cup S)$.
+If $8\le D\le L$, $t\ge1$, and $2(t+2\lfloor D/8\rfloor)\le D$, then disjoint cycles $C,C'$ of $J$, each of length at most $L$, satisfy
+\[
+ \ell(C,C')\le1+\frac{2L}{t+1}+2^{t+1}+578(L/D)^2.
+\]
+\end{lemma}
+
+\begin{proof}
+Put $U=V(C)\cup V(C')$.
+At most one component of $G-U$ meets $P$, because $P$ is connected.
+At most $2L/(t+1)$ components have more than $t$ boundary edges: the total boundary of $U$ is at most $2L$.
+Among the other components joining the two cycles, at most $2^{t+1}$ are cyclic by Lemma~\ref{lem:endpoint-parallel-links}.
+
+Every remaining component $Y$ that joins both cycles is a tree, avoids $P$, and has boundary at most $t$.
+The cubic degree identity gives $|Y|=|\delta Y|-2\le t-2$.
+It contains no vertex of $S$.
+Indeed, each chosen cycle avoids $U$, so any chosen cycle meeting $Y$ would lie entirely in that tree.
+Thus $Y\subseteq J$.
+Choose a path through $Y$ connecting $C$ to $C'$; its length is at most $t-1$.
+Treat each direct edge between $C$ and $C'$ as another connecting path, of length one.
+All these paths are internally disjoint.
+Their endpoints are distinct, since each cycle vertex has at most one edge outside its cycle.
+
+Put $a=\lfloor D/8\rfloor\ge D/16$.
+Partition each cycle into at most $\lceil L/a\rceil\le17L/D$ consecutive arcs, each containing at most $a$ vertices.
+Two connecting paths with endpoints in the same pair of arcs would give a cycle in $J$ of length at most
+\[
+ 2t+2(a-1)\le2(t+2a)\le D.
+\]
+This contradicts the girth of $J$.
+There is at most one path per pair of arcs, so the number of these links is at most $289(L/D)^2$.
+The stated bound uses the harmless larger coefficient $578$.
+Adding the four types of links proves the result.
+\end{proof}
+
+\begin{lemma}[The moment at a strict half threshold]
+\label{lem:sharp-half-moment}
+Use the preceding graph and marked set.
+Let $\mathcal C$ be all cycles of $J$ of length at most $L$, and put
+\[
+ s=\lfloor(D-1)/2\rfloor,\qquad
+ a_C=2^{-|C|},\qquad \mu=\sum_{C\in\mathcal C}a_C.
+\]
+Suppose every disjoint pair has at most $b$ links, and set
+\[
+ \eta=\frac32\,2^b L^3 2^{-s}.
+\]
+If $\mu>0$, the total weight $W_2$ of ordered disjoint pairs with exactly two links satisfies
+\[
+ W_2>\mu^2-(1+\eta)\mu.
+\]
+\end{lemma}
+
+\begin{proof}
+For each cycle use the variable $X_C$ from Section~\ref{sec:polynomial-foundations}, and put $Z=\sum_CX_C$.
+Then $\mathbb EZ=\mu$.
+The diagonal contribution to its second moment is at most $\mu$.
+Intersecting distinct cycles contribute zero.
+The pair law and the exceptional-partner estimate give
+\[
+ \mathbb EZ^2\le\mu^2+W_2+(1+\eta)\mu.
+\]
+Every cycle in $\mathcal C$ avoids $P$, so the forest event implies $Z=0$.
+Its probability exceeds one half.
+Consequently Cauchy--Schwarz gives
+\[
+ \mu^2\le\Pr(Z>0)\mathbb EZ^2<\frac12\mathbb EZ^2.
+\]
+Substitute the second-moment bound and rearrange.
+\end{proof}
+
+\begin{lemma}[A long nested chain]
+\label{lem:sharp-nested-chain}
+Under the preceding hypotheses, assume
+\[
+ \mu>20,\qquad \eta\le\frac12,\qquad L^2 2^{-s}\le\frac12.
+\]
+There are a cycle $C\subseteq J$ of length at most $L$, a neighbor $u$ of $C$, and a family of vertex-disjoint cycles $C_1,\ldots,C_T$ in $J$ such that
+\[
+ T\ge\frac{8\,2^s}{L^3}.
+\]
+All $C_i$ lie in the component of $G-V(C)$ containing $P$ and separate $u$ from $P$ there.
+They admit an ordering for which their $u$-components $U_i$ in $G-V(C)-V(C_i)$ satisfy
+\[
+ U_i\subseteq U_{i+1},\qquad V(C_i)\subseteq U_{i+1}.
+\]
+\end{lemma}
+
+\begin{proof}
+For disjoint cycles $C,C'$, call $C'$ far behind $C$ if it lies outside the $P$-component of $G-V(C)$.
+This relation is antisymmetric.
+To see this, take a path from $P$ to its first vertex on $C$.
+The path avoids the far component and hence avoids $C'$.
+Connectedness of $C$ then puts all of $C$ in the $P$-component after deleting $C'$.
+Thus ordered far pairs have total weight at most $\mu^2/2$.
+
+For fixed $C$, cycles joined to it by an edge meet one of at most $L$ neighboring vertices.
+The local weight bound makes their total weight at most $L^2 2^{-s}$.
+Ordered adjacent pairs therefore have total weight at most $\mu L^2 2^{-s}$.
+After excluding far and adjacent pairs, the preceding moment leaves ordered two-link pairs of total weight greater than
+\[
+ \frac12\mu^2-2\mu>8\mu.
+\]
+Weighted averaging gives a cycle $C$ whose remaining partners have total weight greater than eight.
+
+Such a partner $C'$ has no edge to $C$ and has exactly two exterior linking components.
+At least one avoids $P$ and contains a neighbor $u$ of $C$.
+In $H=G-V(C)$, that partner separates $u$ from $P$.
+There are at most $L$ choices of $u$.
+For one choice the separating partners have total weight at least $8/L$.
+
+Choose a maximal vertex-disjoint subfamily of these partners, of size $T$.
+Its at most $TL$ vertices meet every partner in this family.
+The local weight bound gives
+\[
+ \frac8L\le TL\cdot L2^{-s},
+\]
+which is the asserted lower bound.
+
+Finally, disjoint connected separators of two connected sets have a consistent order.
+Here is a direct justification in the present setting.
+For one separator $A$, a path from $u$ to $P$ can be rerouted within $A$ between its first and last visits.
+A disjoint connected separator $B$ must therefore lie in the $u$-component or the $P$-component of $H-A$.
+If it lay in another component, that rerouted path would avoid $B$.
+If $B$ lies on the $P$-side of $A$, then $A$ and the entire $u$-component of $H-A$ lie in the $u$-component of $H-B$.
+The symmetric alternative reverses their order.
+This orders every pair by inclusion of the $u$-components, giving the claimed nesting.
+\end{proof}

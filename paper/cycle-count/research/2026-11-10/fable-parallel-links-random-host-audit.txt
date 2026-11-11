@@ -1,0 +1,67 @@
+Independent audit: random_hosts agent, 2026-11-10
+
+RESULT: PASS
+
+Source audited:
+  fable-parallel-links.md, Sections 1, 3, 4, and 5.
+Supporting sources checked:
+  second-order-two-scale-polynomial.tex
+  second-order-two-scale-extensions.tex
+  pancyclic-paper.tex, link law, walk bound, spectrum, and cycle weight.
+
+The parallel-region lemma is correct. After including one link component
+in the connected core, deleting any two other complementary components
+leaves a connected remainder. Their zero-boundary events are independent.
+Conditioning on both zero-boundary events gives independent uniform cycle
+spaces inside the two regions. The corresponding nonempty internal-even
+events are therefore pairwise independent. The second-moment bound gives
+the stated count at most 2^(t+1), including the one omitted link component.
+
+The revised link estimate has no dependence on the forest excess. Its
+constant 2^(t+1) is large but fixed for each fixed exponent kappa.
+
+All two-scale exponents check:
+  Elementary case: delta=(1-3kappa)/8,
+    d1/2-(d0+kappa)=delta and d1/2-kappa=3delta.
+  Exponential-cut case: delta=(1-2kappa)/8,
+    d1/2-d0=1/2-3delta>0 and d1/2-kappa=3delta.
+The large deletion is o(r/log r), the small deletion is negligible against
+the block count, and both exceptional-pair errors tend to zero.
+
+The moment inequality with the two-link weight is correct:
+  EZ^2 <= mu^2 + W2 + (1+eta)mu.
+It gives W2>mu^2-(1+eta)mu and mu<(1+eta)/(4eps).
+The far-pair subtraction and edge-adjacent-pair error leave a partner row
+of weight at least eight when mu>=20. The maximal disjoint family has the
+stated lower bound, and the nested-separator argument is unchanged.
+
+Disconnected marked sets cause no gap. Choose one connected component as
+the anchor. Every component of the entire marked set meets at most one
+block, since all block boundary edges end on separator cycles outside P.
+Discarding at most comp(Gamma[P]) blocks removes all marked vertices.
+
+The restoration simplification is valid. A full block that misses S0
+cannot have an edge to S0: every edge leaving it in Gamma-C ends on one of
+its two separator cycles, and those cycles avoid S0. The same applies to P.
+Discarding blocks meeting N(C) removes every edge to the deleted cycle C.
+Thus the induced block has degree deficit at most 2L and girth>D0.
+
+For the local supply step, choose, for example,
+  q=ceil(16 A^2 x/d1)+2.
+Then each block has at least 8L^2 vertices for sufficiently large x. If v
+is its order and d<=2L its deficit, then Ld/(2v)<=1/8. The normalized
+Perron term is at least 7/8 for all lengths at most L. Sum over even
+lengths 6x<=ell<=L. Since v<=O(r), the nonreal spectral error is o(1).
+The repeated-walk error is O(L^2 2^(-s0)) times the block cycle mass and
+tends to zero uniformly. The resulting cycle mass has a fixed positive
+lower bound. Disjoint blocks supply distinct cycles, so their masses add.
+No eigenvalue multiplicity statement or block nonadjacency is needed.
+
+The direct cubic-extremizer transfer and geometric recurrence preserve
+the coefficient (1+o(1)) in the cycle error for each fixed kappa.
+
+Exposition clarifications only:
+  - Use 0<kappa<1/3 or 0<kappa<1/2 in the parameter proof; nonpositive
+    kappa gives a trivial statement.
+  - State an explicit q as above and use even lengths starting at6x.
+These do not change the claimed results.

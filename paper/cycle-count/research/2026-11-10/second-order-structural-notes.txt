@@ -1,0 +1,352 @@
+Second-order structural checkpoint, 10 November 2026.
+
+NEW COMPLETE ARGUMENT, INDEPENDENT AUDITS PASSED:
+Exponential small-cut decay is proved in second-order-structural-notes.tex.
+For k disjoint connected cyclic regions with cut size at most fixed d>=2,
+their simultaneous forest probability is at most
+  1/2 + exp(-k / [2^d (2^((d-1)(2^d-1))-1)]).
+For d<=1 the stronger bound 2^-k holds.
+
+The two ingredients are a direct-sum/common-functional dichotomy and a
+graphic series-class argument. Local star-coordinate spaces have dimension
+at most d-1. A direct sum of 2^d such spaces gives probability below 1/2.
+Otherwise a nonzero functional belongs to a linear number of local spaces.
+Split each selected star to represent that functional by one new edge.
+All new edge coordinates coincide. Removing them leaves exactly as many
+components as new edges, with a cycle as quotient. Conditioned on the common
+coordinate being zero, the component cycle spaces are independent.
+A matching in the quotient cycle gives independent closed-star events.
+
+The quotient reduction from the original cyclic regions is exact. Its
+kernel is the direct sum of their internal cycle spaces. Conditional on a
+closed boundary, a cyclic region is a forest with probability at most 1/2.
+This supplies the product of closed-star penalties used by the theorem.
+Root and path_stability independently audited all steps and constants.
+
+REFINEMENT IN PROGRESS (owned by root):
+The abstract 2^dim(U) pigeonhole can be replaced by a block-cut forest after
+deleting the selected direct-sum vertices S. There are at most d|S| boundary
+terminals. Every remaining marked vertex with nonzero intersection with U
+is either adjacent to S or an articulation separating terminal groups.
+On a nonbranching chain of the pruned block-cut forest, the terminal split
+is constant and supplies one common functional. Only O(d|S|) branches and
+chains occur. This should replace the double-exponential constant by
+poly(d) times 2^(2d). Root is writing the full refined argument.
+
+REFINEMENT COMPLETED AND INDEPENDENTLY AUDITED:
+second-order-terminal-forest.tex now proves
+  p <= 1/2 + 2 exp(-k/(2 d 4^d)).
+The root proof uses any spanning tree of each component after deleting S,
+then prunes to the boundary-terminal subtree. The cut-space argument forces
+every eligible nonexceptional vertex to lie on a degree-two chain. Its
+terminal-side functional is constant along that chain. I audited every
+step and the displayed constants independently; no issue was found.
+
+EXACT FINITE STRUCTURAL CHECKS:
+check_exponential_small_cuts.py and exponential-small-cuts-results.json
+verify 108 connected simple graphs of maximum degree four through order six,
+plus 16 cycle, doubled-cycle, and cubic-necklace cases. All 5682 terminal
+subsets, 459 nonempty terminal classes, and 878 common-functional splits
+passed. The checks target the exact F2 statements and the full conditional
+Cartesian-product law, rather than the numerically loose final constant.
+The largest checked common-functional family has twelve marked vertices.
+
+STRONGER REFINEMENT COMPLETED; ROOT AND PATH_STABILITY AUDITS PASS:
+second-order-block-conditioning.tex proves
+  p <= 1/2 + 2 exp(-k/(8 d 2^d)).
+It conditions on all selected-star data and factors the remaining affine
+cycle space over blocks. After at most 5B exceptions, good articulation
+vertices have a path-conflict graph. The heavier color uses disjoint blocks.
+Each good closure has exact conditional probability 2p_v in the zero sector
+of one nonzero terminal functional. A convex-chord bound needs only its
+balanced marginal, not independence among the terminal functionals.
+The weighted lemma permits arbitrary penalties eta_v in [0,1] and retains
+the exact closure probabilities p_v. Its only losses are the exceptional
+weighted mass and the path-color selection.
+
+The finite checker now also passes 5682 block-selection cases and 1028
+nontrivial full-U conditional product checks, including exact 2p_v fibres.
+
+SHARPNESS OF THE DEGREE SCALE:
+second-order-cut-rate-obstruction.tex gives an exact transfer matrix for
+cycles with m parallel edges in each bundle (marked degree d=2m).
+The excess above 1/2 decays at rate (1+o(1))2^(1-d), so the new rate is
+optimal up to an O(d) factor in its degree dependence. The independent
+check_bundle_cycle_decay.py compares binary cycle spaces, independent
+bundle emptiness, and the transfer-matrix trace. All 12 cases pass, with
+77558 cycle-space states counted. Output: bundle-cycle-decay-results.json.
+
+WEIGHTED CLOSURE MASS (path_stability independent audit passed):
+second-order-weighted-cuts.tex separates the maximum degree d from the
+maximum local coordinate dimension s. The direct-sum threshold is 2^(s+1),
+which gives p <= 1/2 + 2 exp(-k/(8 d 2^(s+1))).
+Bucket marked vertices by their exact local dimension s. There are at most
+d-1 nonzero buckets, and bucket s has closure mass mu_s=k_s 2^-s.
+Choosing a bucket carrying at least mu/(d-1) gives
+  p <= 1/2 + 2 exp(-mu/(16 d (d-1))),
+where mu is the sum of the exact boundary-closure probabilities.
+This answers the weighted disjoint-region question with a polynomial loss
+in d. Overlapping moderate-cycle families remain outside the theorem.
+
+LIMITATION:
+The safe first proof had a doubly exponential degree constant. The audited
+block-conditioning refinement has rate1/(8d2^d), within an O(d) factor of
+the bundled-cycle obstruction. Overlapping cyclic regions remain outside
+the theorem. No unrestricted polynomial or exponential-saving cycle-count
+error is claimed at this checkpoint.
+
+OTHER STRUCTURAL ROUTES EXAMINED:
+Contracting a cubic perfect matching gives a four-regular cycle-space model,
+but cubic cycles can project to fixed-transition Eulerian subgraphs rather
+than cycles. The exact four-regular theorem does not directly count them.
+A balanced two-edge cut gives an immediate exponential excess bound from
+the product formula, but no decomposition covering all graphs was proved.
+The weighted three-pole candidate from cubic-edge-frequency.tex remains
+unproved. No existing audited paper has been changed.
+
+FIXED PATH DENSITY NOW FORCES FEW INTERNAL CYCLES:
+second-order-high-path-cycle-tradeoff.tex proves a geometric counting lemma
+for a bridgeless normalized cubic two-pole N. Put b=rank(N), let A be a
+shortest terminal path of length ell, and put Delta=b-ell and
+H=rank(N-V(A)). Then
+  c(N) <= 2^(19Delta+12H+24+b/2).
+The proof marks at most6Delta+4H+6 exceptional vertices. All remaining
+distance layers have two vertices. A cycle traverses each interior layer
+as two strands. Cut matchings have at most two choices, and two-choice cuts
+cannot be consecutive. Summing over the global minimum/maximum cycle
+layers geometrically removes an initially unnecessary b^2 factor.
+
+Together with additive path stability, for every fixed eps>0,
+  P_st(N) >= (1/2+eps)2^b  ==>  c(N) <= K_eps 2^(b/2),
+where K_eps=2^(31C_eps+25) is valid. Bridges join the relevant normalized
+pieces in series; their ranks add, and the sum of their half-exponent
+terms costs at most a factor two. The multigraph version marks whole
+layers containing off-A parallel pairs, whose number is at most H.
+
+TWO-EDGE-CUT CONSEQUENCE:
+Every connected cubic multigraph with a two-edge cut satisfies
+  c(G) <= 2^(r-1)+K 2^(r/2)
+for an absolute K. For simple graphs, shore ranks are at least two, and
+the fixed-density tradeoff directly absorbs all low-density cases.
+A multigraph rank-one shore is a digon; asymptotic ES handles its low
+opposite shore above a fixed rank, with finite ranks absorbed into K.
+Graphs with a bridge already have c<=2^(r-1). Apart from the triple-edge
+graph, every parallel pair in a bridgeless cubic multigraph supplies a
+two-edge cut. The remaining cubic kernels are therefore simple and
+three-edge-connected. This does not resolve those remaining kernels.
+
+INDEPENDENT AUDIT AND EXACT CHECKS:
+path_stability audited the thin-layer proof, bridge factorization, and
+two-cut cases. Root supplied and independently checked the geometric
+endpoint refinement. A final root audit of the assembled fragment is
+pending. check_high_path_cycle_layers.py checks all621 simple connected
+cubic graphs through14 vertices via their bridgeless edge-deleted poles,
+plus94 capped-ladder and parallel-rail examples. It reconstructs878719
+cycles exactly on11535 poles and verifies8056 two-choice cut instances.
+All checks pass; high-path-cycle-layers-results.json records the totals.
+
+SATURATED-BLOCK AUDITS:
+The repaired saturated-ring proof passes, including its previously missing
+one-double-cap sector. The safe bound is20r2^(r/2). The sharp15/16 general
+path-density gap also passes independently. The arbitrary-four-pole ring
+extension now passes for at least11 blocks: one nonsaturated block costs
+1/64 of the main sector, which dominates all even-interface sectors.
+An initial missing interval using all blocks but one fewer interface was
+corrected before this audit passed. No unrestricted conclusion is inferred.
+
+UNRESTRICTED POLYNOMIAL ERROR — INDEPENDENT AUDIT PASSED:
+second-order-two-scale-polynomial.tex now proves, for an absolute kappa>0,
+  psi(r) <= 2^(r-1)+(1+o(1))2^r/r^kappa.
+The main proof is owned by path_stability and root. My full independent
+read passed all stages: nested short-cycle deletions at .01logr and .1logr,
+both inverse second moments, antisymmetric far-pair averaging, extraction
+of a long chain, full-slab restoration, the spectral pencil multiplicity,
+the trace-to-cycle comparison, and the final edge recurrence.
+Root has requested a further independent Fable audit before final packaging.
+The exponent is deliberately tiny and no Lean formalization is claimed.
+
+The decisive restoration step constructs chain blocks in the full graph,
+then restores all medium deleted cycles. Discarding the much smaller
+S0-neighborhood leaves polynomially many blocks with EXACT zero degree
+deficit and boundary O(logr). These give polynomially many real
+non-backtracking eigenvalues near2, contradicting the inverse-moment bound.
+The independent proof of these pieces is in two-scale-independent-audit.tex.
+
+check_two_scale_structure.py and two-scale-structure-checks.json verify
+9759 disjoint cycle pairs,335 one-way far pairs,200 exact weighted
+antisymmetry bounds,3015 slab boundaries,1763 nonadjacent block pairs,
+and521 clean zero-deficit restored blocks in160 nested chains. Every
+retained block has a strict deficit reduction after restoring medium
+vertices, so the checks exercise the new mechanism rather than a vacuous
+inequality.
+
+THREE-POLE AUDITS AND FINITE CHECKS:
+The two-high pair theorem, one-full pair sum with constant6, universal
+tripole sum, and all cyclic cuts of size at most3 have also passed my
+independent mathematical audit. The resulting O(2^(r/2)) bound covers all
+cubic kernels outside the cyclically four-edge-connected class.
+check_three_pole_return_layers.py reconstructs859425 return paths exactly
+on7638 bridgeless three-poles, with9708 two-choice cut instances. Inputs
+include all621 connected simple cubic graphs through14 vertices and530
+structured subdivisions. Output: three-pole-return-layers-results.json.
+
+FOUR-POLE CAPPING OBSERVATION — SENT TO RANDOM_HOSTS FOR DRAFTING:
+Cap both terminal pairs of a four-pole K by two new terminals. Cross-path
+sum >=(2+eps)2^h makes the capped two-pole rankh+2 and density>=.5+eps/4.
+Four-terminal forests inject into unions of at most two disjoint cycles.
+The thin-layer encoding extends after marking all four extreme layers:
+O(h^4) endpoint choices and at most2^(h/2) matching choices. This supplies
+a K_eps h^4 2^(h/2) forest bound. It is not used in the polynomial theorem.
+
+FOUR-CUT PROGRAM COMPLETED AT SHARP ORDER:
+The capped forest estimate, added-edge coupling, one-full vanishing-minimum
+lemma, universal four-pole aggregate, and all bounded-shore cases now prove
+  c(G) <= 2^(r-1)+K r 2^(r/2)
+for every connected loopless cubic multigraph with a cyclic cut of size
+at most four. The base proof is in second-order-all-four-cuts.tex; the
+sharp-order refinement is in second-order-four-cut-sharp-order.tex.
+Root, path_stability, and random_hosts independently audited the relevant
+steps. The large-shore proof uses a finite high-path profile classification;
+the bounded-shore proof uses the aggregate and a separate C4 calculation.
+The remaining cubic kernels are cyclically five-edge-connected.
+
+The linear error factor comes from two-cycle packings in a high-density
+two-pole. A cycle occupies a distance-layer interval. Two disjoint cycles
+have only O_eps(1) overlap layers. The weighted interval-pair sum is
+O_eps(b 2^(b/2)), replacing the previous b^4 bound. In two aligned full
+K2,2 shores, the product of the two same-side-cap counts cancels exactly
+from the four-cut gluing formula. This removes the remaining quadratic
+rank factor. The proof is in second-order-two-cycle-packing-refinement.tex.
+
+Sharpness is explicit. For the q-square cyclic graph, rankr=2q+1 and
+  c=2^(2q)+(2q+1/2)2^q-3q.
+Its excess is Theta(r2^(r/2)), and it has a cyclic four-edge cut.
+For the capped m-square ladder, rankb=2m+1, the number of disjoint cycle
+pairs containing its opposite cap terminals is(m-2)2^(m+1)+4. Thus the
+linear packing factor is necessary too. check_four_cut_sharp_order.py
+independently verifies both formulas; outputfour-cut-sharp-order-checks.json.
+
+POLYNOMIAL CONSTANT REFINEMENTS AUDITED:
+The direct cubic-extremizer transfer in second-order-two-scale-extensions.tex
+passes independently. It avoids the marked cubic reduction by expanding
+an actual extremizer to cubic degree, then using C and C xor W directly.
+The larger marked-set/component extension also passes.
+The first explicit exponent2^-1050 and the final symmetric-pair exponent
+2^-145 both passed my full independent audits. The final file is
+second-order-two-scale-symmetric-pairs.tex. Its decisive improvement is
+to bound far orientations by half the weight of the symmetric restricted
+multiple-link relation, reducing the required initial cycle mass from2
+to1. ParametersA15,t128,D0=.49logr,D1=.99logr give a positive spectral
+margin and separate the restored-chain exponent.495 from deletion.49.
+
+FIXED-COMPONENT PACKINGS AND FIVE-POLE WORK:
+second-order-fixed-cycle-packings.tex proves the optimal bound
+  number of unions of at most j disjoint cycles
+  <= K_(j,eps) (b+1)^(j-1) 2^(b/2)
+at fixed terminal-path density above one half. Root and path_stability
+independently audited the interval trimming, reconstruction, series sum,
+and capped-ladder lower bound. The lower-bound cycles meet every square
+of their group; they need not span every vertex of the end squares.
+
+second-order-saturated-terminal-avoidance.tex proves a new exact lemma:
+if P_ac=2^h in a tripole, at least half of its b-c paths avoid a.
+The local cap and through counts satisfy A_p>=2T_p-1. The three local
+subdivision rows then give the factor one half directly. Series pieces
+preserve the inequality. Both other research agents audited this proof.
+
+For a five-pole with four full K2,2 cross pairs and fifth port b, this
+lemma gives sum D_j <= sum P_bj on either side. Here D_j is forest mass
+outside the pairing b-j | opposite-end pair. Aligned K2,2 shores with
+all fifth-port densities <=delta have crossing contribution at most
+4+8delta+4delta^2+o(1), strictly below the threshold8 for small delta.
+This removes the K2,2 plus isolated-port Boolean obstruction.
+
+check_four_regular_terminal_avoidance.py passed 5682 endpoint-avoidance
+checks and3442 exact forest-concentration checks on1721 subdivisions.
+Its101 full-K2,2 four-poles include bridged examples. The factor one half
+and the forest/path ratio one are both attained. Results are saved in
+four-regular-terminal-avoidance-checks.json.
+
+My independent audits also pass second-order-positive-port-localization.tex
+and second-order-three-arm-isolated-port.tex. The latter proves
+F_four_leaves <= C sum P_isolate,leaf + C 2^(h/2) with three full arms.
+This removes the three-star plus isolated-port Boolean obstruction.
+The exact localization and product checks are separately saved as
+four-regular-positive-port-localization-checks.json (5501 product and
+11002 distance checks, including309 bridge subdivisions).
+
+Root's marked trivalent-tree reduction is independently audited:
+attaching a k-leaf tree to a k-pole of rank h gives rank h+k-1.
+Restriction identifies the completed cycle space with all2^(k-1)
+even-port parity fibers, each of size2^h. The polynomial forest theorem
+therefore bounds total normalized terminal-forest mass by
+2^(k-2)+2^(k-1)(h+k-1)^(-kappa), including the empty forest term.
+For k5 this gives energy<=8+o(1). Any aggregate coordinate bounded away
+from zero and one forces a fixed energy gap. The five-cut Boolean
+classification and bounded-shore analysis are still being assembled;
+this note does not claim the full five-cut theorem yet.
+
+FIVE-CUT PROGRAM COMPLETED BY A SHORTER ARGUMENT:
+second-order-five-cut-universal-crossing.tex now proves
+  c(G) <= 2^(r-1) + K5 r 2^(r/2)
+for every connected loopless cubic multigraph with a cyclic cut of size
+at most five. For large rank, a cyclic five-cut with no smaller cyclic
+cut gives the stronger strict bound c(G)<2^(r-1). Both other research
+agents independently audited the complete proof, including bounded shores.
+The remaining sharp-order problem is confined to cyclically six-connected
+cubic kernels. The unrestricted polynomial bound still applies there.
+
+The new structural input is that a fixed-density terminal pair above one
+half, in any fixed-k pole of large rank, forces a cyclic cut of size<=4
+in every cubic completion. Four consecutive size-two distance layers
+contain a digon or four-cycle. Additive stability leaves enough clean
+four-layer windows. The protected version avoids any fixed modification.
+I independently audited both path-agent files:
+  second-order-high-density-small-cut.tex
+  second-order-high-density-protected-cuts.tex.
+The earlier saturated-pair proof has the explicit threshold h>5k and is
+saved separately as second-order-saturated-pair-small-cut.tex. Its checker
+verified34598 actual cyclic-cut certificates in800 cubic completions.
+
+Inside a graph with no cyclic<=4cut, the large five-pole shore therefore
+has all path densities<=1/2+o(1), and every added-edge expression satisfies
+  a_kl + U_ijkl - u_(ij|kl) <= 1+o(1),
+without any positivity hypothesis on a_ij. For each of the five four-port
+sectors, choose its worst pairing. These are five distinct edges of the
+Petersen disjointness graph KG(5,2). Its girth is five, so the chosen edges
+admit distinct endpoint representatives. Summing five augmented constraints
+and the five remaining path bounds gives the universal crossing bound7.5.
+This does not use the aggregate theorem or any state-profile classification.
+
+The opposite shore enters only through path coordinates<=1 and pairing
+vectors of total mass<=1. Thus the7.5 bound is uniform in its rank.
+Internal cycles contribute at most1/4+o(1), giving total31/4+o(1)<8 in
+the normalization2^(h+k). This handles all bounded-shore cases at once.
+check_four_regular_five_pairing_duals.py verifies all243 exact coefficient
+certificates and feasible equality vectors; no floating-point optimization
+is used in this saved verification. Output:
+  four-regular-five-pairing-dual-checks.json.
+
+FINAL UNRESTRICTED ENDPOINT IMPROVEMENT:
+Fable's new parallel-link lemma removes epsilon from the complementary
+component count: under forest probability>1/2 there are at most2^(t+1)
+small cyclic link components. I independently audited the topology,
+pairwise independence, probability argument, and all two-scale inputs.
+Path agent wrote the endpoint proof and the stronger packing refinement.
+My complete line-level audits of both files pass:
+  second-order-parallel-links-endpoint.tex
+  second-order-parallel-links-log-five-half.tex.
+
+The final unrestricted bound is now
+ psi(r) <= 2^(r-1) + (M+o(1))2^r(log r)^(11/2)/sqrt(r).
+The logarithmic saving uses the already audited strong branch of the
+exponential cut theorem, which bounds short-cycle packings byO(x2^D)
+rather thanO(x^2 2^D), where x=log2 r. Choosing D1=x-3log2x-B then
+produces Omega(sqrt(r)/x^(11/2)) clean blocks. Each block separately
+has cycle weight at least one, so no multi-mode spectral argument is
+needed. The fixed constants and final cycle transfer are audited.
+
+Detailed audit record: four-regular-audit-parallel-links.txt.
+The earlier fixed exponent2^-145 and logarithmic powers7 and6 remain
+valid checkpoints, but the eleven-halves bound supersedes them.
+The complete endpoint theorem is not yet formalized in Lean.

@@ -1,0 +1,93 @@
+\section{Full four-terminal forest sectors force planarity}
+\label{sec:path-six-four-sector-planarity}
+
+The distinction between arbitrary terminal-state vectors and graph states is essential for six-edge cuts.
+The next theorem supplies a geometric obstruction to simultaneous saturation of all four-terminal forest sectors.
+
+\begin{theorem}[Planarity from full four-terminal sectors]
+\label{thm:path-six-full-four-planar}
+Let $X$ be a connected loopless graph of maximum degree three.
+Let $p_1,\ldots,p_k$ be distinct degree-two ports, where $k\ge6$.
+Suppose every edge set with odd-degree vertex set equal to any four selected ports is a forest.
+Then $X$ is planar.
+
+Equivalently, for a connected normalized $k$-pole of rank $h$, the hypothesis says that every four-terminal forest total equals $2^h$.
+\end{theorem}
+
+\begin{proof}
+Suppose $X$ is nonplanar.
+Kuratowski's theorem supplies a subdivision of $K_5$ or $K_{3,3}$ as a subgraph.
+The maximum degree excludes a subdivision of $K_5$.
+Thus $X$ contains a subdivision $K$ of $K_{3,3}$.
+Call its nine subdivided edge paths the core paths.
+
+Each branch vertex of $K$ already has three incident edges in $K$.
+It cannot be a port or have a neighbor outside $K$.
+Every port lying in $K$ is therefore internal to one core path.
+Assign that port to its core path.
+
+Each component of $X-V(K)$ has an edge to $K$, since $X$ is connected.
+Choose one such attachment edge for each component.
+Its endpoint in $K$ is internal to a core path, by the degree-three condition at branch vertices.
+Assign every port in that component to the core path containing this chosen attachment.
+This assigns all $k$ ports to the nine core paths.
+
+For each core edge $e$, let $w_e$ count the ports assigned to its path.
+The graph $K_{3,3}$ has nine four-cycles.
+Each core edge occurs in four of these cycles and is omitted from five.
+Consequently, the average total assigned weight on edges omitted from a four-cycle is
+\[
+ \frac59\sum_e w_e=\frac{5k}{9}\ge\frac{10}{3}>3.
+\]
+Choose a four-cycle whose omitted edges have total assigned weight at least four.
+Let $C$ be its subdivided cycle in $K$.
+
+The two branch vertices outside this four-cycle remain joined by their core path after deleting $V(C)$.
+Each of the other four omitted core paths has one of these two branch vertices as an endpoint.
+Its surviving interior remains connected to that endpoint.
+Thus all surviving interiors of the five omitted core paths lie in one component of $K-V(C)$.
+
+Every port assigned to an omitted core path survives in the same component of $X-V(C)$.
+For a port inside $K$, this follows from the preceding paragraph.
+For a port outside $K$, its entire outside component survives, and its chosen attachment joins it to that surviving core path.
+Hence one component of $X-V(C)$ contains at least four ports.
+
+Choose four such ports and call their set $S$.
+A connected graph admits an edge set with odd-degree vertex set exactly $S$, since $|S|$ is even.
+For example, use the unique parity solution on a spanning tree of that component.
+This edge set is disjoint from $C$.
+Adding $E(C)$ gives an edge set in $X$ with odd-degree set exactly $S$ that contains a cycle.
+This contradicts the stated forest hypothesis.
+Therefore $X$ is planar.
+\end{proof}
+
+\begin{corollary}[A missing forest state in every six-pole of girth at least seven]
+\label{cor:path-six-girth-seven-missing-state}
+Let $X$ be a normalized six-pole of rank $h$ and girth at least seven.
+Then at least one four-terminal forest total is at most $2^h-1$.
+\end{corollary}
+
+\begin{proof}
+Suppose every four-terminal forest total equals $2^h$.
+Theorem~\ref{thm:path-six-full-four-planar} makes $X$ planar.
+Write $n=|V(X)|$ and $e=|E(X)|$.
+Its degrees give $2e=3n-6$.
+
+The graph has minimum degree two and contains a cycle.
+In a planar embedding, every face boundary walk has length at least seven.
+Indeed, deleting bridge excursions from a face boundary leaves at least one cycle, whose length is at least the girth.
+Euler's formula and the sum of face-boundary lengths yield
+\[
+ 2e\ge7(e-n+2),\qquad
+ 2e\le\frac{14}{5}(n-2).
+\]
+Combining this with the degree sum gives $n\le2$.
+This is impossible because the six ports are distinct.
+Thus some forest total is strictly smaller than $2^h$.
+Its integrality gives the stated bound.
+\end{proof}
+
+The proof requires saturation only for four-terminal forest sectors.
+It does not require saturation of the six-terminal sector.
+The missing-state gap is exactly at least $2^{-h}$ after normalization.
+This gap is useful when the opposite six-cut shore has unbounded rank.

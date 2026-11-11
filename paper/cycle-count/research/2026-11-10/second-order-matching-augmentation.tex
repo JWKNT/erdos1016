@@ -1,0 +1,80 @@
+\section{Matching augmentation constraints for a fixed number of ports}
+\label{sec:matching-augmentation}
+
+The protected small-cut theorem applies after adding any fixed matching between ports.
+It supplies uniform inequalities for the higher terminal-state sectors.
+
+Let $Y$ be a normalized $k$-pole of rank $h$.
+For a nonempty matching $J$ between distinct ports, let $R_J(Y)$ count the following forests.
+Their odd-degree vertices are exactly the endpoints of $J$.
+Their path components define a pairing $\beta$ on those endpoints.
+The union of $J$ and $\beta$, treated as two matchings with distinguished edge colors, must be one alternating cycle.
+For $|J|=1$, the alternating cycle has two parallel colored edges, and $R_J$ is the corresponding terminal-path count.
+
+Write $\rho_J=2^{-h}R_J(Y)$.
+If $J$ has two edges, $R_J$ is the sum of the two pairing counts other than $J$.
+If $J$ has three edges, $R_J$ counts pairing forests whose pairing shares no edge with $J$.
+
+\begin{proposition}[Exact augmentation identity]
+\label{prop:matching-augmentation-identity}
+Let $A$ be a matching on the ports of $Y$, and choose an edge $e=ab\in A$.
+Add all edges of $A\setminus\{e\}$ to $Y$ and call the resulting pole $Y_A$.
+The ports $a,b$ remain unsaturated.
+Then
+\[
+ P_{ab}(Y_A)=\sum_{\substack{J\subseteq A\\e\in J}}R_J(Y).
+\]
+The rank of $Y_A$ is $h+|A|-1$.
+\end{proposition}
+
+\begin{proof}
+Separate terminal paths according to the subset $I\subseteq A\setminus\{e\}$ of added edges that they use.
+Deleting those added edges leaves a forest of vertex-disjoint paths.
+Its odd-degree vertices are exactly the endpoints of $J=I\cup\{e\}$.
+Adding back $I$ joins these components into one $a$--$b$ path precisely when $J$ and its forest pairing form one alternating cycle.
+This gives a bijection with the forests counted by $R_J(Y)$.
+The disjoint alternatives over $I$ prove the identity.
+Adding each edge increases the rank by one, giving the rank formula.
+\end{proof}
+
+\begin{theorem}[Uniform matching augmentation inequalities]
+\label{thm:matching-augmentation-inequalities}
+Fix $k$.
+Suppose $Y$ lies inside a cubic graph with no cyclic cut of size at most four.
+Uniformly over every nonempty port matching $A$ and every $e\in A$,
+\begin{equation}\label{eq:matching-augmentation-bound}
+ \sum_{\substack{J\subseteq A\\e\in J}}\rho_J
+ \le2^{|A|-2}+o(1)
+ \qquad(h\to\infty).
+\end{equation}
+For $|A|=1$, the right side is $1/2+o(1)$.
+\end{theorem}
+
+\begin{proof}
+Apply Proposition~\ref{prop:matching-augmentation-identity}.
+Protect every endpoint of the $|A|-1$ added edges.
+If the augmented terminal-path density exceeded one half by a fixed amount along unbounded ranks, Theorem~\ref{thm:high-density-protected-cyclic-sets} would apply.
+It would produce two disjoint cyclic sets avoiding the protected vertices and all remaining ports.
+Removing the added edges and restoring the original port incidences leaves their cycles and boundaries unchanged.
+This would give a cyclic cut of size at most four in the original cubic graph.
+
+Thus
+\[
+ P_{ab}(Y_A)\le(1/2+o(1))2^{h+|A|-1}.
+\]
+Divide by $2^h$ and use the exact identity.
+There are only finitely many matchings for fixed $k$, so the error is uniform.
+\end{proof}
+
+For six ports, a perfect matching $A=\{ab,ij,kl\}$ gives the inequality
+\[
+ a_{ab}
+ +\rho_{\{ab,ij\}}
+ +\rho_{\{ab,kl\}}
+ +\rho_{\{ab,ij,kl\}}
+ \le2+o(1).
+\]
+The two middle terms are noncap four-terminal forest sums.
+The last term is the compatible six-terminal forest mass.
+These inequalities are proved inputs to the six-cut problem.
+No six-cut error theorem is asserted here.

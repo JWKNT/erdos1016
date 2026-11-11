@@ -1,0 +1,9 @@
+{
+  "status": "all independent exact DFS certificate checks passed",
+  "nontrivial_certificates": 228,
+  "cycles_and_paths": 185410,
+  "failures_of_combined_universal_or_terminal_test": [],
+  "catalogue_graphs": 556471,
+  "connected_deleted_vertex_poles": 10996668,
+  "scope": "All connected simple cubic ambient graphs through order20; repeated isomorphic poles are retained."
+}

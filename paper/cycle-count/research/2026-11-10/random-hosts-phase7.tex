@@ -1,0 +1,125 @@
+% Independently audited by root and four_regular; proof status is recorded in the shared handoff.
+% Include after random-hosts-phase6.tex.
+\section{Centering the wheel length intervals}
+\label{sec:rhost-centered-wheels}
+
+The useful-length construction improves further when each spoke is shortened by approximately one quarter of the rim length.
+This centers the long cycle intervals around their required range.
+Some outcomes then have invalid spokes; their probability is bounded explicitly below.
+
+\begin{theorem}[An upper coefficient of $199/192$]\label{thm:rhost-centered-wheels}
+For the same $p_*$ as in Theorem~\ref{thm:rhost-scale}, and every $p\ge p_*$,
+with high probability
+\[
+ \operatorname{Pex}(G(n,p))
+ \le\log_2n+\left(\frac{199}{192}+o(1)\right)\frac{\ln n}{\ln\ln n}.
+\]
+\end{theorem}
+
+\begin{proof}
+Use the distribution from Lemma~\ref{lem:rhost-partial-wheels}, with one change:
+put
+\[
+ B=h-\lfloor R/4\rfloor+s,\qquad w_i=B-X_i.
+\]
+The total deficit remains $t=h+U$.
+Before discarding invalid outcomes, the total edge length is
+\[
+ 4B-t+R=3h+4s-U+R-4\lfloor R/4\rfloor\ge3h+2s.
+\]
+
+For a fixed rim arc of length $a$, the corresponding cycle length is uniform on
+\[
+ [2B-t+a,2B+a]\cap\mathbb Z.
+\]
+The probability that this length lies outside $[h+1,2h]$ is at most
+\[
+ \frac{|a-R/2|+O(s)}h.
+\]
+The constant in this estimate is absolute, uniformly over all choices.
+For each of the two unit-rim pairs, the two arcs are $1,R-1$.
+Their two absolute deviations sum to $R-2$.
+For the other four pairs, both arcs differ from $R/2$ by $O(s)$.
+Thus, if $k$ counts useful non-rim labels,
+\[
+ \mathbb E(12-k)\le\frac{2\mathbb E R+O(s)}h=\frac1{12}+o(1),
+ \qquad \mathbb E(k-3)\ge\frac{107}{12}-o(1).
+\]
+
+We bound the probability $p_{\rm bad}$ that a spoke is nonpositive.
+The marginal mass formula is
+\[
+ \Pr(X_i=t-r)=\frac{c_{t-r}(2r+1)c_r}{t+1}.
+\]
+Stirling's formula gives $c_j\sim(\pi j)^{-1/2}$.
+Riemann sums, together with $c_j\le C/\sqrt{j+1}$ at the endpoints, show that $X_i/h$
+converges in distribution to a variable with density
+\[
+ f(y)=\frac2\pi y^{-1/2}(1-y)^{1/2},\qquad 0<y<1.
+\]
+Also, $R/h$ converges to an independent uniform variable on $[0,1/12]$.
+The independence follows because $R$ is independent of $U$ and the deficit distribution.
+The limiting event $X_i/h\ge1-R/(4h)$ has a boundary of probability zero.
+A union bound therefore gives
+\[
+ \limsup p_{\rm bad}
+ \le 12\int_0^{1/12}\frac8\pi
+       \int_0^{x/4}\frac{\sqrt u}{\sqrt{1-u}}\,du\,dx.
+\]
+For $0\le x\le1/12$,
+\[
+ \frac8\pi\int_0^{x/4}\frac{\sqrt u}{\sqrt{1-u}}\,du
+ \le\frac{2x^{3/2}}{3\pi\sqrt{1-x/4}}
+ \le\frac9{40}x^{3/2}.
+\]
+For the last inequality, use $\pi\ge3$ and $\sqrt{47/48}>80/81$.
+Consequently,
+\[
+ p_{\rm bad}\le\frac9{100}\left(\frac1{12}\right)^{3/2}+o(1)
+             =\frac3{800\sqrt3}+o(1).
+\]
+
+Discard outcomes with a nonpositive spoke or repeated non-rim cycle lengths.
+The latter event still has probability $o(1)$.
+Discarding a bad-spoke outcome loses at most nine in value.
+Discard outcomes with $k\le3$, whose values are nonpositive.
+The retained expected value is at least
+\[
+ \frac{107}{12}-\frac{27}{800\sqrt3}-o(1).
+\]
+The maximum weighted degree remains $(12+o(1))/h$.
+Indeed, the pair-deficit interval still has $h+U+1$ equally likely positions, and the rim distribution is unchanged.
+The weighted codegree remains $O(h^{-3/2})$.
+The shared-index split proof is unchanged.
+For complementary pairs, condition on $R,L$ and use the independent variable $U$.
+For two arcs of one pair, use the same $R,L$ smoothing as before.
+For a rim and a long length, fixing $R$ and then a pair sum costs $O(h^{-2})$.
+Thus Lemma~\ref{lem:rhost-weighted-matching} supplies disjoint marked sets of total value at least
+\[
+ \left(\frac{107}{144}-\frac9{3200\sqrt3}-o(1)\right)h.
+\]
+
+Every retained metric has the required local density.
+Its total length is at least $3h$ and its largest arm is at most $h+s$.
+A three-spoke rank-three core therefore has length at least $2h$.
+A four-spoke rank-three core omits at most one rim arm, of length at most $R/2+O(s)$, and also exceeds $2h$.
+For a two-spoke rank-two core, include the full rim and use
+\[
+ 2B-t+R\ge h+R/2.
+\]
+A rank-two core with at least three spokes has length at least $2h-R+s>h$.
+Every non-rim cycle has length at least $h-R/2\gg\sqrt h$, while the rim has length at least $6s$.
+The edge count is $O(h)$ and the same four-edge deletion gives a spanning path.
+The wheel embedding estimate therefore applies.
+
+Replace baseline single cycles by these marked wheel sets, as in Theorem~\ref{thm:rhost-one-fifty-one}.
+The short-block rank is at most
+\[
+ \left(\frac{149}{144}+\frac9{3200\sqrt3}+o(1)\right)h.
+\]
+Since $\sqrt3>5/3$ and $27/16000<1/576$, the constant is less than $199/192$.
+The previous exposure scheme and excess calculation finish the proof.
+\end{proof}
+
+The wheel checker also verifies 3000 centered metrics against all 42 kernel core types.
+These finite checks support the metric formulas; the distributional limit and random matching arguments are proved above.

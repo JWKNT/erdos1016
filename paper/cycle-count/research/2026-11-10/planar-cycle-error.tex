@@ -1,0 +1,202 @@
+\section{A quantitative planar cycle-count consequence}
+\label{sec:planar-cycle-error}
+
+Aldred and Thomassen proved the planar asymptotic bound
+$c(G)\le(1/2+o(1))2^{\beta(G)}$ in 2008.\footnote{R. E. L. Aldred and C. Thomassen,
+\emph{On the maximum number of cycles in a planar graph}, Journal of Graph Theory 57 (2008), 255--264,
+\url{https://doi.org/10.1002/jgt.20290}. Their institutional publication record is
+\url{https://orbit.dtu.dk/en/publications/on-the-maximum-number-of-cycles-in-a-planar-graph/}.}
+The argument below gives an explicit error term from the present machinery.
+The original article's full proof was not available during this comparison.
+We therefore make no priority claim for the quantitative rate.
+
+\begin{proposition}[An explicit planar error]\label{prop:planar-cycle-error}
+Every planar graph of rank $r\ge1$ satisfies
+\[
+ c(G)\le2^{r-1}+32257\frac{2^r}{r}.
+\]
+More generally, for graphs of orientable genus $g=o(r)$,
+\[
+ c(G)\le2^{r-1}+O(2^r/r),
+\]
+with an absolute implied constant for sufficiently large $r$.
+\end{proposition}
+
+\begin{lemma}[Embedded marked sets]\label{lem:embedded-marked-forest}
+Let $H$ be a connected graph of rank $R$, embedded in an orientable surface of genus $g$.
+Let $W$ be a nonempty union of cycles with $m$ edges.
+For every integer $L\ge6$ such that
+\[
+ B=(L-5)R-(4L+12)m-2(L+1)g>0,
+\]
+one has
+\[
+ p(H,W)\le\frac12+
+ \frac{3L(L+1)(L-1)2^{L-2}}{B}.
+\]
+\end{lemma}
+
+\begin{proof}
+Inside each vertex disk, replace a high-degree vertex by a trivalent tree respecting the external cyclic order.
+Mark every new vertex incident with an edge of $W$.
+Retain the original vertex when its degree is at most three, marking it if necessary.
+The marked set $P$ has size $p\le2m$.
+No connectivity condition on the marked set is needed.
+
+Contracting the replacement trees identifies the two cycle spaces.
+If the original even subgraph is a forest outside $W$, its lift is a forest after deleting $P$.
+Indeed, a forest remains a forest when its vertices are replaced by trees.
+Delete leaves and suppress degree-two vertices outside $P$.
+These operations preserve the cycle space and the required forest implication.
+They also preserve the embedding.
+Call the resulting connected multigraph $\Gamma$.
+Every unmarked vertex has degree three, while each marked vertex has degree at least one and at most three.
+Consequently,
+\[
+ |V(\Gamma)|\le2R+2p-2,
+ \qquad |E(\Gamma)|\le3R+2p-3.
+\]
+
+Put $J=\Gamma-P$.
+Deleting $P$ removes at most $3p$ edges, giving $\beta(J)\ge R-2p$ when $J$ is nonempty.
+When $J$ is empty, subcubicity gives $R\le p/2+1\le2p$, so the same bound holds.
+The face argument of Lemma~\ref{lem:path-face-packing} now gives at least
+\[
+ R-2p-2g-\frac{6R+4p}{L+1}
+ =\frac{(L-5)R-(2L+6)p-2(L+1)g}{L+1}
+\]
+retained faces with boundary length at most $L$.
+Greedy selection yields $k$ vertex-disjoint cycles outside $P$, where
+\[
+ k\ge\frac{(L-5)R-(2L+6)p-2(L+1)g}{3L(L+1)}
+ \ge\frac{B}{3L(L+1)}.
+\]
+Each cycle's vertex set has boundary at most $L$ in $\Gamma$.
+Apply \eqref{eq:path-small-cuts} and the forest implication to obtain the stated bound.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:planar-cycle-error}]
+Join different components by bridges, preserving the rank, cycles, and genus bound.
+For $r\ge2$, put $k=\lceil\log_2r\rceil$.
+Choose $k$ edges $D$ outside a spanning tree.
+Exactly $2^{r-k}$ even subgraphs avoid $D$.
+
+For each $e=uv\in D$, add a fresh vertex $x_e$ and the edges $ux_e,x_ev$.
+Embed this new path beside $e$ in a narrow neighborhood of that edge.
+The resulting graph $H$ has genus at most $g$ and rank $R=r+k$.
+Let $W$ be the union of the $k$ resulting triangles, so $|E(W)|=3k$.
+
+For each original cycle $C$ meeting $D$ and each subset of the new triangles, take their symmetric difference with $C$.
+These $2^k$ even subgraphs have the same forest outside $W$.
+The new edges determine the chosen subset and hence determine $C$.
+Thus at most $p(H,W)2^r$ original cycles meet $D$.
+The cycles avoiding $D$ contribute at most $2^{r-k}$.
+
+Set $L=7$ in Lemma~\ref{lem:embedded-marked-forest}.
+When the denominator is positive, it gives
+\begin{equation}\label{eq:planar-error-denominator}
+ \frac{c(G)}{2^r}
+ \le\frac12+
+ \frac{32256}{2r-118\lceil\log_2r\rceil-16g}
+ +2^{-\lceil\log_2r\rceil}.
+\end{equation}
+If $g=0$ and $r\ge2048$, then $r\ge118\lceil\log_2r\rceil$.
+The last display is therefore at most $1/2+32257/r$.
+For $1\le r<2048$, the trivial bound $c(G)<2^r$ proves the same assertion.
+If $g=o(r)$, the denominator in \eqref{eq:planar-error-denominator} is $(2-o(1))r$.
+This proves the remaining assertion.
+\end{proof}
+
+The constants come from a fixed face-length cutoff and are not optimized.
+This proof uses only embedding-preserving additions beside selected edges.
+
+\section{A polynomial cycle-count error with a fixed excluded minor}
+\label{sec:minor-cycle-error}
+
+The same order of error holds throughout every fixed proper minor-closed class.
+Here the separators are applied before the witness paths are added.
+Thus the proof does not need to preserve minor exclusion under those additions.
+
+\begin{theorem}[Cycle-count error with an excluded minor]\label{thm:minor-cycle-error}
+For each fixed integer $h\ge4$, there is a constant $C_h$ such that every simple graph $G$
+with no $K_h$ minor and rank $r\ge1$ satisfies
+\[
+ c(G)\le2^{r-1}+C_h\frac{2^r}{r}.
+\]
+One may take
+\[
+ K=4096h^3,\qquad C_h=1+8K(3K-1)2^{3K-2}.
+\]
+In particular, this bound holds in every fixed proper minor-closed class, with a class-dependent constant.
+\end{theorem}
+
+\begin{proof}
+Suppose first that $c(G)>2^{r-1}$.
+All cycles then lie in one block.
+Indeed, two nonempty groups of cyclic blocks, with ranks $a,b\ge1$, would give
+\[
+ c(G)\le(2^a-1)+(2^b-1)\le2^{a+b-1}=2^{r-1}.
+\]
+Discard all other blocks.
+This preserves the rank and cycle count, giving a two-connected graph $B$.
+
+For each vertex $v$ of $B$, the graph $B-v$ is connected.
+The incident pattern of a uniform even subgraph is therefore uniform over all even subsets of the incident edges.
+A cycle uses zero or two edges at $v$.
+If $v$ has degree $d$, this gives
+\[
+ \frac{c(B)}{2^r}\le\frac{1+\binom d2}{2^{d-1}}.
+\]
+The right side is at most one half when $d\ge6$.
+Consequently, every vertex of $B$ has degree at most five.
+
+It suffices to consider $r\ge512$.
+Suppress all degree-two vertices of $B$, retaining parallel edges.
+Since $r\ge2$, the resulting loopless multigraph $\Gamma$ has minimum degree three and maximum degree five.
+Its rank and cycle count remain unchanged.
+Its underlying simple graph is a minor of $G$, and
+\[
+ |V(\Gamma)|\le2r-2.
+\]
+
+Put $k=\lceil\log_2r\rceil$, and choose $k$ edges $D$ outside a spanning tree of $\Gamma$.
+Let $P_0$ be their endpoints, so $|P_0|\le2k$.
+Deleting a vertex of degree at most five decreases rank by at most four.
+Hence the graph $J=\Gamma-P_0$ has
+\[
+ \beta(J)\ge r-8k.
+\]
+Apply Lemma~\ref{lem:path-small-components} to $J$, with $K=4096h^3$.
+There is a set $S$ of size at most $|V(J)|/16$ such that every component of $J-S$ has at most $K$ vertices.
+Another rank estimate gives
+\[
+ \beta(J-S)\ge r-8k-4|S|
+ \ge r/2-8k\ge r/4.
+\]
+The last inequality uses $r\ge32\lceil\log_2r\rceil$, which holds for $r\ge512$.
+
+Every component of $J-S$ has rank at most $2K$.
+Choose one cycle from each cyclic component.
+This yields $q\ge r/(8K)$ vertex-disjoint cycles, each using at most $K$ vertices.
+Each chosen vertex set has edge boundary at most $3K$ in $\Gamma$.
+
+Now add one fresh two-edge path parallel to each selected edge in $D$.
+Let $H$ be the resulting graph, and let $W$ be the union of the resulting triangles.
+The added edges only meet $\Gamma$ at vertices in $P_0$.
+Thus the selected cyclic regions retain their boundary bound in $H$ and avoid $V(W)$.
+The small-cut estimate gives
+\[
+ p(H,W)\le\frac12+\frac{(3K-1)2^{3K-2}}{q}
+ \le\frac12+\frac{8K(3K-1)2^{3K-2}}{r}.
+\]
+The triangle-flip injection from Proposition~\ref{prop:planar-cycle-error} bounds cycles meeting $D$ by $p(H,W)2^r$.
+At most $2^{r-k}\le2^r/r$ cycles avoid $D$.
+Together these estimates give the stated constant $C_h$.
+
+If $c(G)\le2^{r-1}$, the result holds immediately.
+For $1\le r<512$, use $c(G)<2^r$ and $C_h\ge256$.
+Finally, every proper minor-closed class excludes some $K_h$ with fixed $h\ge4$.
+\end{proof}
+
+This result is a consequence of the present counting and small-cut arguments together with the classical separator theorem.
+Its publication priority has not been checked.

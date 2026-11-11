@@ -1,0 +1,73 @@
+{
+  "status": "all exact structural checks passed",
+  "simple_cubic_edge_deletions": [
+    {
+      "order": 4,
+      "cubic_graphs": 1,
+      "poles": 6,
+      "cycles": 18,
+      "outside_parallel_pairs": 0,
+      "exact_reconstructions": 18,
+      "two_choice_cuts": 0
+    },
+    {
+      "order": 6,
+      "cubic_graphs": 2,
+      "poles": 18,
+      "cycles": 123,
+      "outside_parallel_pairs": 0,
+      "exact_reconstructions": 123,
+      "two_choice_cuts": 18
+    },
+    {
+      "order": 8,
+      "cubic_graphs": 5,
+      "poles": 58,
+      "cycles": 781,
+      "outside_parallel_pairs": 0,
+      "exact_reconstructions": 781,
+      "two_choice_cuts": 12,
+      "skipped_with_bridges": 2
+    },
+    {
+      "order": 10,
+      "cubic_graphs": 19,
+      "poles": 260,
+      "cycles": 6535,
+      "outside_parallel_pairs": 0,
+      "exact_reconstructions": 6535,
+      "two_choice_cuts": 86,
+      "skipped_with_bridges": 24,
+      "skipped_bridge_deletions": 1
+    },
+    {
+      "order": 12,
+      "cubic_graphs": 85,
+      "poles": 1395,
+      "cycles": 63284,
+      "outside_parallel_pairs": 0,
+      "exact_reconstructions": 63284,
+      "two_choice_cuts": 372,
+      "skipped_with_bridges": 131,
+      "skipped_bridge_deletions": 4
+    },
+    {
+      "order": 14,
+      "cubic_graphs": 509,
+      "poles": 9704,
+      "cycles": 797805,
+      "outside_parallel_pairs": 0,
+      "exact_reconstructions": 797805,
+      "two_choice_cuts": 3286,
+      "skipped_with_bridges": 955,
+      "skipped_bridge_deletions": 30
+    }
+  ],
+  "structured_ladders_and_multigraphs": {
+    "poles": 94,
+    "cycles": 10173,
+    "outside_parallel_pairs": 21,
+    "exact_reconstructions": 10173,
+    "two_choice_cuts": 4282
+  }
+}

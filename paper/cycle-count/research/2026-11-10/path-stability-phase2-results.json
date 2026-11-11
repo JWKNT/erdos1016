@@ -1,0 +1,82 @@
+{
+  "status": "all exact checks passed",
+  "rank_four_distance_two_paths": 13,
+  "unbounded_distance_two_excess_family": [
+    {
+      "rank": 3,
+      "distance": 2,
+      "paths": 7
+    },
+    {
+      "rank": 4,
+      "distance": 2,
+      "paths": 12
+    },
+    {
+      "rank": 5,
+      "distance": 2,
+      "paths": 21
+    },
+    {
+      "rank": 6,
+      "distance": 2,
+      "paths": 38
+    },
+    {
+      "rank": 7,
+      "distance": 2,
+      "paths": 71
+    },
+    {
+      "rank": 8,
+      "distance": 2,
+      "paths": 136
+    },
+    {
+      "rank": 9,
+      "distance": 2,
+      "paths": 265
+    },
+    {
+      "rank": 10,
+      "distance": 2,
+      "paths": 522
+    },
+    {
+      "rank": 11,
+      "distance": 2,
+      "paths": 1035
+    },
+    {
+      "rank": 12,
+      "distance": 2,
+      "paths": 2060
+    },
+    {
+      "rank": 13,
+      "distance": 2,
+      "paths": 4109
+    },
+    {
+      "rank": 14,
+      "distance": 2,
+      "paths": 8206
+    },
+    {
+      "rank": 15,
+      "distance": 2,
+      "paths": 16399
+    },
+    {
+      "rank": 16,
+      "distance": 2,
+      "paths": 32784
+    },
+    {
+      "rank": 17,
+      "distance": 2,
+      "paths": 65553
+    }
+  ],
+  "limitations": "Finite path counts only; the planar stability proof is a mathematical argument."
+}

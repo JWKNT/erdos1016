@@ -1,0 +1,54 @@
+{
+  "method": "Independent vertex DFS; all permutations through six positions",
+  "rows": [
+    {
+      "positions": 0,
+      "permutations": 1,
+      "saturated": 1,
+      "subdivisions": 2,
+      "maximum_nonfull": 0
+    },
+    {
+      "positions": 1,
+      "permutations": 1,
+      "saturated": 1,
+      "subdivisions": 5,
+      "maximum_nonfull": 0.75
+    },
+    {
+      "positions": 2,
+      "permutations": 2,
+      "saturated": 2,
+      "subdivisions": 16,
+      "maximum_nonfull": 0.875
+    },
+    {
+      "positions": 3,
+      "permutations": 6,
+      "saturated": 3,
+      "subdivisions": 33,
+      "maximum_nonfull": 0.875
+    },
+    {
+      "positions": 4,
+      "permutations": 24,
+      "saturated": 5,
+      "subdivisions": 70,
+      "maximum_nonfull": 0.875
+    },
+    {
+      "positions": 5,
+      "permutations": 120,
+      "saturated": 8,
+      "subdivisions": 136,
+      "maximum_nonfull": 0.875
+    },
+    {
+      "positions": 6,
+      "permutations": 720,
+      "saturated": 13,
+      "subdivisions": 260,
+      "maximum_nonfull": 0.875
+    }
+  ]
+}

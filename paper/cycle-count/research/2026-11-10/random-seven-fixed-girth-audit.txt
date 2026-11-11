@@ -1,0 +1,26 @@
+Independent audit by random_hosts: PASS.
+Source: path-fixed-girth.tex.
+Date: 2026-11-10.
+
+The audit checked the complete proof, including disconnected cycle complements.
+For girth at least five, each outside vertex meets the shortest cycle at most once.
+Thus every outside component has minimum degree two and positive cycle rank.
+Deleting a prefix of p cycle vertices removes exactly 2p edges.
+Each off-target component contributes at least one rank.
+The remaining terminal component therefore has rank at most b-p.
+
+First divergence from the fixed cycle path gives an exact partition of terminal paths.
+Each nonzero branch is a path count in a normalized pole with at most g ports.
+The final branch requires deletion of one pendant vertex and an endpoint slide.
+The protected-vertices theorem applies uniformly above a threshold B(g,epsilon).
+Branches below that rank have a uniformly bounded path count.
+The resulting geometric sum has deficit 2^(r-g-1).
+
+The asymptotic cycle bound applies to the connected edge-deleted graph.
+The fixed-girth theorem and the unbounded-girth reduction both pass.
+The proof gives no uniform rate when the girth grows with rank.
+
+Related finite certificate:
+second-order-random-seven-cycle.tex also passed path_stability's full text audit.
+Its independent exact checker verifies all 231 state coefficients.
+That certificate remains an independent finite cap proof for a seven-cycle shore.

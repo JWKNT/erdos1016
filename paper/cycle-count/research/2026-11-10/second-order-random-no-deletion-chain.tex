@@ -1,0 +1,241 @@
+\section{The chain argument without short-cycle deletions}
+\label{sec:random-no-deletion-chain}
+
+At girth proportional to the logarithm of the rank, the graph itself supplies the girth needed by the parallel-link argument.
+No packing estimate depending on the size of the forest excess is needed.
+All logarithms have base two.
+
+\begin{lemma}[Normalizing a cut between protected cyclic cores]
+\label{lem:random-protected-core-cut}
+Let $G$ be connected and cubic.
+Let $A,B$ be disjoint connected subgraphs of minimum degree at least two.
+Suppose a vertex partition separating $A$ from $B$ has at most $q$ crossing edges.
+Then there is such a partition with at most $q$ crossing edges whose two shores are connected normalized poles.
+Their ranks are at least $\beta(A)$ and $\beta(B)$.
+\end{lemma}
+
+\begin{proof}
+Choose a minimum edge cut among partitions with all of $A$ on one side and all of $B$ on the other.
+Each shore is connected.
+Indeed, a component not containing its protected connected subgraph could be moved to the other shore, strictly reducing the cut.
+
+A protected vertex has at least two incidences within its protected subgraph, so at most one cut incidence.
+If an unprotected vertex had at least two cut incidences, moving that vertex to the opposite shore would reduce the cut.
+Thus every vertex has at most one cut incidence.
+The shores have degree two at their cut endpoints and degree three elsewhere.
+Their ranks are at least the ranks of their respective protected subgraphs.
+\end{proof}
+
+\begin{lemma}[A positive forest excess gives two large shores]
+\label{lem:random-no-deletion-chain}
+Fix $c>0$.
+For all sufficiently large $r$, the following holds.
+Let $G$ be connected and cubic of rank $r$ and girth at least $c\log r$.
+Let $P$ be a connected marked set with $|P|\le3\log r$.
+If
+\[
+ \Pr(\xi_G-P\text{ is a forest})>\frac12,
+\]
+then $G$ has a cut of order at most $2A\log r$, where $A=6e^{168}$, with connected normalized shores of ranks at least
+$r^{\min\{c,1\}/10}$.
+The threshold depends on $c$, but not on the positive amount of forest excess.
+\end{lemma}
+
+\begin{proof}
+Replace $c$ by $\min\{c,1\}$ if necessary.
+Put $x=\log r$, $z=\log x$, and use
+\[
+ L=\lfloor Ax\rfloor,\qquad
+ D=\lfloor cx/2\rfloor,\qquad
+ t=\lfloor z-2\log z\rfloor,\qquad
+ s=\lfloor(D-1)/2\rfloor.
+\]
+The graph $J=G-P$ has girth greater than $D$.
+Thus the empty family is a maximal packing of cycles of length at most $D$ outside $P$.
+In the notation of the endpoint proof, its deletion set is $S=\varnothing$.
+
+The graph $J$ has $v=2r+O(x)$ vertices and degree deficit at most $3|P|=O(x)$.
+Hence $Ld_J/(2v)=o(1)$.
+The even spectral trace sum over $6x\le\ell\le L$, together with
+$L^2 2^{-s}=o(1)$, gives
+\[
+ \mu=\sum_{\substack{C\subseteq J\\|C|\le L}}2^{-|C|}
+ \ge\left(\frac14-o(1)\right)\ln(A/6)>20.
+\]
+
+The parallel-link estimate applies to this empty packing.
+Every pair of disjoint cycles of length at most $L$ has at most
+\[
+ 1+\frac{2L}{t+1}+2^{t+1}+578(L/D)^2
+ \le\frac{3Ax}{z}
+\]
+links for sufficiently large $r$.
+The exceptional-pair error in the established refined second-moment estimate of
+\texttt{polynomial-cycle-error.pdf} is therefore
+\[
+ O\!\left(2^{3Ax/z}L^3 2^{-s}\right)
+ =r^{-c/4+o(1)}=o(1).
+\]
+Only the first conclusion of that lemma is used.
+It requires forest probability greater than one half and gives
+$W_2>\mu^2-(1+o(1))\mu$.
+
+Apply the anchor-component, far-pair, and weighted maximal-disjointness argument from the established endpoint forest proof in
+\texttt{polynomial-cycle-error.pdf}.
+For clarity, its output is a cycle $C\subseteq J$ of length at most $L$, a neighbor $u$ of $C$, and vertex-disjoint cycles
+$C_1,\ldots,C_T$ in the component $H_0$ of $G-V(C)$ containing $P$.
+These cycles separate $u$ from $P$ in $H_0$ and are nested in that order.
+The weighted partner mass is at least $8/L$, so
+\[
+ T\ge\frac{8\,2^s}{L^3}
+ \ge\frac{2}{A^3}\frac{r^{c/4}}{x^3}.
+\]
+The proof of this output uses no inverse bound on $\mu$ and no positive lower bound on the forest excess.
+
+Choose a middle index $i$.
+Let $U_i$ be the $u$-component of $H_0-V(C_i)$.
+It contains $C_1,\ldots,C_{i-1}$.
+The complementary induced subgraph $H_0-U_i$ is connected: it contains the connected cycle $C_i$, and every other component of $H_0-V(C_i)$ has an edge to that cycle.
+It contains $C_i,\ldots,C_T$.
+Thus the ranks of these two connected subgraphs are at least $i-1$ and $T-i+1$, respectively.
+
+The boundary of $U_i$ in $G$ has at most $2L$ edges.
+At most $L$ end on $C_i$, since a vertex of that cycle has at most one incidence outside it.
+The remaining boundary edges end on the removed anchor cycle $C$, and there are at most $L$ of those.
+
+In each of the two connected induced subgraphs above, repeatedly delete degree-one vertices.
+The remaining two-cores are connected, disjoint, and have minimum degree at least two.
+Deleting leaves preserves every cycle and the rank.
+For large $r$, both cores therefore have rank at least $T/3$.
+They are separated by the cut around $U_i$.
+Apply Lemma~\ref{lem:random-protected-core-cut}.
+Its normalized shores have ranks at least $T/3\ge r^{c/10}$ for sufficiently large $r$.
+\end{proof}
+
+\begin{lemma}[A quarter bound for any small cut with two large shores]
+\label{lem:random-general-large-shore-quarter}
+Fix positive constants $c,K,\delta$.
+Suppose connected cubic graphs have rank $r\to\infty$, girth at least $c\log r$, and a cut of order $k\le K\log r$ whose shores are connected normalized poles of ranks at least $r^\delta$.
+Then
+\[
+ c(G)\le\left(\frac14+o_{c,K,\delta}(1)\right)2^r.
+\]
+The cut is not required to have minimum cyclic order.
+\end{lemma}
+
+\begin{proof}
+Write the shore ranks as $h,j$, so $r=h+j+k-1$.
+If $k=1$, no cycle crosses the cut and $c(G)\le2^h+2^j=o(2^r)$.
+Assume henceforth that $k\ge2$.
+Theorem~\ref{thm:random-all-terminal-sectors-girth} applies to the first shore:
+$k\le(\log h)^2$ for large $r$, and its required girth is $O_K(\log\log r)$.
+Each even terminal sector therefore has at most $(1/2+o(1))2^h$ forests.
+Lemma~\ref{lem:random-growing-port-aggregate} gives total forest mass at most
+$(1/2+o(1))2^{j+k-1}$ in the other shore.
+Every crossing cycle has a unique pair of forest restrictions, so its count is bounded by the product of these two quantities.
+The internal cycle counts are at most $2^h+2^j=o(2^r)$.
+All errors are uniform under the fixed constants in the statement.
+\end{proof}
+
+\begin{theorem}[A high-girth edge-count dichotomy]
+\label{thm:random-high-girth-edge-dichotomy}
+Fix $c>0$.
+For all sufficiently large ranks $r$, let $G$ be a connected loopless cubic graph of girth at least $c\log r$.
+Let $W$ be a shortest cycle and let $e=uv$ be any edge of $W$.
+If
+\[
+ P_{uv}(G-e)>2^{r-2},
+\]
+then
+\[
+ c(G)<2^{r-1}.
+\]
+Equivalently, if $c(G)\ge2^{r-1}$, every edge of a shortest cycle belongs to at most $2^{r-2}$ cycles.
+\end{theorem}
+
+\begin{proof}
+The cubic Moore bound gives $|V(W)|\le3\log r$ for large $r$.
+The usual two-state injection, now using the existing edge $e$, gives
+\[
+ \frac{P_{uv}(G-e)}{2^{r-1}}
+ \le\Pr(\xi_G-V(W)\text{ is a forest}).
+\]
+Explicitly, if $A=W-e$, a terminal path $Q$ gives the two distinct even states
+$Q\cup\{e\}$ and $Q\mathbin\triangle A$.
+Their restrictions outside $V(W)$ are forests.
+The hypothesis therefore gives a marked forest probability greater than one half.
+
+Lemma~\ref{lem:random-no-deletion-chain} supplies a cut of order at most $2A\log r$ with two polynomial-rank normalized shores.
+Lemma~\ref{lem:random-general-large-shore-quarter} bounds the cycle count by
+$(1/4+o(1))2^r$, which is strictly below $2^{r-1}$.
+\end{proof}
+
+\begin{corollary}[No logarithmic-girth minimal counterexample to the sharp order]
+\label{cor:random-high-girth-minimal-counterexample}
+Fix $c,K>0$.
+Suppose the bound
+\[
+ c(H)\le2^{s-1}+K s2^{s/2}
+\]
+holds for every connected graph of rank $s=r-1$.
+Then, for all sufficiently large $r$, every connected loopless cubic graph $G$ of rank $r$ and girth at least $c\log r$ satisfies
+\[
+ c(G)\le2^{r-1}+K r2^{r/2}.
+\]
+\end{corollary}
+
+\begin{proof}
+If $c(G)<2^{r-1}$, there is nothing to prove.
+Otherwise choose an edge $e$ of a shortest cycle.
+The theorem gives $P_e(G-e)\le2^{r-2}$.
+The graph $G-e$ is connected and has rank $r-1$, so the assumed predecessor bound yields
+\[
+ c(G)=c(G-e)+P_e(G-e)
+ \le2^{r-1}+K(r-1)2^{(r-1)/2}
+ <2^{r-1}+Kr2^{r/2}.
+\]
+This argument requires the induction hypothesis for general connected graphs; it does not assume that $G-e$ is cubic.
+\end{proof}
+
+\begin{corollary}[The remaining girth window for a minimal counterexample]
+\label{cor:random-minimal-counterexample-window}
+There are absolute constants $K_*,C_3,C_4$ with the following property.
+Fix $K\ge K_*$.
+Suppose a connected loopless cubic graph $G$ of rank $r$ violates
+\[
+ c(G)\le2^{r-1}+Kr2^{r/2},
+\]
+while this bound holds for every connected graph of smaller rank.
+If $r$ is sufficiently large, its girth $g$ and minimum cyclic cut order $k$ satisfy
+\[
+ \frac12\log\log r-\frac{11}{2}\log\log\log r-C_3
+ <k=g
+ <2\log\log r+2\log\log\log r+C_4.
+\]
+Moreover, every minimum cyclic cut has a shortest cycle as one shore.
+The constants do not depend on $K$.
+\end{corollary}
+
+\begin{proof}
+Choose $K_*$ at least the absolute constant in the established sharp-order bound for graphs with a cyclic cut of size at most four.
+Such cuts are then excluded in $G$.
+Corollary~\ref{cor:path-endpoint-loglog-cut} gives the stated lower bound on $k$, since $G$ has cycle count above the half bound.
+In particular, $k$ and $g\ge k$ tend uniformly to infinity in the possible counterexamples.
+
+Apply Corollary~\ref{cor:random-improved-girth-window}.
+It excludes every girth between
+\[
+ \left\lceil2\log\log r+2\log\log\log r+C_*\right\rceil
+ \quad\text{and}\quad
+ \frac12\log r-\frac{11}{2}\log\log r-C_0.
+\]
+For sufficiently large $r$, the second endpoint exceeds $(\log r)/4$.
+Corollary~\ref{cor:random-high-girth-minimal-counterexample}, with $c=1/4$, excludes every girth at least $(\log r)/4$.
+The two ranges overlap.
+Thus the upper bound on $g$ follows after increasing an absolute constant to account for the ceiling.
+
+Finally, Corollary~\ref{cor:path-high-girth-noncycle-minimum-cut} excludes a minimum cyclic cut with two noncycle shores once $g$ is sufficiently large.
+Every minimum cut therefore isolates a cycle.
+Its boundary order equals that cycle's length, which is at least $g$.
+Since $k\le g$, one has $k=g$, and the isolated cycle is shortest.
+\end{proof}

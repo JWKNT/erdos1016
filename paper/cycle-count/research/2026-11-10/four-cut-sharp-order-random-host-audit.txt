@@ -1,0 +1,56 @@
+Independent audit of the linear packing refinement and sharp-order four-cut theorem.
+Auditor: random_hosts research agent. Date: 10 November 2026.
+Status: PASS. No mathematical gap found.
+
+Files:
+  second-order-two-cycle-packing-refinement.tex
+  second-order-four-cut-sharp-order.tex
+
+The bounded-overlap interval sum is valid in all three cases.
+For disjoint intervals, the two lengths share one free split position.
+Outer gaps and the middle gap have summable geometric weights.
+Crossing intervals have bounded overlap length and one free meeting position.
+For nested intervals, the inner interval has bounded length and one free position.
+These give O_B((D+1)*2^(D/2)) for the ordered interval sum.
+
+Two disjoint cycles cannot both cross an ordinary two-vertex layer.
+Thus every common interior layer lies in the bounded initial marked set.
+At most four additional layers are interval endpoints.
+Marking endpoints adds at most eight vertices, uniformly in the rank.
+The previous nonconsecutive matching encoding then applies unchanged.
+Its geometric weight is bounded by2^((|I|+|J|)/2).
+
+The series-piece estimates are valid.
+The weighted one-piece sum is at most(b+2)*2^(b/2).
+For pairs in different pieces, the normalized sum is at most
+binom(q,2)*2^(-(q-2)/2), whose maximum is15/4<4.
+The capping injection therefore gives the asserted linear forest bound.
+
+The universal four-pole aggregate only used the fourth-degree factor in
+the cross-sum forest estimate. Replacing it gives a linear aggregate error.
+All fixed low-profile and bounded-rank cases retain their earlier margins.
+
+For aligned full K2,2 shores, the same-side cap pairing agrees across the cut.
+The exact gluing formula subtracts its product C_h*C_k.
+The remaining forest contribution is bounded by
+C_h*D_k+D_h*C_k+D_h*D_k.
+The audited saturated bounds make this O((h+k)*2^((h+k)/2)).
+The other path coordinates and internal cycles have half-exponent bounds.
+Aligned stars already had a constant half-exponent error.
+All nonaligned and ordinary profiles retain fixed deficits.
+
+Bounded small shores now use a linear aggregate error instead of degree four.
+Their bounded rank factor is absorbed into the absolute constant.
+The exact C4 low-profile case retains its positive absorption margin.
+
+The cyclic-square lower count is correct, including intervals that use all
+blocks but omit one interface. Its all-used sector has no double-cap block,
+because two disjoint same-side caps do not fit inside one square.
+The total is
+  2^(2q)+(2q+1/2)*2^q-3q,
+with rank2q+1 and a cyclic four-edge cut around each square.
+Thus the linear rank factor is necessary within the theorem's class.
+
+Optional clarification: increase the large-shore threshold if the constant
+in the refined forest estimate requires it. The threshold is existential,
+so this does not change the statement or proof.

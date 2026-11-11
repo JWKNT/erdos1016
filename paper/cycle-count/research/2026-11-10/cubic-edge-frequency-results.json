@@ -1,0 +1,170 @@
+{
+  "status": "all exact checks passed",
+  "method": "fundamental binary cycle space; connected nonzero even sets",
+  "generator": "nauty 2.8.9 geng -cq -d3 -D3 n",
+  "classes": [
+    {
+      "order": 4,
+      "graphs": 1,
+      "cycles": 7,
+      "triangles": 4
+    },
+    {
+      "order": 6,
+      "graphs": 2,
+      "cycles": 29,
+      "induced_squares": 12,
+      "perfect_matchings": 10,
+      "triangles": 2
+    },
+    {
+      "order": 8,
+      "graphs": 5,
+      "cycles": 133,
+      "induced_squares": 15,
+      "perfect_matchings": 32,
+      "triangles": 7
+    },
+    {
+      "order": 10,
+      "graphs": 19,
+      "cycles": 885,
+      "induced_squares": 48,
+      "perfect_matchings": 151,
+      "triangles": 31
+    },
+    {
+      "order": 12,
+      "graphs": 85,
+      "cycles": 7059,
+      "induced_squares": 217,
+      "perfect_matchings": 902,
+      "triangles": 148
+    },
+    {
+      "order": 14,
+      "graphs": 509,
+      "cycles": 75818,
+      "induced_squares": 1298,
+      "perfect_matchings": 7045,
+      "triangles": 904
+    }
+  ],
+  "mean_length_counterexample": {
+    "vertices": 8,
+    "cycles": 28,
+    "cycle_length_sum": 171,
+    "histogram": {
+      "3": 1,
+      "4": 3,
+      "5": 6,
+      "6": 6,
+      "7": 6,
+      "8": 6
+    },
+    "triangle_edge_frequencies": [
+      13,
+      13,
+      13
+    ]
+  },
+  "terminal_visitation_counterexample": {
+    "vertices": 14,
+    "edges": [
+      [
+        0,
+        5
+      ],
+      [
+        1,
+        6
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        0,
+        8
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        3,
+        8
+      ],
+      [
+        0,
+        9
+      ],
+      [
+        2,
+        9
+      ],
+      [
+        4,
+        9
+      ],
+      [
+        2,
+        10
+      ],
+      [
+        5,
+        10
+      ],
+      [
+        6,
+        10
+      ],
+      [
+        1,
+        11
+      ],
+      [
+        4,
+        11
+      ],
+      [
+        7,
+        11
+      ],
+      [
+        3,
+        12
+      ],
+      [
+        4,
+        12
+      ],
+      [
+        6,
+        12
+      ],
+      [
+        3,
+        13
+      ],
+      [
+        5,
+        13
+      ],
+      [
+        7,
+        13
+      ]
+    ],
+    "girth": 5,
+    "edge_connectivity": 3,
+    "removed_vertex": 2,
+    "terminals": [
+      7,
+      9,
+      10
+    ],
+    "paths_between_first_two": 50,
+    "paths_visiting_third": 26
+  }
+}

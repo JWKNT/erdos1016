@@ -1,0 +1,82 @@
+{
+  "status": "all exact checks passed",
+  "networkx_version": "3.7",
+  "graphs_checked": 157,
+  "selected_windows": 301,
+  "largest_expanded_graph": 322,
+  "largest_outside_rank": 81,
+  "largest_selected_window": 35,
+  "examples": [
+    {
+      "vertices": 10,
+      "rank": 5,
+      "distance": 2,
+      "outside_rank": 3,
+      "layer_width": 3,
+      "selected_windows": 1,
+      "max_selected_span": 1,
+      "max_selected_window_size": 6
+    },
+    {
+      "vertices": 14,
+      "rank": 7,
+      "distance": 3,
+      "outside_rank": 4,
+      "layer_width": 3,
+      "selected_windows": 1,
+      "max_selected_span": 1,
+      "max_selected_window_size": 6
+    },
+    {
+      "vertices": 22,
+      "rank": 11,
+      "distance": 5,
+      "outside_rank": 6,
+      "layer_width": 3,
+      "selected_windows": 2,
+      "max_selected_span": 2,
+      "max_selected_window_size": 7
+    },
+    {
+      "vertices": 42,
+      "rank": 21,
+      "distance": 10,
+      "outside_rank": 11,
+      "layer_width": 3,
+      "selected_windows": 4,
+      "max_selected_span": 2,
+      "max_selected_window_size": 9
+    },
+    {
+      "vertices": 82,
+      "rank": 41,
+      "distance": 20,
+      "outside_rank": 21,
+      "layer_width": 3,
+      "selected_windows": 7,
+      "max_selected_span": 2,
+      "max_selected_window_size": 9
+    },
+    {
+      "vertices": 162,
+      "rank": 81,
+      "distance": 40,
+      "outside_rank": 41,
+      "layer_width": 3,
+      "selected_windows": 14,
+      "max_selected_span": 2,
+      "max_selected_window_size": 9
+    },
+    {
+      "vertices": 322,
+      "rank": 161,
+      "distance": 80,
+      "outside_rank": 81,
+      "layer_width": 3,
+      "selected_windows": 27,
+      "max_selected_span": 2,
+      "max_selected_window_size": 9
+    }
+  ],
+  "limitations": "Finite checks of the cubic-layer argument only; the probability theorem remains a mathematical proof."
+}

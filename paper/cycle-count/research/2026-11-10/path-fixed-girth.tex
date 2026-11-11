@@ -1,0 +1,236 @@
+\section{A strict deficit at bounded girth}
+\label{sec:path-fixed-girth}
+
+A shortest cycle gives a sequence of terminal-path bounds.
+The argument permits a disconnected complement of that cycle.
+
+The proof uses the asymptotic cycle bound and the protected-vertices theorem.
+The latter is Theorem~\ref{thm:high-density-protected-cyclic-sets}.
+Thus its quantitative constants ultimately depend on additive terminal-path stability.
+
+\begin{lemma}[Prefix deletion along a shortest cycle]
+\label{lem:path-shortest-cycle-prefix}
+Let $G$ be a connected loopless cubic multigraph of rank $r$ and girth $g\ge5$.
+Let $C=v_0v_1\cdots v_{g-1}v_0$ be a shortest cycle.
+Write $w_i$ for the unique neighbor of $v_i$ outside $C$.
+Put $N=G-v_0v_{g-1}$ and $b=\beta(N)=r-1$.
+For $1\le p\le g-1$, delete $v_0,\ldots,v_{p-1}$ from $N$.
+Let $K_p$ be the component containing $v_{g-1}$.
+Then
+\[
+ \beta(K_p)\le b-p.
+\]
+If $p\le g-2$, then $K_p$ is a normalized pole with at most $g$ ports.
+If $p=g-1$, deleting the pendant vertex $v_{g-1}$ from $K_p$ gives such a pole of the same rank.
+Whenever $w_{p-1}\in K_p$, it is a port of the resulting pole.
+Its terminal partner is $v_{g-1}$ for $p\le g-2$, and $w_{g-1}$ for $p=g-1$.
+These terminal partners are distinct from $w_{p-1}$.
+\end{lemma}
+
+\begin{proof}
+The cycle $C$ is induced.
+An outside vertex cannot have two neighbors on $C$.
+Otherwise the shorter arc between those neighbors gives a cycle of length at most
+\[
+ \left\lfloor\frac g2\right\rfloor+2<g.
+\]
+Consequently all $w_i$ are distinct, and every component of $G-V(C)$ has minimum degree at least two.
+Each such component contains a cycle.
+
+Deleting the prefix removes $p$ cycle-path edges and $p$ outside edges.
+If the remaining graph has $c_p$ components, its total rank is
+\[
+ b-p+c_p-1.
+\]
+Every component other than $K_p$ avoids the remaining cycle path.
+It is therefore an entire component of $G-V(C)$ and has rank at least one.
+Subtracting these $c_p-1$ ranks gives $\beta(K_p)\le b-p$.
+
+For $p\le g-2$, the two endpoints of the remaining cycle path have degree two.
+Its other vertices have degree three.
+An outside vertex loses at most one incident edge, so its degree remains at least two.
+The degree-two vertices are these two endpoints and some of $w_0,\ldots,w_{p-1}$.
+There are at most $p+2\le g$ such vertices.
+In particular, $w_{p-1}$ has degree two whenever it belongs to $K_p$.
+
+For $p=g-1$, the remaining cycle vertex has only its outside edge.
+Delete that pendant vertex and move the target to $w_{g-1}$.
+The graph becomes a component of $G-V(C)$ and its rank does not change.
+Its ports are some of $w_0,\ldots,w_{g-1}$.
+The distinctness of the outside neighbors proves the final assertion.
+\end{proof}
+
+\begin{theorem}[Fixed-girth deficit]
+\label{thm:path-fixed-girth-deficit}
+Fix an integer $g\ge5$.
+Let $G$ range over connected loopless cubic multigraphs of rank $r$, girth $g$, and no cyclic cut of size at most four.
+Then, uniformly over these graphs,
+\[
+ c(G)\le 2^{r-1}-2^{r-g-1}+o_g(2^r)
+ \qquad(r\to\infty).
+\]
+In particular, $c(G)<2^{r-1}$ for all sufficiently large $r$.
+\end{theorem}
+
+\begin{proof}
+Use the notation of Lemma~\ref{lem:path-shortest-cycle-prefix}.
+Let $P$ count the simple $v_0$--$v_{g-1}$ paths in $N$.
+The cycle path $v_0v_1\cdots v_{g-1}$ contributes one.
+Every other path first leaves this fixed path through $v_iw_i$, for some $0\le i\le g-2$.
+Its remaining segment avoids $v_0,\ldots,v_i$.
+
+Put $p=i+1$.
+If $w_i\notin K_p$, the corresponding branch contributes zero.
+Otherwise its contribution is exactly the terminal-path count in the pole from Lemma~\ref{lem:path-shortest-cycle-prefix}.
+Write $q_p$ for that pole's rank.
+Then $q_p\le b-p$.
+
+Fix $\varepsilon>0$.
+There is a threshold $B=B(g,\varepsilon)$ such that every nonzero branch of rank at least $B$ has terminal-path count at most
+\[
+ (1/2+\varepsilon)2^{q_p}.
+\]
+Indeed, apply the protected-vertices theorem for each possible number of ports, between two and $g$.
+Protect all remaining vertices of $C$.
+The theorem supplies two disjoint cyclic vertex sets if this bound fails.
+They avoid every port and every protected vertex.
+Every changed incidence in passing back to $G$ is at a port.
+Both sets therefore retain their cycles and boundaries of size at most four in $G$, which is impossible.
+
+A branch of rank less than $B$ has at most $2^B$ terminal paths.
+This follows from the usual injection of terminal paths into their affine parity class.
+Hence every branch, uniformly in its rank, has at most
+\[
+ (1/2+\varepsilon)2^{b-p}+2^B
+\]
+paths.
+Summing over the $g-1$ branches gives
+\begin{align*}
+ P
+ &\le 1+(1/2+\varepsilon)\sum_{p=1}^{g-1}2^{b-p}+(g-1)2^B\\
+ &=1+(1/2+\varepsilon)\bigl(2^b-2^{b-g+1}\bigr)+(g-1)2^B.
+\end{align*}
+First let $r\to\infty$, and then let $\varepsilon\downarrow0$.
+The threshold $B$ depends only on $g$ and $\varepsilon$.
+Therefore
+\[
+ P\le 2^{b-1}-2^{b-g}+o_g(2^b).
+\]
+
+Every cycle of $G$ either avoids $v_0v_{g-1}$ or corresponds to one of these terminal paths.
+Thus $c(G)=c(N)+P$.
+The asymptotic cycle bound applies to the connected graph $N$ of rank $b$ and gives
+\[
+ c(N)\le2^{b-1}+o(2^b).
+\]
+Adding the last two estimates and substituting $b=r-1$ proves the theorem.
+\end{proof}
+
+\begin{corollary}[The remaining girth must tend to infinity]
+\label{cor:path-unbounded-girth-reduction}
+Fix an integer $g_0\ge2$.
+There is a rank threshold $R(g_0)$ such that every connected loopless cubic multigraph $G$ with
+\[
+ \beta(G)\ge R(g_0),\qquad \operatorname{girth}(G)\le g_0,
+\]
+and no cyclic cut of size at most four satisfies $c(G)<2^{\beta(G)-1}$.
+Consequently, any sequence with ranks tending to infinity, no such cyclic cuts, and cycle counts above the half bound has girth tending to infinity.
+\end{corollary}
+
+\begin{proof}
+If a cycle has at most four vertices, deleting its vertices reduces rank by at most eight.
+For rank greater than eight, its complement therefore contains a cycle.
+Its boundary has at most four edges, which contradicts the cut assumption.
+Thus the girth is at least five at sufficiently large rank.
+Apply Theorem~\ref{thm:path-fixed-girth-deficit} to the finitely many values $5\le g\le g_0$.
+\end{proof}
+
+The argument does not require $G-V(C)$ to be connected.
+It also does not require the cut around $C$ to have minimum cyclic order.
+The rank bound in Lemma~\ref{lem:path-shortest-cycle-prefix} is the needed substitute for those assumptions.
+
+\begin{corollary}[Every fixed-order cut with a bounded-rank shore]
+\label{cor:path-bounded-shore-any-order}
+Fix integers $k,H\ge1$.
+For all sufficiently large ranks, the following statement holds.
+Let $G$ be a connected loopless cubic multigraph with no cyclic cut of size at most four.
+If $G$ has a cyclic cut of size at most $k$ with one shore of total rank at most $H$, then
+\[
+ c(G)<2^{\beta(G)-1}.
+\]
+Neither shore is required to be connected, and distinct cut edges may have a common endpoint.
+\end{corollary}
+
+\begin{proof}
+Choose a cyclic component $A$ of the bounded-rank shore.
+Write $h_A=\beta(G[A])\le H$ and $d_A=|\delta_G A|\le k$.
+The cubic degree identity gives
+\[
+ |A|=2h_A+d_A-2\le2H+k-2.
+\]
+Thus $A$ contains a cycle of length at most $2H+k-2$.
+Apply Corollary~\ref{cor:path-unbounded-girth-reduction} with the fixed bound $\max\{2,2H+k-2\}$.
+\end{proof}
+
+In particular, the remaining case for any fixed cut order has both shore ranks tending to infinity.
+Combining this corollary with the established sharp bound for cyclic cuts of size at most four also gives
+\[
+ c(G)\le2^{r-1}+O_{k,H}(r2^{r/2})
+\]
+for every graph with such a bounded-rank cyclic shore, without the small-cut exclusion.
+The finitely many ranks below the strict-deficit threshold are absorbed into the constant.
+
+\subsection{A finite inequality and a growing-girth condition}
+
+The branch poles already contain every changed incidence at a port.
+Thus the unprotected small-cut theorem gives a slightly smaller explicit threshold.
+
+\begin{proposition}[Finite shortest-cycle estimate]
+\label{prop:path-fixed-girth-finite}
+Let $G$ satisfy the hypotheses of Theorem~\ref{thm:path-fixed-girth-deficit}, with rank $r$ and girth $g\ge5$.
+The value of $g$ need not be fixed here.
+For $0<\varepsilon\le1/2$, put
+\[
+ B(g,\varepsilon)
+  =(g+1)\bigl(9\lceil C_\varepsilon\rceil+8g+9\bigr),
+ \qquad
+ E(s)=\max\{\psi(s)-2^{s-1},0\}.
+\]
+Then
+\begin{align*}
+ c(G)\le{}&2^{r-1}-2^{r-g-1}
+       +\varepsilon\bigl(2^{r-1}-2^{r-g}\bigr)
+       +E(r-1)\\
+       &\hspace{20mm}+1+(g-1)2^{B(g,\varepsilon)}.
+\end{align*}
+\end{proposition}
+
+\begin{proof}
+Each nonzero branch is a normalized pole with between two and $g$ ports.
+Every incidence added in returning to $G$ is at one of its ports.
+Theorem~\ref{thm:high-density-pair-small-cyclic-cut} therefore bounds each branch of rank at least $B(g,\varepsilon)$ by $(1/2+\varepsilon)2^{q_p}$.
+A branch below this threshold has at most $2^{B(g,\varepsilon)}$ paths.
+Use $q_p\le r-1-p$, sum the geometric series, and add
+\[
+ c(G-v_0v_{g-1})\le2^{r-2}+E(r-1).
+\]
+This gives the displayed finite inequality.
+\end{proof}
+
+For example, consider a sequence with ranks $r\to\infty$, girths $g=g(r)\ge5$, and no cyclic cut of size at most four.
+Set $\varepsilon=2^{-g-2}$.
+The sequence is eventually below the half bound if
+\begin{equation}\label{eq:path-growing-girth-conditions}
+ \frac{2^g E(r-1)}{2^r}\longrightarrow0,
+ \qquad
+ B(g,2^{-g-2})+g+\log_2 g-r\longrightarrow-\infty.
+\end{equation}
+Indeed, the $\varepsilon$ term is at most one quarter of the negative term $2^{r-g-1}$.
+Both remaining error terms are negligible compared with that negative term under these conditions.
+
+The proved endpoint cycle bound makes the first condition hold whenever
+\[
+ \frac{2^g(\log r)^{11/2}}{\sqrt r}\longrightarrow0.
+\]
+The second condition still depends on the additive stability constant $C_{2^{-g-2}}$.
+No polynomial estimate for that constant is asserted here.

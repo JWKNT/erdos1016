@@ -1,0 +1,29 @@
+Independent full audit by random_hosts: PASS.
+Source: path-quantitative-localization.tex.
+Date: 2026-11-10.
+
+Every component of the retained shore meets its boundary.
+The new boundary cycle therefore makes the localized graph connected.
+Its exact rank is beta(R)+d-comp(R)+1=(|R|+d)/2+1 under cubicity.
+Contraction of the connected complement and contraction of the new cycle
+give identical laws on the retained internal edges.
+
+Complement closure around the connected marked cycle increases the retained
+set and decreases its boundary.
+It preserves cubicity outside the marked cycle.
+The localized marked cycle has at most rho/log^2(rho) vertices.
+Padding when d<3 respects the same bound.
+Thus the endpoint forest theorem excludes good sets directly, without the
+original component-counting threshold.
+
+The resulting local threshold is polynomial in1/epsilon, with logarithmic
+power11. The additive stability constant is single-exponential in that
+threshold. The inversion
+  q(s)=O((loglog s)^(11/2)/sqrt(log s))
+and the growing cyclic-cut range both check.
+
+The dependency chain is noncircular.
+The endpoint forest estimate uses the main cut/spectral machinery and the
+parallel-link argument. It does not use additive path stability.
+The general shortest-path expansion proof supports the multigraph use after
+off-route loops are excluded by the density assumption.

@@ -1,0 +1,10 @@
+{
+  "status": "pass",
+  "graphs_checked": 1099,
+  "graph_pseudoforest_pairs_checked": 54315,
+  "strict_pairs": 43469,
+  "theta_interval_parameter_pairs": 67,
+  "theta_blocks_with_spanning_paths_checked": 7712,
+  "whole_theta_blocks_with_spanning_paths_checked": 10024,
+  "scope": "all simple graphs through five vertices and all spanning pseudoforests; all cycle subfamilies via the worst-case inequality; explicit theta cycles, spanning paths, and interval coverage"
+}

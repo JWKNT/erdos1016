@@ -1,0 +1,96 @@
+\section{A variance bound when shortest cycles form cells}
+\label{sec:random-cycle-cell-variance}
+
+The circuit representation has a simpler consequence for a restricted class of the remaining graphs.
+It does not require an interlace-matrix estimate.
+
+\begin{theorem}[Many shortest-cycle cells force a deficit]
+\label{thm:random-shortest-cycle-cells}
+Let $G$ be a connected cubic graph of girth $g\ge5$ and rank $r$.
+Assume that its minimum cyclic cut order is $g$, and every minimum cyclic cut has a cycle as one shore.
+Suppose a two-factor partitions its vertices into $m\ge5$ cycles of length $g$.
+Put $p=2^{-g}$.
+If $mp>1$, then
+\[
+ \frac{c(G)}{2^r}
+ \le
+ \frac{mp+mg2^{g/2}p^2}{(mp-1)^2}.
+\]
+In particular, if $mp\ge2$, then
+\[
+ \frac{c(G)}{2^r}
+ \le \frac{4\,2^g+4g2^{g/2}}{m}.
+\]
+\end{theorem}
+
+\begin{proof}
+Contract the specified cells to form a quotient multigraph $Q$.
+It is $g$-regular and loopless, since a shortest cycle has no chord.
+Every nonempty proper union of cells has a cycle on each side.
+Thus every edge cut of $Q$ has size at least $g$.
+If both sides contain at least two vertices, its size is strictly greater than $g$:
+both corresponding shores of $G$ contain two disjoint cycles, whereas a minimum cyclic cut is assumed to isolate one cycle.
+
+For any distinct vertices $u,v$ of $Q$, write $t_{uv}$ for their edge multiplicity.
+The cut around $\{u,v\}$ has size $2g-2t_{uv}>g$, so $t_{uv}<g/2$.
+Also $Q-u-v$ is connected.
+To see this, the boundaries of its components sum to $2g-2t_{uv}\le2g$.
+Each component has boundary at least $g$, and a component with at least two vertices has boundary greater than $g$.
+Thus a disconnection would give exactly two singleton components, forcing $m=4$.
+The same cut-sum argument shows that $Q-u$ is connected.
+
+Let $I_u$ indicate that cell $u$ is a component of a uniform even subgraph of $G$, and put $Z=\sum_u I_u$.
+Use the uniform quotient-flow and independent cell-choice law of Proposition~\ref{prop:random-cycle-cell-expansion}.
+Since $Q-u$ is connected, forcing all quotient edges incident with $u$ to zero has codimension $g-1$.
+The additional choice of the full cell has probability $1/2$.
+Hence $\Pr(I_u=1)=2^{-g}=p$.
+
+For two cells, $Q-u-v$ is connected.
+The number of removed quotient edges is $2g-t_{uv}$, so the zero-boundary conditions have codimension
+\[
+ \beta(Q)-\beta(Q-u-v)=2g-t_{uv}-2.
+\]
+The two full-cell choices have probability $1/4$.
+Therefore
+\[
+ \Pr(I_u=I_v=1)=2^{t_{uv}}p^2.
+\]
+Nonadjacent cell indicators are pairwise independent.
+There are at most $mg/2$ adjacent unordered pairs, and $t_{uv}<g/2$.
+Consequently
+\[
+ \mathbb EZ=mp,\qquad
+ \operatorname{Var}Z
+ =mp(1-p)+2p^2\sum_{u<v}(2^{t_{uv}}-1)
+ \le mp+mg2^{g/2}p^2.
+\]
+
+An even state consisting of one cycle has $Z\le1$.
+Chebyshev's inequality therefore gives
+\[
+ \frac{c(G)}{2^r}\le\Pr(Z\le1)
+ \le\frac{\operatorname{Var}Z}{(mp-1)^2}.
+\]
+If $mp\ge2$, replace the denominator by $(mp/2)^2$ to obtain the final estimate.
+\end{proof}
+
+\begin{corollary}[The cycle-cell model is absent from the remaining window]
+\label{cor:random-shortest-cycle-cell-window}
+Under the hypotheses of Theorem~\ref{thm:random-shortest-cycle-cells}, suppose $r\to\infty$ and
+\[
+ g\le2\log\log r+2\log\log\log r+C
+\]
+for a fixed constant $C$.
+Then $c(G)=o(2^r)$.
+In particular, sufficiently large minimal counterexamples from
+Corollary~\ref{cor:random-minimal-counterexample-window} cannot have a two-factor consisting entirely of shortest cycles.
+\end{corollary}
+
+\begin{proof}
+The cubic degree sum gives $mg=2r-2$.
+The girth assumption makes $g2^g+g^2 2^{g/2}$ polynomial in $\log r$.
+Thus $m2^{-g}\to\infty$, and the theorem's final estimate tends to zero.
+\end{proof}
+
+The argument does not assert that shortest cycles partition the vertices of an arbitrary graph.
+Overlapping shortest cycles and large regions outside their union remain outside this model.

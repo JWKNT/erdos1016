@@ -1,0 +1,92 @@
+% Audited research proof; stronger bounds appear in the following refinement.
+% Include after random-host-weighted-matching.tex and random-hosts-phase5.tex.
+\section{Keeping wheels with partially useful length sets}
+\label{sec:rhost-one-fifty-one}
+
+A wheel remains useful when some of its cycle lengths exceed the target interval.
+Retain its useful lengths and charge its full rank.
+This avoids the main loss in the preceding construction.
+
+\begin{lemma}[Partial wheel length sets]\label{lem:rhost-partial-wheels}
+Let $h\to\infty$ through multiples of nine.
+There is a list of traceable wheel subdivisions with marked cycle-length sets $A$ such that:
+\begin{enumerate}
+\item each $A$ contains its rim length in $[3,h/3+1]$ and at least four non-rim lengths in $[h+1,2h]$;
+\item the marked sets are pairwise disjoint;
+\item $\sum_A(|A|-4)\ge(35/48-o(1))h$.
+\end{enumerate}
+Every wheel satisfies the same core thresholds and edge bounds as Lemma~\ref{lem:rhost-wheel-profit}.
+\end{lemma}
+
+\begin{proof}
+Put $s=\lceil\sqrt h\rceil$ and use the previous spoke distribution.
+Choose $R$ uniformly from $\{6s,\ldots,\lfloor h/12\rfloor\}$.
+Choose $L$ uniformly from the integer interval with center $\lfloor(R-2)/2\rfloor$ and radius $\lfloor s/2\rfloor$.
+Put $M=R-2-L$ and use the rim $(1,L,1,M)$.
+Its marked rim length is $R$.
+Retain only those non-rim cycle lengths that lie in $[h+1,2h]$.
+Let $k$ be their number, counted initially by cycle labels.
+The prospective value of this outcome is $k-3$.
+
+Each spoke-pair deficit is uniform on $\{0,\ldots,h+U\}$.
+For a rim arc of length $a$, its cycle exceeds $2h$ with probability at most $(2s+a)/h$.
+The two arcs for each of the six pairs sum to $R$.
+All non-rim cycles have length at least $h+1$.
+Consequently,
+\[
+ \mathbb E(12-k)\le\frac{24s+6\mathbb E R}{h}
+ =\frac14+o(1),
+\]
+and
+\[
+ \mathbb E(k-3)\ge\frac{35}{4}-o(1).
+\]
+Discard outcomes with a nonpositive spoke or repeated non-rim cycle lengths.
+Their total probability is $o(1)$, by the calculations in the preceding section.
+The value is bounded, so this changes its expectation by $o(1)$.
+Also discard outcomes with $k\le3$.
+Their values are nonpositive, so this cannot lower the retained expected value.
+Each retained marked set has size $k+1\in\{5,\ldots,13\}$ and value $|A|-4\in\{1,\ldots,9\}$.
+
+Every upper-interval vertex has weighted degree at most $12/h$.
+Every rim vertex has weighted degree at most
+\[
+ \frac1{\lfloor h/12\rfloor-6s+1}=\frac{12+o(1)}h.
+\]
+The weighted codegree bound $O(h^{-3/2})$ is unchanged.
+Restricting the marked set to its useful cycle lengths only decreases these degrees and codegrees.
+For a rim and a non-rim length, fixing $R$ has probability $O(1/h)$ and fixing the pair deficit costs at most $1/h$.
+Apply the variable-size version of Lemma~\ref{lem:rhost-weighted-matching}, with maximum value nine.
+It supplies disjoint marked sets of total value at least
+\[
+ \frac{h}{12+o(1)}\left(\frac{35}{4}-o(1)\right)
+ =\left(\frac{35}{48}-o(1)\right)h.
+\]
+Choose one metric witnessing each selected set.
+The core bounds, total edge count, and spanning path follow exactly as in Lemma~\ref{lem:rhost-wheel-profit}.
+\end{proof}
+
+\begin{theorem}[An upper coefficient of $151/144$]\label{thm:rhost-one-fifty-one}
+For the same $p_*$ as in Theorem~\ref{thm:rhost-scale}, and every $p\ge p_*$,
+with high probability
+\[
+ \operatorname{Pex}(G(n,p))
+ \le\log_2n+\left(\frac{151}{144}+o(1)\right)\frac{\ln n}{\ln\ln n}.
+\]
+\end{theorem}
+
+\begin{proof}
+Use the short-block baseline of Theorem~\ref{thm:rhost-seventy-nine}, of rank $16h/9+O(1)$.
+For every marked set in Lemma~\ref{lem:rhost-partial-wheels}, replace its $|A|$ single-cycle blocks by the corresponding wheel.
+This saves $|A|-4$ in cycle rank.
+The disjointness of the marked sets makes these replacements compatible.
+The resulting rank is at most
+\[
+ \frac{16h}{9}-\left(\frac{35}{48}-o(1)\right)h
+ =\left(\frac{151}{144}+o(1)\right)h.
+\]
+The remaining $o(d)$ single-cycle blocks, simultaneous random embeddings, connector chain, and later exposures are unchanged.
+All discarded cycle lengths belong to an embedded wheel; they need not belong to its marked set.
+Every required length still has either its retained baseline block or a marked replacement.
+The previous excess calculation proves the assertion.
+\end{proof}

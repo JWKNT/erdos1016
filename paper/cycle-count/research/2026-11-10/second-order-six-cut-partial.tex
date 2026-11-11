@@ -1,0 +1,100 @@
+\section{Six-edge cuts: exact states and a relaxation obstruction}
+\label{sec:six-cut-partial}
+
+This section records exact identities and a finite obstruction to one possible dual argument.
+It does not prove a six-cut error theorem.
+
+Let normalized six-poles $X,Y$ have ranks $h,k$.
+Joining corresponding ports gives rank $r=h+k+5$, with one-half threshold $16\cdot2^{h+k}$.
+There are fifteen pair-path sectors, fifteen four-port forest sectors, and one six-port forest sector.
+Let $\mathcal M_6$ be the fifteen perfect matchings of the six ports.
+Write $t_\alpha,z_\alpha$ for the two shores' six-terminal forest counts with pairing $\alpha\in\mathcal M_6$.
+Use $P_e,Q_e$ and $f_{S,\alpha},g_{S,\alpha}$ for the other states.
+Put $F_S=\sum_\alpha f_{S,\alpha}$ and $J_S=\sum_\alpha g_{S,\alpha}$.
+
+The exact gluing identity is
+\[
+\begin{split}
+ c(G)={}&c(X)+c(Y)+\sum_{|e|=2}P_eQ_e\\
+ &+\sum_{|S|=4}\left(F_SJ_S-\sum_\alpha f_{S,\alpha}g_{S,\alpha}\right)
+ +\sum_{\substack{\alpha,\beta\in\mathcal M_6\\\alpha\cap\beta=\varnothing}}t_\alpha z_\beta.
+\end{split}
+\]
+Indeed, a cycle crosses the cut in two, four, or six edges.
+In the six-edge case, the two colored perfect matchings must form one alternating six-cycle.
+For six ports, this is equivalent to having no common matching edge.
+Each matching has eight compatible matchings.
+
+Normalize the states of $Y$ by $2^k$ and call them $a_e,u_{S,\alpha},w_\beta$.
+Put $U_S=\sum_\alpha u_{S,\alpha}$.
+For a pairing $\alpha$ of $S$, define
+\[
+ B_{S,\alpha}=U_S-u_{S,\alpha}.
+\]
+For $\alpha\in\mathcal M_6$, put
+\[
+ R_\alpha=\sum_{\beta:\,\alpha\cap\beta=\varnothing}w_\beta.
+\]
+The general matching-augmentation theorem gives, in a large pole inside a cubic graph without a cyclic cut of size at most four,
+\[
+ a_e\le\tfrac12+o(1),\qquad
+ a_e+B_{e\cup f,e|f}\le1+o(1)
+\]
+for disjoint pairs $e,f$.
+For each perfect matching $\alpha=\{e,f,g\}$ it also gives
+\[
+ a_e+B_{e\cup f,e|f}+B_{e\cup g,e|g}+R_\alpha\le2+o(1).
+\]
+There are ninety oriented one-edge constraints and forty-five two-edge constraints.
+
+Bounding every opposite-shore state only by its affine-space size gives the universal relaxation
+\[
+ \mathcal L(Y)=\sum_ea_e+\sum_{|S|=4}\max_\alpha B_{S,\alpha}
+                         +\max_{\alpha\in\mathcal M_6}R_\alpha.
+\]
+Unlike the five-port case, these constraints do not force a strict deficit below sixteen.
+The following exact half-integral vector proves this limitation.
+It is an abstract state vector; no graph realization is asserted.
+
+Label the ports $0,1,2,3,4,5$.
+Set $a_e=1/2$ on
+\[
+ 04,05,12,13,15,34,45,
+\]
+and zero on the other pairs.
+For an increasing four-set $S=\{a,b,c,d\}$, order its pairings as $ab|cd,ac|bd,ad|bc$.
+The following table gives twice their masses:
+\[
+\begin{array}{c|ccc@{\qquad}c|ccc@{\qquad}c|ccc}
+ S&\multicolumn{3}{c}{2u_S}&S&\multicolumn{3}{c}{2u_S}&S&\multicolumn{3}{c}{2u_S}\\\hline
+0123&0&1&1&0124&0&0&2&0125&0&1&1\\
+0134&1&0&1&0135&1&0&0&0145&0&0&1\\
+0234&1&0&0&0235&0&1&1&0245&0&1&0\\
+0345&1&0&0&1234&1&1&0&1235&0&0&1\\
+1245&1&0&1&1345&1&0&1&2345&1&0&1
+\end{array}
+\]
+Set $w_{02|14|35}=1/2$ and all other six-terminal masses to zero.
+Every coordinate is nonnegative, each forest total is at most one, and
+\[
+ \sum_ea_e=\frac72,\qquad
+ \sum_SU_S=12,\qquad
+ \sum_\beta w_\beta=\frac12.
+\]
+All ninety one-edge inequalities hold with right side one.
+All forty-five two-edge inequalities hold with right side two.
+The total-state aggregate bound holds with equality sixteen.
+Every four-sector table row has a zero entry, and $02|14|35$ is compatible with $01|23|45$.
+Consequently $\mathcal L(Y)=16$.
+Thus these inequalities alone cannot yield a universal strict-deficit proof.
+
+The exact checker \texttt{check\_six\_cut\_states.py} verifies all these rational inequalities.
+It also verifies 960 complete gluings and 180 two-edge augmentation identities on four small shores, including a shore with a bridge.
+The results are in \texttt{six-cut-state-checks.json}.
+
+The actual six-cycle shore has more restrictive coefficients than the universal relaxation.
+Its four-sector vectors are $(1/2,1/2,0)$ in cyclic order.
+Its six-sector mass is split equally between the two alternating perfect matchings of the cycle.
+An exact rational dual gives crossing maximum at most $15.5$ using only matching-augmentation constraints.
+Section~\ref{sec:six-cycle-shore} records the certificate and the resulting six-cycle-shore theorem.
+This additional conclusion does not extend to arbitrary opposite-shore state vectors.

@@ -1,0 +1,161 @@
+\section{The mean-cycle-length route fails in the reduced cubic class}
+\label{sec:path-edge-half-mean-counterexample}
+
+The mean-length condition remains stronger than the edge-half conclusion, even after the usual structural reductions.
+
+\begin{proposition}\label{prop:path-edge-half-mean-counterexample}
+There is a simple three-edge-connected cubic graph $G$ of girth five and order $66$ such that
+\[
+ c(G)=2\,160\,078\,826,\qquad
+ \sum_{C\text{ a cycle}}|C|=107\,497\,549\,026.
+\]
+Consequently, its mean cycle length exceeds $3|V(G)|/4$.
+The graph nevertheless satisfies the edge-half conclusion.
+\end{proposition}
+
+\begin{proof}
+We first specify an eleven-vertex pole $N$.
+Its vertices are $1,\ldots,11$, and its terminals are $4,7,10$.
+List its edges in this order:
+\[
+\begin{split}
+ &(1,5),(1,7),(1,8),(2,6),(2,8),(2,11),(3,7),(3,9),\\
+ &(3,11),(4,8),(4,9),(5,10),(5,11),(6,9),(6,10).
+\end{split}
+\]
+The terminals have degree two, and all other vertices have degree three.
+The pole has rank five and girth five.
+Its Hamiltonian cycle has vertex order
+\[
+ 1,5,10,6,9,4,8,2,11,3,7.
+\]
+The remaining edges are $(1,8),(2,6),(3,9),(5,11)$.
+In this cyclic order, the chord $(1,8)$ crosses each of the other three chords.
+
+The pole is bridgeless because it has a Hamiltonian cycle.
+Every two-edge cut consists of two Hamiltonian edges.
+The intervening interval must contain both or neither endpoint of each chord.
+Crossing chords cannot lie on different sides of such an interval.
+Thus all eight chord endpoints lie on the same side.
+The three terminals are pairwise nonconsecutive on the Hamiltonian cycle.
+The other side must therefore be one terminal.
+Every two-edge cut of $N$ isolates a terminal.
+
+The cycle polynomial and the three terminal-path polynomials are
+\[
+\begin{aligned}
+ C_N(z)&=5z^5+5z^6+4z^7+5z^8+5z^9+4z^{10}+z^{11},\\
+ P_{47}(z)&=2z^3+z^5+7z^6+4z^7+2z^8+7z^9+3z^{10},\\
+ P_{4,10}(z)=P_{7,10}(z)
+ &=z^3+2z^4+2z^5+3z^6+5z^7+6z^8+5z^9+3z^{10}.
+\end{aligned}
+\]
+For completeness, the following finite certificate verifies these counts without a graph search assumption.
+Number the listed edges from one to fifteen.
+A cycle-space basis consists of the five edge subsets
+\[
+ \{4,6,12,13,15\},\quad
+ \{8,9,12,13,14,15\},\quad
+ \{1,3,10,11,12,14,15\},\quad
+ \{4,5,10,11,14\},\quad
+ \{1,2,7,9,13\}.
+\]
+Their binary incidence vectors are independent, so they enumerate the complete cycle space by symmetric difference.
+Number a basis sum by $s=\sum_{j=1}^5 2^{j-1}\varepsilon_j$.
+For each parity class below, add the stated base edge set to every basis sum.
+The table lists all nonzero states that are not connected.
+All unlisted nonzero states are connected.
+\[
+\begin{array}{c|c|c|c}
+\text{odd vertices}&\text{base edge set}&\text{disconnected indices }s&
+ \text{their lengths}\hline
+\varnothing&\varnothing&23,24&11,10\\
+4,7&\{2,3,10\}&1,2,3,23,26,27&8,9,8,8,9,8\\
+4,10&\{11,14,15\}&7,13,16,24,29&9,8,8,9,9\\
+7,10&\{1,2,12\}&3,8,11,24,31&8,8,9,9,9
+\end{array}
+\]
+This table follows directly by taking the indicated symmetric differences and checking their connected components.
+Every edge coordinate is balanced in each parity class.
+The total edge count over each class is therefore $15\cdot16=240$.
+The table gives
+\[
+ c(N)=29,\quad \sum_C|C|=240-21=219,
+ \qquad (p_{47},p_{4,10},p_{7,10})=(26,27,27),
+\]
+and the corresponding path-length sums are $(190,197,197)$.
+
+Now replace every vertex of $K_{3,3}$ by a copy of $N$.
+Order the three neighbours at each base vertex increasingly.
+Attach their incident edges to ports $4,7,10$, in that order.
+The resulting graph $G$ is simple and cubic, with $66$ vertices and $99$ edges.
+
+Every cycle inside one pole has length at least five.
+A cycle using edges between poles projects to a cycle of $K_{3,3}$.
+Indeed, a cycle uses zero or two of the three boundary edges at each pole.
+The projected cycle has length at least four.
+Each internal terminal path has length at least three.
+Every such crossing cycle therefore has length at least sixteen.
+The internal five-cycles show that the girth of $G$ is exactly five.
+
+The graph remains connected after deletion of any two edges.
+If both deleted edges lie in one pole, every remaining pole component contains a terminal.
+All these components connect through the other five poles, since $K_{3,3}$ minus one vertex is connected.
+Otherwise each affected pole stays connected, because $N$ is bridgeless.
+Contracting the poles then leaves $K_{3,3}$ with at most two edges removed, which is connected.
+This proves three-edge connectivity.
+
+Put
+\[
+ p_1=26,\quad p_2=p_3=27,\qquad
+ \ell_1=190,\quad \ell_2=\ell_3=197,
+\]
+and set
+\[
+ A=p_1^2p_2^2p_3^2=359\,254\,116,\quad
+ U=\sum_i p_i^2=2134,\quad V=\sum_i p_i\ell_i=15578.
+\]
+The nine base four-cycles contribute $U^2$ lifted cycles.
+Their total length is $4U(U+V)$.
+Each of the six base six-cycles uses each terminal-pair type twice.
+They contribute $6A$ cycles and total length
+\[
+ 36A+12A\sum_{i=1}^3\frac{\ell_i}{p_i}.
+\]
+There are also $6\cdot29$ cycles inside the poles, with total length $6\cdot219$.
+Consequently
+\[
+\begin{aligned}
+ c(G)&=6\cdot29+U^2+6A=2\,160\,078\,826,\\
+ \sum_C|C|&=6\cdot219+4U(U+V)+36A
+       +12A\sum_i\frac{\ell_i}{p_i}
+       =107\,497\,549\,026.
+\end{aligned}
+\]
+The exact difference is
+\[
+ 4\sum_C|C|-3|V(G)|c(G)=2\,294\,588\,556>0.
+\]
+
+Finally, the edge $(2,11)$ lies in $15$ pole cycles and in $(12,13,13)$ paths of the three terminal types.
+For the first pole, the three outside path coefficients are
+\[
+ (1405p_i+2A/p_i)_{i=1}^3
+   =(27\,671\,462,26\,649\,351,26\,649\,351).
+\]
+The corresponding edge of $G$ therefore belongs to
+\[
+ 15+12(27\,671\,462)+26(26\,649\,351)=1\,024\,940\,685
+\]
+cycles.
+It is less than $c(G)/2=1\,080\,039\,413$.
+Thus this graph obstructs the mean-length route but not the edge-half conclusion.
+\end{proof}
+
+\paragraph{Independent checks.}
+The script \texttt{path-edge-half-mean-counterexample-check.py} uses only the Python standard library.
+It enumerates the small pole by depth-first search and separately checks its affine-space certificate.
+It reconstructs all $99$ edges and checks all $4\,851$ two-edge deletions.
+It also computes every edge frequency from the exact gluing formulas.
+Their sum equals the stated cycle-length sum.
+A separate implementation by the random-host agent independently confirms these counts and structural checks.

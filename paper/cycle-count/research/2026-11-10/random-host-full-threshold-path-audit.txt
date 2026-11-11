@@ -1,0 +1,90 @@
+Independent audit of random-host-full-threshold.tex
+Agent: path_stability (Codex)
+Date: 2026-11-10
+Status: PASS as a mathematical argument, conditional on the explicitly cited
+robust-expander/tree-embedding and cycle-list lemmas. This is not Lean
+verification or a claim about publication priority.
+
+Main statement checked
+----------------------
+If np - ln n - ln ln n tends to infinity, then with high probability
+Pex(G(n,p)) = (1+o(1)) log_2 n. The displayed quantitative upper error
+(4+o(1)) ln n / ln w, for w=min(np-ln n-ln ln n,ln ln n), also passes.
+
+Independent checks
+------------------
+1. Exposure budget: four auxiliary probabilities D/n, D=w/100000, plus
+   (ln n+ln ln n+w/2)/n sum to at most p eventually. The final random graph
+   can therefore contain their independent union by monotone coupling.
+
+2. Initial objects: all required lengths are O(ln n), the list has O(ln n)
+   entries, and multiplicity is at most three. The cycle-list lemma gives
+   vertex-disjoint objects. Their O((ln n)^2) vertices cannot cover all G1
+   edges on the stated edge-count/maximum-degree event, so the reserved edge
+   f exists. Including f in H1 before exposing G2 is essential and is done.
+
+3. Chain freshness and rollback: expose G2 only inside V\H1. A candidate
+   edge xy lies in a matching on an untouched cycle. Query x against the
+   previous leaf set; condition on the resulting incoming path; temporarily
+   exclude only this path before querying y against a resulting expander.
+   The y-row is still fresh. A failed candidate does not remove the old
+   leaf tree. After success, discard its unused branches before embedding
+   the next tree. Thus there is no forbidden set containing two simultaneous
+   linear-size trees, and the reservoir retains n-o(n) vertices. The failure
+   sum over cycle lengths is geometric, so it is o(1) for every D->infinity.
+
+4. Reusing the chosen endpoint of f costs at most H previously exposed
+   incident edges. Another H fresh candidates exist in its n-o(n) reservoir.
+   The other endpoint of f is used only by the final leaf-set query in G2.
+   Both endpoint rows are fresh in the independent G4 used later.
+
+5. Separate short-cycle chain: the chain through S3,...,ST attaches the
+   binary block to the digit block without enlarging the binary base cycle.
+   Its attachment at the designated endpoint of f is consistent with the
+   later spanning path. This separation prevents circular parameter growth.
+
+6. High binary detours: the compound two-tree structures have positive
+   stems, maximum degree a+1, and fewer than n/50 vertices. The chosen
+   candidate edges avoid low-bit endpoints, and have pairwise disjoint
+   endpoints. The conditional failure bound needs no independence between
+   trials: the expected number of failures and Markov's inequality suffice.
+   Since ell_*/K tends to infinity, the candidate pool fits on C_*.
+
+7. Digit detours: a cycle of length 8b+5 has at least 4b matching edges after
+   avoiding the two endpoints of e_short. The stems 1+j and 1+jb are positive,
+   preserving the tree degree bound. Choosing one successful detour from
+   each group gives exactly T+1+j0+b*j1, hence [T+1,T+b^2]. This meets the
+   binary interval because T=o(ell_*) and b^2>=2ell_*.
+
+8. Spanning path: use all retained detours and long arcs of the S_j, while
+   omitting f, e_short, and each selected edge of S_j from the spanning path.
+   These omitted edges remain in the final subgraph. The binary block is a
+   single contiguous segment of length L0+ell_*-1. All other constructed
+   vertices form the adjoining short-cycle chain and digit segment. The two
+   free endpoints are precisely the unused endpoints of f and e_short.
+   The retained graph has at most 2L0 vertices; temporary trees do not count.
+
+9. Hamilton completion at the exact threshold was checked directly against
+   the revised primary source, not inferred from a stronger-density version:
+   Yahav Alon and Michael Krivelevich, Sparse pancyclic subgraphs of random
+   graphs, November 29, 2024, Lemma 2.1 (PDF page 3), and Claim 4.7 (page 11).
+   https://www.math.tau.ac.il/~krivelev/pancyclic-rg.pdf
+   Lemma 2.1 assumes Np-ln N-ln ln N->infinity and gives a set S of size N/4
+   and, for each s in S, a set T_s of size N/4, with a Hamilton s-t path for
+   every t in T_s. For X in this construction, the claimed lower bound
+   (1/2-1/25-o(1))*w tends to infinity. Independent G4 endpoint rows attach to
+   S and then T_s with failure o(1). No Hamilton-connectedness assertion or
+   stronger threshold is needed.
+
+10. Length coverage and excess: short cycles cover [3,T]; digits cover the
+    next interval and overlap the binary interval [ell_*,ell_*+L0]; binary
+    replacements on the Hamilton cycle cover [n-L0,n]. The original source's
+    long-window construction applies because the whole binary segment is
+    contiguous and ell_*=o(n^0.9)=o(L0). Its candidate counts and union bound
+    remain valid with p5=D/n and m=o(ln n). All failed query edges are omitted
+    from the chosen subgraph. Rank contributions give excess at most
+    K+2b+T+m+O(1). Finally d~ln n/ln w, b=o(d), m=o(d), and T=4d+o(d), proving
+    the quantitative error stated after the theorem.
+
+No blocking gap found. The source's Lemma 2.1 and Claim 4.7 should be named
+explicitly in any standalone presentation of the final completion step.

@@ -1,0 +1,331 @@
+\section{A polynomial unrestricted error from two girth scales}
+\label{sec:two-scale-polynomial-error}
+
+This proof combines Fable's nested-cycle argument with the exponential cut estimate.
+It uses two nested short-cycle deletions.
+The larger deletion finds a long chain.
+Restoring the medium-length deleted cycles makes most chain blocks suitable for a spectral test.
+The proof is mathematical and has not been formalized in Lean.
+
+All logarithms in this section have base two unless written as $\ln$.
+Fix
+\[
+ A=6e^{168},\qquad t=\lceil10000A\rceil,
+ \qquad \kappa=\frac1{10^6t2^t}>0.
+\]
+All thresholds below are absolute.
+They are not optimized.
+
+\begin{theorem}[A polynomial forest error]
+\label{thm:two-scale-polynomial-forest}
+Let $\Gamma$ be a connected multigraph of rank $r$ and maximum degree at most three.
+Let $P$ be a nonempty vertex set such that $\Gamma[P]$ is connected,
+\[
+ |P|\le\frac{2r}{\log^2r},
+\]
+and every vertex outside $P$ has degree three.
+For a uniform even subgraph $\xi$, let $\mathcal F$ mean that $\xi$ is a forest on $\Gamma-P$.
+For all sufficiently large $r$,
+\[
+ \Pr(\mathcal F)\le\frac12+r^{-\kappa}.
+\]
+\end{theorem}
+
+\subsection{The two cycle families and their moments}
+
+Assume, for a contradiction, that
+\begin{equation}\label{eq:two-scale-assumption}
+ \Pr(\mathcal F)>\frac12+\varepsilon,
+ \qquad \varepsilon=r^{-\kappa}.
+\end{equation}
+Put
+\[
+ x=\log r,\qquad L=\lfloor Ax\rfloor,
+ \qquad D_0=\lfloor x/100\rfloor,
+ \qquad D_1=\lfloor x/10\rfloor,
+ \qquad s_j=\lfloor(D_j-1)/2\rfloor.
+\]
+First choose a maximal disjoint family $\mathcal Q_0$ of cycles of length at most $D_0$ in $\Gamma-P$.
+Extend this family to a maximal disjoint family $\mathcal Q_1$ of cycles of length at most $D_1$.
+Let $S_j$ be the union of the vertices of $\mathcal Q_j$, and put
+\[
+ J_j=\Gamma-(P\cup S_j).
+\]
+Thus $S_0\subseteq S_1$ and $J_1\subseteq J_0$.
+
+Every chosen cycle is a cyclic region with boundary at most its length.
+Theorem~\ref{thm:sharper-exponential-cuts} and \eqref{eq:two-scale-assumption} give
+\[
+ |\mathcal Q_j|<8D_j2^{D_j}\ln(2/\varepsilon).
+\]
+Consequently,
+\begin{equation}\label{eq:two-scale-deletion-sizes}
+ |S_0|=O(x^3r^{1/100}),\qquad
+ |S_1|=O(x^3r^{1/10}).
+\end{equation}
+Each $J_j$ is simple and has girth greater than $D_j$.
+Its order $v_j$ and degree deficit $d_j$ satisfy
+\[
+ v_j=2r+O(|P|+|S_j|),\qquad
+ d_j\le3(|P|+|S_j|),\qquad Ld_j=o(v_j).
+\]
+
+Let $\mathcal C_j$ be the cycles of $J_j$ of length at most $L$.
+Write
+\[
+ a_C=2^{-|C|},\qquad \mu_j=\sum_{C\in\mathcal C_j}a_C.
+\]
+The manuscript's walk bound gives, uniformly over vertices $v$ of $J_j$,
+\begin{equation}\label{eq:two-scale-local-mass}
+ \sum_{C\in\mathcal C_j:v\in C}a_C\le L2^{-s_j}.
+\end{equation}
+The spectral supply argument, applied to $J_1$, gives
+\begin{equation}\label{eq:two-scale-initial-mass}
+ \mu_1\ge\left(\frac18-o(1)\right)\ln(A/6)>20.
+\end{equation}
+Here $L^2 2^{-s_1}=o(1)$ controls repeated non-backtracking walks, and $Ld_1=o(v_1)$ controls the spectral loss.
+
+We record the moment bounds at both girth scales.
+For disjoint $C,C'\in\mathcal C_j$, the manuscript's link decomposition now gives
+\[
+ \ell(C,C')\le1+\frac{2L}{t}
+   +8t2^t\ln(2/\varepsilon)+(8L/D_j)^2.
+\]
+The first term uses the connectedness of $P$.
+The third term uses the exponential cut estimate for the cyclic complementary regions.
+The tree-region argument remains valid because $2t+D_j/2\le D_j$ for large $r$.
+The choice of constants gives
+\begin{equation}\label{eq:two-scale-link-bound}
+ \ell(C,C')\le x/1000
+\end{equation}
+for large $r$, at both scales.
+Indeed, $2L/t\le x/5000$, the third term equals
+$(8\ln2/10^6)x+O_t(1)$, and the last term is bounded independently of $r$.
+
+Use the manuscript's normalized cycle-component variables
+\[
+ X_C=\frac{a_C}{\Pr(C\text{ is a component of }\xi)}
+       \mathbf1_{\{C\text{ is a component of }\xi\}},
+ \qquad Z_j=\sum_{C\in\mathcal C_j}X_C.
+\]
+They satisfy $\mathbb EX_C=a_C$, $\mathbb EX_C^2\le a_C$, and
+\[
+ \mathbb E(X_CX_{C'})=a_Ca_{C'}2^{\ell(C,C')-1}
+\]
+for disjoint cycles.
+Distinct intersecting cycles have zero joint contribution.
+The exceptional-partner lemma and \eqref{eq:two-scale-link-bound} bound the contribution of partners with at least three links by
+\[
+ a_C\,2^{x/1000}L^3 2^{-s_j}=o(a_C).
+\]
+This holds even at the smaller scale, since $s_0=x/200+O(1)$.
+
+Let $\Lambda_j$ be the total weight of ordered disjoint one-link pairs in $\mathcal C_j$.
+There is a quantity $\eta_r\to0$ such that
+\begin{equation}\label{eq:two-scale-inverse-moment}
+ \mathbb EZ_j^2
+ \le2\mu_j^2-\Lambda_j+(1+\eta_r)\mu_j.
+\end{equation}
+On $\mathcal F$, one has $Z_j=0$.
+Cauchy--Schwarz and \eqref{eq:two-scale-assumption} therefore imply
+\begin{equation}\label{eq:two-scale-two-consequences}
+ \Lambda_j<(1+\eta_r)\mu_j,
+ \qquad
+ \mu_j\le\frac{1+\eta_r}{4\varepsilon}.
+\end{equation}
+
+\subsection{A chain exists after weighted averaging}
+
+For disjoint cycles $C,C'\in\mathcal C_1$, call $C'$ \emph{far from $P$ behind $C$}
+when it lies in a component of $\Gamma-V(C)$ that avoids $P$.
+This relation is antisymmetric.
+Indeed, a path from $P$ to its first vertex of $C$ avoids that far component.
+It therefore avoids $C'$.
+Since $C$ is connected and disjoint from $C'$, all of $C$ lies in the $P$-component of $\Gamma-V(C')$.
+It follows that the total weight of ordered far pairs is at most $\mu_1^2/2$.
+
+By \eqref{eq:two-scale-local-mass}, the ordered weight of intersecting pairs is at most
+$\mu_1L^2 2^{-s_1}=o(\mu_1)$.
+The same bound applies to disjoint pairs joined by an edge.
+By \eqref{eq:two-scale-two-consequences}, one-link pairs have weight at most $(1+o(1))\mu_1$.
+Thus the ordered weight of the remaining pairs is at least
+\[
+ \frac12\mu_1^2-(1+o(1))\mu_1.
+\]
+In every remaining pair, $C'$ lies in the $P$-component of $\Gamma-V(C)$,
+no edge joins the two cycles, and they have at least two links.
+Equation~\eqref{eq:two-scale-initial-mass} therefore supplies one cycle $C$ whose such partners have total weight at least eight.
+
+Put $H=\Gamma-V(C)$ and let $N(C)$ be the vertices outside $C$ adjacent to $C$.
+Since $C$ lies outside $P$, every vertex of $C$ is cubic, so $|N(C)|\le|C|\le L$.
+For each selected partner $C'$, at least two components of $H-V(C')$ are adjacent to both cycles.
+At most one contains $P$.
+Choose another such component $Y$ and a vertex $u\in Y\cap N(C)$.
+The component $Y$ lies in the main component of $H$, since it is adjacent to $C'$ there.
+Thus $C'$ separates $u$ from $P$ in $H$.
+
+For some fixed $u\in N(C)$, cycles separating $u$ from $P$ in $H$ have total weight at least $8/L$.
+Choose a maximal vertex-disjoint subfamily of these cycles.
+If it has $T$ members, its vertex union meets every cycle in the family.
+Equation~\eqref{eq:two-scale-local-mass} gives
+\[
+ \frac8L\le TL^2 2^{-s_1},\qquad
+ T\ge\frac{8\,2^{s_1}}{L^3}
+ \ge\frac{r^{1/20}}{L^3}
+\]
+for large $r$.
+
+These disjoint cycles are nested between $u$ and $P$ in $H$.
+Here is the required separation argument.
+For two such cycles, replace the middle of a $u$--$P$ path by an arc of the first cycle.
+The resulting path meets the second cycle in either the $u$-component or the $P$-component after deleting the first.
+Connectedness places the entire second cycle in that component.
+The two cycles cannot each lie on the other's $u$-side, since a path through the first cycle would then avoid the second separator.
+They cannot each lie on the other's $P$-side, by the reversed argument.
+Thus they have a consistent linear order.
+
+Write the ordered cycles as $C_1,\ldots,C_T$.
+Let $U_i$ be the component of $u$ in $H-V(C_i)$.
+Then $U_i\subseteq U_{i+1}$, and $C_i\subseteq U_{i+1}$.
+
+\subsection{Restore medium cycles inside the chain}
+
+Put $q=\lceil20000Ax\rceil+2$.
+Choose disjoint index intervals $[a,b]$ with $b-a=q$, leaving a separator cycle between consecutive intervals.
+There are
+\[
+ m_* = \Omega\!\left(\frac{r^{1/20}}{x^4}\right)
+\]
+such intervals.
+For each interval define the full vertex set
+\[
+ V(a,b)=U_b\setminus\bigl(U_a\cup V(C_a)\bigr).
+\]
+It contains $C_{a+1},\ldots,C_{b-1}$.
+Consequently,
+\begin{equation}\label{eq:two-scale-block-volume}
+ |V(a,b)|\ge(q-1)(D_1+1)\ge2000Ax^2.
+\end{equation}
+These sets are pairwise disjoint and pairwise non-adjacent in $H$.
+Every edge of $H$ leaving one set ends on $C_a$ or $C_b$.
+Its boundary in $H$ is therefore at most $2L$.
+The set has no neighbor in $P$, since $C_b$ separates it from $P$.
+
+The definition uses full vertex sets in $H$.
+It restores the vertices in $S_1\setminus S_0$ that lie between the separator cycles.
+This restoration is the reason for using two girth scales.
+
+Discard every block meeting $N(C)$.
+At most $L$ blocks are lost.
+Also discard every block meeting $S_0$ or a neighbor of $S_0$ in $\Gamma$.
+At most $4|S_0|$ further blocks are lost, since $\Gamma$ has maximum degree three.
+By \eqref{eq:two-scale-deletion-sizes}, this loss is $o(m_*)$.
+Let $V_1,\ldots,V_m$ be the remaining blocks.
+Then
+\begin{equation}\label{eq:two-scale-many-blocks}
+ m=\Omega\!\left(\frac{r^{1/20}}{x^4}\right).
+\end{equation}
+
+Each $V_i$ lies in $J_0$.
+It has no neighbor in $P\cup S_0$, so every one of its vertices has degree three in $J_0$.
+Thus its degree deficit in $J_0$ is exactly zero.
+Its boundary in $J_0$ has size at most $2L$.
+The blocks remain pairwise non-adjacent.
+
+\subsection{Many blocks give many spectral modes}
+
+We include the spectral argument for completeness.
+Let $J$ be a simple graph of maximum degree three.
+Suppose $V_1,\ldots,V_m$ are pairwise disjoint and pairwise non-adjacent vertex sets.
+Write $b_i=|\delta_J V_i|$ and
+$\delta_i=\sum_{v\in V_i}(3-\deg_J v)$.
+If $0<\theta<1/2$ and
+\[
+ \delta_i+3b_i\le\theta|V_i|,
+\]
+then the non-backtracking matrix of $J$ has at least $m$ real eigenvalues in $[2-\theta,2]$, with multiplicity.
+
+To prove this, let $A_J$ be its adjacency matrix and $\Delta_J$ its degree matrix.
+Put $M(\lambda)=\lambda^2I-\lambda A_J+\Delta_J-I$.
+For the indicator vector of $V_i$,
+\[
+ \mathbf1_{V_i}^{\mathsf T}M(2-\theta)\mathbf1_{V_i}
+ =-\theta(1-\theta)|V_i|
+ +(1-\theta)\delta_i+(2-\theta)b_i\le0.
+\]
+Nonadjacency makes the corresponding cross terms zero.
+Hence $M(2-\theta)$ has at least $m$ nonpositive eigenvalues.
+The matrix $M(2)$ is positive semidefinite.
+Its ordered eigenvalues vary continuously, so at least $m$ zeros occur in $[2-\theta,2]$, counted with kernel multiplicity.
+Equivalently, $M'(\lambda)=2\lambda I-A_J$ is positive definite for $\lambda>3/2$, so each ordered eigenvalue crosses zero at most once there.
+The manuscript's map
+$g\mapsto f$, with $f(v\to w)=\lambda g(w)-g(v)$,
+injects each kernel into the corresponding non-backtracking eigenspace.
+This proves the eigenvalue count.
+
+For even $\ell$, the nonreal eigenvalues have modulus at most $\sqrt2$.
+Therefore
+\[
+ \operatorname{tr}B_J^\ell
+ \ge m(2-\theta)^\ell-3|V(J)|2^{\ell/2}.
+\]
+Apply this to the clean blocks in $J_0$, with $\theta=1/(12x)$.
+Their zero deficit, boundary at most $2L$, and \eqref{eq:two-scale-block-volume} verify the hypothesis.
+Sum the normalized trace over even lengths $6x\le\ell\le24x$.
+The first term contributes at least a fixed positive constant times $m$.
+The nonreal error is $o(1)$, since $|V(J_0)|=O(r)$.
+The repeated-walk bound is at most
+$\tfrac32L^2 2^{-s_0}\mu_0=o(\mu_0)$.
+The manuscript's trace-to-cycle calculation consequently gives, for large $r$,
+\[
+ \mu_0\ge m/16-1.
+\]
+Together with \eqref{eq:two-scale-many-blocks}, this yields
+\[
+ \mu_0=\Omega\!\left(\frac{r^{1/20}}{x^4}\right).
+\]
+But \eqref{eq:two-scale-two-consequences} gives
+\[
+ \mu_0\le\frac{1+o(1)}4\,r^\kappa.
+\]
+Since $\kappa<1/100$, these bounds contradict each other for large $r$.
+This proves Theorem~\ref{thm:two-scale-polynomial-forest}.
+
+\subsection{Transfer to unrestricted cycle counts}
+
+\begin{corollary}[A polynomial unrestricted cycle error]
+\label{cor:two-scale-polynomial-cycles}
+For the absolute constant $\kappa$ above,
+\[
+ \psi(r)\le2^{r-1}+(1+o(1))\frac{2^r}{r^\kappa}.
+\]
+In particular, $\psi(r)-2^{r-1}=O(2^r/r^\kappa)$.
+\end{corollary}
+
+\begin{proof}
+Normalize a graph by deleting irrelevant trees and suppressing degree-two vertices.
+Rank and cycle count are preserved.
+The resulting kernel has at most $2r-2$ vertices and a cycle of length $O(\log r)$.
+If necessary, subdivide its edges uniformly to work with a simple graph.
+The chosen cycle still has length $O(\log r)$.
+
+For this connected cycle witness, the manuscript's marked cubic reduction has connected marked set $P$ and
+$|P|=O(\log r)\le2r/\log^2r$.
+Theorem~\ref{thm:two-scale-polynomial-forest} therefore bounds the original forest probability by $1/2+r^{-\kappa}$.
+The cycle-flip injection for any witness edge gives
+\[
+ c_e(G)\le2^{r-2}+2^{r-1}r^{-\kappa}.
+\]
+Deleting that cyclic edge preserves connectedness and reduces rank by one.
+The established edge recurrence, with $E_r=\psi(r)-2^{r-1}$, gives
+\[
+ E_r\le\max\{0,E_{r-1}+2^{r-1}r^{-\kappa}\}
+\]
+for all sufficiently large $r$.
+Iterating and summing the geometric tail yields
+\[
+ E_r\le O(1)+\sum_{j\le r}2^{j-1}j^{-\kappa}
+      =(1+o(1))2^r r^{-\kappa}.
+\]
+This proves the corollary.
+\end{proof}

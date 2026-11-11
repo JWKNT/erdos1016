@@ -1,0 +1,196 @@
+\section{A cycle-count recurrence without witness chords}
+\label{sec:cycle-recursion}
+
+Fable 5.2 proposed this use of the Entringer--Slater deletion identity in its November 10 notes.
+The recurrence gives a shorter route from a one-cycle forest estimate to the cycle-count asymptotic theorem.
+It does not change the existing formal proof.
+It also removes the separate witness-avoidance error from the quantitative argument.
+
+Let $\psi(r)$ be the maximum number of cycles among finite graphs of rank $r$.
+The same maximum results if one requires simple connected graphs.
+Bridges can join different components, and subdividing each edge twice removes loops and parallel edges without changing cycles or rank.
+Since cycle counts are integers bounded by $2^r-1$, this maximum is attained.
+
+\begin{lemma}[One marked edge]\label{lem:recursion-marked-edge}
+Let $G$ be a connected multigraph of rank $r$, let $W$ be a cycle, and let $e\in E(W)$.
+Then
+\[
+ c_e(G)\le p(G,W)2^{r-1}.
+\]
+\end{lemma}
+
+\begin{proof}
+A cycle $C$ containing $e$ has a forest outside $W$.
+If two such cycles $C,C'$ have the same outside part, their symmetric difference is an even edge set in $W-e$.
+Since $W-e$ is a forest, that symmetric difference is empty.
+Thus these cycles give distinct forest outside parts.
+There are $2^{r-1}$ outside parts, since $W$ has rank one.
+Their forest proportion is $p(G,W)$, proving the bound.
+\end{proof}
+
+\begin{proposition}[Recurrence from one-cycle estimates]\label{prop:cycle-forest-recurrence}
+Suppose that for each sufficiently large integer $r$, every connected simple graph $G$ of rank $r$
+and every cycle $W$ with at most $\sqrt r$ edges satisfy
+\[
+ p(G,W)\le1/2+d(r),
+\]
+where $d(r)\ge0$.
+Then, for all sufficiently large $r$,
+\begin{equation}\label{eq:cycle-deletion-recurrence}
+ \psi(r)\le\psi(r-1)+(1/4+d(r)/2)2^r.
+\end{equation}
+Consequently,
+\begin{equation}\label{eq:cycle-recursion-window}
+ \frac{\psi(r)}{2^r}
+ \le\frac12+
+ \max_{\lceil r/2\rceil\le s\le r}d(s)+2^{-r/2}.
+\end{equation}
+In particular, $d(r)=o(1)$ implies $\psi(r)\le(1/2+o(1))2^r$.
+\end{proposition}
+
+\begin{proof}
+Choose a connected graph $G$ of rank $r$ with $c(G)=\psi(r)$.
+Delete leaves, and suppress degree-two vertices.
+For $r\ge2$, the resulting connected multigraph $K$ has minimum degree at least three.
+These operations preserve its rank and cycle count, and $|V(K)|\le2r-2$.
+
+The elementary Moore bound gives a cycle $W$ of length at most $2\log(2r)+1$ in $K$.
+Loops and parallel pairs already give cycles of length one or two.
+Otherwise, the usual vertex-centered and edge-centered breadth-first trees give the claimed logarithmic bound.
+Choose an edge $e$ of $W$.
+Subdivide every edge of $K$ twice, obtaining a simple graph $K'$ of the same rank.
+The cycle $W$ becomes a cycle $W'$ with
+\[
+ |E(W')|\le6\log(2r)+3\le\sqrt r
+\]
+for sufficiently large $r$.
+Subdivision preserves outside-forest probability and cycle counts.
+Lemma~\ref{lem:recursion-marked-edge} therefore yields
+\[
+ c_e(K)\le(1/2+d(r))2^{r-1}.
+\]
+Since $e$ lies on a cycle, $K-e$ is connected and has rank $r-1$.
+The deletion identity gives
+\[
+ \psi(r)=c(K-e)+c_e(K)
+ \le\psi(r-1)+(1/2+d(r))2^{r-1},
+\]
+which proves \eqref{eq:cycle-deletion-recurrence}.
+
+Put $z_r=\psi(r)/2^r-1/2$.
+The recurrence becomes $z_r\le z_{r-1}/2+d(r)/2$.
+For $s=\lfloor r/2\rfloor$, iteration gives
+\[
+ z_r\le2^{-(r-s)}z_s+
+ \sum_{j=s+1}^{r}2^{j-r-1}d(j).
+\]
+Use $z_s\le1/2$ and sum the geometric weights, whose sum is less than one.
+This proves \eqref{eq:cycle-recursion-window}.
+\end{proof}
+
+The manuscript's forest error $20/\log\log\log r$ gives the same order of cycle-count error through this recurrence.
+The constant $21$ also follows for sufficiently large $r$.
+If a one-cycle forest estimate has error $O(r^{-a})$ for a fixed $a>0$, the cycle-count error has the same order.
+No additional term from cycles avoiding a selected witness set is needed.
+
+\subsection{The additive excess as an edge problem}
+
+For $r\ge2$, define
+\[
+ X_r=\psi(r)-2^{r-1},\qquad
+ g(r)=\max_{\beta(G)=r}\ \min_{e\text{ on a cycle}}c_e(G)-2^{r-2}.
+\]
+The maximum may be taken over connected simple graphs.
+It exists because the minimum edge frequency is an integer between one and $2^{r-1}$.
+
+\begin{proposition}\label{prop:cycle-edge-excess-recurrence}
+For every $r\ge2$,
+\[
+ X_r-X_{r-1}\le g(r).
+\]
+Hence, for $1\le s<r$,
+\[
+ X_r\le X_s+\sum_{j=s+1}^r g(j).
+\]
+\end{proposition}
+
+\begin{proof}
+Choose a graph attaining $\psi(r)$ and an edge $e$ of minimum frequency among its cyclic edges.
+Then
+\[
+ \psi(r)=c(G-e)+c_e(G)
+ \le\psi(r-1)+2^{r-2}+g(r).
+\]
+Subtract $2^{r-1}$ and iterate.
+\end{proof}
+
+For a simple graph and an edge $e=uv$, one has $c_e(G)=P_{uv}(G-e)$.
+Thus an upper bound on $g(r)$ is a terminal-path bound for one suitable edge of each graph.
+If $g(r)=O(2^r/r^a)$, then $X_r=O(2^r/r^a)$.
+If $g(r)=O(2^{(1-\kappa)r})$ for $0<\kappa<1$, then $X_r$ has that same exponential order.
+Both conclusions follow by summing the recurrence, splitting the sum at $r/2$ when needed.
+
+The general additive stability theorem gives a fixed-gap bound, with a threshold depending on that gap.
+It does not presently control this threshold strongly enough to give a polynomial error in arbitrary graphs.
+Accordingly, the recurrence does not by itself prove such an error bound.
+
+\subsection{An alternative proof of the fixed-minor error bound}
+
+The recurrence also gives a proof of Theorem~\ref{thm:minor-cycle-error} without adding witness triangles.
+We record it because it separates the geometric input from the counting step.
+
+Fix $h\ge4$, put $K=4096h^3$, and set
+\[
+ A_h=8K(3K-1)2^{3K-2}.
+\]
+Let $\psi_h(r)$ be the maximum cycle count among simple $K_h$-minor-free graphs of rank $r$.
+Suppose an extremizer has more than $2^{r-1}$ cycles.
+The proof of Theorem~\ref{thm:minor-cycle-error} reduces it to a unique cyclic kernel $\Gamma$ with
+\[
+ 3\le\deg(v)\le5,\qquad |V(\Gamma)|\le2r-2.
+\]
+Its underlying simple graph remains $K_h$-minor-free.
+
+Choose a shortest cycle $W$ in $\Gamma$.
+For $r\ge512$, the Moore bound gives
+\[
+ |V(W)|\le|E(W)|\le2\log(2r)+1\le r/16.
+\]
+The graph $J=\Gamma-V(W)$ therefore has rank at least $r-4|V(W)|$.
+Apply Lemma~\ref{lem:path-small-components}, with the same $K$ as above, to delete at most $|V(J)|/16$ vertices.
+Every remaining component has at most $K$ vertices, while the remaining rank is at least
+\[
+ r-4|V(W)|-4|V(J)|/16\ge r/2-4|V(W)|\ge r/4.
+\]
+Each component has rank at most $2K$.
+Selecting one cycle from every cyclic component gives at least $r/(8K)$ disjoint cyclic regions outside $W$.
+Their boundaries in $\Gamma$ are at most $3K$.
+The sharper small-cut estimate \eqref{eq:path-small-cuts} gives
+\[
+ p(\Gamma,W)\le1/2+A_h/r.
+\]
+
+For any edge $e$ of $W$, Lemma~\ref{lem:recursion-marked-edge} now yields
+\[
+ c_e(\Gamma)\le(1/2+A_h/r)2^{r-1}.
+\]
+Choose an edge of the corresponding subdivided path in the original simple graph.
+Deleting that edge removes exactly the cycles counted by $c_e(\Gamma)$ and decreases rank by one.
+It preserves the excluded-minor condition.
+Hence, whenever $\psi_h(r)>2^{r-1}$ and $r\ge512$,
+\[
+ \psi_h(r)\le\psi_h(r-1)+(1/2+A_h/r)2^{r-1}.
+\]
+
+For completeness, this recurrence gives the same explicit constant as Theorem~\ref{thm:minor-cycle-error}.
+Put $C=A_h+1$.
+For $r\le2C$, the trivial bound $\psi_h(r)<2^r$ gives
+$\psi_h(r)\le(1/2+C/r)2^r$.
+For larger $r$, assume the same bound at rank $r-1$.
+If $\psi_h(r)\le2^{r-1}$, there is nothing to prove.
+Otherwise the recurrence applies, and its normalized excess is at most
+\[
+ \frac{C}{2(r-1)}+\frac{A_h}{2r}\le\frac Cr.
+\]
+The last inequality is equivalent to $C/(r-1)\le1$, which holds in this range.
+This proves the error bound by induction, without any witness addition.

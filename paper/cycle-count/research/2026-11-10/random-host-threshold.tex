@@ -1,0 +1,170 @@
+% Audited historical retuning; the subsequent adaptive proof reaches the full threshold.
+\section{A smaller gap above the pancyclicity threshold}
+\label{sec:rhost-threshold-retuning}
+
+The constant refinements above use the original five exposure probabilities.
+For the leading term alone, those probabilities can be reduced substantially.
+The following retuning still leaves a gap from the full threshold.
+
+\begin{lemma}[A short list of disjoint cycles]\label{lem:rhost-cycle-list}
+Fix constants $A,B>0$.
+Suppose $D\to\infty$ and $D\le(\ln n)^B$.
+In $G(n,D/n)$, with high probability, one can select vertex-disjoint cycles from any fixed list of $O(\ln n)$ lengths,
+all between $3$ and $A\ln n$, provided each length has bounded multiplicity.
+\end{lemma}
+
+\begin{proof}
+For a cycle of length $\ell=O(\ln n)$, let $X_\ell$ count copies and let $Y_\ell$ count ordered intersecting pairs, including identical copies.
+Write $\mu_\ell=\mathbb EX_\ell$.
+The overlap calculation used above gives
+\[
+ \frac{\operatorname{Var}X_\ell}{\mu_\ell^2},\quad
+ \frac{\mathbb EY_\ell}{\mu_\ell^2}
+ \le C\left(\frac{\ell^2}n+\ell D^{-\ell}\right).
+\]
+Every proper overlap is a union of paths and isolated vertices.
+A connected path contributes at most a constant times $\ell^2/n$ times a convergent geometric series in $1/D$.
+Disjoint overlap components exponentiate this bound.
+A full overlap contributes $2\ell D^{-\ell}$.
+This proves the displayed estimate uniformly in the stated range.
+
+Put $q=\lfloor\ln n/(10\ln D)\rfloor$.
+Chebyshev's inequality, summed over $3\le\ell\le q$, shows that every required short length has any fixed number of copies.
+Indeed, $\sum_{\ell\ge3}\ell D^{-\ell}=O(D^{-3})$, and $\mu_\ell\to\infty$ uniformly.
+With high probability, all distinct cycles of lengths at most $q$ are vertex-disjoint.
+The expected number of intersecting pairs is at most
+\[
+ n^{-1}(\ln n)^{O(1)}D^{2q}=o(1),
+\]
+by the same proper-overlap enumeration.
+Choose all required cycles in this range first.
+
+For $q<\ell\le A\ln n$, the displayed error is at most $n^{-1/10+o(1)}$.
+The Chebyshev, Markov, and independent-set argument from Lemma~\ref{lem:rhost-theta-list}
+gives more than $(\ln n)^3$ disjoint copies of every such length, simultaneously.
+The earlier choices and the entire prescribed list use only $O((\ln n)^2)$ vertices.
+Choose the remaining cycles greedily.
+\end{proof}
+
+\begin{theorem}[Leading term with a logarithmic-logarithmic gap]\label{thm:rhost-threshold-retuning}
+There is an absolute constant $C$ such that, if
+\[
+ p\ge\frac{\ln n+C\ln\ln n}{n},
+\]
+then with high probability
+\[
+ \operatorname{Pex}(G(n,p))=(1+o(1))\log_2 n.
+\]
+The proof permits $C=500000$.
+\end{theorem}
+
+\begin{proof}
+Put $D=100000\ln\ln n$ and expose independent graphs with probabilities
+\[
+ p_1=p_2=p_3=p_5=D/n,\qquad
+ p_4=(\ln n+20\ln\ln n)/n.
+\]
+Their union is dominated by $G(n,p)$ for the stated value of $C$.
+Use the corrected Alon--Krivelevich construction, with the parameter changes below.
+
+Set
+\[
+ \beta=\frac{20\ln D}{D},\quad
+ a=\left\lfloor\frac1{5\beta}\right\rfloor,\quad
+ M=\lfloor n/1000\rfloor,\quad
+ d=\lceil\log_a M\rceil.
+\]
+Then $a\to\infty$ and $d\sim\ln n/\ln\ln\ln n=o(\ln n)$.
+The robust expansion proof applies because
+\[
+ D\beta=20\ln D>2\ln(e/\beta)+\omega(1).
+\]
+After excluding $o(n)$ used vertices, it gives an induced expander with $n-o(n)$ vertices and the same expansion factor $1/(3\beta)$.
+Use its tree embedding conditions with $k=\lfloor\beta n/2\rfloor$, maximum degree $\lfloor1/(4\beta)\rfloor$, and tree size $n/50$.
+
+We modify the trees to avoid losing a factor $a$ in their leaf count.
+Take complete $a$-ary levels through depth $d-1$.
+Give the $a^{d-1}$ vertices at that depth between one and $a$ children each, with exactly $M$ children in total.
+This is possible because $a^{d-1}\le M\le a^d$.
+All $M$ leaves have depth $d$.
+Each tree has at most $3M$ vertices and maximum degree $a+1$.
+Two trees and an $o(n)$ connecting stem therefore fit within the tree-size limit.
+
+At an endpoint's first use, expose at most $H=\lfloor n/4000\rfloor$ candidate neighbour edges.
+The failure probability is at most
+\[
+ \exp(-p_iH)=(\ln n)^{-25+o(1)}.
+\]
+At its later use, at least $M-H\ge n/2000$ leaves have fresh endpoint edges.
+That failure probability is at most $(\ln n)^{-50+o(1)}$.
+Use the same edge-ordering convention for shared endpoints as in the corrected construction.
+Thus all $O(\ln n)$ endpoint queries succeed with high probability.
+The reservoir edges are exposed before these queries, so the required independence remains valid.
+
+Choose
+\[
+ K_0=\lceil\log_2(4d)\rceil,\qquad
+ K=\left\lfloor\log_2\frac{n\ln\ln n}{100\ln n}\right\rfloor,
+ \qquad L_0=2^{K+1}-1.
+\]
+The initial cycle lengths are $2^i+2$ for $0\le i\le K_0$.
+They are at most $8d+2$.
+For $i>K_0$, the binary detour stem $2^i+1-2d-2$ is positive.
+The binary base cycle has length
+\[
+ \ell_*=(K_0+1)(d+3)=O\!\left(\frac{\ln n\ln\ln n}{\ln\ln\ln n}\right).
+\]
+It has more than enough edges for all binary detours and the reserve edge.
+
+Put $b=\lceil\sqrt{2\ell_*}\rceil$ and retain two-digit encoding.
+The short base cycle has length $2b+1=o(d)$.
+Lemma~\ref{lem:rhost-cycle-list} supplies all initial cycles vertex-disjointly in $G_1$.
+The two-digit paths cover $[T+1,T+b^2]$, where $T=2(d+b+1)=o(\ln n)$.
+For large $n$, this interval overlaps the binary interval beginning at $\ell_*$.
+The individual short chords in $G_5$ supply all lengths through $T$.
+Their failure probability is at most $T\exp(-D)=o(1)$.
+
+The short gadget uses $O(bd+b^3)$ vertices, and all these terms are polynomial in $\ln n$.
+The total used vertex count is at most $2L_0$, with
+\[
+ 2L_0\le\frac{n\ln\ln n}{25\ln n}.
+\]
+The remaining set $X$ therefore satisfies
+\[
+ |X|p_4-\ln|X|-\ln\ln|X|\to\infty.
+\]
+The source's Hamilton completion lemma applies to $G_4[X]$.
+Its two endpoint attachments also succeed with probability tending to one.
+
+The last interval-covering chords in $G_5$ use the same $n^{0.9}$ windows.
+This is permitted because $L_0\gg n^{0.9}$ and $\ell_*=o(L_0)$.
+Their number is
+\[
+ m=\lfloor n2^{-K}\rfloor=O(\ln n/\ln\ln n)=o(\ln n).
+\]
+Each window has at least $n^{1.8}/5$ candidate edges, so the previous union bound remains valid.
+All path stems fit the tree-size limit because $L_0=o(n)$.
+
+The final excess is at most
+\[
+ K+2b+T+m+O(1)=\log_2 n+o(\ln n).
+\]
+The universal cycle-count lower bound gives the matching leading term.
+\end{proof}
+
+\paragraph{The remaining threshold gap.}
+The full range is $np-\ln n-\ln\ln n\to\infty$.
+The theorem above does not cover an arbitrarily slow divergent excess.
+With auxiliary mean degree $D\to\infty$ arbitrarily slowly, the endpoint-query union bound can fail.
+Its error has the form $O(\ln n)e^{-cD}$.
+Selecting endpoints adaptively or proving a rooted expander linkage lemma could remove this obstruction.
+No such repair is asserted here.
+
+Cooper's 1991 result gives a Hamilton cycle with cycles of every length using at most two additional edges each,
+at the full pancyclicity threshold:
+\url{https://doi.org/10.1016/0012-365X(91)90105-B}.
+That property alone does not bound the total number of distinct chords by $O(\ln n)$.
+Montgomery's 2019 resilience theorem applies at the Hamiltonicity hitting time:
+\url{https://doi.org/10.1016/j.jctb.2019.04.002}.
+It permits local edge deletion, but does not directly force the prescribed gadget path into a Hamilton cycle.
+These results suggest possible routes; they do not close the remaining gap in this note.

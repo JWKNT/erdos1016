@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "edge_subsets_checked": 32768,
+  "distinct_prisms": 60,
+  "balanced_partitions": 10,
+  "nonblocking_subsets": 541,
+  "maximal_nonblocking_subsets": 10,
+  "maximal_nonblocking_shape": "two disjoint triangles"
+}

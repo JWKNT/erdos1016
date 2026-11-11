@@ -1,0 +1,130 @@
+\section{A strict deficit for a seven-cycle shore}
+\label{sec:random-seven-cycle}
+
+A seven-cycle has a finite cap certificate analogous to the six-cycle certificate.
+Branching caps are needed for the certificate below.
+Every coefficient in the final sum is one half.
+
+Label the seven ports $0,1,\ldots,6$ in cyclic order.
+For disjoint pairs $e,f$, write $B_{e|f}$ for the four-terminal forest mass outside pairing $e|f$.
+For three disjoint pairs, write $R_{e|f|g}$ for the six-terminal forest mass compatible with that matching.
+All masses are normalized by the affine-space size of the opposite shore.
+
+We use five cap expressions:
+\[
+\begin{aligned}
+ M(e;f)&=a_e+B_{e|f},\\
+ N(e;f,g)&=a_e+B_{e|f}+B_{e|g}+R_{e|f|g},\\
+ S(e;Q)&=a_e+\sum_{f\in\binom Q2}B_{e|f},\\
+ T(e;f,g)&=a_e+\sum_{f'\in\binom{f\cup g}2}B_{e|f'}+R_{e|f|g},\\
+ D(e;Q,g)&=a_e+B_{e|g}
+              +\sum_{f\in\binom Q2}(B_{e|f}+R_{e|f|g}).
+\end{aligned}
+\]
+Here $Q$ has three ports, and all displayed attachment sets are disjoint from the terminal pair $e$.
+The matching and protected-cap theorems give, uniformly in a large opposite shore inside a cubic graph without a cyclic cut of size at most four,
+\[
+ a_e\le\tfrac12+o(1),\quad
+ M\le1+o(1),\quad N\le2+o(1),\quad S\le2+o(1),
+ \quad T\le4+o(1),\quad D\le4+o(1).
+\]
+The first four cap types were established earlier.
+For $D$, attach a three-leaf star to $Q$ and add the edge $g$.
+The rank increment is three.
+A terminal path uses neither cap, only the edge, only two star incidences, or both cap components.
+Deleting the used cap edges gives exactly the terms in the displayed definition of $D$.
+The general fixed-cap theorem therefore gives its stated bound.
+
+\begin{lemma}[The seven-cycle functional]
+\label{lem:random-seven-cycle-functional}
+The normalized crossing functional against a seven-cycle satisfies
+\[
+ L_7\le\frac{63}{2}+o(1).
+\]
+\end{lemma}
+
+\begin{proof}
+For each increasing four-set $A=\{a<b<c<d\}$, its two noncrossing pairings are $ab|cd$ and $ad|bc$.
+For each increasing six-set $A=\{a<b<c<d<e<f\}$, its two alternating pairings are $ab|cd|ef$ and $af|bc|de$.
+Let $\mathcal Q_4$ contain the seventy resulting four-terminal pairings.
+Let $\mathcal Q_6$ contain the fourteen resulting six-terminal pairings.
+The seven-cycle has two terminal paths for every port pair.
+Its forest states give the exact formula
+\[
+ L_7=\sum_e a_e+\frac12\sum_{\alpha\in\mathcal Q_4}B_\alpha
+                     +\frac12\sum_{\alpha\in\mathcal Q_6}R_\alpha.
+\]
+
+Use $a_{13}$ and $a_{35}$ with their path upper bounds.
+Use the twenty-four expressions $M(e;f)$ in the following table:
+\[
+\begin{array}{cc|cc|cc|cc}
+e&f&e&f&e&f&e&f\\\hline
+03&12&12&04&01&26&05&14\\
+14&06&15&06&04&23&23&05\\
+45&02&24&05&02&46&06&24\\
+02&56&04&56&14&23&46&12\\
+16&24&12&56&34&16&56&14\\
+25&34&26&34&26&45&36&45
+\end{array}
+\]
+Use these nine expressions of type $N$:
+\[
+\begin{array}{c|cc@{\qquad}c|cc@{\qquad}c|cc}
+e&f&g&e&f&g&e&f&g\\\hline
+01&23&45&05&12&34&46&01&23\\
+06&12&34&56&01&23&24&01&56\\
+45&06&12&23&06&45&16&23&45
+\end{array}
+\]
+Finally use
+\[
+\begin{gathered}
+ S(36;012),\quad S(25;016),\quad S(15;234),\quad S(03;456),\\
+ T(35;06,12),\quad T(13;06,45),\quad D(34;012,56).
+\end{gathered}
+\]
+
+The forty-two left sides sum exactly to $2L_7$.
+Each of the twenty-one path coordinates occurs twice.
+Each member of $\mathcal Q_4$ occurs once, as does each member of $\mathcal Q_6$.
+Thus this identity holds already in the formal symbols $a,B,R$, before expanding any pairing masses.
+The sum of the right sides is
+\[
+ 2\left(\frac12\right)+24+9(2)+4(2)+2(4)+4+o(1)
+ =63+o(1).
+\]
+Dividing by two proves the lemma.
+\end{proof}
+
+\begin{theorem}[Seven-cycle-shore error bound]
+\label{thm:random-seven-cycle-shore}
+There is an absolute constant $K$ with the following property.
+Let $G$ be obtained by joining corresponding ports of a seven-cycle and a normalized seven-pole $Y$ of rank $h$.
+Put $r=h+7$.
+Then
+\[
+ c(G)\le2^{r-1}+Kr2^{r/2}.
+\]
+For sufficiently large $h$, if $G$ has no cyclic cut of size at most six, then $c(G)<2^{r-1}$.
+\end{theorem}
+
+\begin{proof}
+If a cyclic cut of size at most six exists, use Corollary~\ref{cor:root-all-six-cuts-sharp}.
+Otherwise Lemma~\ref{lem:random-seven-cycle-functional} bounds the crossing contribution, divided by $2^{h+1}$, by $63/2+o(1)$.
+The seven-cycle contributes one internal cycle.
+The asymptotic cycle bound gives $c(Y)\le(1/2+o(1))2^h$.
+Consequently
+\[
+ \frac{c(G)}{2^{h+1}}
+ \le\frac{63}{2}+\frac14+o(1)
+ =\frac{127}{4}+o(1)<32.
+\]
+Since $2^{r-1}=32\cdot2^{h+1}$, this proves the strict half bound at large rank.
+Increase $K$ to cover the remaining bounded ranks.
+\end{proof}
+
+The forty-two-row certificate is saved in \texttt{random-seven-cycle-integer-dual.json}.
+The solver-free checker \texttt{verify\_random\_seven\_cycle.py} verifies both its formal-symbol identity and all 231 expanded state coefficients.
+The earlier rational certificate and its search script remain reproducible records.
+This theorem concerns a seven-cycle shore and does not establish the bound for every cyclic seven-edge cut.

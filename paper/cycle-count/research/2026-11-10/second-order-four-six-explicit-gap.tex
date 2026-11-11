@@ -1,0 +1,109 @@
+% Independently audited by root and path_stability.
+\section{An explicit gap in the two-shore six-cut relaxation}
+\label{sec:four-six-explicit-gap}
+
+Retain the limiting state polytope $\mathcal P$ and crossing form $\mathcal B$ from Section~\ref{sec:four-six-large-shores}.
+The equality obstruction has a quantitative version.
+
+\begin{lemma}[Two triples with large pair sums]
+\label{lem:four-six-triple-overlap}
+Let $x_1,x_2,x_3,y_1,y_2,y_3$ be nonnegative.
+Suppose every pair sum among the $x_i$ is at least $p\ge0$, and every pair sum among the $y_i$ is at least $q\ge0$.
+Then
+\[
+ \sum_{i=1}^3x_iy_i\ge\frac34pq.
+\]
+\end{lemma}
+
+\begin{proof}
+The assertion is immediate if $p=0$.
+If every $x_i\ge p/2$, then $\sum_i y_i\ge3q/2$ gives the result.
+Otherwise relabel so that $x_1=a<p/2$.
+The other two coordinates are at least $p-a$.
+Put $Y=y_2+y_3$ and $Z=y_1+y_2+y_3$.
+Then $Y\ge q$, $Z\ge3q/2$, and
+\[
+ \sum_i x_iy_i\ge ay_1+(p-a)Y
+ =\left(1-\frac{2a}{p}\right)pY
+   +\frac{2a}{p}\,\frac p2 Z
+ \ge\frac34pq.
+\]
+\end{proof}
+
+\begin{proposition}[A rational six-cut gap]
+\label{prop:four-six-explicit-gap}
+For every $x,y\in\mathcal P$,
+\[
+ \mathcal B(x,y)<16-\frac1{40}.
+\]
+\end{proposition}
+
+\begin{proof}
+Suppose $\mathcal B(x,y)\ge16-d$, where $d=1/40$.
+The energy bounds give $E(x),E(y)\le16$ and
+$\mathcal B(x,y)\le(E(x)+E(y))/2$.
+Thus each energy is at least $16-2d$.
+
+For one shore, put
+\[
+ D=16-\sum_SU_S-W.
+\]
+Its aggregate bound gives $\sum_ea_e\le D$.
+Hence
+\[
+ E\le\tfrac12\sum_ea_e+\sum_SU_S+W
+ \le16-D/2,
+\]
+so $D\le4d$ on either shore.
+In particular, $W_x,W_y\ge1-4d$.
+
+Let
+\[
+ O=\sum_{S,\alpha}u^x_{S,\alpha}u^y_{S,\alpha}
+\]
+be the four-sector pairing overlap.
+Dropping all incompatible six-pairing products bounds
+$\mathcal B(x,y)+O$ by $(E(x)+E(y))/2\le16$.
+Therefore $O\le d$.
+
+For a perfect matching $A=\{e,f,g\}$, write
+\[
+ \Delta_A=(1-U_{e\cup f})+(1-U_{e\cup g})+(1-U_{f\cup g}).
+\]
+The three augmented inequalities imply that the three pair sums among
+$u_{e|f},u_{e|g},u_{f|g}$ are at least
+\[
+ p_A=(R_A-\Delta_A)_+.
+\]
+Use superscripts $x,y$ for the two shores.
+Every four-sector pairing slot extends uniquely to a perfect matching of six ports.
+Lemma~\ref{lem:four-six-triple-overlap} therefore gives
+\[
+ O\ge\frac34\sum_A p_A^x p_A^y.
+\]
+For nonnegative $R,S,D,E$, one has
+$(R-D)_+(S-E)_+\ge RS-DS-ER$.
+Also $R_A^x,R_A^y\le1$ and
+\[
+ \sum_A\Delta_A=3\sum_S(1-U_S)\le3D\le12d.
+\]
+Consequently,
+\[
+ O\ge\frac34\left(\sum_A R_A^xR_A^y-24d\right).
+\]
+
+Any two six-matchings have at least one common disjoint matching, by Lemma~\ref{lem:four-six-common-matching}.
+Expanding the last sum therefore gives
+\[
+ \sum_A R_A^xR_A^y\ge W_xW_y\ge(1-4d)^2.
+\]
+Combining the bounds yields
+\[
+ O\ge\frac34\bigl((1-4d)^2-24d\bigr)
+ =\frac{63}{400}>\frac1{40}=d.
+\]
+This contradicts $O\le d$ and proves the proposition.
+\end{proof}
+
+The constant $1/40$ is deliberately conservative.
+The proof uses no numerical optimization and no graph-realizability assumption beyond membership in the stated limiting polytope.

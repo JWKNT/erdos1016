@@ -1,0 +1,10 @@
+{
+  "status": "pass",
+  "single_piece_subdivisions": 6330,
+  "series_subdivisions": 833,
+  "checks_per_subdivision": [
+    "squared_product_bound",
+    "left_density_distance",
+    "right_density_distance"
+  ]
+}

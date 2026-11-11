@@ -1,0 +1,256 @@
+\section{Faster cut induction when girth exceeds the cut order}
+\label{sec:path-girth-surplus-cuts}
+
+The cut induction can use the endpoint forest error directly when its selected edges have short alternate paths.
+A girth surplus guarantees such a choice at every deletion step.
+All logarithms have base two.
+
+\begin{lemma}[Moore balls along a terminal geodesic]
+\label{lem:path-geodesic-moore-balls}
+Let $N$ be a connected graph on $n$ vertices with distinct degree-two terminals $u,v$ and every other vertex cubic.
+Suppose its girth is at least an integer $h\ge5$.
+Then
+\[
+ \operatorname{dist}_N(u,v)
+ \le2hn2^{-h/2}+h+1.
+\]
+\end{lemma}
+
+\begin{proof}
+Put $a=\lfloor(h-1)/2\rfloor$, and choose a shortest terminal path of length $\ell$.
+If $\ell\le2a+1$, the asserted bound is immediate.
+Otherwise choose centers along this path, starting at distance $a+1$ from $u$, spaced $2a+1$ apart, and stopping before distance $a$ from $v$.
+The radius-$a$ balls around these centers are disjoint, because every subpath of the geodesic is shortest.
+They avoid both degree-two terminals.
+
+A breadth-first tree in any such ball has at least $1+3(2^a-1)\ge2^a$ vertices.
+A repeated vertex in that tree would give a cycle of length at most $2a<h$.
+The number $t$ of chosen centers therefore satisfies $t\le n2^{-a}$.
+The choice of centers also gives
+\[
+ \ell\le(2a+1)t+2a+2
+ \le hn2^{-a}+h+1.
+\]
+Finally $a\ge(h-2)/2$, so $2^{-a}\le2\,2^{-h/2}$.
+\end{proof}
+
+\begin{lemma}[A short alternate path gives the endpoint error]
+\label{lem:path-short-alternate-endpoint}
+Let $G$ be a connected cubic multigraph of rank $s$, and let $e=uv$ be a nonbridge edge.
+If
+\[
+ \operatorname{dist}_{G-e}(u,v)+2\le\frac{s}{(\log s)^2},
+\]
+then, for all sufficiently large $s$,
+\[
+ P_{uv}(G-e)
+ \le\left(\frac12+M\frac{(\log s)^{11/2}}{\sqrt s}\right)2^{s-1},
+\]
+where $M$ is an absolute constant.
+\end{lemma}
+
+\begin{proof}
+Let $A$ be a shortest terminal path in $N=G-e$.
+Add a new two-edge path $u-z-v$, obtaining a graph $H$ of rank $s$.
+Mark $P=V(A)\cup\{z\}$.
+This set is connected and contains every vertex of degree below three.
+Its size satisfies the endpoint forest hypothesis.
+
+For each simple terminal path $Q$ in $N$, the edge sets
+\[
+ Q\cup\{uz,zv\},\qquad Q\mathbin\triangle A
+\]
+are even subgraphs of $H$ whose restrictions outside $P$ are forests.
+They give $2P_{uv}(N)$ distinct states, separated by whether the new two-edge path is present.
+The endpoint forest theorem therefore gives
+\[
+ \frac{P_{uv}(N)}{2^{s-1}}
+ \le\Pr(\xi_H\text{ is a forest outside }P)
+ \le\frac12+M\frac{(\log s)^{11/2}}{\sqrt s}.
+\]
+\end{proof}
+
+\begin{lemma}[Selecting fast edges through the cut reduction]
+\label{lem:path-girth-surplus-edge-selection}
+Fix $\eta>0$.
+Let $G$ have rank $r$, girth $g$, and minimum cyclic cut order $k\ge5$.
+Suppose
+\[
+ g-k\ge(4+\eta)\log\log r.
+\]
+For all sufficiently large $r$, one can carry out the $k-5$ cut-deletion steps of Proposition~\ref{prop:path-finite-cut-recurrence} so that every selected edge satisfies Lemma~\ref{lem:path-short-alternate-endpoint}.
+The rank threshold may depend on $\eta$.
+\end{lemma}
+
+\begin{proof}
+Retain one original minimum cut and its two shores throughout the reduction.
+After $i$ steps, its remaining edges form a minimum cut of order $k-i$.
+Each shore has lost exactly $i$ original port vertices by suppression.
+Every cycle inside a current shore lifts to an original shore cycle by restoring at most $i$ vertices.
+Thus every such cycle has length at least $g-i$.
+
+Suppose the current graph has a cycle of length less than $g-i$.
+It must cross the retained cut.
+Choose an edge of that cut on the cycle.
+Its alternate endpoint distance is at most $g-i-1$.
+The original Moore bound gives $g=O(\log r)$, so this distance meets the hypothesis of Lemma~\ref{lem:path-short-alternate-endpoint}.
+
+Otherwise the current graph has girth at least $g-i$.
+This is at least $(4+\eta)\log\log r$.
+Choose any edge of its retained cut and delete it.
+The resulting connected graph has only its two terminals of degree two.
+Apply Lemma~\ref{lem:path-geodesic-moore-balls} with
+\[
+ h=\lfloor(4+\eta)\log\log r\rfloor.
+\]
+It bounds the alternate distance by
+\[
+ O_\eta\!\left(
+ \frac{r\log\log r}{(\log r)^{2+\eta/2}}
+ +\log\log r\right)
+ =o\!\left(\frac r{(\log r)^2}\right).
+\]
+This also meets the short-alternate-path hypothesis.
+
+The original Moore bound also gives $k\le g=O(\log r)$ at these ranks.
+All current ranks are therefore $r-O(\log r)$.
+Both estimates above hold uniformly over the deletion steps.
+\end{proof}
+
+\begin{theorem}[A growing cut order with a girth surplus]
+\label{thm:path-girth-surplus-growing-cuts}
+Fix $\eta>0$.
+Let connected loopless cubic multigraphs have ranks $r\to\infty$, girths $g$, and minimum cyclic cut orders $k\ge5$.
+Assume
+\[
+ g-k\ge(4+\eta)\log\log r,
+ \qquad
+ \frac{2^k(\log r)^{11/2}}{\sqrt r}\longrightarrow0.
+\]
+Then
+\[
+ c(G)\le2^{r-1}-(1-o(1))2^{r-k-1}<2^{r-1}.
+\]
+Moreover, there is a constant $C_\eta$ such that, for sufficiently large $r$, the first condition together with
+\[
+ k\le\frac12\log r-\frac{11}{2}\log\log r-C_\eta
+\]
+implies
+\[
+ c(G)\le2^{r-1}-2^{r-k-2}.
+\]
+\end{theorem}
+
+\begin{proof}
+Use the edge choices from Lemma~\ref{lem:path-girth-surplus-edge-selection}.
+Repeat the exact finite cut recurrence, replacing its worst-case path excesses by the selected-edge estimates.
+Their weighted sum is at most
+\[
+ (M+o(1))\frac{(\log r)^{11/2}}{\sqrt r},
+\]
+because the geometric weights sum to less than one and all current ranks are $r-O(\log r)$.
+The base error remains $2^{-(k-5)}a_5(r-k+5)$.
+Comparing these two errors with $2^{-k-1}$ proves the first assertion.
+
+For the endpoint assertion, choose $C_\eta$ large enough that the selected-edge error is at most $2^{-k-3}$.
+At sufficiently large rank, $a_5(r-k+5)\le1/256$ uniformly in this range.
+Its weighted contribution is also at most $2^{-k-3}$.
+The remaining deficit is therefore at least $2^{-k-2}$ after normalization by $2^r$.
+\end{proof}
+
+This result does not assume that arbitrary minimum-cut edges have short alternate paths.
+It uses either a short crossing cycle or the Moore-ball bound at each step.
+It leaves open the regime where the girth is close to the minimum cyclic cut order.
+
+\begin{corollary}[A girth-dependent error throughout the cut induction]
+\label{cor:path-girth-weighted-cut-error}
+There is an absolute constant $C$ such that the following holds for all sufficiently large ranks $r$.
+Let $G$ be a connected loopless cubic multigraph of rank $r$, girth $g$, and minimum cyclic cut order $k\ge5$.
+Then
+\begin{align*}
+ \frac{c(G)}{2^r}
+ \le{}&\frac12-2^{-k-1}
+ +2^{-(k-5)}a_5(r-k+5)\\
+ &+C\left(g^{11/2}2^{-g/4}
+       +\frac{(\log r)^{11/2}}{\sqrt r}\right).
+\end{align*}
+In particular, a sequence of such graphs satisfies
+\[
+ c(G)\le2^{r-1}-(1-o(1))2^{r-k-1}<2^{r-1}
+\]
+if
+\[
+ 2^k g^{11/2}2^{-g/4}\longrightarrow0,
+ \qquad
+ \frac{2^k(\log r)^{11/2}}{\sqrt r}\longrightarrow0.
+\]
+Here $a_5$ is the base error in Proposition~\ref{prop:path-finite-cut-recurrence}.
+\end{corollary}
+
+\begin{proof}
+As before, retain an original minimum cut during the smoothing process.
+The Moore bound and the cyclic cut around a shortest cycle give
+$5\le k\le g=O(\log r)$ for all sufficiently large $r$.
+At stage $i$, every cycle internal to a retained shore has length at least $g-i$.
+
+If a shorter cycle exists, choose an edge of the retained cut on that cycle.
+Its alternate path has length $O(\log r)$.
+Lemma~\ref{lem:path-short-alternate-endpoint} bounds its normalized path excess by
+\[
+ O\!\left(\frac{(\log r)^{11/2}}{\sqrt r}\right),
+\]
+uniformly over these stages.
+Otherwise the current graph, and hence its edge-deleted two-pole, has girth at least $g-i$.
+Proposition~\ref{prop:four-girth-path-excess} bounds the selected-edge path excess by
+\[
+ C_0(g-i)^{11/2}2^{-(g-i)/4}.
+\]
+All stages in the recurrence have $0\le i\le k-6$, so $g-i\ge6$.
+The bound therefore applies at every such stage.
+
+Insert these choices into the exact recurrence.
+The geometric weights on the short-path errors sum to less than one.
+The other errors have total at most
+\[
+ \sum_{i=0}^{k-6}2^{-i-1}C_0(g-i)^{11/2}2^{-(g-i)/4}
+ \le\frac{C_0}{2}g^{11/2}2^{-g/4}
+       \sum_{i\ge0}2^{-3i/4}.
+\]
+Absorb the convergent series and the short-path constant into $C$.
+This proves the finite bound.
+For the final assertion, $r-k+5\to\infty$, and the weighted base error divided by $2^{-k-1}$ is $64a_5(r-k+5)=o(1)$.
+The two stated conditions make the remaining errors $o(2^{-k})$.
+\end{proof}
+
+\begin{corollary}[The improved girth surplus]
+\label{cor:path-two-log-girth-surplus}
+Theorem~\ref{thm:path-girth-surplus-growing-cuts} remains valid if its girth-surplus hypothesis is replaced by
+\[
+ g-k\ge(2+\eta)\log\log r,
+\]
+for any fixed $\eta>0$.
+The constants and rank thresholds may depend on $\eta$.
+\end{corollary}
+
+\begin{proof}
+Use the larger-marker endpoint theorem, Theorem~\ref{thm:random-larger-marker}, with its absolute constant $a>0$.
+The proof of Lemma~\ref{lem:path-short-alternate-endpoint} now applies whenever the alternate distance plus two is at most
+\[
+ a\,\frac{s}{\log s}.
+\]
+The marked cycle is connected, so its component condition holds automatically.
+The normalized path error remains $O((\log s)^{11/2}/\sqrt s)$.
+
+Repeat the selected-edge argument with
+$h=\lfloor(2+\eta)\log\log r\rfloor$.
+A short crossing cycle still gives an alternate path of length $O(\log r)$.
+In the other case, the Moore-ball estimate bounds that distance by
+\[
+ O_\eta\!\left(
+ \frac{r\log\log r}{(\log r)^{1+\eta/2}}
+ +\log\log r\right)
+ =o(r/\log r).
+\]
+It therefore meets the larger-marker threshold for all sufficiently large $r$.
+Every subsequent step of the recurrence and both error comparisons are unchanged.
+\end{proof}

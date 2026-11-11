@@ -1,0 +1,113 @@
+% Independent mathematical audit passed: random_hosts. Dependencies separately audited.
+\section{The sharp order for cyclic cuts of size at most four}
+\label{sec:four-cut-sharp-order}
+
+The linear two-cycle packing bound improves both four-cut estimates.
+For aligned saturated shores, the largest forest terms cancel in the gluing identity.
+These two improvements give the same order as the cyclic-square lower bound.
+
+\begin{corollary}[A linear four-pole aggregate error]
+\label{cor:linear-four-pole-aggregate}
+There is an absolute constant $A'_4$ such that every connected loopless cubic four-pole of rank $h$ satisfies
+\[
+ \sum_{i<j}P_{ij}+\sum_\alpha f_\alpha
+ \le4\,2^h+A'_4(h+3)2^{h/2}.
+\]
+\end{corollary}
+
+\begin{proof}
+Repeat the proof of Theorem~\ref{thm:four-pole-aggregate}.
+Its only fourth-degree factor comes from the cross-sum forest estimate.
+Replace that estimate by Corollary~\ref{cor:linear-four-pole-cross-sum-forest}.
+The low-cross-sum full-star case still has error $O(2^{h/2})$.
+All fixed rank thresholds and the finitely many smaller ranks are absorbed into $A'_4$.
+\end{proof}
+
+\begin{theorem}[Sharp-order four-cut error]
+\label{thm:sharp-order-four-cut-error}
+There is an absolute constant $K$ such that every connected loopless cubic multigraph of rank $r$ with a cyclic edge cut of size at most four satisfies
+\[
+ c(G)\le2^{r-1}+Kr2^{r/2}.
+\]
+The factor $r$ cannot be replaced by a function that is $o(r)$ throughout this class.
+\end{theorem}
+
+\begin{proof}
+Cuts of size at most three already have error $O(2^{r/2})$ by Theorem~\ref{thm:all-three-cut-half-exponent}.
+For a cyclic four-edge cut, use the connected four-pole shores from Theorem~\ref{thm:all-four-cut-half-exponent}.
+Write their ranks as $h,k$, so $r=h+k+3$.
+
+First suppose both ranks exceed the fixed threshold in Theorem~\ref{thm:four-cut-large-shores}.
+Increase that threshold if needed for the constant in the linear forest estimate.
+Its ordinary and nonaligned exceptional cases have fixed crossing deficits.
+Those deficits still absorb all internal cycles.
+The same profile classification applies when the forest estimate is replaced by its linear refinement.
+Only equal full-star supports and equal full-$K_{2,2}$ supports need a smaller error bound.
+
+For equal stars, the earlier bound is
+\[
+ \mathcal B\le4+3\rho_h\rho_k,
+ \qquad \rho_j=C2^{-j/2}.
+\]
+Thus their crossing error is $O(2^{(h+k)/2})$.
+Both shores have a full terminal pair, so their internal cycle counts have the same half-exponent bound.
+
+Now suppose the two full-$K_{2,2}$ supports agree.
+They have the same distinguished same-side cap pairing $\alpha$.
+For the rank-$h$ shore, put
+\[
+ C_h=f_\alpha,\qquad D_h=\sum_{\beta\ne\alpha}f_\beta.
+\]
+Thus $D_h$ counts through pairs and $C_h$ counts pairs of disjoint same-side caps.
+Define $C_k,D_k$ in the other shore.
+The audited saturated-block bounds give
+\[
+ D_h\le2^{(h+1)/2},\qquad
+ C_h\le3(h+1)2^{(h+1)/2},
+\]
+and the corresponding inequalities at rank $k$.
+
+The exact four-cut gluing identity subtracts products with equal pairings.
+In particular, its $C_hC_k$ term cancels.
+The remaining four-edge contribution is at most
+\[
+ C_hD_k+D_hC_k+D_hD_k
+ \le[3(h+k+2)+1]2^{(h+k+2)/2}.
+\]
+The two nonfull path-coordinate products contribute only $O(2^{(h+k)/2})$.
+Internal cycles again contribute $O(2^{h/2}+2^{k/2})$.
+This proves the required $O(r2^{r/2})$ bound when both shores have large rank.
+
+Suppose instead that one shore has bounded rank.
+The proof of Theorem~\ref{thm:all-four-cut-half-exponent} already places every low-path-density large shore below the one-half bound.
+Its only remaining case uses the universal four-pole aggregate and a high path count in the large shore.
+Replace the aggregate there by Corollary~\ref{cor:linear-four-pole-aggregate}.
+The resulting crossing error is $O((k+3)2^{k/2})$, since the other rank is bounded.
+The large shore's internal cycles are $O(2^{k/2})$ by the fixed-density tradeoff.
+All bounded ranks are absorbed into $K$.
+This proves the upper bound.
+
+For the lower bound, take the cyclic-square graph $G_q$ from Proposition~\ref{prop:hk-short-path-obstruction}.
+It has rank $r=2q+1$ and a cyclic four-edge cut around each square.
+There are $4^q$ cycles using one edge at every interface.
+There are $q$ cycles using no interface.
+A proper interval of $d$ interfaces gives $q2^{d+1}$ cycles, for $1\le d\le q-1$.
+Using both edges at every interface gives $2^{q-1}$ cycles.
+Therefore
+\[
+ \begin{split}
+ c(G_q)
+ &=4^q+q+q\sum_{d=1}^{q-1}2^{d+1}+2^{q-1}\\
+ &=2^{2q}+\left(2q+\frac12\right)2^q-3q.
+ \end{split}
+\]
+Its excess is $\Theta(q2^q)=\Theta(r2^{r/2})$.
+\end{proof}
+
+This theorem addresses a structural subclass of cubic kernels.
+It does not prove the unrestricted sharp-order error.
+After the established reductions, that remaining question concerns cyclically five-edge-connected cubic kernels.
+
+The independent script \texttt{check\_four\_cut\_sharp\_order.py} verifies the total cycle formula for $2\le q\le7$ by binary cycle-space enumeration.
+It also verifies the disjoint-cap packing formula for one through six square blocks.
+Its results are saved in \texttt{four-cut-sharp-order-checks.json}.

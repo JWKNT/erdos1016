@@ -1,0 +1,62 @@
+ROOT INDEPENDENT AUDIT OF THE UNRESTRICTED SHARP-ORDER BOUND
+2026-11-11T06:14:13.193719+00:00
+
+Result: PASS for the mathematical proof and the focused exposition.
+Scope: every finite graph, rank r>=1, absolute K independent of graph/rank.
+Conclusion: c(G)<=2^(r-1)+Kr2^(r/2). Known examples make the order necessary.
+
+1. Original qualitative input checked directly in pancyclic-paper.tex:
+   thm:forest and rem:range. The original event removes E(W), not V(W).
+   In the localized cap, the remaining spokes are pendant, making the
+   event exactly interior foresthood. Subdivision off W handles multigraphs.
+2. Localization checked for disconnected retained regions with connected
+   complement. Projection is surjective and uniform; rank formula correct.
+3. Thin connected BFS markers contain every port and support every even
+   terminal join. Translation preserves the exterior state. Window bounds
+   and constants yield layer width B(k+1)^2 from the fixed .55 input.
+4. Weighted cubic-kernel Moore estimate checked with loops and parallel
+   edges, directed-edge stationarity, walk counts, and positive lengths.
+   The h>=256,k<=4D and h>=L,k<=2L regimes yield the required .6 bounds.
+5. Quotient local star spaces, maximal direct sums, and actual terminal
+   bipartitions checked. Middle intervals have no terminal attachments;
+   their lifts are connected and disjoint. Dirty intervals number at most
+   |S|+1 because P lies in a single outside component.
+6. Leaf pruning preserves positive rank and reduces ambient cubic boundary.
+   Conditioning all noninternal edges gives a complete Cartesian product
+   of two affine spaces, even when the cores are adjacent. Probabilities
+   therefore multiply to .36. This is the decisive excess-free step.
+7. Packing recurrence and common forward dyadic scales checked. Deletions
+   remain unions of disjoint cycles, maximal at their target length.
+   S0=r^o(1), S1<=r^(1/4+o(1)), s1>=log2(r)/32-2 are sufficient.
+8. Spectral trace, repeated walks, local weights, parallel-link independence,
+   exception-pair count, strict-half moment, and anchor extraction checked.
+   Only the large scale needs a moment estimate. No inverse-excess bound
+   enters the proof. The chain has polynomial length with exponent1/32.
+9. Full restored blocks have order>=8L^2 and boundary<=2L. The constant
+   q=ceil(128A^2*log2 r)+2 handles the smaller D1. Discarding neighbors of
+   the anchor cycle, S0, and P costs at most L+|S0|+1 blocks. Two remain.
+   D0/log(L+2) tends to infinity, so their cores give the contradiction.
+10. Final induction checked over ALL connected graphs of smaller rank.
+    Cubic extremizer expansion preserves rank and injects cycles, and finite
+    attainment follows from fixed cubic order. Loops contribute one cycle.
+    The bounded-girth thresholds and <=4-cut constant are independent of K.
+    Cycle toggling creates 2c_e distinct states distinguished by e, giving
+    c_e<=2^(r-2). Deleting that edge preserves connectivity. Bridges extend
+    the conclusion to disconnected graphs.
+11. The cyclic-square enumeration is correct and independently checked on
+    finite instances. Its lower order matches the claimed upper order.
+
+No circular use of the sharp conclusion was found. The focused proof needs
+only the three established inputs stated explicitly in its first section.
+The earlier polynomial-error theorem is not a dependency of that version.
+
+Verification: root reran four-high-connectivity-iterative-packing-check.py
+with all results passing. Earlier exact localization, prefix, and lower-
+family records are preserved. Numerical checks do not prove the thresholds.
+
+PDF QA: root reviewed final pages1-7 individually; path_stability reviewed
+8-14; four_regular reviewed15-20. All pass with no requested layout changes.
+Final build has zero TeX warnings and no unresolved-reference markers.
+
+This audit is internal mathematical review. It does not constitute external
+peer review, publication priority, or complete Lean formalization.

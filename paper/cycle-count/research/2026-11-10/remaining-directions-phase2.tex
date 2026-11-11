@@ -1,0 +1,91 @@
+\section{Other directions and the remaining gaps}\label{sec:remaining}
+
+\subsection{An edge-frequency consequence}
+
+The following implication was proposed in the supplied research list.
+It follows from the source manuscript's formalized forest estimate.
+It is recorded here with its denominator and graph assumptions.
+
+\begin{proposition}\label{prop:research-edge}
+Let $G$ be connected and simple, with sufficiently large rank $r$.
+Suppose an edge $e$ lies on a cycle $W$ of length at most $\sqrt r$.
+Then
+\[
+ c_e(G)\le\left(\frac14+\frac{10}{\log_2\log_2\log_2 r}\right)2^r.
+\]
+If also $c(G)\ge(1/2-\eta)2^r$ with $0\le\eta<1/2$, then
+\[
+ \frac{c_e(G)}{c(G)}
+ \le\frac{1/4+10/(\log_2\log_2\log_2 r)}{1/2-\eta}.
+\]
+\end{proposition}
+
+\begin{proof}
+Restriction outside $W$ has fibers of size two, namely $\{x,x\mathbin\triangle E(W)\}$.
+Exactly one member of each fiber contains $e$.
+A cycle containing $e$ has a forest outside part.
+Thus $c_e(G)\le p(G,W)2^{r-1}$.
+Apply the source manuscript's forest theorem and divide by the stated lower bound on $c(G)$.
+\end{proof}
+
+A connected simple graph of minimum degree three has at most $2r-2$ vertices.
+A breadth-first search gives a cycle of length $O(\log r)$.
+Hence such a graph has an edge satisfying the proposition for large $r$.
+For families with $c(G)/2^r\to1/2$, this gives an edge in at most $(1/2+o(1))c(G)$ cycles.
+This is not the exact edge-half theorem for arbitrary graphs.
+
+At a vertex $v$ of degree $d\ge4$, the exact local half bound is elementary:
+\[
+ \sum_{e\ni v}c_e(G)=2c_v(G)\le2c(G).
+\]
+Some incident edge therefore has $c_e(G)\le c(G)/2$.
+A bridge lies in no cycle.
+Thus a global counterexample with minimum degree at least three would have to be cubic and bridgeless.
+
+\subsection{Why the general error-term questions remain}
+
+The extended marked-set range in Section~\ref{sec:research-path} concerns a fixed positive error.
+It does not supply polynomial decay in the error as $r$ grows.
+The source proof's weighted cycle supply remains logarithmic in its available length ratio.
+The moment-only example in Section~\ref{sec:inverse} prevents stronger conclusions from those moments alone.
+
+The original chord construction gives
+\[
+ \frac{c(G)}{2^r}\le p(G^+,W)+2^{-t}.
+\]
+Its witness can have $t$ components.
+The current forest estimate allows only $O(\log r)$ components.
+Consequently, this direct use of the construction cannot make $2^{-t}$ exponentially small in $r$.
+Fable's edge-deletion recurrence removes this separate error: for an edge $e$ of a short cycle,
+\[
+ c(G)=c(G-e)+c_e(G),\qquad c_e(G)\le p(G,W)2^{r-1}.
+\]
+It uses a single marked cycle at each rank and transfers the forest error directly to the cycle count.
+The remaining obstacle is a sufficiently strong quantitative bound on that forest error or on the least edge frequency.
+
+The fixed-edge-budget problem needs a different improvement as well.
+Multiplying $2^r$ by a constant does not improve its exponential base when $r$ is proportional to the edge count.
+No result here proves the proposed base $(2+2\sqrt2)^{1/5}$.
+The degree-sequence paper supplying that target is Dvo\v r\'ak, Morrison, Noel, Norin, and Postle,
+\emph{Bounding the number of cycles in a graph in terms of its degree sequence},
+\url{https://arxiv.org/abs/1907.12091}.
+
+\subsection{A boundary for matroid extensions}
+
+Let $M=M^*(K_{r+1})$ be the cographic matroid of the complete graph.
+Its binary cycle space is the graph's cut space and has dimension $r$.
+Every nonempty cut $\delta(S)$ is a bond, since both induced sides are connected.
+Thus every nonzero vector is a circuit, and $M$ has $2^r-1$ circuits.
+The one-half theorem cannot extend to all binary matroids or even all regular matroids.
+This counterexample was already identified in the supplied research list.
+
+\subsection{Targets not resolved by this work}
+
+General additive path stability is proved in Section~\ref{sec:general-additive-path-stability}: every terminal path has length at least $b-C_\varepsilon$.
+It uses Fable's localization and layer argument and the subsequent short-cycle packing in bounded layers.
+The exact four-regular bound and its equality cases are proved in the companion paper.
+The leading random-host bound now holds throughout the full pancyclicity threshold range.
+The sharp second-order term remains open, including the gap between coefficients $1$ and $199/192$ at the stated higher density and its behavior closer to the threshold.
+Polynomial cycle-count error is proved for fixed proper minor-closed classes; the corresponding unrestricted bound and an exponential saving remain open.
+No new result here proves monotonicity of minimum pancyclic excess or the proposed edge-pancyclic density bound.
+The supplied list's distinction between cycle-space counts and obligations through every edge remains essential.

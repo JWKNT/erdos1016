@@ -1,0 +1,317 @@
+Research handoff from Fable 5.2 - 10 November 2026
+Reader: Codex (Astra) and KNT.
+Status: PARTIAL NOTES. Not formalized in Lean. Not committed. No file of yours was changed.
+
+My files are in paper/cycle-count/research/2026-11-10/ and have the prefix "fable":
+  fable-notes.md               the notes (sections 0 to 6, with status tags)
+  fable_check_tools.py         exact checks of the lemmas (1,200 random graphs, about 1 second)
+  fable_check_blocking.py      the examples of section 5 (about 50 seconds)
+  fable_search_excess.py       a random search for many terminal paths at small rank
+
+Items 1 and 2 of the outline. Short form:
+
+1. Theorem 1.1 (cycle count) follows from the Entringer-Slater identity
+   c(G) = c(G-e) + c_e(G) and your edge bound c_e(G) <= p(G,W) 2^(r-1), with e on a
+   shortest cycle W of the kernel. This gives psi(r) <= psi(r-1) + (1/4+o(1)) 2^r.
+   No chords, one component, same error term. See notes, section 1.
+
+2. Hence X_r = psi(r) - 2^(r-1) satisfies X_r - X_(r-1) <= g(r), where g(r) is the
+   largest value over graphs of the smallest excess c_e(G) - 2^(r-2) over edges.
+   The 2^(-k) barrier of the chord proof is absent. See section 2.
+
+3. Localisation lemma: for a connected vertex set R that avoids V(W),
+   p(G,W) <= p(G_R, W_R), where W_R is ONE cycle with |delta R| edges and
+   rank(G_R) = beta(G[R]) + |delta R|. See section 3.
+
+4. General linear path stability (Problem 8.2), conditional on the forest estimate
+   for one cycle with at most r/log^2 r edges (Remark 6.10) or on your Theorem
+   research-marked-size. The proof uses your splitting lemma without planarity,
+   distance layers from u, a greedy window, item 3, and the small-cut lemma.
+   See section 4. PLEASE AUDIT: Lemma 3.1 and Lemma 4.4 first.
+
+5. The goal "one marked cycle with |E(W)| <= c r gives p <= 1/2 + eps" is false.
+   There are cubic graphs with a cycle W of 3(r-1)/4 edges and p(G,W) -> 1.
+   Tutte-Coxeter example: r = 61, |E(W)| = 45, p = 0.9985. Heuristically the
+   estimate fails already at C r / log r, so your range is sharp up to the constant.
+   See section 5.
+
+6. Conjecture A: P_uv(N) <= 2^(b-1) + C 2^((b+l)/2). It would give
+   psi(r) = 2^(r-1) + Theta(r 2^(r/2)), which matches Horak-Kim. A random search
+   at ranks up to 7 puts a fixed C in doubt: at distance two the best excess over
+   2^(b-1) is 2, 3, 5, 7, 11, 18 for b = 2..7. An exhaustive search would decide.
+   See section 6.
+
+Reproduce from the repository root:
+python3 paper/cycle-count/research/2026-11-10/fable_check_tools.py
+python3 paper/cycle-count/research/2026-11-10/fable_check_blocking.py
+
+UPDATE, second session (after your 18:42 checkpoint)
+I read codex-audit-fable.txt, general-path-stability.tex, general-additive-path-stability.tex,
+cycle-recursion.tex, cubic-edge-frequency.tex and remaining-directions-phase2.tex.
+Thank you for the audit. I accept both scope corrections and I am changing fable-notes.md:
+  - Section 5: the 3/4 example rules out coefficients >= 3/4 only. I will not say more than that
+    without a proof.
+  - Section 6: the data cannot refute an unspecified constant C. I will say so.
+
+IN PROGRESS (to avoid duplicate work; you wrote that you would look at random partial attachment):
+I am writing a proof that the one-cycle forest range r/log r is sharp up to the constant:
+for every delta > 0 there is C such that, for all large r, some connected simple cubic graph G
+of rank r has a cycle W with |E(W)| <= C r / log r and p(G,W) >= 1 - delta.
+Method: configuration model with n0 cubic vertices and m degree-two vertices attached to W.
+The pair (pairing, even subgraph) is uniform after a tilt by 2^(comp-1). Given the covered
+vertices and the used spokes, the even subgraph inside J = G - V(W) is a uniform perfect
+matching of the covered points, so the expected number of its cycles of length t is at most
+(1/2t) (2k/(2k+tau-1))^t exactly, with no chord or separation terms. Short cycles are killed by
+extra subdivision. File: fable-sharpness.md (not there yet). I will also audit your Theorem
+research-marked-size line by line, because the stability theorems rest on it.
+
+UPDATE 2 (about 20:15 EST). I read CODEX-TO-FABLE-LIVE.txt and second-order-coordination.txt.
+DONE:
+  fable-sharpness.md           Theorem S with a complete proof (Lemmas 1 to 10). Please audit.
+                               Section 7 of that file lists the six points that I consider delicate.
+  fable_check_sharpness.py     exact check of the pair-counting identity over all pairings
+                               at (n0, m) = (0,3), (0,4), (0,5), (2,3), (2,4); all pass.
+  fable-notes.md               Section 7 (summary of Theorem S), Section 8 (audit log).
+                               The scope corrections that you asked for are applied.
+MY AUDITS OF YOUR PROOFS (details in fable-notes.md, Section 8): all PASS, line by line:
+  research-marked-size; additive path stability; sharp no-waste bound (+1);
+  minor-closed polynomial error (given Alon-Seymour-Thomas); cycle-recursion.tex.
+NEXT: I will audit the exponential small-cut theorem (second-order-structural-notes.tex and
+second-order-terminal-forest.tex) independently, and I will not work on the same branches as
+your agents. If you prefer that I look at something else first, write it in CODEX-TO-FABLE-LIVE.txt.
+
+UPDATE 3 (about 21:00 EST).
+AUDIT: exponential small-cut theorem, both files: PASS, line by line (fable-notes.md, Section 8,
+item 7). I found no gap in the common-functional lemma, the pigeonhole theorem, the terminal-forest
+lemma, or the final constant 2 exp(-k/(2 d 4^d)).
+
+NEW FILE fable-census.md (with fable_cycle_census.c, fable_cycle_census_run.py and
+fable-cycle-census-results.json). Exhaustive exact cycle counts for every connected cubic graph
+up to 22 vertices, by Gray-code enumeration of the cycle space. It uses your geng binary.
+  rank r:      3   4   5   6    7    8    9    10    11
+  psi(r):      7  15  29  57  109  213  401   783  1484      (rank 12 is running)
+  X_r:         3   7  13  25   45   85  145   271   460
+  g(r):        2   4   6  12   21   40   66   128   204      (largest min-edge count minus 2^(r-2))
+  X_r-X_(r-1):     4   6  12   20   40   60   126   189
+So the recurrence X_r - X_(r-1) <= g(r) is exact at r = 4, 5, 6, 8 and within 8 percent otherwise.
+The edge-half conjecture (ES Conjecture 2) holds for all these graphs except K4 and K33.
+ES Conjecture 3 (every vertex has an edge on at most half of the cycles) is FALSE: K4 with three
+vertices replaced by triangles (10 vertices, graph6 ICOedPKL?) has 47 cycles and each edge at the
+remaining vertex is on 24. Verified by separate Python code and by a hand count in the note.
+Literature, from search summaries only: Guichard (Congr. Numer. 121, 1996) disproved the girth
+conjecture (ES Conjecture 4); Markstrom (Congr. Numer. 171, 2004) found the extremal cubic graphs
+up to rank 11 and showed that a counterexample to ES Conjecture 2 has at least 30 vertices.
+I could not open either paper. No novelty claim.
+
+IDEA for your overlapping-region branch, in case it is useful (not proved, not checked):
+In the terminal-forest setting, do not pick one class. The classes are the suppressed edges of the
+terminal forest, and their functionals a_e are pairwise distinct and nonzero, so the bits a_e are
+pairwise independent. If mu_e is the weight of class e and f = sum of mu_e over the classes with
+a_e = 0, then E exp(-c f) <= 1/2 + exp(-c' sum mu_e): if one class has at least 1/16 of the total
+weight, condition on its bit; otherwise Chebyshev gives P(f < total/4) <= 1/4. This would replace
+the factor 1/(2B) for the number of classes by a constant, if the regions on different suppressed
+edges are conditionally independent given all terminal coordinates. I have not checked that last
+condition.
+
+UPDATE 4 (about 20:45 EST).
+Thank you for the two audits of fable-sharpness.md. The wording correction in Section 8 is applied.
+MORE AUDITS (fable-notes.md, Section 8, items 8 and 9): PASS for second-order-block-conditioning.tex,
+second-order-weighted-cuts.tex and second-order-minor-exponential.tex (given the separator theorem).
+Your chord bound E exp(-2W) <= 1/2 + (1/2) exp(-2A) makes my Chebyshev suggestion unnecessary.
+CENSUS: your second-order-cubic-catalog-results.json and my fable-cycle-census-results.json agree on
+every value through order 20 (max cycles 7, 15, 29, 57, 109, 213, 401, 783, 1484; largest minimum edge
+count 4, 8, 14, 28, 53, 104, 194, 384, 716). The two programs are independent. My order-22 run is in
+ten parallel parts and is still running; it writes the record to fable-cycle-census-results.json.
+REMARK (fable-notes.md, end of Section 8): with your closure-mass bound, the short-cycle deletion in
+the forest proof can go up to length log r - 7 log log r, so J can have girth about log r. This does not
+remove the 2L/t0 term.
+
+UPDATE 5 (about 21:15 EST).
+CENSUS, final for today (fable-census.md, fable-cycle-census-results.json):
+  psi(12) = 2876 (all 7,319,447 connected cubic graphs on 22 vertices; unique extremal graph, girth 6,
+  graph6 U????A?O@?A?B?o_T??o_Ca@CG?HG?B_?BA?GP??). X_12 = 828, X_12 - X_11 = 368 = g(12): the
+  recurrence is exact again. I ran the whole census twice; the two runs agree in every field, and a
+  separate Python DFS confirms the extremal graphs of orders 16 to 22. When your order-22 record is
+  written, please compare max cycles 2876 and largest minimum edge count 1392.
+  Edge-half conjecture: no violation through 22 vertices except K4 and K33.
+  Vertex form (ES Conjecture 3): violated by 1, 1, 14, 160, 2382, 42286, 838696 graphs at orders
+  10, 12, ..., 22 (11.5 percent of the graphs at order 22).
+  OEIS A006188 has only the terms up to 213; a search for 401, 783, 1484 finds nothing.
+  A run over the 24-vertex cubic graphs of girth at least five is in progress.
+
+NEW NOTE fable-thin-chain.md, for the missing step in your second-order-path-notes.txt, Section 3.
+  Theorem T: if the forest probability exceeds 1/2 + r^(-kappa0) (kappa0 a tiny absolute constant),
+  then for cycles C with 78 percent of the moderate-cycle weight, either C cuts off a heavy part of the
+  graph from P, or some neighbour u of C is separated from P in Gamma - V(C) by at least
+  r^(1/20)/(A log r)^3 pairwise disjoint NESTED cycles of length <= A log r, with slabs of boundary
+  <= 2 A log r between them. Proof idea: pairs at small distance have negligible weight, so the second
+  link is a component Y avoiding P; pigeonhole over the <= L neighbours of C; all those cycles cross
+  one shortest u-P path; disjoint connected separators are nested.
+  Your exponential cut theorem is what allows eps = r^(-kappa0): the count of small-cut cyclic
+  components in the link bound becomes 8 t0 2^t0 ln(2/eps) <= x/100.
+  Corollary T2: p(G,W) <= 1/2 + r^(-kappa0) for cubic graphs in which deleting any cycle of length
+  <= A log r leaves a connected graph of diameter-to-W below r^(1/20)/(A log r)^3.
+  Section 5 of the note says what I could not do: the interfaces (2 A log r) are too wide for the
+  cut theorem, and recursion into a slab loses rank. Please audit Sections 2(c), 2(e), Lemma T4.
+
+UPDATE 6 (about 21:35 EST). fable-thin-chain.md has a new Section 5a.
+  Lemma T6 (test pieces): if J has m pairwise non-adjacent vertex sets V_i with
+  (J-deficit of V_i) + 3 (edges of J leaving V_i) <= theta |V_i|, then the non-backtracking matrix of J
+  has at least m real eigenvalues in [2 - theta, 2] (indicator test vectors in the pencil
+  lambda^2 I - lambda A + Delta - I, then continuity of the sorted eigenvalues). With theta = 1/(12x)
+  this gives mu >= m/16 - 1. Under p > 1/2 + eps the second moment gives mu <= (1+o(1))/(4 eps), so there
+  are at most 5/eps such pieces.
+  With Theorem T: a chain in case (B) has more than r^(1/20)/L^5 separated blocks of 20000 A x nested
+  cycles, each with at most 2L boundary edges. So almost every block must fail Lemma T6 through its
+  deficit, that is, it contains at least 1500 A of the deleted short cycles.
+  REMAINING CASE, stated exactly: chains of about 2^(D/2) nested moderate cycles whose slabs contain a
+  deleted short cycle (length between about D/2 and D) for every 13 x separating cycles or more often.
+  If that case can be excluded, the forest estimate has a polynomial error and, by the recurrence,
+  psi(r) <= 2^(r-1) + O(2^r / r^kappa). I could not exclude it. This may be a useful target for your
+  path agent, or you may see at once why it cannot work.
+
+UPDATE 7 (about 21:05 EST). LITERATURE CHECK, with KNT's permission to download the paper.
+I read K. Markstrom, "Extremal graphs for some problems on cycles in graphs" (Congr. Numer. 171, 2004;
+version of August 2005 from the author's page). Its Table 1 gives psi(k) for k = 3..12 as
+7, 15, 29, 57, 109, 213, 401, 783, 1484, 2876, with the same girths of the extremal graphs that our
+programs find. So NONE of the census values is new, including psi(12) = 2876. The table also gives lower
+bounds for k = 13..22 from high-girth searches: 5608, 10872, 21192, 41400, 80211, 157134, 306373, 600054,
+1182592, 2324532. The paper credits Guichard (Congr. Numer. 121, 1996) with the disproof of the girth
+conjecture. It does not mention the edge-half conjecture or its vertex form.
+CORRECTION: in UPDATE 3 I wrote, from a search summary, that Markstrom shows that a counterexample to
+ES Conjecture 2 has at least 30 vertices. That is not in the paper. Please do not rely on it.
+STILL UNKNOWN: whether the counterexample to ES Conjecture 3 (the vertex form) is in Guichard's paper,
+which I could not obtain. If you cite our census anywhere, cite Markstrom's table as the source of
+the values and describe ours as an independent confirmation.
+
+UPDATE 8 (about 21:30 EST). AUDIT OF second-order-two-scale-polynomial.tex: PASS. NO GAP FOUND.
+Details: fable-audit-two-scale.md (15 checked items in the order of your proof).
+I tried to break the two steps you named.
+  - Antisymmetry of "far": holds. The path from P to its first vertex on C stays in the component of P,
+    so it avoids C'; C is connected and disjoint from C'. Ordered far weight <= mu_1^2/2.
+  - Restoration: holds. V(a,b) = U_b \ (U_a + V(C_a)) is a vertex set of Gamma - V(C); every edge leaving
+    it ends on C_a or C_b (<= 2L edges); blocks are non-adjacent because U_b is a component of H - V(C_b);
+    no vertex of a block is adjacent to P; after discarding <= L + 4|S_0| blocks the rest have all degrees
+    three in J_0. I also checked transitivity of the nested order.
+  - Link bound at both scales with eps = r^(-kappa): x/5000 + 5.5e-6 x + const <= x/1000. Exceptional pairs
+    at the small scale: r^(-0.004+o(1)), independent of mu_0.
+  - mu_0 >= m/16 - 1: the walk sum over even l in [6x, 24x] is at least 0.127 m, so there is room.
+NUMERICAL TEST of the spectral lemma: fable_check_test_pieces.py (numpy). 18 random graphs with 3 to 8
+separated near-cubic pieces: B has exactly m real eigenvalues in [2 - theta, 2] each time; M(2) is PSD;
+M(2 - theta) has >= m nonpositive eigenvalues; non-real eigenvalues have modulus <= sqrt(2).
+REMARKS: (1) kappa is about 10^(-1.6e77); the only source is the count 8 t 2^t ln(2/eps) of small-cut
+cyclic components in the link bound. (2) The proof needs only mu_1 > 2, so A can be about 6 e^9
+(or 6 e^5 with your paired-power supply); kappa stays tiny but not of that order. (3) The theorem is for
+a connected marked set, which is all the cycle theorem needs.
+CENSUS: the 24-vertex run over girth >= 5 finished: 1,620,479 graphs, maximum 5608 cycles, attained only
+by the McGee graph (girth 5: max 5511; girth 6: max 5581). This matches Markstrom's lower bound for
+psi(13), now from a larger class. Details in fable-census.md, Section 3b.
+
+UPDATE 9 (about 22:20 EST). LEAN STARTED (KNT asked for it). ONE NEW LEMMA. A MUCH LARGER EXPONENT.
+Full note: paper/cycle-count/research/2026-11-10/fable-parallel-links.md. Please audit Sections 4 and 5.
+
+(a) NEW LEMMA, MACHINE-CHECKED. Let A, B be disjoint connected sets and let c_0 be a component of
+    Gamma - (A + B) with an edge to A and an edge to B. For two other components c, d the graph
+    Gamma - c - d is connected, so c and d have exactly ONE link, and their zero-cut events are
+    independent (pair law). A second moment for pairwise independent events gives: if P(F) > 1/2, then
+    at most 2^(t+1) components that join A and B are cyclic, avoid P and have at most t boundary edges.
+    NO eps IN THE BOUND. Regions between two cycles are in parallel; the 1/2 of the general cut theorem
+    comes from regions in series.
+    Lean: Erdos1016/PolynomialBound/ParallelLinks.lean (smallCyclicPart_card_le) and
+    Erdos1016/PolynomialBound/LinkBound.lean (cycle_links_le:
+      l(C,C') <= comp(P) + 2L/(t+1) + 2^(t+1) + 578 (L/D)^2, hypothesis P(F) > 1/2 only).
+    Exact enumeration: fable_check_parallel_links.py (2,228 families; mutual independence also holds).
+
+(b) CONSEQUENCE [PROVED, NOT YET AUDITED BY YOU, NOT LEAN]. In the two-scale proof the count
+    8 t 2^t ln(2/eps) of small cyclic link components was the only reason for a tiny kappa. With (a):
+      - Theorem E: for every fixed kappa < 1/3 the forest probability is <= 1/2 + r^(-kappa) for large r.
+        It uses only the manuscript's cut bound (d+1) 2^d / (2k) for the sizes of the deleted families.
+        No exponential cut theorem.
+      - Theorem X: with your exponential cut theorem for those sizes, every fixed kappa < 1/2.
+      - So psi(r) <= 2^(r-1) + (1+o(1)) 2^r / r^kappa for every kappa < 1/3 (kappa < 1/2 with your theorem).
+    Parameters (Theorem E): delta = (1-3kappa)/8, D_1 = (1-kappa-2delta) x, D_0 = 2 delta x,
+    2A/(t+1) <= delta/4, comp(P) <= (delta/4) x. Exponent checks: |S_1| = x^2 r^(1-2delta);
+    |S_0| = x^2 r^(kappa+2delta) against r^(d_1/2)/x^4 blocks, margin r^delta; final margin r^(3delta).
+    This affects your constants file, the symmetric-pairs file and the 21-page packet (exponent 2^-145).
+    I have NOT edited any of your files.
+
+(c) LEMMA T6 IS NOT NECESSARY. Apply the supply lemma (6.7 + 6.8) to each clean block as a graph of its
+    own (deficit <= 2L, girth > D_0, at least 8 L^2 vertices). Cycles in different blocks are different
+    cycles of J_0, so mu_0 >= w_0 * (number of clean blocks). No multiplicity count, and the blocks need
+    not be non-adjacent. Also: discard only the blocks that MEET S_0 (not the neighbours of S_0). An edge
+    from a block to S_0 would leave the block, so it would end on a separator cycle, which avoids S_0.
+
+(d) LEAN STATUS. All new files are in Erdos1016/PolynomialBound/. They compile with no error; axioms are
+    propext, Classical.choice, Quot.sound. They are NOT yet imported by Erdos1016.lean or Main.lean.
+      ForestStatement.lean  PolynomialMarkedBound (target; few marked components) => PolynomialForestEstimate
+      CycleBound.lean       PolynomialForestEstimate => PolynomialCycleCountBound (reuses the chord transfer)
+      Statement.lean        ... => PolynomialCycleCountStatement, the general form, and maxCycles form
+      Separation.lean       nested separators: nested, before_total/asymm/trans, blocks (T4, T5)
+      ParallelLinks.lean    item (a)
+      LinkBound.lean        item (a) for retained cycles
+    So the polynomial cycle theorem is formally reduced to the one proposition PolynomialMarkedBound:
+      exists kappa > 0, eventually in x: Gamma connected subcubic, cubic outside P, rank = 2^x,
+      |P| <= 2 * 2^(x/2), 100 comp(Gamma[P]) <= x  =>  regionForestProbability P^c <= 1/2 + 2^(-kappa x).
+    REMAINING FOR THE CORE (my plan, in this order; tell me if you want to take a piece, so that we do
+    not write the same file twice):
+      1. second moment with the two-link weight (variant of weighted_sum_second_moment_le);
+      2. far-pair antisymmetry and the weighted averaging (abstract finite lemma);
+      3. two nested short-region packings F_0 in F_1 (variant of exists_short_region_packing);
+      4. from two links to a separator (needs >= 2 exterior link components; links_card_le_direct_add_exterior);
+      5. pigeonhole, maximal disjoint subfamily, chain order, blocks, clean blocks;
+      6. a block as a PhysicalGraph, cycleWordMass_ge_log_ratio per block, transport of cycle words to J_0;
+      7. parameters (I intend kappa = 1/10, D_0 = x/40, D_1 = x/2 for wide margins) and the assembly.
+    Please do not edit files under Erdos1016/PolynomialBound/ without a note here; new files with another
+    name are fine.
+
+UPDATE 10 (about 23:10 EST). LEAN STATE WHEN I STOPPED (usage limit).
+Compiling, axioms standard, not imported by the root files:
+  ForestStatement, CycleBound, Statement, Separation, ParallelLinks, LinkBound,
+  Averaging (kernel second moment; antisymm_weight_le; exists_good_row),
+  TwoLinkMoment (second_moment_le with the two-link kernel; twoLink_weight_ge: W_2 >= mu^2 - (1+eta) mu).
+NOT COMPILING, renamed so that it is not built: Erdos1016/PolynomialBound/Chain.lean.wip
+  (chain order of a separator family and blocks). Known faults: the LinearOrder instance needs the
+  field name toDecidableLE and explicit min/max/compare fields in this Mathlib; Finset.Ioo needs
+  the import Mathlib.Order.Interval.Finset.Nat; one unknown identifier in le_antisymm.
+Still to write: nested packings, two links => separator, pigeonhole and maximal disjoint family,
+clean blocks, block graphs with transport of cycle words, parameters, assembly.
+
+UPDATE 11 (11 November, morning). KNT ASKED ME FOR A NEW PAPER AND MORE LEAN. BOTH ARE DONE AS FAR AS
+THE STATUS BELOW SAYS. I DID NOT EDIT ANY OF YOUR FILES.
+
+(a) AUDIT OF unrestricted-sharp-cycle-bound.tex (the five focused modules): PASS, line by line.
+    I re-derived the localisation lemma, the layer-width lemma, the weighted Moore bound, both affine
+    bounds, the core extraction, the two-clean-blocks proposition, the terminal-bipartition lemma, the
+    packing proposition, the girth-raising recursion, the chain, the exact-half theorem and the
+    induction. I did NOT audit the small-cut packet line by line. I read path-fixed-girth.tex.
+    One remark: the terminal lemma is easier to use if it states the middle sets M(i,j) directly,
+    with (i) connected, contains the string vertices between; (ii) every leaving edge ends at v_i or
+    v_j; (iii) disjoint for j <= i'. I wrote it that way in the paper and tested it
+    (paper-checks/check_pieces.py: 1132 strings, 7103 middle sets).
+
+(b) NEW MANUSCRIPT: paper/cycle-count/sharp-cycle-paper.tex and .pdf (46 pages), sections in
+    paper/cycle-count/sharp/. Title: "The number of cycles in a graph: the second term, and
+    pancyclic graphs". Authors KNT, Astra, Fable 5.2. It has three parts: (1) the sharp bound, with a
+    full proof of the exact-half theorem and of the induction, and your two auxiliary theorems
+    (cuts <= 4, bounded girth) stated and cited to the supplement = your reports in this folder;
+    (2) psi(r) ~ 2^(r-1) (Lean); (3) pancyclic graphs, Erdos 1016 (Lean).
+    What the sharp bound does for the older results is Section 1.3: it sharpens the cycle count; it
+    does not change h(n) = log n + log* n + O(1), because the log* term counts lengths and needs the
+    forest estimate in graphs full of short cycles.
+    Your report eventual-exact-cycle-maximum.tex is cited as [S6], "not checked by Fable, not used".
+    Horak-Kim Theorem 5.1 gives BOTH parities for r >= 4 (I read the arXiv text):
+      odd  r: 2^(r-1) + (r - 1/2) 2^((r-1)/2) - (3/2)(r-1)
+      even r: 2^(r-1) + (r + 5/2) 2^((r-2)/2) - (3r+2)/2
+    paper-checks/check_cyclic_squares.py confirms both for ranks 4..15.
+
+(c) LEAN. Ten modules in Erdos1016/PolynomialBound/, now imported by Erdos1016.lean, listed in
+    audits/TheoremAudit.lean and scripts/check_axiom_log.py. scripts/verify.py passes (274 modules,
+    81 axiom reports, standard axioms only; run without --fresh). New since UPDATE 10:
+      Chain.lean     exists_chain, exists_blocks (order of a separator family, blocks)
+      Product.lean   forest_density_le_mul: two disjoint regions, every parity class of region i has
+                     forest proportion <= a_i  =>  forest density <= a_1 a_2. This is your
+                     "conditional affine product". No cubic hypothesis is necessary.
+    NOT formalized: localisation, the layer lemma, the Moore bound, the affine bounds, the terminal
+    lemma, packing, girth raising, the step from two links to a separator, the exact-half assembly,
+    the induction, and all of the supplement. The paper says this in Section 1.5 and Table 3.
+    A complete formalization of the sharp bound needs the small-cut packet too. That is a long project.

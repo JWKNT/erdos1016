@@ -1,0 +1,202 @@
+\section{A gap below full terminal-path saturation}
+\label{sec:second-order-path-gap}
+
+Paths and cycles are simple.
+Parallel edges remain distinct, and a pair of parallel edges can form a cycle.
+The term \emph{saturated} means that the terminal-path count equals $2^{\beta(G)}$.
+
+\begin{lemma}\label{lem:full-two-pole-classification}
+Let $N$ be a connected loopless multigraph with two distinct degree-two terminals $a,c$.
+Every other vertex has degree three.
+Suppose that $P_{ac}(N)=2^{\beta(N)}$.
+Then its bridges join saturated bridgeless two-terminal pieces in series.
+Every such piece is either a pair of parallel terminal edges, or a capped permutation ladder.
+The ladder permutation is a concatenation of singleton blocks and adjacent transpositions.
+\end{lemma}
+
+\begin{proof}
+Every terminal path meets every cycle.
+This follows by counting its affine parity class, which has $2^{\beta(N)}$ members.
+Each member is one terminal path together with vertex-disjoint cycles.
+
+Every shore of a bridge contains a cycle.
+If a shore has $n$ vertices and $p$ original terminals, its rank is $(n-p+1)/2\ge1$.
+Hence every bridge separates $a$ from $c$.
+Neither original terminal meets a bridge.
+A path from such a terminal would immediately cross it and avoid a cycle on its starting shore.
+All bridges occur on their route, and no cyclic part can lie off that route.
+After deleting the bridges, the attachment vertices of each piece are distinct.
+Otherwise, every terminal path would avoid a cycle inside that piece.
+The pieces are two-terminal graphs with degree-two attachment vertices and all other degrees three.
+Their ranks add, and their terminal-path counts multiply.
+Saturation forces every piece to be saturated.
+
+Consider one bridgeless piece.
+A connected bridgeless graph of maximum degree three has no cut vertex.
+Choose two internally vertex-disjoint terminal paths $P,Q$.
+Let $F$ contain the unused edges.
+The terminals have degree zero in $F$.
+Other vertices of $P\cup Q$ have degree one in $F$, while unused vertices have degree three.
+The graph $F$ has no cycle, since such a cycle would avoid $P$.
+No forest component can have two leaves on the interior of $P$.
+Its joining path would form a cycle with a subpath of $P$, disjoint from $Q$.
+The same argument applies to $Q$.
+Thus every nonempty component of $F$ is one edge joining the two path interiors.
+
+The two path interiors therefore have the same size $k$, and together they contain all nonterminal vertices.
+Their unused edges give a perfect matching.
+When $k=0$, the piece consists of two parallel terminal edges.
+Otherwise, order both interiors from $a$ to $c$ and write the matching as a permutation $\pi$.
+A pattern $231$ or $321$ produces a two-rung cycle on its first two positions.
+The third rung joins the top right interval to the bottom left interval outside that cycle.
+Together with $a,c$, these intervals give a terminal path disjoint from the cycle.
+A pattern $312$ gives the symmetric contradiction using its last two positions for the cycle.
+Thus $\pi$ avoids these three patterns.
+If its first value is at least three, the later values one and two give a $312$ or $321$ pattern.
+If its first value is two, value one must occur second, since an intervening value would give $231$.
+Delete the initial singleton or transposition and apply induction.
+The common endpoints $a,c$ cap the two ends of the ladder.
+\end{proof}
+
+\begin{lemma}\label{lem:one-full-three-pole-gap}
+Let $T$ be connected, with three distinct degree-two terminals $a,b,c$ and all other degrees three.
+If $\beta(T)=h$ and $P_{ac}(T)=2^h$, then
+\[
+ P_{bc}(T)=2^h
+ \quad\hbox{or}\quad
+ P_{bc}(T)\le\frac78\,2^h.
+\]
+The factor $7/8$ is attained by a simple graph.
+\end{lemma}
+
+\begin{proof}
+Suppress $b$ to an edge of a saturated two-terminal graph $N$.
+Its two neighbors are distinct.
+Otherwise, its parallel-edge cycle would be pendant and would avoid every $a$--$c$ path.
+Apply Lemma~\ref{lem:full-two-pole-classification}.
+
+Suppose first that $b$ subdivides a bridge.
+The earlier pieces have total positive rank, while every $b$--$c$ path avoids them.
+The normalized count is therefore at most $1/2$.
+The same bound holds if $b$ lies in any piece after the first.
+In that case, the later pieces multiply both the local path count and its upper bound by the same power of two.
+The earlier pieces contribute at least one additional rank unit only to the denominator.
+It remains to consider an edge in the first piece.
+A piece consisting of two parallel edges gives a triangle after subdivision, and its local count is saturated.
+
+Now use the capped ladder description of the first piece.
+Suppose that it has $k$ ladder positions, so its rank is $k+1$.
+For a prefix containing $p$ positions and the left cap $a$, let $A_p$ count paths between its two right attachment vertices.
+Set $A_0=1$ for the empty prefix.
+For $p\ge1$, this prefix has rank $p$, so $A_p\le2^p$.
+A suffix containing $q$ positions and the right cap has $2^q$ paths from either left attachment to its terminal.
+Any path from $b$ to the right terminal uses exactly one edge of the suffix's two-edge entrance cut.
+Its crossing parity is odd, and a simple path cannot use either edge twice.
+Thus the suffix contributes one terminal path, and the following local lists are exhaustive.
+
+First suppose that the subdivided edge is an interface edge or an end-cap edge.
+With $p$ positions before it and $q$ after it, the path count is
+\[
+ (1+A_p)2^q,
+ \qquad
+ \frac{P_{bc}}{2^{k+1}}=\frac{1+A_p}{2^{p+1}}.
+\]
+The path first goes right, or first uses a prefix cap and returns along the other interface edge.
+The displayed ratio is one when $p=0$, and at most $3/4$ when $p\ge1$.
+
+If the subdivided edge is the rung of a single-rung block, its two initial directions give
+$2(1+A_p)2^q$ paths.
+Here $k=p+1+q$, so the same normalized ratio applies.
+
+Finally, suppose that the subdivided edge lies in a square block.
+Delete that edge, and regard a path through the earlier prefix as one virtual cap between the square's left ports.
+There are four local paths to the right ports that avoid this cap.
+There are three that use it.
+For clarity, label the square ports $u,v$ on the left and $x,y$ on the right, and subdivide $ux$ by $b$.
+The cap-free paths are
+\[
+ bx,\quad bu yv x,\quad bu y,\quad bx v y.
+\]
+The paths using the virtual cap $uv$ are
+\[
+ bu v x,\quad bu v y,\quad bx v u y.
+\]
+Each virtual cap has $A_p$ realizations.
+Consequently,
+\[
+ P_{bc}=(4+3A_p)2^q,
+ \qquad
+ \frac{P_{bc}}{2^{k+1}}=\frac{4+3A_p}{2^{p+3}}.
+\]
+This ratio is $7/8$ when $p=0$, and at most $5/8$ when $p\ge1$.
+All edge types have now been covered.
+
+For equality, take the capped ladder with one square block and subdivide any square edge.
+Its old terminal-path count is eight, and the new count is seven.
+The graph is simple.
+\end{proof}
+
+\begin{theorem}\label{thm:terminal-path-saturation-gap}
+Let $G$ be a connected finite graph or multigraph of rank $b$, with distinct terminals $s,t$.
+Then
+\[
+ P_{st}(G)=2^b
+ \quad\hbox{or}\quad
+ P_{st}(G)\le\frac{15}{16}\,2^b.
+\]
+The factor $15/16$ is attained by a simple graph of rank four.
+\end{theorem}
+
+\begin{proof}
+Induct on $b$.
+For $b=0$, the graph is a tree and has one terminal path.
+Use the block route between $s,t$.
+An off-route cyclic block contributes rank but no terminal choices, so it gives $P_{st}(G)\le2^{b-1}$.
+Otherwise, the route-block ranks add and their terminal-path counts multiply.
+If there are at least two cyclic route blocks, each has smaller rank.
+Induction proves the dichotomy by multiplying their normalized counts.
+Bridge blocks contribute one and can be suppressed.
+Thus it remains to consider a two-connected loopless block with distinct terminal attachments.
+
+At any vertex $v$ of this block, the incident-edge pattern of a uniform affine terminal-parity vector is uniform subject to its required parity.
+Indeed, deleting $v$ leaves a connected graph.
+Every compatible incident pattern extends to a parity vector there, with the same number of extensions.
+At an internal vertex of degree $d$, a simple path uses zero or two incident edges.
+If $d\ge4$, this bounds its density by
+\[
+ \frac{1+\binom d2}{2^{d-1}}\le\frac78.
+\]
+At a terminal of degree $d\ge3$, only singleton incident patterns are allowed, giving density at most
+$d/2^{d-1}\le3/4$.
+Both cases prove the required bound immediately.
+
+Suppress unmarked degree-two vertices.
+We may therefore assume that both terminals have degree two and every other vertex has degree three.
+The rank-one case is a cycle and is saturated.
+Assume $b\ge2$.
+If the terminals are adjacent, their direct edge and the remaining paths give
+$P_{st}(G)\le1+2^{b-1}\le(3/4)2^b$.
+Otherwise, let $x,y$ be the neighbors of $s$.
+They are distinct.
+If both edges joined $s$ to one vertex, that vertex would be a cut vertex unless the graph were the rank-one digon.
+
+The graph $T=G-s$ is connected and has rank $b-1$.
+Its three distinct terminals $x,y,t$ have degree two, and every other vertex has degree three.
+Split paths according to their first edge:
+\[
+ P_{st}(G)=P_{xt}(T)+P_{yt}(T).
+\]
+Apply induction to both terminal pairs in $T$.
+If neither count is full, their sum is at most $(15/16)2^b$.
+If one is full, Lemma~\ref{lem:one-full-three-pole-gap} makes the other either full or at most $(7/8)2^{b-1}$.
+Thus their sum is either $2^b$ or at most
+$(1+7/8)2^{b-1}=(15/16)2^b$.
+
+For equality, use the rank-three three-terminal example at the end of Lemma~\ref{lem:one-full-three-pole-gap}.
+Add a new terminal $s$ joined to its two left terminals, and keep its right terminal $t$.
+The two branch counts are eight and seven.
+The resulting simple graph has rank four and fifteen terminal paths.
+\end{proof}
+
+In particular, a sequence of four-terminal blocks whose four cross-path densities tend to one is eventually exactly saturated.
+Thus vanishing cross-path defects cannot bypass Theorem~\ref{thm:saturated-ring-barrier}.

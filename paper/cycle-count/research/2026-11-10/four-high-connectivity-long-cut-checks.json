@@ -1,0 +1,73 @@
+{
+  "status": "all_checks_passed",
+  "results": [
+    {
+      "M": 10,
+      "core_order": 400,
+      "order": 810,
+      "rank": 406,
+      "core_girth": 6,
+      "transitive_orbit_size": 400,
+      "minimum_port_distance": 21,
+      "joining_edge_shortest_cycles": [
+        44,
+        44,
+        44,
+        44,
+        44
+      ],
+      "small_cut_patterns_tested": 9013248,
+      "patterns_with_boundary_at_most_five": 4457,
+      "cyclic_cut_patterns_at_most_five": 1,
+      "reduction_input": "Nedela-Skoviera1995 Theorem17: core cyclic connectivity6"
+    },
+    {
+      "M": 11,
+      "core_order": 440,
+      "order": 890,
+      "rank": 446,
+      "core_girth": 6,
+      "transitive_orbit_size": 440,
+      "minimum_port_distance": 23,
+      "joining_edge_shortest_cycles": [
+        48,
+        48,
+        48,
+        48,
+        48
+      ]
+    },
+    {
+      "M": 20,
+      "core_order": 800,
+      "order": 1610,
+      "rank": 806,
+      "core_girth": 6,
+      "transitive_orbit_size": 800,
+      "minimum_port_distance": 41,
+      "joining_edge_shortest_cycles": [
+        84,
+        84,
+        84,
+        84,
+        84
+      ]
+    },
+    {
+      "M": 50,
+      "core_order": 2000,
+      "order": 4010,
+      "rank": 2006,
+      "core_girth": 6,
+      "transitive_orbit_size": 2000,
+      "minimum_port_distance": 101,
+      "joining_edge_shortest_cycles": [
+        204,
+        204,
+        204,
+        204,
+        204
+      ]
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+\section{Cycle cells, circuit partitions, and an interlace representation}
+\label{sec:random-cycle-quotient}
+
+This section records an exact representation and a research direction.
+It does not prove a new upper bound for the remaining graphs.
+A chosen two-factor is required.
+Its cycles need not be shortest cycles, and shortest cycles need not form a two-factor.
+
+Let $G$ be a connected cubic graph with a specified two-factor consisting of $m$ cycles, called cells.
+The edges outside the two-factor form a perfect matching.
+Contract each cell to a vertex, retaining its cyclic order of matching incidences.
+This produces a connected quotient multigraph $Q$, possibly with loops.
+For an even edge set $F$ of $Q$, let $V_+(F)$ denote its nonisolated vertices and let $z(F)=m-|V_+(F)|$.
+At a vertex of selected degree $2q>0$, the incident selected half-edges inherit a cyclic order.
+Their two alternating pairings are
+\[
+ (12)(34)\cdots(2q-1,2q),
+ \qquad
+ (23)(45)\cdots(2q,1).
+\]
+When $q=1$ these pairings coincide, but the two cell paths are distinct and must both be counted.
+
+For a choice $\sigma\in\{0,1\}^{V_+(F)}$ of alternating pairings, let
+$\ell(F,\sigma)$ be the number of circuits after smoothing every selected quotient vertex according to its chosen pairing.
+Define the component polynomial of the even space by
+\[
+ Z_G(t)=\sum_{J\text{ even in }G}t^{\operatorname{comp}_+(J)},
+\]
+where only components with edges are counted and the empty state has exponent zero.
+
+\begin{proposition}[The exact cycle-cell expansion]
+\label{prop:random-cycle-cell-expansion}
+One has
+\[
+ Z_G(t)=
+ \sum_{F\text{ even in }Q}
+ (1+t)^{z(F)}
+ \sum_{\sigma\in\{0,1\}^{V_+(F)}}t^{\ell(F,\sigma)}.
+\]
+For $F=\varnothing$, the inner sum is interpreted as one.
+In particular,
+\[
+ \beta(G)=\beta(Q)+m,
+ \qquad
+ c(G)=m+
+ \sum_{\substack{F\ne\varnothing\text{ even in }Q\\
+                 (V_+(F),F)\text{ connected}}}\kappa(F),
+\]
+where $\kappa(F)$ counts the alternating-pairing choices producing one circuit.
+\end{proposition}
+
+\begin{proof}
+The matching edges of an even state in $G$ induce an even boundary set at each cell, hence an even edge set $F$ of $Q$.
+Conversely, any even boundary pattern on a cycle has exactly two extensions using cycle edges.
+For a nonzero pattern they are complementary unions of paths, inducing the two alternating pairings.
+For the zero pattern they are the empty set and the entire cell cycle.
+All cell choices are independent.
+
+Thus every even quotient state has exactly $2^m$ lifts, and its component polynomial is the displayed summand.
+This also proves the rank identity.
+A lift with one component either is one cell cycle and has $F=\varnothing$, or has nonempty connected quotient support.
+In the latter case all zero-boundary cells must choose the empty extension, and the selected smoothing must have one circuit.
+This gives the cycle-count identity.
+\end{proof}
+
+\begin{proposition}[A matrix on blocks of switches]
+\label{prop:random-cycle-cell-interlace}
+Fix a connected nonempty even quotient state $F$.
+Suppose $\kappa(F)>0$ and choose one permitted one-circuit state as reference.
+There is a symmetric matrix $M_F$ over $\mathbb F_2$ whose index set is partitioned into blocks $B_v$, one for each $v\in V_+(F)$, with
+\[
+ |B_v|=\frac{\deg_F(v)}2-1,
+ \qquad
+ \dim M_F=|F|-|V_+(F)|=\beta(F)-1,
+\]
+such that
+\[
+ \kappa(F)=
+ \#\left\{
+ S\subseteq V_+(F):
+ M_F\!\left[\bigcup_{v\in S}B_v\right]\text{ is nonsingular}
+ \right\}.
+\]
+Empty blocks remain in the subset count.
+The empty principal matrix is nonsingular by convention.
+\end{proposition}
+
+\begin{proof}
+Replace each selected vertex of degree $2q\ge4$ by a chain of $q-1$ four-valent switches.
+This replacement has two permitted states, obtained by choosing one local transition at every switch in the chain or the other transition at every switch.
+To verify the replacement, split off ports $1,2,3$ at the first switch, whose fourth incidence leads to the remaining gadget.
+The first transition pairs $1$ with $2$ and sends $3$ into the remaining gadget.
+The second pairs $2$ with $3$ and sends $1$ into it.
+The remaining cyclic port list is the new internal incidence followed by $4,5,\ldots,2q$.
+Induction gives the two alternating pairings.
+For $q=1$, suppress the vertex and retain its twofold multiplicity.
+
+The resulting graph is connected and four-regular unless every selected degree is two.
+The reference state gives an Euler circuit.
+Form its binary interlace matrix.
+At each switch, put a one on the diagonal exactly when its alternative transition is orientation-inconsistent with that Euler circuit.
+Call the resulting symmetric matrix $M_F$.
+
+Changing a cell's state changes every switch in its block.
+The extended Cohn--Lempel equality states that the new circuit count is
+\[
+ 1+\operatorname{nullity}_{\mathbb F_2}
+ M_F\!\left[\bigcup_{v\in S}B_v\right].
+\]
+Thus one circuit is equivalent to nonsingularity.
+The count includes both choices at degree-two quotient vertices, whose blocks are empty.
+If every selected degree is two, the quotient support is a cycle, all blocks are empty, and every one of its $2^{|V_+(F)|}$ cell choices produces one circuit.
+This also agrees with the formula.
+\end{proof}
+
+The external identity used here is Theorem~4 of Lorenzo Traldi,
+\href{https://arxiv.org/pdf/0903.4405}{\emph{Binary nullity, Euler circuits and interlace polynomials}},
+European Journal of Combinatorics 32 (2011), 944--950.
+It applies to undirected four-regular multigraphs, including loops.
+Its transition rule deletes reference-following rows and columns and changes the diagonal for orientation-inconsistent transitions.
+
+This representation alone does not give a half bound.
+For example, an identity matrix has every principal submatrix nonsingular.
+Even if the matrix is alternating, taking independent nonsingular $2$-by-$2$ blocks and permitting only whole-block selections gives the same phenomenon.
+Any useful bound must therefore retain restrictions imposed by the original cubic graph and its cyclic connectivity.
+
+There is a limited parity bound.
+If $M_F$ has zero diagonal and at least one block has odd order, nonsingularity requires the total selected block order to be even.
+Exactly half of all block subsets have that parity, so $\kappa(F)\le2^{|V_+(F)|-1}$.
+Neither the zero-diagonal hypothesis nor the existence of an odd block is automatic.

@@ -1,0 +1,38 @@
+PARTIAL EXPLORATION — 20:16 EST, 10 November 2026
+
+OPEN QUESTION
+For a two-terminal subcubic network, with all internal vertices cubic and
+terminal degrees at most two, is its path count either2^b or at most(15/16)2^b?
+This is a conjecture, not a proved result.
+It concerns the gap below full saturation, not the excess above one half.
+A uniform gap could support decomposition arguments for the second-order problem.
+
+EXHAUSTIVE SIMPLE CUBIC EVIDENCE
+For every connected simple cubic graph through20 vertices, each edge lies in
+either every even subgraph that contains it, or at most15/16 of those subgraphs.
+Deleting the edge gives the corresponding terminal network of rank b=n/2.
+The maximum nonfull path counts are:
+  n=6:7/8; n=8:15/16; n=10:30/32; n=12:60/64;
+  n=14:120/128; n=16:240/256; n=18:480/512; n=20:960/1024.
+The equality scale is preserved by suitable series expansions.
+This catalogue does not cover every cubic multigraph or every terminal degree pattern.
+
+FILES AND VERIFICATION
+check_second_order_cubic_catalog.cpp enumerates every binary cycle-space state.
+The generator is nauty2.8.9 geng, with options -c -d3 -D3.
+The saved JSON also records maximum total cycles and maximum minimum edge counts.
+verify_second_order_cubic_witnesses.py uses Fable's independent cycle/path DFS.
+It verified26 extremal witnesses and480 edge counts through order20.
+The graph6 parser is independent of the C++ parser.
+
+The order22 enumeration is running in exec session85530.
+It started at about20:16 EST. It may take around an hour or longer.
+The process appends a completed record to second-order-cubic-catalog-results.json.
+Do not claim the order22 check until that record is present and independently verified.
+
+20:47 UPDATE
+The saturation-gap conjecture has been proved: second-order-path-gap.tex.
+Three independent line-level audits passed. Priority remains unchecked.
+The duplicate order22 run was stopped after finding Fable's parallel census.
+Our completed independent catalogue stops at20 vertices. Fable owns order22.
+Do not claim a completed Codex order22 catalogue.

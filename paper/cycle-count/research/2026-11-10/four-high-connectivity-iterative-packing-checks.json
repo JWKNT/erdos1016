@@ -1,0 +1,25 @@
+{
+  "status": "all exact checks passed",
+  "counts": {
+    "selected_vertex_sets": 5572,
+    "small_quotient_graphs": 108,
+    "actual_articulation_partitions": 503,
+    "terminal_classes": 371,
+    "largest_terminal_class": 21,
+    "middle_interval_separations": 636,
+    "long_quotient_fixtures": 8,
+    "disjoint_segment_pairs": 114,
+    "core_prunings": 4482,
+    "cubic_graphs": 30,
+    "affine_product_fibers": 4163,
+    "disjoint_core_pairs": 421
+  },
+  "scope": [
+    "actual terminal bipartitions and articulation components",
+    "terminal-free interval boundaries and disjoint segments",
+    "rank preservation and boundary decrease under core pruning",
+    "complete conditional Cartesian products of affine states",
+    "exact rational conditional forest product law"
+  ],
+  "limitation": "The analytic high-girth forest threshold is not numerically tested."
+}

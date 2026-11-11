@@ -1,0 +1,84 @@
+\section{A path obstruction from the Horak--Kim construction}
+\label{sec:second-order-constructions}
+
+The proposed additive path bound needs a polynomial factor.
+The following family gives a linear obstruction at terminal distance three.
+It uses the graphs $MC_{2q}$ of Horak and Kim~\cite{HK}.
+Their total cycle count already gives the known lower bound
+$\psi(r)-2^{r-1}=\Omega(r2^{r/2})$.
+The marked-edge count below gives a separate consequence for terminal paths.
+
+\begin{proposition}\label{prop:hk-short-path-obstruction}
+For every integer $q\ge2$, there is a simple connected graph $N_q$
+with terminals $u,v$, rank $b=2q$, and $\operatorname{dist}_{N_q}(u,v)=3$,
+such that
+\[
+ P_{uv}(N_q)=2^{2q-1}+\left(q-\frac34\right)2^q+1.
+\]
+Consequently, no absolute constant $C$ satisfies
+\[
+ P_{uv}(N)\le 2^{b-1}+C2^{(b+\ell)/2}
+\]
+for every connected graph of rank $b$ with terminal distance $\ell$.
+\end{proposition}
+
+\begin{proof}
+Use indices modulo $q$.
+Block $i$ has vertices $a_i,b_i,c_i,d_i$ and all four edges between
+$\{a_i,b_i\}$ and $\{c_i,d_i\}$.
+Add the interface edges $c_i a_{i+1}$ and $d_i b_{i+1}$.
+The resulting graph $G_q$ is simple and cubic.
+It has $4q$ vertices, $6q$ edges, and rank $2q+1$.
+Set $e=a_0c_0$ and $N_q=G_q-e$.
+
+Cut parity gives two cases for every cycle of $G_q$.
+It uses one edge at every interface, or it uses zero or two at every interface.
+In the first case, choose one edge independently at every interface.
+Each square then has two paths between the selected endpoints.
+There are therefore $2^q2^q=4^q$ cycles in this case.
+Exactly half contain $e$.
+Indeed, four of the eight local endpoint-and-path choices contain any fixed square edge.
+The contribution is $2^{2q-1}$.
+
+Now consider the second case.
+If no interface is used, only the square in block zero contains $e$.
+This contributes one cycle.
+If some interfaces are used, but not all, they form a cyclic interval.
+An interval of $d$ interfaces occupies $d+1$ blocks, where $1\le d\le q-1$.
+Each end block has two possible caps.
+Each inner block has two possible matchings.
+There are $2^{d+1}$ cycles for each such interval.
+Exactly $d+1$ intervals contain block zero.
+For each of these intervals, half the cycles contain $e$.
+Their total contribution is
+\[
+ \sum_{d=1}^{q-1}(d+1)2^d=(q-1)2^q.
+\]
+
+Finally, suppose that every interface is used.
+Each square supplies one of its two matchings.
+The result is one cycle precisely when the matching product is the transposition.
+There are $2^{q-1}$ such choices.
+Exactly half contain $e$, so they contribute $2^{q-2}$.
+Adding the contributions gives
+\[
+ c_e(G_q)=2^{2q-1}+1+(q-1)2^q+2^{q-2}.
+\]
+
+Deleting $e$ gives a bijection from these cycles to simple terminal paths.
+The remaining three edges of its square give a path of length three.
+The graph is bipartite, so the terminal distance is three.
+Its rank is $2q$.
+The normalized excess equals
+\[
+ \frac{P_{uv}(N_q)-2^{b-1}}{2^{(b+3)/2}}
+ =\frac{q-3/4+2^{-q}}{2^{3/2}},
+\]
+which tends to infinity.
+\end{proof}
+
+This obstruction does not refute an error bound $O(r2^{r/2})$ for total cycles.
+It shows that a direct path bound at the half exponent needs additional rank dependence.
+The independent script \texttt{check\_second\_order\_constructions.py}
+counts terminal paths for $2\le q\le9$ and verifies the formula.
+These finite checks support the symbolic proof; they do not establish optimality.

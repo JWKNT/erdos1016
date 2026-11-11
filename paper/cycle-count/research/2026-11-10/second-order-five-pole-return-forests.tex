@@ -1,0 +1,140 @@
+\section{Forests whose terminal vertices are all far from one port}
+\label{sec:far-terminal-return-forests}
+
+The distance-layer encoding also controls several paths whose endpoints all lie in the far terminal tail.
+Only one of those paths can traverse any ordinary two-vertex layer.
+This avoids the linear factor needed for two cycles with independently placed layer intervals.
+
+\begin{theorem}[A fixed number of far terminal vertices]
+\label{thm:far-terminal-forests}
+Fix an even integer $q\ge2$ and $0<\varepsilon\le1/2$.
+There is a constant $R_{q,\varepsilon}$ with the following property.
+Let $T$ be a connected loopless multigraph of rank $h$ with distinct degree-two ports
+\[
+ c,a_1,\ldots,a_q.
+\]
+Every other vertex has degree three.
+Suppose
+\[
+ P_{ca_i}(T)\ge(1/2+\varepsilon)2^h
+ \qquad(1\le i\le q).
+\]
+Then the number of forests whose odd-degree vertex set is exactly $\{a_1,\ldots,a_q\}$ is at most
+\[
+ R_{q,\varepsilon}2^{h/2}.
+\]
+Each such forest consists of $q/2$ vertex-disjoint paths pairing the leaf ports.
+\end{theorem}
+
+\begin{proof}
+Put $C=C_\varepsilon$ for the additive path-stability constant.
+Suppress all ports except $c,a_i$ when considering that terminal pair.
+No loop can arise.
+A loop would represent a cyclic part avoided by every terminal path and would force normalized density at most one half.
+The resulting normalized two-pole has rank $h$ and the same terminal-path count.
+Additive stability gives terminal distance at least $h-C$ there, and hence also in $T$.
+Thus
+\begin{equation}\label{eq:far-port-distances}
+ \operatorname{dist}_T(c,a_i)\ge h-C
+ \qquad(1\le i\le q).
+\end{equation}
+
+Assume first that $T$ is bridgeless.
+Suppress $a_2,\ldots,a_q$ and call the resulting normalized two-pole $N$.
+It is bridgeless and has order $2h$.
+Choose a shortest $c$--$a_1$ path $A$ in $N$.
+The residual-rank part of additive stability gives
+\[
+ H:=\beta(N-V(A))\le C.
+\]
+
+Each edge of $N$ corresponds to a path of $T$, with at most $q-1$ suppressed vertices in total.
+Consider an edge whose path contains a suppressed port, and one endpoint $v$ of that edge.
+A shortest $c$--$v$ path in $N$ lifts to a walk of length at most
+$\operatorname{dist}_N(c,v)+q-1$ in $T$.
+Following the subdivided edge from $v$ reaches that port in at most $q$ further steps.
+Equation~\eqref{eq:far-port-distances} therefore implies
+\[
+ \operatorname{dist}_N(c,v)\ge h-C-2q.
+\]
+The slightly weaker constant avoids distinctions about overlap between these two walks.
+
+Ranks bounded in terms of $q,C$ satisfy the theorem by the trivial bound $2^h$.
+For the remaining ranks, put
+\[
+ d=\lfloor h-C-2q-2\rfloor\ge1,
+ \qquad \Delta=h-d\le C+2q+3.
+\]
+Use the distance layers of $N$ from $c$.
+All suppressed subdivision paths have both endpoints in layers at least $d$.
+Also $a_1$ lies in that tail, since its distance in $N$ is at least $h-C$.
+
+Mark $c$, every vertex in a layer at least $d$, and every internal layer with at least three vertices.
+As in the two-pole layer proof, at most $6\Delta+2$ vertices of $N$ are marked.
+Every remaining layer has exactly two vertices, one on $A$.
+Mark whole layers containing endpoints of parallel pairs outside $A$.
+This adds at most $4H$ vertices, since their digons are independent in $N-V(A)$.
+Restore the $q-1$ suppressed ports and mark them as well.
+Every restored edge segment lies wholly in the marked subgraph.
+Outside the marked set, the graphs $T$ and $N$ agree.
+The marked set has size bounded in terms of $q,\varepsilon$ alone.
+
+Let $F$ be one forest counted in the theorem.
+At each leaf port its degree is one.
+At every other vertex its degree is zero or two.
+Therefore it consists of $q/2$ vertex-disjoint paths, with all endpoints in the marked terminal tail.
+
+If $F$ lies wholly in the tail, all its edges are determined by marked incidences.
+Otherwise let $i<d$ be its minimum distance layer among the vertices of $N$.
+If this layer is ordinary, mark its two vertices.
+This adds at most two vertices to the marked set $B$.
+Fix all forest edges incident with $B$, with at most $2^{3|B|}$ choices.
+
+Choose a path component of $F$ that attains layer $i$.
+Both its endpoints lie in the terminal tail.
+It therefore traverses every ordinary layer strictly between $i$ and $d$ with two strands.
+Both vertices in each such layer belong to this path, with one backward and one forward edge.
+No other component of $F$ can use either vertex.
+Consequently, the entire forest has exactly the same matching description on ordinary layers as one returning path.
+
+Every cut between consecutive occupied ordinary layers has at most two matching choices.
+Two-choice cuts are nonconsecutive.
+The extra parallel-edge markings justify the same assertion in a multigraph.
+The matching choices contribute at most $2^{(d-i)/2}$.
+The remaining edges are determined by the marked-incidence data.
+Hence
+\[
+ \#F\le O_{q,\varepsilon}(1)
+ \left(1+\sum_{i=0}^{d-1}2^{(d-i)/2}\right)
+ =O_{q,\varepsilon}(2^{d/2})
+ =O_{q,\varepsilon}(2^{h/2}).
+\]
+
+For completeness, consider a bridge in $T$.
+A shore with $n$ vertices and $p$ original ports has rank $(n-p+1)/2$, a positive integer.
+Thus both shores contain cycles.
+Every high terminal pair must cross the bridge, since otherwise it avoids a cyclic shore and has normalized density at most one half.
+It follows that every bridge separates $c$ from all $a_i$.
+No original port can be a bridge endpoint, since its terminal paths would immediately leave a cyclic shore.
+
+Delete one bridge and retain its leaf-port shore.
+Its new bridge attachment serves as the center port.
+All normalized center-to-leaf path densities remain at least $1/2+\varepsilon$, by factorization across the bridge.
+Every counted forest stays on this shore.
+Indeed, each path has both endpoints there and cannot cross a bridge twice.
+The shore has smaller rank.
+Induction on rank proves the result with the same constant.
+\end{proof}
+
+\begin{corollary}[The four far ports of a five-pole]
+\label{cor:five-pole-four-far-forests}
+Let $T$ be a normalized five-pole of rank $h$, with center port $c$ and four other ports.
+If every center-to-other-port path count is at least $(1/2+\varepsilon)2^h$, then the total forest count on those four other ports is
+\[
+ O_\varepsilon(2^{h/2}).
+\]
+In particular, this applies to a full high star in a five-pole.
+\end{corollary}
+
+This lemma is an input for a possible five-edge-cut state analysis.
+It does not by itself prove a half-exponent bound for all five-edge cuts.

@@ -1,0 +1,13 @@
+{
+  "status": "all exact localization and product inequalities passed",
+  "checks": {
+    "full_two_poles": 241,
+    "with_series_bridges": 153,
+    "exact_distance_checks": 11002,
+    "exact_product_checks": 5501,
+    "subdivided_bridge_checks": 309
+  },
+  "maximum_squared_product_normalized_by_2_to_3h": "3025/256",
+  "maximum_delta_squared_times_2_to_distance_minus_3": "529/512",
+  "limits": "Finite evidence only. The symbolic proof covers all ranks."
+}

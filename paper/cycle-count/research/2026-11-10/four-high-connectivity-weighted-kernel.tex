@@ -1,0 +1,143 @@
+\section{Fixed multiples of the girth and bounded-rank exceptions}
+\label{sec:four-high-connectivity-weighted-kernel}
+
+Suppressing the ports gives a cubic kernel with positive integer edge lengths.
+A weighted Moore argument isolates the possible bounded-rank exceptions.
+The path-stability agent proposed the walk argument below.
+All logarithms have base two.
+
+\begin{lemma}[A weighted-kernel Moore bound]
+\label{lem:four-weighted-kernel-moore}
+Let $N$ be a normalized $k$-pole of rank $h\ge2$ and girth $g\ge3$.
+Then, with $t=\lceil\log(8h)\rceil$,
+\[
+ g\le4t\left(1+\frac{k}{3(h-1)}\right).
+\]
+\end{lemma}
+
+\begin{proof}
+Suppress all degree-two vertices.
+Since $N$ is connected and has rank at least two, the resulting kernel is a connected cubic multigraph.
+Loops and parallel edges are allowed.
+It has $n_0=2h-2$ vertices and $m_0=3h-3$ edges.
+Give each kernel edge the length of the path that it replaces.
+These positive lengths sum to $m_0+k$.
+The weighted girth of the kernel equals $g$.
+
+There are $2m_0\,2^{t-1}$ directed non-backtracking walks of length $t$ in the kernel.
+Choose one uniformly.
+Every directed edge is uniform at every step, so its expected total weight is
+\[
+ t\left(1+\frac{k}{m_0}\right).
+\]
+At least half the walks have weight at most twice this expectation.
+Their number is at least
+\[
+ m_0\,2^{t-1}\ge12h(h-1)>(2h-2)^2=n_0^2.
+\]
+
+If one such walk repeats a vertex, its edge support contains a cycle of no greater weight.
+Otherwise these walks are simple paths.
+Two must have the same ordered endpoints, so their union contains a cycle of weight at most the sum of their weights.
+In either case, a cycle has weight at most $4t(1+k/m_0)$.
+This proves the bound.
+\end{proof}
+
+\begin{proposition}[A bounded-rank or near-Moore alternative]
+\label{prop:four-fixed-ratio-shore-rank}
+Fix $C>0$, and put
+\[
+ H_C=\left\lceil64(C+1)\log(16(C+1))\right\rceil+1.
+\]
+If a normalized $k$-pole has rank $h\ge H_C$, girth at least $g$, and $k\le Cg$, then
+\[
+ h\ge2^{g/8-4}.
+\]
+For sufficiently large $g$, depending only on $C$, the stronger bound
+\[
+ h\ge2^{g/2-5}
+\]
+holds.
+\end{proposition}
+
+\begin{proof}
+The choice of $H_C$ ensures
+\[
+ h-1>\frac{8C}{3}\,\lceil\log(8h)\rceil
+ \qquad(h\ge H_C).
+\]
+Here is one explicit verification.
+Put $D=C+1$ and $u=\log(16D)\ge4$.
+At $h=H_C$, one has $h-1\ge64Du$ and $\log h+4\le4u$.
+The function $(h-1)/(\log h+4)$ increases for $h\ge2$.
+Also $\lceil\log(8h)\rceil\le\log h+4$.
+These facts give the displayed inequality for all $h\ge H_C$.
+
+Lemma~\ref{lem:four-weighted-kernel-moore} and $k\le Cg$ now give
+\[
+ g\le4t+\frac{4tCg}{3(h-1)}<4t+\frac g2.
+\]
+Thus $g<8t\le8\log h+32$, proving the first bound.
+
+For sufficiently large $g$, that bound implies $h-1\ge(C+1)g^2$.
+If $h\ge2^{g/2}$, the stronger assertion already holds.
+Otherwise $n=2h+k-2\le2^{g/2+2}$ for large $g$, and
+\[
+ \frac{2k\log n}{3(h-1)}
+ \le\frac{2Cg(g/2+2)}{3(C+1)g^2}<1.
+\]
+The entropy Moore bound therefore gives $g<5+2\log n$.
+Since $n>2^{(g-5)/2}$ eventually exceeds $2Cg$, one has
+\[
+ h=\frac{n-k+2}{2}>\frac n4>2^{g/2-5}.
+\]
+\end{proof}
+
+\begin{corollary}[Uniform terminal forests above the bounded-rank range]
+\label{cor:four-fixed-ratio-terminal-forests}
+For each fixed $C>0$, there is $B_C$ such that every normalized $k$-pole of rank $h\ge H_C$ with
+\[
+ 2\le k\le Cg,
+ \qquad \operatorname{girth}(N)\ge g
+\]
+satisfies, for every even port subset $T$,
+\[
+ \frac{F_T(N)}{2^h}
+ \le\frac12+B_C g^{13/2}2^{-g/4}.
+\]
+\end{corollary}
+
+\begin{proof}
+Use Proposition~\ref{prop:four-fixed-ratio-shore-rank} in the proof of Theorem~\ref{thm:path-high-girth-terminal-forests}.
+The port-free ball with radius $\lfloor g/2-\log k-10\rfloor$ still exists.
+Its layer lower bound is at least $2^{g/2}/(2^{11}Cg^2)$.
+The thin-marker layer upper bound has polynomial term at most $(Cg+1)^2$.
+The same inversion gives the result after changing its constant by a factor depending only on $C$.
+Increasing that constant handles the remaining finite range of $g$.
+\end{proof}
+
+\begin{corollary}[All fixed multiples of the girth]
+\label{cor:four-fixed-ratio-cyclic-cuts}
+Fix $C>0$.
+Let connected cubic graphs have girths $g\to\infty$.
+If a cut of order at most $Cg$ has two connected shores, each of rank at least $H_C$, then
+\[
+ c(G)\le\left(\frac14+o_C(1)\right)2^{\beta(G)}.
+\]
+\end{corollary}
+
+\begin{proof}
+Move vertices with two cut incidences across the cut until its endpoints are distinct on each shore.
+Such a vertex is a leaf in its connected positive-rank shore; moving it preserves that rank, increases the other rank by one, and decreases the cut order by one.
+A vertex with three cut incidences would be isolated in its shore, which is impossible.
+The resulting connected normalized poles have ranks $h,j\ge H_C$ and cut order $k'\le Cg$.
+Proposition~\ref{prop:four-fixed-ratio-shore-rank} makes both ranks at least $2^{g/2-5}$ for large $g$.
+If $k'=1$, there are no crossing cycles and the conclusion follows from the internal-cycle bound.
+Otherwise apply Corollary~\ref{cor:four-fixed-ratio-terminal-forests} to both shores and sum over the $2^{k'-1}-1$ nonempty even boundary subsets.
+The crossing count is at most $(1/2+o_C(1))^2 2^{\beta(G)}$.
+The internal counts, at most $2^h+2^j$, are negligible after normalization.
+\end{proof}
+
+Consequently, an unresolved above-half family with girth tending to infinity cannot have such a cut.
+For every fixed $C$, each cut of order at most $Cg$ with connected shores must have a shore of rank below $H_C$.
+This does not prove that an appropriate moderate cut exists in every remaining graph.

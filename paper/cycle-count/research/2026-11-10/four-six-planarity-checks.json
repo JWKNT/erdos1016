@@ -1,0 +1,18 @@
+{
+  "status": "all exact omitted-weight, connectivity, parity, and nonforest checks passed",
+  "checks": {
+    "core_compositions": 3003,
+    "affine_states_checked": 48048,
+    "core_parity_witnesses": 3003,
+    "outside_attachment_fixtures": 500,
+    "outside_components": 675,
+    "multiple_attachment_components": 477
+  },
+  "rank_four_forest_count_histogram": {
+    "9": 171,
+    "13": 1064,
+    "14": 336,
+    "15": 1432
+  },
+  "scope": "The abstract graph theorem is proved separately; these checks test all3003 core assignments and500 deterministic outside-component fixtures."
+}

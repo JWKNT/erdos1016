@@ -1,0 +1,745 @@
+Unrestricted second-order cycle bounds: path and forest route
+2026-11-10, continued research by the path_stability agent
+Status: working notes. Sections 4 and 5 record new mathematical deductions.
+Their audit status is stated separately. Earlier papers remain unchanged.
+
+Objective
+---------
+Improve psi(r)-2^(r-1) for arbitrary graphs. The immediate target is
+O(2^r/r^alpha), for one absolute alpha>0. An exponential saving remains a
+longer target. Existing audited papers are not changed by these notes.
+
+1. What explicit thresholds alone can and cannot achieve
+-------------------------------------------------------
+The original forest argument uses x=log_2 r, y=log_2 x, a short-cycle
+cutoff D=floor(x/10), and a counted-cycle cutoff L. Its relevant bounds are
+
+  mu >= (1/4-o(1))*ln(L/(6x)),
+
+  links(C,C') <= c + 2L/t + (t+1)2^(t-1)/epsilon + (8L/D)^2,
+
+and the exceptional covariance error is at most
+
+  2^(maximum links) L^3 2^(-D/2+O(1)).
+
+Here c is the number of marked components. To make this error small by the
+present proof, maximum links must be below a fixed multiple of x. The
+cyclic small-cut term forces t=O(log x) when epsilon is not enormous.
+Then 2L/t=O(x) forces L=O(x log x). The harmonic cycle supply consequently
+has mu=O(log log x) at the scale supported by this argument. The resulting
+epsilon has the existing triple-logarithmic scale 1/log log log r.
+
+This identifies a structural bottleneck in the proof, rather than merely
+an unspecified numerical threshold. Taking L=A_epsilon*x with
+A_epsilon=exp(O(1/epsilon)) still requires log x much larger than A_epsilon.
+The localization and bounded-layer arguments add further exponentials.
+Therefore explicit versions of their present thresholds do not improve
+the established unrestricted asymptotic error.
+
+The statement above is a limitation of these displayed estimates. It is
+not a lower bound for the true forest error.
+
+2. The edge recurrence removes a different obstruction
+----------------------------------------------------
+For an edge e on a marked cycle W,
+
+  c_e(G) <= p(G,W) 2^(r-1).
+
+If X_r=psi(r)-2^(r-1) and g(r) is the maximum, over rank-r graphs, of their
+smallest cyclic-edge excess c_e(G)-2^(r-2), then
+
+  X_r-X_(r-1) <= g(r).
+
+There is no witness-avoidance error 2^(-k) here. A sufficiently strong
+single-edge estimate would pass directly to the cycle-count error.
+The problem is now to find that edge estimate, rather than to optimize a
+number of witness components.
+
+3. A possible structural use of the one-link correction
+------------------------------------------------------
+The inverse second-moment calculation retains the weighted mass of pairs
+with one link. With L=C log r for a sufficiently large fixed C, mu is an
+arbitrarily large fixed constant. Under forest density above one half,
+the one-link mass must then be small, even if the positive excess is tiny.
+Most weighted disjoint pairs consequently have two links.
+
+This differs from the quantitative path-stability proof: it does not ask
+for mu of order 1/epsilon. It might support a separator or decomposition
+argument with constants independent of epsilon.
+
+The missing step is substantial. Two links between cycles of length
+O(log r) need not immediately give a balanced rank separation. One link
+could be a small tree or a short connecting path. A valid argument must
+control this possibility with weights or establish a useful unbalanced
+recursive decomposition. No such statement is proved here yet.
+
+4. A proved improvement to the unrestricted constant
+----------------------------------------------------
+Full proof: second-order-path-constant.tex.
+Independent root audit: PASS, 2026-11-10.
+
+The spectral argument can use odd lengths. Pair an even power j with j+1.
+For a negative real eigenvalue lambda=-2t, 0<=t<=1, its normalized
+contribution is t^j/(2j)-t^(j+1)/(2(j+1)) >=0. Positive real eigenvalues
+are nonnegative. The old modulus bound still controls nonreal eigenvalues.
+The Perron eigenvalue consequently supplies the full harmonic sum.
+
+Use D=floor(x/10), L=floor(x*y/1000), and t=floor(y/2). The maximum-link
+bound remains below x/40, while the girth exponent is approximately x/20.
+The weighted cycle supply becomes mu >= (1/2-o(1))*ln y. Therefore
+
+  psi(r) <= 2^(r-1)
+            + (1/(2 ln 2)+o(1)) 2^r / log_2^(3) r.
+
+This improves the previous best stated constant 2/ln 2 by a factor four.
+It leaves the order unchanged. For the forest theorem, an explicit version
+is p<=1/2+1/log_2^(3)r whenever r>=2^(2^(2^100)), with marked size at most
+r/log_2^2 r and at most (log_2 r)/100 marked components. The huge threshold
+is deliberately coarse. Root checked every numerical inequality in it.
+
+5. Exponential saving for proper minor-closed classes
+----------------------------------------------------
+Full proof: second-order-minor-exponential.tex.
+Status: full derivation and independent root audit PASS.
+
+Root and four_regular proved an exponential small-cut estimate:
+
+  forest probability <= 1/2 + 2 exp[-k/(8d2^d)]
+
+for k disjoint cyclic regions with edge boundaries at most d.
+I independently audited both the common-functional splitting argument and
+root's terminal-forest improvement of the constant. Both pass.
+The later block-conditioning refinement also passes independent audits.
+
+Combining this estimate with our existing short-cycle packings and the
+edge recurrence gives the following explicit deductions:
+
+  Planar graphs:
+    c(G) <= 2^(r-1) + 3*2^r exp[-r/774144].
+
+  Graphs with no K_h minor, h>=4, K=4096h^3:
+    c(G) <= 2^(r-1) + 3*2^r exp[-r/(192K^2 2^(3K))].
+
+  Orientable genus g=o(r):
+    c(G) <= 2^(r-1) + 3*2^r exp[-r/1548288]
+    eventually along the sequence.
+
+The planar packing uses face cutoff six and k>=r/252. The minor-free
+packing uses k>=r/(8K) regions with cut at most 3K. No witness-avoidance
+term occurs because the proof deletes one edge of a short cycle.
+These are proper-class deductions, not an unrestricted exponential bound.
+Publication priority of these rates has not been established. The accessible
+Aldred--Thomassen 2008 abstract states the planar leading asymptotic only;
+its full text was not available in this check.
+
+6. Restrictions on a sharp quantitative path target
+--------------------------------------------------
+The random_hosts agent found a direct counterexample to Fable's Conjecture A.
+I independently audited its exact count. Delete a square edge from the
+Horak--Kim graph MC_(2q). The resulting network has rank b=2q, terminal
+distance three, and
+
+  P_uv = 2^(2q-1) + (q-3/4)2^q + 1.
+
+Thus a bound of the form half*2^b+C*2^((b+ell)/2) cannot hold with fixed C.
+A linear factor in b is necessary even at distance three. This does not
+refute a weaker exponential saving, or the proposed cycle error
+O(r2^(r/2)). See second-order-constructions-notes.txt for the full count.
+
+7. A small exploratory saturation check
+--------------------------------------
+The script check_near_full_paths.py considers a path on b vertices, a
+disjoint b-cycle, and a perfect matching between their vertices. The
+network has rank b and a displayed terminal path of length b-1.
+Every cyclic order was checked for b=3,...,8. The maximum path counts are
+7,15,30,59,114,219, respectively. Ranks 9,...,12 used 200 random orders each.
+The results are in near-full-path-results.json.
+
+This check suggested a uniform gap below full path saturation.
+The random_hosts agent subsequently proved the exact statement:
+
+  P_st(G)=2^b OR P_st(G)<=(15/16)2^b.
+
+The theorem covers arbitrary connected finite graphs and multigraphs.
+Its proof is in second-order-path-gap.tex.
+Our complete independent audit passes and is recorded in
+path-gap-independent-audit.txt.
+An independent DFS checks every matching permutation through six positions,
+plus all edge subdivisions of the saturated examples.
+The proof uses a capped-ladder classification, a sharp 7/8 three-terminal
+lemma, and induction on rank after local degree normalization.
+The original finite data suggested the theorem but do not prove it.
+
+8. A conditional polynomial bound and an explicit obstruction
+------------------------------------------------------------
+Full proof: second-order-detour-obstruction.tex.
+Status: independent root audit PASS, including the weak-expansion extension.
+
+For A=6e^16, t=ceil(1000A), and alpha=1/(10^6*t*2^t), the following holds.
+Under the manuscript's marked-set size and component conditions, a forest
+probability above 1/2+r^(-alpha) forces a cycle C of length at most A log r.
+Some two neighbors of C lie in one component of Gamma-V(C), but their
+distance in that component exceeds r^(1/25).
+
+The new observation retains the exact factor one for one-link cycle pairs.
+A tree connecting all neighbors of C meets every partner with two or more
+links to C. If these neighbors have small pairwise distances, that tree is
+small and the per-vertex cycle-weight bound makes all multiple-link mass small.
+The second moment then gives probability at most 1/8+o(1), a contradiction.
+The exponential cut lemma controls the exceptional links at a polynomial gap.
+
+For fixed cubic vertex-expanders, deleting O(log r) vertices leaves every
+component with diameter O(log r). Thus the long-detour obstruction is absent.
+A matching of cotree-edge triangle gadgets preserves fixed expansion.
+The usual triangle-flip injection consequently gives
+
+  c(G) <= 2^(r-1) + 2*2^r/r^alpha
+
+for every sufficiently large fixed cubic vertex-expander.
+This is conditional on expansion and is not the unrestricted target.
+
+9. Why the proposed expander decomposition does not yet finish the proof
+-----------------------------------------------------------------------
+A scale-s cut with conductance s^(-eta) can create s^(1-eta) boundary terminals.
+Connecting these inside an s^(-eta)-expander can cost O(s log s) vertices.
+This already exceeds the marked-set budget at that same scale.
+Ancestor boundary contributions create an additional difficulty.
+Weighted charging among descendant leaves does not repair the local mismatch.
+
+A successful argument needs more than a standard conductance decomposition.
+Possible replacements include a better connection bound for the specific
+boundary terminals, or a uniform forest theorem for affine terminal joins.
+Neither replacement is proved here.
+
+10. Exact structure when a shortest path leaves no residual rank
+--------------------------------------------------------------
+Let N have two degree-two terminals and all other vertices cubic.
+Let A be a shortest terminal path, and let H be a tree component of N-V(A).
+If H has t attachments, degree counting gives |V(H)|=t-2.
+Its extreme attachment positions differ by at least t-1.
+Their route through H has length at most |V(H)|+1=t-1.
+Geodesicity forces equality, so the attachment positions are consecutive.
+It also forces H itself to be a path.
+
+The two exterior routes between the extreme attachment positions have equal lengths.
+Their interior matching has displacement at most one, by geodesicity at both ends.
+Therefore this piece is a capped ladder of singleton and adjacent-transposition blocks.
+It is fully saturated by the new classification.
+Parallel edges between consecutive vertices of A give zero-vertex digon pieces.
+Consequently beta(N-V(A))=0 forces N to be fully saturated.
+
+For a component of rank h, the same degree count gives |V(H)|=t-2+2h.
+Its attachment span has at most 2h holes.
+The four_regular agent is using this bounded interleaving to study cycle counts
+when beta(N-V(A)) is bounded by the additive path theorem.
+The resulting general bounded-rank cycle estimate is not yet proved.
+
+11. The unrestricted polynomial target is now proved and independently audited
+----------------------------------------------------------------------------
+Full proof: second-order-two-scale-polynomial.tex.
+Status: independent root and four_regular audits PASS.
+The additional independent Fable audit is pending at this note's update.
+The result is mathematical and has not been formalized in Lean.
+
+The proof gives an explicit absolute kappa>0 such that
+
+  psi(r) <= 2^(r-1) + (1+o(1))*2^r/r^kappa.
+
+Fable's thin-chain note supplied the nested separators and multi-mode spectral test.
+Two additional steps close its remaining obstruction.
+First, the far-pair relation is antisymmetric relative to a connected marked anchor.
+Its total ordered weight is at most mu^2/2.
+The inverse second moment bounds one-link weight by (1+o(1))*mu.
+Thus some cycle always has enough main-component multi-link partners to give a long chain.
+
+Second, use two nested girth deletions.
+Delete maximal disjoint cycles through D0=.01logr, then extend through D1=.1logr.
+The larger deletion yields a chain with about r^.05 nested separators.
+Restore all deleted cycles longer than D0.
+Only O(r^.01 polylogr) vertices remain deleted, so almost all full chain blocks are clean.
+They have zero degree deficit and O(logr) boundary.
+The spectral test gives cycle weight Omega(r^.05/polylogr).
+The inverse moment bound gives weight O(r^kappa), a contradiction.
+
+The separate file second-order-two-scale-extensions.tex reaches the critical marked size:
+
+  |P| <= r/(1000A logr),  comp(Gamma[P]) <= logr/10000.
+
+It also contains the direct cubic-extremizer transfer to unrestricted cycle counts.
+This avoids the marked cubic-reduction dependency in the transfer itself.
+
+12. Smaller explicit constants
+------------------------------
+Full parameter audit: second-order-two-scale-constants.tex.
+Status: complete independent four_regular audit PASS.
+The original audited proof remains unchanged.
+
+The new parameters are A=112, t=1024, D0=.48logr, D1=.98logr,
+and kappa*=2^(-1050).
+Paired trace powers start at 2logr+10loglogr.
+The initial cycle mass exceeds2.005, sufficient for the global chain argument.
+The link coefficient is below.235, while the smaller girth gives exponent.24.
+The chain scale is r^.49, while the restored deletion scale is r^.48.
+These margins preserve the proof.
+The marked-set conditions become
+
+  |P| <= r/(112000logr),  comp(Gamma[P]) <= logr/100.
+
+The numeric limits were checked with60-digit decimal arithmetic:
+  initial mass >=2.008650493676839...;
+  link coefficient <=0.228834612692939....
+These checks support the displayed numerical margins, not the structural proof.
+
+13. Further half-exponent results
+--------------------------------
+The shortest-path layer encoding now gives
+
+  P_st(N)>=(1/2+eps)2^b ==> c(N)<=K_eps 2^(b/2)
+
+for every normalized two-pole.
+The geometric endpoint sum removes the earlier polynomial factor.
+Full proof: second-order-high-path-cycle-tradeoff.tex.
+Our independent audit passes, including the multigraph and bridge cases.
+
+For normalized three-poles, two high pair counts force the third count
+to be O_eps(2^(b/2)).
+The universal15/16 path gap and the one-full-pair classification then give
+
+  P_ab+P_ac+P_bc <=2^(b+1)+O(2^(b/2)).
+
+Full proofs: second-order-three-pole-tradeoff.tex and second-order-one-full-tripole.tex.
+Root and four_regular independently audited the three-pole proof.
+Our independent audit passes the one-full lemma.
+These results yield c(G)<=2^(r-1)+O(2^(r/2)) for every cubic graph with
+a cyclic cut of size at most three.
+
+The random_hosts agent's four-cut state analysis gives
+c(G)<=2^(r-1)+O(r^8*2^(r/2)) when both four-cut shore ranks exceed an absolute threshold.
+Our independent audit passes both second-order-four-cut-states.tex and
+second-order-four-cut-large-shores.tex.
+Bounded-rank four-cut shores are not covered by that theorem.
+The unrestricted O(r*2^(r/2)) target remains open in this research programme.
+Publication priority of these new deductions has not been established.
+
+14. Symmetric pair averaging and further cut-state progress
+---------------------------------------------------------
+The separate refinement second-order-two-scale-symmetric-pairs.tex improves
+the unrestricted polynomial exponent to kappa=2^(-145).
+Its full independent four_regular audit passes.
+The original two-scale proof remains unchanged.
+
+The main improvement restricts the far-pair comparison to the symmetric
+relation of disjoint, non-edgejoined pairs with at least two links.
+If its total ordered weight is M, at most M/2 consists of far orientations.
+The inverse second moment gives M >= mu^2-(1+o(1))*mu.
+Thus cycle mass mu>1 suffices for a positive main-component partner weight.
+Parameters A=15, t=128, D0=.49logr and D1=.99logr then apply.
+The paired-trace supply is greater than1.005.
+The link coefficient is less than.244, below the girth margin.245.
+
+The four-cut analysis now covers every cyclic four-edge cut.
+Fixed-component cycle-packings satisfy O_{j,eps}(b^(j-1)*2^(b/2)).
+For two cycles, this gives a linear factor.
+The equal-pairing subtraction cancels the product of the two dominant cap terms.
+The resulting sharp-order four-cut error is O(r*2^(r/2)).
+The root and four_regular agents own the final combined statement.
+Our independent audits pass the base four-cut proof and the fixed-component encoding.
+
+15. Five-pole restrictions
+-------------------------
+Three new files give rigorous five-terminal inputs:
+
+  second-order-five-pole-return-forests.tex
+  second-order-positive-port-localization.tex
+  second-order-three-arm-isolated-port.tex
+
+The first controls forests whose four leaf ports are all far from a center.
+If all four center-to-leaf path densities exceed1/2 by a fixed amount,
+the four-leaf forest count is O(2^(h/2)).
+The proof has one global minimum layer, so no polynomial factor occurs.
+
+The second gives exact localization beside a saturated terminal pair.
+For a tripole with P_ac=2^h and P_ab>=delta*2^h,
+
+  dist(b,c) <=2log2(3/(2delta))+3,
+  P_ab*P_bc <=7*2^(3h/2).
+
+It also handles three full center arms and a fixed positive fourth arm.
+The resulting four-leaf forest count is O_delta(2^(h/2)).
+
+The third removes the positive fourth-arm requirement.
+For a five-pole with P_ca1=P_ca2=P_ca3=2^h, it proves
+
+  F_a1a2a3a4 <= C*(P_a4a1+P_a4a2+P_a4a3)+C*2^(h/2)
+
+with an absolute constant C.
+Exact saturation puts the first three leaves in a bounded terminal tail
+of the final saturated two-pole piece.
+An earlier fourth port forces the other returning path to stay in that tail.
+A fourth port inside the tail gives the geometric minimum-layer bound.
+This includes series bridges and several subdivisions of one edge.
+Both four_regular and random_hosts completed independent full audits, with PASS results.
+
+The root's aggregate theorem attaches a marked trivalent tree to all ports.
+For fixed k, the total normalized forest mass is at most2^(k-2)+o(1).
+For five ports, the fifteen path/forest totals therefore have sum at most8+o(1).
+Any critical limiting energy profile is Boolean, with exactly eight entries equal to one.
+Our independent audit passes this reduction.
+
+The separate saturated-terminal-avoidance lemma by four_regular also passes our audit.
+At least half the relevant paths avoid the other endpoint of a saturated pair.
+For a full K2,2 plus an isolated fifth port, it concentrates forest mass
+on common cap pairings that cancel in the exact gluing formula.
+The remaining five-cut analysis is coordinated by the root and random_hosts agents.
+No complete five-cut theorem is claimed in these notes.
+
+16. High terminal-path density forces a small cyclic cut
+------------------------------------------------------
+New proofs:
+
+  second-order-high-density-small-cut.tex
+  second-order-high-density-protected-cuts.tex
+
+Both have complete independent PASS audits from four_regular and random_hosts.
+For fixed k and eps>0, a sufficiently large normalized k-pole with
+P_st>=(1/2+eps)*2^h forces a cyclic cut of size at most four in every cubic completion.
+An explicit threshold is
+
+  h >=(k+1)*(9ceil(C_eps)+8k+9).
+
+Four consecutive internal distance layers of size two contain a digon or square.
+If an interlayer cut has four simple edges, it is K2,2.
+Otherwise the three cut sizes are all two or all three.
+The first case has two middle rungs, and the second has a common-neighbor square.
+Additive stability leaves only O(C_eps) larger layers.
+Deleting the layers touched by restored ports leaves two disjoint short cycles.
+Series bridges are handled by two untouched whole pieces or one large piece.
+
+The protected version avoids any prescribed m vertices, with threshold
+
+  h >=(k+m+1)*(9ceil(C_eps)+8k+4m+9).
+
+Its two cyclic vertex sets also avoid every original port.
+This permits fixed added edges to be removed after finding the small cuts.
+In particular, for a large five-pole inside a cubic graph with no cyclic cut<=4,
+adding any edge ij gives the unconditional inequalities
+
+  a_kl+U_ijkl-u_ij|kl <=1+o(1).
+
+No positive-density assumption on a_ij is needed.
+The same context forces every original path coordinate to be <=1/2+o(1).
+
+An exact independent local checker covers all190 admissible four-layer strips.
+All contain a digon or square, including every possible parallel-edge case.
+Files: check_path_four_thin_layers.py and path-four-thin-layer-checks.json.
+
+The independent five-pole Boolean support checker covers all1024 labeled graphs.
+It finds14 triangle-free isomorphism classes and exactly five initial critical supports.
+Files: check_path_five_boolean_supports.py and path-five-boolean-support-checks.json.
+Our full audit of second-order-five-cut-large-shores.tex passes.
+The new unconditional inequalities now support a shorter all-five-cut argument,
+which the root and four_regular agents are writing separately.
+
+17. Unrestricted endpoint-scale improvement after Fable's parallel-link lemma
+---------------------------------------------------------------------------
+Fable's new fable-parallel-links.md proves that small cyclic components
+between two connected regions have an excess-independent count bound2^(t+1).
+Retain one joining component to connect the core.
+All other complementary regions then have pairwise independent zero-boundary events.
+Adding the internal-nonzero condition preserves that pairwise independence.
+The elementary second moment gives the claimed count whenever the forest probability exceeds1/2.
+
+Our independent full audit of Fable's Theorems E and X passes.
+Theorem E gives every exponent kappa<1/3 using the old cut theorem.
+Theorem X gives every exponent kappa<1/2 using exponential cut packing.
+Clean blocks can use the original one-eigenvalue spectral supply separately.
+This removes the need for the multi-mode eigenvalue argument in the new proof.
+
+The root proposed variable parameters that reach an endpoint-scale error.
+The complete extension is written in:
+
+  second-order-parallel-links-endpoint.tex
+  second-order-parallel-links-log-five-half.tex
+
+Both files have complete independent line-level PASS audits from four_regular
+and random_hosts, after repairing the vacuous strict inequality when mu=0.
+The conservative log7 and log6 proofs remain in the first file.
+The second file gives the strongest proved estimate:
+
+  psi(r) <=2^(r-1)+O(2^r*(log r)^(11/2)/sqrt(r)).
+
+The parameters are x=log2r, z=log2x, A=6e^168,
+t=floor(z-2log2z), D0=ceil(8A*x/z), and
+D1=floor(x-3z-B), where2^B>=10^6A.
+The sharper branch of the exponential cut proof gives
+
+  |Q| <2^(D+1)*max(5D+1, ln(1/(2eps))) <=12x*2^D.
+
+Thus S1 has size at most12*2^(-B)*r/x, with fixed spectral loss below.01.
+The initial cycle weight still exceeds20.
+The excess-independent link bound is at most3A*x/z,
+while s0>=4A*x/z-2, so all exceptional-pair errors vanish.
+The chain has order sqrt(r)/x^(9/2).
+Grouping O(x) gaps gives order sqrt(r)/x^(11/2) clean blocks.
+Each block contributes cycle weight at least one.
+Taking eps=M*x^(11/2)/sqrt(r), with fixed M chosen after the block constant,
+contradicts the inverse second-moment upper bound.
+The direct cubic-extremizer transfer preserves this order of error.
+
+The stronger unrestricted half-exponent target O(r*2^(r/2)) remains open.
+It is now proved for every cubic graph with a cyclic cut of size at most five.
+Our independent full audit of second-order-five-cut-universal-crossing.tex passes.
+
+18. Six-cut completion and bounded-seven-shore progress
+------------------------------------------------------
+The general fixed-cap theorem is saved in second-order-path-six-caps.tex.
+It permits disconnected caps and new terminal vertices.
+A cap with q attachments, rank g, and c components increases rank by q+g-c.
+Protected high-density path bounds give the corresponding exact forest-state inequalities.
+The star and binary-tree cap inequalities exclude the old half-integral six-pole relaxation witness.
+This proof has a full independent PASS audit from random_hosts.
+
+The geometric theorem in second-order-path-six-four-sector-planarity.tex proves:
+if every four-terminal forest sector is full in a subcubic k-pole, k>=6,
+then the graph is planar.
+A K3,3 subdivision assigns all ports to its nine core paths.
+Some square omits at least four assigned ports, all in one complementary component.
+A four-port parity join there, together with the square, gives a missing forest state.
+Root, four_regular, and random_hosts have full independent PASS audits.
+
+Together with saturated-pair planarity and the two-large-shore six-cut theorem,
+this proves the sharp O(r*2^(r/2)) error for EVERY cyclic cut of size at most six.
+The complete root assembly is second-order-root-all-six-cuts.tex.
+Our independent line-level audit passes.
+
+For seven ports, the grid lemma in second-order-path-six-grid-count.tex proves
+at least eleven distinct missing four-terminal forest sectors in every nonplanar pole.
+Its proof is analytic; an independent exact checker covers all6435 port compositions.
+All three other agents have full line-level PASS audits.
+The new path-seven-bounded-shores.tex assembles the exact quantum argument
+for every fixed bound on one seven-cut shore's rank.
+There is no all-seven-cut theorem at this checkpoint.
+
+19. Fixed shortest cycles force a strict half-bound deficit
+----------------------------------------------------------
+The root proposed a first-divergence decomposition around a fixed cycle.
+Our path-fixed-girth.tex extends it to a shortest cycle with disconnected complement.
+For each fixed g>=5, a cubic graph of rank r and girth g with no cyclic cut<=4 satisfies
+
+  c(G) <=2^(r-1)-2^(r-g-1)+o_g(2^r).
+
+The outside neighbors of a shortest cycle are distinct.
+Every component of its complement has minimum degree2 and therefore positive rank.
+After deleting p initial vertices of the opened cycle, the target component has rank<=r-1-p.
+Its terminal paths are bounded by the fixed-pole high-density small-cut theorem.
+The final pendant target is deleted and its terminal moves to its outside neighbor.
+The geometric sum gives the strict deficit above.
+Root, four_regular, and random_hosts independently audited this proof in full.
+
+The finite version uses B(g,eps)=(g+1)(9ceil(C_eps)+8g+9) and gives
+
+  c(G) <=2^(r-1)-2^(r-g-1)
+          +eps*(2^(r-1)-2^(r-g))+E(r-1)+1+(g-1)*2^B,
+
+where E(s)=max(psi(s)-2^(s-1),0).
+This gives explicit sufficient conditions for slowly growing girth.
+The dependence of C_eps remains the limitation in that quantitative consequence.
+In particular, any above-half sequence without cyclic cuts<=4 must have girth tending to infinity.
+The unrestricted sharp error remains open.
+
+20. Sharp order for every fixed cyclic cut order
+------------------------------------------------
+The deletion induction in path-fixed-cut-induction.tex supersedes the need
+for separate six-cut and seven-cut state classifications for this scope.
+All previous independent state proofs are preserved.
+
+Let G have minimum cyclic cut order k>=6.
+Delete one edge of a minimum cyclic cut and suppress its two degree2 endpoints.
+The resulting graph G' has rank r-1, minimum cyclic cut order k-1,
+and unchanged ranks on the two cut shores.
+Any cyclic cut of G' lifts through the subdivisions and then gains at most
+one boundary edge when the deleted edge is restored.
+This proves the exact minimum-cut reduction.
+
+The cycles through the deleted edge are terminal paths in G-e.
+The high-density small-cut theorem for two-poles gives their count
+at most(1/2+o(1))*2^(r-1), uniformly in G and the chosen edge.
+The genuine-five-cut theorem has the uniform base estimate31/64*2^r+o(2^r).
+Induction therefore proves, for every fixed k>=5,
+
+  c(G) <= (1/2-2^(-k-1)+o_k(1))*2^r.
+
+The root, four_regular, and random_hosts agents independently audited
+this complete written proof and issued PASS.
+Combining with the sharp cyclic<=4 theorem proves
+
+  c(G) <=2^(r-1)+O_K(r*2^(r/2))
+
+for every fixed K and every cubic graph with a cyclic cut of size<=K.
+Thus the remaining unrestricted counterexample sequence, after excluding
+the sharp four-cut class, must have cyclic connectivity tending to infinity.
+
+The appended finite recurrence defines q(s) as the uniform normalized
+edge-deletion terminal-path excess above1/2, and a5(s) as the base-five error.
+It gives
+
+  c(G)/2^r <=1/2-2^(-k-1)
+    +2^(-k+5)*a5(r-k+5)
+    +sum_(i=0)^(k-6) 2^(-i-1)*q(r-i).
+
+This permits growing k if r-k tends to infinity and2^k*max q tends to zero.
+A sufficient explicit threshold is
+
+  r-k+5 >=max(10,R5,B_(2,2^(-k-3))),
+
+which yields c(G)<= (1/2-2^(-k-2))*2^r.
+The remaining quantitative obstacle is the inverse dependence of q on
+our additive stability constant C_epsilon.
+The unrestricted O(r*2^(r/2)) bound remains open.
+
+21. Additional exact seven-state reductions, retained independently
+-----------------------------------------------------------------
+path-six-seven-star-obstruction.tex proves that a critical seven-cut
+limiting profile needs at least two active six-terminal sectors.
+The proof uses two disjoint weighted triangle covers on five vertices.
+Their total masses are at least10,6,4,3,0 when0,1,2,3,>=4edges are missing.
+A five-type complement-graph argument proves the126-versus124 contradiction
+when exactly one six-sector is active.
+These proofs have independent root/four_regular PASS audits.
+
+path-six-matching-support.tex proves that any three distinct perfect
+matchings on six vertices have at most two common compatible partners.
+Thus one shore's active-six pairing support has size at most two.
+The direct five-case proof has a four_regular full PASS audit.
+The standard-library checker verifies all455 matching triples.
+
+path-six-seven-pure-pair-notes.tex records a weaker finite observation:
+a bridgeless subcubic graph has an alternative forest pairing for every
+four-terminal pairing, and normalized poles with<=7ports inside a cubic
+completion without cyclic<=4cuts are bridgeless.
+The resulting gap is only2^(-h), so it does not rule out limiting purity.
+No rank-independent concentration gap is claimed.
+
+22. Quantitative localization and growing cut orders
+
+The disconnected localization identity removes the original four-class component loss.
+The retained set need not be connected; only its complement must be connected.
+Its localized rank is (|R|+boundary)/2+1, independent of its number of components.
+The endpoint forest theorem therefore gives a good-set threshold
+R_eps=O(eps^{-2}(log(2/eps))^{11}).
+The additive path constant is at most exp(O(eps^{-2}log^{11}(2/eps))),
+and the edge-deletion excess is
+q(r)=O((loglog r)^{11/2}/sqrt(log r)).
+The full proof, path-quantitative-localization.tex, passed root, random_hosts,
+and four_regular line audits, including its constant-loss endpoint cut range.
+
+The finite cut recurrence now gives strict below-half through
+k <= .5 loglog r - 5.5 logloglog r - C.
+All logarithms here are binary. This is not the unrestricted sharp bound.
+
+23. Girth-dependent fast edge choices
+
+path-girth-surplus-cuts.tex selects a retained-cut edge at each smoothing step.
+Internal shore cycles lose at most one original vertex per stage.
+A shorter crossing cycle supplies a short alternate path; otherwise Moore balls do.
+The initial surplus theorem used (4+eta)loglog r.
+The independently audited larger-marker theorem now reduces this to
+(2+eta)loglog r, with the same growing-cut endpoint
+k <= .5 log r - 5.5 loglog r - C_eta.
+The separate weighted-girth corollary uses the rank-independent path excess
+O(g^{11/2}2^{-g/4}); summing its errors has convergent factor2^{-3i/4}.
+All initial and weighted-girth proofs passed three independent audits.
+
+The proposed universal short-edge property of minimum cuts is false.
+The random_hosts chain construction and four_regular explicit honeycomb instance
+both passed my mathematical audit. I checked the primary existence inputs:
+Wormald1981 cyclic connectivity at fixed girth, and Nedela-Skoviera1995 Theorem17.
+Every edge of the unique minimum cut in these families can have alternate distance
+linear in the rank. These do not contradict the selected-edge girth-surplus theorem.
+
+24. Higher-terminal affine forest stability
+
+A new root idea extends localization to a BFS tree marker joining all ports.
+Such a marker meets every root-distance layer in at most k vertices.
+The window boundary is now at most
+3m_left+3m_right+3k(span+3).
+A good-set threshold max(2R_eps,2^100(k+1)^2) still bounds every full layer.
+
+For normalized k-poles of rank h>=2 with k<=girth g, theta counting first gives
+k<=6(h-1). The entropy Moore argument then gives h>=2^{g/6-O(1)}.
+Bootstrapping yields h>=2^{g/2-5} at large girth.
+A port-free cubic ball of radius floor(g/2-log k-10) gives a layer of size
+at least2^{g/2}/(2^11 k g).
+Comparing with the localized width bound proves, uniformly over EVERY even
+subset T of the ports,
+  (#T-join forests)/2^h <=1/2+O(g^{13/2}2^{-g/4}).
+The full fragment is path-high-girth-terminal-forests.tex.
+The root, four_regular, and random_hosts all passed its line-level audit.
+
+A direct sector-product corollary gives c(G)/2^r<=1/4+o_g(1) when a minimum
+cyclic cut has two noncycle shores. Combined with fixed-girth exclusion, any
+remaining above-half sequence must have cyclic connectivity equal to girth,
+and EVERY minimum cyclic cut must isolate a shortest cycle.
+The rank-one exception is essential: a cycle with all vertices marked as ports
+has every nonempty affine terminal-join class fully forest.
+
+25. Finite evidence for the rank-distance target
+
+The independent catalogue extension check_path_rank_deficit.cpp has completed
+all556471 connected simple cubic graphs on at most20 vertices.
+For every nonbridge edge e it counts paths in G-e exactly from the cycle space
+and computes terminal distance by BFS. Results are saved in
+path-rank-deficit-catalog-results.json.
+The maximum of (P/2^b-1/2)*2^{(b-ell)/2} at b=10 is1.8009125833344883,
+attained at ell3 and P675. Its ratio to b is.18009125833344883.
+No counterexample to a linear-rank prefactor appears in this finite range.
+The known Horak-Kim family already forces a linear prefactor asymptotically.
+This catalogue does not prove any unrestricted rank-distance estimate.
+
+26. The unrestricted sharp-order bootstrap is now proved and audited
+
+The earlier open-status entries above are chronological research notes.
+The full unrestricted upper bound has now been assembled:
+  c(G) <= 2^(r-1) + K r2^(r/2)
+for an absoluteK and every connected graph of rankr.
+The known cyclic-square lower family shows that this second-order scale is sharp.
+The proof is in second-order-unrestricted-sharp-bootstrap.tex.
+Root authorized promotion after full mathematical audits.
+This is not a Lean formalization or an external peer-review claim.
+
+The decisive new step is an excess-independent packing recurrence AFTER
+previous deletions. In a long terminal-forest class, divide the ordered
+articulations into segments containingH cyclic regions. At most|S|+1 segments
+meet the previous deletion set or the connected marker. Two clean segments
+have small boundaries and high girth; each conditional affine forest law is
+at most3/5, and their joint forest probability is at most9/25. This bounds
+all class lengths without dividing by the forest excess.
+
+Iterating the resulting recurrence raises girth toD with
+  |S(D)|+1 <=2^(2D+O(log^2D)).
+AtD0~sqrt(logr), deletions are subpolynomial. AtD1 betweenlogr/16 andlogr/8,
+there are at mostr^(1/4+o1) deletions. The familiar spectral/link argument
+then produces r^(1/32)/polylogr nested separators under the sole assumption
+forestprobability>1/2. Restoring full blocks and discarding those touchingS0
+leaves two clean large blocks. Their conditional3/5 estimates contradict
+that assumption. Thus the marked forest probability is EXACTLY at mosthalf
+above one fixed absolute girth threshold.
+
+The cycle proof uses general rank induction. The established sharp bound for
+cyclic cuts<=4 handles small cuts; fixed-girth deficit handles the remaining
+bounded-girth cases. At large girth the exact-half forest theorem bounds every
+shortest-cycle edge count by2^(r-2), and deleting that edge preserves the sharp
+inductive bound. Cubic extremizer normalization and a separate loop case
+cover general connected graphs.
+
+A focused dependency alternative is now available:
+  path-qualitative-affine-bootstrap.tex
+  four-unrestricted-iterative-packing.tex
+It uses only the original one-marked-cycle forest estimate at fixed error11/20,
+with |E(W)|<=rho/log^2rho. It does NOT require the later quantitative endpoint
+forest theorem. The localization cap converts outside-edge forest probability
+to the required interior law because its remaining spokes are pendant.
+All original audited quantitative fragments remain preserved.
+
+My complete independent audit is saved in
+path-sharp-bootstrap-independent-audit.txt.

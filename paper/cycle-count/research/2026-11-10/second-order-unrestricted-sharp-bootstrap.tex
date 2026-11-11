@@ -1,0 +1,219 @@
+% Audited mathematical working proof: root, four_regular, and path_stability passed full independent line audits.
+\section{A bootstrap to the unrestricted sharp-order error}
+\label{sec:unrestricted-sharp-bootstrap}
+
+This audited mathematical working proof combines the excess-free girth-raising theorem with two conditional clean-block estimates.
+The original qualitative marked-cycle estimate suffices through localization and affine-forest bounds.
+The independently established polynomial forest theorem supplies a stronger version of that input.
+Thus the argument does not assume the sharp conclusion that it seeks to prove.
+All logarithms have base two.
+
+\begin{theorem}[An exact half bound above a fixed girth]
+\label{thm:bootstrap-exact-half-forest}
+There are absolute integers $D_*,R$ such that the following holds.
+Let $G$ be a connected cubic multigraph of rank $r\ge R$.
+Let $P$ be connected or empty, with $|P|\le3\log r$.
+If
+\[
+ \operatorname{girth}(G-P)\ge D_*,
+\]
+then
+\[
+ \Pr(\xi_G-P\text{ is a forest})\le\frac12.
+\]
+Here an acyclic graph has infinite girth.
+\end{theorem}
+
+\begin{proof}
+Take $D_*$ from Theorem~\ref{thm:four-excess-free-girth-raising}.
+If $P$ is empty, the only even forest is the empty state, of probability $2^{-r}$.
+Assume $P$ is nonempty and, for contradiction, that the forest probability exceeds one half.
+Write $x=\log r$, $z=\log x$, and put
+\[
+ A=6e^{168},\qquad
+ L=\lfloor Ax\rfloor,\qquad
+ t=\lfloor z-2\log z\rfloor.
+\]
+Use the common forward dyadic sequence $2^jD_*$.
+Let $D_0$ be its first value at least $\sqrt x$, and let $D_1$ be its first value at least $x/16$.
+For sufficiently large $r$,
+\[
+ \sqrt x\le D_0<2\sqrt x,\qquad
+ x/16\le D_1<x/8,\qquad D_*<D_0<D_1.
+\]
+Apply the maximal-packing recurrence from the girth-raising theorem along this one sequence.
+It supplies nested sets $S_0\subseteq S_1$, disjoint from $P$, such that
+\[
+ J_j=G-(P\cup S_j)
+\]
+has girth greater than $D_j$, and
+\begin{align*}
+ \log(|S_0|+1)
+ &\le2D_0+K\log^2(D_0+2)=o(x),\\
+ \log(|S_1|+1)
+ &\le2D_1+K\log^2(D_1+2)
+ \le x/4+o(x).
+\end{align*}
+In particular,
+\[
+ |S_0|=r^{o(1)},\qquad |S_1|\le r^{1/4+o(1)}=o(r/x).
+\]
+Each $S_j$ is the vertex union of a maximal disjoint family of cycles of length at most $D_j$ outside $P$:
+the construction only adds disjoint cycles, and its final complement contains no further such cycle.
+
+We use the non-backtracking trace and local cycle-weight estimates from Section~\ref{sec:polynomial-foundations}.
+The link and moment estimates are Lemmas~\ref{lem:sharp-uniform-links} and~\ref{lem:sharp-half-moment}.
+Their required parameters are verified here.
+Write
+\[
+ s_1=\lfloor(D_1-1)/2\rfloor\ge x/32-2.
+\]
+The graph $J_1$ is simple, has order $v_1=2r+o(r)$, and has degree deficit
+$d_1\le3(|P|+|S_1|)$.
+Consequently $Ld_1/(2v_1)=o(1)$ and $L^2 2^{-s_1}=o(1)$.
+The even trace sum over $6x\le\ell\le L$ therefore gives
+\[
+ \mu_1:=
+ \sum_{\substack{C\subseteq J_1\\|C|\le L}}2^{-|C|}
+ \ge\left(\frac14-o(1)\right)\ln(A/6)>20.
+\]
+
+The large-scale link estimate applies because $8\le D_1\le L$ and
+$2(t+2\lfloor D_1/8\rfloor)\le D_1$ for large $r$.
+The marked set is connected, so it gives the bound
+\[
+ b_1\le
+ 1+\frac{2L}{t+1}+2^{t+1}+578(L/D_1)^2
+ \le\frac{3Ax}{z}
+\]
+on the number of links between disjoint cycles of length at most $L$ in $J_1$.
+The exceptional-pair error is
+\[
+ \eta_1\le\frac32\,2^{b_1}L^3 2^{-s_1}
+ \le r^{-1/32+o(1)}=o(1).
+\]
+Only the first refined moment conclusion is needed:
+\[
+ W_{2,1}>\mu_1^2-(1+\eta_1)\mu_1.
+\]
+It follows from forest probability greater than one half, without a lower bound on that excess.
+No moment estimate is used at scale $D_0$.
+
+Apply Lemma~\ref{lem:sharp-nested-chain}, with the connected set $P$ as anchor.
+It gives an auxiliary cycle $C\subseteq J_1$ of length at most $L$, a neighbor $u$ of $C$, and a nested chain
+$C_1,\ldots,C_T$ of vertex-disjoint cycles in the component of $G-V(C)$ containing $P$.
+Each chain cycle separates $u$ from $P$, and
+\[
+ T\ge\frac{8\,2^{s_1}}{L^3}
+ \ge\frac{2}{A^3}\frac{r^{1/32}}{x^3}.
+\]
+For reference, the moment inequality leaves partner weight at least eight after discarding ordered far pairs and adjacent pairs.
+Choosing one of at most $L$ neighbors of $C$ leaves weight at least $8/L$.
+The local cycle-weight bound $L2^{-s_1}$ and maximal vertex-disjointness give the displayed chain length.
+
+Let $H=G-V(C)$, and let $U_i$ be the $u$-component of $H-V(C_i)$.
+The nesting gives $U_i\subseteq U_{i+1}$ and $C_i\subseteq U_{i+1}$.
+Put $q=\lceil128A^2x\rceil+2$.
+Choose disjoint index intervals $[a,b]$ with $b-a=q$, leaving a separator between successive intervals.
+For each one, take the full block
+\[
+ R(a,b)=U_b\setminus\bigl(U_a\cup V(C_a)\bigr).
+\]
+These blocks are pairwise disjoint.
+Each contains all $q-1$ intermediate chain cycles.
+Since each of those cycles has length greater than $D_1$,
+\[
+ |R(a,b)|\ge(q-1)(D_1+1)\ge8L^2
+\]
+for sufficiently large $r$.
+Every edge of $H$ leaving a block ends on $C_a$ or $C_b$, so its boundary in $H$ has at most $2L$ edges.
+
+Discard blocks meeting a neighbor of $C$, a vertex of $S_0$, or a vertex of $P$.
+This removes at most $L+|S_0|+1$ blocks.
+The last bound uses connectedness of $P$: it cannot cross a block boundary, since that boundary ends on chain cycles disjoint from $P$.
+The total number of blocks is of order at least $r^{1/32}/x^4$.
+Thus at least two remain after the $r^{o(1)}$ discards.
+
+Every retained block avoids $P\cup S_0$, has girth greater than $D_0$, and has boundary at most $2L$ in $G$.
+The boundary statement follows because the block meets no neighbor of the removed auxiliary cycle $C$.
+Finally,
+\[
+ \frac{D_0}{\log(L+2)}\longrightarrow\infty.
+\]
+Proposition~\ref{prop:path-two-clean-blocks} therefore bounds the original forest probability by $9/25$.
+This contradicts the assumption that it exceeds one half and proves the theorem.
+\end{proof}
+
+\begin{theorem}[The unrestricted sharp-order upper bound]
+\label{thm:bootstrap-unrestricted-sharp-error}
+There is an absolute constant $K$ such that every finite graph of cycle rank $r\ge1$ satisfies
+\[
+ c(G)\le2^{r-1}+Kr2^{r/2}.
+\]
+The order of the second term is necessary on an infinite sequence of ranks.
+\end{theorem}
+
+\begin{proof}
+Join distinct components by bridges.
+This preserves the cycle count and the rank $r=|E|-|V|+\operatorname{comp}$, so it suffices to prove the connected case.
+
+We use two established inputs.
+First, the extremal cycle count $\psi(r)$ is attained by a finite connected cubic multigraph for $r\ge2$.
+Attainment starts from a finite graph because the nonempty set of possible cycle counts is a set of integers bounded by $2^r-1$.
+The reduction deletes leaves, suppresses degree-two vertices, and replaces each higher-degree vertex by a trivalent tree.
+It preserves rank and injects the original cycles.
+Multigraphs and simple graphs have the same extremal value because subdivision preserves rank and cycle count.
+Second, Theorem~\ref{thm:sharp-order-four-cut-error} gives the claimed order, with an absolute constant $K_4$, for loopless cubic multigraphs with a cyclic cut of size at most four.
+
+Choose an absolute rank threshold $R_0$ above that in
+Theorem~\ref{thm:bootstrap-exact-half-forest} and above the fixed-girth deficit thresholds for every girth below $D_*$.
+The latter thresholds exist by Corollary~\ref{cor:path-unbounded-girth-reduction}.
+Increase $R_0$ if needed for the cubic Moore bound $g\le3\log r$.
+Choose $K\ge K_4$ large enough that the asserted bound holds for every rank below $R_0$.
+This is possible using the elementary bound $\psi(r)\le2^r-1$.
+We prove the theorem by strong induction on the rank.
+
+Let $r\ge R_0$, and choose a cubic multigraph attaining $\psi(r)$.
+If it has a loop $e$, that loop is the only cycle containing $e$.
+Deleting $e$ leaves a connected graph of rank $r-1$, so the induction hypothesis gives
+\[
+ c(G)=c(G-e)+1
+ \le2^{r-2}+K(r-1)2^{(r-1)/2}+1
+ \le2^{r-1}+Kr2^{r/2}.
+\]
+Assume henceforth that $G$ is loopless.
+
+If it has a cyclic cut of size at most four, apply the established bound with constant $K_4$.
+Otherwise its girth is at least five at sufficiently large rank:
+a cycle of length at most four has boundary at most four and leaves a cyclic exterior once the rank exceeds an absolute constant.
+If its girth is below $D_*$, the fixed-girth deficit gives
+$c(G)<2^{r-1}$.
+These cases are complete.
+
+In the remaining case, choose a shortest cycle $W$.
+It has at most $3\log r$ vertices, and $G-V(W)$ has girth at least $D_*$.
+Theorem~\ref{thm:bootstrap-exact-half-forest}, with $P=V(W)$, gives forest probability at most one half.
+For any edge $e$ of $W$, each cycle containing $e$ gives two distinct even states by toggling $W$.
+Both restrictions outside $V(W)$ are forests.
+Consequently the number $c_e$ of cycles containing $e$ satisfies
+\[
+ 2c_e\le\frac12\,2^r,
+ \qquad c_e\le2^{r-2}.
+\]
+The graph $G-e$ is connected and has rank $r-1$.
+Apply the induction hypothesis to this general connected graph:
+\[
+ c(G)=c(G-e)+c_e
+ \le2^{r-1}+K(r-1)2^{(r-1)/2}
+ \le2^{r-1}+Kr2^{r/2}.
+\]
+This completes the induction.
+It does not require $G-e$ to remain cubic.
+
+Finally, the cyclic-square family from the sharp four-cut theorem has ranks $r=2q+1$ and excess
+\[
+ \left(2q+\frac12\right)2^q-3q
+ =\Theta(r2^{r/2}).
+\]
+Thus the error term cannot be replaced uniformly by $o(r2^{r/2})$.
+\end{proof}

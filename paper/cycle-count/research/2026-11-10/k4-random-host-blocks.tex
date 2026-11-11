@@ -1,0 +1,112 @@
+\section{Integer bands from traceable subdivisions of $K_4$}
+\label{sec:rhost-k4-bands}
+
+A graph is traceable if it has a Hamilton path.
+Every subdivision below retains one edge of $K_4$ without subdivision.
+This is necessary for the stated spanning-path construction.
+A subdivision with an internal vertex on all six arms has no Hamilton path.
+Indeed, such a path would delete three edges while reducing all four branch degrees.
+Each deleted edge would then meet at most one branch vertex.
+
+\begin{lemma}\label{lem:rhost-k4-bands}
+For each integer $N\ge1$, there are $2(N+1)$ traceable subdivisions of $K_4$ with these properties:
+\begin{enumerate}
+\item Every cycle has length at least $2N+6$.
+\item Every bicyclic core has at least $7N+13$ edges.
+\item Each whole subdivision has at least $14N+15$ edges and at most $15N+14$ vertices.
+\item Their cycle lengths include every integer in $[2N+6,14N+10]$ except possibly $4N+8$.
+\end{enumerate}
+Consequently, adding $2N+4$ individual cycles covers all lengths $3,\ldots,14N+10$.
+The total cycle rank of these blocks is $8N+10$.
+Their total number of vertices is at most $(61N^2+141N+94)/2$.
+\end{lemma}
+
+\begin{proof}
+Label the vertices of $K_4$ by $a,b,c,d$.
+List its six arms in the order
+\[
+ (ab,ac,ad,bc,bd,cd).
+\]
+For each integer $t\in\{0,1,\ldots,N\}$, define two subdivisions by the following arm lengths:
+\begin{align*}
+ A_t&=(8N-2t+3,\ 1,\ N-t+3,\ 2N+2t+3,\ N+t+3,\ 3N-t+3),\\
+ B_t&=(1,\ N-t+2,\ N-t+3,\ 3N-t+3,\ 3N+3t+3,\ 6N+3).
+\end{align*}
+All arm lengths are positive integers.
+The arm $ac$ of $A_t$ and the arm $ab$ of $B_t$ each have length one.
+Every other arm has length at least two.
+
+The six selected cycle lengths in the following table each run through an arithmetic progression with step two.
+The interval gives the two endpoint values, irrespective of direction.
+\[
+\begin{array}{c|cc|cc}
+ \text{band}&\text{cycle in }A_t&\text{length interval}&
+              \text{cycle in }B_t&\text{length interval}\\\hline
+ 0&acd&[2N+7,4N+7]&abc&[2N+6,4N+6]\\
+ 1&acbd&[4N+10,6N+10]&abd&[4N+7,6N+7]\\
+ 2&bcd&[6N+9,8N+9]&acd&[6N+8,8N+8]\\
+ 3&abd&[8N+9,10N+9]&abcd&[8N+10,10N+10]\\
+ 4&abdc&[10N+10,12N+10]&abdc&[10N+9,12N+9]\\
+ 5&abcd&[12N+12,14N+12]&bcd&[12N+9,14N+9]
+\end{array}
+\]
+The unlisted cycles have lengths $10N+7$ in $A_t$ and $8N+11$ in $B_t$.
+These formulas show that every cycle has length at least $2N+6$.
+Each band supplies the two opposite parities.
+The endpoint intervals overlap across all interfaces except the single possible gap $4N+8$.
+Their union therefore contains $[2N+6,14N+10]\setminus\{4N+8\}$.
+
+The total arm lengths are
+\[
+ E(A_t)=15N-t+16,\qquad E(B_t)=14N+15.
+\]
+A bicyclic core in a subdivision of $K_4$ consists of five complete arms.
+For $A_t$, the longest arm is $ab$, so every such core has at least $7N+t+13$ edges.
+For $B_t$, the longest arm is $cd$, tied by $bd$ when $t=N$.
+Every such core therefore has at least $8N+12\ge7N+13$ edges.
+The whole subdivisions have cycle rank three and $E-2$ vertices.
+This proves the edge and vertex bounds.
+
+It remains to verify traceability.
+In $A_t$, omit the edge $ac$.
+Delete the edge at $b$ on the arm $ab$, and the edge at $d$ on the arm $cd$.
+The remaining graph is the spanning path whose branch order is
+\[
+ a,d,b,c.
+\]
+Its endpoints are the internal vertices adjacent to $b$ on $ab$ and to $d$ on $cd$.
+In $B_t$, omit $ab$.
+Delete the edge at $c$ on $ac$, and the edge at $d$ on $bd$.
+The remaining graph is a spanning path with branch order
+\[
+ a,d,c,b.
+\]
+Its endpoints are the internal vertices adjacent to $c$ on $ac$ and to $d$ on $bd$.
+Every arm used to specify these endpoints has an internal vertex.
+
+Add one individual cycle of each length $3,\ldots,2N+5$, and one of length $4N+8$.
+This uses $2N+4$ cycles and fills the prefix and the possible gap.
+The cycle-rank sum is
+\[
+ 3\cdot2(N+1)+(2N+4)=8N+10.
+\]
+The $K_4$ subdivisions together have
+\[
+ \sum_{t=0}^{N}\bigl(15N-t+14+14N+13\bigr)
+ =\frac{57N^2+111N+54}{2}
+\]
+vertices.
+The individual cycles add $2N^2+15N+20$ vertices.
+Adding these expressions gives the claimed total.
+\end{proof}
+
+For a target interval $3,\ldots,T$, set $N=\lceil T/14\rceil$.
+The lemma gives total block rank at most $4T/7+18$.
+All blocks together use $O(T^2)$ vertices.
+If $d=7N$, the whole-edge threshold is at least $2d$, every bicyclic core has at least $d$ edges,
+and every cycle has at least $2d/7$ edges.
+These inequalities are the local density inputs for packing the blocks into a random host.
+The lemma itself does not assert a random-host embedding theorem.
+
+The exact formulas and the Hamilton paths are checked by
+\nolinkurl{check_k4_random_host_blocks.py}.

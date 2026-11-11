@@ -1,0 +1,292 @@
+\section{Two large path counts in a three-terminal graph}
+\label{sec:three-pole-high-pair-tradeoff}
+
+A \emph{normalized three-pole} is a connected loopless multigraph with three distinct degree-two terminals.
+Every other vertex has degree three.
+Its rank $b$ and order $n$ satisfy $n=2b+1$.
+Paths distinguish parallel edges.
+
+\begin{theorem}[Two high pairs force a small third pair]
+\label{thm:three-pole-two-high}
+For every $0<\varepsilon\le1/2$, there is a constant $Q_\varepsilon$ such that every normalized three-pole $T$ satisfies
+\[
+ P_{ac}(T),P_{bc}(T)\ge(1/2+\varepsilon)2^b
+ \quad\Longrightarrow\quad
+ P_{ab}(T)\le Q_\varepsilon 2^{b/2}.
+\]
+One may take $Q_\varepsilon=2^{30C_\varepsilon+20}$, where $C_\varepsilon$ is the additive path-stability constant.
+For a simple three-pole, $2^{18C_\varepsilon+20}$ suffices.
+\end{theorem}
+
+\begin{proof}
+We first explain the use of additive stability in a normalized multigraph.
+Suppress the third terminal $b$ when considering the pair $a,c$.
+Its two neighbors are distinct.
+Otherwise, its pendant digon would contribute rank while avoiding every $a$--$c$ path.
+This would bound the normalized path count by one half.
+The resulting graph is a normalized two-pole $N$ of the same rank and path count.
+
+The additive stability proof applies directly to every shortest terminal path in $N$.
+Indeed, subdividing parallel edges gives a simple graph whose normalized reduction returns $N$.
+No cubic expansion is necessary.
+Thus its terminal distance is at least $b-C_\varepsilon$.
+The same lower bound holds in $T$.
+Repeating the argument for the pair $b,c$ gives
+\[
+ d:=\min\{\operatorname{dist}_T(c,a),\operatorname{dist}_T(c,b)\}
+ \ge b-C_\varepsilon.
+\]
+
+We will also need a shortest $c$--$a$ path $A$ in $T$ with
+\[
+ \beta(T-V(A))\le C_\varepsilon.
+\]
+Let $e$ be the suppressed edge in $N$.
+If $\operatorname{dist}_T(c,a)=\operatorname{dist}_N(c,a)$, choose a shortest path in $N$ that avoids $e$.
+Such a path exists, since any path using $e$ gains one edge when lifted.
+Otherwise, the two distances differ by one, and every shortest path in $N$ lifts to a shortest path in $T$.
+In either case, the residual-rank conclusion of additive stability applies to the chosen path in $N$.
+Its lift has the same residual rank, since the extra vertex only subdivides an edge or becomes a leaf or isolated vertex.
+This proves the required bound.
+
+Assume first that $T$ is bridgeless.
+It has no cut vertex, since it is subcubic.
+Let $L_i$ be its distance layers from $c$.
+Every layer $L_i$ with $1\le i<d$ separates $c$ from both other terminals, so $|L_i|\ge2$.
+The terminal tail $\bigcup_{i\ge d}L_i$ contains both $a,b$.
+Since $n=2b+1$, it follows that $d\le b$.
+Put $\Delta=b-d\le C_\varepsilon$.
+
+Mark $c$, the whole terminal tail, and every internal layer of size at least three.
+The baseline counts are one vertex at $c$, two in each internal layer, and two in the terminal tail.
+Their sum is $2d+1$, leaving excess $2\Delta$.
+Using $w\le3(w-2)$ for $w\ge3$, the marked set has size at most $6\Delta+3$.
+Every remaining layer has exactly two vertices.
+It contains one vertex of $A$ and one vertex outside $A$.
+
+In the multigraph case, mark every whole layer containing an endpoint of a parallel pair outside $A$.
+There are at most $H:=\beta(T-V(A))$ such pairs, since their digons are independent.
+These extra markings add at most $4H$ vertices.
+A parallel pair cannot have just one endpoint on $A$, since each path vertex has at most one incidence outside $A$.
+A parallel pair with both endpoints on $A$ joins consecutive path vertices, by geodesicity.
+
+Fix a simple $a$--$b$ path $P$.
+If $P$ stays in the terminal tail, its entire edge set lies in the marked set.
+Otherwise, let $i<d$ be its minimum distance layer.
+If that layer is not already marked, mark its two vertices.
+The final marked set $B$ therefore satisfies
+\[
+ |B|\le6\Delta+4H+5.
+\]
+Fix all edges of $P$ incident with $B$, with at most $2^{3|B|}$ choices.
+
+Every unmarked layer strictly between $i$ and $d$ carries two strands of $P$.
+Indeed, both path endpoints lie beyond that layer, so every prefix cut meets $P$ evenly.
+Connectedness forces both layer vertices to carry one backward and one forward path edge.
+A same-layer path edge would give an odd prefix crossing.
+Separate backward and forward caps would disconnect the path.
+
+Across consecutive unmarked layers, these strands therefore form a perfect matching.
+The matching is unique unless the cut is $K_{2,2}$ or contains a doubled edge of $A$.
+Each exceptional cut has at most two choices after the extra markings.
+Two such cuts cannot be consecutive, since their shared path vertex would have degree at least four.
+Thus their combined contribution is at most $2^{(d-i)/2}$.
+All remaining edges are fixed by the marked-edge data.
+
+Summing over the minimum layer, and including paths wholly in the tail, gives
+\[
+ \begin{split}
+ P_{ab}(T)
+ &\le 2^{18\Delta+12H+15}
+       \left(1+\sum_{i=0}^{d-1}2^{(d-i)/2}\right)\\
+ &< 5\cdot2^{18\Delta+12H+15+d/2}
+ \le 2^{30C_\varepsilon+20+b/2}.
+ \end{split}
+\]
+For a simple graph, no parallel-edge markings are needed, so the term $12H$ is omitted.
+
+Finally suppose that $T$ has a bridge.
+Every bridge shore contains a cycle.
+Indeed, a shore with $m$ vertices and $p$ original terminals has rank $(m-p+1)/2$, a positive integer.
+The two high path counts force every bridge to separate $\{a,b\}$ from $c$.
+No original terminal can be a bridge endpoint, since the corresponding terminal path would immediately leave a cyclic shore.
+
+Delete one bridge, and retain the shore containing $a,b$.
+It is a normalized three-pole with third terminal at the bridge attachment.
+Its two normalized path densities remain at least $1/2+\varepsilon$, by factorization across the bridge.
+Every $a$--$b$ path stays in this shore.
+Its rank is smaller than $b$.
+Induction on rank proves the same estimate, with the same constant.
+\end{proof}
+
+\begin{corollary}[A large-shore three-edge cut]
+\label{cor:large-three-cut-half-exponent}
+There are absolute constants $B_0,K$ such that the following holds.
+Let $G$ be a connected cubic graph with a three-edge cut whose two shores are normalized three-poles of ranks at least $B_0$.
+Then, writing $r=\beta(G)$,
+\[
+ c(G)\le2^{r-1}+K2^{r/2}.
+\]
+Parallel edges are allowed.
+\end{corollary}
+
+\begin{proof}
+Write the shores as $T_1,T_2$, with ranks $b_1,b_2$.
+Index each shore's terminal pairs by the same three pairs of cut edges.
+Put
+\[
+ f_{ij}=\frac{P_j(T_i)}{2^{b_i}},\qquad
+ f_i=(f_{i1},f_{i2},f_{i3}),\qquad c_i=c(T_i).
+\]
+Each cycle crosses the cut either zero or two times, so
+\[
+ r=b_1+b_2+2,\qquad
+ c(G)=c_1+c_2+2^{b_1+b_2}\langle f_1,f_2\rangle.
+\]
+
+Call a coordinate high when it is at least $2/3$.
+Put $Q=Q_{1/6}$ and choose
+\[
+ B_0\ge\max\{5,\lceil2\log_2(16Q)\rceil\}.
+\]
+The theorem shows that a shore with two high coordinates has third coordinate at most
+$\delta_i:=Q2^{-b_i/2}\le1/16$.
+Consequently, no shore has three high coordinates.
+
+If both shores have two high coordinates in the same positions, then
+\[
+ \langle f_1,f_2\rangle\le2+\delta_1\delta_2.
+\]
+In every other case the dot product is at most $17/9$.
+For two shores with one high coordinate each, this follows from $1+2(2/3)^2=17/9$.
+If exactly one shore has two high coordinates, the bound is at most $1+2/3+(2/3)/16<17/9$.
+If both have two high coordinates in different positions, the bound is at most $1+2/16<17/9$.
+A shore with no high coordinate gives a smaller bound in every case.
+
+If each shore has at least one high coordinate, suppress its unused terminal.
+Theorem~\ref{thm:high-path-cycle-tradeoff} then gives
+\[
+ c_i\le K_{1/6}2^{b_i/2}.
+\]
+The aligned case has crossing excess at most $Q^2 2^{(b_1+b_2)/2}$.
+The other cases have no crossing excess.
+Since $b_1,b_2\ge2$, their internal cycle counts add to at most
+$K_{1/6}2^{(b_1+b_2)/2}$.
+This gives the claimed estimate.
+
+If one shore has no high coordinate, the crossing deficit is at least
+$2^{b_1+b_2}/9$.
+The trivial internal bounds satisfy
+\[
+ c_1+c_2<2^{b_1}+2^{b_2}
+ \le2^{b_1+b_2}/16,
+\]
+because $b_1,b_2\ge5$.
+Thus $c(G)<2^{r-1}$ in this case.
+Taking $K=Q^2+K_{1/6}$ proves the corollary.
+\end{proof}
+
+\begin{theorem}[The three-terminal path sum]
+\label{thm:universal-tripole-sum}
+There is an absolute constant $S$ such that every normalized three-pole $T$ of rank $b$ satisfies
+\[
+ P_{ab}(T)+P_{ac}(T)+P_{bc}(T)
+ \le2^{b+1}+S2^{b/2}.
+\]
+One may take $S=\max\{6,Q_{1/32}\}$.
+\end{theorem}
+
+\begin{proof}
+If one terminal pair is full, Lemma~\ref{lem:one-full-tripole-sum} proves the estimate with constant six.
+Otherwise, Theorem~\ref{thm:terminal-path-saturation-gap} bounds every count by $(15/16)2^b$.
+If their sum is at most $2^{b+1}$, the claim is immediate.
+If their sum exceeds $2^{b+1}$, at least two counts exceed $(17/32)2^b$.
+Indeed, one count at most $15/16$ and two counts at most $17/32$ have normalized sum at most two.
+Apply Theorem~\ref{thm:three-pole-two-high} with $\varepsilon=1/32$.
+It bounds the remaining count by $Q_{1/32}2^{b/2}$.
+The other two counts are each at most $2^b$, proving the theorem.
+\end{proof}
+
+\begin{theorem}[Every cyclic cut of size at most three]
+\label{thm:all-three-cut-half-exponent}
+There is an absolute constant $K_3$ such that every connected loopless cubic multigraph $G$ with a cyclic edge cut of size at most three satisfies
+\[
+ c(G)\le2^{r-1}+K_3 2^{r/2},\qquad r=\beta(G).
+\]
+Here a cut is cyclic when both shores contain a cycle.
+In a cubic graph, every nontrivial three-edge cut is cyclic.
+\end{theorem}
+
+\begin{proof}
+A graph with a bridge has $c(G)\le2^{r-1}$.
+A two-edge cut is covered by Corollary~\ref{cor:cubic-multigraph-two-cut-error}.
+It remains to consider a three-edge cut in a graph with no smaller edge cut.
+
+Each shore is connected.
+Otherwise, its separate components would give two cuts of size at least three within the specified three-edge boundary.
+The three attachment vertices on each shore are distinct.
+If one vertex had two boundary edges, deleting that vertex from its shore would expose a two-edge cut.
+Three boundary edges at one vertex would make that shore a singleton, contrary to cyclicity.
+Thus the shores $T_1,T_2$ are normalized three-poles.
+Their ranks $b_1,b_2$ are positive, and $r=b_1+b_2+2$.
+
+Let $B_0$ be the constant from Corollary~\ref{cor:large-three-cut-half-exponent}.
+If both ranks are at least $B_0$, that corollary applies.
+Otherwise, reorder the shores so that $1\le b_1<B_0$ and $b_1\le b_2$.
+
+Let $R_0$ be an integer such that every graph of rank at least $R_0$ has at most $(9/16)2^b$ cycles.
+The established asymptotic cycle bound supplies such an integer.
+Subdividing parallel edges extends that bound to loopless multigraphs.
+Put
+\[
+ M=\max\{R_0,B_0+3\}.
+\]
+If $b_2<M$, then $r\le2M$.
+The trivial cycle bound is absorbed by the constant $2^{M+1}$ in the asserted estimate.
+Assume henceforth that $b_2\ge M$.
+
+Suppose first that one terminal pair of $T_2$ has at least $(9/16)2^{b_2}$ paths.
+Suppressing its unused terminal and applying Theorem~\ref{thm:high-path-cycle-tradeoff} gives
+\[
+ c(T_2)\le K_{1/16}2^{b_2/2}.
+\]
+Every path count in $T_1$ is at most $2^{b_1}$.
+Theorem~\ref{thm:universal-tripole-sum} therefore bounds the crossing cycles by
+\[
+ 2^{b_1}\sum_jP_j(T_2)
+ \le2^{r-1}+S2^{b_1+b_2/2}.
+\]
+Since $b_1<B_0$, the last term is at most
+$S2^{B_0/2}2^{(b_1+b_2)/2}$.
+Also $c(T_1)<2^{b_1}\le2^{(b_1+b_2)/2}$.
+Together, these estimates give the required bound with constant
+$S2^{B_0/2}+K_{1/16}+1$.
+
+Finally suppose that every terminal-pair count in $T_2$ is below $(9/16)2^{b_2}$.
+The crossing cycles then number at most
+\[
+ \frac{27}{16}\,2^{b_1+b_2}.
+\]
+Their deficit from $2^{r-1}$ is at least
+\[
+ \frac5{16}2^{b_1+b_2}\ge\frac58\,2^{b_2}.
+\]
+The choice of $R_0$ gives $c(T_2)\le(9/16)2^{b_2}$.
+The remaining deficit is at least $2^{b_2}/16$.
+Since $b_2\ge B_0+3\ge b_1+4$, it absorbs $c(T_1)<2^{b_1}$.
+Thus $c(G)<2^{r-1}$ in this case.
+
+For explicit dependence, let $K_2$ be the two-edge-cut constant and let $K_{\mathrm{large}}$ be the large-shore constant.
+The choice
+\[
+ K_3=\max\left\{
+ K_2,K_{\mathrm{large}},2^{M+1},
+ S2^{B_0/2}+K_{1/16}+1
+ \right\}
+\]
+suffices.
+\end{proof}
+
+This result leaves cyclically four-edge-connected cubic kernels as the remaining unrestricted case.
+It does not prove the half-exponent bound for that case.
+No publication-priority claim is made here.

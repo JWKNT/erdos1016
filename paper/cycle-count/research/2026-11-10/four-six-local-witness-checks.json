@@ -1,0 +1,55 @@
+{
+  "status": "All rational primal checks passed",
+  "checks": [
+    {
+      "file": "four-six-local-boolean-binary.json",
+      "active_four_count": 10,
+      "caps": "binary",
+      "four_relax": false,
+      "six_zero": false
+    },
+    {
+      "file": "four-six-local-boolean-matching-four-relax.json",
+      "active_four_count": 12,
+      "caps": "matching",
+      "four_relax": true,
+      "six_zero": false
+    },
+    {
+      "file": "four-six-local-boolean-matching.json",
+      "active_four_count": 11,
+      "caps": "matching",
+      "four_relax": false,
+      "six_zero": false
+    },
+    {
+      "file": "four-six-local-boolean-star-four-relax.json",
+      "active_four_count": 11,
+      "caps": "star",
+      "four_relax": true,
+      "six_zero": false
+    },
+    {
+      "file": "four-six-local-boolean-star-six-zero.json",
+      "active_four_count": 15,
+      "caps": "star",
+      "four_relax": false,
+      "six_zero": true
+    },
+    {
+      "file": "four-six-local-boolean-star.json",
+      "active_four_count": 9,
+      "caps": "star",
+      "four_relax": false,
+      "six_zero": false
+    },
+    {
+      "file": "four-six-local-boolean.json",
+      "active_four_count": 9,
+      "caps": "all",
+      "four_relax": false,
+      "six_zero": false
+    }
+  ],
+  "scope": "Feasible witnesses only. Numerical optimization upper bounds remain uncertified."
+}

@@ -1,0 +1,113 @@
+\section{The sharp error for every cyclic cut of size at most six}
+\label{sec:root-all-six-cuts}
+
+The bounded-shore case needs an exact counting deficit.
+A missing forest in one parity class supplies that deficit.
+
+\begin{proposition}[A bounded six-pole shore of girth at least seven]
+\label{prop:root-bounded-six-shore}
+Fix an integer $H\ge1$.
+Let normalized six-poles $X,Y$ have ranks $1\le h\le H$ and $k$, respectively.
+Assume that $X$ has girth at least seven.
+Join corresponding ports to form a cubic graph $G$ of rank $r=h+k+5$.
+Then, uniformly over these choices, for all sufficiently large $k$,
+\[
+ c(G)<2^{r-1}.
+\]
+\end{proposition}
+
+\begin{proof}
+A planar normalized six-pole cannot have girth at least seven, by the Euler argument in Proposition~\ref{prop:root-six-girth-path-gap}.
+Thus $X$ is nonplanar.
+Theorem~\ref{thm:path-six-full-four-planar} supplies a four-port set $S_0$ for which $F_{S_0}(X)<2^h$.
+Write $\delta=2^{-h}$.
+Integrality gives
+\[
+ 2^{-h}F_{S_0}(X)\le1-\delta.
+\]
+No terminal pair in $X$ is saturated, by Lemma~\ref{lem:root-saturated-pole-planar}.
+Integrality again gives $2^{-h}P_e(X)\le1-\delta$ for every terminal pair $e$.
+All other normalized forest totals are at most one.
+
+Use $a_e,U_S,W$ for the normalized path, four-terminal, and six-terminal totals of $Y$.
+Let
+\[
+ A_Y=\sum_e a_e+\sum_SU_S+W,
+ \qquad T_Y=\sum_{S\ne S_0}U_S+W.
+\]
+There are fourteen four-port terms in $T_Y$, and one six-port term.
+Consequently $T_Y\le15$.
+The fixed-port aggregate theorem gives $A_Y\le16+\eta_k$, with $\eta_k\to0$ uniformly.
+
+Drop the incompatible-pairing subtractions in the exact six-cut crossing expression.
+The coefficients of all path sectors and of $S_0$ are at most $1-\delta$.
+Every remaining coefficient is at most one.
+Therefore the normalized crossing count satisfies
+\[
+ \mathcal B(X,Y)
+ \le(1-\delta)A_Y+\delta T_Y
+ \le16-\delta+(1-\delta)\eta_k.
+\]
+This estimate uses the exact quantum $\delta$, rather than an unspecified strict inequality.
+
+The asymptotic cycle bound gives $c(Y)\le(1/2+\theta_k)2^k$, where $\theta_k\to0$ uniformly.
+The trivial bound gives $c(X)\le2^h-1$.
+Thus
+\[
+ \frac{c(G)}{2^{h+k}}
+ \le16-\frac\delta2+(1-\delta)\eta_k
+       +\delta\theta_k+2^{-k}.
+\]
+Here $\delta\ge2^{-H}$.
+Choose $k$ sufficiently large that the three error terms total less than $2^{-H-1}$.
+The displayed quantity is then strictly below sixteen, uniformly in $X$ and $h\le H$.
+\end{proof}
+
+\begin{theorem}[A strict deficit for genuine six-cuts]
+\label{thm:root-six-cut-strict}
+There is an absolute integer $R_6$ with the following property.
+Let $G$ be a connected loopless cubic multigraph of rank $r\ge R_6$.
+Assume that $G$ has a cyclic cut of size six and no cyclic cut of size at most five.
+Then
+\[
+ c(G)<2^{r-1}.
+\]
+\end{theorem}
+
+\begin{proof}
+The cut shores are connected normalized six-poles, as proved in Theorem~\ref{thm:four-six-two-large-shores}.
+Write their ranks as $h\le k$.
+
+First suppose that $G$ has a cycle of length at most six.
+For sufficiently large rank, its complement contains a cycle.
+A shortest such cycle is induced.
+A cycle of length at most five would therefore give a forbidden smaller cyclic cut.
+If its length is six, the six-cycle-shore theorem gives the asserted strict deficit for sufficiently large rank.
+The normalization of the opposite shore follows from the absence of smaller cyclic cuts.
+
+We may therefore assume that $G$ has girth at least seven.
+Let $H$ be the threshold from Theorem~\ref{thm:four-six-two-large-shores}.
+If $h,k\ge H$, that theorem proves the claim.
+Otherwise $h<H$ and $k=r-h-5$ tends to infinity with $r$.
+Proposition~\ref{prop:root-bounded-six-shore}, with the fixed bound $H$, proves the claim uniformly.
+Increase $R_6$ to meet all these thresholds.
+\end{proof}
+
+\begin{corollary}[Sharp order for cuts of size at most six]
+\label{cor:root-all-six-cuts-sharp}
+There is an absolute constant $K$ such that every connected loopless cubic multigraph of rank $r$ with a cyclic cut of size at most six satisfies
+\[
+ c(G)\le2^{r-1}+K r2^{r/2}.
+\]
+The order of the error is necessary within this class, by the Horak--Kim cyclic-square family.
+\end{corollary}
+
+\begin{proof}
+For a cyclic cut of size at most five, apply the established sharp small-cut theorem.
+For a six-cut without any smaller cyclic cut, apply Theorem~\ref{thm:root-six-cut-strict} when $r\ge R_6$.
+The finitely many remaining ranks are covered by increasing $K$, using $c(G)\le2^r-1$.
+The cited family has cyclic four-cuts and excess of order $r2^{r/2}$.
+\end{proof}
+
+The unrestricted sharp bound is still open.
+Its remaining large cubic kernels may now be assumed to have no cyclic cut of size at most six and to have girth at least seven.

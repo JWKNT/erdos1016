@@ -1,0 +1,6 @@
+{
+  "status": "pass",
+  "parameter_pairs": 114,
+  "explicit_cycles_checked": 17214,
+  "scope": "two-digit gadget, exact ranks, and interval coverage"
+}

@@ -1,0 +1,66 @@
+Independent path-stability audit of the unrestricted sharp bootstrap
+Date: November11,2026
+Status: PASS of the complete mathematical argument; not a Lean formalization.
+
+Audited full assembly:
+  second-order-unrestricted-sharp-bootstrap.tex
+
+Audited focused local modules:
+  path-qualitative-affine-bootstrap.tex
+  four-unrestricted-iterative-packing.tex
+
+The focused local proof needs only the original fixed-error forest input:
+for sufficiently large rank rho, one marked cycle W with
+|E(W)|<=rho/log^2(rho) has outside-EDGE forest probability at most11/20.
+This is the original manuscript thm:forest together with rem:range, at a fixed
+sufficiently large threshold. It does not require the later quantitative
+endpoint forest bound or any sharp-order cycle estimate.
+
+The edge/vertex distinction is handled explicitly. In the localized cap,
+deleting the marked cycle EDGES leaves only pendant spokes outside the
+retained interior. Those spokes cannot create a cycle. Thus its outside-edge
+forest event is exactly the interior forest event needed by localization.
+To use the simple-graph input, subdivide only non-W loops and parallel edges;
+rank, the marked cycle size, and the outside-forest law are preserved.
+
+Checked local steps:
+- Disconnected retained shores, connected complement, uniform quotient law,
+  and localized rank (|R|+boundary)/2+1.
+- Nonempty connected marker closure; growing-window boundary and explicit
+  67 log^3(mu) step bound; width B(k+1)^2 at fixed forest density3/5.
+- BFS tree translation for every even subset of the ports.
+- Weighted cubic-kernel Moore counting, including loops and parallel edges.
+- Explicit fixed-ratio rank threshold H=256 and radiusD/16 port-free balls.
+- Large clean block core extraction, boundary-decreasing leaf pruning,
+  and exact conditional product of affine internal spaces.
+- Terminal-star direct sums, actual terminal bipartitions, disjoint middle
+  segments, at most|S|+1 dirty segments, and packing recurrence independent
+  of the positive excess.
+- Common forward dyadic scales and maximality of the combined disjoint
+  cycle family at each final scale.
+
+Checked full assembly:
+- D0 of order sqrt(log r), D1 between log r/16 and log r/8.
+- S0=r^o(1), S1<=r^(1/4+o(1)), adequate spectral degree deficit.
+- The old link estimate applies because each S_j is still the union of a
+  maximal disjoint family of cycles of length at most D_j outside P.
+- Only the first second-moment conclusion is used at forest probability>1/2;
+  no inverse-excess estimate or hidden lower bound on the excess is used.
+- Far-pair removal and weighted disjointness yield a chain of size at least
+  constant*r^(1/32)/(log r)^3.
+- Full blocks have order>=8L^2 and boundary<=2L; discarding neighbors of the
+  auxiliary cycle, S0, and the connected marker leaves at least two blocks.
+- Their fixed conditional3/5 bounds force original forest probability<=9/25,
+  contradicting>1/2.
+- Cubic extremizer normalization preserves rank and injects cycles.
+- Loop deletion, established cyclic-cut<=4 bound, finite bounded-girth
+  thresholds, and general-connected-graph predecessor induction cover all cases.
+- The two-state cycle flip gives exactly2c_e distinct states and hence
+  c_e<=2^(r-2) in the high-girth case.
+
+No circular dependency on the unrestricted O(r*2^(r/2)) conclusion was found.
+The qualitative module also received independent line-level PASS audits from
+the root, four_regular, and random_hosts agents. The root separately confirmed
+a full-assembly PASS audit and authorized promotion of the proof.
+The existing finite exact checkers corroborate the combinatorial identities;
+they are not substitutes for the general proofs or external peer review.

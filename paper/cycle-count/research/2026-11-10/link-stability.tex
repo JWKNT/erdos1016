@@ -1,0 +1,108 @@
+\section{A quantitative inverse for the small-cut estimate}\label{sec:inverse}
+
+This section refines the small-cut argument from the source manuscript.
+It gives both a pair-structure conclusion and a concentration conclusion.
+It does not give a decomposition of every graph with many cycles.
+
+Let $G$ be a connected multigraph.
+Let $A_1,\ldots,A_k$ be disjoint cyclic regions, where $k\ge2$ and $|\delta A_i|\le d$.
+Set $\Delta=\max\{d-2,0\}$ and $K=1+\Delta$.
+For a uniform even subgraph $\xi$, define
+\[
+ E_i=\{\xi\cap\delta A_i=\varnothing,\quad
+             \xi\cap E(G[A_i])\ne\varnothing\},\qquad
+ p_i=\Pr(E_i),\quad Z=\sum_i\mathbf1_{E_i},\quad \mu=\sum_i p_i.
+\]
+Let $\ell_{ij}$ count the links between $A_i$ and $A_j$.
+The source manuscript gives
+\[
+ \Pr(E_i\cap E_j)=2^{\ell_{ij}-1}p_i p_j.
+\]
+Every region is proper, since $k\ge2$.
+The cut formula therefore improves the elementary lower bound to
+\begin{equation}\label{eq:pi-lower}
+ p_i=2^{\operatorname{comp}(G-A_i)-|\delta A_i|}
+       (1-2^{-\beta(G[A_i])})\ge2^{-d},\qquad \mu\ge k2^{-d}.
+\end{equation}
+
+\begin{theorem}\label{thm:inverse}
+Suppose that $0\le\eta<1/2$ and
+\[
+ f:=\Pr\bigl(\xi\cap E(G[A_i])\text{ is a forest for every }i\bigr)
+       \ge\tfrac12-\eta.
+\]
+Define the ordered one-link mass by
+\[
+ D_1=\frac1{\mu^2}\sum_{i\ne j:\,\ell_{ij}=1}p_i p_j.
+\]
+Then
+\begin{equation}\label{eq:inverse-mass}
+ D_1\le \frac{4\eta}{1+2\eta}+\frac K\mu
+       \le \frac{4\eta}{1+2\eta}+\frac{K2^d}{k}.
+\end{equation}
+Choose $I,J$ independently with $\Pr(I=i)=\Pr(J=i)=p_i/\mu$.
+Then
+\begin{equation}\label{eq:two-link-mass}
+ \Pr(I\ne J,\ \ell_{IJ}=2)
+   \ge1-\frac{4\eta}{1+2\eta}-\frac{2K}{\mu}.
+\end{equation}
+Writing $\nu=\Pr(Z>0)$, we also have
+\begin{gather}
+ \frac1{2+K/\mu}\le\nu\le\tfrac12+\eta,\label{eq:nu}\\
+ \frac{\operatorname{Var}(Z\mid Z>0)}{(\mu/\nu)^2}
+       \le2\eta+(\tfrac12+\eta)\frac K\mu.\label{eq:occupancy}
+\end{gather}
+\end{theorem}
+
+\begin{proof}
+The exceptional-partner lemma bounds each region's partners with at least three links by $\Delta$.
+For these pairs, use $\Pr(E_i\cap E_j)\le p_i$.
+For one-link pairs, the product moment is $p_i p_j$.
+For two-link pairs, it is $2p_i p_j$.
+Together with the diagonal terms, this gives
+\begin{equation}\label{eq:inverse-moment}
+ \mathbb E Z^2\le2\mu^2-D_1\mu^2+K\mu.
+\end{equation}
+On the event defining $f$, every $E_i$ fails.
+Thus $\Pr(Z=0)\ge f$, and $\nu\le1/2+\eta$.
+Cauchy--Schwarz gives $\mathbb E Z^2\ge\mu^2/\nu$.
+Substitution in \eqref{eq:inverse-moment} proves \eqref{eq:inverse-mass}.
+
+The weighted diagonal mass is at most $1/\mu$, since $p_i\le1$.
+The weighted mass of exceptional ordered pairs is at most $\Delta/\mu$.
+Connectedness gives $\ell_{ij}\ge1$ for distinct regions.
+Subtract these masses and \eqref{eq:inverse-mass} from one to obtain \eqref{eq:two-link-mass}.
+
+Dropping $D_1$ from \eqref{eq:inverse-moment} gives the lower bound in \eqref{eq:nu}.
+Finally, $\mathbb E(Z\mid Z>0)=\mu/\nu$, and
+\[
+ \frac{\operatorname{Var}(Z\mid Z>0)}{(\mu/\nu)^2}
+   =\frac{\nu\mathbb E Z^2}{\mu^2}-1
+   \le2\nu-1+\nu K/\mu.
+\]
+The upper bound on $\nu$ proves \eqref{eq:occupancy}.
+\end{proof}
+
+For fixed $d$, let $k\to\infty$ and $\eta\to0$.
+The theorem forces almost all weighted pair mass onto distinct two-link pairs.
+It also forces $Z/\mu$ to concentrate near two, conditionally on being positive.
+That conditioning event has probability tending to one half.
+These conclusions describe the near-equality mechanism of this particular second-moment argument.
+
+\paragraph{Transfer from a cycle count.}
+The chord construction gives $c(G)/2^r\le p(G^+,W)+2^{-t}$ when $t$ edges are selected.
+Hence $c(G)\ge(1/2-\eta)2^r$ implies $p(G^+,W)\ge1/2-\eta-2^{-t}$.
+Suppose that the regions above are disjoint from $V(W)$ in $G^+$.
+The forest event outside $W$ implies the event defining $f$.
+The theorem therefore applies with $\eta+2^{-t}$, when that number is less than one half.
+A separate argument must produce many regions with bounded cuts.
+
+\paragraph{A more general second-moment boundary.}
+If a proposed improvement uses only $\mathbb E Z=\mu$ and $\mathbb E Z^2\le2\mu^2+K\mu$, it cannot force an error exponentially small in $\mu$.
+For $K>0$, take $Z=0$ with probability $(\mu+K)/(2\mu+K)$ and $Z=2\mu+K$ otherwise.
+Both moment conditions hold with equality, and
+\[
+ \Pr(Z=0)-\tfrac12=\frac{K}{2(2\mu+K)}.
+\]
+This is a limitation of those moment inequalities alone.
+It is not a graph construction or an obstruction to stronger graph estimates.

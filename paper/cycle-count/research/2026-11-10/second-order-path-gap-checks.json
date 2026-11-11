@@ -1,0 +1,119 @@
+{
+  "local_formula_checks": [
+    {
+      "positions": 1,
+      "pieces": 1,
+      "subdivision_checks": 5,
+      "max_nonfull_ratio": 0.75
+    },
+    {
+      "positions": 2,
+      "pieces": 2,
+      "subdivision_checks": 16,
+      "max_nonfull_ratio": 0.875
+    },
+    {
+      "positions": 3,
+      "pieces": 3,
+      "subdivision_checks": 33,
+      "max_nonfull_ratio": 0.875
+    },
+    {
+      "positions": 4,
+      "pieces": 5,
+      "subdivision_checks": 70,
+      "max_nonfull_ratio": 0.875
+    },
+    {
+      "positions": 5,
+      "pieces": 8,
+      "subdivision_checks": 136,
+      "max_nonfull_ratio": 0.875
+    },
+    {
+      "positions": 6,
+      "pieces": 13,
+      "subdivision_checks": 260,
+      "max_nonfull_ratio": 0.875
+    },
+    {
+      "positions": 7,
+      "pieces": 21,
+      "subdivision_checks": 483,
+      "max_nonfull_ratio": 0.875
+    },
+    {
+      "positions": 8,
+      "pieces": 34,
+      "subdivision_checks": 884,
+      "max_nonfull_ratio": 0.875
+    },
+    {
+      "positions": 9,
+      "pieces": 55,
+      "subdivision_checks": 1595,
+      "max_nonfull_ratio": 0.875
+    },
+    {
+      "positions": 10,
+      "pieces": 89,
+      "subdivision_checks": 2848,
+      "max_nonfull_ratio": 0.875
+    }
+  ],
+  "sharp_gap_witness": {
+    "vertices": 8,
+    "edges": [
+      [
+        4,
+        0
+      ],
+      [
+        4,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        1,
+        5
+      ],
+      [
+        3,
+        5
+      ],
+      [
+        0,
+        6
+      ],
+      [
+        6,
+        1
+      ],
+      [
+        7,
+        4
+      ],
+      [
+        7,
+        6
+      ]
+    ],
+    "terminals": [
+      7,
+      5
+    ],
+    "rank": 4,
+    "paths": 15
+  }
+}

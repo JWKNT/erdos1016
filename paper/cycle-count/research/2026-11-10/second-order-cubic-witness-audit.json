@@ -1,0 +1,177 @@
+[
+  {
+    "order": 4,
+    "checks": [
+      {
+        "kind": "max_cycles_graph6",
+        "cycles": 7,
+        "edge_path_checks": 6
+      },
+      {
+        "kind": "max_min_edge_graph6",
+        "cycles": 7,
+        "edge_path_checks": 6
+      }
+    ]
+  },
+  {
+    "order": 6,
+    "checks": [
+      {
+        "kind": "max_cycles_graph6",
+        "cycles": 15,
+        "edge_path_checks": 9
+      },
+      {
+        "kind": "max_min_edge_graph6",
+        "cycles": 15,
+        "edge_path_checks": 9
+      },
+      {
+        "kind": "nonfull_graph6",
+        "cycles": 14,
+        "edge_path_checks": 9
+      }
+    ]
+  },
+  {
+    "order": 8,
+    "checks": [
+      {
+        "kind": "max_cycles_graph6",
+        "cycles": 29,
+        "edge_path_checks": 12
+      },
+      {
+        "kind": "max_min_edge_graph6",
+        "cycles": 28,
+        "edge_path_checks": 12
+      },
+      {
+        "kind": "nonfull_graph6",
+        "cycles": 29,
+        "edge_path_checks": 12
+      }
+    ]
+  },
+  {
+    "order": 10,
+    "checks": [
+      {
+        "kind": "max_cycles_graph6",
+        "cycles": 57,
+        "edge_path_checks": 15
+      },
+      {
+        "kind": "max_min_edge_graph6",
+        "cycles": 57,
+        "edge_path_checks": 15
+      },
+      {
+        "kind": "nonfull_graph6",
+        "cycles": 52,
+        "edge_path_checks": 15
+      }
+    ]
+  },
+  {
+    "order": 12,
+    "checks": [
+      {
+        "kind": "max_cycles_graph6",
+        "cycles": 109,
+        "edge_path_checks": 18
+      },
+      {
+        "kind": "max_min_edge_graph6",
+        "cycles": 109,
+        "edge_path_checks": 18
+      },
+      {
+        "kind": "nonfull_graph6",
+        "cycles": 98,
+        "edge_path_checks": 18
+      }
+    ]
+  },
+  {
+    "order": 14,
+    "checks": [
+      {
+        "kind": "max_cycles_graph6",
+        "cycles": 213,
+        "edge_path_checks": 21
+      },
+      {
+        "kind": "max_min_edge_graph6",
+        "cycles": 213,
+        "edge_path_checks": 21
+      },
+      {
+        "kind": "nonfull_graph6",
+        "cycles": 141,
+        "edge_path_checks": 21
+      }
+    ]
+  },
+  {
+    "order": 16,
+    "checks": [
+      {
+        "kind": "max_cycles_graph6",
+        "cycles": 401,
+        "edge_path_checks": 24
+      },
+      {
+        "kind": "max_min_edge_graph6",
+        "cycles": 400,
+        "edge_path_checks": 24
+      },
+      {
+        "kind": "nonfull_graph6",
+        "cycles": 329,
+        "edge_path_checks": 24
+      }
+    ]
+  },
+  {
+    "order": 18,
+    "checks": [
+      {
+        "kind": "max_cycles_graph6",
+        "cycles": 783,
+        "edge_path_checks": 27
+      },
+      {
+        "kind": "max_min_edge_graph6",
+        "cycles": 783,
+        "edge_path_checks": 27
+      },
+      {
+        "kind": "nonfull_graph6",
+        "cycles": 525,
+        "edge_path_checks": 27
+      }
+    ]
+  },
+  {
+    "order": 20,
+    "checks": [
+      {
+        "kind": "max_cycles_graph6",
+        "cycles": 1484,
+        "edge_path_checks": 30
+      },
+      {
+        "kind": "max_min_edge_graph6",
+        "cycles": 1480,
+        "edge_path_checks": 30
+      },
+      {
+        "kind": "nonfull_graph6",
+        "cycles": 988,
+        "edge_path_checks": 30
+      }
+    ]
+  }
+]

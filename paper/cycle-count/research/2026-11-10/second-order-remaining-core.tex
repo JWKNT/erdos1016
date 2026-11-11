@@ -1,0 +1,32 @@
+\section{The remaining cubic core}
+\label{sec:remaining-cubic-core}
+
+Combining the five-cut theorem with the six-cycle-shore theorem gives the following reduction.
+It does not solve arbitrary six-edge cuts.
+
+\begin{corollary}
+There is an absolute constant $K$ such that every connected loopless cubic multigraph of rank $r$ that has a cyclic cut of size at most five or has girth at most six satisfies
+\[
+ c(G)\le2^{r-1}+Kr2^{r/2}.
+\]
+Consequently the remaining unrestricted sharp-order question can be restricted to cyclically six-edge-connected cubic kernels of girth at least seven.
+\end{corollary}
+
+\begin{proof}
+The cyclic-cut case is already proved.
+Assume there is no cyclic cut of size at most five, and that $r$ is sufficiently large.
+If deleting the vertices of a cycle of length $s$ leaves a forest with $q\ge1$ components, the cubic degree count gives
+\[
+ r=2s-e(G[V(C)])-q+1\le s.
+\]
+Thus the complement of a cycle of length at most six contains a cycle when $r>6$.
+There can be no cycle of length at most five, since its vertex boundary would be a smaller cyclic cut.
+
+A six-cycle has no chord: a chord would give a cycle of length at most four.
+Its boundary therefore has size six.
+Its complement is connected, since any cyclic component requires all six boundary edges, leaving no edge to another component.
+No complementary vertex has two boundary incidences, since moving such a leaf vertex to the six-cycle shore would give a smaller cyclic cut.
+The complement is thus a normalized six-pole.
+Apply the six-cycle-shore theorem.
+All bounded ranks are absorbed into $K$.
+\end{proof}
