@@ -233,3 +233,20 @@ end Erdos1016.TheoremAudit
 #print axioms Erdos1016.ExactCounting.card_even_le_two_pow
 #print axioms Erdos1016.ExactCounting.Multi.exists_small_dense
 #print axioms Erdos1016.ExactCounting.Multi.card_le_of_intersecting
+
+#print axioms Erdos1016.PolynomialBound.ParallelLinks.none_density_le
+#print axioms Erdos1016.PolynomialBound.ParallelLinks.links_card_le_one
+#print axioms Erdos1016.PolynomialBound.ParallelLinks.smallCyclicPart_card_le
+#print axioms Erdos1016.PolynomialBound.LinkBound.cycle_links_le
+#print axioms Erdos1016.PolynomialBound.TwoLinkMoment.second_moment_le
+#print axioms Erdos1016.PolynomialBound.TwoLinkMoment.twoLink_weight_ge
+#print axioms Erdos1016.PolynomialBound.Averaging.antisymm_weight_le
+#print axioms Erdos1016.PolynomialBound.Averaging.exists_good_row
+#print axioms Erdos1016.PolynomialBound.Separation.nested
+#print axioms Erdos1016.PolynomialBound.Separation.before_trans
+#print axioms Erdos1016.PolynomialBound.Separation.mem_separator_of_adj_block
+#print axioms Erdos1016.PolynomialBound.Separation.SeparatorFamily.exists_chain
+#print axioms Erdos1016.PolynomialBound.Separation.SeparatorFamily.exists_blocks
+#print axioms Erdos1016.PolynomialBound.Product.forest_density_le_mul
+#print axioms Erdos1016.PolynomialBound.polynomialForestEstimate_of_marked_bound
+#print axioms Erdos1016.PolynomialBound.polynomialCycleCountStatement_of_markedBound

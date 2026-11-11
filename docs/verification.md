@@ -17,6 +17,8 @@ The audit states the two exact-counting theorems in expanded form in the same wa
 
 A theorem with an additional mathematical premise cannot pass these checks.
 
+The audit also reports kernel axioms for the formalized steps towards the sharp cycle bound in `Erdos1016/PolynomialBound/`. These steps are lemmas. They are not endpoint theorems, and the sharp bound itself is not formalized.
+
 The audit reports kernel axioms for the public endpoints and the main steps of the shorter proof. These steps include actual retained-cycle supply, the link bound, and the weighted forest estimate. They also include the contraction law, the small-cut bound, and descent. Only `propext`, `Classical.choice`, and `Quot.sound` are accepted. The log checker requires every named report and all seven checked statement markers. It rejects conditional development logs, Lean errors, proof admissions, and compiler-trust axioms.
 
 The schema-version-5 report is `.verification/verification.json`. The same directory contains detailed rebuild logs and `theorem-audit.log`. The report binds the result to hashes of the library source set and verification inputs. These inputs are source, audits, scripts, toolchain, dependency manifest, and workflow. If an input changes during the check, verification fails.

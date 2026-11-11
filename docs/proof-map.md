@@ -59,6 +59,19 @@ The public endpoints are `Erdos1016.twoTerminalTheorem` and `Erdos1016.noWasteTh
 - `ExactCounting/DisjointCycles` proves the lemma of Erdős and Pósa by induction. An intersecting edge set on `n` vertices has at most `n + 3` edges.
 - `ExactCounting/NoWaste` states and proves the no-waste theorem for Mathlib simple graphs.
 
+## Steps towards the sharp cycle bound
+
+The modules in `PolynomialBound/` contain no endpoint theorem. They prove steps of two results that are not formalized as a whole. The first result is the bound `2^(r-1) + K r 2^(r/2)` for the number of cycles of a graph with cyclomatic number `r`. The second result is the forest estimate with a polynomial error. The manuscript `paper/cycle-count/sharp-cycle-paper.tex` gives the written proofs and states which steps are formalized.
+
+- `PolynomialBound/Separation` treats sets that separate two vertices of a simple graph. Two disjoint connected separators are nested. The resulting order is total, asymmetric, and transitive. Every edge that leaves the block between two separators ends in one of them.
+- `PolynomialBound/Chain` enumerates a finite family of pairwise disjoint connected separators in that order. It cuts the chain into pairwise disjoint blocks. Each block contains a prescribed number of separators.
+- `PolynomialBound/ParallelLinks` proves the parallel-link lemma. Let two connected sets be joined by a component of the rest. Then any two other components have at most one link, so their region cycle events are not positively correlated. If the forest probability exceeds one half, at most `2^(t+1)` components that join the two sets are cyclic, avoid the marked set, and have at most `t` cut edges.
+- `PolynomialBound/LinkBound` uses this count in the link bound of two retained cycles. The bound needs only a forest probability above one half.
+- `PolynomialBound/Averaging` proves the second-moment inequality with a pair kernel. It proves that an antisymmetric kernel has at most half of the pair weight, and that a heavy kernel has a heavy row.
+- `PolynomialBound/TwoLinkMoment` sorts the pairs of cycles by their exact link number. If the forest probability is at least one half, the pairs with exactly two links have weight at least `μ² - (1 + η) μ`.
+- `PolynomialBound/Product` proves the product lemma. Two disjoint regions are independent after conditioning on all other edges. If each parity class of each region has forest proportion at most `a_i`, the forest probability is at most `a₁ a₂`.
+- `PolynomialBound/ForestStatement`, `CycleBound`, and `Statement` prove a conditional statement. If the marked forest bound holds with a polynomial error (`PolynomialMarkedBound`), then the number of cycles is at most `(1/2 + r^(-κ)) 2^r`. The hypothesis is not formalized.
+
 ## Final assembly
 
 `Probability/Avoidance/FewComponentForest` selects uniform thresholds. It uses the same retained graph for mass and correlations. It proves the marked multigraph forest bound. `MarkedForestReduction` transfers this bound to the original simple graph and witness union. The result is the unconditional `ShortProof.fewComponentForestEstimate`.

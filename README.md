@@ -37,7 +37,17 @@ Cycles are Mathlib `SimpleGraph.Walk.IsCycle` objects. The count uses their edge
 
 The bound is asymptotic and its threshold is not explicit. The bound is below the elementary bound `2^r` only if `log₂ log₂ log₂ r > 42`. See the [proof map](docs/proof-map.md#cycle-count-theorems) for the modules.
 
-A draft manuscript gives the proof: [PDF](paper/cycle-count/pancyclic-paper.pdf) and [LaTeX source](paper/cycle-count/pancyclic-paper.tex). The folder [`paper/cycle-count`](paper/cycle-count/README.md) also contains tests on small graphs, earlier drafts, and research notes.
+A draft manuscript gives the proof: [PDF](paper/cycle-count/sharp-cycle-paper.pdf) and [LaTeX source](paper/cycle-count/sharp-cycle-paper.tex). The folder [`paper/cycle-count`](paper/cycle-count/README.md) also contains tests on small graphs, earlier drafts, and research notes.
+
+## The sharp cycle bound: a written proof with formalized steps
+
+The same manuscript states a stronger result. A graph with cyclomatic number `r` has at most
+
+$$2^{r-1}+K\,r\,2^{r/2}$$
+
+cycles, for an absolute constant `K`. Examples of Horak and Kim show that the order of the second term is correct. This result is **not formalized**. Its proof is a written proof that two language models checked. No referee has read it. A part of the proof is in research reports in [`paper/cycle-count/research/2026-11-10`](paper/cycle-count/research/2026-11-10).
+
+The modules in `Erdos1016/PolynomialBound/` formalize some steps of the proof: the parallel-link lemma, the link bound without a forest excess, the two-link moment inequality, the order of nested separators with its blocks, and the product lemma for two regions. They contain no endpoint theorem. See the [proof map](docs/proof-map.md#steps-towards-the-sharp-cycle-bound) for the modules, and the manuscript for the list of the steps that are not formalized.
 
 ## Exact-counting theorems
 
