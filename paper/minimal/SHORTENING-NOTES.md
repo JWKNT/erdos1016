@@ -752,6 +752,14 @@ that no application paper repeat the proof of the estimate.
   copies of `K_{2,2}` there are `2^(2k) = 2^(r-1)` cycles that go once around the ring, and each
   of them meets the four vertices of one copy.
 
+- Later on 12 November 2026 KNT said: "the forest paper should not reference to either of the
+  other two in any way." The subsection on the two applications, the sentence on companion
+  papers in the lead, and the citations of the two papers are removed. I also removed the
+  citation of the manuscript of September 2026, because its subject is the pancyclic problem;
+  the section on authorship still says that KNT obtained the estimate in September 2026 with
+  Astra. The bibliography has three entries. The paper has 12 pages, and the numbers of its
+  statements did not change.
+
 ## 19. The Lean development and the present text (12 November 2026)
 
 KNT said: "now work on fixing the lean formalization to match: and commit everything when done".

@@ -17,11 +17,8 @@ subgraph of $\Gamma$, the edges without an end in $P$ form a forest with probabi
 \[
   \frac12+\frac{20}{\log\log\log r}.
 \]
-The constant $\frac12$ cannot be lowered. Two companion papers use this \emph{forest estimate}.
-The first determines the minimum number of edges of a pancyclic graph up to an additive
-constant~\cite{Pan}, and the second determines the maximum number of cycles of a graph of large
-rank~\cite{Max}. Astra and Fable~5.2 are language models. Section~\ref{sec:status} states the
-part of each author. The estimate has a formal proof in Lean~4, and the Lean kernel has checked
+The constant $\frac12$ cannot be lowered. We call this bound the \emph{forest estimate}. Astra
+and Fable~5.2 are language models. Section~\ref{sec:status} states the part of each author. The estimate has a formal proof in Lean~4, and the Lean kernel has checked
 it.
 
 \fronthead{The proof in five sentences}
@@ -45,6 +42,7 @@ $\PP(Z=0)\le\half+1/(2\mu)$.
 
 \contentsblock
 
+\newpage
 \section{The estimate}\label{sec:intro}
 
 \subsection{The result}
@@ -125,7 +123,7 @@ Then
 \]
 \end{maintheorem}
 
-The estimate and its proof are from~\cite{KNT}. The proof gives no value for $r_0$.
+The proof gives no value for $r_0$.
 
 \begin{fineprint}
 The constant $\half$ cannot be lowered. Let $k\ge2$, and take the vertices $a_i,b_i,c_i,d_i$
@@ -182,46 +180,11 @@ can give one more link between two cycles, and the bound on the number of compon
 number of links below $\frac1{90}\log r$ (Step~2 in the proof of
 Proposition~\ref{prop:loggirth}).
 
-\subsection{Two applications}\label{sec:applications}
-
-Two companion papers use the estimate. We state their results without proof, and we state how
-the hypotheses of the estimate are satisfied.
-
-\paragraph{Pancyclic graphs~\cite{Pan}.}
-A simple graph on $n$ vertices is \emph{pancyclic} if it has a cycle of every length from $3$
-to $n$. Let $n+h(n)$ be the least number of edges of such a graph. Then
-$h(n)=\log n+\lgs n+O(1)$, where $\lgs$ is the iterated logarithm. This answers Problem~\#1016
-of Erd\H{o}s~\cite{Bloom}. The lower bound uses Corollary~\ref{cor:simple}. Let $G$ be a graph
-of rank $r\ge2^{256R}$ with a cycle of every length from $3$ to a large number. Cycles of the
-first lengths form a subgraph $W$ that is a union of at most $2R$ cycles and has at most
-$2^{2R+1}$ edges. So $W$ has at most $\sqrt r\le r/\log^{2}r$ edges and at most
-$2R\le(\log r)/100$ components. These cycles can be disjoint, and for this reason the estimate
-allows several components. A cycle of $G$ with an edge in $W$ has a forest as its outside part,
-and the cycles with a given outside part of this kind have at most $|E(W)|$ different lengths.
-By the corollary, at most $\half+o(1)$ of the outside parts are forests. So the largest possible
-density of cycle lengths decreases by a factor of almost two from the rank $R$ to the rank
-$2^{256R}$. This gives the term $\lgs n$.
-
-\paragraph{The maximum number of cycles~\cite{Max}.}
-Let $\psi(r)$ be the largest number of cycles of a graph of rank $r$. Entringer and
-Slater~\cite{ES} conjectured that $\psi(r)\sim2^{r-1}$. In fact $\psi(r)=H(r)$ for all large
-$r$, where $H(r)=2^{r-1}+(1+o(1))\,r\,2^{\lfloor(r-1)/2\rfloor}$ is the number of cycles of
-cubic graphs of Horak and Kim~\cite{HK}. The proof uses Theorem~\ref{thm:forest} only when
-$\Gamma[P]$ is connected. Some connected cubic multigraph $G$ of rank $r$ has $\psi(r)$ cycles.
-Let $P$ be a set of $\lceil4\log r\rceil$ vertices such that $G[P]$ is connected. The outside
-part of a cycle that meets $P$ is a proper subset of a cycle, hence a forest. So at most
-$q(G,P)\,2^{r}$ cycles meet $P$. If $G$ has no bridge, at most $2^{r-1-|P|/2}$ cycles avoid
-$P$. This gives $\psi(r)\le(\half+o(1))2^{r}$. For the exact value, \cite{Max} applies the
-theorem also to parts of $G$ with a small boundary. Where a bound below $\half$ is necessary,
-it uses Lemmas~\ref{lem:link} to~\ref{lem:smallcuts} and Proposition~\ref{prop:loggirth}
-directly. For this purpose Proposition~\ref{prop:loggirth} has the hypothesis
-$q(\Gamma,P)\ge\frac25$, which is weaker than $q(\Gamma,P)>\half$.
-
 \subsection{Authorship and verification}\label{sec:status}
 
 KNT is a person. Astra and Fable~5.2 are the language models GPT-6 Astra and Claude Fable~5.2.
 KNT directed the work at each step. KNT obtained the forest estimate and its proof in September
-2026 with Astra, for the problem on pancyclic graphs~\cite{KNT}. Fable~5.2 wrote this text.
+2026 with Astra. Fable~5.2 wrote this text.
 
 Theorem~\ref{thm:forest} and Corollary~\ref{cor:simple} have formal proofs in Lean~4. The
 statements are \lean{Erdos1016.ShortProof.eventually_marked_forest_bound_logSquared} and
@@ -461,9 +424,8 @@ even $\ell$ the real eigenvalues contribute nonnegative terms, one of which is a
 $(2-d_J/v)^{\ell}$, and the non-real ones contribute at least $-3v\,2^{\ell/2}$ in total.
 \end{proof}
 
-Facts (2) and (4) are part of the Ihara--Bass theory~\cite{Bass,KS}. The test vector $\mathbf{1}$
-in~(3) is from~\cite{KNT}. With this test vector the argument needs no assumption of regularity
-or expansion.
+Facts (2) and (4) are part of the Ihara--Bass theory~\cite{Bass,KS}. With the test vector
+$\mathbf{1}$ in~(3) the argument needs no assumption of regularity or expansion.
 
 \begin{lemma}[Cycle weight]\label{lem:weight}
 Suppose that $d_J<v$, and let $\ell_0\le L$ be a positive integer. The total weight
@@ -764,29 +726,11 @@ $p(G,W)\le q(\Gamma,P)\le\half+20/\lgk{3}r$. \qed
 \bibitem{Bass} H.~Bass, The Ihara--Selberg zeta function of a tree lattice, \emph{Internat.\
 J.~Math.}\ \textbf{3} (1992), 717--797.
 
-\bibitem{Bloom} T.~F.~Bloom, Erd\H{o}s Problem \#1016, \url{https://www.erdosproblems.com/1016},
-accessed November 2026.
-
-\bibitem{ES} R.~C.~Entringer and P.~J.~Slater, On the maximum number of cycles in a graph,
-\emph{Ars Combin.}\ \textbf{11} (1981), 289--294.
-
-\bibitem{HK} P.~Horak and D.~Kim, Connected cubic graphs with the maximum number of perfect
-matchings, \emph{J.~Graph Theory} \textbf{99} (2022), 671--690. arXiv:2006.13459.
-
-\bibitem{KNT} KNT, The minimum number of edges in a pancyclic graph, manuscript, September 2026,
-\url{https://jehlp.net/erdos1016/}.
-
 \bibitem{KS} M.~Kotani and T.~Sunada, Zeta functions of finite graphs, \emph{J.~Math.\ Sci.\ Univ.\
 Tokyo} \textbf{7} (2000), 7--25.
 
-\bibitem{Max} KNT, Astra and Fable~5.2, The maximum number of cycles in a graph of large rank,
-companion manuscript, November 2026.
-
-\bibitem{Pan} KNT, Astra and Fable~5.2, The minimum number of edges in a pancyclic graph: a
-short proof, companion manuscript, November 2026.
-
-\bibitem{Repo} KNT, Astra and Fable~5.2, Lean~4 formalisation of the forest estimate and of the
-results of~\cite{Pan} and~\cite{Max}, \url{https://github.com/JWKNT/erdos1016}.
+\bibitem{Repo} KNT, Astra and Fable~5.2, Lean~4 formalisation of the forest estimate,
+\url{https://github.com/JWKNT/erdos1016}.
 
 \end{thebibliography}
 

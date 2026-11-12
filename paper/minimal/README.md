@@ -7,12 +7,15 @@ Each paper has one aim and no side results.
 
 | Paper | Aim | Source | Pages |
 |---|---|---|---|
-| [forest.pdf](forest/forest.pdf) | The forest estimate: `q(Gamma,P) <= 1/2 + 20/log log log r` for a random even subgraph, with a complete proof | `forest/forest.tex` | 13 |
+| [forest.pdf](forest/forest.pdf) | The forest estimate: `q(Gamma,P) <= 1/2 + 20/log log log r` for a random even subgraph, with a complete proof | `forest/forest.tex` | 12 |
 | [pancyclic.pdf](pancyclic/pancyclic.pdf) | Erdős Problem #1016: `log n + log* n - O(1) <= h(n) <= floor(log n) + log* n + 1` | `pancyclic/pancyclic.tex` | 7 |
 | [exact-maximum.pdf](exact-maximum/exact-maximum.pdf) | `psi(r) = H(r)` for all large `r` (the formulas of Horak and Kim), and nothing else | `exact-maximum/exact-maximum.tex` and `exact-maximum/sections/` | 36 |
 
-The forest paper is complete in itself. It names the two applications in a short subsection
-and does not prove them. The pancyclic paper cites Corollary 1.2 of the forest paper (a union of
+The forest paper is complete in itself. On KNT's request it does not refer to the other two
+papers in any way: it has no section on applications, and it cites neither of them. For the
+same reason it does not cite the manuscript of September 2026 on pancyclic graphs, in which the
+estimate first appeared; its section on authorship says who obtained the estimate and when.
+The pancyclic paper cites Corollary 1.2 of the forest paper (a union of
 cycles in a simple graph). The maximum-cycles paper cites Theorem 1.1, Lemmas 2.2 to 2.4 and
 Proposition 3.4 of the forest paper, and states them in its Section 2 without proof. Neither
 application paper repeats the proof of the estimate. The asymptotic corollary
@@ -67,8 +70,9 @@ estimate (its Sections 2, 3.1 and 3.2). That version is in `research/single-pape
 
 New in the forest paper: the introduction with a figure of outside parts; a ring of copies of
 `K_{2,2}` that shows that the constant `1/2` cannot be lowered (fine print after Theorem 1.1);
-three sentences on the place where each hypothesis on `P` is used; the subsection on the two
-applications; an outline box at the start of Section 3; a figure of the splitting step.
+three sentences on the place where each hypothesis on `P` is used; an outline box at the start
+of Section 3; a figure of the splitting step. A first form had a subsection on the two
+applications; KNT asked for its removal.
 `checks/ring_half_check.py` enumerates the even subgraphs of the ring for `k = 2, ..., 6` and
 confirms the count `2^(2k)` and `q >= 1/2` (exit code 0; the values of `q` are 15/16, 53/64,
 185/256, 657/1024, 2401/4096).
