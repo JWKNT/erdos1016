@@ -69,6 +69,9 @@ New in the forest paper: the introduction with a figure of outside parts; a ring
 `K_{2,2}` that shows that the constant `1/2` cannot be lowered (fine print after Theorem 1.1);
 three sentences on the place where each hypothesis on `P` is used; the subsection on the two
 applications; an outline box at the start of Section 3; a figure of the splitting step.
+`checks/ring_half_check.py` enumerates the even subgraphs of the ring for `k = 2, ..., 6` and
+confirms the count `2^(2k)` and `q >= 1/2` (exit code 0; the values of `q` are 15/16, 53/64,
+185/256, 657/1024, 2401/4096).
 
 Numbers of the statements in the maximum-cycles paper after the split: Theorem 2.1 (forest
 estimate), Lemmas 2.2 to 2.4, Proposition 2.5 (cycles of moderate length), Lemma 3.1 (cubic
