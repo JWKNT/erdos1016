@@ -1,0 +1,46 @@
+\section{Proof of Theorem~\ref{thm:exact}}\label{sec:proof}
+
+Let $D_*$ be as in Theorem~\ref{thm:half} and $K_0$ as in Section~\ref{sec:poles}.
+By~\eqref{eq:H},
+\begin{equation}\label{eq:Hlower}
+  H(r)\;\ge\;2^{r-1}+(r-2)\,2^{r/2-1}\qquad\text{for all }r\ge3 .
+\end{equation}
+Choose $R\ge8$ so large that the following holds for every $r\ge R$:
+Proposition~\ref{prop:threecut}, Theorem~\ref{thm:fourcut}, Theorem~\ref{thm:girth} with
+$g_0=D_*-1$, and Theorem~\ref{thm:half} apply to the rank $r$; and $r-2>10K_0^{2}$.
+
+Let $r\ge R$. A ring $R_r$ has $H(r)$ cycles by Corollary~\ref{cor:ringmax}, so $\psi(r)\ge H(r)$.
+By Lemma~\ref{lem:cubic}, some connected cubic multigraph $G$ of rank $r$ has $\psi(r)$ cycles. We
+show that $G$ is a ring or that $c(G)\le2^{r-1}+5K_0^{2}\,2^{r/2}$. In the first case
+$c(G)\le H(r)$ by Corollary~\ref{cor:ringmax}. In the second case $c(G)<H(r)$ by~\eqref{eq:Hlower},
+because $r-2>10K_0^{2}$. So $\psi(r)\le H(r)$.
+
+\step{Case 1: $G$ has a loop $e$.} Every cycle of $G$ other than $e$ is a cycle of $G-e$, which has
+rank $r-1$. So $c(G)\le1+(2^{r-1}-1)$.
+
+\step{Case 2: $G$ has no loop, and it has a cyclic cut of size at most three.} Then
+$c(G)\le2^{r-1}+5K_0^{2}\,2^{r/2}$ by Proposition~\ref{prop:threecut}.
+
+\step{Case 3: $G$ has no loop, it has a cyclic cut of size four, and it has no smaller cyclic
+cut.} Then $G$ is a ring or $c(G)<2^{r-1}$, by Theorem~\ref{thm:fourcut}.
+
+In the other cases $G$ has no loop and no cyclic cut of size at most four. Let $g$ be its girth.
+
+\step{Case 4: $g<D_*$.} Then $c(G)<2^{r-1}$ by Theorem~\ref{thm:girth}.
+
+\step{Case 5: $g\ge D_*$.} The graph $G$ has $2r-2\ge8$ vertices. Choose a set $P$ of eight
+vertices such that $G[P]$ is connected. Then $|P|\le3\log r$, and $G-P$ has girth at least $D_*$.
+So $q(G,P)<\frac25$ by Theorem~\ref{thm:half}.
+
+Let $Z$ be a cycle of $G$ that meets $P$. Its edges in $G-P$ form a proper subset of $Z$, hence a
+forest. So at most $q(G,P)\,2^{r}<\frac25\,2^{r}$ cycles meet $P$. The other cycles are cycles of
+$G-P$, and there are at most $2^{\beta(G-P)}$ of them. Let $a$ be the number of edges of $G[P]$.
+Then $24-2a$ edges leave $P$, and $G-P$ arises from $G$ by the deletion of $8$ vertices and
+$24-a$ edges. So
+\[
+  \beta(G-P)=r-17+a+\comp(G-P).
+\]
+The graph $G$ has no cut of size one, because such a cut is cyclic (Section~\ref{sec:cuts}). So
+every component of $G-P$ contains the ends of at least two of the edges that leave $P$. Hence
+$\comp(G-P)\le12-a$ and $\beta(G-P)\le r-5$. Therefore
+$c(G)<\bigl(\frac25+\frac1{32}\bigr)2^{r}<2^{r-1}$. \qed

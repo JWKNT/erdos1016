@@ -1,0 +1,533 @@
+\section{Poles with many paths}\label{sec:poles}
+
+A cut of a cubic graph divides it into two parts, and a cycle that crosses the cut is made of
+paths in the two parts. So we need to count paths between prescribed ends.
+
+\begin{idea}{the results of this section}
+First, if more than half of the possible paths between two ends are present, by a fixed margin,
+then the part looks like a ladder, and it has few cycles (Theorem~\ref{thm:fewcycles}). Second,
+the number of paths between two ends is the largest possible, or it is smaller by a fixed factor
+(Theorem~\ref{thm:gap}): a part that is not a ladder has a short cycle away from a shortest
+path between the two ends.
+\end{idea}
+
+\subsection{Poles}
+
+A \emph{pole} is a connected multigraph without loops in which every vertex has degree two or
+three. Its vertices of degree two are its \emph{ports}. A \emph{$k$-pole} is a pole with exactly
+$k$ ports. By a count of edge ends, a $k$-pole of rank $h$ has $2h+k-2$ vertices.
+
+For two vertices $s\ne t$ of a multigraph $N$ let $P_{st}(N)$ be the number of paths from $s$ to
+$t$. An \emph{$\{s,t\}$-join} is a set of edges in which $s$ and $t$ have odd degree and all other
+vertices have even degree. If $N$ is connected of rank $b$, there are exactly $2^{b}$ of them: they
+exist, and the sum of two of them is even. Every path from $s$ to $t$ is an $\{s,t\}$-join, so
+\begin{equation}\label{eq:joinbound}
+  P_{st}(N)\;\le\;2^{b}.
+\end{equation}
+Call the pair $s,t$ \emph{full} in $N$ if $P_{st}(N)=2^{\beta(N)}$.
+
+\begin{lemma}[Joins]\label{lem:joins}
+Let $N$ be a pole of rank $b$, and let $s,t$ be two of its ports. Every $\{s,t\}$-join is the union
+of a path from $s$ to $t$ and of cycles, and these are pairwise vertex-disjoint. So the pair is
+full if and only if every cycle of $N$ meets every path from $s$ to $t$. If some cycle of $N$ meets
+no path from $s$ to $t$, then $P_{st}(N)\le2^{b-1}$. If a cycle $Z$ of $N$ is disjoint from some
+path from $s$ to $t$, then $P_{st}(N)\le2^{b}-2^{b-|Z|}$.
+\end{lemma}
+
+\begin{proof}
+In a join, $s$ and $t$ have odd degree at most two, and every other vertex has even degree at most
+three. So the degrees are one at $s$ and $t$ and zero or two elsewhere. If a cycle $Z$ meets no
+path from $s$ to $t$, then $J\mapsto J+Z$ maps the paths injectively to joins that are not paths.
+Let a cycle $Z$ be disjoint from a path $Q$ from $s$ to $t$. Then $Q$ is an $\{s,t\}$-join of
+$N-E(Z)$. So $N-E(Z)$ has $2^{\beta(N-E(Z))}$ such joins, and $\beta(N-E(Z))\ge b-|Z|$. The union
+of each of them with $E(Z)$ is an $\{s,t\}$-join of $N$ that is not a path.
+\end{proof}
+
+\begin{lemma}[Reduction]\label{lem:reduction}
+Let $N$ be a pole of rank $b$, and let $s,t$ be two of its ports with $P_{st}(N)>2^{b-1}$.
+\begin{enumerate}
+\item[\textup{(a)}] Replace each port other than $s,t$, with its two edges, by one edge. No loop
+arises. The result $N^{\circ}$ is a $2$-pole with ports $s,t$. It has the same rank, the same number
+of paths from $s$ to $t$, and the same number of cycles as $N$.
+\item[\textup{(b)}] Every bridge of $N^{\circ}$ separates $s$ from $t$ and is incident with neither.
+Let $N_1,\dots,N_q$ be the components of $N^{\circ}$ without its bridges, in the order from $s$ to
+$t$. Each $N_i$ is a bridgeless $2$-pole of rank $b_i\ge1$, and
+\[
+  b=\sum_ib_i,\qquad P_{st}(N)=\prod_iP(N_i),\qquad c(N)=\sum_ic(N_i),
+\]
+where $P(N_i)$ is the number of paths between the two ports of $N_i$. In particular
+$P(N_i)\,2^{-b_i}\ge P_{st}(N)\,2^{-b}$ for every $i$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Let $v$ be a port other than $s,t$. Suppose that both edges at $v$ end in the same vertex $u$.
+Then $u$ has degree three, its third edge is a bridge, and no path from $s$ to $t$ meets the cycle
+through $u$ and $v$. This contradicts Lemma~\ref{lem:joins}. So the two neighbours of $v$ are
+distinct, and we may replace $v$ by an edge. Paths and cycles correspond. Repeat.
+
+(b) Let $e$ be a bridge of $N^{\circ}$, and let $Y$ be a component of $N^{\circ}-e$, with $n$
+vertices, $j$ of them ports. Counting edge ends gives $\beta(Y)=(n-j+1)/2$. This is a positive
+integer, so $Y$ contains a cycle. If $Y$ contains neither port or both ports, a cycle on one side
+of $e$ meets no path from $s$ to $t$. If $e$ is incident with $s$, every path from $s$ to $t$
+starts with $e$ and avoids the cycle on the side of $s$. Both cases contradict
+Lemma~\ref{lem:joins}. So every path from $s$ to $t$ passes all bridges, in the same order.
+
+The multigraph $N_i$ is connected and bridgeless. Its vertices have degree three, except the ends
+of the two bridges at $N_i$, or $s$, or $t$. These two vertices are distinct: a common end of two
+bridges would have a third edge that is a bridge and does not separate $s$ from $t$. So $N_i$ is a
+$2$-pole, and it contains a cycle. Ranks add over the $N_i$, every cycle lies in one $N_i$, and a
+path from $s$ to $t$ is a concatenation of paths between the ports of the $N_i$ and of the bridges.
+The last statement holds because $P(N_j)\le2^{b_j}$ for all $j$.
+\end{proof}
+
+\subsection{A shortest path between the ports}\label{sec:shape}
+
+Let $N$ be a bridgeless $2$-pole with ports $s,t$ and rank $b\ge2$. It has $2b$ vertices. It has no
+cut vertex: a cut vertex of a subcubic multigraph is joined to some component by a single edge.
+We use the following notation. The \emph{layer} $L_j$ is the set of vertices at distance $j$ from
+$s$. Every edge joins vertices of the same layer or of consecutive layers. Let $\ell$ be the
+distance from $s$ to $t$, let $A=w_0w_1\cdots w_\ell$ be a shortest path from $s$ to $t$, and put
+\[
+  J=N-V(A),\qquad\Delta=b-\ell .
+\]
+Then $w_j\in L_j$. Write $e_i$ for the edge $w_{i-1}w_i$ of $A$. A vertex of $A$ lies on two edges
+of $A$, or on one if it is a port. So it has at most one \emph{further edge}. This edge leads to
+$J$, or it is parallel to an edge of $A$, because $A$ is a shortest path. For $0<j<\ell$ the layer
+$L_j$ separates $s$ from $t$, so $|L_j|\ge2$. Call $L_j$ \emph{thin} if $0<j<\ell$ and $|L_j|=2$.
+A thin layer consists of $w_j$ and one vertex of $J$ (Figure~\ref{fig:layers}).
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1.22cm,y=1cm]
+  % layers
+  \foreach \j in {1,2,3,6,7,8}
+    \draw[slate!45, line width=0.4pt, dash pattern=on 2pt off 2pt] (\j,-0.45) -- (\j,1.75);
+  \foreach \j in {1,2,3,6,7,8} \node[note] at (\j,2.0) {$L_{\j}$};
+  \node[note] at (0,2.0) {$L_0$};
+  \node[note] at (9,2.0) {$L_\ell$};
+  % the part of bounded size
+  \draw[draw=warm, fill=warm!8, line width=0.6pt, rounded corners=7pt] (3.55,-0.4) rectangle (5.45,1.7);
+  \node[note, text=warm, align=center] at (4.5,0.85) {not thin:\\ bounded size};
+  % shortest path A
+  \foreach \j in {0,...,9} \coordinate (w\j) at (\j,0);
+  \foreach \j in {1,2,3,6,7,8} \coordinate (y\j) at (\j,1.3);
+  \draw[cool] (w0)--(w1)--(w2)--(w3)--(3.55,0) (5.45,0)--(w6)--(w7)--(w8)--(w9);
+  \draw[cool, dash pattern=on 2.5pt off 2pt] (3.55,0)--(5.45,0);
+  % edges of J and between
+  \draw[edge] (w0)--(y1) (y1)--(y2) (w1)--(y2) (y1)--(w2) (y2)--(y3) (w3)--(y3) (y3)--(3.55,1.3);
+  \draw[edge] (5.45,1.3)--(y6) (w6)--(y6) (y6)--(y7) (y7)--(y8) (w7)--(y8) (y7)--(w8) (y8)--(w9);
+  \foreach \j in {1,2,3,6,7,8} \node[vtx] at (w\j) {};
+  \foreach \j in {1,2,3,6,7,8} \node[vtx] at (y\j) {};
+  \node[port] at (w0) {};
+  \node[port] at (w9) {};
+  \node[note, text=accent, below=3pt] at (w0) {$s$};
+  \node[note, text=accent, below=3pt] at (w9) {$t$};
+  \node[note, text=accent, below=2pt] at (2,0) {$w_2$};
+  \node[note, text=accent, anchor=west] at (9.25,0) {the shortest path $A$};
+  \node[note, anchor=west] at (9.25,1.3) {the rest $J$};
+\end{tikzpicture}
+\caption{A bridgeless $2$-pole with many paths from $s$ to $t$ (schematic). Almost every layer
+is thin: it has one vertex of the shortest path $A$ and one vertex of $J$
+(Lemma~\ref{lem:path} and Proposition~\ref{prop:thin}).}
+\label{fig:layers}
+\end{figure}
+
+\begin{idea}{the content of Lemma~\ref{lem:path}}
+The lemma has no hypothesis on the number of paths. It compares $N$ with a pole that has exactly
+two vertices in each layer between the ports; $N$ has $2\Delta$ vertices more. So at most
+$6\Delta+2$ vertices of $N$ lie outside the thin layers, and $\Delta$ is at most the rank of $J$.
+Between two thin layers a cycle has at most two ways to continue (Figure~\ref{fig:free}). Statement~(d) counts the
+cycles by their edges on $A$. It follows that a pole in which $J$ has a small rank has few cycles.
+\end{idea}
+
+\begin{lemma}[A shortest path]\label{lem:path}
+Let $N$ be a bridgeless $2$-pole of rank $b\ge2$. In the notation above,
+\begin{enumerate}
+\item[\textup{(a)}] $0\le\Delta\le\beta(J)$;
+\item[\textup{(b)}] at most $2\Delta$ of the layers $L_j$ with $0<j<\ell$ are not thin, and at
+most $4\Delta$ vertices of $J$ lie outside the thin layers;
+\item[\textup{(c)}] every cycle of $J$ has at most $4\Delta+2$ vertices;
+\item[\textup{(d)}] $c(N)\le10\cdot2^{\,5\beta(J)+b/2}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \begin{scope}
+    \foreach \x in {0,1.7} \draw[slate!45, line width=0.4pt, dash pattern=on 2pt off 2pt] (\x,-0.5) -- (\x,1.55);
+    \node[note] at (0,1.8) {$L_{i-1}$};
+    \node[note] at (1.7,1.8) {$L_i$};
+    \draw[cool] (-1.0,0)--(0,0)--(1.7,0)--(2.7,0);
+    \draw[edge] (-1.0,1.1)--(0,1.1)--(1.7,1.1)--(2.7,1.1);
+    \draw[edge] (0,0)--(0,1.1) (1.7,0)--(1.7,1.1);
+    \foreach \p in {(0,0),(1.7,0),(0,1.1),(1.7,1.1)} \node[vtx] at \p {};
+    \node[note, text=accent] at (-0.48,-0.3) {$w_{i-1}$};
+    \node[note, text=accent] at (2.0,-0.3) {$w_i$};
+    \node[note, text=accent] at (0.85,0.22) {$e_i$};
+    \node[note] at (0.85,-0.95) {$i$ is not free};
+  \end{scope}
+  \begin{scope}[xshift=6.0cm]
+    \foreach \x in {0,1.7} \draw[slate!45, line width=0.4pt, dash pattern=on 2pt off 2pt] (\x,-0.5) -- (\x,1.55);
+    \node[note] at (0,1.8) {$L_{i-1}$};
+    \node[note] at (1.7,1.8) {$L_i$};
+    \draw[cool] (-1.0,0)--(0,0)--(1.7,0)--(2.7,0);
+    \draw[edge] (-1.0,1.1)--(0,1.1)--(1.7,1.1)--(2.7,1.1);
+    \draw[hot] (0,0)--(1.7,1.1) (1.7,0)--(0,1.1);
+    \foreach \p in {(0,0),(1.7,0),(0,1.1),(1.7,1.1)} \node[vtx] at \p {};
+    \node[note, text=accent] at (-0.48,-0.3) {$w_{i-1}$};
+    \node[note, text=accent] at (2.0,-0.3) {$w_i$};
+    \node[note, text=accent] at (0.85,-0.22) {$e_i$};
+    \node[note, text=warm] at (0.85,-0.95) {$i$ is free};
+    \node[note, text=accent, anchor=west] at (2.85,0) {the path $A$};
+    \node[note, text=warm, anchor=west] at (2.85,0.62) {the two further edges};
+  \end{scope}
+\end{tikzpicture}
+\caption{Two thin layers $L_{i-1}$ and $L_i$. Left: the index $i$ is not free, and a cycle that
+passes both layers contains the edge $e_i$ of $A$. Right: the index $i$ is free. A cycle can
+contain $e_i$, or it can contain the further edges of $w_{i-1}$ and of $w_i$.}
+\label{fig:free}
+\end{figure}
+
+\begin{proof}
+(a) The layers $L_0,\dots,L_\ell$ contain at least $2\ell$ vertices, so $\ell\le b$. The graph $J$
+has $2b-\ell-1\ge1$ vertices. The vertices of $A$ meet the $\ell$ edges of $A$ and at most
+$\ell+1$ other edges, and $N$ has $3b-1$ edges. So $|E(J)|\ge(3b-1)-(2\ell+1)$, and
+$\beta(J)\ge|E(J)|-|V(J)|+1\ge b-\ell$.
+
+(b) Compare $N$ with a multigraph that has one vertex in $L_0$ and in $L_\ell$, two in each layer
+between, and none beyond. Then $N$ has exactly $2\Delta$ vertices more. A layer between $L_0$ and
+$L_\ell$ with $n\ge3$ vertices has $n-2$ vertices too many, and $n-1\le2(n-2)$ of its vertices are
+in $J$. Each vertex of $L_\ell$ other than $t$, and each vertex beyond $L_\ell$, is one vertex
+too many, and it is in $J$. This gives~(b).
+
+(c) Let $Z$ be a cycle of $J$, and let $L_i$ and $L_j$ be the first and the last layer that it
+meets. A thin layer has one vertex of $J$. If $i<l<j$, the two paths of $Z$ between a vertex in
+$L_i$ and a vertex in $L_j$ both have a vertex in $L_l$, so $L_l$ is not thin. Hence at most two
+vertices of $Z$ are in thin layers, and~(b) gives~(c).
+
+(d) An even subgraph of $N$ without an edge of $A$ has degree at most one at each vertex of $A$,
+hence degree zero. So it is an even subgraph of $J$, and there are $2^{\beta(J)}$ of them. The sum
+of two even subgraphs with the same edges in $A$ has no edge of $A$. So at most $2^{\beta(J)}$
+cycles of $N$ have the same edges in $A$.
+
+Let $Z$ be a cycle that contains an edge of $A$, and let $e_a$ and $e_z$ be the first and the
+last edge of $A$ in $Z$.
+
+\step{Two strands.} Let $L_l=\{w_l,y_l\}$ be a thin layer with $a\le l<z$. The cycle $Z$ contains
+$w_{a-1}$ and $w_z$, so it has vertices before and after this layer. So it has at least two edges
+from $L_{l-1}$ to $L_l$ and at least two edges from $L_l$ to $L_{l+1}$. The two vertices of $L_l$
+have degree at most two in $Z$. So $Z$ has exactly two edges on each side of $L_l$. Suppose that
+both edges from $L_{l-1}$ end in the same vertex of $L_l$. Then both edges to $L_{l+1}$ start in
+the other vertex, and no edge of $Z$ joins the part of $Z$ before $L_l$ to the part after it.
+This is impossible, because $Z$ is connected. So each vertex of $L_l$ has one edge of $Z$ to
+$L_{l-1}$ and one to $L_{l+1}$.
+
+\step{Free indices.} Call an index $i$ \emph{free} if the further edge of $w_{i-1}$ leads to
+$L_i$ and the further edge of $w_i$ leads to $L_{i-1}$ (Figure~\ref{fig:free}). Two consecutive indices are not both
+free, because $w_i$ has one further edge at most. Let $a<i<z$, and suppose that the layers
+$L_{i-1}$ and $L_i$ are thin and that $e_i$ is not in $Z$. By the last paragraph, $Z$ has an edge
+from $w_{i-1}$ to $L_i$ and an edge from $w_i$ to $L_{i-1}$. These are further edges. So $i$ is
+free.
+
+\step{The count.} So the edges of $Z$ in $A$ are determined by $a$ and $z$ and by a choice for
+each index $i$ with $a<i<z$ that is free, or for which $L_{i-1}$ or $L_i$ is not thin. At most
+$(z-a)/2$ of the indices between $a$ and $z$ are free, and by~(b) at most $4\Delta$ indices are of
+the second kind. So for given $a\le z$ there are at most $2^{4\Delta+(z-a)/2}$ possibilities.
+With the first paragraph,
+\[
+  c(N)\;\le\;2^{\beta(J)}\Bigl(1+2^{4\Delta}\sum_{1\le a\le z\le\ell}2^{(z-a)/2}\Bigr)
+  \;\le\;2^{\beta(J)}\bigl(1+9\cdot2^{4\Delta+\ell/2}\bigr)\;\le\;10\cdot2^{\,5\beta(J)+b/2}.
+\]
+Here the sum is at most $2^{\ell/2}\sum_{i\ge1}i\,2^{-i/2}=(4+3\sqrt2)\,2^{\ell/2}$, and we use
+$\Delta\le\beta(J)$ and $\ell\le b$.
+\end{proof}
+
+\begin{idea}{outline of the proof of Proposition~\ref{prop:thin}}
+Add the shortest path $A$ to a path from $s$ to $t$. The result is an even subgraph whose edges
+away from $A$ form a forest. So the outside part is a forest for more than half of the even
+subgraphs, and every layer is small by Lemma~\ref{lem:width}. By
+Lemma~\ref{lem:smallcuts} there are few short cycles away from $A$. So the rank of $J$ is
+bounded. By Lemma~\ref{lem:path}, almost every layer then has exactly two vertices, and $N$ has
+few cycles.
+\end{idea}
+
+\begin{proposition}[Away from the shortest path]\label{prop:thin}
+For every $\varepsilon\in(0,\half]$ there is a number $C=C_\varepsilon\ge1$ with the following
+property. Let $N$ be a bridgeless $2$-pole of rank $b\ge2$ with ports $s,t$ and
+$P_{st}(N)\ge(\half+\varepsilon)2^{b}$. Then $\beta(J)\le C$, in the notation above.
+\end{proposition}
+
+\begin{proof}
+\step{Step 1: the layers are small.} Put $P=V(A)$. Then $N[P]$ is connected, and every vertex
+outside $P$ has degree three. For a path $Q$ from $s$ to $t$, the set $Q+A$ is an even subgraph of
+$N$. Its edges in $N-P$ are edges of the path $Q$, so they form a forest. Different paths give
+different even subgraphs, and $N$ has $2^{b}$ even subgraphs. Hence
+\begin{equation}\label{eq:qH}
+  q(N,P)\;\ge\;\frac{P_{st}(N)}{2^{b}}\;\ge\;\frac12+\varepsilon .
+\end{equation}
+Let $\lambda(u)$ be the distance from $s$ to $u$ in $N$. This is a level function, and $P$ has at
+most one vertex of each level. By Lemma~\ref{lem:width} with $\delta=\varepsilon/2$, every layer
+$L_j$ has fewer than $\Theta:=\Theta_{\varepsilon/2}(1)$ vertices of $J$.
+
+\step{Step 2: a short cycle.} Put $U_j=L_j\sm V(A)$, and for an interval $I$ of indices let $J_I$ be
+the subgraph of $J$ induced by the sets $U_j$ with $j\in I$. Suppose that $J_I$ contains a cycle.
+Choose a cycle $Z$ of $J_I$ such that the interval $[a,a']$ of the layers that $Z$ meets is as
+short as possible, and put $\sigma=a'-a$ and $R=U_a\cup\dots\cup U_{a'}$. We claim that
+$|R|\le20\Theta$.
+
+By the choice of $Z$, every cycle of $J[R]$ meets $U_a$. So $J[R]-U_a$ is a forest. Deleting a
+vertex of degree at most three lowers the rank by at most two, so $\beta(J[R])\le2|U_a|<2\Theta$.
+The vertices of $R$ have degree three in $N$. Counting edge ends gives
+$|R|=2\beta(J[R])+|\delta R|-2\comp(J[R])$. An edge that leaves $R$ ends in $U_{a-1}$, in
+$U_{a'+1}$, or in one of the vertices $w_{a-1},\dots,w_{a'+1}$, each of which has at most one
+further edge. So $|\delta R|<6\Theta+\sigma+3$, and $|R|<10\Theta+\sigma+1$. The cycle $Z$ has a vertex in
+layer $a$ and a vertex in layer $a'$, so $|Z|\ge2\sigma$. Also $|Z|\le|R|$. Hence
+$\sigma\le10\Theta$ and $|R|\le20\Theta$.
+
+\step{Step 3: the rank of $J$.} Start with the interval of all layers. As long as $J_I$ contains a
+cycle for some interval $I$ of the present family, choose $Z$ and $R$ as in Step~2, and replace $I$
+by the at most two intervals that remain when $[a,a']$ is removed. Let $Z_1,\dots,Z_k$ be the
+chosen cycles and $R_1,\dots,R_k$ the corresponding sets. The sets $R_i$ are pairwise disjoint,
+$|R_i|\le20\Theta$, and $J-\bigcup_iR_i$ is a forest, because an edge of $J$ joins equal or
+consecutive layers. So $\beta(J)\le2\sum_i|R_i|\le40\Theta k$.
+
+The sets $V(Z_i)$ are pairwise disjoint cyclic regions of $N$ that avoid $P$. Each has at most
+$|Z_i|\le20\Theta$ edges that leave it. If $\xi\cap E(N-P)$ is a forest, then
+$\xi\cap E(N[V(Z_i)])$ is a forest for every $i$. So Lemma~\ref{lem:smallcuts} and~\eqref{eq:qH}
+give $k\le(20\Theta+1)2^{20\Theta-1}/\varepsilon$. Hence $\beta(J)\le C$ with
+\[
+  C=C_\varepsilon:=\frac{40\Theta\,(20\Theta+1)\,2^{20\Theta-1}}{\varepsilon}.\qedhere
+\]
+\end{proof}
+
+\begin{theorem}[Few cycles]\label{thm:fewcycles}
+For every $\varepsilon\in(0,\half]$ there is a constant $K_\varepsilon$ with the following property.
+Let $N$ be a pole of rank $b$, and let $s,t$ be two of its ports with
+$P_{st}(N)\ge(\half+\varepsilon)2^{b}$. Then
+\[
+  c(N)\;\le\;K_\varepsilon\,2^{b/2}.
+\]
+\end{theorem}
+
+\begin{proof}
+In the notation of Lemma~\ref{lem:reduction}, $c(N)=\sum_ic(N_i)$, and each $N_i$ is a
+bridgeless $2$-pole with at least $(\half+\varepsilon)2^{b_i}$ paths between its ports. If
+$b_i=1$, then $c(N_i)=1$. If $b_i\ge2$, then $c(N_i)\le10\cdot2^{5C_\varepsilon}\,2^{b_i/2}$ by
+Proposition~\ref{prop:thin} and Lemma~\ref{lem:path}(d). Also
+$\sum_i2^{b_i/2}\le2^{b/2}+q-1\le2\cdot2^{b/2}$, because $x+y\le xy+1$ for $x,y\ge1$. So the
+theorem holds with $K_\varepsilon=20\cdot2^{5C_\varepsilon}$.
+\end{proof}
+
+\subsection{Full pairs}\label{sec:full}
+
+A \emph{square} is a copy of the complete bipartite graph $K_{2,2}$; its two classes are its
+\emph{left pair} and its \emph{right pair}. A \emph{single rung} is one edge; its two ends form
+both its left pair and its right pair. These are the two kinds of \emph{tiles}. The \emph{weight}
+of a square is $2$, and the weight of a single rung is $1$. A \emph{chain} of tiles
+$\tau_1,\dots,\tau_m$ consists of these tiles, pairwise disjoint, and of two disjoint edges from
+the right pair of $\tau_i$ to the left pair of $\tau_{i+1}$ for $1\le i<m$. These two edges are an
+\emph{interface}. A \emph{capped ladder} is a chain with two more vertices $s$ and $t$, the
+\emph{caps}: $s$ is joined to the two vertices of the left pair of $\tau_1$, and $t$ to the two
+vertices of the right pair of $\tau_m$ (Figure~\ref{fig:ladder}). A capped ladder is a $2$-pole. If
+its tiles have total weight $W$, it has $2W+2$ vertices and rank $W+1$.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \coordinate (s) at (0,0);
+  \coordinate (t) at (9.6,0);
+  \foreach \n/\x in {a/1.2,b/2.4,c/3.8,d/5.2,e/6.4,f/7.8}{
+    \coordinate (\n u) at (\x,0.65);
+    \coordinate (\n l) at (\x,-0.65);}
+  \draw[edge] (s)--(au) (s)--(al);
+  \draw[cool] (au)--(bu) (al)--(bl) (au)--(bl) (al)--(bu);
+  \draw[edge] (bu)--(cu) (bl)--(cl);
+  \draw[hot] (cu)--(cl);
+  \draw[edge] (cu)--(du) (cl)--(dl);
+  \draw[cool] (du)--(eu) (dl)--(el) (du)--(el) (dl)--(eu);
+  \draw[edge] (eu)--(fu) (el)--(fl);
+  \draw[hot] (fu)--(fl);
+  \draw[edge] (fu)--(t) (fl)--(t);
+  \foreach \q in {au,al,bu,bl,cu,cl,du,dl,eu,el,fu,fl} \node[vtx] at (\q) {};
+  \node[port] at (s) {};
+  \node[port] at (t) {};
+  \node[note, text=accent, left=3pt] at (s) {$s$};
+  \node[note, text=accent, right=3pt] at (t) {$t$};
+  \node[note, text=accent] at (1.8,-1.15) {square};
+  \node[note, text=warm] at (3.8,-1.15) {single rung};
+  \node[note, text=accent] at (5.8,-1.15) {square};
+  \node[note, text=warm] at (7.8,-1.15) {single rung};
+  \node[note] at (3.1,1.1) {interface};
+  \draw[slate, line width=0.4pt] (3.1,0.95) -- (3.1,0.7);
+\end{tikzpicture}
+\caption{A capped ladder with four tiles, of weight $6$ and rank $7$. Without $s$ and $t$ it is a
+chain. If the right pair of the last tile is joined to the left pair of the first tile instead, the
+result is a ring (Section~\ref{sec:rings}).}
+\label{fig:ladder}
+\end{figure}
+
+\begin{lemma}[Ladders]\label{lem:ladders}
+Let $N$ be a bridgeless $2$-pole with ports $s,t$ and rank $b$. If $b=1$, then $N$ consists of two
+vertices and two parallel edges, and the pair $s,t$ is full. If $b\ge2$, the following statements
+are equivalent, in the notation of Section~\ref{sec:shape}:
+\begin{enumerate}
+\item[\textup{(i)}] the pair $s,t$ is full;
+\item[\textup{(ii)}] the graph $J$ is a forest;
+\item[\textup{(iii)}] $N$ is a capped ladder whose caps are $s$ and $t$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+If $b=1$, then $N$ has two vertices, and it is a cycle. Let $b\ge2$.
+
+\step{From \textup{(i)} to \textup{(ii)}.} By Lemma~\ref{lem:joins}, every cycle meets the path
+$A$.
+
+\step{From \textup{(ii)} to \textup{(iii)}.} By Lemma~\ref{lem:path}(a), $b-\ell\le\beta(J)=0$.
+So $\ell=b$, and equality holds in every estimate of the proof of Lemma~\ref{lem:path}(a).
+This means the following. Every layer $L_j$ with $0<j<b$ consists of $w_j$ and of one
+vertex $y_j$ of $J$, and there are no other vertices outside $A$. Every vertex of $A$ has a
+further edge, and this edge leads to $J$. And $J$ is a tree.
+
+An edge joins vertices of equal or consecutive layers. So $J$ is the path
+$y_1y_2\cdots y_{b-1}$, the further edge of $s$ leads to $y_1$, that of $t$ leads to $y_{b-1}$,
+and the further edge of $w_j$ leads to a vertex $y_{\pi(j)}$ with $|\pi(j)-j|\le1$, for $0<j<b$.
+Every $y_i$ has degree three, so it is the end of exactly one of the edges $w_jy_{\pi(j)}$. Hence
+$\pi$ is a permutation of $\{1,\dots,b-1\}$ that moves every number by at most one. So $\pi$ is
+composed of fixed points and of exchanges of two consecutive numbers. A fixed point $j$ is a
+single rung with the ends $w_j,y_j$. An exchange of $j$ and $j+1$ is a square with the left pair
+$w_j,y_j$ and the right pair $w_{j+1},y_{j+1}$. The remaining edges of $A$ and $J$ are the
+interfaces and the edges at the caps.
+
+\step{From \textup{(iii)} to \textup{(i)}.} Let the tiles have total weight $W$, so $b=W+1$. A path
+from $s$ to $t$ passes the tiles in order. It enters a tile at a vertex of the left pair and
+leaves it at a vertex of the right pair. In a square there are two paths to each vertex of the
+right pair. In a single rung the path stays or crosses. So there are $2\cdot2^{W}=2^{b}$ paths.
+\end{proof}
+
+\begin{theorem}[Gap]\label{thm:gap}
+There is a constant $\gamma_0\in(0,\frac14]$ with the following property. Let $N$ be a pole of
+rank $b$, and let $s,t$ be two of its ports. Then
+\[
+  P_{st}(N)=2^{b}\qquad\text{or}\qquad P_{st}(N)\le(1-\gamma_0)\,2^{b}.
+\]
+\end{theorem}
+
+\begin{proof}
+Put $C=C_{1/4}$ and $\gamma_0=2^{-4C-2}$. Let $P_{st}(N)>(1-\gamma_0)2^{b}$. In the notation of
+Lemma~\ref{lem:reduction}, the path counts of the bridgeless $2$-poles $N_1,\dots,N_q$ multiply,
+and $P(N_i)>(1-\gamma_0)2^{b_i}$ for every $i$. So it suffices to show that the pair of ports of
+each $N_i$ is full.
+
+Let $N$ be one of them, with rank $b$. If $b=1$, the pair is full. Let $b\ge2$, and suppose that
+$J$ contains a cycle $Z$. We have $P_{st}(N)\ge\frac34\,2^{b}$. So $\beta(J)\le C$ by
+Proposition~\ref{prop:thin}, and $Z$ has at most $4C+2$ vertices by Lemma~\ref{lem:path}(a)
+and~(c). The cycle $Z$ is disjoint from the path $A$. By Lemma~\ref{lem:joins},
+$P_{st}(N)\le2^{b}-2^{b-|Z|}\le(1-\gamma_0)2^{b}$. This is a contradiction. So $J$ is a forest,
+and the pair is full by Lemma~\ref{lem:ladders}.
+\end{proof}
+
+\begin{corollary}[Four ports]\label{cor:fourports}
+Let $N$ be a $4$-pole without bridge, with ports $a,b,c,d$ such that the four pairs $ac$, $ad$,
+$bc$, $bd$ are full. Then $N$ is a chain of tiles; $a,b$ is the left pair of its first tile and
+$c,d$ is the right pair of its last tile.
+\end{corollary}
+
+\begin{proof}
+Add a vertex $z$ joined to $a,b$ and a vertex $w$ joined to $c,d$. The result $N'$ is a $2$-pole
+of rank $\beta(N)+2$ with ports $z,w$, and $P_{zw}(N')=4\cdot2^{\beta(N)}$. So the pair $z,w$ is
+full. No edge of $N$ is a bridge of $N'$, because $N$ has no bridge. No edge at $z$ is a bridge,
+because the second edge at $z$ ends in another vertex of $N$; the same holds for $w$. So $N'$ has
+no bridge, and it has more than two vertices. By Lemma~\ref{lem:ladders}, $N'$ is a capped ladder
+with the caps $z$ and $w$. The neighbours $a,b$ of $z$ form the left pair of
+its first tile, and the neighbours $c,d$ of $w$ form the right pair of its last tile. Without the
+caps, this is a chain.
+\end{proof}
+
+\subsection{Three gadgets}\label{sec:gadgets}
+
+For four distinct ports $a,b,c,d$ of a pole $N$ let $f_{ab|cd}(N)$ be the number of pairs of
+vertex-disjoint paths of $N$, one from $a$ to $b$ and one from $c$ to $d$.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \begin{scope}
+    \draw[region] (0,0) ellipse [x radius=1.1, y radius=0.75];
+    \node[text=accent] at (-0.1,0) {$N$};
+    \draw[hot] (0.95,0.38)--(1.95,0)--(0.95,-0.38);
+    \node[vtx] at (1.95,0) {};
+    \foreach \p in {(0.95,0.38),(0.95,-0.38),(-1.1,0)} \node[port] at \p {};
+    \node[note, text=accent] at (1.0,0.72) {$a$};
+    \node[note, text=accent] at (1.0,-0.72) {$b$};
+    \node[note, text=accent] at (-1.4,0) {$c$};
+    \node[note, text=warm] at (2.25,0) {$z$};
+    \node[note] at (0.3,-1.3) {the pole $N'$ of (b)};
+  \end{scope}
+  \begin{scope}[xshift=5.6cm]
+    \draw[region] (0,0) ellipse [x radius=1.1, y radius=0.75];
+    \node[text=accent] at (0,0) {$N$};
+    \draw[hot] (0.95,0.38)--(1.95,0)--(0.95,-0.38) (-0.95,0.38)--(-1.95,0)--(-0.95,-0.38);
+    \node[vtx] at (1.95,0) {};
+    \node[vtx] at (-1.95,0) {};
+    \foreach \p in {(0.95,0.38),(0.95,-0.38),(-0.95,0.38),(-0.95,-0.38)} \node[port] at \p {};
+    \node[note, text=accent] at (1.0,0.72) {$a$};
+    \node[note, text=accent] at (1.0,-0.72) {$b$};
+    \node[note, text=accent] at (-1.0,0.72) {$c$};
+    \node[note, text=accent] at (-1.0,-0.72) {$d$};
+    \node[note, text=warm] at (2.25,0) {$z$};
+    \node[note, text=warm] at (-2.25,0) {$w$};
+    \node[note] at (0,-1.3) {the pole $N'$ of (c)};
+  \end{scope}
+  \begin{scope}[xshift=10.9cm]
+    \draw[region] (0,0) ellipse [x radius=1.1, y radius=0.75];
+    \node[text=accent] at (0,0) {$N$};
+    \draw[hot] (0.95,0.38) .. controls (1.8,0.35) and (1.8,-0.35) .. (0.95,-0.38);
+    \foreach \p in {(0.95,0.38),(0.95,-0.38),(-0.95,0.38),(-0.95,-0.38)} \node[port] at \p {};
+    \node[note, text=accent] at (1.0,0.72) {$c$};
+    \node[note, text=accent] at (1.0,-0.72) {$d$};
+    \node[note, text=accent] at (-1.0,0.72) {$a$};
+    \node[note, text=accent] at (-1.0,-0.72) {$b$};
+    \node[note] at (0.2,-1.3) {the pole $N'$ of (d)};
+  \end{scope}
+\end{tikzpicture}
+\caption{The three gadgets in the proof of Lemma~\ref{lem:gadgets}: a new vertex $z$ at the
+ports $a$ and $b$; new vertices $z$ and $w$; a new edge between $c$ and $d$.}
+\label{fig:gadgets}
+\end{figure}
+
+\begin{lemma}[Three gadgets]\label{lem:gadgets}
+Let $\varepsilon\in(0,\half]$, and let $N$ be a pole of rank $h$. In each statement below, the
+letters denote distinct ports of $N$. Write $P_{xy}$ for $P_{xy}(N)$ and $f$ for $f(N)$.
+\begin{enumerate}
+\item[\textup{(a)}] If $P_{ab}\ge(\half+\varepsilon)2^{h}$, then $c(N)\le K_\varepsilon\,2^{h/2}$.
+\item[\textup{(b)}] If $P_{ac}+P_{bc}\ge(1+2\varepsilon)2^{h}$, then $P_{ab}\le2K_\varepsilon\,2^{h/2}$.
+\item[\textup{(c)}] If $P_{ac}+P_{ad}+P_{bc}+P_{bd}\ge(2+4\varepsilon)2^{h}$, then
+$f_{ac|bd}+f_{ad|bc}\le2K_\varepsilon\,2^{h/2}$.
+\item[\textup{(d)}] If $P_{ab}+f_{ac|bd}+f_{ad|bc}\ge(1+2\varepsilon)2^{h}$, then
+$P_{cd}\le2K_\varepsilon\,2^{h/2}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) is Theorem~\ref{thm:fewcycles}. In each of the other cases we change $N$ into a pole $N'$
+(Figure~\ref{fig:gadgets}) and apply Theorem~\ref{thm:fewcycles} to two ports of $N'$.
+
+(b) Add a new vertex $z$ and join it to $a$ and $b$. Then $N'$ has rank $h+1$, and
+$P_{zc}(N')=P_{ac}+P_{bc}\ge(\half+\varepsilon)2^{h+1}$. The cycles of $N'$ through $z$
+correspond to the paths of $N$ from $a$ to $b$. So
+$P_{ab}\le c(N')\le K_\varepsilon\,2^{(h+1)/2}$.
+
+(c) Add a new vertex $z$ joined to $a$ and $b$, and a new vertex $w$ joined to $c$ and $d$. Then
+$N'$ has rank $h+2$, and $P_{zw}(N')$ is the sum of the four path counts. The cycles of $N'$
+through $z$ and $w$ correspond to the pairs counted by $f_{ac|bd}+f_{ad|bc}$. So this sum is at
+most $K_\varepsilon\,2^{(h+2)/2}$.
+
+(d) Add an edge between $c$ and $d$. Then $N'$ has rank $h+1$. A path from $a$ to $b$ in $N'$
+avoids the new edge, or it consists of the new edge and a pair counted by
+$f_{ac|bd}+f_{ad|bc}$. So $P_{ab}(N')=P_{ab}+f_{ac|bd}+f_{ad|bc}$. The cycles of $N'$ through the
+new edge correspond to the paths of $N$ from $c$ to $d$. So
+$P_{cd}\le K_\varepsilon\,2^{(h+1)/2}$.
+\end{proof}

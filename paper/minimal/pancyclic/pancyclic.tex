@@ -3,6 +3,7 @@
 
 \renewcommand{\papertitle}{The minimum number of edges\\ in a pancyclic graph}
 \renewcommand{\papersubtitle}{A short proof for Erd\H{o}s Problem \#1016}
+\renewcommand{\paperdate}{Draft of 12 November 2026}
 \renewcommand{\paperrunning}{The minimum number of edges in a pancyclic graph}
 \hypersetup{pdftitle={The minimum number of edges in a pancyclic graph: a short proof},pdfauthor={KNT, Astra, Fable 5.2}}
 
@@ -15,9 +16,9 @@ $n+h(n)$ be the least number of edges of such a graph. We prove that
   \log_2n+\log^{*}n-O(1)\;\le\;h(n)\;\le\;\lfloor\log_2n\rfloor+\log^{*}n+1 .
 \]
 This answers Problem~\#1016 of Erd\H{o}s. The lower bound follows from one estimate for random
-even subgraphs, which is proved in~\cite{Max}. The upper bound is a construction. Both bounds are
-formalised in Lean~4. Astra and Fable~5.2 are language models. Section~\ref{sec:status} states
-the part of each author.
+even subgraphs, which the companion paper~\cite{Forest} proves. The upper bound is a
+construction. Both bounds are formalised in Lean~4. Astra and Fable~5.2 are language models.
+Section~\ref{sec:status} states the part of each author.
 
 \fronthead{The proof in five sentences}
 \begin{enumerate}[leftmargin=1.6em]
@@ -68,7 +69,8 @@ lower bound can increase to $\log n+\lgs n-O(1)$, and if at least $h(n)-\log n\t
 Theorem~\ref{thm:main} answers both questions.
 
 The theorem and its proof are from~\cite{KNT}. This paper gives the proof in a short form. It
-uses one result of~\cite{Max}, the forest estimate, which we state in Section~\ref{sec:input}.
+uses one result of the companion paper~\cite{Forest}, the forest estimate, which we state in
+Section~\ref{sec:input}.
 
 \section{The forest estimate}\label{sec:input}
 
@@ -83,11 +85,13 @@ $2^{r}-1$ cycles.
 \item Let $W$ be a subgraph of $G$, with $r=\beta(G)$, $t=\beta(W)$ and $m=|E(W)|$. For an even
 subgraph $\xi$ we call $\xi\sm E(W)$ its \emph{outside part}. The map $\xi\mapsto\xi\sm E(W)$ is
 linear on $\Z(G)$ with kernel $\Z(W)$. So there are $2^{r-t}$ outside parts.
-\item $p(G,W)$ is the proportion of the outside parts that are forests.
+\item $p(G,W)$ is the proportion of the outside parts that are forests. Each outside part
+comes from $2^{t}$ even subgraphs. So $p(G,W)$ is also the probability that $\xi\sm E(W)$ is a
+forest, for a uniformly random $\xi\in\Z(G)$.
 \end{itemize}
 \end{notation}
 
-\begin{theorem}[Forest estimate, {\cite[Theorem~3.1]{Max}}]\label{thm:forest}
+\begin{theorem}[Forest estimate, {\cite[Corollary~1.2]{Forest}}]\label{thm:forest}
 There is $r_0$ such that the following holds for all $r\ge r_0$. Let $G$ be a connected simple graph
 of rank $r$. Let $W\subseteq G$ be a nonempty union of cycles with at most $r/\log^{2}r$ edges and
 at most $(\log r)/100$ components. Then
@@ -95,6 +99,12 @@ at most $(\log r)/100$ components. Then
   p(G,W)\;\le\;\frac12+\frac{20}{\lgk{3}r}.
 \]
 \end{theorem}
+
+The proof in~\cite{Forest} is a second-moment argument. It reduces the estimate to a multigraph
+in which a small set of vertices is marked and all other vertices have degree three. In this
+multigraph it counts the cycles of length about $\log r$ that are components of a random even
+subgraph. The union $W$ can have several components, and Section~\ref{sec:lower} needs this,
+because the cycles of Lemma~\ref{lem:witness} can be disjoint.
 
 \begin{lemma}[Lengths]\label{lem:count}
 The cycles of $G$ have at most $2^{r-t}\bigl(p\,m+1-p\bigr)$ different lengths, where $p=p(G,W)$.
@@ -323,29 +333,21 @@ $3,\dots,6$.}
 
 \section{Authorship and verification}\label{sec:status}
 
-KNT is a person. Astra and Fable~5.2 are language models: GPT-6 Astra and Claude Fable~5.2. KNT
-obtained Theorem~\ref{thm:main}, the forest estimate and their proofs in September 2026 with
+KNT is a person. Astra and Fable~5.2 are the language models GPT-6 Astra and Claude Fable~5.2.
+KNT obtained Theorem~\ref{thm:main}, the forest estimate and their proofs in September 2026 with
 Astra~\cite{KNT}, and directed the work at each step. Fable~5.2 wrote this short form.
 
-The theorem is formalised in Lean~4 with Mathlib, in the repository~\cite{Repo} at commit
-\texttt{a5cb5fa}.
+Theorem~\ref{thm:main} has a formal proof in Lean~4. The statement \lean{Erdos1016.mainTheorem}
+has both bounds, with absolute additive constants, and
+\lean{Erdos1016.Problem1016.upper_bound_integer} is the upper bound
+$\lfloor\log n\rfloor+\lgs n+1$. The formal proof uses the forest estimate for
+$|E(W)|\le\sqrt r$, which is \lean{Erdos1016.ShortProof.fewComponentForestEstimate};
+Section~\ref{sec:lower} needs no more. The Lean kernel accepts the proofs with the axioms
+\lean{propext}, \lean{Classical.choice} and \lean{Quot.sound} only. The files are
+in~\cite{Repo}, at commit \texttt{a5cb5fa}.
 
-\begin{center}\small
-\begin{tabular}{@{}p{6.6cm}p{7.4cm}@{}}
-\toprule
-\textsf{\textbf{Statement}} & \textsf{\textbf{Lean declaration}}\\
-\midrule
-Both bounds of Theorem~\ref{thm:main}, with absolute additive constants & \lean{Erdos1016.mainTheorem}\\
-The upper bound $\lfloor\log n\rfloor+\lgs n+1$ & \lean{Erdos1016.Problem1016.upper_bound_integer}\\
-Theorem~\ref{thm:forest} for $|E(W)|\le\sqrt r$ & \lean{Erdos1016.ShortProof.fewComponentForestEstimate}\\
-\bottomrule
-\end{tabular}
-\end{center}
-
-Section~\ref{sec:lower} uses the forest estimate only for $|E(W)|\le\sqrt r$. The Lean kernel
-accepts the proofs with the axioms \lean{propext}, \lean{Classical.choice} and \lean{Quot.sound}
-only. The kernel check covers these formal statements. No machine has checked the text of this
-paper, and no referee has read it.
+The kernel check covers these formal statements, and it does not cover the text of this paper.
+No referee has read the text.
 
 \begin{thebibliography}{9}\small
 
@@ -355,13 +357,13 @@ accessed November 2026.
 \bibitem{Bondy} J.~A.~Bondy, Pancyclic graphs~I, \emph{J.~Combin.\ Theory Ser.~B} \textbf{11}
 (1971), 80--84.
 
+\bibitem{Forest} KNT, Astra and Fable~5.2, The forest proportion of a random even subgraph,
+companion manuscript, November 2026.
+
 \bibitem{Griffin} S.~Griffin, Minimal pancyclicity, arXiv:1312.0274 (2013).
 
 \bibitem{KNT} KNT, The minimum number of edges in a pancyclic graph, manuscript, September 2026,
 \url{https://jehlp.net/erdos1016/}.
-
-\bibitem{Max} KNT, Astra and Fable~5.2, The maximum number of cycles in a graph of large rank,
-draft, November 2026.
 
 \bibitem{Repo} KNT, Astra and Fable~5.2, Lean~4 formalisation of the results of~\cite{KNT},
 \url{https://github.com/JWKNT/erdos1016}.

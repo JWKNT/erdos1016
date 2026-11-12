@@ -1,0 +1,399 @@
+\documentclass[11pt]{article}
+\input{../style/preamble}
+
+\renewcommand{\papertitle}{An audit of Astra's notes,\\ and one combined form of the proof}
+\renewcommand{\papersubtitle}{A fourth research note on ``The maximum number of cycles in a graph of large rank''}
+\renewcommand{\paperrunning}{An audit of Astra's notes}
+\renewcommand{\paperauthors}{Fable~5.2, for KNT}
+\renewcommand{\paperdate}{Research note of 12 November 2026}
+\hypersetup{pdftitle={An audit of Astra's notes, and one combined form of the proof},pdfauthor={Fable 5.2, for KNT}}
+
+\newcommand{\M}[1]{[M,~#1]}
+\newcommand{\T}[1]{[T,~#1]}
+
+\begin{document}
+\maketitleblock
+
+KNT gave me notes of Astra with eight proposals for a shorter proof, and asked which of them can
+be incorporated. This note has the audit, and it describes one copy of the paper that contains
+the sound parts together with the reductions of my three notes [N1], [N2], [N3]. [M] is the
+draft of 42~pages; Astra's notes use its numbers. [T] is the new copy,
+\texttt{trial-combined.pdf}. The manuscript is not changed.
+
+\fronthead{The result in eight sentences}
+\begin{enumerate}[leftmargin=1.6em]
+\item \emph{The audit.} I checked every step of the eight proposals, and I found no error. One
+step needs an exact reading, which Section~\ref{sec:path} gives.
+\item \emph{Agreement.} Three proposals are the same as reductions of my notes: the marked set,
+the gap theorem as a corollary, and the recursion from a length $d$ to a length of order
+$\log d$. Astra's notes do not mention [N1], [N2], [N3], so I take this as two independent
+derivations.
+\item \emph{New and in the copy.} The lemma on a shortest path, which needs no hypothesis on the
+number of paths; the proof of rigidity by a limit; the cut of size three that excludes three
+full pairs at a port; the upper bound for pairs with two links; a shorter proof of nesting; a
+shorter window step in the lemma on layers.
+\item \emph{Sound, but not in the copy.} Caps for cuts of size two and three: measured, 11~lines
+more. Connected blocks in the chain: measured, 1~line more. The form of the theorem on cuts of
+size four with two sides: not necessary when one side is a cycle of length four. The recursion
+with two deleted sets: the form of [N1] has one family of cycles.
+\item \emph{Measured.} The copy [T] has 41~pages, 1577 typeset lines, 39 numbered statements and
+three cases. The manuscript has 42, 1624, 40 and five. The copy of [N3] has 41, 1587, 39 and
+three.
+\item \emph{A price of [N3] is gone.} With the limit proof, the gap constant is used at one
+place. Proposition~6.3 keeps the proof and the numbers of the manuscript, and the lemma on a
+full star is not necessary.
+\item \emph{Astra's notes keep the case of bounded girth.} With [N2] the statements that the
+notes list as retained (\M{Lemma~5.5}, \M{Corollary~5.6}, \M{Section~7}) are not necessary.
+The copy [T] uses [N2].
+\item \emph{Status.} All new proofs are on paper. Nothing of this note or of Astra's notes has a
+formal proof, and the text of [T] differs from the Lean proof in more places than [M].
+\end{enumerate}
+
+\begin{notation}{the status of this note}
+\begin{itemize}[leftmargin=1.2em]
+\item \emph{Checked on paper.} Each proposal, in the form of Astra's notes. The copy [T] has the
+proofs of the adopted parts in full, and I read the typeset text of its Sections~4 to~7 again.
+\item \emph{Tested by computer.} The script \texttt{checks/astra\_audit\_check.py}
+(Section~\ref{sec:tests}). The tests cover small graphs and the arithmetic. They do not replace
+a proof.
+\item \emph{Measured.} Every number of lines in this note is from a built copy.
+\item \emph{Not done.} No formal proof. No reader other than Astra, for its own proposals, and
+me. I did not build a copy without [N2] (Section~\ref{sec:open}).
+\end{itemize}
+\end{notation}
+
+\contentsblock
+
+\section{Verdicts}\label{sec:verdicts}
+
+\begin{center}\small
+\begin{tabular}{@{}p{1.1cm}p{4.6cm}p{1.0cm}p{2.1cm}p{5.0cm}@{}}
+\toprule
+ & \textsf{\textbf{Proposal}} & \textsf{\textbf{Sound}} & \textsf{\textbf{In [T]}} & \textsf{\textbf{Measured effect, remark}}\\
+\midrule
+1 & Marked set; no edge recursion; five marked vertices at the end & yes & yes & same as reduction~4 of [N3]; $-2$ lines\\
+2 & Window step with the threshold $m^{3/4}$ & yes & yes & Section~4: $-5$ lines\\
+3 & A shortest path: counts without a hypothesis; cycles by their edges on the path & yes & yes & Section~5: $-1$ line; no ordinary layers, no matchings, one conclusion in \M{Proposition~5.3}\\
+4 & A gap with some fixed constant, without induction & yes & yes & same as reduction~1 of [N3]; $-24$ lines there\\
+5 & Caps for cuts of size two and three; the bound $2^{r-1}+420\cdot2^{r/2}$ & yes & no (option) & $+11$ lines\\
+6 & Rigidity by limits; three full pairs give a cut of size three & yes & yes, for a cycle of length four & Section~6: $-6$ lines; no lemma on a full star\\
+7.1 & Shorter proof of nesting & yes & yes & with 7.2: $-3$ lines\\
+7.1 & Connected blocks & yes & no (option) & $+1$ line\\
+7.2 & Two links as an upper bound for $W_2$ & yes & yes & shorter statement; shorter proof for heavy families\\
+7.3--7.5 & Packing at logarithmic girth; recursion $d\mapsto C_0\log(Qd+2)$; direct end & yes & no & same recursion as [N1]; [N1] has one family of cycles, and [N2] needs another base\\
+8.1 & Coarse bound for the dyadic scales & yes & no & no dyadic scales in [N1]\\
+8.2 & Fixed blocks in \M{Proposition~5.3} & yes & no & Astra does not recommend it\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The effects are differences of typeset lines against the copy of [N3] (lean form
+of~[N2] with the four reductions), section by section. The introduction of [T] is five lines
+longer, because it states the origin of the new parts.
+
+\section{The audit, proposal by proposal}\label{sec:audit}
+
+\subsection{Proposal 1: the marked set}
+
+For a connected cubic multigraph without a bridge and a set $P$ of $k$ vertices, Astra proves
+$\beta(G-P)\le r-\lceil k/2\rceil-1$ and
+$c(G)\le\bigl(q(G,P)+2^{-\lceil k/2\rceil-1}\bigr)2^{r}$. This is the lemma on cycles and a
+marked set of [N3], with the integer part. The proof is the same count. I checked the two uses:
+$|P|=2\lceil\log r\rceil$ gives the term $\frac1{2r}$ for the leading term, and five vertices
+give $\frac25+\frac1{16}<\half$ in the last case. The copy [T] has eight vertices there, as [M];
+both numbers are correct.
+
+\subsection{Proposal 2: the window step}
+
+The step uses three inequalities, and all three hold: $(t+\frac16)^{4}\le t^{4}+t^{3}$ for
+$t\ge1$, because $\frac23+\frac16+\frac1{54}+\frac1{1296}<1$;
+$6\mu^{3/4}+3k(6\mu^{1/4}+3)\le33\mu^{3/4}$ for $k\le\sqrt\mu$; and
+$132\log^{2}\mu\le\mu^{1/4}$ for $\mu\ge2^{100}$, because $132\cdot10^{4}<2^{25}$ and the right
+side grows faster. Step~1 of \M{Lemma~4.1} and the number $\Theta_\delta(k)$ do not change. This
+is \T{Lemma~4.1, Step~2}.
+
+\subsection{Proposal 3: a shortest path}\label{sec:path}
+
+Let $N$ be a bridgeless $2$-pole of rank $b\ge2$, $A=w_0\cdots w_\ell$ a shortest path between
+its ports, $J=N-V(A)$ and $\Delta=b-\ell$. Astra's statements, in the form of \T{Lemma~5.3}:
+\begin{enumerate}[leftmargin=2.2em]
+\item[(a)] $0\le\Delta\le\beta(J)$;
+\item[(b)] at most $2\Delta$ layers between the ports are not thin, and at most $4\Delta$
+vertices of $J$ lie outside the thin layers;
+\item[(c)] every cycle of $J$ has at most $4\Delta+2$ vertices;
+\item[(d)] $c(N)\le10\cdot2^{5\beta(J)+b/2}$.
+\end{enumerate}
+I checked (a), (b), (c) as written. In (d), the restriction of an even subgraph to $E(A)$ has
+the kernel $\Z(J)$, so at most $2^{\beta(J)}$ cycles have the same edges on $A$; this is correct
+also when an edge of $A$ is doubled.
+
+\begin{idea}{the step that needs an exact reading}
+Astra's notes say: if the layers at both ends of an edge $e_i$ of $A$ are thin and $e_i$ is
+absent from the cycle, then the further edge of $w_{i-1}$ points forward and that of $w_i$
+points backward, and ``positions satisfying this condition cannot be consecutive''. The
+condition must be read as a property of the \emph{graph}: call $i$ free if the two further edges
+have these directions. Then no two consecutive indices are free, an index that is not free
+between thin layers has its edge in every cycle that passes it, and the count
+$2^{\lceil(z-a-1)/2\rceil}$ is correct. Read as a property of the cycle (``no two consecutive
+absent edges'') the count would be false: there are more than $2^{n/2}$ such patterns. The copy
+[T] defines free indices.
+\end{idea}
+
+With (d), \M{Theorem~5.4} has a proof of five lines and the constant
+$K_\varepsilon=20\cdot2^{5C_\varepsilon}$. \M{Proposition~5.3} keeps one conclusion,
+$\beta(J)\le C_\varepsilon$, and Steps~1 to~3 of its proof. The ordinary layers, the count of
+perfect matchings and the items (ii), (iii) are not necessary. Astra's notes keep the bound for
+the layers that are not thin, because \M{Corollary~5.6} uses it. With [N2] that corollary is
+not in the text, so (b) is used only inside the lemma.
+
+In lines this proposal is neutral: Section~5 has 275 lines in [T] and 276 in the copy of [N3].
+I put it in the copy for its content. The counts that hold for every pole are now in one lemma,
+and the proposition with the forest estimate gives one number.
+
+\subsection{Proposal 4: the gap theorem}
+
+Astra's proof is that of [N3]: a bridgeless $2$-pole is a capped ladder if and only if $J$ is a
+forest, and a cycle of $J$ gives a gap by \M{Lemma~5.1}. The two notes bound the length of the
+cycle in different ways. [N3] takes it from Step~2 of \M{Proposition~5.3}. Astra takes it from
+(c) and $\Delta\le\beta(J)\le C_{1/4}$, which gives $\gamma_0=2^{-4C_{1/4}-2}$. The copy [T]
+has Astra's form (\T{Theorem~5.7}), because (c) is there in any case. Astra's warning is
+correct: the old arithmetic with $3.99$ cannot use the new constant without change. [N3] changed
+the arithmetic. The copy [T] does not need it (Section~\ref{sec:limits}).
+
+\subsection{Proposal 5: caps for cuts of size two and three}
+
+The proposal is correct. I checked the cap for two and for three ports, the inequalities
+$z<4\eta$ and $\mathcal B>2^{d-2}-3\eta$, the step from $a_1+a_2\ge\frac23\sum_ja_j$ to
+$a_3=o(1)$, the bounds $c(N)\le20\cdot2^{b/2}$ for a pole with a full pair and
+$P_{ab}\le20\sqrt2\cdot2^{h/2}$ for a $3$-pole with two full pairs, and the constant: the excess
+is at most $(15+400)\,2^{r/2}$.
+
+I built it as an option of the script (\texttt{caps}). The copy has 1588 lines, 11 more than
+[T]. The reason is that the proof of \M{Proposition~6.3} does not need full pairs. It uses
+\M{Theorem~5.4} and one gadget, and it does not use the gap theorem or a cap. The proposal has
+its merits: one method for all cuts, an absolute constant $420$, and no numbers $\frac1{1000}$,
+$K_0$, $\kappa(h)$ in the paper. KNT can choose it; the proofs are in the option.
+
+\subsection{Proposal 6: rigidity by limits}\label{sec:limits}
+
+\emph{The three implications.} For the limit of the states of a sequence of $4$-poles whose
+ranks tend to infinity, Astra states
+\begin{gather*}
+  a_{ik}+a_{jk}>1\ \Longrightarrow\ a_{ij}=0,\qquad\qquad
+  a_{kl}>0\ \Longrightarrow\ a_{ij}+F-u_{ij|kl}\le1,\\
+  a_{ik}+a_{il}+a_{jk}+a_{jl}>2\ \Longrightarrow\ u_{ik|jl}+u_{il|jk}=0 .
+\end{gather*}
+They need the gadgets of \M{Lemma~5.7} for every positive margin, as Astra says. So
+\T{Lemma~5.9} is stated for every $\varepsilon$; its proof is that of [M].
+
+\emph{The classification.} I checked the proof that a limit with $S+F\ge4$ is a cross or a star,
+line by line, and a script enumerated all states on three grids (Test~3). There is no other
+state.
+
+\emph{Three full pairs.} Astra excludes them without \M{Lemma~6.7}: the pole without the two
+other ports is a capped ladder, the two other ports cannot lie in its first end piece, and this
+piece then has three edges to the rest of the graph. I checked the proof, and Test~2 examined
+all positions of two ports in the capped ladders of weight $3$ to $6$.
+
+\emph{What [T] takes.} The copy has the theorem for a cycle $C$ of length four (reduction~2 of
+[N3]). There the count is
+$c(G)\,2^{-k}=2^{-k}+z+(S+F-u_{12|34})+(S+F-u_{14|23})$, and one use of the cap gives
+$S+F\ge4-\rho_0$. So [T] has: the cap with a free error $\eta$ (\T{Lemma~6.4}); the rigidity
+lemma with the statement of [M] and Astra's proof by a limit (\T{Lemma~6.5}); and Astra's cut
+of size three as Case~1 of \T{Theorem~6.6}. The second cap, the bound for $z$, the lemma on a
+full star and the arithmetic of the star case are not necessary. Astra's step~6.5 (the full
+pairs of the smaller side) is not necessary either, because the other side is $C$.
+
+\emph{The constants.} In [N3] the gap constant forced $\varepsilon_0=\gamma_0/20$ in all of
+Section~6. In [T] the gap theorem is used in the last step of the limit proof only. So
+\M{Proposition~6.3} keeps its proof and its numbers $0.501$ and $1.002$.
+
+\subsection{Proposal 7: the last section}
+
+\emph{7.1, nesting.} The proof with the two cases $D\not\subseteq U_C$ and $D\subseteq U_C$ is
+correct, and it is in [T]. \emph{Connected blocks:} for $j\ge i+2$ the separators between $C_i$
+and $C_j$ lie in one component of $H-(C_i\cup C_j)$; I checked the argument with a path from $u$
+to $p$. This removes the choice of a large component, and the factor $2\Lambda$ in the
+thresholds. The proof of the one component has the same length as the choice of a component:
+the option \texttt{blocks} gives 1578 lines.
+
+\emph{7.2, two links.} The bound $W_2\le2\mu(e+NM)$ is correct, with $M$ a bound for the weight
+of the regions that separate a neighbour $u$ of $A$ from $p$. It is the lemma of [M] in the
+other direction, with no condition on $\mu$ and no number $K$. It is \T{Lemma~7.9}, and the
+proof for heavy families is shorter with it. Test~4 compares the two sides for random families.
+
+\emph{7.3 to 7.5.} I checked the packing bound $C_2d^{6}(s+1)2^{d}$ with $m=1$, the recursion
+$|S_d|+1\le2^{2d}$ with $a(d)=\lceil C_0\log(Qd+2)\rceil$, and the end with $\mu\ge\frac53$ and
+$\PP(Z>0)\ge\frac58-o(1)$. They are correct. The recursion from $d$ to a length of order
+$\log d$ is the idea of [N1]. The two forms differ in one point: Astra deletes two nested sets
+$S^{-}\subseteq S^{+}$, and [N1] deletes one set and counts the blocks that contain a short
+cycle. The direct end is the inequality of the proposition on heavy families. I keep the form
+of [N1], because [N2] is written for it: in [N2] the start of the recursion is girth five, not
+a large girth $D_*$.
+
+\subsection{Proposal 8 and the list of retained parts}
+
+Proposal~8.1 is correct and has no use when there are no dyadic scales. Proposal~8.2 is correct;
+Astra does not recommend it, and I did not build it.
+
+Astra's notes keep \M{Lemma~5.5}, \M{Corollary~5.6} and \M{Section~7}, and they say that no
+replacement was found. [N2] is such a replacement: a large piece of girth five has few forests,
+so \M{Theorem~8.1} holds for girth five and the case of bounded girth is empty. Astra's notes do
+not refer to [N2], so I take it that Astra has not audited it.
+
+\section{The combined copy}\label{sec:copy}
+
+\begin{center}\small
+\begin{tabular}{@{}p{2.6cm}p{6.6cm}p{5.0cm}@{}}
+\toprule
+\textsf{\textbf{Section of [T]}} & \textsf{\textbf{Content}} & \textsf{\textbf{Origin of the changes}}\\
+\midrule
+3 Forest estimate & as [M]; Lemma~3.7 on a marked set; the leading term from it & [N3], Astra~1\\
+4 Layers & Lemma~4.1 with the new Step~2 & Astra~2\\
+5 Poles & Lemma~5.3 (a shortest path); Proposition~5.4 ($\beta(J)\le C$); Theorem~5.5 (few
+cycles); Lemma~5.6 (ladders, three equivalent statements); Theorem~5.7 (gap); Corollary~5.8;
+Lemma~5.9 (three gadgets, every margin) & Astra~3, 4; [N3]\\
+6 Rings and cuts & rings as [M]; Proposition~6.3 as [M], also for loops; Lemma~6.4 (cap);
+Lemma~6.5 (rigidity, by a limit); Theorem~6.6 (a cycle of length four) & [N3]; Astra~6\\
+7 Girth five & lean form of [N2]; Lemma~7.7 (nesting) with the short proof; Lemma~7.9 (two
+links) as an upper bound & [N1], [N2]; Astra~7.1, 7.2\\
+8 Proof & three cases & [N3]\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent Against [M], the copy does not have: Section~7 (bounded girth), \M{Lemma~5.5},
+\M{Corollary~5.6}, \M{Lemma~5.9} (a third port), \M{Lemma~6.4} (gluing), \M{Lemma~6.7} (full
+star), \M{Theorem~8.8} (raising the girth), the ordinary layers, and the edge recursion. It has
+these new statements: the lemma on a marked set, the lemma on a shortest path, the two lemmas
+of [N2] on full pairs and rigid sets at girth five with the lemma on pieces, and the proposition
+on heavy families.
+
+\subsection{Measured}
+
+\begin{center}\small
+\begin{tabular}{@{}p{5.2cm}rrrrr@{}}
+\toprule
+ & \textsf{\textbf{[M]}} & \textsf{\textbf{[N3] copy}} & \textsf{\textbf{[T]}} & \textsf{\textbf{[T], caps}} & \textsf{\textbf{[T], blocks}}\\
+\midrule
+Pages & 42 & 41 & 41 & 41 & 41\\
+Typeset lines & 1624 & 1587 & 1577 & 1588 & 1578\\
+Numbered statements & 40 & 39 & 39 & 39 & 39\\
+Cases of the main theorem & 5 & 3 & 3 & 3 & 3\\
+Section 4 (layers), lines & 72 & 73 & 68 & 68 & 68\\
+Section 5 (poles), lines & 339 & 276 & 275 & 278 & 275\\
+Section 6 (rings and cuts), lines & 275 & 258 & 252 & 260 & 252\\
+Bounded girth and last section, lines & 323 & 358 & 355 & 353 & 356\\
+Proof of the main theorem, lines & 30 & 20 & 20 & 20 & 20\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The numbers of statements are equal because one lemma comes (a shortest path) and one
+goes (a full star). The gain of [T] against the copy of [N3] is ten lines. Its larger gain is in
+the content: no numbers that depend on the gap constant, no lemma on a full star, and the
+counts in a pole separated from the forest estimate.
+
+\section{The text and the formal proof}\label{sec:formal}
+
+Nothing of Astra's notes or of my notes is formalised. In [M] the text and the Lean proof differ
+in four places. In [T] they differ in these places also; Section~1.4 of [T] says so.
+\begin{itemize}[leftmargin=1.2em]
+\item The leading term: the formal proof has the edge recursion.
+\item \T{Theorem~5.5}: the formal proof counts perfect matchings between ordinary layers.
+\item \T{Theorem~5.7}: the formal proof is an induction with a third port, and it gives
+$\frac1{16}$.
+\item \T{Lemma~6.5} and \T{Theorem~6.6}: the formal proof treats a cyclic cut of size four with
+two sides; it has the arithmetic with fixed numbers and the bound for a full star.
+\item The last case: the formal proof has the case of bounded girth and two girth scales.
+\end{itemize}
+The formal statement of the main theorem does not depend on any of this.
+
+\section{Tests}\label{sec:tests}
+
+The script \texttt{checks/astra\_audit\_check.py} has six tests. Exit code $0$ means that all
+passed. With the arguments \texttt{3000 2} it prints:
+
+\begin{center}\small
+\begin{tabular}{@{}p{0.8cm}p{13.7cm}@{}}
+\toprule
+\textsf{\textbf{Test}} & \textsf{\textbf{Content and result}}\\
+\midrule
+1 & \T{Lemma~5.3} for 3000 random bridgeless $2$-poles of rank $2$ to $7$ and all 4157 shortest
+paths: (a), (b), (c); at most $2^{\beta(J)}$ cycles with the same edges on $A$; no two
+consecutive free indices; the edge of an index that is not free between thin layers is in the
+cycle; the bound of~(d). The largest value of $c(N)\,2^{-\beta(J)-4\Delta-\ell/2}$ was $4.125$;
+the lemma allows $10$.\\
+2 & 9354 capped ladders of weight $3$ to $6$ with two more ports on their edges. In 282 of them
+both pairs at the cap are full. In each of these, no port is in the first end piece, and two
+edges leave it.\\
+3 & All states with entries in the grids of step $\frac14$, $\frac16$, $\frac18$ that satisfy
+the three implications, $F\le1$ and $S+F\ge4$: 361 states, 9 crosses and 352 stars.\\
+4 & $W_2\le2\mu(e+NM)$ for 300 random families of regions with weights in cubic graphs (5752
+ordered pairs with two links). The largest ratio of the two sides was $0.263$.\\
+5 & The two inequalities of the window step, for $t\in[1,101]$ and $\log\mu\in[100,20000]$.\\
+6 & The caps of poles with two and three ports: the count of the cycles through the cap, 150
+poles.\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent Tests 1, 2, 4, 6 are complete counts on small graphs. Test~3 is a finite part of a
+statement about real numbers. The rigidity lemma and the theorem on a cycle of length four
+contain large constants, and no computation tests them.
+
+\section{Open points}\label{sec:open}
+
+\begin{itemize}[leftmargin=1.2em]
+\item \emph{The base.} The copy [T] uses [N2] (no case of bounded girth) and the cycle of length
+four of [N3], which needs [N2]. Astra's notes are written for [M] with its Section~7. The
+proposals 2, 3, 4 and 7.2 do not depend on this choice. Proposal~6 then needs its form with two
+sides (Astra's steps 6.3 to 6.5, which I checked on paper), and \M{Corollary~5.6} needs (b) of
+the lemma on a shortest path. I did not build this copy.
+\item \emph{Readers.} [N2] has had one reader. Its two lemmas at girth five carry the removal of
+a whole case, and they have very large constants. A second reader for them has more value than
+for any other part.
+\item \emph{The formal proof.} A formal proof of [T] is new work in Sections~5 and~6 and in the
+last section. The existing Lean proof stays valid for the theorem.
+\item \emph{The options.} \texttt{caps} and \texttt{blocks} are complete texts. Each is a choice
+of KNT; I recommend neither, by the measured lines.
+\end{itemize}
+
+\section{Files}\label{sec:files}
+
+\begin{center}\small
+\begin{tabular}{@{}p{6.1cm}p{8.4cm}@{}}
+\toprule
+\textsf{\textbf{File}} & \textsf{\textbf{Content}}\\
+\midrule
+\texttt{research/astra-audit.tex}, \texttt{.pdf} & this note\\
+\texttt{research/apply\_combined.py} & writes the combined form into a copy; options
+\texttt{caps} and \texttt{blocks}; every replacement must match exactly once\\
+\texttt{research/trial-combined.pdf} & the copy [T], 41~pages\\
+\texttt{checks/astra\_audit\_check.py} & the six tests of Section~\ref{sec:tests}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent To build [T], copy the folders \texttt{exact-maximum} and \texttt{style} to a new
+folder. On the copy of \texttt{exact-maximum} run the three scripts in this order:
+\begin{center}
+\texttt{python3 apply\_girth\_five.py <copy> lean}\\
+\texttt{python3 apply\_fewer\_cases.py <copy> keepgap}\\
+\texttt{python3 apply\_combined.py <copy>}
+\end{center}
+Then build \texttt{exact-maximum.tex} with \texttt{tectonic}.
+
+\begin{thebibliography}{9}\small
+\bibitem[M]{M} KNT, Astra and Fable~5.2, \emph{The maximum number of cycles in a graph of large
+rank}, draft of 12 November 2026, 42~pages, \texttt{exact-maximum/exact-maximum.pdf}.
+\bibitem[T]{T} The combined copy of this note, \texttt{research/trial-combined.pdf}.
+\bibitem[N1]{N1} Fable~5.2, \emph{The large-girth theorem with one family of short cycles},
+\texttt{research/one-scale.pdf}.
+\bibitem[N2]{N2} Fable~5.2, \emph{Pieces at girth five: the case of bounded girth is not
+necessary}, \texttt{research/girth-five.pdf}.
+\bibitem[N3]{N3} Fable~5.2, \emph{Three cases: four reductions in the cut analysis and the final
+count}, \texttt{research/fewer-cases.pdf}.
+\end{thebibliography}
+
+\end{document}

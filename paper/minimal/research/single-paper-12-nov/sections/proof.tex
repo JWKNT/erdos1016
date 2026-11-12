@@ -1,0 +1,30 @@
+\section{Proof of Theorem~\ref{thm:exact}}\label{sec:proof}
+
+Let $K_0$ be as in Section~\ref{sec:threecut}. By~\eqref{eq:H},
+\begin{equation}\label{eq:Hlower}
+  H(r)\;\ge\;2^{r-1}+(r-2)\,2^{r/2-1}\qquad\text{for all }r\ge3 .
+\end{equation}
+Choose $R\ge9$ so large that the following holds for every $r\ge R$:
+Proposition~\ref{prop:threecut}, Theorem~\ref{thm:fourcut} and Theorem~\ref{thm:half} apply to
+the rank $r$; and $r-2>10K_0^{2}$.
+
+Let $r\ge R$. A ring $R_r$ has $H(r)$ cycles by Corollary~\ref{cor:ringmax}, so $\psi(r)\ge H(r)$.
+By Lemma~\ref{lem:cubic}, some connected cubic multigraph $G$ of rank $r$ has $\psi(r)$ cycles. We
+show that $G$ is a ring or that $c(G)\le2^{r-1}+5K_0^{2}\,2^{r/2}$. In the first case
+$c(G)\le H(r)$ by Corollary~\ref{cor:ringmax}. In the second case $c(G)<H(r)$ by~\eqref{eq:Hlower},
+because $r-2>10K_0^{2}$. So $\psi(r)\le H(r)$.
+
+\step{Case 1: $G$ has a cyclic cut of size at most three.} Then
+$c(G)\le2^{r-1}+5K_0^{2}\,2^{r/2}$ by Proposition~\ref{prop:threecut}.
+
+\step{Case 2: $G$ has no cyclic cut of size at most three, and it has a cycle of length four.}
+Then $G$ is a ring or $c(G)<2^{r-1}$, by Theorem~\ref{thm:fourcut}.
+
+\step{Case 3: $G$ has no cyclic cut of size at most three and no cycle of length four.} Let $Z$
+be a cycle with at most three edges. Then at most three edges leave $V(Z)$, and
+at most six edges have an end in $V(Z)$. So $G-V(Z)$ has rank at least $r-6>0$, and
+$\delta V(Z)$ is a cyclic cut of size at most three. Hence $G$ has girth at least five. The graph $G$ has $2r-2\ge8$ vertices. Choose a set $P$
+of eight vertices such that $G[P]$ is connected. Then $|P|\le3\log r$, and $G-P$ has girth at
+least five. So $q(G,P)<\frac25$ by Theorem~\ref{thm:half}.
+The graph $G$ has no bridge, because a cut of size one is cyclic (Section~\ref{sec:cuts}). So
+Lemma~\ref{lem:marked} gives $c(G)<\frac25\,2^{r}+2^{r-5}<2^{r-1}$. \qed

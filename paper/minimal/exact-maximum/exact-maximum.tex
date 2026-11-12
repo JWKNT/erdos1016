@@ -1,6 +1,16 @@
 \documentclass[11pt]{article}
 \input{../style/preamble}
 
+% \needroom{length}: start a new page if less than this length is left on the page.
+% The pages of this design have no stretch, so the macro measures the room that is left.
+\makeatletter
+\newcommand{\needroom}[1]{\par\penalty-100\begingroup
+  \setlength{\dimen@}{#1}%
+  \dimen@ii\pagegoal \advance\dimen@ii-\pagetotal
+  \ifdim\dimen@>\dimen@ii \ifdim\dimen@ii>\z@ \vfil\break \fi\fi
+  \endgroup}
+\makeatother
+
 \renewcommand{\papertitle}{The maximum number of cycles\\ in a graph of large rank}
 \renewcommand{\papersubtitle}{The formulas of Horak and Kim are exact for every large rank}
 \renewcommand{\paperdate}{Draft of 12 November 2026}
@@ -17,29 +27,29 @@ for all sufficiently large $r$,
   \psi(2q+2)=2^{2q+1}+\bigl(2q+\tfrac92\bigr)2^{q}-3q-4 .
 \]
 Cubic graphs of Horak and Kim have these numbers of cycles. In particular
-$\psi(r)\sim2^{r-1}$, which Entringer and Slater conjectured in 1981. Astra and Fable~5.2 are
-language models. Section~\ref{sec:status} states the part of each author. The theorem has a
+$\psi(r)\sim2^{r-1}$, which Entringer and Slater conjectured in 1981. The proof uses the
+forest estimate of the companion paper~\cite{Forest}. Astra and Fable~5.2 are language models. Section~\ref{sec:status} states the part of each author. The theorem has a
 formal proof in Lean~4, and the Lean kernel has checked it.
 
-\fronthead{The proof in eight sentences}
+\fronthead{The proof in seven sentences}
 \begin{enumerate}[leftmargin=1.6em]
 \item Subdividing an edge keeps the number of cycles, and splitting a vertex of degree four or
 more does not lower it. So some cubic multigraph $G$ of rank $r$ has $\psi(r)$ cycles.
-\item Fix a short cycle $W$. A cycle through an edge of $W$ is determined by its part outside $W$,
-and this part is a forest. By the \emph{forest estimate}, at most $\half+o(1)$ of all outside
-parts are forests, so $\psi(r)\le(\half+o(1))2^{r}$.
-\item A cut with at most four edges divides $G$ into two parts, and a cycle across the cut
-consists of paths in the parts. A part with more than half of the possible paths between two
-ends, by a fixed margin, is a ladder up to a bounded error, and it has few cycles.
-\item So a graph with such a cut is a ring of copies of $K_{2,2}$ and of single edges, or it has
-at most $2^{r-1}+O(2^{r/2})$ cycles.
+\item Fix a small connected set $P$ of vertices. For a cycle that meets $P$, the edges without
+an end in $P$ form a forest. By the \emph{forest estimate} of~\cite{Forest}, at most
+$\half+o(1)$ of all even subgraphs have this property, and few cycles avoid $P$. So
+$\psi(r)\le(\half+o(1))2^{r}$.
+\item A cut with at most three edges, or a cycle of length four, divides $G$ into two parts,
+and a cycle that meets both parts consists of paths in the parts. A part with more than half of
+the possible paths between two ends, by a fixed margin, is a ladder up to a bounded error, and
+it has few cycles.
+\item So a graph with such a cut or such a cycle is a ring of copies of $K_{2,2}$ and of single
+edges, or it has at most $2^{r-1}+O(2^{r/2})$ cycles.
 \item A ring has at most $H(r)$ cycles, by a direct count; $H(r)$ is the right side of the
 formulas above.
-\item Without such a cut but with a short cycle, $G$ has fewer than $2^{r-1}$ cycles: sort the
-cycles through an edge of a shortest cycle by the vertex where they leave it.
-\item Without such a cut and with large girth, $G$ has fewer than $2^{r-1}$ cycles: by a
-second-moment argument, $G$ contains two large pieces with small boundaries, and each piece has
-a forest proportion of at most $\frac35$.
+\item In the other case $G$ has girth at least five, and it has fewer than $2^{r-1}$ cycles:
+by a second-moment argument, $G$ contains two large pieces with small boundaries, and each piece
+has a forest proportion of at most $\frac35$.
 \item $H(r)-2^{r-1}$ is at least $(r-2)2^{r/2-1}$. So $\psi(r)=H(r)$ for large $r$.
 \end{enumerate}
 
@@ -47,11 +57,10 @@ a forest proportion of at most $\frac35$.
 
 \input{sections/intro}
 \input{sections/tools}
-\input{sections/forest}
+\input{sections/leading}
 \input{sections/layers}
 \input{sections/poles}
 \input{sections/cuts}
-\input{sections/girth}
 \input{sections/large}
 \input{sections/proof}
 
@@ -64,24 +73,18 @@ number of minimal codewords in long codes, \emph{Discrete Appl.\ Math.}\ \textbf
 \bibitem{AT} R.~E.~L.~Aldred and C.~Thomassen, On the maximum number of cycles in a planar graph,
 \emph{J.~Graph Theory} \textbf{57} (2008), 255--264.
 
-\bibitem{Bass} H.~Bass, The Ihara--Selberg zeta function of a tree lattice, \emph{Internat.\
-J.~Math.}\ \textbf{3} (1992), 717--797.
-
 \bibitem{ES} R.~C.~Entringer and P.~J.~Slater, On the maximum number of cycles in a graph,
 \emph{Ars Combin.}\ \textbf{11} (1981), 289--294. A scan is linked from the entry A006188 of the
 OEIS, \url{https://oeis.org/A006188}.
+
+\bibitem{Forest} KNT, Astra and Fable~5.2, The forest proportion of a random even subgraph,
+companion manuscript, November 2026.
 
 \bibitem{HK} P.~Horak and D.~Kim, Connected cubic graphs with the maximum number of perfect
 matchings, \emph{J.~Graph Theory} \textbf{99} (2022), 671--690. arXiv:2006.13459.
 
 \bibitem{KNT} KNT, The minimum number of edges in a pancyclic graph, manuscript, September 2026,
 \url{https://jehlp.net/erdos1016/}.
-
-\bibitem{KS} M.~Kotani and T.~Sunada, Zeta functions of finite graphs, \emph{J.~Math.\ Sci.\ Univ.\
-Tokyo} \textbf{7} (2000), 7--25.
-
-\bibitem{Pan} KNT, Astra and Fable~5.2, The minimum number of edges in a pancyclic graph: a short
-proof for Erd\H{o}s Problem \#1016, draft, November 2026.
 
 \bibitem{Repo} KNT, Astra and Fable~5.2, Lean~4 formalisation of the forest estimate, of the
 results of~\cite{KNT} and of Theorem~\ref{thm:exact}, \url{https://github.com/JWKNT/erdos1016}.

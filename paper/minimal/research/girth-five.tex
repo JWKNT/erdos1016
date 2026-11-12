@@ -1,0 +1,666 @@
+\documentclass[11pt]{article}
+\input{../style/preamble}
+
+\renewcommand{\papertitle}{Pieces at girth five:\\ the case of bounded girth is not necessary}
+\renewcommand{\papersubtitle}{A second research note on ``The maximum number of cycles in a graph of large rank''}
+\renewcommand{\paperrunning}{Pieces at girth five}
+\renewcommand{\paperauthors}{Fable~5.2, for KNT}
+\renewcommand{\paperdate}{Research note of 12 November 2026}
+\hypersetup{pdftitle={Pieces at girth five: the case of bounded girth is not necessary},pdfauthor={Fable 5.2, for KNT}}
+
+\newcommand{\M}[1]{[M,~#1]}
+\newcommand{\N}[1]{[N1,~#1]}
+
+\begin{document}
+\maketitleblock
+
+This note answers the second research task of 12 November 2026: can the case of bounded girth
+(Section~7 of the paper~[M]) be removed by a stronger lemma on pieces? The answer is yes. The
+numbers of the statements of~[M] are those of the draft of 42~pages, and [N1] is the first note,
+\texttt{one-scale.pdf}. The manuscript is not changed.
+
+\fronthead{The result in eight sentences}
+\begin{enumerate}[leftmargin=1.6em]
+\item \emph{The audit.} Theorem~4.4 of~[N1] is correct. Section~\ref{sec:audit} writes its
+induction step again, with the two regions and all conditions.
+\item \emph{The new theorem.} The lemma on pieces holds at girth five: a connected subcubic
+multigraph of girth at least five with at most $k$ boundary vertices and at least $C_1k^{7}$
+vertices has a forest proportion of less than $\frac35$ for every even set of boundary vertices
+(Theorem~\ref{thm:poly}).
+\item It needs no hypothesis on the cuts of an ambient graph. A cubic graph without a cyclic cut
+of size at most four has girth at least five, and this is all that the proof uses.
+\item \emph{The reason.} A piece with a larger forest proportion is thin. A long thin piece
+contains a part in which \emph{every} join is a forest. In such a part, a tree that connects the
+terminals passes one time through a region far from the terminals. If the number of terminals on
+each side is odd, this region has a full pair of ports. By \M{Lemma~5.8} it is a capped ladder,
+and a ladder has cycles of length four.
+\item \emph{The consequence.} \M{Theorem~8.1} holds for girth five. Then Case~4 in the proof of
+the main theorem is empty. Section~7 (Theorem~7.1), Lemma~5.5 and Corollary~5.6 are not
+necessary, and they are used nowhere else (Section~\ref{sec:last}).
+\item \emph{Measured.} Two copies of the paper without Section~7 build. The lean form has 1617
+typeset lines and 42 pages (now 1624 and 42). The clean form has 1643 lines and 43 pages. The
+main theorem has four cases in the place of five.
+\item \emph{Tests.} In all families that I computed, the largest forest proportion decreases
+with the size, and the ladder is the only family with a rigid set of unbounded size
+(Section~\ref{sec:tests}).
+\item \emph{The price.} The constant $C_1$ is very large, the proof of the lemma on pieces is
+longer, and the text differs more from the formal proof, which has the case of bounded girth.
+\end{enumerate}
+
+\begin{notation}{the status of this note}
+\begin{itemize}[leftmargin=1.2em]
+\item \emph{Established on paper.} Sections~\ref{sec:audit} to~\ref{sec:last} contain complete
+proofs. They use \M{Theorem~3.1} through \M{Lemma~4.1}, and \M{Lemmas~5.2 and~5.8}. I checked
+each step against these statements.
+\item \emph{Tested by computer.} Section~\ref{sec:tests} has complete enumerations on small
+graphs. These tests do not replace a proof, and the constants of the theorem are far outside
+their range.
+\item \emph{Not done.} There is no formal proof. No other person or model has read this note.
+\item \emph{The manuscript.} It is unchanged. The script \texttt{apply\_girth\_five.py} applies
+either form to a copy.
+\end{itemize}
+\end{notation}
+
+\contentsblock
+
+\section{The setting}\label{sec:setting}
+
+A graph may have loops and parallel edges; a multigraph of girth at least five has none. Let $N$
+be a connected subcubic multigraph. Its vertices of degree less than three are its
+\emph{boundary vertices}, and its \emph{deficit} $d(N)$ is the sum of $3-\deg v$ over all
+vertices $v$. A count of edge ends gives
+\begin{equation}\label{eq:deficit}
+  |V(N)|=2\beta(N)-2+d(N).
+\end{equation}
+Let $T$ be a set of boundary vertices of even size. A \emph{$T$-join} is a set of edges in which
+exactly the vertices of $T$ have odd degree. There are $2^{\beta(N)}$ of them. The \emph{forest
+proportion} of $T$ is the proportion of the $T$-joins that are forests. We call $T$ \emph{rigid}
+if every $T$-join is a forest. For two vertices $x\ne y$ of degree at most two, an
+$\{x,y\}$-join is a path from $x$ to $y$ and some cycles, pairwise disjoint; so the set
+$\{x,y\}$ is rigid if and only if every $\{x,y\}$-join is a path. This is a \emph{full pair}
+in~[M].
+
+\begin{fineprint}
+\textbf{Statements that the note uses.}
+
+\smallskip
+\textbf{(a) Thin pieces} (\M{Lemma~4.1} and the step ``A marker'' in the proof of
+\M{Lemma~8.2}). There is an absolute constant $B>2^{100}$ with the following property. Let $N$
+have at most $k$ boundary vertices, let $o$ be one of them, and suppose that some even set of
+boundary vertices has forest proportion at least $\frac35$. Then fewer than $W_k=B(k+1)^{2}$
+vertices have any given distance from $o$. This step uses no hypothesis on the girth.
+
+\smallskip
+\textbf{(b) Poles} (\M{Lemmas~5.2 and~5.8}). A \emph{pole} is a connected multigraph without
+loops in which every vertex has degree two or three; the vertices of degree two are its
+\emph{ports}. Let $x,y$ be a full pair of ports of a pole $M_1$ of rank $b\ge1$. Replace every
+other port, with its two edges, by one edge. The result $M_1^{\circ}$ consists of bridges and of
+bridgeless multigraphs $N_1,\dots,N_q$ of ranks $b_i\ge1$ with $b=\sum_ib_i$. Each $N_i$ has
+two ports, and they form a full pair. Each $N_i$ is a pair of parallel edges, or a \emph{capped
+ladder}: a chain of tiles, where a tile is a copy of $K_{2,2}$ (a \emph{square}, of weight~$2$) or
+one edge (a \emph{single rung}, of weight~$1$), two disjoint edges join the right pair of each
+tile to the left pair of the next tile, and each of the two ports is joined to the two vertices
+of an end pair. A capped ladder of total weight $w$ has rank $w+1$.
+
+\smallskip
+\textbf{(c) Separators} (\M{Lemma~8.4}, \N{Lemma~1.2}). Pairwise disjoint connected sets that
+separate two vertices $u$ and $p$ of a connected graph are linearly ordered,
+$C_1<C_2<\dots<C_n$. For an integer $w\ge1$ there are pairwise disjoint sets $Y_l$, one for each
+$l\ge0$ with $(l+1)w\le n-1$, such that $Y_l$ contains $w-1$ of the sets $C_i$, every edge that
+leaves $Y_l$ ends in $C_{lw+1}$ or in $C_{(l+1)w+1}$, and $Y_l$ lies in the component of $u$
+without $C_{(l+1)w+1}$.
+
+\smallskip
+\textbf{(d) Free regions} (\N{Lemma~4.1}). A region $A$ of $N$ is \emph{$T$-free} if it contains
+no vertex of $T$ and every component of $N-A$ contains an even number of vertices of $T$. If $N$
+has $n$ pairwise disjoint $T$-free cyclic regions with at most $d$ boundary edges each, then the
+forest proportion of $T$ is at most $\half+(d+1)2^{d-1}/n$.
+
+\smallskip
+\textbf{(e) Product} (\N{Lemma~4.2}, with numbers $f_i$ in the place of $\frac35$; the proof is
+the same). Let $U_1,\dots,U_m\subseteq V(N)\sm T$ be pairwise disjoint sets of vertices of
+degree three such that each $N[U_i]$ is connected, and let $f_i$ be a number such that every
+even set of boundary vertices of $N[U_i]$ has forest proportion at most $f_i$. Then the forest
+proportion of $T$ is at most $f_1\cdots f_m$.
+
+\smallskip
+\textbf{(f) Few short cycles} (\N{Lemma~4.3}). For $k\ge1$ let $s_k$ be the least integer with
+$2^{s_k}>(2s_k+1)W_k$. Let $N$ have at least two and at most $k$ boundary vertices, put $s=s_k$,
+and let $t$ be the size of a maximal family of pairwise disjoint cycles of length at most $2s$.
+If $N$ has more than $3\cdot2^{s}(k+2s\,t)$ vertices, then every even set of boundary vertices
+has forest proportion less than $\frac35$. This lemma has no hypothesis on the girth.
+\end{fineprint}
+
+\section{The audit of Theorem 4.4 of [N1]}\label{sec:audit}
+
+\begin{theorem}[{\N{Theorem~4.4}}]\label{thm:old}
+Fix $k_0$ such that $4s_k<k$ for all $k\ge k_0$, and put $D_*=2s_{k_0}+1$. There is an absolute
+constant $C_1$ with the following property. Let $k\ge1$, and let $N$ be a connected subcubic
+multigraph of girth at least $D_*$ with at most $k$ boundary vertices and at least $C_1k^{7}$
+vertices. Then every even set of boundary vertices has forest proportion less than $\frac35$.
+\end{theorem}
+
+\paragraph{The result of the audit.} The proof is correct. One passage was not precise: the proof
+took ``one of the others'' and then used ``two sets $Y'$''. The step is written in full below,
+and~[N1] has the new wording. I found no other defect. The proof uses the girth in two places
+only. These are the base, and the number of vertices of a short cycle in~(6) below.
+
+\paragraph{The numbers.} For $k<k_0$ put $F(k)=3\cdot2^{s_k}k+1$. For $k\ge k_0$ put $s=s_k$,
+$k'=4s<k$ and
+\begin{gather*}
+  w=\lceil k'F(k')/D_*\rceil+1,\qquad n_1=5(2s+1)\,2^{2s},\qquad n_2=k^{2}(k+2)\,w,\\
+  F(k)=3\cdot2^{s}\bigl(k+2s\,(k+n_1+n_2+2)\bigr)+1 .
+\end{gather*}
+The claim $P(k)$ is: a multigraph $N$ as in the theorem with at least $F(k)$ vertices has forest
+proportion less than $\frac35$ for every even set $T$ of boundary vertices. The recursion is
+sound, because $F(k)$ uses $F(k')$ with $k'<k$ only.
+
+\paragraph{The base, $k<k_0$.} Here $2s_k\le2s_{k_0}<D_*$, so $N$ has no cycle of length at most
+$2s_k$, and (f) with $t=0$ gives $P(k)$. If $N$ has at most one boundary vertex, then $T$ is
+empty and $N$ contains a cycle, so the forest proportion is at most $\half$.
+
+\paragraph{The step, $k\ge k_0$.} Let $\mathcal D$ be a maximal family of pairwise disjoint
+cycles of length at most $2s$, and let $t$ be their number.
+\begin{enumerate}[leftmargin=2.1em]
+\item[(1)] If $t<k+n_1+n_2+2$, then $F(k)>3\cdot2^{s}(k+2s\,t)$, and (f) gives the claim.
+\item[(2)] Let $t\ge k+n_1+n_2+2$. At most $k$ cycles of $\mathcal D$ contain a boundary vertex.
+Each other cycle $Q$ has at most $2s$ boundary edges, and $V(Q)$ contains no vertex of $T$. So
+more than $n_1$ of them are $T$-free, or more than $n_2$ of them are not.
+\item[(3)] \emph{More than $n_1$ free cycles.} By (d) with $d=2s$, the forest proportion is less
+than $\half+(2s+1)2^{2s-1}/n_1=\frac35$.
+\item[(4)] \emph{More than $n_2$ cycles that are not free.} For such a cycle $Q$, some component
+of $N-V(Q)$ contains an odd number of vertices of $T$. As $|T|$ is even and $T$ avoids $Q$, there
+are $a,b\in T$ in different components of $N-V(Q)$. There are fewer than $k^{2}$ pairs, so more
+than $(k+2)w$ of these cycles separate the same two vertices $a$ and $b$. Their vertex sets are
+pairwise disjoint and connected, and they avoid $a$ and $b$. By (c), with $u=a$ and $p=b$, they
+are linearly ordered, and there are $k+2$ pairwise disjoint sets $Y_0,\dots,Y_{k+1}$.
+\item[(5)] \emph{Two sets.} At most $k$ of the sets $Y_l$ contain a boundary vertex of $N$. So
+there are two indices $l_1\ne l_2$ such that $Y_1:=Y_{l_1}$ and $Y_2:=Y_{l_2}$ contain none. These
+two sets are disjoint. Their vertices have degree three in $N$, and they are not in $T$.
+\item[(6)] \emph{Size.} Each $Y_i$ contains $w-1$ of the cycles, and a cycle has at least $D_*$
+vertices. So $|Y_i|\ge(w-1)D_*\ge k'F(k')$.
+\item[(7)] \emph{Boundary.} An edge that leaves $Y_i$ ends in one of two of the cycles, and each
+of them has at most $2s$ boundary edges. So at most $4s=k'$ edges leave $Y_i$. The set $Y_i$ does
+not contain $b$, and $N$ is connected. So every component of $N[Y_i]$ has an edge that leaves
+$Y_i$, and there are at most $k'$ components.
+\item[(8)] \emph{The two regions.} Let $Y_i'$ be the vertex set of a largest component of
+$N[Y_i]$. Then $N[Y_i']$ is connected, $|Y_i'|\ge F(k')$, and $Y_1'\cap Y_2'=\emptyset$. A
+vertex of $Y_i'$ has degree less than three in $N[Y_i']$ only if it is an end of an edge that
+leaves $Y_i$. So $N[Y_i']$ has at most $k'$ boundary vertices. Its girth is at least $D_*$.
+\item[(9)] \emph{Induction.} By $P(k')$, every even set of boundary vertices of $N[Y_i']$ has
+forest proportion less than $\frac35$, for $i=1,2$.
+\item[(10)] \emph{Product.} The sets $U_1=Y_1'$ and $U_2=Y_2'$ satisfy the hypotheses of (e):
+they are disjoint, they avoid $T$, their vertices have degree three in $N$, and they induce
+connected multigraphs. So the forest proportion of $T$ is at most $\frac9{25}<\frac35$.
+\end{enumerate}
+
+\paragraph{The size of $F$.} We have $2^{s}=O(k^{2}\log k)$ and $s=O(\log k)$, so
+$F(k)=O\bigl(k^{6}\log^{5}k+k^{5}\log^{3}k\cdot F(4s_k)\bigr)$ for $k\ge k_0$. Let $k_1\ge k_0$
+be such that this bound, with $F(4s_k)\le C(4s_k)^{7}$, is at most $Ck^{7}$ for every $C\ge1$
+and $k\ge k_1$. Then $C_1=\max_{k<k_1}F(k)$ serves. \qed
+
+\section{Rigid sets at girth five}\label{sec:rigid}
+
+The ladder with $n$ rungs has girth four, four boundary vertices and a rigid set: the two ends
+of one rail. So a multigraph of girth four with a rigid set can be large. At girth five it
+cannot.
+
+\begin{lemma}[Full pairs at girth five]\label{lem:fullfive}
+Let $M$ be a connected subcubic multigraph of girth at least five. Let $x\ne y$ be vertices of
+degree at most two such that every $\{x,y\}$-join of $M$ is a path. Then $|V(M)|<15\,d(M)$.
+\end{lemma}
+
+\begin{proof}
+Put $d=d(M)$ and $b=\beta(M)$. If $b=0$, then $M$ is a tree and $|V(M)|=d-2$. Let $b\ge1$.
+
+\step{A pole.} Delete a vertex of degree one other than $x$ and $y$, as long as there is one.
+Such a vertex is on no join, so the joins and the rank do not change. If then $x$ has degree
+one, every join contains the edge at $x$. Delete $x$ and take its neighbour $x'$ in the place of
+$x$. The joins for $x'$ and $y$ are the old joins without that edge, so they are paths, and the
+rank is the same. The vertex $x'$ is not $y$: otherwise the old joins are the edge $xy$ together
+with an even subgraph, all even subgraphs are empty, and $b=0$. Do the same for $y$, and
+repeat. The result $M_1$ is a pole in which the two vertices are ports and form a full pair, and
+$\beta(M_1)=b$.
+
+\step{The ports.} Let $u$ be a port of $M_1$. If $u$ has degree three in $M$, one of its edges
+leads to a deleted tree. The vertices of this tree have degrees in $M$ that add up to twice the
+number of its edges plus one. So the tree has a deficit of at least two. Different ports have
+different trees. Hence $M_1$ has at most $d$ ports.
+
+\step{The ladders.} Let $M_1^{\circ}$ and $N_1,\dots,N_q$ be as in~(b). An edge of
+$M_1^{\circ}$ is a path of $M_1$ whose inner vertices are ports. Call it \emph{plain} if this
+path has no inner vertex. At most $d-2$ edges are not plain. A cycle of $M_1^{\circ}$ with at
+most four edges, all plain, would be a cycle of $M$. So every cycle of $M_1^{\circ}$ with at
+most four edges has an edge that is not plain. Let $e_i$ be the number of edges of $N_i$ that
+are not plain. If $N_i$ is a pair of parallel edges, then $e_i\ge1=b_i$. Let $N_i$ be a capped
+ladder with $m$ tiles. Each square is a cycle of length four. Two consecutive single rungs and
+the two edges between them form a cycle of length four. These cycles are pairwise
+edge-disjoint, and there are at least $(m-1)/2$ of them, because a run of $j$ consecutive single
+rungs gives $\lfloor j/2\rfloor$ cycles and there are at most one more run than squares. A cap
+and the first tile contain a cycle of length three or four. So $e_i\ge\max\{1,(m-1)/2\}\ge m/3$.
+The rank of $N_i$ is at most $2m+1\le6e_i+1\le7e_i$. Hence
+\[
+  b=\sum_ib_i\le7\sum_ie_i\le7(d-2),
+\]
+and~\eqref{eq:deficit} gives $|V(M)|=2b-2+d<15d$.
+\end{proof}
+
+\begin{lemma}[Rigid sets]\label{lem:rigidpiece}
+Let $M$ be a connected subcubic multigraph of girth at least five with deficit $d$. Let
+$\lambda\colon V(M)\to\mathbb Z$ be a map with $|\lambda(u)-\lambda(v)|\le1$ for every edge $uv$,
+such that fewer than $W$ vertices have any given value. If some even set $U$ of boundary vertices
+is rigid, then $|V(M)|\le500\,dW(W+d)$.
+\end{lemma}
+
+\begin{proof}
+If $U=\emptyset$, every even subgraph is a forest, so $M$ has no cycle and $|V(M)|=d-2$. Let
+$U\ne\emptyset$.
+
+\step{A tree.} Let $S$ be a connected subgraph of $M$ that contains $U$ and has as few edges as
+possible. It is a tree, and its vertices of degree one are in $U$. Call a vertex of $S$
+\emph{special} if it is in $U$ or has degree three in $S$. There are at most $2|U|-2$ special
+vertices. A \emph{segment} is a path of $S$ between two special vertices without a special inner
+vertex. The tree $S$ is the union of at most $2|U|-3$ segments.
+
+\step{A region on a long segment.} Put $\rho=30W+8d$ and $\ell_0=(2\rho+1)W+2$. Suppose that
+some segment $\sigma$ has at least $2\ell_0$ edges, and let $z_0$ be a vertex of $\sigma$ with at
+least $\ell_0$ edges of $\sigma$ on each side. Let $B$ be the vertex set of the component of
+$z_0$ in the subgraph of $M$ induced by the vertices $v$ with $|\lambda(v)-\lambda(z_0)|\le\rho$.
+Then $M[B]$ is connected, and $B$ has fewer than $(2\rho+1)W=\ell_0-2$ vertices. The values of
+$\lambda$ change by at most one along an edge. So $B$ contains the $2\rho+1$ vertices of
+$\sigma$ nearest to $z_0$.
+
+\step{The tree meets $B$ in one part of $\sigma$.} Let $v$ be a vertex of $S$ in $B$, and let
+$\pi$ be a path from $v$ to $z_0$ in $M[B]$. It has fewer than $\ell_0-2$ edges. Suppose that
+$v$ is not an inner vertex of $\sigma$. Delete from $S$ the part of $\sigma$ between $z_0$ and
+the end of $\sigma$ on the side of $v$, and add $\pi$. The result is connected, it contains $U$,
+and it has fewer edges, because the deleted part has at least $\ell_0$ edges. This is not
+possible. In the same way, if $v$ is an inner vertex of $\sigma$, then $\sigma$ has at most as
+many edges between $v$ and $z_0$ as $\pi$ has. So the vertices of $S$ in $B$ are inner vertices
+of $\sigma$, and $B$ contains no vertex of $U$.
+
+Let $z'$ and $z''$ be the ends of $\sigma$, and let $S^{-}$ and $S^{+}$ be the components of
+$S-B$ that contain them. They are different, because the path of $S$ from $z'$ to $z''$ is
+$\sigma$, which contains $z_0$. Every special vertex is joined to $z'$ or to $z''$ by a path of
+$S$ without inner vertices of $\sigma$. So every vertex of $U$ is in $S^{-}$ or in $S^{+}$. Let
+$x^{-}$ be the first vertex of $\sigma$ in $B$, seen from $z'$, and let $x^{+}$ be the first one
+seen from $z''$. Then $x^{-}\ne x^{+}$, the vertex $x^{-}$ has a neighbour in $S^{-}$, and
+$x^{+}$ has a neighbour in $S^{+}$. Let $K^{-}$ and $K^{+}$ be the components of $M-B$ that
+contain $S^{-}$ and $S^{+}$, and put $U^{-}=U\cap V(S^{-})$.
+
+\step{The set $B$ is small.} We claim that $|B|<15\,d(M[B])$.
+
+\emph{First case: $K^{-}=K^{+}$, or $|U^{-}|$ is even.} Then $M-B$ contains a $U$-join: in the
+connected set $K^{-}=K^{+}$, or in $K^{-}$ for $U^{-}$ and in $K^{+}$ for $U\sm U^{-}$. Its
+union with a cycle of $M[B]$ would be a $U$-join that is not a forest. So $M[B]$ is a tree, and
+$|B|=d(M[B])-2$.
+
+\emph{Second case: $K^{-}\ne K^{+}$ and $|U^{-}|$ is odd.} Let $J$ be an $\{x^{-},x^{+}\}$-join
+of $M[B]$. Let $v^{-}$ be a neighbour of $x^{-}$ in $K^{-}$ and $v^{+}$ a neighbour of $x^{+}$
+in $K^{+}$. The set $U^{-}$ with $v^{-}$ added or removed is even, so $K^{-}$ has a join for it;
+in the same way $K^{+}$ has a join for $U\sm U^{-}$ with $v^{+}$ added or removed. These two
+joins, the edges $x^{-}v^{-}$ and $x^{+}v^{+}$, and $J$ form a $U$-join of $M$. It is a forest,
+so $J$ is a forest, and hence a path. The vertices $x^{-}$ and $x^{+}$ have degree at most two
+in $M[B]$. So the claim is Lemma~\ref{lem:fullfive} for $M[B]$.
+
+An edge of $M$ that leaves $B$ starts in a vertex $v$ with $|\lambda(v)-\lambda(z_0)|=\rho$,
+because $B$ is a component. There are fewer than $2W$ such vertices, and each has at most two
+such edges. So $d(M[B])<4W+d$, and the claim gives $|B|<60W+15d<2\rho+1$. This contradicts
+$|B|\ge2\rho+1$. So every segment has fewer than $2\ell_0$ edges.
+
+\step{The count.} So $S$ has fewer than $4|U|\,\ell_0\le4d\,\ell_0$ vertices. The set $V(S)$ is
+connected and contains $U$. So $M-V(S)$ is a forest, as in the first case. Let it have $f$
+vertices. At most $|V(S)|+2$ edges join it to $S$, and a count of the edge ends in the forest
+gives $f\le|V(S)|+d$. Hence
+$|V(M)|\le8d\,\ell_0+d=8d\bigl((60W+16d+1)W+2\bigr)+d\le500\,dW(W+d)$.
+\end{proof}
+
+\begin{fineprint}
+The proof has three ideas. A rigid set stays rigid in a part of the multigraph, for every way in
+which the joins can cross the boundary of the part. A tree that connects the terminals with the
+fewest edges passes through a region around a far point of the tree one time, so this region
+has exactly two sides with terminals. If both sides are odd, one strand passes, and the region
+has a full pair; if they are even, a join can avoid the region, and the region has no cycle.
+\end{fineprint}
+
+\section{Pieces at girth five}\label{sec:pieces}
+
+\begin{theorem}[Pieces with few boundary vertices]\label{thm:base}
+For every integer $k\ge1$ put $W=B(k+1)^{2}$, $h=10^{4}\,W^{3}$ and
+$F_0(k)=Wh\,(k+2^{Wh}+2)$. Let $N$ be a connected subcubic multigraph of girth at least five with
+at most $k$ boundary vertices and at least $F_0(k)$ vertices. Then every set of boundary vertices
+of even size has forest proportion less than $\frac35$.
+\end{theorem}
+
+\begin{proof}
+Suppose that some even set $T$ of boundary vertices has forest proportion at least $\frac35$.
+If $T$ is empty, then $N$ has no cycle. A tree with at most $k$ boundary vertices has fewer than
+$2k$ vertices. So let $T\ne\emptyset$. Fix a boundary vertex $o$, and call the set of the
+vertices at distance $j$ from $o$ the layer $j$.
+
+\step{Thin.} By (a), each layer has fewer than $W$ vertices. So $N$ has at least
+$h\,(k+2^{Wh}+2)$ layers.
+
+\step{Stretches.} Divide the layers $1,2,\dots$ into groups of $h$ consecutive layers. There are
+at least $k+2^{Wh}$ groups all of whose layers are not empty, and at least $2^{Wh}$ of them
+contain no boundary vertex. Let $\Gamma$ be the union of the layers of such a group, and let $v$
+be a vertex in its last layer. Let $M$ be the component of $N[\Gamma]$ that contains $v$. A
+shortest path from $o$ to $v$ has one vertex in each layer, and its vertices in $\Gamma$ are in
+$M$. So $|V(M)|\ge h$. The vertices of $M$ have degree three in $N$. An edge of $N$ that leaves
+$M$ ends outside $\Gamma$, so it starts in the first or in the last layer of the group; and each
+vertex of $M$ has a neighbour in $M$. So $d(M)<4W$. By~\eqref{eq:deficit} the rank of $M$ is
+less than $Wh$.
+
+\step{Not rigid.} The distance from $o$ in $N$ is a map $\lambda$ on $V(M)$ as in
+Lemma~\ref{lem:rigidpiece}. If some even set of boundary vertices of $M$ were rigid, the lemma
+would give $|V(M)|<500\cdot4W\cdot W\cdot5W=h$. So for every even set of boundary vertices of
+$M$, at least one of the fewer than $2^{Wh}$ joins is not a forest, and the forest proportion is
+at most $1-2^{-Wh}$.
+
+\step{Product.} The sets $V(M)$ for the different groups are pairwise disjoint, they avoid $T$,
+and their vertices have degree three in $N$. By (e), the forest proportion of $T$ is at most
+$(1-2^{-Wh})^{2^{Wh}}<\half$. This is a contradiction.
+\end{proof}
+
+\begin{theorem}[Pieces at girth five]\label{thm:poly}
+There is an absolute constant $C_1$ with the following property. Let $k\ge1$, and let $N$ be a
+connected subcubic multigraph of girth at least five with at most $k$ boundary vertices and at
+least $C_1k^{7}$ vertices. Then every set of boundary vertices of even size has forest
+proportion less than $\frac35$.
+\end{theorem}
+
+\begin{proof}
+Let $k_0$ be as in Section~\ref{sec:audit}. For $k<k_0$ put $F(k)=F_0(k)$. For $k\ge k_0$ define
+$F(k)$ as in Section~\ref{sec:audit}, with $5$ in the place of $D_*$ in the definition of $w$.
+The claim $P(k)$ is the statement of the theorem with $F(k)$ in the place of $C_1k^{7}$. For
+$k<k_0$ it is Theorem~\ref{thm:base}. For $k\ge k_0$ the step of Section~\ref{sec:audit} holds
+word for word: (1) uses (f), which has no hypothesis on the girth; (6) holds because a cycle has
+at least five vertices; and in (8) and (9) the girth of $N[Y_i']$ is at least five. The bound
+for $F(k)$ is the same, with $C_1=\max_{k<k_1}F(k)$.
+\end{proof}
+
+\begin{corollary}[Two regions]\label{cor:two}
+Let $G$ be a cubic multigraph, and let $P$ be a set of vertices such that $G-P$ has girth at least
+five. Suppose that $V(G)\sm P$ contains two disjoint sets $Y_1,Y_2$ and that, for some
+$k_1,k_2\ge1$, each $G[Y_i]$ is connected, $|\delta Y_i|\le k_i$ and $|Y_i|\ge C_1k_i^{7}$. Then
+$q(G,P)\le\frac9{25}$.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:poly} and (e) with $T=\emptyset$; the proof of (e) does not change when the
+forest is in $G-P$.
+\end{proof}
+
+\paragraph{The size of the constant.} For $k<k_0$ the number $F_0(k)$ is about
+$2^{10^{4}B^{4}(k+1)^{8}}$, and $B>2^{100}$. So $C_1$ is a very large absolute constant. The
+proof of \M{Theorem~8.1} needs a bound $F(k)\le2^{\varepsilon k}$ for the pieces with
+$k\approx\log r$ boundary vertices; Theorem~\ref{thm:base} alone does not give this, and the
+step of Section~\ref{sec:audit} is necessary for it.
+
+\section{The last case of [M] without bounded girth}\label{sec:last}
+
+\begin{theorem}[{\M{Theorem~8.1} for girth five}]\label{thm:half}
+There is an integer $r_5$ with the following property. Let $G$ be a connected cubic multigraph of
+rank $r\ge r_5$. Let $P$ be a nonempty set of at most $3\log r$ vertices such that $G[P]$ is
+connected. If $G-P$ has girth at least five, then $q(G,P)<\frac25$.
+\end{theorem}
+
+\begin{proof}
+The proof is the second form of~[N1] (\N{Section~4.3}), with Theorem~\ref{thm:poly} in the
+place of \N{Theorem~4.4} and with $5$ in the place of $D_*$. I checked the four applications.
+
+\emph{Blocks and the chain.} Let $A$, $u$, $p$ and $C_1,\dots,C_T$ be as in \N{Proposition~2.1},
+with $T>(\Lambda+2)\bigl(\lceil2^{8}C_1\Lambda^{8}/m\rceil+1\bigr)$. The sets $Y_l$ of (c) avoid
+$P$. At most $\Lambda$ of them contain a vertex with a neighbour in $A$, and two others remain.
+For such a set $Y$, at most $2\Lambda$ edges leave $Y$, and
+$|Y|\ge2\Lambda\cdot C_1(2\Lambda)^{7}$. So a component of $G[Y]$ has at least
+$C_1(2\Lambda)^{7}$ vertices and at most $2\Lambda$ boundary vertices, and it is a subgraph of
+$G-P$, so its girth is at least five. Corollary~\ref{cor:two} gives $q(G,P)\le\frac9{25}$.
+
+\emph{Heavy families.} The proof of \N{Proposition~2.2} uses the chain and \M{Lemma~8.6} only.
+The bound is
+$\mu\le\frac32K+3\Lambda\kappa\,(\Lambda+3)\bigl(\lceil2^{8}C_1\Lambda^{8}/m\rceil+1\bigr)$.
+
+\emph{Packing.} Let $d\ge5$, and let $Q_1,\dots,Q_n$ be pairwise disjoint cycles of length at
+most $d$ in $G-P$. Each has at least five vertices and at most $d$ boundary edges. With
+$\Lambda=d$, $m=5$, $\kappa=1$ and $K=d+1$,
+\[
+  \mu\;\le\;\tfrac32(d+1)+3d\,(d+3)\bigl(\lceil2^{8}C_1d^{8}/5\rceil+1\bigr)\;\le\;2^{9}C_1\,d^{10},
+  \qquad n\le2^{d+1}\mu\le2^{10}C_1\,2^{d}d^{10} .
+\]
+
+\emph{The final step.} With $D=\lceil x/16\rceil$ and $L=\lfloor Ax\rfloor$, the deleted set has
+$|S|\le2^{10}C_1\,2^{D}D^{11}\le r/x^{2}$ vertices. \M{Proposition~3.5} has no hypothesis on the
+girth of $G-P$. The family of the cycles of $\mathcal C$ gives
+$\mu\le\frac32(1+\eta)+3L\eta\,(L+3)\bigl(\lceil2^{12}C_1L^{8}/x\rceil+1\bigr)=\frac32+o(1)$,
+because $\eta=r^{-1/60}$ and $C_1$ is a constant. This contradicts $\mu>30$.
+\end{proof}
+
+\paragraph{The proof of the main theorem with four cases.} In \M{Section~9}, after the cases of
+a loop, of a cyclic cut of size at most three, and of a cyclic cut of size four, the multigraph
+$G$ has no loop and no cyclic cut of size at most four, and $r\ge9$. Let $Z$ be a cycle with at
+most four edges. At most four edges leave $V(Z)$, and at most eight edges have an end in $V(Z)$.
+So $G-V(Z)$ has rank at least $r-8>0$, and $\delta V(Z)$ is a cyclic cut of size at most four.
+Hence $G$ has girth at least five. Choose eight vertices $P$ such that $G[P]$ is connected.
+Then $G-P$ has girth at least five, $q(G,P)<\frac25$ by Theorem~\ref{thm:half}, and the count
+of \M{Section~9} gives $c(G)<(\frac25+\frac1{32})2^{r}<2^{r-1}$. So
+\[
+  G\text{ has no cyclic cut of size at most four},\quad r\text{ large}
+  \quad\Longrightarrow\quad c(G)<2^{r-1},
+\]
+and Case~4 of~[M], with a cycle shorter than $D_*$, is not a separate case.
+
+\paragraph{What is not necessary any more.} I searched the source of~[M] for each label.
+\begin{center}
+\small
+\begin{tabular}{@{}p{5.4cm}p{8.8cm}@{}}
+\toprule
+Statement of [M] & Where it is used\\
+\midrule
+Theorem 7.1 (bounded girth), all of Section~7; 52 typeset lines & Case~4 of Section~9 only.\\\addlinespace
+Corollary 5.6 (an induced pole with few ports has not many paths) & The proof of Theorem~7.1
+only.\\\addlinespace
+Lemma 5.5 (four thin layers); with Corollary~5.6, 38 typeset lines & The proof of Corollary~5.6
+only.\\\addlinespace
+The number $D_*$, the fifth question of Figure~2, the sixth of the eight sentences & The
+statement of the cases.\\
+\bottomrule
+\end{tabular}
+\end{center}
+These statements stay: Proposition~5.3 and Theorem~5.4 (Section~6 uses them), Corollary~3.7
+(Section~6 uses it), and Lemmas~5.2 and~5.8, which Section~8 now uses as well.
+
+\paragraph{What is new in the text.} Lemma~\ref{lem:fullfive}, Lemma~\ref{lem:rigidpiece} and
+Theorem~\ref{thm:base}, with (e) for joins. There are two forms of Section~8.
+\begin{itemize}[leftmargin=1.2em]
+\item \emph{The clean form.} One lemma on pieces, Theorem~\ref{thm:poly}. The chain, the heavy
+families and the packing bound are as in the second form of~[N1]; there is no packing number in
+the statements and no induction in the packing bound.
+\item \emph{The lean form.} \M{Lemma~8.2} stays, for pieces with at least $2\Lambda_0$ boundary
+vertices and no short cycle. Theorem~\ref{thm:base} treats the pieces with fewer boundary
+vertices. The rest is the first form of~[N1]: the chain counts the blocks with a short cycle,
+and the packing bound uses induction on the length. A block needs
+$\Phi(\Lambda)=C_1\Lambda^{4}$ vertices for $\Lambda\ge\Lambda_0$ and a constant number $C_2$ of
+vertices for $\Lambda<\Lambda_0$. The lean form does not need (d), (f) and the step of
+Section~\ref{sec:audit}.
+\end{itemize}
+
+\paragraph{The size, measured.} I applied each form to a copy of the paper and built it. The
+count is in lines of the text of the PDF file.
+\begin{center}
+\small
+\begin{tabular}{@{}lccccc@{}}
+\toprule
+ & Now & [N1], first & [N1], second & Girth five, lean & Girth five, clean\\
+\midrule
+Section 5 (poles) & 339 & 339 & 339 & 301 & 301\\
+Section 7 (bounded girth) & 52 & 52 & 52 & -- & --\\
+Section 8 (the last case) & 271 & 259 & 289 & 358 & 384\\
+The paper, typeset lines & 1624 & 1615 & 1644 & 1617 & 1643\\
+The paper, pages & 42 & 42 & 42 & 42 & 43\\
+Cases of the main theorem & 5 & 5 & 5 & 4 & 4\\
+Statements in Sections 5, 7, 8 & 20 & 20 & 21 & 20 & 21\\
+\bottomrule
+\end{tabular}
+\end{center}
+So the removal of the case of bounded girth costs no length in the lean form: the paper has 7
+lines less than now, the same number of statements, one section less and one case less. The
+last section is longer by 87 lines, and Sections~5 and~7 lose 90 lines. The mathematical gain is
+in the structure: one argument treats every graph without a small cyclic cut. The total amount
+of proof is about the same.
+
+\section{Is the statement true? Tests}\label{sec:tests}
+
+The task asks for a search for counterexamples. I found none. All numbers below are complete
+enumerations of the joins of small graphs by the program \texttt{fpmax.c}.
+
+\paragraph{The ladder.} At girth four the ladder is a counterexample of every size: the two ends
+of one rail form a rigid set (computed up to 16 rungs). Its part in the proof is visible: a
+ladder is the capped ladder of \M{Lemma~5.8}, and Lemma~\ref{lem:fullfive} fails for it because
+its cycles of length four have plain edges only.
+
+\paragraph{Families of girth at least five.} For each graph the table gives the largest forest
+proportion over all nonempty even sets $T$ of boundary vertices.
+\begin{center}
+\small
+\begin{tabular}{@{}p{6.1cm}cp{6.6cm}@{}}
+\toprule
+Family & $k$ & Largest forest proportion, by the number $n$ of vertices\\
+\midrule
+Segments of generalised Petersen graphs with step 2 (girth 5) & 6 &
+$1$ ($n=12$), $0.78$ ($24$), $0.64$ ($32$), $0.59$ ($36$), $0.48$ ($44$)\\\addlinespace
+The same with step 3 (girth 6) & 8 & $1$ ($16$), $0.94$ ($24$), $0.84$ ($32$), $0.73$ ($40$)\\\addlinespace
+Rings of length 5 with two and three edges between them in turn (girth 5; cuts of size four) &
+4, 5 & $1$ ($10$), $0.88$ ($20$), $0.81$ ($30$), $0.75$ ($40$)\\\addlinespace
+Tubes: rings of length 6, 8, 10 with 3, 4, 5 edges between consecutive rings (girth 6) &
+6, 8, 10 & length 6: $1$ ($18$), $0.84$ ($36$); length 8: $0.99$ ($24$), $0.76$ ($40$);
+length 10: $1$ ($30$), $0.91$ ($40$)\\\addlinespace
+Rings over the Heawood graph, 7 edges between them; three rings; sets $T$ of size at most 4 &
+14 & $0.62$ ($42$)\\\addlinespace
+Petersen, Heawood, Pappus, dodecahedron, Desargues, McGee, Tutte--Coxeter without one vertex &
+3 & from $0.88$ ($9$) to $0.55$ ($19$) and $0.62$ ($29$)\\\addlinespace
+Random cubic graphs of girth at least 5 without two or three vertices of a path & 4, 5 &
+$0.97$ to $1$ ($n\le12$), $0.74$ to $0.89$ ($23$, $24$), $0.68$ to $0.81$ ($31$, $32$)\\
+\bottomrule
+\end{tabular}
+\end{center}
+In each family the proportion decreases when the graph grows. No graph in these runs with more
+than 30 vertices has a rigid set. The largest rigid set that I saw at girth at least five is the
+set of all ten boundary vertices in a tube of three rings of length ten, with 30 vertices and
+deficit 10.
+
+\paragraph{What the numbers say about the threshold.} A piece with 4 to 10 boundary vertices and
+about 40 vertices can have a forest proportion above $\frac35$. So the true threshold is not
+very small. The theorem gives the exponent $7$ with a very large constant. The tests are far
+from the range of the theorem. They can show an error of the statement at small size, and they
+show none. They cannot confirm the exponent.
+
+\paragraph{A search for large rigid sets.} Rigid sets stay rigid when an edge or a vertex of
+degree one is deleted. So every multigraph with a rigid set arises from one edge when we add
+vertices of degree one and edges, through multigraphs with rigid sets. The script
+\texttt{rigid\_search.py} takes random steps of this kind and keeps at most $k$ boundary vertices
+at every step. At girth four it reaches the cap of the rank, $14$, for $k=4,5,6$; it finds
+ladders. At girth five it finds rank $0$, $5$ and $8$ for $k=4,5,6$, with two seeds. This search
+space is small, so the result is weak evidence.
+
+\paragraph{The reduction.} The script \texttt{rigid\_reduction\_check.py} tests the two cases in
+the proof of Lemma~\ref{lem:rigidpiece} for arbitrary connected sets $B$ without a terminal: on
+290 rigid sets of small graphs and 7272 sets $B$, a set with only even sides induces a forest,
+and a set with exactly two odd sides has full pairs between them. It also tests
+Lemma~\ref{lem:fullfive} on the 11420 full pairs at girth five that occur; the largest ratio
+$|V|/d$ is $1.4$.
+
+\section{The questions of the task}\label{sec:answers}
+
+\emph{1. The audit of Theorem 4.4.} Section~\ref{sec:audit}. The proof is valid, and the theorem
+is a tool: Theorem~\ref{thm:poly} is its form for girth five.
+
+\emph{2. The theorem for pieces of a graph without a small cyclic cut.} It is true, with the
+exponent $a=7$ and an absolute constant (Theorem~\ref{thm:poly}). The piece $N$ need not inherit
+any connectivity: the proof uses only that $N$ has girth at least five. I found no
+counterexample. The two kinds of counterexample are different. A counterexample to the bound
+$\frac35$ is a family of pieces with a bounded number of boundary vertices, of unbounded size,
+with a forest proportion of at least $\frac35$; Theorem~\ref{thm:base} excludes it at girth
+five, and the ladder is such a family at girth four. A counterexample to the polynomial
+threshold is a family with a forest proportion of at least $\frac35$ whose size grows faster
+than every power of $k$; the step of Section~\ref{sec:audit} excludes it. The pieces with about
+40 vertices in Section~\ref{sec:tests} are neither: they are below the threshold.
+
+\emph{3. Can the induction start at girth five?} Yes. The base is Theorem~\ref{thm:base}. A
+large piece with a fixed number of boundary vertices and a high forest proportion is thin,
+by~(a). A long thin piece contains a stretch with a rigid set, by the product. A rigid set gives
+a region with a full pair (Lemma~\ref{lem:rigidpiece}), and this region is a capped ladder up to
+its ports (Lemma~\ref{lem:fullfive}). So the only obstruction is the ladder, and it contradicts
+girth five. No small cyclic cut is necessary for the contradiction. The proof does not use
+\M{Corollary~5.6}. It uses the exact statement \M{Lemma~5.8} on full pairs, and the step from
+all even boundary sets to one pair of ports is Lemma~\ref{lem:rigidpiece}.
+
+\emph{4. Does this remove Section 7?} Yes (Section~\ref{sec:last}). Theorem~7.1, Lemma~5.5 and
+Corollary~5.6 are not necessary, and Corollary~5.6 is used nowhere else.
+
+\emph{5. If girth five is false.} It is not false. For girth four the ladder is the
+obstruction, and a graph without a cyclic cut of size at most four has no cycle of length four.
+
+\section{Limits}\label{sec:limits}
+
+\begin{itemize}[leftmargin=1.2em]
+\item \emph{The constant.} $C_1$ is the largest value of $F(k)$ over a range of small $k$, and
+there $F(k)$ is about $2^{10^{4}W^{4}}$ with $W=B(k+1)^{2}$. This has no effect on the main
+theorem, which holds for large rank only. The cause is the product in the proof of
+Theorem~\ref{thm:base}: it takes $2^{Wh}$ stretches. I found no polynomial argument for few
+boundary vertices.
+\item \emph{The amount of proof.} The removal of Section~7 does not make the paper shorter by
+much, because Lemma~\ref{lem:fullfive}, Lemma~\ref{lem:rigidpiece} and Theorem~\ref{thm:base}
+replace it. The proof of Theorem~7.1 with its two dependencies has 90 typeset lines, and the new
+statements have 87 lines in the lean form.
+\item \emph{The formal proof.} The Lean proof has the case of bounded girth and pieces of large
+girth. With a new Section~8 the text and the formal proof differ in the whole last case. The
+main statement is the same.
+\item \emph{Dependencies.} Section~8 then depends on \M{Lemmas~5.2 and~5.8}. Before, it depended
+on Sections~2 to~4 only.
+\item \emph{No second reader.} The proofs of Lemma~\ref{lem:fullfive},
+Lemma~\ref{lem:rigidpiece} and Theorem~\ref{thm:base} are new. They are short enough to check
+by hand, and I ask for this check before the manuscript changes.
+\end{itemize}
+
+\section{Files and checks}\label{sec:files}
+
+All files are in \texttt{paper/minimal/}.
+\begin{center}
+\small
+\begin{tabular}{@{}p{7.3cm}p{6.9cm}@{}}
+\toprule
+File & Content and result\\
+\midrule
+\texttt{research/apply\_girth\_five.py} & Applies the girth-five form to a copy of the paper:
+\texttt{clean} or \texttt{lean}. It writes Section~8, removes Section~7, Lemma~5.5 and
+Corollary~5.6, and changes Sections~1 and~9. Both copies build with no undefined reference and
+no overfull line.\\\addlinespace
+\texttt{research/trial-girth-five-lean.pdf}\newline\texttt{research/trial-girth-five-clean.pdf}
+& The two copies. The last case starts on page~31.\\\addlinespace
+\texttt{checks/girth5/fpmax.c} & Forest proportions of all even boundary sets of a small
+graph, by enumeration of the joins.\\\addlinespace
+\texttt{checks/girth5/families.py} & The table of Section~\ref{sec:tests}. Exit
+code~0.\\\addlinespace
+\texttt{checks/girth5/rigid\_search.py} & The search for rigid sets. Seeds 1 and 2, 6000 steps.\\\addlinespace
+\texttt{checks/girth5/rigid\_reduction\_check.py} & The two cases of
+Lemma~\ref{lem:rigidpiece} and the bound of Lemma~\ref{lem:fullfive} on small graphs. Exit
+code~0.\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{The choice.} The lean form is the smaller change and the shorter text, and it keeps
+\M{Lemma~8.2}. The clean form has one lemma on pieces and simpler statements after it. Each of
+them removes the case of bounded girth. My recommendation is the lean form, after a second
+reader has checked Section~\ref{sec:rigid} and Theorem~\ref{thm:base}.
+
+\begin{thebibliography}{9}\small
+\bibitem[M]{M} KNT, Astra and Fable~5.2, \emph{The maximum number of cycles in a graph of large
+rank}, draft of 12 November 2026, 42 pages, file
+\texttt{paper/minimal/exact-maximum/exact-maximum.pdf}.
+\bibitem[N1]{N1} Fable~5.2, \emph{The large-girth theorem with one family of short cycles},
+research note of 12 November 2026, file \texttt{paper/minimal/research/one-scale.pdf}.
+\end{thebibliography}
+
+\end{document}

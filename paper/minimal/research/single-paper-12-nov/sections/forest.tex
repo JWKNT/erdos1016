@@ -1,0 +1,394 @@
+\section{The forest estimate}\label{sec:forest}
+
+\begin{theorem}[Forest estimate, KNT~\cite{KNT}]\label{thm:forest}
+There is $r_0$ such that the following holds for all $r\ge r_0$. Let $\Gamma$ be a connected
+subcubic multigraph of rank $r$. Let $P$ be a set of at most $2r/\log^{2}r$ vertices such that
+every vertex outside $P$ has degree three and $\Gamma[P]$ has at most $(\log r)/100$ components.
+Then
+\[
+  q(\Gamma,P)\;\le\;\frac12+\frac{20}{\lgk{3}r}.
+\]
+\end{theorem}
+
+This paper uses the theorem only when $\Gamma[P]$ is connected. The proof is that of~\cite{KNT}.
+
+\begin{idea}{the proof in three steps}
+\begin{enumerate}[leftmargin=1.5em]
+\item If $\Gamma-P$ has many disjoint short cycles, the estimate follows from
+Lemma~\ref{lem:smallcuts}. So we may delete a small maximal family of them, and a graph $J$ of
+large girth remains.
+\item The graph $J$ has many cycles with between $6\log r$ and $\log r\sqrt{\log\log r}$ edges.
+Their total weight $\sum_C2^{-|C|}$ is at least $(\frac18-o(1))\ln\log\log r$
+(Lemma~\ref{lem:weight}).
+\item For such a cycle $C$, the event that $C$ is a component of $\xi$ has probability at least
+$2^{-|C|}$, and then the outside part of $\xi$ is not a forest. Most pairs of these events are
+correlated by a factor of at most two (Lemma~\ref{lem:link}).
+\end{enumerate}
+With the factor two of step~3, the second moment of the number $Z$ of these events is at most
+$2\mu^{2}+K\mu$, and Lemma~\ref{lem:second} then gives $\PP(Z=0)\le\half+K/(4\mu)$.
+\end{idea}
+
+Proposition~\ref{prop:loggirth} has the steps~2 and~3 in a form that Section~\ref{sec:half} uses
+again.
+
+\subsection{Cycles of moderate length in a graph of large girth}\label{sec:moderate}
+
+\begin{notation}{the setting of this subsection}
+\begin{itemize}[leftmargin=1.2em]
+\item $\Gamma$ is a connected subcubic multigraph, and $U$ is a set of its vertices such that
+every vertex outside $U$ has degree $3$.
+\item $J=\Gamma-U$ is a simple graph of girth greater than $D$, where $D\ge3$ is an integer, and
+$s=\lfloor(D-1)/2\rfloor$.
+\item $L\ge1$ is an integer, and $\mathcal{C}$ is the set of the cycles of $J$ of length at most
+$L$.
+\item $v$ is the number of vertices of $J$, and $d_J=\sum_{u\in V(J)}(3-\deg_Ju)$ is its
+\emph{deficit}. This is the number of edges between $V(J)$ and $U$, so $d_J\le3|U|$.
+\end{itemize}
+\end{notation}
+
+A walk $u_0u_1\cdots u_\ell$ is \emph{non-backtracking} if $u_{i+1}\ne u_{i-1}$ for $0<i<\ell$. Let
+$N_\ell(u,w)$ be the number of non-backtracking walks of length $\ell$ from $u$ to $w$ in $J$.
+
+\begin{lemma}[Walks without backtracking]\label{lem:walks}
+If $\ell>s$, then $N_\ell(u,w)\le3\cdot2^{\ell-s-1}$ for all $u,w$. Consequently, for every vertex
+$w$ of $J$,
+\begin{equation}\label{eq:load}
+  \sum_{C\in\mathcal{C},\ C\ni w}2^{-|C|}\;\le\;L\,2^{-s}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+There are at most $3\cdot2^{\ell-s-1}$ ways to choose the first $\ell-s$ steps. The last $s$ steps
+form a non-backtracking walk of length $s$ between two given vertices. Such a walk is a path,
+because $s$ is less than the girth. There is at most one such path, because two of them would give
+a cycle of length at most $2s<D$. For the second statement, a cycle of length $\ell$ through $w$
+can be traversed from $w$ in two directions. So there are at most $\half N_\ell(w,w)$ of them, and
+$\ell>D>s$. Hence the cycles of each length $\ell\le L$ contribute at most $\frac34\,2^{-s}$.
+\end{proof}
+
+Let $B$ be the non-backtracking matrix of $J$. Its rows and columns are indexed by the directed
+edges $(i\to j)$ of $J$, two for each edge. The entry in row $(i\to j)$ and column $(j'\to k)$ is
+$1$ if $j'=j$ and $k\ne i$, and it is $0$ otherwise.
+
+\begin{lemma}[Closed walks]\label{lem:spectrum}
+Suppose that $d_J<v$. Then, for every even $\ell\ge2$,
+\[
+  \tr B^{\ell}\;\ge\;\bigl(2-d_J/v\bigr)^{\ell}-3v\,2^{\ell/2}.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $A$ be the adjacency matrix of $J$ and $\Delta$ the diagonal matrix of its degrees, and put
+$M(\lambda)=\lambda^{2}I-\lambda A+\Delta-I$.
+
+(1) \emph{If $M(\lambda)g=0$ for a real $\lambda>1$ and a vector $g\ne0$, then $\lambda$ is an
+eigenvalue of $B$.} A direct computation shows that $f(i\to j)=\lambda g(j)-g(i)$ satisfies
+$Bf=\lambda f$. And $f=0$ would give $g(i)=\lambda g(j)=\lambda^{2}g(i)$ along every edge, hence
+$g=0$; at an isolated vertex, the equation $M(\lambda)g=0$ is $(\lambda^{2}-1)g=0$.
+
+(2) \emph{If $Bf=\lambda f$ with $f\ne0$ and $\lambda^{2}\ne1$, then $M(\lambda)g=0$ for
+$g(j)=\sum_{k\sim j}f(j\to k)$, and $g\ne0$.} The eigenvalue equation at $(i\to j)$ and at
+$(j\to i)$ reads $\lambda f(i\to j)=g(j)-f(j\to i)$ and $\lambda f(j\to i)=g(i)-f(i\to j)$.
+Eliminating $f(j\to i)$ gives $(\lambda^{2}-1)f(i\to j)=\lambda g(j)-g(i)$. This shows that
+$g\ne0$. Summing it over the neighbours $j$ of $i$ gives $M(\lambda)g=0$.
+
+(3) \emph{$B$ has a real eigenvalue $\lambda_1\ge2-d_J/v$.} The matrix
+$M(2)=2(\Delta-A)+(3I-\Delta)$ is positive semidefinite, while
+$\mathbf{1}^{\!\top}M(\lambda)\mathbf{1}=(\lambda-1)(v\lambda-2v+d_J)$ vanishes at
+$\lambda^{*}=2-d_J/v>1$. The smallest eigenvalue of the symmetric matrix $M(\lambda)$ is continuous
+in $\lambda$, at most $0$ at $\lambda^{*}$ and at least $0$ at $2$. So $M(\lambda_1)$ is singular for
+some $\lambda_1\in[\lambda^{*},2]$, and (1) applies.
+
+(4) \emph{Every non-real eigenvalue $\lambda$ of $B$ satisfies $|\lambda|\le\sqrt2$.} With $g$ as
+in~(2), $g^{*}M(\lambda)g=0$ is a quadratic equation $a\lambda^{2}-b\lambda+c'=0$ with real
+coefficients $a=g^{*}g>0$, $b=g^{*}Ag$ and $c'=g^{*}(\Delta-I)g\le2a$. Its roots are $\lambda$ and
+$\bar\lambda$, so $|\lambda|^{2}=c'/a\le2$.
+
+Now $\tr B^{\ell}$ is the sum of the $\ell$th powers of the $2|E(J)|\le3v$ eigenvalues of $B$. For
+even $\ell$ the real eigenvalues contribute nonnegative terms, one of which is at least
+$(2-d_J/v)^{\ell}$, and the non-real ones contribute at least $-3v\,2^{\ell/2}$ in total.
+\end{proof}
+
+Facts (2) and (4) are part of the Ihara--Bass theory~\cite{Bass,KS}. The test vector $\mathbf{1}$
+in~(3) is from~\cite{KNT}. With this test vector the argument needs no assumption of regularity
+or expansion.
+
+\begin{lemma}[Cycle weight]\label{lem:weight}
+Suppose that $d_J<v$, and let $\ell_0\le L$ be a positive integer. The total weight
+$\mu:=\sum_{C\in\mathcal{C}}2^{-|C|}$ satisfies
+\[
+  \Bigl(1+\tfrac32\,L^{2}\,2^{-s}\Bigr)\,\mu\;\ge\;
+  \Bigl(1-\frac{L\,d_J}{2v}-3v\,2^{-\ell_0/2}\Bigr)\sum_{\ell}\frac1{2\ell},
+\]
+where the sum is over the even $\ell$ with $\ell_0\le\ell\le L$.
+\end{lemma}
+
+\begin{proof}
+$\tr B^{\ell}$ is the number of closed walks $u_0u_1\cdots u_\ell=u_0$ in $J$ with
+$u_{i+1}\ne u_{i-1}$ for all $i$ modulo $\ell$. A cycle of length $\ell$ gives $2\ell$ of them; let
+$n_\ell$ be the number of the others. Then
+\[
+  T:=\sum_{\ell\le L}\frac{\tr B^{\ell}}{2\ell\,2^{\ell}}=\mu+\sum_{\ell\le L}\frac{n_\ell}{2\ell\,2^{\ell}} .
+\]
+Consider a walk counted by $n_\ell$, and let $j$ be the least index with
+$u_j\in\{u_0,\dots,u_{j-1}\}$, say $u_j=u_i$. Then $j<\ell$, the walk $C=u_iu_{i+1}\cdots u_j$ is a
+cycle, of length $q$ say, and $u_ju_{j+1}\cdots u_\ell u_1\cdots u_i$ is a non-backtracking closed
+walk of length $\ell-q>0$ from $u_i$ to itself. It contains a cycle, so $\ell-q>D>s$. The original
+walk is determined by $C$, by the vertex $u_i$ and a direction on $C$ ($2q$ choices), by the
+complementary walk (at most $3\cdot2^{\ell-q-s-1}$ choices, by Lemma~\ref{lem:walks}), and by the
+position of $u_0$ on the latter (at most $\ell$ choices). Hence
+\[
+  \sum_{\ell\le L}\frac{n_\ell}{2\ell\,2^{\ell}}
+  \;\le\;\sum_{\ell\le L}\ \sum_{C\in\mathcal{C}}\tfrac32\,|C|\,2^{-|C|-s}
+  \;\le\;\tfrac32\,L^{2}\,2^{-s}\,\mu ,
+\]
+and $T\le(1+\frac32L^{2}2^{-s})\mu$. On the other hand, all terms of $T$ are nonnegative. For even
+$\ell$ with $\ell_0\le\ell\le L$, Lemma~\ref{lem:spectrum} gives
+\[
+  2^{-\ell}\tr B^{\ell}\;\ge\;\Bigl(1-\frac{d_J}{2v}\Bigr)^{\ell}-3v\,2^{-\ell/2}
+  \;\ge\;1-\frac{L\,d_J}{2v}-3v\,2^{-\ell_0/2}.\qedhere
+\]
+\end{proof}
+
+\paragraph{The second moment.}
+Let $\xi$ be uniform on $\Z(\Gamma)$. For $C\in\mathcal{C}$ let $I_C$ be the event that $C$ is a
+component of $\xi$. As the vertices of $C$ have degree $3$ in $\Gamma$, this is the event
+$E(C)\subseteq\xi$. It is also the event that $\cO_{V(C)}$ holds and
+$\xi\cap E(\Gamma[V(C)])=E(C)$. Put
+\[
+  a_C=2^{-|C|},\qquad p_C=\PP(I_C),\qquad X_C=\frac{a_C}{p_C}\,\mathbf{1}_{I_C},\qquad
+  Z=\sum_{C\in\mathcal{C}}X_C .
+\]
+Because of the factor $a_C/p_C$, the mean of $X_C$ is the combinatorial weight $a_C$ for every
+value of $p_C$. The event $I_C$ is given by $|C|$ linear conditions on $\xi\in\Z(\Gamma)$,
+which are satisfied by $\xi=C$. So $p_C\ge a_C$. Hence $0\le X_C\le1$, and $\EE Z=\mu$. If
+$Z\ne0$, then $\xi$ contains a cycle of $J$.
+
+Let $C\ne C'$ be in $\mathcal{C}$. If they share a vertex, then $I_C\cap I_{C'}=\emptyset$. If they
+are disjoint, Lemma~\ref{lem:link}, applied to the regions $V(C)$ and $V(C')$ of $\Gamma$, gives
+$\PP(I_C\cap I_{C'})=2^{\ell(C,C')-1}p_Cp_{C'}$ and therefore
+\begin{equation}\label{eq:pair}
+  \EE(X_CX_{C'})=a_Ca_{C'}\,2^{\ell(C,C')-1},
+\end{equation}
+where $\ell(C,C')$ is the number of links between $V(C)$ and $V(C')$ in $\Gamma$. Let $W_2$ be
+the sum of $a_Ca_{C'}$ over the ordered pairs of disjoint cycles of $\mathcal{C}$ with exactly two
+links. Then $W_2\le\mu^{2}$.
+
+\begin{proposition}[Logarithmic girth]\label{prop:loggirth}
+There is $r_2$ such that the following holds for all $r\ge r_2$, with $x=\log r$ and $y=\log x$.
+Let $\Gamma$ and $P$ be as in Theorem~\ref{thm:forest}, with $q(\Gamma,P)\ge\frac25$. Let $D$ and
+$L$ be integers with $x/16\le D\le x/8$ and $7x\le L\le x\sqrt y$. Let $S$ be the union of the
+vertex sets of a maximal family of pairwise disjoint cycles of length at most $D$ in $\Gamma-P$,
+and suppose that $|S|\le r/x^{2}$. Then $\Gamma$ and $U=P\cup S$ are as in this subsection,
+$s\ge x/32-1$, and
+\[
+  L^{2}\,2^{-s}\le r^{-1/60},\qquad
+  \mu\;\ge\;\frac14\ln\frac{L}{6x}-\frac1{\sqrt x},\qquad
+  \EE Z^{2}\;\le\;\mu^{2}+W_2+\bigl(1+r^{-1/60}\bigr)\mu .
+\]
+\end{proposition}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[cool] (0,0) ellipse [x radius=0.7, y radius=1.4];
+  \draw[cool] (6.4,0) ellipse [x radius=0.7, y radius=1.4];
+  \node[note, text=accent] at (-1.05,0) {$C$};
+  \node[note, text=accent] at (7.5,0) {$C'$};
+  % the ends of the arcs
+  \foreach \a/\b/\c/\d in {0.33/0.94/0.474/1.353, 0.568/0.16/0.818/0.23, 0.47/-0.658/0.676/-0.948, 0.148/-1.109/0.214/-1.596}{
+    \draw[slate, line width=0.5pt] (\a,\b)--(\c,\d);
+    \draw[slate, line width=0.5pt] (6.4-\a,\b)--(6.4-\c,\d);}
+  % two paths between the same two arcs
+  \draw[hot] (0.536,0.9)--(2.2,1.0)--(4.2,1.0)--(5.864,0.9);
+  \draw[hot] (0.654,0.5)--(2.2,0.5)--(4.2,0.5)--(5.746,0.5);
+  \draw[hot] (0.654,0.5) arc [start angle=20.9, end angle=40, x radius=0.7, y radius=1.4];
+  \draw[hot] (5.746,0.5) arc [start angle=159.1, end angle=140, x radius=0.7, y radius=1.4];
+  % other links
+  \draw[edge] (0.684,-0.3)--(5.716,-0.3);
+  \draw[edge] (0.49,-1.0)--(2.4,-1.05)--(4.0,-1.05)--(5.91,-1.0) (3.2,-1.05)--(3.2,-1.55);
+  \draw[edge] (2.4,-1.05)--(3.2,-1.05)--(4.0,-1.05);
+  \foreach \p in {(0.536,0.9),(2.2,1.0),(4.2,1.0),(5.864,0.9),(0.654,0.5),(2.2,0.5),(4.2,0.5),(5.746,0.5),
+                  (0.684,-0.3),(5.716,-0.3),(0.49,-1.0),(2.4,-1.05),(3.2,-1.05),(4.0,-1.05),(5.91,-1.0)}
+    \node[vtx] at \p {};
+  \node[note, text=warm, anchor=west] at (8.1,0.75) {two paths between the same two arcs:};
+  \node[note, text=warm, anchor=west] at (8.1,0.35) {a cycle with fewer than $D$ edges};
+  \node[note, anchor=west] at (8.1,-0.3) {a link that is an edge};
+  \node[note, anchor=west] at (8.1,-1.05) {a link that is a tree};
+\end{tikzpicture}
+\caption{Step~2 in the proof of Proposition~\ref{prop:loggirth}. Each cycle is divided into arcs with at most $\lfloor D/8\rfloor$
+vertices. A link that is an edge or a tree gives a path with at most $t$ edges from $C$ to
+$C'$. Two of these paths between the same arc of $C$ and the same arc of $C'$ would close a
+cycle of $J$ with fewer than $D$ edges.}
+\label{fig:twocycles}
+\end{figure}
+
+\begin{proof}
+All estimates below hold for large $r$, uniformly in the other data. The family contains the
+loops and the pairs of parallel edges of $\Gamma-P$, because these are cycles of length at most
+two. By its maximality, $J=\Gamma-U$ is a simple graph of girth greater than $D$. We have
+$s\ge(D-2)/2\ge x/32-1$, so $L^{2}2^{-s}\le2x^{2}y\,r^{-1/32}\le r^{-1/60}$. Recall that
+$|P|\le2r/x^{2}$ and that the number $c$ of components of $\Gamma[P]$ is at most $x/100$.
+
+\step{Step 1: components with a cycle.} Let $A$ and $B$ be disjoint regions of $\Gamma$, and let
+$t\ge0$ be an integer. We claim that at most $5\cdot2^{t}$ components $Y$ of $\Gamma-(A\cup B)$
+have all of the following properties: $Y$ has an edge to $A$ and an edge to $B$; $Y$ avoids $P$;
+$Y$ contains a cycle; $|\delta Y|\le t$. Let $Y_0,Y_1,\dots,Y_n$ be such components. For
+$1\le i<j\le n$ the graph $\Gamma-Y_i-Y_j$ is connected. Indeed, it contains the connected set
+$A\cup B\cup Y_0$, and every other component of $\Gamma-(A\cup B)$ is connected and has an edge to
+$A\cup B$. No edge joins $Y_i$ and $Y_j$. So the regions $Y_i$ and $Y_j$ have exactly one link.
+Let $E_i$ be the event that $\cO_{Y_i}$ holds and $\xi\cap E(\Gamma[Y_i])$ is not empty. By
+Lemma~\ref{lem:link}, the events $E_i$ and $E_j$ are independent, and
+$\PP(E_i)\ge2^{-t}\cdot\half$. If $n=0$, the bound holds. Otherwise let $N$ be the number of the
+events $E_1,\dots,E_n$ that occur, and put $\nu=\EE N\ge n\,2^{-t-1}>0$. Then
+$\EE N^{2}\le\nu^{2}+\nu$, and the Cauchy--Schwarz inequality gives
+$\PP(N=0)\le1-\nu^{2}/\EE N^{2}\le1/(1+\nu)$. If $\xi\cap E(\Gamma-P)$ is a forest, then no $E_i$
+occurs, because $Y_i$ avoids $P$ and a nonempty even subgraph is not a forest. So
+$\frac25\le q(\Gamma,P)\le1/(1+\nu)$. Hence $\nu\le\frac32$ and $n\le3\cdot2^{t}$, and there are
+at most $3\cdot2^{t}+1\le5\cdot2^{t}$ such components.
+
+\step{Step 2: the links of two cycles.} Put $t=\lfloor y/2\rfloor$; then $1\le t\le D/4$. Let
+$C,C'\in\mathcal C$ be disjoint, and put $U'=V(C)\cup V(C')$. Every vertex of $U'$ lies on exactly
+one edge outside its own cycle, so at most $2L$ edges leave $U'$. At most $c$ components of
+$\Gamma-U'$ meet $P$, because $P\cap U'=\emptyset$ and so each component of $\Gamma[P]$ lies in one
+of them. At most $2L/(t+1)$ components have more than $t$ edges to $U'$. Of the other components
+that are joined to both cycles, at most $5\cdot2^{t}$ contain a cycle, by Step~1 with $A=V(C)$
+and $B=V(C')$. The remaining components that are joined to both cycles induce trees, avoid $P$
+and have at most $t$ edges to $U'$. They also avoid $S$: each cycle of the family is disjoint
+from $U'$, so it lies in one component of $\Gamma-U'$, and this component contains a cycle.
+
+Let $Y$ be one of the remaining components, with $d_Y\le t$ edges to $U'$. All its vertices have
+degree $3$, so $3|Y|=2(|Y|-1)+d_Y$, that is, $|Y|=d_Y-2$. So there is a path from $C$ to $C'$
+through $Y$ with at most $t$ edges (Figure~\ref{fig:twocycles}). For a link that is an edge,
+take this edge as the path. These
+paths lie in $J$. They are pairwise disjoint, because every vertex of $U'$ lies on exactly one
+edge outside its own cycle. Divide each of $C$ and $C'$ into arcs of at most $\lfloor D/8\rfloor$
+consecutive vertices. At most $17L/D$ arcs are necessary for each cycle, because
+$\lfloor D/8\rfloor\ge D/16$ and $L\ge D$. If two of the paths had their ends in the same arc of
+$C$ and in the same arc of $C'$, they would form, together with parts of these two arcs, a cycle
+of $J$ of length at most $2t+2\lfloor D/8\rfloor<D$. So there are at most $(17L/D)^{2}$ such
+paths. Together,
+\[
+  \ell(C,C')\;\le\;b:=c+\frac{2L}{t+1}+5\cdot2^{t}+289\Bigl(\frac LD\Bigr)^{2}
+  \;\le\;\frac{x}{100}+\frac{4x}{\sqrt y}+5\sqrt x+289\cdot256\,y\;\le\;\frac{x}{90}.
+\]
+
+\step{Step 3: the second moment.} Call a disjoint pair $C,C'\in\mathcal{C}$ \emph{exceptional} if
+$\ell(C,C')\ge3$. Fix $C$, and let $\mathcal{E}$ be a maximal family of pairwise disjoint
+exceptional partners of $C$. By Lemma~\ref{lem:exc}, $|\mathcal{E}|\le|\delta V(C)|\le L$. So the
+union of their vertex sets has at most $L^{2}$ vertices, and every exceptional partner of $C$
+meets this union. By~\eqref{eq:load}, the sum of $a_{C'}$ over the exceptional partners $C'$ of $C$
+is at most $L^{3}2^{-s}$. With~\eqref{eq:pair} and Step~2,
+\[
+  \sum_{C'\ \mathrm{exceptional}}\EE(X_CX_{C'})\;\le\;a_C\,2^{b}L^{3}\,2^{-s}
+  \;\le\;a_C\,2^{x/90-x/32+1}\bigl(x\sqrt y\bigr)^{3}\;\le\;a_C\,r^{-1/60}.
+\]
+By~\eqref{eq:pair}, a disjoint pair with at most one link has $\EE(X_CX_{C'})\le a_Ca_{C'}$, and
+a pair with two links has $\EE(X_CX_{C'})=2a_Ca_{C'}$. Intersecting pairs contribute nothing, and
+$\EE X_C^{2}\le\EE X_C=a_C$. The sum over all ordered pairs is the bound for $\EE Z^{2}$.
+
+\step{Step 4: the weight.} A count of edge ends gives
+$3|V(\Gamma)|-3|P|\le2|E(\Gamma)|\le3|V(\Gamma)|$, and $|E(\Gamma)|=|V(\Gamma)|+r-1$. So
+$2r-2\le|V(\Gamma)|\le2r-2+3|P|$. Hence the number $v$ of vertices of $J$ satisfies
+$r\le v\le3r$, and $d_J\le3(|P|+|S|)\le9r/x^{2}$. By Lemma~\ref{lem:weight} with
+$\ell_0=\lceil6x\rceil$,
+\[
+  \bigl(1+\tfrac32\,r^{-1/60}\bigr)\,\mu\;\ge\;
+  \Bigl(1-\frac{5\sqrt y}{x}-\frac{9}{r^{2}}\Bigr)\sum_{\ell}\frac1{2\ell},
+\]
+where the sum is over the even $\ell$ with $6x\le\ell\le L$. This sum is at least
+$\frac14\ln\bigl(L/(6x+2)\bigr)\ge\frac14\ln\bigl(L/(6x)\bigr)-1/(12x)$, and it is at most $\ln y$.
+The bound for $\mu$ follows.
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:forest}}
+
+Let $\Gamma$ and $P$ be as in the theorem, let $\xi$ be uniform on $\Z(\Gamma)$, and let $r$ be
+large. Put
+\[
+  x=\log r,\qquad y=\log x,\qquad z=\log y,\qquad
+  D=\lfloor x/10\rfloor,\qquad L=\lfloor x\sqrt y\rfloor,\qquad\varepsilon=20/z .
+\]
+Let $\mathcal{F}$ be the event that $\xi\cap E(\Gamma-P)$ is a forest. We assume that
+$\PP(\mathcal{F})>\frac12+\varepsilon$ and derive a contradiction.
+
+Let $\mathcal{Q}$ be a maximal family of pairwise disjoint cycles of $\Gamma-P$ of length at most
+$D$, and let $S$ be the union of their vertex sets. For $Q\in\mathcal{Q}$ the set $V(Q)$ is a
+cyclic region of $\Gamma$ with $|\delta V(Q)|\le|Q|\le D$, because its vertices have degree $3$.
+On $\mathcal{F}$ the set $\xi\cap E(\Gamma[V(Q)])$ is a forest for every $Q$. So
+Lemma~\ref{lem:smallcuts} gives $|\mathcal{Q}|<(D+1)2^{D-1}/\varepsilon\le\sqrt r$. Hence
+$|S|\le D\sqrt r\le r/x^{2}$, and Proposition~\ref{prop:loggirth} applies. As
+$L/(6x)\ge\sqrt y/7$ and $W_2\le\mu^{2}$, it gives
+\[
+  \mu\;\ge\;\frac14\ln\frac{\sqrt y}{7}-\frac1{\sqrt x}\;\ge\;\frac{\ln y}{10},
+  \qquad \EE Z^{2}\;\le\;2\mu^{2}+2\mu .
+\]
+On $\mathcal{F}$ no cycle of $J\subseteq\Gamma-P$ is contained in $\xi$, so $Z=0$. By
+Lemma~\ref{lem:second},
+\[
+  \PP(\mathcal{F})\;\le\;\PP(Z=0)\;\le\;\frac12+\frac1{2\mu}\;\le\;\frac12+\frac{5}{\ln y}
+  \;<\;\frac12+\frac{20}{z},
+\]
+since $\ln y=z\ln2$. This is a contradiction, and Theorem~\ref{thm:forest} is proved.
+
+\subsection{The leading term}\label{sec:leading}
+
+\begin{lemma}[Cubic multigraphs]\label{lem:cubic}
+For every $r\ge2$ there is a connected cubic multigraph of rank $r$ with exactly $\psi(r)$ cycles.
+\end{lemma}
+
+\begin{proof}
+The numbers of cycles of the graphs of rank $r$ are integers below $2^{r}$, so some graph $G_0$
+attains $\psi(r)$. If $G_0$ is not connected, identify a vertex of one component with a vertex of
+another. This changes neither the rank nor the set of cycles. Now delete a vertex of degree one, or
+replace a vertex of degree two and its two edges by one edge, as long as this is possible. These
+steps keep the rank and the number of cycles. The result is a connected multigraph with all
+degrees at least three, because $r\ge2$.
+
+Let $v$ be a vertex of degree $d\ge4$. Replace $v$ by a path $v^{1}v^{2}\cdots v^{d-2}$, and
+distribute the $d$ edge ends at $v$ along this path: two at $v^{1}$, one at each of
+$v^{2},\dots,v^{d-3}$, and two at $v^{d-2}$. The new multigraph has $d-3$ more vertices and $d-3$
+more edges, so its rank is $r$. A cycle through $v$ uses two edge ends at $v$. Together with the
+part of the path between these two ends it is a cycle of the new multigraph. Different cycles give
+different cycles, and the cycles that avoid $v$ remain. So the number of cycles does not decrease,
+and it cannot exceed $\psi(r)$. Repeat this for every vertex of degree at least four.
+\end{proof}
+
+\begin{lemma}[Cycles and a marked set]\label{lem:marked}
+Let $G$ be a connected cubic multigraph of rank $r$ without a bridge. Let $P$ be a set of $p$
+vertices, not all vertices of $G$, such that $G[P]$ is connected. Then
+\[
+  c(G)\;\le\;q(G,P)\,2^{r}+2^{\,r-1-p/2}.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $Z$ be a cycle of $G$ that meets $P$. Its edges in $G-P$ form a proper subset of $Z$, hence a
+forest. So at most $q(G,P)\,2^{r}$ cycles meet $P$. The other cycles are cycles of $G-P$, and
+there are at most $2^{\beta(G-P)}$ of them. Let $a$ be the number of edges of $G[P]$. Then $3p-2a$
+edges leave $P$, and $G-P$ arises from $G$ by the deletion of $p$ vertices and $3p-a$ edges. So
+$\beta(G-P)=r-1-2p+a+\comp(G-P)$. The graph $G$ has no bridge, so every component of $G-P$
+contains the ends of at least two of the edges that leave $P$. Hence $\comp(G-P)\le(3p-2a)/2$ and
+$\beta(G-P)\le r-1-p/2$.
+\end{proof}
+
+\begin{corollary}[Leading term]\label{cor:cycles}
+There is $r_1$ such that every graph of rank $r\ge r_1$ has at most
+$\bigl(\half+21/\lgk3r\bigr)2^{r}$ cycles. Consequently $\psi(r)\sim2^{r-1}$.
+\end{corollary}
+
+\begin{proof}
+Let $r$ be large, and let $G$ be a connected cubic multigraph of rank $r$ with $\psi(r)$ cycles
+(Lemma~\ref{lem:cubic}). Suppose first that $G$ has a bridge $e$, and let $b_1$ and $b_2$ be the
+ranks of the two components of $G-e$. A component with $n$ vertices has $(3n-1)/2\ge n$ edges, so
+$b_1,b_2\ge1$, and $b_1+b_2=r$. Every cycle lies in one component. So
+$c(G)\le(2^{b_1}-1)+(2^{b_2}-1)\le2^{r-1}$.
+
+In the other case choose a set $P$ of $\lceil4\log r\rceil$ vertices such that $G[P]$ is
+connected. Then $|P|\le2r/\log^{2}r$. By Theorem~\ref{thm:forest} and Lemma~\ref{lem:marked},
+\[
+  c(G)\;\le\;\Bigl(\frac12+\frac{20}{\lgk3r}\Bigr)2^{r}+2^{\,r-1-2\log r}
+  \;\le\;\Bigl(\frac12+\frac{21}{\lgk3r}\Bigr)2^{r}.
+\]
+Finally $\psi(r)>2^{r-1}$ for $r\ge3$~\cite{ES}; the rings of Section~\ref{sec:rings} also show this.
+\end{proof}

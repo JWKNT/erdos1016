@@ -1,0 +1,64 @@
+\section{The leading term}\label{sec:leading}
+
+This section proves that $\psi(r)\le(\half+o(1))\,2^{r}$. The later sections use this bound and
+the two lemmas.
+
+\begin{lemma}[Cubic multigraphs]\label{lem:cubic}
+For every $r\ge2$ there is a connected cubic multigraph of rank $r$ with exactly $\psi(r)$ cycles.
+\end{lemma}
+
+\begin{proof}
+The numbers of cycles of the graphs of rank $r$ are integers below $2^{r}$, so some graph $G_0$
+attains $\psi(r)$. If $G_0$ is not connected, identify a vertex of one component with a vertex of
+another. This changes neither the rank nor the set of cycles. Now delete a vertex of degree one, or
+replace a vertex of degree two and its two edges by one edge, as long as this is possible. These
+steps keep the rank and the number of cycles. The result is a connected multigraph with all
+degrees at least three, because $r\ge2$.
+
+Let $v$ be a vertex of degree $d\ge4$. Replace $v$ by a path $v^{1}v^{2}\cdots v^{d-2}$, and
+distribute the $d$ edge ends at $v$ along this path: two at $v^{1}$, one at each of
+$v^{2},\dots,v^{d-3}$, and two at $v^{d-2}$. The new multigraph has $d-3$ more vertices and $d-3$
+more edges, so its rank is $r$. A cycle through $v$ uses two edge ends at $v$. Together with the
+part of the path between these two ends it is a cycle of the new multigraph. Different cycles give
+different cycles, and the cycles that avoid $v$ remain. So the number of cycles does not decrease,
+and it cannot exceed $\psi(r)$. Repeat this for every vertex of degree at least four.
+\end{proof}
+
+\begin{lemma}[Cycles and a marked set]\label{lem:marked}
+Let $G$ be a connected cubic multigraph of rank $r$ without a bridge. Let $P$ be a set of $p$
+vertices, not all vertices of $G$, such that $G[P]$ is connected. Then
+\[
+  c(G)\;\le\;q(G,P)\,2^{r}+2^{\,r-1-p/2}.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $Z$ be a cycle of $G$ that meets $P$. Its edges in $G-P$ form a proper subset of $Z$, hence a
+forest. So at most $q(G,P)\,2^{r}$ cycles meet $P$. The other cycles are cycles of $G-P$, and
+there are at most $2^{\beta(G-P)}$ of them. Let $a$ be the number of edges of $G[P]$. Then $3p-2a$
+edges leave $P$, and $G-P$ arises from $G$ by the deletion of $p$ vertices and $3p-a$ edges. So
+$\beta(G-P)=r-1-2p+a+\comp(G-P)$. The graph $G$ has no bridge, so every component of $G-P$
+contains the ends of at least two of the edges that leave $P$. Hence $\comp(G-P)\le(3p-2a)/2$ and
+$\beta(G-P)\le r-1-p/2$.
+\end{proof}
+
+\begin{corollary}[Leading term]\label{cor:cycles}
+There is $r_1$ such that every graph of rank $r\ge r_1$ has at most
+$\bigl(\half+21/\lgk3r\bigr)2^{r}$ cycles. Consequently $\psi(r)\sim2^{r-1}$.
+\end{corollary}
+
+\begin{proof}
+Let $r$ be large, and let $G$ be a connected cubic multigraph of rank $r$ with $\psi(r)$ cycles
+(Lemma~\ref{lem:cubic}). Suppose first that $G$ has a bridge $e$, and let $b_1$ and $b_2$ be the
+ranks of the two components of $G-e$. A component with $n$ vertices has $(3n-1)/2\ge n$ edges, so
+$b_1,b_2\ge1$, and $b_1+b_2=r$. Every cycle lies in one component. So
+$c(G)\le(2^{b_1}-1)+(2^{b_2}-1)\le2^{r-1}$.
+
+In the other case choose a set $P$ of $\lceil4\log r\rceil$ vertices such that $G[P]$ is
+connected. Then $|P|\le2r/\log^{2}r$. By Theorem~\ref{thm:forest} and Lemma~\ref{lem:marked},
+\[
+  c(G)\;\le\;\Bigl(\frac12+\frac{20}{\lgk3r}\Bigr)2^{r}+2^{\,r-1-2\log r}
+  \;\le\;\Bigl(\frac12+\frac{21}{\lgk3r}\Bigr)2^{r}.
+\]
+Finally $\psi(r)>2^{r-1}$ for $r\ge3$~\cite{ES}; the rings of Section~\ref{sec:rings} also show this.
+\end{proof}

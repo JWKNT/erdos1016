@@ -1,0 +1,917 @@
+\documentclass[11pt]{article}
+\input{../style/preamble}
+
+\renewcommand{\papertitle}{The large-girth theorem\\ with one family of short cycles}
+\renewcommand{\papersubtitle}{A research note on Section 8 of ``The maximum number of cycles in a graph of large rank''}
+\renewcommand{\paperrunning}{The large-girth theorem with one family of short cycles}
+\renewcommand{\paperauthors}{Fable~5.2, for KNT}
+\renewcommand{\paperdate}{Research note of 12 November 2026}
+\hypersetup{pdftitle={The large-girth theorem with one family of short cycles},pdfauthor={Fable 5.2, for KNT}}
+
+% A statement of the paper [M], in the numbering of the draft of 42 pages.
+\newcommand{\M}[1]{[M,~#1]}
+
+\begin{document}
+\maketitleblock
+
+This note answers the research task of 12 November 2026: find a shorter mathematical proof of
+Theorem~8.1 of the paper~[M], the theorem for large girth. The numbers of the statements of~[M]
+are those of the draft of 42~pages. The note gives two new proofs. Each proof deletes one maximal
+family of short cycles, at one scale. Each proof removes Theorem~8.8 (raising the girth), the
+nested sets $S_0\subseteq S_1\subseteq\cdots$, the two girth scales of Section~8.4, and the
+deleted set in Propositions~8.5 and~8.7. The manuscript is not changed.
+
+\fronthead{The result in seven sentences}
+\begin{enumerate}[leftmargin=1.6em]
+\item In the present proof a block of a chain is a piece only if it avoids a deleted set of short
+cycles. So the proof needs a small deleted set and a large one, and Theorem~8.8 constructs both.
+\item It is sufficient to discard the blocks that \emph{contain} a short cycle. These blocks are
+disjoint. So their number is at most a packing number: the largest number of pairwise disjoint
+cycles of length less than $C_0\log(\Lambda+2)$.
+\item With this change, one proposition on a weighted family of regions gives the packing bound
+for short cycles and also the final contradiction for cycles of moderate length
+(Proposition~\ref{prop:heavy}).
+\item The packing bound for the length $d$ then follows from the packing bound for the length
+$C_0\log(d+2)$, by induction. Nothing is deleted, and Theorem~8.8 is not necessary
+(Section~\ref{sec:first}).
+\item A second proof moves this induction into the lemma on pieces. The new lemma says: at a
+fixed girth $D_*$, every large connected subcubic multigraph with a small boundary has a forest
+proportion of less than $\frac35$. Then two large disjoint regions of $G-P$ with small boundaries
+always give $q(G,P)\le\frac9{25}$ (Section~\ref{sec:second}).
+\item Measured in copies of the paper, Section~8 has 271 typeset lines now, 259 lines with the
+first proof and 289 lines with the second proof. The paper keeps 42 pages. So the gain is in the
+structure of the proof and not in its length.
+\item The hypotheses of the final application do not help (Section~\ref{sec:p3}), and each
+proof keeps an induction over about $\log^{*}r$ scales (Section~\ref{sec:stays}).
+\end{enumerate}
+
+\begin{notation}{the status of this note}
+\begin{itemize}[leftmargin=1.2em]
+\item \emph{Established on paper.} Sections~\ref{sec:first} and~\ref{sec:second} contain complete
+proofs. I checked each step against the statements of~[M]. Two copies of the paper with the new
+Section~8 build without an undefined reference.
+\item \emph{Tested by computer.} Scripts test the facts on joins of Section~\ref{sec:joins} and
+the examples of Sections~\ref{sec:p3} and~\ref{sec:stays} on small graphs
+(Section~\ref{sec:checks}). These tests do not replace a proof.
+\item \emph{Not done.} There is no formal proof of the new arguments. The Lean proof of~[M]
+follows the present Section~8. No other person or model has read this note.
+\item \emph{The manuscript.} It is unchanged. Two scripts in the folder of this note apply the
+first or the second proof to a copy of the paper.
+\end{itemize}
+\end{notation}
+
+\contentsblock
+
+\section{The setting}\label{sec:setting}
+
+\subsection{Notation and the theorem}
+
+Throughout, $G$ is a connected cubic multigraph, $\xi$ is a uniformly random even subgraph of
+$G$, and $q(G,P)$ is the probability that $\xi\cap E(G-P)$ is a forest. A \emph{region} is a
+nonempty set $A$ of vertices such that $G[A]$ is connected. It is \emph{cyclic} if $G[A]$ contains
+a cycle. The set $\delta A$ consists of the edges with exactly one end in $A$; these are the
+\emph{boundary edges} of $A$. For disjoint regions $A$ and $B$, a \emph{link} is an edge between
+them, or a component of $G-(A\cup B)$ that is joined to both. Their number is $\ell(A,B)$. The
+event $\cO_A$ is $\xi\cap\delta A=\emptyset$. Logarithms have base $2$, and $\ln$ is the natural
+logarithm.
+
+\begin{theorem}[{\M{Theorem~8.1}}]\label{thm:half}
+There are integers $D_*\ge7$ and $r_5$ with the following property. Let $G$ be a connected cubic
+multigraph of rank $r\ge r_5$. Let $P$ be a nonempty set of at most $3\log r$ vertices such that
+$G[P]$ is connected. If $G-P$ has girth at least $D_*$, then $q(G,P)<\frac25$.
+\end{theorem}
+
+\subsection{The present proof, and the place of the two girth scales}\label{sec:present}
+
+The proof of~[M] supposes that $q(G,P)\ge\frac25$. It has five steps.
+\begin{enumerate}[leftmargin=1.6em]
+\item \emph{Pieces} (Lemmas~8.2 and~8.3). Let $Y'\subseteq V(G)\sm P$ be a connected set such
+that $G[Y']$ has at most $2\Lambda$ boundary vertices, at least $C_1\Lambda^{4}$ vertices, and
+girth at least $C_0\log(\Lambda+2)$. Then $\xi\cap E(G[Y'])$ is a forest with a probability of
+less than $\frac35$, for every choice of the edges outside it. Two disjoint sets of this kind give
+$q(G,P)\le\frac9{25}$.
+\item \emph{A chain} (Lemma~8.4, Proposition~8.5). Pairwise disjoint regions that separate the
+same two vertices are nested, and the blocks between them have small boundaries. A block must have
+a large girth. For this purpose the proposition takes a set $U\supseteq P$ such that $G-U$ has
+large girth, and it discards the blocks that meet $U\sm P$. So $|U\sm P|$ must be smaller than the
+number of blocks.
+\item \emph{Packing} (Lemma~8.6, Proposition~8.7). If $G-(P\cup S)$ has girth at least $D$, then
+it contains at most $C_2\,d^{6}(|S|+1)\,2^{d}$ pairwise disjoint cyclic regions with at most
+$d\le2D$ boundary edges.
+\item \emph{Raising the girth} (Theorem~8.8). Step~3 for $D=D_*,2D_*,4D_*,\dots$ gives nested
+sets $S_0\subseteq S_1\subseteq\cdots$ such that $G-(P\cup S_j)$ has girth greater than
+$D_j=2^{j}D_*$ and $\log(|S_j|+1)\le2D_j+C_3\log^{2}D_j$.
+\item \emph{Two scales} (Section~8.4). Put $x=\log r$. The second moment of the cycles of
+moderate length needs the scale $D^{+}\approx x/16$, and there $|S^{+}|=r^{1/4+o(1)}$. The chain
+of Step~2 has about $r^{1/32}$ members. So its blocks cannot avoid $S^{+}$. The proof takes the
+girth of the blocks from a second scale $D^{-}\approx\sqrt x$, where $|S^{-}|=r^{o(1)}$.
+\end{enumerate}
+So the two scales have one cause: Step~2 obtains the girth of a block from a deleted set, and the
+deleted set of the large scale is larger than the chain. Section~\ref{sec:first} removes this
+cause.
+
+\subsection{Statements of [M] that the note uses}\label{sec:used}
+
+\begin{fineprint}
+\textbf{(a) \M{Lemma~2.4} and its proof.} Let $X_1,\dots,X_n$ be pairwise disjoint cyclic regions
+of a connected multigraph with $|\delta X_i|\le d$. Let $E_i$ be the event that $\cO_{X_i}$ holds
+and $\xi\cap E(G[X_i])\ne\emptyset$, and put $p_i=\PP(E_i)$. Then $p_i\ge2^{-d-1}$, and
+$\PP(E_i\cap E_j)=2^{\ell(X_i,X_j)-1}p_ip_j$ for $i\ne j$. For each $i$ at most $d$ indices $j$
+have $\ell(X_i,X_j)\ge3$. The probability that no $E_i$ occurs is at most
+$\half+(d+1)2^{d-1}/n$.
+
+\smallskip
+\textbf{(b) \M{Section~3.1 and Proposition~3.5}.} Let $U$ be a set of vertices such that $J=G-U$
+is a simple graph of girth greater than $D$. Put $s=\lfloor(D-1)/2\rfloor$. Let $\mathcal C$ be
+the set of the cycles of $J$ of length at most $L$, with the weights $a_C=2^{-|C|}$ of total
+$\mu$. Then, for every vertex $w$,
+\begin{equation}\label{eq:load}
+  \sum_{C\in\mathcal C,\ C\ni w}a_C\;\le\;L\,2^{-s}.
+\end{equation}
+There is a random variable $Z\ge0$ with $\EE Z=\mu$ such that $\xi$ contains a cycle of $J$ if
+$Z\ne0$. Let $W_2$ be the sum of $a_Ca_{C'}$ over the ordered pairs of disjoint cycles of
+$\mathcal C$ whose vertex sets have exactly two links. Proposition~3.5 says the following. Let $r$
+be large, $x=\log r$ and $y=\log x$. Let $P$ be a set of at most $2r/x^{2}$ vertices such that
+$G[P]$ has at most $x/100$ components, and let $q(G,P)\ge\frac25$. Let $D$ and $L$ be integers
+with $x/16\le D\le x/8$ and $7x\le L\le x\sqrt y$. Let $S$ be the union of the vertex sets of a
+maximal family of pairwise disjoint cycles of length at most $D$ in $G-P$, and let
+$|S|\le r/x^{2}$. Then, for $U=P\cup S$,
+\[
+  L^{2}2^{-s}\le r^{-1/60},\qquad \mu\ge\frac14\ln\frac{L}{6x}-\frac1{\sqrt x},\qquad
+  \EE Z^{2}\le\mu^{2}+W_2+\bigl(1+r^{-1/60}\bigr)\mu .
+\]
+
+\smallskip
+\textbf{(c) \M{Lemma~8.2}.} There are absolute constants $C_0$ and $C_1\ge1$ with the following
+property. Let $\Lambda\ge4$, and let $N$ be a connected subcubic multigraph with at most
+$2\Lambda$ boundary vertices, at least $C_1\Lambda^{4}$ vertices, and girth at least
+$C_0\log(\Lambda+2)$. Then every set of boundary vertices of even size has forest proportion less
+than $\frac35$. (The boundary vertices are the vertices of degree less than three. For an even
+set $T$ of them, a $T$-join is a set of edges in which exactly the vertices of $T$ have odd
+degree, and the forest proportion of $T$ is the proportion of the $T$-joins that are forests.)
+
+\smallskip
+\textbf{(d) \M{Lemma~8.3}.} Let $U_1,\dots,U_m\subseteq V(G)\sm P$ be pairwise disjoint sets such
+that each $G[U_i]$ is connected and every even set of boundary vertices of $G[U_i]$ has forest
+proportion at most $\frac35$. Then $q(G,P)\le(3/5)^{m}$.
+
+\smallskip
+\textbf{(e) \M{Lemma~8.4}.} Let $u$ and $p$ be two vertices of a connected graph $H$. Pairwise
+disjoint connected sets that avoid $u$ and $p$ and separate $u$ from $p$ are linearly ordered:
+$C_1<C_2$ means that $C_1\cup U_1\subseteq U_2$, where $U_i$ is the vertex set of the component of
+$u$ in $H-C_i$.
+
+\smallskip
+\textbf{(f) \M{Lemma~8.6}.} Let $p$ be a vertex of a connected multigraph. Let $\mathcal A$ be a
+finite family of regions that avoid $p$, with weights $w_A\ge0$ of total $\mu>0$. Let $W_2$ be the
+sum of $w_Aw_{A'}$ over the ordered pairs of disjoint regions of $\mathcal A$ with exactly two
+links. Let $N$ and $e$ be numbers such that, for every $A\in\mathcal A$, at most $N$ vertices
+outside $A$ have a neighbour in $A$, and the regions of $\mathcal A$ that are disjoint from $A$
+and joined to $A$ by an edge have total weight at most $e$. Let $K$ be a number with
+$W_2\ge\frac23\mu^{2}-K\mu$ and $\mu>\frac32K+3e$. Then there are a region $A\in\mathcal A$ and a
+vertex $u\notin A$ in the component of $p$ in $G-A$ such that the regions of $\mathcal A$ that
+are disjoint from $A$, avoid $u$, and separate $u$ from $p$ in $G-A$ have total weight at least
+$(\mu/3-K/2-e)/N$.
+\end{fineprint}
+
+The next lemma is the step ``Blocks'' in the proof of \M{Proposition~8.5}. Both new proofs use
+it, so the note states it alone.
+
+\begin{lemma}[Blocks]\label{lem:blocks}
+Let $u$ and $p$ be two vertices of a connected graph $H$. Let $C_1<C_2<\dots<C_n$ be pairwise
+disjoint connected sets that avoid $u$ and $p$ and separate $u$ from $p$, and let $w\ge1$ be an
+integer. Then there are pairwise disjoint sets $Y_l\subseteq V(H)$, one for each integer $l\ge0$
+with $(l+1)w\le n-1$, such that
+\begin{enumerate}
+\item[\textup{(i)}] $Y_l$ contains $w-1$ of the sets $C_i$;
+\item[\textup{(ii)}] every edge of $H$ that leaves $Y_l$ ends in $C_{lw+1}$ or in $C_{(l+1)w+1}$;
+\item[\textup{(iii)}] $Y_l$ lies in the component of $u$ in $H-C_{(l+1)w+1}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Let $U_i$ be the vertex set of the component of $u$ in $H-C_i$. Then $U_i\cup C_i\subseteq U_j$
+for $i<j$. For $i<j$ put $X_{ij}=U_j\sm(U_i\cup C_i)$. An edge of $H$ that leaves $U_j$ ends
+in $C_j$, because $U_j$ is a component of $H-C_j$. No edge joins $X_{ij}$ to $U_i$: its end in
+$X_{ij}$ would lie in the component $U_i$ of $H-C_i$. So every edge of $H$ that leaves $X_{ij}$
+ends in $C_i$ or in $C_j$. If $i<l<j$, then $C_l\subseteq U_j$, and $C_l$ avoids
+$U_i\cup C_i\subseteq U_l$; so $C_l\subseteq X_{ij}$. If $i<j\le i'<j'$, then
+$X_{ij}\subseteq U_j\subseteq U_{i'}$ is disjoint from $X_{i'j'}$. So the sets
+$Y_l=X_{lw+1,\,(l+1)w+1}$ have the three properties.
+\end{proof}
+
+\section{The first proof: count the blocks that contain a short cycle}\label{sec:first}
+
+Let $C_0$ and $C_1$ be the constants of \M{Lemma~8.2}. We may suppose that $C_0\ge1$, because a
+larger number $C_0$ makes the hypothesis of that lemma stronger.
+
+Call a cycle \emph{$\Lambda$-short} if its length is less than $C_0\log(\Lambda+2)$. Let
+$\nu_\Lambda(G,P)$ be the largest number of pairwise disjoint $\Lambda$-short cycles of $G-P$. Let
+$D_*\ge7$ be a fixed integer such that every integer $d\ge D_*$ satisfies
+\begin{equation}\label{eq:dstar}
+  \bigl(C_0\log(d+2)\bigr)^{C_0+9}\le d,\qquad (d+2)^{C_0}\le2\,d^{\,C_0},\qquad d^{2}\ge20\,C_1 .
+\end{equation}
+Then $C_0\log(d+2)\le d$. This number $D_*$ replaces the number $D_*$ of~[M], which satisfies
+$D\ge C_0\log(2D+2)$ for $D\ge D_*$.
+
+\begin{proposition}[A long chain]\label{prop:chain}
+Let $G$ be a connected cubic multigraph, and let $P$ be a nonempty set of vertices such that
+$G[P]$ is connected. Let $p\in P$, let $A$ be a region that avoids $P$, and let $u\notin A$ be a
+vertex in the component of $p$ in $G-A$. Let $C_1,\dots,C_T$ be pairwise disjoint regions that
+avoid $P$, $A$ and $u$ and separate $u$ from $p$ in $G-A$. Let $\Lambda\ge4$ be an integer and
+$m\ge1$ a number such that $A$ and every $C_i$ have at most $\Lambda$ boundary edges, and every
+$C_i$ has at least $m$ vertices. If
+\[
+  T\;>\;\bigl(\Lambda+\nu_\Lambda(G,P)+2\bigr)\bigl(\lceil2C_1\Lambda^{5}/m\rceil+1\bigr),
+\]
+then $q(G,P)\le\frac9{25}$.
+\end{proposition}
+
+\begin{proof}
+Each $C_i$ is connected and separates $u$ from $p$ in $G-A$. So it lies in the component $H$ of
+$G-A$ that contains $u$ and $p$. By \M{Lemma~8.4} we may assume that $C_1<C_2<\dots<C_T$. Put
+$w=\lceil2C_1\Lambda^{5}/m\rceil+1$ and $\nu=\nu_\Lambda(G,P)$.
+
+\step{Blocks.} Lemma~\ref{lem:blocks} gives at least $\Lambda+\nu+2$ pairwise disjoint sets
+$Y_l$. Each of them contains $w-1$ of the sets $C_i$, so $|Y_l|\ge(w-1)m\ge2C_1\Lambda^{5}$. Every
+edge of $H$ that leaves $Y_l$ ends in one of two sets $C_i$, so at most $2\Lambda$ edges of $H$
+leave $Y_l$. The set $P$ is connected, it contains $p$, and it is disjoint from $A$ and from the
+sets $C_i$. So $P$ lies in the component of $p$ in $H-C_i$ for every $i$, and every $Y_l$ avoids
+$P$, by~(iii).
+
+Discard $Y_l$ if it contains a vertex with a neighbour in $A$, or if $G[Y_l]$ contains a
+$\Lambda$-short cycle. The set $A$ has at most $\Lambda$ boundary edges, and the sets $Y_l$ are
+pairwise disjoint subsets of $V(G)\sm P$. So this discards at most $\Lambda+\nu$ sets, and two
+sets remain. Let $Y$ be one of them. The edges of $G$ that leave $Y$ are edges of $H$, so
+$|\delta Y|\le2\Lambda$, and $G[Y]$ has girth at least $C_0\log(\Lambda+2)$.
+
+\step{Pieces.} Every component of $G[Y]$ has an edge that leaves $Y$. So there are at most
+$2\Lambda$ components, and one of them has a vertex set $Y'$ with at least $C_1\Lambda^{4}$
+vertices. A boundary vertex of $G[Y']$ is an end of an edge of $\delta Y$, so there are at most
+$2\Lambda$ of them. By \M{Lemma~8.2}, every even set of boundary vertices of $G[Y']$ has forest
+proportion less than $\frac35$. \M{Lemma~8.3}, for the two sets $Y'$, gives
+$q(G,P)\le\frac9{25}$.
+\end{proof}
+
+The difference from \M{Proposition~8.5} is in the second paragraph of the step ``Blocks''. There
+is no set $U$ and no number $D$, and the conclusion is for the marked set $P$.
+
+\begin{proposition}[Heavy families]\label{prop:heavy}
+Let $G$ be a connected cubic multigraph, and let $P$ be a nonempty set of vertices such that
+$G[P]$ is connected and $q(G,P)\ge\frac25$. Let $\mathcal A$ be a finite family of regions that
+avoid $P$, with weights $w_A\ge0$ of total $\mu$, and let $W_2$ be the sum of $w_Aw_{A'}$ over the
+ordered pairs of disjoint regions of $\mathcal A$ with exactly two links. Let $\Lambda\ge4$ be an
+integer, and let $m\ge1$, $\kappa>0$ and $K\ge0$ be numbers such that
+\begin{enumerate}
+\item[\textup{(a)}] every region of $\mathcal A$ has at most $\Lambda$ boundary edges and at
+least $m$ vertices;
+\item[\textup{(b)}] for every $A\in\mathcal A$, the regions of $\mathcal A$ that meet $A$ have
+total weight at most $\kappa$;
+\item[\textup{(c)}] some random variable $Z\ge0$ has $\EE Z=\mu$ and
+$\EE Z^{2}\le\mu^{2}+W_2+K\mu$, and $Z=0$ whenever $\xi\cap E(G-P)$ is a forest.
+\end{enumerate}
+Then
+\begin{equation}\label{eq:heavy}
+  \mu\;\le\;\tfrac32K+3\Lambda\kappa\,\bigl(\Lambda+\nu_\Lambda(G,P)+3\bigr)
+  \bigl(\lceil2C_1\Lambda^{5}/m\rceil+1\bigr).
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Put $\nu=\nu_\Lambda(G,P)$ and $w=\lceil2C_1\Lambda^{5}/m\rceil+1$. We may assume that
+$\mu>\frac32K+3\Lambda\kappa$. By~(c), $\PP(Z\ne0)\le1-q(G,P)\le\frac35$, and the Cauchy--Schwarz
+inequality $\mu^{2}\le\EE Z^{2}\cdot\PP(Z\ne0)$ gives $W_2\ge\frac23\mu^{2}-K\mu$.
+
+Fix $p\in P$. We apply \M{Lemma~8.6}. Let $A\in\mathcal A$. By~(a), at most $\Lambda$ vertices
+outside $A$ have a neighbour in $A$, and a region that is joined to $A$ by an edge contains one of
+them. The regions of $\mathcal A$ that contain a given vertex all meet one of them, so their total
+weight is at most $\kappa$ by~(b). Hence we may take $N=\Lambda$ and $e=\Lambda\kappa$. The lemma
+gives a region $A\in\mathcal A$, a vertex $u\notin A$ in the component of $p$ in $G-A$, and
+regions of $\mathcal A$ of total weight at least $(\mu/3-K/2-\Lambda\kappa)/\Lambda$ that are
+disjoint from $A$, avoid $u$, and separate $u$ from $p$ in $G-A$. Take a maximal family
+$C_1,\dots,C_T$ of pairwise disjoint regions among them. Each of these regions meets some $C_i$,
+so their total weight is at most $T\kappa$ by~(b). As $q(G,P)>\frac9{25}$,
+Proposition~\ref{prop:chain} gives $T\le(\Lambda+\nu+2)\,w$. So
+$\mu/3-K/2-\Lambda\kappa\le\Lambda\kappa\,(\Lambda+\nu+2)\,w$, and the claim follows because
+$w\ge1$.
+\end{proof}
+
+In other words: if a family with the properties (a), (b) and (c) has a total weight above the
+bound~\eqref{eq:heavy}, then $q(G,P)<\frac25$. The proof has two cases. Either the pairs with two
+links have a small weight, and the second moment gives $q(G,P)<\frac25$. Or they give two large
+disjoint regions with small boundaries and without a short cycle, and the product gives
+$q(G,P)\le\frac9{25}$.
+
+\begin{proposition}[Packing]\label{prop:packing}
+Let $G$ be a connected cubic multigraph, and let $P$ be a nonempty set of vertices such that
+$G[P]$ is connected. Suppose that $q(G,P)\ge\frac25$ and that $G-P$ has girth at least $D_*$. Let
+$d\ge D_*$ be an integer. Then
+\begin{enumerate}
+\item[\textup{(i)}] $G-P$ has at most $2^{d}d^{\,C_0+9}$ pairwise disjoint cycles of length at
+most $d$;
+\item[\textup{(ii)}] $\nu_d(G,P)\le2\,d^{\,C_0+1}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+We use induction on $d$. Suppose that~(i) holds for every smaller integer that is at least $D_*$.
+
+\step{The shorter cycles.} Let $g$ be the largest integer that is less than $C_0\log(d+2)$. Then
+$g<d$ by~\eqref{eq:dstar}, and a cycle is $d$-short if and only if its length is at most $g$. If
+$g<D_*$, then $G-P$ has no such cycle. Otherwise~(i) for $g$ and~\eqref{eq:dstar} give
+\[
+  \nu_d(G,P)\;\le\;2^{g}g^{\,C_0+9}\;\le\;(d+2)^{C_0}\bigl(C_0\log(d+2)\bigr)^{C_0+9}
+  \;\le\;2\,d^{\,C_0+1}.
+\]
+This is~(ii).
+
+\step{The cycles of length at most $d$.} Let $Q_1,\dots,Q_n$ be pairwise disjoint cycles of
+length at most $d$ in $G-P$, and put $X_i=V(Q_i)$. Every vertex of $Q_i$ lies on exactly one edge
+outside $Q_i$, and $Q_i$ has at least $D_*$ vertices. So $X_i$ is a cyclic region with at most
+$d$ boundary edges and at least $D_*$ vertices. Let $E_i$ be the event that $\cO_{X_i}$ holds and
+$\xi\cap E(G[X_i])\ne\emptyset$. Put $p_i=\PP(E_i)$, let $Z$ be the number of the events $E_i$
+that occur, and put $\mu=\EE Z$. By Section~\ref{sec:used}(a), $p_i\ge2^{-d-1}$ and
+$\PP(E_i\cap E_j)=2^{\ell(X_i,X_j)-1}p_ip_j$ for $i\ne j$, and for each $i$ at most $d$ indices
+$j$ have $\ell(X_i,X_j)\ge3$. Let $W_2$ be the sum of $p_ip_j$ over the ordered pairs $(i,j)$ with
+$\ell(X_i,X_j)=2$. Then $\EE Z^{2}\le\mu^{2}+W_2+(d+1)\mu$: a pair with at most one link gives at
+most $p_ip_j$, a pair with two links gives $2p_ip_j$, a pair with three or more links gives at
+most $p_i$, and the terms with $i=j$ give $\mu$. If $\xi\cap E(G-P)$ is a forest, then no event
+$E_i$ occurs, and $Z=0$.
+
+So Proposition~\ref{prop:heavy} applies to the sets $X_i$ with the weights $p_i$, and with
+$\Lambda=d$, $m=D_*$, $\kappa=1$ and $K=d+1$; property~(b) holds because the sets are pairwise
+disjoint and $p_i\le1$. We have $\lceil2C_1d^{5}/D_*\rceil+1\le C_1d^{5}$, because $D_*\ge7$, and
+$d+3\le d^{\,C_0+1}$. With~(ii),
+\[
+  \mu\;\le\;\tfrac32(d+1)+3d\,\bigl(d+3+2\,d^{\,C_0+1}\bigr)\,C_1d^{5}\;\le\;10\,C_1\,d^{\,C_0+7}.
+\]
+Hence $n\le2^{d+1}\mu\le20\,C_1\,2^{d}d^{\,C_0+7}\le2^{d}d^{\,C_0+9}$, by~\eqref{eq:dstar}. This
+is~(i).
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:half}}\label{sec:firstproof}
+
+Let $G$ and $P$ be as in the theorem, with the number $D_*$ of~\eqref{eq:dstar}, and suppose that
+$q(G,P)\ge\frac25$. We derive a contradiction when $r$ is large. All limits are for
+$r\to\infty$, and they are uniform in $G$ and $P$. Put
+\[
+  x=\log r,\qquad A=6\,e^{124},\qquad L=\lfloor Ax\rfloor,\qquad D=\lceil x/16\rceil .
+\]
+
+\step{Cycles of moderate length.} Let $S$ be the union of the vertex sets of a maximal family of
+pairwise disjoint cycles of length at most $D$ in $G-P$. By
+Proposition~\ref{prop:packing}(i), $|S|\le2^{D}D^{\,C_0+10}\le r/x^{2}$ for large $r$. We use
+\M{Proposition~3.5} for $G$, $P$, $D$, $L$ and $S$. Its hypotheses hold for large $r$: the set
+$P$ has at most $3x$ vertices and $G[P]$ is connected, $x/16\le D\le x/8$, and
+$7x\le L\le x\sqrt{\log x}$. So we are in the setting of Section~\ref{sec:used}(b), with
+$U=P\cup S$ and $J=G-U$. With $\eta=r^{-1/60}$ the proposition gives
+\[
+  L^{2}2^{-s}\le\eta,\qquad \mu\;\ge\;\frac14\ln\frac{L}{6x}-\frac1{\sqrt x}\;>\;30,\qquad
+  \EE Z^{2}\;\le\;\mu^{2}+W_2+(1+\eta)\mu .
+\]
+The bound $\mu>30$ holds because $L/(6x)\ge e^{124}-1$.
+
+\step{The contradiction.} We apply Proposition~\ref{prop:heavy} to the vertex sets of the cycles
+of $\mathcal C$, with the weights $a_C$, and with $\Lambda=L$, $m=x/16$, $\kappa=\eta$ and
+$K=1+\eta$. A cycle $C\in\mathcal C$ has at most $L$ vertices, each of them has one edge end
+outside $C$, and the girth of $J$ is greater than $D\ge x/16$. So $V(C)$ has at most $L$ boundary
+edges and at least $x/16$ vertices; this is~(a). A cycle of $\mathcal C$ that meets $C$ passes
+through one of the at most $L$ vertices of $C$, so~(b) holds by~\eqref{eq:load}. If
+$\xi\cap E(G-P)$ is a forest, then $\xi$ contains no cycle of $J$, and $Z=0$; this is~(c). By
+Proposition~\ref{prop:packing}(ii), $\nu_L(G,P)\le2L^{C_0+1}$. So
+\[
+  \mu\;\le\;\tfrac32(1+\eta)+3L\eta\,\bigl(L+2L^{C_0+1}+3\bigr)
+  \bigl(\lceil32C_1L^{5}/x\rceil+1\bigr)\;=\;\tfrac32+o(1),
+\]
+because $L\le Ax$ and $\eta=r^{-1/60}$. This contradicts $\mu>30$, and
+Theorem~\ref{thm:half} is proved. \qed
+
+\section{What the first proof replaces}\label{sec:replaces}
+
+\begin{center}
+\small
+\begin{tabular}{@{}p{7.1cm}p{7.1cm}@{}}
+\toprule
+In [M] & In the first proof\\
+\midrule
+Lemmas 8.2, 8.3, 8.4 and 8.6 & No change.\\\addlinespace
+Proposition 8.5 (a long chain): a set $U$ such that $G-U$ has girth at least $D$; it discards the
+blocks that meet $U\sm P$; the conclusion is for $q(G,U)$ &
+Proposition~\ref{prop:chain}: no set $U$ and no number $D$; it discards the blocks that contain
+a short cycle; the conclusion is for $q(G,P)$.\\\addlinespace
+The step ``A chain'' in the proof of Proposition 8.7, and the paragraphs ``Pairs with two
+links'', ``The chain'' and ``The contradiction'' of Section 8.4. This is one argument, written two
+times &
+Proposition~\ref{prop:heavy} (heavy families), used two times.\\\addlinespace
+Proposition 8.7 (packing): a deleted set $S$, girth at least $D$ outside $P\cup S$, regions with
+at most $d\le2D$ boundary edges, bound $C_2\,d^{6}(|S|+1)2^{d}$ &
+Proposition~\ref{prop:packing}: no deleted set, every length $d\ge D_*$, bound
+$2^{d}d^{\,C_0+9}$, proof by induction on $d$.\\\addlinespace
+Theorem 8.8 (raising the girth): the sets $S_0\subseteq S_1\subseteq\cdots$ at the scales
+$2^{j}D_*$, with $\log(|S_j|+1)\le2D_j+C_3\log^{2}D_j$ & Removed.\\\addlinespace
+Section 8.4: the scales $D^{-}$ and $D^{+}$, the sets $S^{-}\subseteq S^{+}$, the
+estimate~(8.1) & One scale $D=\lceil x/16\rceil$ and one set $S$.\\\addlinespace
+The number $D_*$ with $D\ge C_0\log(2D+2)$ for $D\ge D_*$ & The number $D_*$
+of~\eqref{eq:dstar}. It is larger.\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{The size.} I applied the first proof to a copy of the paper and built the copy. The
+count is in lines of the text of the PDF file.
+\begin{center}
+\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+ & Now & First proof & Second proof (Section~\ref{sec:second})\\
+\midrule
+Section 8, typeset lines & 271 & 259 & 289\\
+The paper, typeset lines & 1624 & 1615 & 1644\\
+The paper, pages & 42 & 42 & 42\\
+Numbered statements in Section 8 & 8 & 8 & 9\\
+\bottomrule
+\end{tabular}
+\end{center}
+So the first proof is shorter by 12 lines in Section~8. The paper as a whole is shorter by 9
+lines, because Section~1 must say that the formal proof raises the girth in stages. This is not a
+large change of the length. The change is in the structure: the deleted sets, the two scales and
+Theorem~8.8 are no longer in the proof, and the chain argument is written one time.
+
+\paragraph{Remarks.}
+\begin{itemize}[leftmargin=1.2em]
+\item The new packing bound is better. Theorem~8.8 gives about
+$2^{2D}D^{\,C_3\log D}$ vertices in the deleted set of the scale $D$.
+Proposition~\ref{prop:packing} gives $2^{D}D^{\,C_0+10}$.
+\item The number $D_*$ is larger than before, because~\eqref{eq:dstar} contains the constant
+$C_1$. It is an absolute constant, and \M{Theorem~7.1} holds for every fixed bound of the girth.
+So the proof of the main theorem of~[M] does not change.
+\item The formal proof follows the present Section~8. If the manuscript takes a new proof,
+Section~1.4 of~[M] must say that the formal proof of Theorem~8.1 uses another method. The table
+in the two copies has this sentence.
+\item Proposition~\ref{prop:chain} is used one time, in Proposition~\ref{prop:heavy}, and
+\M{Lemma~8.6} is used one time. I did not merge them, because this does not make the proof
+shorter.
+\end{itemize}
+
+\section{The second proof: pieces at a fixed girth}\label{sec:second}
+
+The first proof has an induction, because \M{Lemma~8.2} needs a girth of about
+$C_0\log\Lambda$ for $2\Lambda$ boundary vertices. This section proves the lemma at a fixed
+girth. The induction is then in the proof of this lemma, and the other statements have no packing
+number.
+
+\subsection{Joins}\label{sec:joins}
+
+Let $N$ be a connected subcubic multigraph. Its \emph{boundary vertices} are the vertices of
+degree less than three. Let $T$ be an even set of boundary vertices. A \emph{$T$-join} is a set of
+edges in which exactly the vertices of $T$ have odd degree. There are $2^{\beta(N)}$ of them, and
+the \emph{forest proportion} of $T$ is the proportion of the $T$-joins that are forests. A
+region $A$ of $N$ is \emph{$T$-free} if it contains no vertex of $T$ and every component of $N-A$
+contains an even number of vertices of $T$.
+
+\begin{lemma}[Free regions]\label{lem:free}
+Let $J$ be a uniformly random $T$-join of $N$. For a region $A$ let $E_A$ be the event that
+$J\cap\delta A=\emptyset$ and $J\cap E(N[A])\ne\emptyset$.
+\begin{enumerate}
+\item[\textup{(i)}] Let $A$ be a region without a vertex of $T$. Some $T$-join avoids $\delta A$
+if and only if $A$ is $T$-free.
+\item[\textup{(ii)}] If $A$ is $T$-free, then $E_A$ has the same probability as for a uniformly
+random even subgraph of $N$.
+\item[\textup{(iii)}] If $A$ and $B$ are disjoint $T$-free regions, then $E_A\cap E_B$ is empty,
+or it has the same probability as for a uniformly random even subgraph of $N$.
+\end{enumerate}
+So the bound of Section~\ref{sec:used}(a) holds for $J$ and pairwise disjoint $T$-free cyclic
+regions: if there are $n$ of them, each with at most $d$ boundary edges, then the forest
+proportion of $T$ is at most $\half+(d+1)2^{d-1}/n$.
+\end{lemma}
+
+\begin{proof}
+(i) A $T$-join that avoids $\delta A$ has an even number of vertices of odd degree in each
+component of $N-A$. In the other direction, each component $K$ of $N-A$ is connected and has a
+$(T\cap K)$-join if $|T\cap K|$ is even. The union of these joins is a $T$-join $F$ without an
+edge that has an end in $A$.
+
+(ii) The map $J\mapsto J+F$ is a bijection from the $T$-joins to the even subgraphs of $N$, and
+it keeps the edges that have an end in $A$. The event $E_A$ depends on these edges only.
+
+(iii) Suppose that some $T$-join is in $E_A\cap E_B$. Delete its edges in $N[A]$ and in $N[B]$.
+These form even subgraphs, so the result is a $T$-join $F'$ without an edge that has an end in
+$A\cup B$. Use the map $J\mapsto J+F'$.
+
+For the last statement, the proof of \M{Lemma~2.4} uses the probabilities of the events $E_i$ and
+upper bounds for the probabilities of the events $E_i\cap E_j$. By (ii) and (iii) these hold
+for~$J$. If $J$ is a forest, then no event $E_i$ occurs.
+\end{proof}
+
+\begin{lemma}[Product, for joins]\label{lem:product}
+Let $N$ be a multigraph, and let $P$ and $T$ be sets of vertices such that $N$ has a $T$-join. Let
+$U_1,\ldots,U_m\subseteq V(N)\sm(P\cup T)$ be pairwise disjoint sets of vertices of degree three
+such that each $N[U_i]$ is connected. Suppose that in each $N[U_i]$ every even set of boundary
+vertices has forest proportion at most $\frac35$. Then $J\cap E(N-P)$ is a forest for at most the
+proportion $(3/5)^m$ of the $T$-joins $J$ of $N$.
+\end{lemma}
+
+For a cubic multigraph $G$ and $T=\emptyset$ this is \M{Lemma~8.3}. The proof is the proof of
+that lemma.
+
+\begin{proof}
+Let $E'$ consist of the edges that lie in none of the graphs $N[U_i]$, and let $J$ be a uniformly
+random $T$-join. Fix a set $x\subseteq E'$ that extends to a $T$-join. For each $i$, let $T_i$ be
+the set of the vertices of $U_i$ that are incident with an odd number of edges of $x$. The set
+$U_i$ avoids $T$, so the parity equations say that $J\cap E(N[U_i])$ is a $T_i$-join. These
+equations involve disjoint sets of edges, so the joins are independent and uniform, conditional on
+$J\cap E'=x$. A vertex of degree three in $N[U_i]$ has no incident edge in $E'$. So $T_i$ is an
+even set of boundary vertices. If $J\cap E(N-P)$ is a forest, its restriction to every $N[U_i]$
+is a forest. The conditional probability is therefore at most $(3/5)^m$. Average over $x$.
+\end{proof}
+
+\subsection{The lemma on pieces}
+
+Let $B$ be the absolute constant of \M{Section~8.1}: each layer in the conclusion of
+\M{Lemma~4.1} with $\delta=\frac1{20}$, together with at most $k$ marked vertices, has fewer than
+$B(k+1)^{2}$ vertices. For $k\ge1$ let $s_k$ be the least integer with
+$2^{s_k}>(2s_k+1)B(k+1)^{2}$. Then $2^{s_k}\le2(2s_k+1)B(k+1)^{2}$, the numbers $s_k$ do not
+decrease, and $s_k=O(\log k)$.
+
+\begin{lemma}[Pieces with few short cycles]\label{lem:few}
+Let $k\ge2$, and let $N$ be a connected subcubic multigraph with at least two and at most $k$
+boundary vertices. Put $s=s_k$. Let $\mathcal D$ be a maximal family of pairwise disjoint cycles
+of length at most $2s$ in $N$, and let $t$ be their number. If $N$ has more than
+$3\cdot2^{s}(k+2s\,t)$ vertices, then every set of boundary vertices of even size
+has forest proportion less than $\frac35$.
+\end{lemma}
+
+The lemma has no hypothesis on the girth. For $t=0$ it is \M{Lemma~8.2}: there
+$k=2\Lambda$, the girth is greater than $2s$, and $C_1\Lambda^{4}>6\Lambda\,2^{s}$.
+
+\begin{proof}
+Fix a boundary vertex $o$, and call the set of the vertices at distance $j$ from $o$ the
+\emph{layer} $j$.
+
+\step{A large layer.} A ball of radius $s$ has at most $3\cdot2^{s}$ vertices. So some vertex $w$
+has distance more than $s$ from every boundary vertex and from every vertex of a cycle of
+$\mathcal D$. Let $W$ be the set of the vertices within distance $s$ of $w$. They have degree
+three. Take a breadth-first tree from $w$. Suppose that some vertex at distance less than $s$
+from $w$ has fewer than two children in this tree, or that $w$ has fewer than three. Then
+$N[W]$ contains a cycle of length at most $2s$. By the maximality of $\mathcal D$, this cycle
+meets a cycle of $\mathcal D$, and this contradicts the choice of $w$. So $|W|\ge2^{s}$. The
+distances from $o$ to two vertices of $W$ differ by at most
+$2s$. So $W$ meets at most $2s+1$ layers, and some layer has at least
+$2^{s}/(2s+1)>B(k+1)^{2}$ vertices.
+
+\step{A marker.} This step is the second step of the proof of \M{Lemma~8.2}. Suppose that some
+set $T$ of boundary vertices has forest proportion at least $\frac35$. Take a breadth-first tree
+of $N$ from $o$, and let $P$ be the union of its paths from $o$ to the other boundary vertices.
+Then $N[P]$ is connected, every vertex outside $P$ has degree three, and $P$ has at most $k$
+vertices in each layer. The tree paths inside $P$ contain a $T$-join $F_0$. The map
+$J\mapsto J+F_0$ is a bijection from the $T$-joins of $N$ to the even subgraphs of $N$, and
+$J+F_0$ has the same edges in $N-P$ as $J$. So if $J$ is a forest, then $J+F_0$ is a forest in
+$N-P$. Hence $q(N,P)\ge\frac35>\half+\frac1{20}$. The distance from $o$ is a level function. By
+\M{Lemma~4.1}, each layer has fewer than $B(k+1)^{2}$ vertices. This contradicts the first step.
+\end{proof}
+
+\begin{theorem}[Pieces at a fixed girth]\label{thm:pieces}
+There are an integer $D_*\ge7$ and an absolute constant $C_1\ge2$ with the following property. Let
+$k\ge1$, and let $N$ be a connected subcubic multigraph of girth at least $D_*$ with at most $k$
+boundary vertices and at least $C_1k^{7}$ vertices. Then every set of boundary vertices of even
+size has forest proportion less than $\frac35$.
+\end{theorem}
+
+\begin{proof}
+Fix $k_0$ such that $4s_k<k$ for all $k\ge k_0$, and put $D_*=2s_{k_0}+1$. We define numbers
+$F(k)\ge2$ below, and we prove the theorem with $F(k)$ in the place of $C_1k^{7}$, by induction
+on $k$.
+
+Let $N$ and $k$ be as in the theorem, with at least $F(k)$ vertices, and put $s=s_k$. If $N$ has
+at most one boundary vertex, the only set is the empty one. Then $N$ contains a cycle, because it
+has at least two vertices, and the forest proportion is at most $\half$. So let $N$ have at least
+two boundary vertices, and let $\mathcal D$ and $t$ be as in Lemma~\ref{lem:few}.
+
+\step{The base.} Let $k<k_0$. Then $2s<D_*$, so $t=0$. By Lemma~\ref{lem:few} the theorem
+holds with $F(k)=3\cdot2^{s}k+1$.
+
+\step{The numbers.} Let $k\ge k_0$, and put $k'=4s$. Then $k'<k$. Put
+\begin{gather*}
+  w=\lceil k'F(k')/D_*\rceil+1,\qquad n_1=5(2s+1)\,2^{2s},\qquad n_2=k^{2}(k+2)\,w,\\
+  F(k)=3\cdot2^{s}\bigl(k+2s\,(k+n_1+n_2+2)\bigr)+1 .
+\end{gather*}
+If $t<k+n_1+n_2+2$, the claim holds by Lemma~\ref{lem:few}. So let $t\ge k+n_1+n_2+2$, and let
+$T$ be an even set of boundary vertices. At most $k$ cycles of $\mathcal D$ contain a boundary
+vertex. Each of the other cycles $Q$ has at most $2s$ boundary edges, and $V(Q)$ contains no
+vertex of $T$. Call $Q$ \emph{free} if $V(Q)$ is $T$-free. So more than $n_1$ cycles are free, or
+more than $n_2$ cycles are not free.
+
+\step{More than $n_1$ free cycles.} By Lemma~\ref{lem:free} with $d=2s$, the forest proportion
+of $T$ is less than $\half+(2s+1)\,2^{2s-1}/n_1=\frac35$.
+
+\step{More than $n_2$ cycles that are not free.} Let $Q$ be one of them. Some component of
+$N-V(Q)$ contains an odd number of vertices of $T$. The set $T$ is even and avoids $Q$. So $T$ has
+a vertex $a$ in this component and a vertex $b$ in another component, and $V(Q)$ separates $a$
+from $b$. There are fewer than $k^{2}$ pairs $a,b$. So more than $(k+2)w$ of these cycles
+separate the same two vertices $a$ and $b$. By \M{Lemma~8.4} their vertex sets are linearly
+ordered, and Lemma~\ref{lem:blocks} for $N$, $a$ and $b$ gives $k+2$ pairwise disjoint sets $Y_l$.
+At most $k$ of them contain a boundary vertex of $N$. Let $Y_1$ and $Y_2$ be two of the others,
+and let $i\in\{1,2\}$. The set $Y_i$ contains $w-1$ of the cycles, and each cycle has at least
+$D_*$ vertices. So $|Y_i|\ge(w-1)D_*\ge k'F(k')$. At most $2\cdot2s=k'$ edges leave $Y_i$, and
+every component of $N[Y_i]$ has such an edge, because $b\notin Y_i$. So some component has a
+vertex set $Y_i'$ with at least $F(k')$ vertices. The vertices of $Y_i$ have degree three in $N$,
+so $N[Y_i']$ has at most $k'$ boundary vertices. By induction, every even set of boundary
+vertices of $N[Y_i']$ has forest proportion less than $\frac35$. Lemma~\ref{lem:product}, for
+$N$, $T$, $P=\emptyset$ and the disjoint sets $Y_1'$ and $Y_2'$, shows that the forest
+proportion of $T$ is at most $\frac9{25}$.
+
+\step{The size of $F$.} We have $2^{s}=O(k^{2}\log k)$ and $s=O(\log k)$. So $n_1=O(k^{4}\log^{3}k)$
+and $n_2=O\bigl(k^{3}\log k\cdot F(4s_k)\bigr)$, and the definition gives
+$F(k)=O\bigl(k^{6}\log^{5}k+k^{5}\log^{3}k\cdot F(4s_k)\bigr)$. Hence $F(k)\le C_1k^{7}$ for an
+absolute constant $C_1$, by induction on $k$.
+\end{proof}
+
+\begin{corollary}[Two regions]\label{cor:two}
+Let $G$ be a cubic multigraph, and let $P$ be a set of vertices such that $G-P$ has girth at least
+$D_*$. Suppose that $V(G)\sm P$ contains two disjoint sets $Y_1,Y_2$ and that, for some
+$k_1,k_2\ge1$, each $G[Y_i]$ is connected, $|\delta Y_i|\le k_i$ and $|Y_i|\ge C_1k_i^{7}$. Then
+$q(G,P)\le\frac9{25}$.
+\end{corollary}
+
+\begin{proof}
+The multigraph $G[Y_i]$ has at most $k_i$ boundary vertices and girth at least $D_*$. Use
+Theorem~\ref{thm:pieces} and Lemma~\ref{lem:product} with $T=\emptyset$.
+\end{proof}
+
+\subsection{Section 8 in the second form}\label{sec:secondform}
+
+Let $D_*$ and $C_1$ be as in Theorem~\ref{thm:pieces}. The statements of
+Section~\ref{sec:first} change as follows. In each of them, $G-P$ has girth at least $D_*$.
+\begin{itemize}[leftmargin=1.2em]
+\item \emph{A long chain.} For an integer $\Lambda\ge1$: if
+$T>(\Lambda+2)\bigl(\lceil2^{8}C_1\Lambda^{8}/m\rceil+1\bigr)$, then $q(G,P)\le\frac9{25}$. In
+the proof, put $w=\lceil2^{8}C_1\Lambda^{8}/m\rceil+1$. The only sets $Y_l$ to discard are the at
+most $\Lambda$ sets that contain a vertex with a neighbour in $A$. A set $Y$ that remains has
+$|\delta Y|\le2\Lambda$ and $|Y|\ge(w-1)m\ge2\Lambda\cdot C_1(2\Lambda)^{7}$. So a component of
+$G[Y]$ has at least $C_1(2\Lambda)^{7}$ vertices, and Corollary~\ref{cor:two} applies with
+$k_1=k_2=2\Lambda$.
+\item \emph{Heavy families.} The bound is
+$\mu\le\tfrac32K+3\Lambda\kappa\,(\Lambda+3)\bigl(\lceil2^{8}C_1\Lambda^{8}/m\rceil+1\bigr)$.
+The proof does not change.
+\item \emph{Packing.} For every integer $d\ge D_*$, the multigraph $G-P$ has at most
+$2^{10}C_1\,2^{d}d^{10}$ pairwise disjoint cycles of length at most $d$. The proof is the second
+step of the proof of Proposition~\ref{prop:packing}, and there is no induction: with
+$\Lambda=d$, $m=D_*$, $\kappa=1$ and $K=d+1$,
+\[
+  \mu\;\le\;\tfrac32(d+1)+3d\,(d+3)\bigl(\lceil2^{8}C_1d^{8}/D_*\rceil+1\bigr)\;\le\;2^{9}C_1\,d^{10},
+  \qquad n\le2^{d+1}\mu .
+\]
+\item \emph{The proof of the theorem.} Now $|S|\le2^{10}C_1\,2^{D}D^{11}\le r/x^{2}$, and the last
+display is
+$\mu\le\tfrac32(1+\eta)+3L\eta\,(L+3)\bigl(\lceil2^{12}C_1L^{8}/x\rceil+1\bigr)=\tfrac32+o(1)$.
+\end{itemize}
+In this form the numbers $\nu_\Lambda$, the condition~\eqref{eq:dstar}, and part~(ii) of
+Proposition~\ref{prop:packing} do not exist. The price is the longer proof of
+Theorem~\ref{thm:pieces}, and the section is longer by 18 lines than it is now
+(Section~\ref{sec:replaces}).
+
+\section{The questions of the task}\label{sec:answers}
+
+\subsection{Priority 1: one family of short cycles at one scale}
+
+\emph{(1) Is there a direct bound for the number of vertices that we remove?} Yes.
+Proposition~\ref{prop:packing} gives $|S|\le2^{D}D^{\,C_0+10}$ from $q(G,P)\ge\frac25$ and the
+girth $D_*$, for one maximal family at the scale $D$. In the first proof, ``direct'' has one
+restriction: the bound for the length $d$ uses the bound for the length $C_0\log(d+2)$. In the
+second proof the packing bound has no induction.
+
+\emph{(2) Do the pairs of removed short cycles with two links give the long chain?} Yes. This is
+the proof of Proposition~\ref{prop:packing}: the family of the short cycles is a family for
+Proposition~\ref{prop:heavy}. The proof of \M{Proposition~8.7} already has this idea. The new
+point is that no deleted set is necessary for the girth of the blocks.
+
+\emph{(3) Can we use the separators before the logarithmic girth is known?} Yes.
+Proposition~\ref{prop:heavy} has no hypothesis on the girth of the family. The girth is in two
+places only: in the number $\nu_\Lambda(G,P)$ of the blocks that we discard, and in
+\M{Proposition~3.5}, which controls the second moment of the cycles of moderate length.
+
+\emph{(4) Where does the present argument need two scales, and is this necessary?}
+Section~\ref{sec:present} gives the place: Proposition~8.5 takes the girth of a block from a
+deleted set, and the deleted set of the scale $x/16$ has more vertices than the chain has members.
+It is not necessary. A block needs no short cycle \emph{inside} it, and the number of the blocks
+with a short cycle is at most $\nu_L(G,P)=(\log r)^{O(1)}$.
+
+\subsection{Priority 2: one structural lemma}
+
+The task asks for a lemma of this form: either the forest probability is below $\frac25$, or the
+graph contains two large disjoint regions with small boundaries. Proposition~\ref{prop:heavy}
+with Corollary~\ref{cor:two} is this lemma. Suppose that a family has the properties~(a), (b)
+and~(c) and that its weight is above the bound. Then
+\begin{itemize}[leftmargin=1.2em]
+\item the pairs with two links have weight $W_2<\frac23\mu^{2}-K\mu$, and
+$q(G,P)<\frac25$ by the second moment; or
+\item $V(G)\sm P$ contains two disjoint connected sets with at most $2\Lambda$ boundary edges and
+at least $C_1(2\Lambda)^{7}$ vertices, and $q(G,P)\le\frac9{25}$ by Corollary~\ref{cor:two}.
+\end{itemize}
+The regions come from the pairs with two links, through \M{Lemma~8.6} and
+Lemma~\ref{lem:blocks}. No packing bound is used.
+
+The parts of this lemma are not all new. The second moment, \M{Lemma~8.6} and the blocks are
+in~[M]. Three points are new: the statement for a general weighted family, which serves the short
+cycles and the cycles of moderate length; the count of the blocks with a short cycle in the place
+of a deleted set (first proof); and Theorem~\ref{thm:pieces}, which removes the condition on the
+girth of the regions (second proof).
+
+\subsection{Priority 3: the hypotheses of the final application}\label{sec:p3}
+
+In Case~5 of \M{Section~9}, $G$ has no cyclic cut of size at most four, its girth is at least
+$D_*$, and $P$ is a connected set of eight vertices. The task asks if these hypotheses exclude the
+pairs with two links. They do not.
+
+\begin{lemma}[Necklaces]\label{lem:necklace}
+Let $R$ be a bipartite cubic graph with $n\ge10$ vertices and a Hamiltonian cycle
+$v_0v_1\cdots v_{n-1}$, and let $M\ge4$. Let $G_M$ be the graph on the vertices $(v_a,i)$ with
+$i\in\mathbb Z_M$ that has the edges $(v_a,i)(v_{a+1},i)$ and, for each chord $v_av_b$ of the
+Hamiltonian cycle with $a$ even, the edges $(v_a,i)(v_b,i+1)$. The \emph{ring} $Z_i$ is the cycle
+on the vertices $(v_a,i)$. Then
+\begin{enumerate}
+\item[\textup{(i)}] $G_M$ is a connected cubic graph, and its girth is at least the girth of $R$;
+\item[\textup{(ii)}] $G_M$ has no cyclic cut of size at most four;
+\item[\textup{(iii)}] two rings that are not consecutive have exactly two links.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(i) The map $(v_a,i)\mapsto v_a$ is a covering map from $G_M$ to $R$. So a cycle of $G_M$ maps to
+a closed walk of $R$ without an immediate return, and such a walk has at least as many edges as a
+shortest cycle of $R$.
+
+(ii) Each vertex is on one edge outside its ring. For a vertex $(v_a,i)$ with $a$ even this edge
+goes to $Z_{i+1}$, and for $a$ odd it goes to $Z_{i-1}$. So $n/2\ge5$ edges join two consecutive
+rings, and a ring is an induced cycle. Let $X$ be a set of vertices with $|\delta X|\le4$ such
+that $X$ and its complement are not empty. We show that $G[X]$ or $G-X$ has no cycle. Call a ring
+\emph{split} if it has vertices on both sides. A cut contains an even number of edges of a cycle.
+So $\delta X$ contains at least two edges of a split ring, and at most two rings are split. Two
+consecutive rings that are not split are on the same side.
+
+If no ring is split, all rings are on one side. This is not possible. If one ring is split, the
+other rings are consecutive, so they are on one side. The other side is a proper subset of a
+ring, and it induces no cycle. Let two rings be split. Then $\delta X$ contains two edges of
+each of them and no edge between two rings. Suppose that the split rings are not consecutive,
+and let $Z_j$ be one of them. Its vertices with $a$ even are on the side of $Z_{j+1}$, and its
+vertices with $a$ odd are on the side of $Z_{j-1}$. If these sides are equal, $Z_j$ is not split.
+If they differ, all edges of $Z_j$ are in $\delta X$. Both cases are not possible. So the split
+rings are $Z_j$ and $Z_{j+1}$. The other rings are consecutive and on one side. Let $Y$ be the
+other side. A vertex of $Z_j$ with $a$ odd has an edge to $Z_{j-1}$, and this edge is not in $\delta X$.
+So the vertices of $Y$ in $Z_j$ have $a$ even. They are consecutive on $Z_j$, because $\delta X$
+contains two edges of $Z_j$. So there is one of them. In the same way, with the edges to
+$Z_{j+2}$, the set $Y$ has one vertex in $Z_{j+1}$. So $|Y|=2$, and $Y$ induces no cycle.
+
+(iii) Without two rings that are not consecutive, the graph has two components. Each of them is
+joined to the two rings, and no edge joins the two rings.
+\end{proof}
+
+The Heawood graph ($n=14$, girth $6$) and the Tutte--Coxeter graph ($n=30$, girth $8$) are
+bipartite, cubic and Hamiltonian. For every $g$ there is such a graph $R$ of girth at least $g$.
+For example, take a cover of $R$ with the group $\mathbb Z_k$ in which one edge of the Hamiltonian
+cycle has the voltage $1$ and the chords have the voltages $(2g)^{1},(2g)^{2},\dots$, for a large
+$k$. The cover is bipartite and cubic, and the Hamiltonian cycle lifts to a Hamiltonian cycle. A
+cycle of the cover with fewer than $g$ edges maps to a closed walk of $R$ whose voltages add up
+to zero. For a large $k$ this is possible only if the walk uses each of these edges the same
+number of times in the two directions. A shortest cycle of $R$ is not such a walk,
+because it uses a chord one time, or it is the Hamiltonian cycle. So the girth increases, and we
+repeat the step.
+
+So there are cubic graphs of every girth, without a cyclic cut of size at most four, that contain
+$M$ pairwise disjoint cycles of one length $n$ in which all pairs that are not consecutive have
+exactly two links. For the family of these $M$ rings, with equal weights, $W_2=(1-3/M)\mu^{2}$.
+The second moment of this family gives no bound below $\half$. For $M>2^{16n}$ the rings are
+cycles of length less than $(\log r)/16$, so they are short cycles at the scale of the proof. The
+theorem holds for these graphs. But a proof must find the two pieces between the rings, and the
+hypotheses do not remove this case. The reason is that the hypothesis is on cuts of size at most
+four, and the regions of the proof have at least $D_*\ge7$ boundary edges.
+
+Two more remarks on the final application.
+\begin{itemize}[leftmargin=1.2em]
+\item Case~5 needs less than $q(G,P)<\frac25$. For a connected set $P$ of $p$ vertices the
+argument of \M{Section~9} gives $c(G)\le\bigl(q(G,P)+2^{-1-p/2}\bigr)2^{r}$. So a bound
+$q(G,P)\le\half-\varepsilon$, for one fixed $\varepsilon>0$ and connected sets of a fixed size, is
+sufficient. I found no simpler proof for a weaker constant: one piece gives no bound below
+$\half$, and two pieces give $\frac9{25}$.
+\item The proofs of this note use the set $P$ in two ways only: it contains the vertex $p$, and
+the regions avoid it. The size of $P$ is used in \M{Proposition~3.5} only.
+\end{itemize}
+
+\section{What stays, and why}\label{sec:stays}
+
+\paragraph{The packing bound stays.} Proposition~8.7 of~[M] is not removed; it has a shorter
+statement and no deleted set. It cannot be removed in this method. The second moment of
+\M{Proposition~3.5} needs a graph $J$ of girth about $(\log r)/16$: the number of the links of two
+cycles of length about $\log r$ is controlled by the girth (Step~2 of that proof). And the weight
+of the cycles of $J$ is large only if few edges join $J$ to the deleted set (\M{Lemma~3.4} needs
+$L\,d_J/v=o(1)$). So the case of many disjoint short cycles is a separate case, and the packing
+bound is this case.
+
+\paragraph{An induction over scales stays.} There are three facts.
+\begin{enumerate}[leftmargin=1.6em]
+\item The second moment alone gives the bound $\half$ and no more, because two regions with two
+links have a correlation of two. A bound below $\half$ needs two pieces.
+\item A piece needs a large layer. In the proof of \M{Lemma~8.2} the layer comes from a ball
+that is a tree, of radius about $2\log k$ for $k$ boundary vertices. So a block with a boundary
+of size $k$ must be free of cycles of length about $4\log k$, or we must count such blocks.
+\item \M{Theorem~7.1} treats the graphs with a cycle shorter than a fixed number. Its error terms
+come from the forest estimate with $\varepsilon=2^{-g-2}$. So it cannot treat a girth that grows
+with $r$.
+\end{enumerate}
+The girth of the hypothesis is the constant $D_*$, and the final step needs blocks without cycles
+of length about $C_0\log\log r$. An argument must pass from the one to the other. In~[M] it is the
+sequence of the scales $2^{j}D_*$, with about $\log\log r$ steps and nested deleted sets. In the
+first proof it is the induction $d\mapsto C_0\log(d+2)$ in Proposition~\ref{prop:packing}, with
+about $\log^{*}r$ steps and no deleted set. In the second proof it is the induction
+$k\mapsto4s_k$ in Theorem~\ref{thm:pieces}. I found no proof without such an induction.
+
+\paragraph{The factor two is a parity.} The script \texttt{checks/necklace\_parity.py} examines
+a necklace of $M$ rings of length four, for $4\le M\le7$, by complete enumeration. Let the
+\emph{parity} of $\xi$ be the parity of its number of edges between two fixed consecutive rings.
+The parity is even with probability $\half$. If it is odd, no ring is a component of $\xi$. If it
+is even, each ring is a component with two times its probability without the condition, and for
+rings that are pairwise not consecutive the probability that none of them is a component is the
+product, as for independent events. This is a test on one family of graphs and not a theorem. It shows why the second moment stops at $\half$, and why the blocks of
+Theorem~\ref{thm:pieces} need another argument when the parity is odd: there the cycles of the
+chain are not free.
+
+\paragraph{The lemma on pieces is false for girth four.} In a ladder with $n$ rungs, let $T$
+consist of the two ends of one rail. Then every $T$-join is a path, for every $n$. So the forest
+proportion is $1$, and the ladder has four boundary vertices and any number of vertices
+(\texttt{checks/tjoin\_check.py} tests $n\le10$). In the proof of Theorem~\ref{thm:pieces} the
+ladder is the case of cycles that are not free, and the induction does not start: the cycles of
+length four have four boundary edges, and the pieces between them have four boundary vertices
+again. The proof of Theorem~\ref{thm:pieces} needs $D_*=2s_{k_0}+1$, which is more than $200$.
+
+\paragraph{An open question, and what it would remove.} I do not know the least girth for which
+Theorem~\ref{thm:pieces} holds. In its proof the girth is used in the base only, for pieces with
+fewer than $k_0$ boundary vertices. So the theorem holds at a smaller girth if it holds there for
+these pieces, with some bound for the number of vertices. The pieces of the application are
+induced subgraphs of a cubic multigraph without a cyclic cut of size at most four, and such a
+multigraph has girth at least five. Suppose that the base holds for these pieces at girth five.
+Then Theorem~\ref{thm:half} holds with $D_*=5$ in the final application, Case~4 of \M{Section~9}
+is empty, and \M{Section~7} with \M{Lemma~5.5} and \M{Corollary~5.6} is not necessary. For two
+boundary vertices, \M{Corollary~5.6} is a statement of this kind, with $\half+\varepsilon$ in the
+place of $\frac35$. For more boundary vertices I have no proof and no counterexample. This is a
+question and not a result.
+
+\paragraph{Approaches that failed.}
+\begin{itemize}[leftmargin=1.2em]
+\item \emph{A marker without layers.} If a small connected set contains all boundary vertices of
+a block, then \M{Theorem~3.1} gives a forest proportion of at most $\half+o(1)$ at once, with no
+hypothesis on the girth. For a block between two cycles $C_i$ and $C_j$ the set is the two cycles
+and a path between them. The obstruction is a long thin block: the path has almost as many
+vertices as the block. The ladder is the extreme case.
+\item \emph{A second moment in a block.} The cycles of the chain that lie in one block are
+pairwise disjoint, so their total weight is at most $\eta$. They give no bound.
+\item \emph{A chain that is longer than a trivial count.} The proof gives a chain of about
+$2^{s}/L^{3}$ members, and this is less than $r^{1/16}$ for a girth of at most $x/8$. Without a
+packing bound, the number of the disjoint short cycles has only a bound of order $r$. So we
+cannot count the blocks with a short cycle without a packing bound.
+\item \emph{A higher girth in \M{Theorem~7.1}.} See fact~3 above.
+\end{itemize}
+
+\section{Checks and files}\label{sec:checks}
+
+All files are in \texttt{paper/minimal/}.
+\begin{center}
+\small
+\begin{tabular}{@{}p{5.6cm}p{8.6cm}@{}}
+\toprule
+File & Content and result\\
+\midrule
+\texttt{research/apply\_one\_scale.py} & Applies the first proof to a copy of the paper
+(Sections~8 and~1). Each replacement must match one time. The copy builds: 42 pages, 1615
+lines, no undefined reference, no overfull line.\\\addlinespace
+\texttt{research/apply\_two\_regions.py} & Applies the second proof to a copy. The copy builds:
+42 pages, 1644 lines, no undefined reference, no overfull line.\\\addlinespace
+\texttt{research/trial-one-scale.pdf}\newline \texttt{research/trial-fixed-girth.pdf} &
+The two copies of the paper. Section~8 starts on page~34.\\\addlinespace
+\texttt{checks/tjoin\_check.py} & Lemma~\ref{lem:free}\,(i) and the probabilities of
+Lemma~\ref{lem:free} for one and two regions, on 300 random subcubic graphs with 8 to 13
+vertices; the ladders with 3 to 10 rungs. Exit code~0 for the seeds 1 and 7.\\\addlinespace
+\texttt{checks/tube\_cyclic\_cuts.py} & Lemma~\ref{lem:necklace} for the Heawood graph and
+$M=4,5$: girth~6, every set of at most four edges tested, two links between the rings~0 and~2.
+Exit code~0.\\\addlinespace
+\texttt{checks/necklace\_parity.py} & The parity statement of Section~\ref{sec:stays} for
+$4\le M\le7$. Exit code~0.\\
+\bottomrule
+\end{tabular}
+\end{center}
+The scripts test the statements on small graphs. They do not test the proofs of
+Sections~\ref{sec:first} and~\ref{sec:second}, whose constants are too large for a computer.
+
+\paragraph{The choice.} The first proof is the smaller change: \M{Lemma~8.2} stays, and the
+section is shorter. The second proof has the cleaner statements and the stronger lemma, and the
+section is longer. Each of them needs a decision by KNT before the manuscript changes, and each
+makes the text differ more from the formal proof. My recommendation is the first proof for the
+manuscript. Theorem~\ref{thm:pieces} then stays in this note; it is the start for the open
+question of Section~\ref{sec:stays}.
+
+\begin{thebibliography}{9}\small
+\bibitem[M]{M} KNT, Astra and Fable~5.2, \emph{The maximum number of cycles in a graph of large
+rank}, draft of 12 November 2026, 42 pages, file
+\texttt{paper/minimal/exact-maximum/exact-maximum.pdf}.
+\end{thebibliography}
+
+\end{document}

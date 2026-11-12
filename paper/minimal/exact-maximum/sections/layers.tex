@@ -1,19 +1,21 @@
 \section{Layers}\label{sec:layers}
 
-The later sections use Theorem~\ref{thm:forest} through Corollary~\ref{cor:cycles} and through
-one lemma.
+The later sections use Theorem~\ref{thm:forest} in two ways: by Corollary~\ref{cor:cycles}, and
+by the lemma of this section.
 
 \begin{idea}{the content of the lemma}
-If more than half of the outside parts are forests, by a fixed margin, then every distance layer
-around the marked set is small. In the other case a window of consecutive layers is a large set
+If the outside part is a forest for more than half of the even subgraphs, by a fixed margin, then
+every distance layer around the marked set is small. In the other case a window of consecutive layers is a large set
 with a small boundary, and the forest estimate applies inside this set. We use the lemma for
-paths in Section~\ref{sec:poles} and for large girth in Section~\ref{sec:half}.
+paths in Section~\ref{sec:poles} and for pieces in Section~\ref{sec:half}.
 \end{idea}
 
 Let $G$ be a multigraph and $P$ a set of vertices. A \emph{level function} is a map
 $\lambda\colon V(G)\to\mathbb{Z}$ such that $|\lambda(u)-\lambda(w)|\le1$ for every edge $uw$ that
-has an end outside $P$. The distance from a fixed vertex is a level function. For $\delta>0$ let
-$R_\delta$ be as in Proposition~\ref{prop:input}, and for an integer $k\ge1$ put
+has an end outside $P$. The distance from a fixed vertex is a level function. For
+$\delta\in(0,\half)$ let $R_\delta\ge2^{100}$ be an integer such that every $r\ge R_\delta$ is in
+the range of Theorem~\ref{thm:forest} and satisfies $20/\lgk3r\le\delta$. For an integer $k\ge1$
+put
 \[
   \Theta_\delta(k)=\max\bigl\{2R_\delta,\;2^{100}(k+1)^{2}\bigr\}.
 \]
@@ -26,6 +28,46 @@ suppose that $q(G,P)>\half+\delta$. Then, for every $j$, fewer than $\Theta_\del
 outside $P$ have level $j$.
 \end{lemma}
 
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  % the graph G
+  \draw[draw=slate!70, fill=black!4, line width=0.6pt] (0,0) ellipse [x radius=1.25, y radius=1.15];
+  \draw[draw=slate!70, fill=black!12, line width=0.6pt] (-0.4,0.15) ellipse [x radius=0.45, y radius=0.4];
+  \node[text=slate] at (-0.4,0.15) {\small$P$};
+  \node[note] at (0.15,-0.75) {$C_0$};
+  \draw[region] (4.0,0) ellipse [x radius=1.45, y radius=1.15];
+  \draw[accent, line width=0.5pt, dash pattern=on 2pt off 2pt] (4.4,0.1) ellipse [x radius=0.75, y radius=0.6];
+  \node[text=accent] at (4.4,0.1) {$X$};
+  \node[note, text=accent] at (4.0,-0.85) {$X^{+}$};
+  \foreach \y in {0.6,0.2,-0.2,-0.6}{
+    \draw[edge] (1.05,\y) -- (2.8,\y);
+    \node[vtx] at (1.05,\y) {};
+    \node[vtx] at (2.8,\y) {};}
+  \node[note] at (1.95,-1.6) {the graph $G$};
+  % the multigraph Gamma
+  \begin{scope}[xshift=8.3cm]
+    \draw[hot] (0.5,0) ellipse [x radius=0.33, y radius=0.85];
+    \draw[region] (3.7,0) ellipse [x radius=1.45, y radius=1.15];
+    \draw[accent, line width=0.5pt, dash pattern=on 2pt off 2pt] (4.1,0.1) ellipse [x radius=0.75, y radius=0.6];
+    \node[text=accent] at (4.1,0.1) {$X$};
+    \node[note, text=accent] at (3.7,-0.85) {$X^{+}$};
+    \foreach \y/\x in {0.6/0.73,0.2/0.82,-0.2/0.82,-0.6/0.73}{
+      \draw[edge] (\x,\y) -- (2.5,\y);
+      \node[vtx] at (\x,\y) {};
+      \node[vtx] at (2.5,\y) {};}
+    \node[note, text=warm] at (0.5,1.15) {$W$};
+    \node[note, text=warm] at (0.55,-1.2) {$P^{+}$};
+    \node[note] at (1.9,-1.6) {the multigraph $\Gamma$};
+  \end{scope}
+\end{tikzpicture}
+\caption{Step~1 in the proof of Lemma~\ref{lem:width}. In $G$ the set $X^{+}$ is joined by $d^{+}$ edges to the
+connected rest $C_0$, which contains $P$. In $\Gamma$ a cycle $W$ through $d^{+}$ new vertices
+takes the place of $C_0$. The even subgraphs of $G$ and of $\Gamma$ give the same distribution
+of the edges inside $X^{+}$.}
+\label{fig:local}
+\end{figure}
+
 \begin{proof}
 Put $\Phi(m)=m/\log^{2}m$ and $\Theta=\Theta_\delta(k)$.
 
@@ -34,17 +76,32 @@ $X\subseteq V(G)\sm P$ has $|X|=m\ge\Theta$ and $|\delta X|\le\Phi(m)/4$. Suppos
 set. Let $C_0$ be the component of $G-X$ that contains $P$, and put $X^{+}=V(G)\sm V(C_0)$. Then
 $X\subseteq X^{+}$, the set $X^{+}$ avoids $P$, and $G-X^{+}=C_0$ is connected. Different components
 of $G-X$ have no edge between them, so $\delta X^{+}\subseteq\delta X$. Every vertex of $X^{+}$ has
-degree three. Let $d^{+}=|\delta X^{+}|\ge1$ and apply Lemma~\ref{lem:loc} to $X^{+}$. The rank of
-$G_{X^{+}}$ is
+degree three. Put $d^{+}=|\delta X^{+}|\ge1$.
+
+We form a multigraph $\Gamma$ from $G[X^{+}]$ (Figure~\ref{fig:local}). For each edge of $\delta X^{+}$ add a new vertex
+and join it to the end of that edge in $X^{+}$. Join the $d^{+}$ new vertices by a cycle $W$
+through all of them, and let $P^{+}$ be the set of the new vertices. Every component of
+$G[X^{+}]$ has an edge to $C_0$, so $\Gamma$ is connected. It is subcubic, $\Gamma[P^{+}]$ is
+connected, the vertices outside $P^{+}$ have degree three, and $\Gamma-P^{+}=G[X^{+}]$. The
+multigraph $\Gamma$ has $d^{+}$ more vertices and $2d^{+}$ more edges than $G[X^{+}]$, and
+$3|X^{+}|=2|E(G[X^{+}])|+d^{+}$. So its rank is
 \[
   \rho=\frac{|X^{+}|+d^{+}}2+1\;\ge\;\frac m2\;\ge\;R_\delta .
 \]
-The cycle $W_{X^{+}}$ has $\max\{d^{+},3\}$ edges. The function $\Phi$ is increasing on
-$[8,\infty)$, and $\Phi(m)/4\le\Phi(m/2)$. So
-$d^{+}\le\Phi(m)/4\le\Phi(m/2)\le\Phi(\rho)$, and also $3\le\Phi(\rho)$. By
-Proposition~\ref{prop:input} and Lemma~\ref{lem:loc}(b),(c),
+The function $\Phi$ is increasing on $[8,\infty)$, and $\Phi(m)/4\le\Phi(m/2)$. So
+$d^{+}\le\Phi(m)/4\le\Phi(m/2)\le\Phi(\rho)$, and Theorem~\ref{thm:forest} with the choice of
+$R_\delta$ gives $q(\Gamma,P^{+})\le\half+\delta$.
+
+The set $\xi\cap E(G[X^{+}])$ has the same distribution for $\xi$ uniform on $\Z(G)$ and for
+$\xi$ uniform on $\Z(\Gamma)$. Indeed, contract the connected set $V(C_0)$ of $G$ to one vertex,
+and delete the loops that arise. Call the result $G'$. An even subgraph of $G$ restricts to an
+even subgraph of $G'$. Every even subgraph of $G'$ arises in this way: the missing edges inside
+the contracted set can be chosen in a spanning tree of that set. So the restriction is a
+surjective linear map $\Z(G)\to\Z(G')$, and it sends the uniform distribution to the uniform
+distribution. The contraction of $W$ in $\Gamma$ gives the same multigraph $G'$, with the new
+edges in the place of the edges of $\delta X^{+}$. Hence
 \[
-  \PP\bigl(\xi\cap E(G[X^{+}])\text{ is a forest}\bigr)\;\le\;\frac12+\delta .
+  \PP\bigl(\xi\cap E(G[X^{+}])\text{ is a forest}\bigr)\;=\;q(\Gamma,P^{+})\;\le\;\frac12+\delta .
 \]
 But $G[X^{+}]$ is a subgraph of $G-P$, so this probability is at least $q(G,P)>\half+\delta$. This
 contradiction proves the claim.
@@ -57,22 +114,17 @@ $[i-1,i'+1]$. So
   |\delta X(i,i')|\;\le\;3m_{i-1}+3m_{i'+1}+3k(i'-i+3).
 \end{equation}
 Suppose that $m_j\ge\Theta$ for some $j$. Start with the window $i=i'=j$. As long as a level next
-to the window has more than $m/(48\log^{2}m)$ vertices outside $P$, where $m=|X(i,i')|$ is the
-present size, add that level to the window. The graph is finite, so this stops. Let $\mu$ be the
-final size and $\gamma=\log\mu\ge100$. Each step multiplies the size by more than
-$1+1/(48\gamma^{2})$. So the number of steps is at most
+to the window has more than $m^{3/4}$ vertices outside $P$, where $m=|X(i,i')|$ is the present
+size, add that level to the window. The graph is finite, so this stops. A step increases
+$m^{1/4}$ by more than $\frac16$, because $(t+\frac16)^{4}\le t^{4}+t^{3}$ for $t\ge1$. Let $\mu$
+be the final size. Then there were fewer than $6\mu^{1/4}$ steps, and both levels next to the
+final window have at most $\mu^{3/4}$ vertices outside $P$. We have $k\le\sqrt\mu$, because
+$\mu\ge\Theta\ge2^{100}(k+1)^{2}$. By~\eqref{eq:window},
 \[
-  \frac{\ln\mu}{\ln\bigl(1+1/(48\gamma^{2})\bigr)}\;\le\;96\gamma^{2}\ln\mu\;<\;67\gamma^{3}.
+  |\delta X(i,i')|\;\le\;6\mu^{3/4}+3k\bigl(6\mu^{1/4}+3\bigr)\;\le\;33\,\mu^{3/4}
+  \;\le\;\frac{\mu}{4\log^{2}\mu}=\frac{\Phi(\mu)}4 .
 \]
-At the end both levels next to the window have at most $\mu/(48\gamma^{2})$ vertices outside $P$.
-By~\eqref{eq:window},
-\[
-  |\delta X(i,i')|\;\le\;\frac{\mu}{8\gamma^{2}}+3k\bigl(67\gamma^{3}+3\bigr)
-  \;\le\;\frac{\mu}{4\gamma^{2}}=\frac{\Phi(\mu)}4 .
-\]
-The second inequality is equivalent to $24k\gamma^{2}(67\gamma^{3}+3)\le2^{\gamma}$. This holds because
-$k\le2^{\gamma/2-50}$, by $\mu\ge\Theta\ge2^{100}(k+1)^{2}$, and because
-$24\gamma^{2}(67\gamma^{3}+3)\le2000\gamma^{5}\le2^{\gamma/2+50}$ for $\gamma\ge100$. So the final
-window contradicts Step~1.
+The last inequality says that $132\log^{2}\mu\le\mu^{1/4}$, and this holds for
+$\mu\ge2^{100}$. So the final window contradicts Step~1.
 \end{proof}
 

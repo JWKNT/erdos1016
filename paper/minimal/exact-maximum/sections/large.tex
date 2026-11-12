@@ -1,480 +1,326 @@
-\section{Large girth outside a small set}\label{sec:half}
+\needroom{12\baselineskip}
+\section{Girth five outside a small set}\label{sec:half}
 
 Recall that $q(G,P)$ is the probability that $\xi\cap E(G-P)$ is a forest.
 
-\begin{theorem}\label{thm:half}
-There are integers $D_*\ge7$ and $r_5$ with the following property. Let $G$ be a connected cubic
-multigraph of rank $r\ge r_5$. Let $P$ be a nonempty set of at most $3\log r$ vertices such that
-$G[P]$ is connected. If $G-P$ has girth at least $D_*$, then $q(G,P)<\frac25$.
+\begin{theorem}[Girth five]\label{thm:half}
+There is an integer $r_5$ with the following property. Let $G$ be a connected cubic multigraph of
+rank $r\ge r_5$. Let $P$ be a nonempty set of at most $3\log r$ vertices such that $G[P]$ is
+connected. If $G-P$ has girth at least five, then $q(G,P)<\frac25$.
 \end{theorem}
 
 \begin{idea}{outline of the proof}
-Suppose that $q(G,P)\ge\frac25$. We find two disjoint parts of $G-P$ that are large, have small
-boundaries and have large girth. Each of them has a forest proportion of at most $\frac35$, for
-every choice of the edges outside it. This is a contradiction, because $(\frac35)^{2}<\frac25$. To
-find the parts we use a packing bound for short cycles (Section~\ref{sec:packing}), a second
-moment and a chain of nested separators (Section~\ref{sec:chain}).
+Suppose that $q(G,P)\ge\frac25$. We find two disjoint parts of $G-P$ that are large and have
+small boundaries. Each of them has a forest proportion of at most $\frac35$, for every choice of
+the edges outside it. This is a contradiction, because $(\frac35)^{2}<\frac25$. For a part with
+many boundary vertices this needs that the part contains no short cycle
+(Section~\ref{sec:affine}). For a part with few boundary vertices it needs girth five only,
+because a ladder has cycles of length four (Section~\ref{sec:girthfive}). The parts come from a family of regions with a large total weight:
+the second moment gives many pairs with exactly two links, and these pairs give nested separators
+(Section~\ref{sec:separators}). We use this for short cycles (Section~\ref{sec:packing}) and
+for cycles of moderate length (Section~\ref{sec:halfproof}).
 \end{idea}
 
-\subsection{Pieces with a small boundary}\label{sec:affine}
+\subsection{Forest proportions of a piece}\label{sec:affine}
 
-Let $N$ be a pole, and let $T$ be a set of ports of even size. A \emph{$T$-join} of $N$ is a set
-of edges in which the vertices of $T$ have odd degree and all other vertices have even degree.
-There are $2^{\beta(N)}$ of them. The \emph{forest proportion} of $T$ is the proportion of the
-$T$-joins that are forests. For $T=\emptyset$ the $T$-joins are the even subgraphs, only the empty
-one is a forest, and the forest proportion is $2^{-\beta(N)}$. Put
-\[
-  R_{*}=R_{1/20},\qquad B=2R_{*}+2^{100}+1,
-\]
-with $R_{1/20}$ as in Proposition~\ref{prop:input}. Then $\Theta_{1/20}(k)+k\le B(k+1)^{2}$ for all
-$k\ge1$.
+A \emph{piece} is the subgraph of $G$ that a connected set of vertices outside $P$ induces. It is
+a connected subcubic multigraph, and we use the following notions for it.
 
-\begin{lemma}[A marker in a pole]\label{lem:marker}
-Let $N$ be a pole with $k\ge2$ ports, and let $o$ be a port. Call the set of the vertices at
-distance $j$ from $o$ the \emph{layer} $j$. Suppose that some set $T$ of ports has forest
-proportion at least $\frac35$. Then each layer has at most $B(k+1)^{2}$ vertices.
-\end{lemma}
+\begin{notation}{joins and forest proportions}
+\begin{itemize}[leftmargin=1.2em]
+\item $N$ is a connected subcubic multigraph. Its vertices of degree less than three are its
+\emph{boundary vertices}, and its \emph{deficit} $d(N)$ is the sum of $3-\deg v$ over all
+vertices $v$. A count of edge ends gives
+\begin{equation}\label{eq:deficit}
+  |V(N)|=2\beta(N)-2+d(N).
+\end{equation}
+\item $T$ is a set of boundary vertices of even size. A \emph{$T$-join} of $N$ is a set of edges
+in which the vertices of $T$ have odd degree and all other vertices have even degree. There are
+$2^{\beta(N)}$ of them.
+\item The \emph{forest proportion} of $T$ is the proportion of the $T$-joins that are forests,
+and $T$ is \emph{rigid} if every $T$-join is a forest. For $T=\emptyset$ the $T$-joins are the
+even subgraphs, only the empty one is a forest, and the forest proportion is $2^{-\beta(N)}$.
+\item $R_{*}=R_{1/20}$ and $B=2R_{*}+2^{100}+1$, with $R_{1/20}$ as in
+Section~\ref{sec:layers}. Then $\Theta_{1/20}(k)+k\le B(k+1)^{2}$ for all $k\ge1$.
+\end{itemize}
+\end{notation}
 
-\begin{proof}
-Take a breadth-first tree of $N$ from $o$, and let $P$ be the union of its paths from $o$ to the
-other ports. Then $N[P]$ is connected, $P$ contains all vertices of degree two, and $P$ has at most
-$k$ vertices in each layer, because a path of the tree from $o$ has one vertex in each layer that
-it meets. The tree paths inside $P$ contain a $T$-join $F_0$. The map $J\mapsto J+F_0$ is a
-bijection from the $T$-joins of $N$ to the even subgraphs of $N$, and $J+F_0$ has the same edges in
-$N-P$ as $J$. So if $J$ is a forest, then $J+F_0$ is a forest in $N-P$. Hence
-$q(N,P)\ge\frac35>\half+\frac1{20}$. The distance from $o$ is a level function. By
-Lemma~\ref{lem:width} with $\delta=\frac1{20}$, each layer has fewer than $\Theta_{1/20}(k)$
-vertices outside $P$, and it has at most $k$ vertices in $P$.
-\end{proof}
-
-\begin{lemma}[Girth and rank of a pole]\label{lem:moore}
-Let $N$ be a pole of rank $h\ge2$ with $k$ ports and girth at least $D$. Put
-$t=\lceil\log(8h)\rceil$. Then
-\[
-  D\;\le\;4t\Bigl(1+\frac{k}{3(h-1)}\Bigr).
-\]
-\end{lemma}
-
-\begin{proof}
-Replace every vertex of degree two and its two edges by one edge, and give each edge of the result
-the length of the path of $N$ that it replaces. The result $N_0$ is a connected cubic multigraph
-with $n_0=2h-2$ vertices and $m_0=3h-3$ edges, and the lengths of its edges add up to $m_0+k$. A
-cycle of $N_0$ comes from a cycle of $N$ of the same length.
-
-There are $2m_0\,2^{t-1}$ non-backtracking walks with $t$ edges in $N_0$. Choose one of them
-uniformly. Then each of its steps is uniform over the $2m_0$ directed edges. So the expected length
-of the walk is $t(1+k/m_0)$. At least half of the walks have length at most twice this value. Their
-number is at least
-\[
-  m_0\,2^{t-1}\;\ge\;12h(h-1)\;>\;n_0^{2}.
-\]
-If one of these short walks visits a vertex twice, it contains a cycle that is not longer than the
-walk. Otherwise all of them are paths, and two of them have the same first vertex and the same last
-vertex. Their union contains a cycle of length at most the sum of their lengths. In both cases $N$
-has a cycle of length at most $4t(1+k/m_0)$.
-\end{proof}
+When the edges of an even subgraph of $G$ outside a piece are given, its edges in the piece form
+a $T$-join for some set $T$. So a bound for all forest proportions of a piece gives a factor in
+the estimate of $q(G,P)$, and the factors of disjoint pieces multiply (Lemma~\ref{lem:product}).
+The first lemma is for a piece of large girth.
 
 \begin{lemma}[Forest proportions at large girth]\label{lem:affine}
-There are absolute constants $D_{*}\ge7$ and $C_0$ with the following property. Let $N$ be a pole
-of rank $h$ with $k$ ports and girth at least $D$. Suppose that
-\begin{enumerate}
-\item[\textup{(a)}] $h\ge256$, $k\le4D$ and $D\ge D_{*}$, or
-\item[\textup{(b)}] $h\ge\Lambda\ge4$, $k\le2\Lambda$ and $D\ge C_0\log(\Lambda+2)$ for some
-number $\Lambda$.
-\end{enumerate}
-Then every set of ports of even size has forest proportion at most $\frac35$.
+There are absolute constants $C_0\ge1$ and $C_1\ge1$ with the following property. Let $\Lambda\ge4$,
+and let $N$ be a connected subcubic multigraph with at most $2\Lambda$ boundary vertices, at
+least $C_1\Lambda^{4}$ vertices, and girth at least $C_0\log(\Lambda+2)$. Then every set of
+boundary vertices of even size has forest proportion less than $\frac35$.
 \end{lemma}
 
 \begin{proof}
-If $k\le1$, the only set is the empty one, with forest proportion $2^{-h}$. Let $k\ge2$, and put
-$t=\lceil\log(8h)\rceil\le\log h+4$.
+Let $s$ be the least integer with $2^{s}>(2s+1)B(2\Lambda+1)^{2}$. Then
+$2^{s}\le2(2s+1)B(2\Lambda+1)^{2}$, and $B$ is an absolute constant. So there are absolute
+constants $C_0\ge1$ and $C_1\ge1$ such that $2s<C_0\log(\Lambda+2)$ and $6\Lambda\,2^{s}<C_1\Lambda^{4}$
+for every $\Lambda\ge4$.
 
-\step{The rank is exponential in the girth.} In case~(a), $h-1>\frac{32}3t$: this holds at
-$h=256$, where $t=11$, and the ratio $(h-1)/(\log h+4)$ increases with $h$. So
-Lemma~\ref{lem:moore} gives $D\le4t+16tD/(3(h-1))<4t+D/2$. In case~(b),
-$k/(3(h-1))\le2h/(3(h-1))<1$, and Lemma~\ref{lem:moore} gives $D<8t$. In both cases
-$D<8t\le8\log h+32$, so
-\begin{equation}\label{eq:rankgirth}
-  h\;\ge\;2^{D/8-4},\qquad\text{and }N\text{ has }n\ge h\text{ vertices}.
-\end{equation}
+Let $k$ be the number of boundary vertices of $N$. If $k\le1$, the only set is the empty one.
+Then $N$ contains a cycle, and the forest proportion is at most $\half$. Let $k\ge2$, fix a
+boundary vertex $o$, and call the set of the vertices at distance $j$ from $o$ the \emph{layer}
+$j$.
 
-\step{A ball without ports.} Put $s=\lfloor D/16\rfloor$. A ball of radius $s$ has at most
-$3\cdot2^{s}$ vertices. So at most $3k\,2^{s}$ vertices are within distance $s$ of a port. In
-case~(a) this is at most $12D\,2^{D/16}$, and in case~(b) at most $6\Lambda\,2^{D/16}$. Choose
-$D_{*}$ and $C_0$ so large that this number is less than $2^{D/8-4}\le n$ in each case. Then some
-vertex $w$ has distance more than $s$ from every port. All vertices within distance $s$ of $w$
-have degree three, and $2s<D$. So the ball of radius $s$ around $w$ is a tree in which every
-vertex at distance less than $s$ from $w$ has degree three, and it has at least
-$2^{s}\ge2^{D/16-1}$ vertices. Fix a port $o$. The distances from $o$ to two vertices of this ball
-differ by at most $2s$. So the ball meets at most $2s+1\le D$ layers with respect to $o$, and some
-layer has at least $2^{D/16-1}/D$ vertices.
+\step{A large layer.} A ball of radius $s$ has at most $3\cdot2^{s}$ vertices. So at most
+$3k\,2^{s}\le6\Lambda\,2^{s}$ vertices are within distance $s$ of a boundary vertex, and some
+vertex $w$ has distance more than $s$ from every boundary vertex. All vertices within distance
+$s$ of $w$ have degree three, and $2s$ is less than the girth. So the ball of radius $s$ around
+$w$ is a tree in which every vertex at distance less than $s$ from $w$ has degree three, and it
+has at least $2^{s}$ vertices. The distances from $o$ to two vertices of this ball differ by at
+most $2s$. So the ball meets at most $2s+1$ layers, and some layer has at least
+$2^{s}/(2s+1)>B(k+1)^{2}$ vertices.
 
-\step{Conclusion.} Suppose that some set of ports has forest proportion more than $\frac35$. By
-Lemma~\ref{lem:marker} every layer has at most $B(k+1)^{2}$ vertices. This is at most
-$B(4D+1)^{2}$ in case~(a) and at most $B(2\Lambda+1)^{2}$ in case~(b). In case~(a) choose $D_{*}$ so
-large that $2^{D/16-1}/D>B(4D+1)^{2}$ for $D\ge D_{*}$. In case~(b) the function $2^{D/16}/D$
-increases for $D\ge32$, and at $D=C_0\log(\Lambda+2)$ its ratio to $(\Lambda+2)^{2}$ is
-$(\Lambda+2)^{C_0/16-2}/(C_0\log(\Lambda+2))$. This tends to infinity with $C_0$, uniformly in
-$\Lambda\ge4$. So a large $C_0$ gives $2^{D/16-1}/D>B(2\Lambda+1)^{2}$. In both cases we have a
-contradiction.
+\step{A marker.} Suppose that some set $T$ of boundary vertices has forest proportion at least
+$\frac35$. Take a breadth-first tree of $N$ from $o$, and let $P$ be the union of its paths from
+$o$ to the other boundary vertices. Then $N[P]$ is connected, every vertex outside $P$ has degree
+three, and $P$ has at most $k$ vertices in each layer, because a path of the tree from $o$ has
+one vertex in each layer that it meets. The tree paths inside $P$ contain a $T$-join $F_0$. The
+map $J\mapsto J+F_0$ is a bijection from the $T$-joins of $N$ to the even subgraphs of $N$, and
+$J+F_0$ has the same edges in $N-P$ as $J$. So if $J$ is a forest, then $J+F_0$ is a forest in
+$N-P$. Hence $q(N,P)\ge\frac35>\half+\frac1{20}$. The distance from $o$ is a level function. By
+Lemma~\ref{lem:width} with $\delta=\frac1{20}$, each layer has fewer than $\Theta_{1/20}(k)$
+vertices outside $P$, and it has at most $k$ vertices in $P$. So each layer has fewer than
+$B(k+1)^{2}$ vertices. This is a contradiction.
 \end{proof}
-
-\paragraph{Products of pieces.}
 
 \begin{lemma}[Product]\label{lem:product}
-Let $G$ be a cubic multigraph, let $P$ be a set of vertices, and let
-$U_1,\ldots,U_m\subseteq V(G)\sm P$ be pairwise disjoint sets such that each $G[U_i]$ is a pole.
-Suppose every even set of ports in each pole has forest proportion at most $3/5$.
-Then $q(G,P)\le(3/5)^m$.
+Let $N$ be a multigraph, and let $P$ and $T$ be sets of vertices such that $N$ has a $T$-join. Let
+$U_1,\ldots,U_m\subseteq V(N)\sm(P\cup T)$ be pairwise disjoint sets of vertices of degree three
+such that each $N[U_i]$ is connected. Let $f_1,\dots,f_m$ be numbers such that in $N[U_i]$ every
+even set of boundary vertices has forest proportion at most $f_i$. Then $J\cap E(N-P)$ is a
+forest for at most the proportion $f_1\cdots f_m$ of the $T$-joins $J$ of $N$. For a cubic
+multigraph $G$ and $T=\emptyset$ this says that $q(G,P)\le f_1\cdots f_m$.
 \end{lemma}
 
 \begin{proof}
-Let $E'$ consist of the edges that lie in none of the induced poles.
-Fix a restriction $x\subseteq E'$ that extends to an even subgraph of $G$.
-For each $i$, let $T_i$ be the vertices of $U_i$ incident with an odd number of edges of $x$.
-The parity equations say that $\xi\cap E(G[U_i])$ is a $T_i$-join.
-These equations involve disjoint internal edge sets, so the joins are independent and uniform,
-conditional on $\xi\cap E'=x$.
-A vertex of degree three in a pole has no incident edge in $E'$; thus each $T_i$ is an even set of ports.
-If $\xi\cap E(G-P)$ is a forest, its restriction to every pole is a forest.
-The conditional probability is therefore at most $(3/5)^m$. Average over $x$.
-Edges between the poles belong to $E'$, so adjacent pieces cause no exception.
+Let $E'$ consist of the edges that lie in none of the graphs $N[U_i]$, and let $J$ be a uniformly
+random $T$-join. Fix a set $x\subseteq E'$ that extends to a $T$-join. For each $i$, let $T_i$ be
+the set of the vertices of $U_i$ that are incident with an odd number of edges of $x$. The set
+$U_i$ avoids $T$, so the parity equations say that $J\cap E(N[U_i])$ is a $T_i$-join. These
+equations involve disjoint sets of edges, so the joins are independent and uniform, conditional on
+$J\cap E'=x$. A vertex of degree three in $N[U_i]$ has no incident edge in $E'$. So $T_i$ is an
+even set of boundary vertices. If $J\cap E(N-P)$ is a forest, its restriction to every $N[U_i]$
+is a forest. The conditional probability is therefore at most $f_1\cdots f_m$. Average over $x$.
 \end{proof}
 
-\begin{lemma}[The core of a piece]\label{lem:core}
-Let $G$ be a cubic multigraph, and let $X$ be a set of vertices such that $G[X]$ is connected, has
-no loop, and has rank $h\ge2$. Then there is a set $U\subseteq X$ such that $G[U]$ is a pole of rank $h$ with at
-most $|\delta X|$ ports, and the girth of $G[U]$ is at least the girth of $G[X]$.
-\end{lemma}
+\needroom{16\baselineskip}
+\subsection{Pieces with few boundary vertices at girth five}\label{sec:girthfive}
 
-\begin{proof}
-Delete vertices of degree one from $G[X]$ as long as there are any. The result $G[U]$ is connected,
-has the same cycles as $G[X]$ and all its degrees are two or three. When a vertex of degree one is
-deleted, two edges that left the set no longer do, and one edge inside the set now leaves it. So
-$|\delta U|\le|\delta X|$. A vertex of degree two in $G[U]$ has exactly one edge end outside
-$G[U]$, and a vertex of degree three has none. So $G[U]$ has $|\delta U|$ ports.
-\end{proof}
-
-\begin{proposition}[Pieces with small boundaries]\label{prop:blocks}
-Let $G$ be a connected cubic multigraph and let $P$ be a set of vertices. Let
-$X_1,\ldots,X_m\subseteq V(G)\sm P$ be pairwise disjoint, nonempty and proper sets of vertices. Suppose that one of
-the following holds for every $i$.
-\begin{enumerate}
-\item[\textup{(a)}] $G[X_i]$ is connected of rank at least $256$ and girth at least $D\ge D_{*}$,
-and $|\delta X_i|\le4D$.
-\item[\textup{(b)}] $|X_i|\ge8\Lambda^{2}$, $|\delta X_i|\le2\Lambda$, and $G[X_i]$ has girth at
-least $D$, where $\Lambda\ge4$ and $D\ge C_0\log(\Lambda+2)$.
+\begin{idea}{outline of Lemmas~\ref{lem:fullfive}, \ref{lem:rigidpiece} and~\ref{lem:piecesfive}}
+Lemma~\ref{lem:affine} needs a girth that grows with the number of boundary vertices. For a
+bounded number of boundary vertices, girth five is sufficient. Girth four is not sufficient: in
+a ladder, the two ends of one rail form a rigid set. The proof has three steps.
+\begin{enumerate}[leftmargin=1.5em]
+\item A multigraph of girth five with a full pair is small. It consists of capped ladders, and
+a capped ladder has many cycles with at most four edges (Lemma~\ref{lem:fullfive}).
+\item A thin multigraph of girth five with a rigid set is small. A tree that joins the vertices
+of the set passes through a region far from them, and this region is a tree or has a full pair
+(Lemma~\ref{lem:rigidpiece}, Figure~\ref{fig:rigid}).
+\item A large piece with a forest proportion of at least $\frac35$ is thin and long. So it
+contains many disjoint parts without a rigid set, and each part loses a fixed proportion of the
+forests (Lemma~\ref{lem:piecesfive}).
 \end{enumerate}
-Then $q(G,P)\le(3/5)^m$.
-\end{proposition}
-
-\begin{proof}
-It suffices to find sets $U_i\subseteq X_i$ as in Lemma~\ref{lem:product}. In case~(a),
-Lemma~\ref{lem:core} gives a pole $G[U_i]$ of rank at least $256$ with at most $4D$ ports and girth
-at least $D$, and Lemma~\ref{lem:affine}(a) applies.
-
-In case~(b) write $n=|X_i|$, $d=|\delta X_i|$ and $c=\comp(G[X_i])$. Every component of $G[X_i]$
-has an edge that leaves $X_i$, so $1\le c\le d\le2\Lambda$. Count the edge ends:
-$3n=2|E(G[X_i])|+d$. So $\beta(G[X_i])=(n-d)/2+c$, and some component $Y$ of $G[X_i]$ has rank at
-least
-\[
-  \frac{n-d}{2c}+1\;\ge\;\frac{8\Lambda^{2}-2\Lambda}{4\Lambda}+1\;>\;\Lambda .
-\]
-Its boundary is a part of $\delta X_i$. Lemma~\ref{lem:core} for $Y$ gives a pole $G[U_i]$ of rank
-at least $\Lambda$ with at most $2\Lambda$ ports and girth at least $D$, and
-Lemma~\ref{lem:affine}(b) applies.
-\end{proof}
-
-\subsection{Packing of short cycles}\label{sec:packing}
-
-\begin{idea}{the purpose of the packing bound}
-The second-moment argument requires a graph of girth about $\log r$. So we delete a maximal
-family of disjoint short cycles, and we need a bound for the size of this family.
-Lemma~\ref{lem:smallcuts} gives such a bound only when the proportion of forests exceeds one half
-by a fixed margin. Here we prove the bound with Proposition~\ref{prop:blocks}. Many disjoint
-cyclic sets with small boundaries have independent local events, or many of them lie in one
-string (Lemma~\ref{lem:strings}), and a long string contains two pieces to which
-Proposition~\ref{prop:blocks} applies.
 \end{idea}
 
-Throughout, $h_*=256$.
-
-\paragraph{Vertices that share a parity.}
-
-Let $Q$ be a connected multigraph without loops. For an edge $e$, the map
-$\xi\mapsto[e\in\xi]$ is a linear functional on $\Z(Q)$. For a vertex $v$ let $L_v$ be the space
-of functionals that is spanned by the edges at $v$. For a set $A$ of vertices put
-$U_A=\sum_{a\in A}L_a$. We use one standard fact: if a set $F$ of edges meets every even subgraph of
-$Q$ in an even number of edges, then $F=\delta Y$ for some set $Y$ of vertices. (Fix a spanning
-tree and a root. Let $Y$ be the set of the vertices whose tree path from the root has an odd number
-of edges in $F$. Then $F$ and $\delta Y$ contain the same tree edges, and the fundamental cycles
-show that they contain the same edges outside the tree.)
-
-\begin{lemma}[Strings]\label{lem:strings}
-Let $Q$ be a connected multigraph without loops, and let $A$ be a nonempty proper set of its
-vertices. Put $b=|\delta A|$. Call a vertex $v\notin A$ \emph{relevant} if $L_v\cap U_A\ne0$. There
-are a set of at most $2b$ relevant vertices, the \emph{exceptions}, and at most $2b$ sequences of
-relevant vertices, the \emph{strings}, with these properties. Every relevant vertex that is not an
-exception is in a string. If $v_1,\dots,v_m$ is a string and $1\le i<j\le m$ with $j\ge i+2$, there
-is a set $M(i,j)$ of vertices such that
-\begin{enumerate}
-\item[\textup{(i)}] $M(i,j)$ is disjoint from $A\cup\{v_i,v_j\}$, the graph $Q[M(i,j)]$ is
-connected, and $v_l\in M(i,j)$ for $i<l<j$;
-\item[\textup{(ii)}] every edge that leaves $M(i,j)$ ends in $v_i$ or in $v_j$;
-\item[\textup{(iii)}] $M(i,j)\cap M(i',j')=\emptyset$ if $j\le i'$.
-\end{enumerate}
+\begin{lemma}[Full pairs at girth five]\label{lem:fullfive}
+Let $M$ be a connected subcubic multigraph of girth at least five. Let $x\ne y$ be vertices of
+degree at most two such that every $\{x,y\}$-join of $M$ is a path. Then $|V(M)|<15\,d(M)$.
 \end{lemma}
 
 \begin{proof}
-Call the edges of $\delta A$ \emph{terminals}. The end of a terminal outside $A$ is its
-\emph{foot}. Every component of $Q-A$ contains a foot, because $Q$ is connected.
+Put $d=d(M)$ and $b=\beta(M)$. If $b=0$, then $M$ is a tree and $|V(M)|=d-2$. Let $b\ge1$. Delete
+a vertex of degree one other than $x$ and $y$, as long as there is one. If then $x$ has degree
+one, delete $x$ and take its neighbour in the place of $x$; do the same for $y$; repeat. These
+steps keep the rank, and every join is a path after each step. The two vertices stay distinct,
+because $b\ge1$. The result $M_1$ is a pole in which the two vertices are ports and form a full
+pair. A port of $M_1$ has degree two in $M$, or one of its edges in $M$ leads to a deleted tree,
+and such a tree has a deficit of at least two. So $M_1$ has at most $d$ ports.
 
-\step{Step 1.} Let $v\notin A$ be relevant and not a foot, and let $K$ be the component of $Q-A$
-that contains $v$. We show that at least two components of $K-v$ contain feet. Let
-$0\ne a\in L_v\cap U_A$. Then $a$ is the sum of the functionals of a set $F$ of edges at $v$, and
-also of a set $F'$ of edges with an end in $A$. No edge is in both sets, because $v$ is not a foot.
-The set $F\cup F'$ meets every even subgraph in an even number of edges, so $F\cup F'=\delta Y$ for
-some $Y$. We may assume that $v\notin Y$. No edge of $K-v$ is in $F\cup F'$. So each component of
-$K-v$ lies inside $Y$ or outside $Y$, and $F$ is the set of all edges from $v$ to the components
-inside $Y$. For a component $J$ of $K-v$, the cut $\delta V(J)$ consists of the edges from $J$ to
-$v$ and the terminals with a foot in $J$. So on $\Z(Q)$ the sum of the edges from $J$ to $v$ equals
-the sum of the terminals with a foot in $J$. Hence $a$ is the sum of the terminals with a foot in
-$Y$. The sum of all terminals with a foot in $K$ is zero on $\Z(Q)$, because these terminals form
-the cut $\delta V(K)$. As $a\ne0$, some component of $K-v$ inside $Y$ contains a foot, and some
-component outside $Y$ contains a foot.
-
-\step{Step 2.} In each component $K$ of $Q-A$ fix a spanning tree. For each terminal add a new leaf
-at its foot. Let $T_K$ be the union of the paths of this tree between the new leaves, and let $T$
-be the union of the trees $T_K$. Every leaf of $T$ is a new leaf, so $T$ has at most $b$ leaves and
-at most $b$ vertices of degree at least three. The exceptions are the relevant vertices that are
-feet or have degree at least three in $T$. There are at most $2b$ of them.
-
-Let $v$ be a relevant vertex that is not an exception. By Step~1 two components of $K-v$ contain
-feet. The path of the tree between the two new leaves at these feet passes through $v$. So $v$ is
-a vertex of $T$, and its degree in $T$ is two. A \emph{thread} is a maximal path of $T$ whose inner
-vertices have degree two in $T$. There are at most $2b$ threads, and every vertex of degree two of
-$T$ is an inner vertex of exactly one thread. The strings are the sequences of the relevant
-vertices that are not exceptions on one thread, in the order of the thread.
-
-\step{Step 3.} Let $v$ be a vertex of a string, in the component $K$. The forest $T-v$ has exactly
-two components that meet $K$, one on each side of $v$ along its thread. Their vertex sets in $K$ are
-the \emph{near side} of $v$, towards the start of the thread, and the \emph{far side} of $v$. Each
-side is connected in $K-v$, and all feet in $K$ lie in the two sides. By Step~1 the two sides lie in
-different components of $K-v$.
-
-Now let $v_i$ and $v_j$ be as in the lemma. Let $\Pi$ be the part of their thread strictly between
-them. It contains $v_{i+1}$, it is connected, and it contains no foot, because a new leaf at a
-vertex of $\Pi$ would give that vertex degree three in $T$. Let $M(i,j)$ be the vertex set of the
-component of $K-v_i-v_j$ that contains $\Pi$. This gives~(i).
-
-For~(ii), suppose that $M(i,j)$ contains a foot $w$. Then $w$ is a vertex of $T$ outside $\Pi$. So
-$w$ lies in the near side of $v_i$ or in the far side of $v_j$; say in the near side of $v_i$. The
-path $\Pi$ lies in the far side of $v_i$. But $w$ and $\Pi$ are joined in $K-v_i$ through
-$M(i,j)$, and the two sides of $v_i$ lie in different components of $K-v_i$. This is a
-contradiction. So $M(i,j)$ contains no foot. An edge that leaves $M(i,j)$ ends in $A$, in $v_i$ or
-in $v_j$, and it does not end in $A$.
-
-For~(iii), let $j\le i'$. The set $M(i,j)$ is connected in $K-v_j$ and contains $\Pi$, which lies
-in the near side of $v_j$. So $M(i,j)$ lies in the component of $K-v_j$ that contains the near side
-of $v_j$. We show that $M(i',j')$ lies in the component of $K-v_j$ that contains the far side of
-$v_j$; then the two sets are disjoint. The set $M(i',j')$ is connected in $K-v_{i'}$ and contains
-the part $\Pi'$ of the thread between $v_{i'}$ and $v_{j'}$, which lies in the far side of
-$v_{i'}$. If $j=i'$, this is the claim. If $j<i'$, then $v_j$ lies in the near side of $v_{i'}$, so
-$v_j\notin M(i',j')$. Hence $M(i',j')$ is connected in $K-v_j$, and it contains $\Pi'$, which lies
-in the far side of $v_j$.
+By Lemma~\ref{lem:reduction}, replace the other ports by edges. The result $M_1^{\circ}$
+consists of bridges and of bridgeless $2$-poles $N_1,\dots,N_q$ with full pairs of ports, and
+their ranks $b_i\ge1$ add up to $b$. An edge of $M_1^{\circ}$ is a path of $M_1$ whose inner
+vertices are ports; call it \emph{plain} if this path has no inner vertex. At most $d-2$ edges
+are not plain. A cycle of $M_1^{\circ}$ with at most four edges is not a cycle of $M$, so one of
+its edges is not plain. By Lemma~\ref{lem:ladders}, $N_i$ is a pair of parallel edges, or a capped
+ladder with some number $m$ of tiles. In the second case its rank is at most $2m+1$, and it
+contains at least $m/3$ pairwise edge-disjoint cycles with at most four edges: the squares, pairs
+of consecutive single rungs with the interface between them, and one cycle through a cap. So in
+both cases at least $b_i/7$ edges of $N_i$ are not plain. Hence $b\le7(d-2)$,
+and~\eqref{eq:deficit} gives $|V(M)|<15d$.
 \end{proof}
 
-\paragraph{A packing bound.}
+\begin{lemma}[Rigid sets]\label{lem:rigidpiece}
+Let $M$ be a connected subcubic multigraph of girth at least five with deficit $d$. Let
+$\lambda\colon V(M)\to\mathbb Z$ be a map with $|\lambda(u)-\lambda(v)|\le1$ for every edge $uv$,
+such that fewer than $W$ vertices have any given value. If some even set $U$ of boundary vertices
+is rigid, then $|V(M)|\le500\,dW(W+d)$.
+\end{lemma}
 
-\begin{proposition}[Packing]\label{prop:packing}
-Let $G$ be a connected cubic multigraph. Let $P$ be empty or induce a connected subgraph,
-and let $S$ consist of $s$ vertices outside $P$.
-Suppose $G-(P\cup S)$ has girth at least $D\ge D_*$ and $q(G,P\cup S)\ge\frac25$.
-Let $2\le d\le2D$, and let $X_1,\ldots,X_n$ be pairwise disjoint sets outside $P\cup S$,
-each inducing a connected graph with a cycle and satisfying $|\delta X_i|\le d$.
-Then $n\le1551\,d(s+1)2^{d}$.
-\end{proposition}
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[draw=slate!70, fill=black!4, line width=0.6pt] (1.75,0) ellipse [x radius=1.8, y radius=1.2];
+  \draw[draw=slate!70, fill=black!4, line width=0.6pt] (11.85,0) ellipse [x radius=1.8, y radius=1.2];
+  \draw[region] (5.1,-1.05) rectangle (8.5,1.05);
+  \coordinate (u1) at (0.5,0.7);
+  \coordinate (u2) at (0.5,-0.05);
+  \coordinate (u3) at (1.0,-0.75);
+  \coordinate (b0) at (1.35,0.3);
+  \coordinate (b1) at (2.3,-0.1);
+  \coordinate (xm) at (5.5,0);
+  \coordinate (s1) at (6.15,0);
+  \coordinate (z0) at (6.8,0);
+  \coordinate (s2) at (7.45,0);
+  \coordinate (xp) at (8.1,0);
+  \coordinate (t1) at (6.15,0.62);
+  \coordinate (t2) at (7.45,0.62);
+  \coordinate (u4) at (12.9,0.15);
+  % the part of M[B] outside the tree
+  \draw[edge] (xm)--(t1)--(t2)--(xp) (s1)--(t1) (s2)--(t2);
+  % the tree S
+  \draw[hot] (u1)--(b0)--(u2) (b0)--(b1)--(u3);
+  \draw[hot] (b1)--(3.1,0)--(3.9,0.05)--(4.7,0)--(xm)--(s1)--(z0)--(s2)--(xp)--(8.9,0)--(9.7,0.05)--(10.5,0)--(11.3,0.08)--(12.1,0.1)--(u4);
+  \foreach \p in {(3.1,0),(3.9,0.05),(4.7,0),(8.9,0),(9.7,0.05),(10.5,0),(11.3,0.08),(12.1,0.1)} \node[vtx] at \p {};
+  \foreach \q in {b0,b1,xm,s1,z0,s2,xp,t1,t2} \node[vtx] at (\q) {};
+  \foreach \q in {u1,u2,u3,u4} \node[port] at (\q) {};
+  \node[note] at (1.75,-1.5) {the component $K^{-}$};
+  \node[note] at (11.85,-1.5) {the component $K^{+}$};
+  \node[note, text=accent] at (6.8,1.3) {the set $B$};
+  \node[note, text=accent] at (5.5,-0.3) {$x^{-}$};
+  \node[note, text=accent] at (6.8,-0.3) {$z_0$};
+  \node[note, text=accent] at (8.1,-0.3) {$x^{+}$};
+  \node[note, text=warm] at (3.9,0.4) {$\sigma$};
+  \node[note, text=warm] at (2.0,0.5) {$S^{-}$};
+  \node[note, text=warm] at (11.3,0.5) {$S^{+}$};
+\end{tikzpicture}
+\caption{The proof of Lemma~\ref{lem:rigidpiece}. The tree $S$ (thick) joins the vertices of the
+rigid set $U$ (circles). A long segment $\sigma$ of $S$ passes through the set $B$ around
+$z_0$, and $S$ meets $B$ in a part of $\sigma$ only. Here $K^{-}\ne K^{+}$, and each of them
+contains an odd number of vertices of $U$. Then every $\{x^{-},x^{+}\}$-join of $M[B]$ is a
+path, and $B$ is small by Lemma~\ref{lem:fullfive}.}
+\label{fig:rigid}
+\end{figure}
 
 \begin{proof}
-Contract each $X_i$ to a marked vertex $x_i$, contract each component of
-$G-\bigcup_iX_i$ to a vertex, and delete the loops. The resulting graph $Q$ is connected.
-Projection maps the uniform distribution on $\Z(G)$ to the uniform distribution on $\Z(Q)$,
-as in Lemma~\ref{lem:loc}(b). Conditional on the projected edges, the restrictions to the
-induced graphs $G[X_i]$ are independent affine joins.
-Let $I_i$ be the event that the projection uses no edge at $x_i$.
-On $I_i$ the restriction to $G[X_i]$ is an even subgraph, and its forest probability is at most
-$1/2$, since $G[X_i]$ contains a cycle. Hence
-\begin{equation}\label{eq:packprod}
- \frac25\le q(G,P\cup S)\le
- \EE\prod_{i=1}^n\left(1-\frac{\mathbf1_{I_i}}2\right).
-\end{equation}
+If $U=\emptyset$, then $M$ has no cycle, and $|V(M)|=d-2$. Let $U\ne\emptyset$. Let $S$ be a
+connected subgraph of $M$ that contains $U$ and has as few edges as possible. It is a tree, and
+its vertices of degree one are in $U$. Call a vertex of $S$ \emph{special} if it is in $U$ or has
+degree three in $S$. There are at most $2|U|-2$ special vertices. A \emph{segment} is a path of
+$S$ between two special vertices without a special inner vertex. The tree $S$ is the union of at
+most $2|U|-3$ segments.
 
-Write $L_i=L_{x_i}$ for the local parity space in $Q$.
-The sum of its incident edge functionals is zero, so $\dim L_i\le d-1$ and
-$\PP(I_i)=2^{-\dim L_i}\ge2^{1-d}$.
-If $z_0$ local spaces are zero, then $\frac25\le2^{-z_0}$.
-Thus at most one local space is zero.
-Keep its vertex in $Q$, but omit this mark from the selection below.
-If no mark remains, the desired bound is immediate.
+Put $\rho=30W+8d$ and $\ell_0=(2\rho+1)W+2$. Suppose that some segment $\sigma$ has at least
+$2\ell_0$ edges, and let $z_0$ be a vertex of $\sigma$ with at least $\ell_0$ edges of $\sigma$
+on each side. Let $B$ be the vertex set of the component of $z_0$ in the subgraph of $M$ induced
+by the vertices $v$ with $|\lambda(v)-\lambda(z_0)|\le\rho$. Then $M[B]$ is connected, $B$ has
+fewer than $(2\rho+1)W$ vertices, and it contains the $2\rho+1$ vertices of $\sigma$ nearest to
+$z_0$.
 
-Choose a maximal direct-sum family $A$ of nonzero local spaces.
-Put $t=|A|\ge1$ and $b=|\delta A|\le dt$.
-The events $I_a$ for $a\in A$ are independent, so
-\[
- \frac25\le\prod_{a\in A}\left(1-\frac{\PP(I_a)}2\right)
- \le(1-2^{-d})^t<e^{-t2^{-d}}.
-\]
-In particular, $t<2^d$.
-If all remaining marks lie in $A$, the bound follows.
-Otherwise $A$ is a nonempty proper vertex set of $Q$.
-Every remaining mark outside $A$ is relevant in Lemma~\ref{lem:strings}, by maximality.
-There are at most $2b$ exceptions and at most $2b$ strings.
+\step{The tree meets $B$ in one part of $\sigma$.} Let $v$ be a vertex of $S$ in $B$, and let
+$\pi$ be a path from $v$ to $z_0$ in $M[B]$. It has fewer than $\ell_0-2$ edges. If $v$ is not an
+inner vertex of $\sigma$, or if $\sigma$ has more edges between $v$ and $z_0$ than $\pi$ has,
+then $\pi$ can replace a part of $\sigma$ with more edges, and $S$ does not have the fewest
+edges. So the vertices of $S$ in $B$ are inner vertices of $\sigma$, and $B$ contains no vertex
+of $U$. Let $S^{-}$ and $S^{+}$ be the components of $S-B$ that contain the two ends of
+$\sigma$ (Figure~\ref{fig:rigid}). They are different, and every vertex of $U$ is in one of them. Let $x^{-}$ be the first
+vertex of $\sigma$ in $B$, seen from the end in $S^{-}$, and let $x^{+}$ be the first one seen
+from the other end. Then $x^{-}\ne x^{+}$, the vertex $x^{-}$ has a neighbour in $S^{-}$, and
+$x^{+}$ has a neighbour in $S^{+}$. Let $K^{-}$ and $K^{+}$ be the components of $M-B$ that
+contain $S^{-}$ and $S^{+}$, and put $U^{-}=U\cap V(S^{-})$.
 
-Suppose a string has at least $(h_*+2)(s+3)$ marks.
-Split these marks into $s+3$ consecutive groups of $h_*+2$ marks.
-For each group take the region between its first and last marks from Lemma~\ref{lem:strings}.
-Lift this region to the union of the sets contracted to its vertices.
-The lifted regions are connected and pairwise disjoint.
-Each contains $h_*$ disjoint cyclic sets $X_i$, so has rank at least $h_*$.
-Its boundary has at most $2d\le4D$ edges.
-At most $s$ regions meet $S$, and at most one meets $P$, since a nonempty connected $P$
-lies in one contracted set. Thus two regions remain inside $G-(P\cup S)$.
-Proposition~\ref{prop:blocks}(a) gives $q(G,P\cup S)\le\frac9{25}<\frac25$, a contradiction.
+\step{The set $B$ is small.} We claim that $|B|<15\,d(M[B])$. Suppose first that $K^{-}=K^{+}$
+or that $|U^{-}|$ is even. Then $M-B$ contains a $U$-join. Its union with a cycle of $M[B]$ would
+be a $U$-join that is not a forest. So $M[B]$ is a tree, and $|B|=d(M[B])-2$. Suppose now that
+$K^{-}\ne K^{+}$ and that $|U^{-}|$ is odd. Let $J$ be an $\{x^{-},x^{+}\}$-join of $M[B]$. Add
+an edge from $x^{-}$ to a neighbour $v^{-}$ in $K^{-}$, an edge from $x^{+}$ to a neighbour
+$v^{+}$ in $K^{+}$, a join of $K^{-}$ for the set $U^{-}$ with $v^{-}$ added or removed, and a
+join of $K^{+}$ for the set $U\sm U^{-}$ with $v^{+}$ added or removed. The result is a $U$-join
+of $M$. So $J$ is a forest, and hence a path. The vertices $x^{-}$ and $x^{+}$ have degree at
+most two in $M[B]$, and the claim is Lemma~\ref{lem:fullfive}.
 
-Count the omitted mark, the selected marks, the exceptions and the strings:
-\[
- n\le1+t+2b+2b(h_*+2)(s+3).
-\]
-Here $b\le dt$, $t<2^{d}$, $s+3\le3(s+1)$ and $h_*+2=258$. So
-$n\le2^{d}+2d\,2^{d}+1548\,d(s+1)2^{d}\le1551\,d(s+1)2^{d}$.
+An edge of $M$ that leaves $B$ starts in a vertex $v$ with $|\lambda(v)-\lambda(z_0)|=\rho$.
+There are fewer than $2W$ such vertices, and each has at most two such edges. So
+$d(M[B])<4W+d$, and the claim gives $|B|<60W+15d<2\rho+1$. This is a contradiction. So every
+segment has fewer than $2\ell_0$ edges.
+
+\step{The count.} So $S$ has fewer than $4|U|\,\ell_0\le4d\,\ell_0$ vertices. The set $V(S)$ is
+connected and contains $U$. So $M-V(S)$ is a forest, as in the first case above. Let it have $f$
+vertices. At most $|V(S)|+2$ edges join it to $S$, and a count of edge ends in the forest gives
+$f\le|V(S)|+d$. Hence $|V(M)|\le8d\,\ell_0+d\le500\,dW(W+d)$.
 \end{proof}
 
-\paragraph{Raising the girth.}
-
-\begin{theorem}[Raising the girth]\label{thm:raise}
-Let $G$ be a connected cubic multigraph and let $P$ be empty or induce a connected subgraph.
-Suppose $q(G,P)\ge\frac25$ and $G-P$ has girth at least $D_*$.
-Put $D_j=2^jD_*$ for $j\ge0$.
-There are nested sets $S_0\subseteq S_1\subseteq\cdots$ outside $P$ such that
-\begin{enumerate}
-\item[\textup{(i)}] $S_j$ is the union of a maximal family of pairwise disjoint cycles of length
-at most $D_j$ in $G-P$; hence $G-(P\cup S_j)$ has girth greater than $D_j$;
-\item[\textup{(ii)}] $\log(|S_j|+1)\le2D_j+6\log^{2}D_j$.
-\end{enumerate}
-\end{theorem}
-
-\begin{proof}
-Put $S_{-1}=\emptyset$.
-Having chosen $S_{j-1}$, take a maximal disjoint family $\mathcal Q_j$ of cycles of length
-at most $b=D_j$ in $G-(P\cup S_{j-1})$, and add its vertices to $S_{j-1}$ to form $S_j$.
-The exterior girth is at least $a=D_*$ for $j=0$, and at least $a=D_{j-1}+1$ otherwise;
-thus $b\le2a$.
-Each cycle $C$ has $|\delta V(C)|\le|C|\le b$.
-Also $q(G,P\cup S_{j-1})\ge q(G,P)\ge\frac25$.
-Proposition~\ref{prop:packing} gives
-\[
- |\mathcal Q_j|\le1551\,b(|S_{j-1}|+1)2^b,
- \qquad |S_j|+1\le1552\,b^22^b(|S_{j-1}|+1).
-\]
-The union of all families chosen so far is maximal at scale $D_j$, which proves~(i).
-For~(ii), take logarithms in the recursion. As $\log1552<11$, the step $i$ adds at most
-$D_i+2\log D_i+11$. There are $j+1\le\log D_j$ steps, and $\sum_{i\le j}D_i<2D_j$. So
-\[
- \log(|S_j|+1)\le2D_j+\log D_j\,\bigl(2\log D_j+11\bigr)\le2D_j+6\log^{2}D_j,
-\]
-because $\log D_j\ge\log7>\frac{11}4$.
-\end{proof}
-
-\subsection{Links, a second moment and a chain}\label{sec:chain}
-
-\paragraph{Components between two connected sets.}
-Lemma~\ref{lem:smallcuts} bounds the number of disjoint cyclic regions with small boundaries, and
-it needs an excess above $\half$. For components that join the same two connected sets there is a
-bound without an excess.
-
-\begin{lemma}[Parallel links]\label{lem:parallel}
-Let $\Gamma$ be a connected multigraph, let $A$ and $B$ be disjoint regions, and let $P$ be a set of
-vertices with $q(\Gamma,P)\ge\frac25$. Let $t\ge0$ be an integer. Then at most $5\cdot2^{t}$
-components $Y$ of $\Gamma-(A\cup B)$ have all of the following properties: $Y$ has an edge to $A$
-and an edge to $B$; $Y$ avoids $P$; $Y$ contains a cycle; $|\delta Y|\le t$.
+\begin{lemma}[Pieces at girth five]\label{lem:piecesfive}
+For every integer $k\ge1$ there is a number $F_0(k)$ with the following property. Let $N$ be a
+connected subcubic multigraph of girth at least five with at most $k$ boundary vertices and at
+least $F_0(k)$ vertices. Then every set of boundary vertices of even size has forest proportion
+less than $\frac35$.
 \end{lemma}
 
 \begin{proof}
-Let $Y_0,Y_1,\dots,Y_n$ be such components. For $1\le i<j\le n$ the graph $\Gamma-Y_i-Y_j$ is
-connected. Indeed, it contains the connected set $A\cup B\cup Y_0$, and every other component of
-$\Gamma-(A\cup B)$ is connected and has an edge to $A\cup B$. No edge joins $Y_i$ and $Y_j$. So the
-regions $Y_i$ and $Y_j$ have exactly one link, and by Lemma~\ref{lem:link}
-\[
-  \PP(\cO_{Y_i}\cap\cO_{Y_j})=\PP(\cO_{Y_i})\,\PP(\cO_{Y_j}).
-\]
-Let $E_i$ be the event that $\cO_{Y_i}$ holds and $\xi\cap E(\Gamma[Y_i])$ is not empty. By the last
-part of Lemma~\ref{lem:link}, the events $E_i$ and $E_j$ are independent as well, and
-$\PP(E_i)\ge2^{-t}\cdot\half$. If $n=0$, the bound holds. Otherwise let $N$ be the number of the
-events $E_1,\dots,E_n$ that occur, and put $\nu=\EE N\ge n\,2^{-t-1}>0$. Then
-$\EE N^{2}\le\nu^{2}+\nu$, and the Cauchy--Schwarz inequality gives
-\[
-  \PP(N=0)\;\le\;1-\frac{\nu^{2}}{\EE N^{2}}\;\le\;\frac1{1+\nu}.
-\]
-If $\xi\cap E(\Gamma-P)$ is a forest, then no $E_i$ occurs, because $Y_i$ avoids $P$ and a nonempty
-even subgraph is not a forest. So $\frac25\le q(\Gamma,P)\le1/(1+\nu)$. Hence $\nu\le\frac32$ and
-$n\le3\cdot2^{t}$. With $Y_0$ there are at most $3\cdot2^{t}+1$ components.
+Put $W=B(k+1)^{2}$, $h=10^{4}\,W^{3}$ and $F_0(k)=Wh\,(k+2^{Wh}+2)$. Suppose that some even set
+$T$ of boundary vertices has forest proportion at least $\frac35$. If $T$ is empty, then $N$ has
+no cycle and fewer than $2k$ vertices. In the other case fix a boundary vertex $o$, and define the
+layers as in the proof of Lemma~\ref{lem:affine}. The step ``A marker'' of that proof uses no
+girth, and it shows that each layer has fewer than $W$ vertices. So $N$ has at least
+$h\,(k+2^{Wh}+2)$ layers. Divide the layers $1,2,\dots$ into groups of $h$ consecutive layers. At
+least $2^{Wh}$ groups contain no boundary vertex. In such a group let $M$ be a component of the
+subgraph induced by the group that has a vertex $v$ in the last layer of the group. A shortest
+path from $o$ to $v$ shows that $M$ has a vertex in each layer of the group, so $|V(M)|\ge h$.
+The vertices of $M$ have degree three in $N$, and an edge that leaves $M$ starts in the first or
+in the last layer of the group. So $d(M)<4W$, and the rank of $M$ is less than $Wh$. By
+Lemma~\ref{lem:rigidpiece}, with the distance from $o$ in the place of $\lambda$, a rigid set of
+$M$ would give $|V(M)|<500\cdot4W\cdot W\cdot5W=h$. So no even set of boundary vertices of $M$ is
+rigid, and each of them has forest proportion at most $1-2^{-Wh}$. By Lemma~\ref{lem:product},
+the forest proportion of $T$ is at most $(1-2^{-Wh})^{2^{Wh}}<\half$. This is a contradiction.
 \end{proof}
 
-\begin{lemma}[Few links]\label{lem:linkshalf}
-Let $G$ be a connected cubic multigraph, and let $P$ be a nonempty set of vertices such that $G[P]$
-is connected and $q(G,P)\ge\frac25$. Let $S$ be the union of the vertex sets of a maximal family of
-pairwise disjoint cycles of length at most $D$ in $G-P$, and put $J=G-(P\cup S)$. Let
-$8\le D\le L$, and let $t$ be an integer with $1\le t\le D/4$. Then any two disjoint cycles $C,C'$
-of $J$ of length at most $L$ satisfy
+\begin{notation}{constants and short cycles for the rest of this section}
+\begin{itemize}[leftmargin=1.2em]
+\item $C_0$ and $C_1$ are as in Lemma~\ref{lem:affine}, and $F_0$ is as in
+Lemma~\ref{lem:piecesfive}.
+\item $\Lambda_0\ge7$ is a fixed integer such that every integer $d\ge\Lambda_0$ satisfies
 \[
-  \ell\bigl(V(C),V(C')\bigr)\;\le\;1+\frac{2L}{t+1}+5\cdot2^{t}+289\Bigl(\frac LD\Bigr)^{2}.
+  \bigl(C_0\log(d+2)\bigr)^{C_0+9}\le d,\qquad (d+2)^{C_0}\le2\,d^{\,C_0},\qquad d^{2}\ge20\,C_1 .
 \]
-\end{lemma}
+Then $C_0\log(d+2)\le d$.
+\item $C_2\ge4$ is a number with $C_2\ge F_0(2\Lambda)$ for $4\le\Lambda<\Lambda_0$.
+\item For an integer $\Lambda\ge4$ we put $\Phi(\Lambda)=C_1\Lambda^{4}$ if
+$\Lambda\ge\Lambda_0$, and $\Phi(\Lambda)=C_2$ if $\Lambda<\Lambda_0$.
+\item A cycle is \emph{$\Lambda$-short} if $\Lambda\ge\Lambda_0$ and its length is less than
+$C_0\log(\Lambda+2)$. So no cycle is $\Lambda$-short if $\Lambda<\Lambda_0$.
+\item For a multigraph $G$ and a set $P$ of vertices, $\nu_\Lambda(G,P)$ is the largest number
+of pairwise disjoint $\Lambda$-short cycles of $G-P$.
+\end{itemize}
+\end{notation}
+
+\begin{corollary}[Pieces]\label{cor:pieces}
+Let $\Lambda\ge4$ be an integer. Let $N$ be a connected subcubic multigraph of girth at least
+five with at most $2\Lambda$ boundary vertices, at least $\Phi(\Lambda)$ vertices and no
+$\Lambda$-short cycle. Then every even set of boundary vertices of $N$ has forest proportion
+less than $\frac35$.
+\end{corollary}
 
 \begin{proof}
-By the maximality of the family, $J$ is a simple graph of girth greater than $D$. So we are in the
-setting of Section~\ref{sec:moderate}, with $\Gamma=G$ and $U=P\cup S$. Put
-$U'=V(C)\cup V(C')$. Every vertex of $U'$ lies on exactly one edge outside its own cycle, so at
-most $2L$ edges leave $U'$. At most one component of $G-U'$ meets $P$, because $G[P]$ is connected
-and disjoint from $U'$. At most $2L/(t+1)$ components have more than $t$ edges to $U'$. Of the
-other components that are joined to both cycles, at most $5\cdot2^{t}$ contain a cycle, by
-Lemma~\ref{lem:parallel} with $A=V(C)$ and $B=V(C')$. The remaining components that are joined to
-both cycles induce trees, avoid $P$ and have at most $t$ edges to $U'$. They also avoid $S$:
-each cycle of the family is disjoint from $U'$, so it lies in one component of $G-U'$, and this
-component contains a cycle. By Lemma~\ref{lem:treelinks}, at most $289(L/D)^{2}$ links are such
-components or edges.
+If $\Lambda\ge\Lambda_0$, then $N$ has no cycle of length less than $C_0\log(\Lambda+2)$, and
+Lemma~\ref{lem:affine} applies. If $\Lambda<\Lambda_0$, then $N$ has at least
+$C_2\ge F_0(2\Lambda)$ vertices, and Lemma~\ref{lem:piecesfive} applies with $k=2\Lambda$.
 \end{proof}
 
-\paragraph{Pairs with exactly two links.}
-Let $G$, $P$, $S$, $J$, $D$ and $L$ be as in Lemma~\ref{lem:linkshalf}. As in its proof we are in
-the setting of Section~\ref{sec:moderate}. So $s=\lfloor(D-1)/2\rfloor$, the set $\mathcal{C}$
-consists of the cycles of $J$ of length at most $L$, and the numbers $a_C$, $\mu$ and $W_2$ and the
-random variables $X_C$ and $Z$ are defined there.
+\subsection{Separators}\label{sec:separators}
 
-\begin{lemma}[Two links]\label{lem:twolinks}
-Suppose that $\ell(V(C),V(C'))\le b$ for all disjoint $C,C'\in\mathcal{C}$, and put
-$\eta=2^{b}L^{3}2^{-s}$. Then
-\[
-  W_2\;\ge\;\tfrac23\,\mu^{2}-(1+\eta)\,\mu .
-\]
-\end{lemma}
-
-\begin{proof}
-By Lemma~\ref{lem:moment}, $\EE Z^{2}\le\mu^{2}+W_2+(1+\eta)\mu$. If $\xi\cap E(G-P)$ is a forest,
-then $\xi$ contains no cycle of $J$, so $Z=0$. Hence $\PP(Z\ne0)\le\frac35$. The Cauchy--Schwarz
-inequality $\mu^{2}\le\EE Z^{2}\cdot\PP(Z\ne0)$ gives $\EE Z^{2}\ge\frac53\mu^{2}$.
-\end{proof}
-
-\begin{idea}{from pairs with two links to a chain}
-By Lemma~\ref{lem:twolinks} there are many pairs of cycles with exactly two links. Let $C$ and
-$C'$ be such a pair. One of the two links avoids $p$, and then $C'$ separates a neighbour $u$ of
-$C$ from $p$. Many disjoint cycles $C'$ have this property for the same $C$ and $u$. They are
-nested (Figure~\ref{fig:chain}), and the parts between them are the pieces that we need. The
-argument requires that $C'$ lies in the component of $p$ in $G-V(C)$. By symmetry, at least half
-of the weight of the pairs with two links has this property.
+\begin{idea}{two links give a separator}
+If two disjoint connected sets have exactly two links, then one of them separates a neighbour of
+the other one from a fixed vertex $p$. Disjoint sets that separate the same two vertices are
+nested, and the parts between them have small boundaries (Figure~\ref{fig:chain}). So a long
+chain of such sets contains two pieces without a short cycle.
 \end{idea}
-
-\paragraph{Separators are nested.}
 
 \begin{lemma}[Nested separators]\label{lem:nested}
 Let $u$ and $p$ be two vertices of a connected graph $H$. Let $C_1$ and $C_2$ be disjoint connected
@@ -485,180 +331,35 @@ $U_2\subseteq U_1$.
 \end{lemma}
 
 \begin{proof}
-Take a path from $u$ to $p$, and let $z$ be its last vertex before the first vertex in $C_1$. The
-part of the path up to $z$ lies in $U_1$. In the same way there is a path from $p$ to a vertex next
-to $C_1$ that avoids $C_1$. The set $C_2$ is connected and disjoint from $C_1$, so it lies in one
-component of $H-C_1$. If this component is neither $U_1$ nor the component of $p$, then the two
-partial paths and a path inside $C_1$ form a walk from $u$ to $p$ that avoids $C_2$. This is
-impossible. So $C_2$ lies in $U_1$ or in the component of $p$ in $H-C_1$, and the same holds with
-the indices exchanged.
-
-Suppose that $C_2$ lies in the component of $p$ in $H-C_1$. Then $C_2$ avoids $U_1$. So every
-vertex of $U_1$ is joined to $u$ outside $C_2$, and so is every vertex of $C_1$, through $z$ and
-the connected set $C_1$. Hence $U_1\cup C_1\subseteq U_2$. If $C_2$ lies in $U_1$ and $C_1$ lies in
-$U_2$, then the path from $p$ to a vertex next to $C_1$, a path inside $C_1$, and a path inside
-$U_2$ from $C_1$ to $u$ give a walk from $p$ to $u$ outside $C_2$. This is impossible. So if $C_2$
-lies in $U_1$, then $C_1$ lies in the component of $p$ in $H-C_2$, and
-$U_2\cup C_2\subseteq U_1$ by the first case with the indices exchanged. The two alternatives
-exclude each other, because $C_1\subseteq U_2$ and $U_2\subseteq U_1$ would give
-$C_1\subseteq U_1$.
+Let $W_i$ be the vertex set of the component of $p$ in $H-C_i$. Some edge joins $U_i$ to $C_i$,
+and some edge joins $W_i$ to $C_i$, because $H$ is connected. The set $C_2$ is connected and
+disjoint from $C_1$, so it lies in one component of $H-C_1$. If this component is not $U_1$, then
+$U_1\cup C_1$ is a connected set that contains $u$ and avoids $C_2$, so $U_1\cup C_1\subseteq U_2$.
+This is the first alternative. If $C_2\subseteq U_1$, then $W_1\cup C_1$ is a connected set that
+contains $p$ and avoids $C_2$, so $W_1\cup C_1\subseteq W_2$. Then $U_2\cup C_2$ is a connected
+set that contains $u$ and avoids $C_1$, so $U_2\cup C_2\subseteq U_1$. This is the second
+alternative. The two alternatives exclude each other, because
+$C_1\subseteq U_2$ and $U_2\subseteq U_1$ would give $C_1\subseteq U_1$.
 \end{proof}
 
 So a family of pairwise disjoint connected sets that separate $u$ from $p$ is linearly ordered:
 write $C_1<C_2$ in the first case of the lemma. The order is transitive, because it is the order
 of the sets $U_i$ by inclusion.
 
-\begin{lemma}[Blocks]\label{lem:blocks}
-In the situation of Lemma~\ref{lem:nested}, let $C_1<C_2$ and put
-$X=U_2\sm(U_1\cup C_1)$. Then every edge of $H$ that leaves $X$ ends in $C_1$ or in $C_2$. If
-$C_1<C<C_2$ for a third set $C$ of the family, then $C\subseteq X$. If $C_1<C_2\le C_3<C_4$, then
-the sets $U_2\sm(U_1\cup C_1)$ and $U_4\sm(U_3\cup C_3)$ are disjoint.
-\end{lemma}
-
-\begin{proof}
-An edge that leaves $U_2$ ends in $C_2$, because $U_2$ is a component of $H-C_2$. No edge joins
-$X$ to $U_1$: its end in $X$ would lie in the component $U_1$ of $H-C_1$. So an edge from $X$ to
-$U_1\cup C_1$ ends in $C_1$. For the second statement,
-$C\subseteq U_2$, and $C$ avoids $U_1\cup C_1$ because $U_1\cup C_1\subseteq U_C$, the component of
-$u$ in $H-C$. For the third, $U_2\subseteq U_3$.
-\end{proof}
-
-\paragraph{The chain.}
-
-\begin{lemma}[Chain]\label{lem:chain}
-In the situation of Lemma~\ref{lem:twolinks}, suppose that
-\[
-  \mu>30,\qquad\eta\le\frac12,\qquad L^{2}2^{-s}\le\frac12 .
-\]
-Fix a vertex $p\in P$. Then there are a cycle $C\in\mathcal C$, a vertex $u\notin V(C)$ that has a
-neighbour on $C$, and pairwise disjoint cycles $C_1,\dots,C_T\in\mathcal C$ with
-\[
-  T\;\ge\;\frac{8\cdot2^{s}}{L^{3}},
-\]
-such that each $C_i$ is disjoint from $C$ and avoids $u$, and $u$ and $p$ lie in the same component
-of $G-V(C)$ and in different components of $G-V(C)-V(C_i)$.
-\end{lemma}
-
-\begin{proof}
-For disjoint $C,C'\in\mathcal C$ say that $C'$ is \emph{far behind} $C$ if $C'$ does not lie in the
-component of $p$ in $G-V(C)$. This relation is antisymmetric. Let $C'$ be far behind $C$. A path
-from $p$ to its first vertex on $C$ stays in the component of $p$ in $G-V(C)$ before it ends. So it
-avoids $C'$. As $C$ is connected and disjoint from $C'$, all of $C$ lies in the component of $p$ in
-$G-V(C')$. So $C$ is not far behind $C'$. Hence the ordered pairs $(C,C')$ with $C'$ far behind $C$
-have total weight at most $W_2/2$ when restricted to the exactly-two-link pairs.
-Indeed, the two-link relation is symmetric and opposite orientations have the same weight;
-at most one orientation is far behind.
-
-Fix $C$. Every vertex of $C$ has exactly one edge end outside $C$, so at most $L$ vertices outside
-$C$ have a neighbour on $C$. A cycle $C'$ that is joined to $C$ by an edge passes through one of
-them. By~\eqref{eq:load} these cycles have total weight at most $L^{2}2^{-s}\le\half$. So the
-ordered pairs of disjoint cycles that are joined by an edge have total weight at most $\mu/2$.
-
-Call an ordered pair $(C,C')$ \emph{good} if the cycles are disjoint, have exactly two links, are
-not joined by an edge, and $C'$ is not far behind $C$. By Lemma~\ref{lem:twolinks} and the two
-bounds above, the good pairs have total weight at least $W_2/2-\mu/2$, hence at least
-\[
-  \frac13\mu^2-\left(1+\frac\eta2\right)\mu
-  \;>\;\left(10-\frac54\right)\mu\;>\;8\mu .
-\]
-So for some $C\in\mathcal C$ the cycles $C'$ with $(C,C')$ good have total weight more than $8$.
-Fix this $C$, and put $H=G-V(C)$.
-
-Let $(C,C')$ be good. The two links are components $Y_1,Y_2$ of $G-V(C)-V(C')$ that are joined to
-both cycles, because no edge joins the cycles. The vertex $p$ lies in at most one of them. So one of
-them, say $Y$, avoids $p$. Let $u$ be a vertex of $Y$ with a neighbour on $C$. The cycle $C'$ lies
-in the component of $p$ in $H$, and $Y$ is connected and joined to $C'$. So $u$ lies in that
-component as well. The set $Y$ is a component of $H-V(C')$ that contains $u$ and not $p$. So $C'$
-separates $u$ from $p$ in $H$.
-
-There are at most $L$ choices for $u$. So for some vertex $u$ the cycles $C'$ that separate $u$
-from $p$ in $H$, as above, have total weight at least $8/L$. Take a maximal family
-$C_1,\dots,C_T$ of pairwise disjoint cycles among them. Every cycle of the collection meets one of
-the at most $TL$ vertices of the family. By~\eqref{eq:load},
-\[
-  \frac8L\;\le\;TL\cdot L\,2^{-s}.\qedhere
-\]
-\end{proof}
-
-\subsection{Proof of Theorem~\ref{thm:half}}\label{sec:halfproof}
-
-Let $D_*$ and $C_0$ be as in Lemma~\ref{lem:affine}. Let $G$ and $P$ be as in the theorem, and
-suppose that $q(G,P)\ge\frac25$. We derive a contradiction when $r$ is large. All limits below are
-for $r\to\infty$, and they are uniform in $G$ and $P$. Put
-\[
-  x=\log r,\qquad z=\log x,\qquad A=6\,e^{124},\qquad L=\lfloor Ax\rfloor,\qquad
-  t=\lfloor z-2\log z\rfloor .
-\]
-
-\paragraph{Two girth scales.}
-Let $D_j=2^{j}D_{*}$ and let $S_0\subseteq S_1\subseteq\cdots$ be the sets of
-Theorem~\ref{thm:raise}. Let $D^{-}$ be the first $D_j$ that is at least $\sqrt x$, and let $D^{+}$
-be the first $D_j$ that is at least $x/16$. For large $r$,
-\[
-  \sqrt x\le D^{-}<2\sqrt x,\qquad \frac x{16}\le D^{+}<\frac x8,\qquad D^{-}<D^{+}.
-\]
-Let $S^{-}\subseteq S^{+}$ be the corresponding sets, and put $J^{\pm}=G-(P\cup S^{\pm})$. Then
-$J^{-}$ has girth greater than $D^{-}$, $J^{+}$ has girth greater than $D^{+}$, and
-$J^{+}\subseteq J^{-}$. By Theorem~\ref{thm:raise}(ii),
-\begin{equation}\label{eq:twosizes}
-  |S^{-}|\;\le\;2^{4\sqrt x+6\log^{2}(2\sqrt x)}=r^{o(1)},\qquad
-  |S^{+}|\;\le\;2^{x/4+6\log^{2}x}=r^{1/4+o(1)}.
-\end{equation}
-We use the small scale $D^{-}$ for the girth of the final pieces, and the large scale $D^{+}$
-for a long chain.
-
-\paragraph{Cycles at the large scale.}
-We apply Section~\ref{sec:chain} with $S=S^{+}$, $J=J^{+}$, $D=D^{+}$ and
-$s=\lfloor(D^{+}-1)/2\rfloor\ge x/32-1$. The hypotheses of Lemma~\ref{lem:linkshalf} hold for large
-$r$: $8\le D^{+}\le L$ and $1\le t\le z\le D^{+}/4$. So every two disjoint cycles of $J^{+}$ of
-length at most $L$ have at most
-\[
-  b\;=\;1+\frac{2L}{t+1}+5\cdot2^{t}+289\Bigl(\frac L{D^{+}}\Bigr)^{2}
-  \;\le\;1+\frac{2Ax}{z-2\log z}+\frac{5x}{z^{2}}+289\,(16A)^{2}\;\le\;\frac{3Ax}{z}
-\]
-links. Hence
-\[
-  \eta=2^{b}L^{3}2^{-s}\;\le\;r^{3A/z}\,(Ax)^{3}\,2\,r^{-1/32}=r^{-1/32+o(1)}=o(1),
-  \qquad L^{2}2^{-s}=o(1).
-\]
-
-The graph $J^{+}$ has $v=2r-2-|P|-|S^{+}|=2r-o(r)$ vertices, and its deficit is
-$d_J\le3(|P|+|S^{+}|)=r^{1/4+o(1)}$. Let $\mu$ be the total weight of its cycles of length at most
-$L$. By Lemma~\ref{lem:weight} with $\ell_0=\lceil6x\rceil$,
-\[
-  \Bigl(1+\tfrac32\,L^{2}\,2^{-s}\Bigr)\,\mu\;\ge\;
-  \Bigl(1-\frac{L\,d_J}{2v}-3v\,r^{-3}\Bigr)\sum_{\ell}\frac1{2\ell},
-\]
-where the sum is over the even $\ell$ with $6x\le\ell\le L$. This sum is
-$(\frac14-o(1))\ln(A/6)=31-o(1)$, and the two factors in brackets are $1+o(1)$. Thus $\mu>30$ for
-large $r$.
-
-\paragraph{The chain.}
-Fix $p\in P$. For large $r$ the hypotheses of Lemma~\ref{lem:chain} hold. So there are a cycle $C$
-of $J^{+}$ of length at most $L$, a vertex $u$, and pairwise disjoint cycles $C_1,\dots,C_T$ of
-$J^{+}$ of length at most $L$ with
-\[
-  T\;\ge\;\frac{8\cdot2^{s}}{L^{3}}\;\ge\;\frac{4}{A^{3}}\cdot\frac{r^{1/32}}{x^{3}},
-\]
-such that each $C_i$ separates $u$ from $p$ in $G-V(C)$. Let $H$ be the component of $G-V(C)$
-that contains $u$ and $p$. Each $V(C_i)$ is connected and separates $u$ from $p$, so it lies in $H$.
-By Lemma~\ref{lem:nested} we may number the cycles so that $C_1<C_2<\dots<C_T$. Let $U_i$ be the
-vertex set of the component of $u$ in $H-V(C_i)$.
-
 \begin{figure}[ht]
 \centering
 \begin{tikzpicture}[x=1cm,y=1cm]
-  % the cycle C and the vertex u
+  % the region A and the vertex u
   \draw[hot] (0,0) ellipse [x radius=0.32, y radius=0.95];
-  \node[note, text=warm] at (0,1.25) {$C$};
+  \node[note, text=warm] at (0,1.25) {$A$};
   \node[vtx] (u) at (0.85,0.25) {};
   \draw[edge] (0.31,0.25)--(u);
   \node[note, above=2pt] at (u) {$u$};
   % blocks
   \fill[accent!10] (2.4,-1.0) rectangle (5.2,1.0);
   \fill[accent!10] (5.8,-1.0) rectangle (8.6,1.0);
-  \node[note, text=accent] at (3.8,-1.3) {the block $X_0$};
-  \node[note, text=accent] at (7.2,-1.3) {the block $X_1$};
+  \node[note, text=accent] at (3.8,-1.3) {a block};
+  \node[note, text=accent] at (7.2,-1.3) {a block};
   % separating cycles
   \foreach \x in {2.1,5.5,8.9} \draw[cool] (\x,0) ellipse [x radius=0.26, y radius=0.95];
   \foreach \x in {2.9,3.5,4.1,4.7,6.3,6.9,7.5,8.1,9.7,10.3}
@@ -674,43 +375,237 @@ vertex set of the component of $u$ in $H-V(C_i)$.
   \node[note, above=7pt] at (12.2,0.3) {$p\in P$};
   \draw[slate!60, line width=0.4pt, dash pattern=on 2pt off 2pt] (u)--(1.8,0.25) (11.3,0.05)--(pp);
 \end{tikzpicture}
-\caption{The chain of Lemma~\ref{lem:chain}. Each cycle $C_i$ separates $u$ from $p$ in $G-V(C)$, so
-the cycles are nested. Every $w$-th cycle is the end of a block. A block has many vertices and at
-most $2L$ boundary edges.}
+\caption{Nested separators. Each set $C_i$ separates the vertex $u$ from $p$ in the graph
+without the region $A$. So the sets $C_i$ are nested (Lemma~\ref{lem:nested}). Every $w$-th set is the end of a block, and the edges that leave a
+block end in its two end sets (proof of Proposition~\ref{prop:chain}).}
 \label{fig:chain}
 \end{figure}
 
-\paragraph{Blocks.}
-Put $w=\lceil128A^{2}x\rceil+2$. For $l=0,1,\dots$ with $(l+1)w\le T-1$ let
+\begin{proposition}[A long chain]\label{prop:chain}
+Let $G$ be a connected cubic multigraph, and let $P$ be a nonempty set of vertices such that
+$G[P]$ is connected and $G-P$ has girth at least five. Let $p\in P$, let $A$ be a region that
+avoids $P$, and let $u\notin A$ be a vertex in the component of $p$ in $G-A$. Let $C_1,\dots,C_T$
+be pairwise disjoint regions that avoid $P$, $A$ and $u$ and separate $u$ from $p$ in $G-A$. Let
+$\Lambda\ge4$ be an integer and $m\ge1$ a number such that $A$ and every $C_i$ have at most
+$\Lambda$ boundary edges, and every $C_i$ has at least $m$ vertices. If
 \[
-  X_l\;=\;U_{(l+1)w+1}\sm\bigl(U_{lw+1}\cup V(C_{lw+1})\bigr).
+  T\;>\;\bigl(\Lambda+\nu_\Lambda(G,P)+2\bigr)\bigl(\lceil2\Lambda\,\Phi(\Lambda)/m\rceil+1\bigr),
 \]
-There are at least $\lfloor(T-1)/w\rfloor\ge r^{1/32}/x^{5}$ such sets, for large $r$. By
-Lemma~\ref{lem:blocks} they are pairwise disjoint. Each contains the $w-1$ cycles between its two
-end cycles. These cycles are pairwise disjoint and each has more than $D^{+}$ vertices, so
-\[
-  |X_l|\;\ge\;(w-1)(D^{+}+1)\;\ge\;128A^{2}x\cdot\frac x{16}=8A^{2}x^{2}\;\ge\;8L^{2}.
-\]
-Every edge of $H$ that leaves $X_l$ ends on one of its two end cycles. An end cycle has at most $L$
-vertices, and each of them has one edge end outside the cycle. So at most $2L$ edges of $H$ leave
-$X_l$.
+then $q(G,P)\le\frac9{25}$.
+\end{proposition}
 
-\paragraph{Clean blocks.}
-Discard a set $X_l$ if it contains a vertex with a neighbour on $C$, or a vertex of $S^{-}$. At most
-$L$ vertices outside $C$ have a neighbour on $C$, so this discards at most
-$L+|S^{-}|=r^{o(1)}$ sets. For large $r$ at least two sets remain. Let $X$ be one of them.
-\begin{itemize}
-\item $X$ avoids $P$. The set $P$ is connected and disjoint from the cycles, and it contains $p$,
-which is not in $U_i$ for any $i$. A path in $G[P]$ from $p$ to a vertex of $U_i$ would have to pass
-through $C_i$ or through $C$.
-\item No edge of $G$ joins $X$ to $V(C)$, and $H$ is a component of $G-V(C)$. So the edges of $G$
-that leave $X$ are edges of $H$, and $|\delta X|\le2L$.
-\item $X$ avoids $P\cup S^{-}$, so $G[X]$ is a subgraph of $J^{-}$, and its girth is greater than
-$D^{-}$.
-\end{itemize}
+\begin{proof}
+Each $C_i$ is connected and separates $u$ from $p$ in $G-A$. So it lies in the component $H$ of
+$G-A$ that contains $u$ and $p$. By Lemma~\ref{lem:nested} we may assume that
+$C_1<C_2<\dots<C_T$. Let $U_i$ be the vertex set of the component of $u$ in $H-C_i$. Then
+$U_i\cup C_i\subseteq U_j$ for $i<j$.
+
+\step{Blocks.} For $i<j$ put $X_{ij}=U_j\sm(U_i\cup C_i)$. An edge of $H$ that leaves $U_j$ ends
+in $C_j$, because $U_j$ is a component of $H-C_j$. No edge joins $X_{ij}$ to $U_i$: its end in
+$X_{ij}$ would lie in the component $U_i$ of $H-C_i$. So every edge of $H$ that leaves $X_{ij}$
+ends in $C_i$ or in $C_j$. If $i<l<j$, then $C_l\subseteq U_j$, and $C_l$ avoids
+$U_i\cup C_i\subseteq U_l$; so $C_l\subseteq X_{ij}$. If $i<j\le i'<j'$, then
+$X_{ij}\subseteq U_j\subseteq U_{i'}$ is disjoint from $X_{i'j'}$.
+
+Put $w=\lceil2\Lambda\,\Phi(\Lambda)/m\rceil+1$, and let $Y_l=X_{lw+1,\,(l+1)w+1}$ for
+$l=0,1,\dots$ with $(l+1)w\le T-1$. These sets are pairwise disjoint, each contains $w-1$ of the
+sets $C_i$, and every edge of $H$ that leaves $Y_l$ ends in one of its two end sets. So
+$|Y_l|\ge(w-1)m\ge2\Lambda\,\Phi(\Lambda)$, and at most $2\Lambda$ edges of $H$ leave $Y_l$.
+
+There are at least $\Lambda+\nu+2$ sets $Y_l$, where $\nu=\nu_\Lambda(G,P)$. The set $P$ is
+connected, it contains $p$, and it is disjoint from $A$ and from the sets $C_i$. So $P$ lies in
+the component of $p$ in $H-C_i$ for every $i$, and every $Y_l$ avoids $P$. Discard $Y_l$ if it
+contains a vertex with a neighbour in $A$, or if $G[Y_l]$ contains a $\Lambda$-short cycle. The
+sets $Y_l$ are pairwise disjoint, so this discards at most $\Lambda+\nu$ sets, and two sets
+remain. Let $Y$ be one of them. The edges of $G$ that leave $Y$ are edges of $H$, so
+$|\delta Y|\le2\Lambda$.
+
+\step{Pieces.} Every component of $G[Y]$ has an edge that leaves $Y$. So there are at most
+$2\Lambda$ components, and one of them has a vertex set $Y'$ with at least $\Phi(\Lambda)$
+vertices. A boundary vertex of $G[Y']$ is an end of an edge of $\delta Y$, so there are at most
+$2\Lambda$ of them, and $G[Y']$ has girth at least five and no $\Lambda$-short cycle. So every
+even set of boundary vertices of $G[Y']$ has forest proportion less than $\frac35$, by
+Corollary~\ref{cor:pieces}.
+Lemma~\ref{lem:product}, for the two sets $Y'$, gives $q(G,P)\le\frac9{25}$.
+\end{proof}
+
+\begin{lemma}[Two links]\label{lem:sep}
+Let $G$ be a connected multigraph, and let $p$ be a vertex. Let $\mathcal A$ be a finite family of
+regions that avoid $p$, with weights $w_A\ge0$ of total $\mu$. Let $W_2$ be the sum of
+$w_Aw_{A'}$ over the ordered pairs $(A,A')$ of disjoint regions of $\mathcal A$ with
+$\ell(A,A')=2$. Let $N$, $e$ and $M$ be numbers such that the following holds for every
+$A\in\mathcal A$. At most $N$ vertices outside $A$ have a neighbour in $A$. The regions of
+$\mathcal A$ that are disjoint from $A$ and joined to $A$ by an edge have total weight at most
+$e$. For every vertex $u\notin A$ in the component of $p$ in $G-A$, the regions of $\mathcal A$
+that are disjoint from $A$, avoid $u$, and separate $u$ from $p$ in $G-A$ have total weight at
+most $M$. Then
+\[
+  W_2\;\le\;2\mu\,(e+NM).
+\]
+\end{lemma}
+
+\begin{proof}
+Let $A,A'\in\mathcal A$ be disjoint. Then $A'$ lies in the component of $p$ in $G-A$, or $A$ lies
+in the component of $p$ in $G-A'$. Indeed, suppose that the first statement is false. A path from
+$p$ to its first vertex in $A$ stays in the component of $p$ in $G-A$ before it ends, so it avoids
+$A'$. As $A$ is connected and disjoint from $A'$, all of $A$ lies in the component of $p$ in
+$G-A'$.
+
+Call an ordered pair $(A,A')$ \emph{good} if the regions are disjoint, $\ell(A,A')=2$, no edge
+joins them, and $A'$ lies in the component of $p$ in $G-A$. By the last paragraph, the pairs with
+the first, the second and the fourth property have total weight at least $W_2/2$. The pairs that
+are joined by an edge have total weight at most $e\mu$. So the good pairs have total weight at
+least $W_2/2-e\mu$.
+
+Let $(A,A')$ be good. No edge joins the two regions, so the two links are components $Y_1,Y_2$ of
+$G-A-A'$ that are joined to both. The vertex $p$ lies in at most one of them. Let $Y$ be one that
+avoids $p$, and let $u$ be a vertex of $Y$ with a neighbour in $A$. The set $Y$ is connected and
+joined to $A'$, and $A'$ lies in the component of $p$ in $G-A$. So $u$ lies in that component as
+well. And $Y$ is a component of $G-A-A'$ that contains $u$ and not $p$. So $A'$ avoids $u$ and
+separates $u$ from $p$ in $G-A$. For a given $A$ there are at most $N$ vertices $u$ outside $A$
+with a neighbour in $A$, and for each of them these regions $A'$ have total weight at most $M$.
+So the good pairs have total weight at most $\mu NM$, and $W_2/2-e\mu\le\mu NM$.
+\end{proof}
+
+\begin{proposition}[Heavy families]\label{prop:heavy}
+Let $G$ be a connected cubic multigraph, and let $P$ be a nonempty set of vertices such that
+$G[P]$ is connected, $G-P$ has girth at least five, and $q(G,P)\ge\frac25$. Let $\mathcal A$ be a
+finite family of regions that avoid $P$, with weights $w_A\ge0$ of total $\mu$, and let $W_2$ be
+as in Lemma~\ref{lem:sep}. Let $\Lambda\ge4$ be an integer, and let $m\ge1$, $\kappa>0$ and
+$K\ge0$ be numbers such that
+\begin{enumerate}
+\item[\textup{(a)}] every region of $\mathcal A$ has at most $\Lambda$ boundary edges and at
+least $m$ vertices;
+\item[\textup{(b)}] for every $A\in\mathcal A$, the regions of $\mathcal A$ that meet $A$ have
+total weight at most $\kappa$;
+\item[\textup{(c)}] some random variable $Z\ge0$ has $\EE Z=\mu$ and
+$\EE Z^{2}\le\mu^{2}+W_2+K\mu$, and $Z=0$ whenever $\xi\cap E(G-P)$ is a forest.
+\end{enumerate}
+Then
+\[
+  \mu\;\le\;\tfrac32K+3\Lambda\kappa\,\bigl(\Lambda+\nu_\Lambda(G,P)+3\bigr)
+  \bigl(\lceil2\Lambda\,\Phi(\Lambda)/m\rceil+1\bigr).
+\]
+\end{proposition}
+
+\begin{proof}
+Put $\nu=\nu_\Lambda(G,P)$ and $w=\lceil2\Lambda\,\Phi(\Lambda)/m\rceil+1$. Fix $p\in P$. We apply
+Lemma~\ref{lem:sep}. Let $A\in\mathcal A$. By~(a), at most $\Lambda$ vertices outside $A$ have a
+neighbour in $A$, and a region that is joined to $A$ by an edge contains one of them. The
+regions of $\mathcal A$ that contain a given vertex all meet one of them, so their total weight
+is at most $\kappa$ by~(b). Hence we may take $N=\Lambda$ and $e=\Lambda\kappa$. Let $u\notin A$
+be a vertex in the component of $p$ in $G-A$, and consider the regions of $\mathcal A$ that are
+disjoint from $A$, avoid $u$, and separate $u$ from $p$ in $G-A$. Take a maximal family
+$C_1,\dots,C_T$ of pairwise disjoint regions among them. Each of these regions meets some $C_i$,
+so their total weight is at most $T\kappa$ by~(b). As $q(G,P)>\frac9{25}$,
+Proposition~\ref{prop:chain} gives $T\le(\Lambda+\nu+2)\,w$. So we may take
+$M=(\Lambda+\nu+2)\,w\kappa$, and the lemma gives $W_2\le2\mu\Lambda\kappa\,(\Lambda+\nu+3)\,w$.
+
+By~(c), $\PP(Z\ne0)\le1-q(G,P)\le\frac35$, and the Cauchy--Schwarz inequality
+$\mu^{2}\le\EE Z^{2}\cdot\PP(Z\ne0)$ gives $\mu^{2}\le\frac35(\mu^{2}+W_2+K\mu)$. So
+$\mu\le\frac32(K+W_2/\mu)$ if $\mu>0$, and this is the claim.
+\end{proof}
+
+\subsection{Packing of short cycles}\label{sec:packing}
+
+\begin{idea}{the purpose of the packing bound}
+The second-moment argument requires a graph of girth about $\log r$. So we delete a maximal
+family of disjoint short cycles, and we need a bound for the size of this family.
+Lemma~\ref{lem:smallcuts} gives such a bound only when the proportion of forests exceeds one half
+by a fixed margin. Here Proposition~\ref{prop:heavy} gives a bound for the cycles of length at
+most $d$. For large $d$ it contains the number of disjoint cycles of length about $\log d$, and
+for this number we use induction.
+\end{idea}
+
+\begin{proposition}[Packing]\label{prop:packing}
+Let $G$ be a connected cubic multigraph, and let $P$ be a nonempty set of vertices such that
+$G[P]$ is connected. Suppose that $q(G,P)\ge\frac25$ and that $G-P$ has girth at least five. Let
+$d\ge5$ be an integer, and put $C_3=8C_2$. Then
+\begin{enumerate}
+\item[\textup{(i)}] $G-P$ has at most $C_3\,2^{d}d^{\,C_0+9}$ pairwise disjoint cycles of length
+at most $d$;
+\item[\textup{(ii)}] $\nu_d(G,P)\le2\,C_3\,d^{\,C_0+1}$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+We use induction on $d$. Suppose that~(i) holds for every smaller integer that is at least five.
+
+\step{The shorter cycles.} If $d<\Lambda_0$, no cycle is $d$-short. Let $d\ge\Lambda_0$, and let
+$g$ be the largest integer that is less than $C_0\log(d+2)$. Then $g<d$, and a cycle is $d$-short
+if and only if its length is at most $g$. If $g<5$, then $G-P$ has no such cycle. Otherwise~(i)
+for $g$ and the choice of $\Lambda_0$ give
+\[
+  \nu_d(G,P)\;\le\;C_3\,2^{g}g^{\,C_0+9}\;\le\;C_3\,(d+2)^{C_0}\bigl(C_0\log(d+2)\bigr)^{C_0+9}
+  \;\le\;2\,C_3\,d^{\,C_0+1}.
+\]
+This is~(ii).
+
+\step{The cycles of length at most $d$.} Let $Q_1,\dots,Q_n$ be pairwise disjoint cycles of
+length at most $d$ in $G-P$, and put $X_i=V(Q_i)$. Every vertex of $Q_i$ lies on exactly one edge
+outside $Q_i$, and $Q_i$ has at least five vertices. So $X_i$ is a cyclic region with at most $d$
+boundary edges and at least five vertices. Let $E_i$ be the event that $\cO_{X_i}$ holds and
+$\xi\cap E(G[X_i])\ne\emptyset$. Put $p_i=\PP(E_i)$, let $Z$ be the number of the events $E_i$
+that occur, and put $\mu=\EE Z$. By Lemma~\ref{lem:link},
+$p_i=\PP(\cO_{X_i})\bigl(1-2^{-\beta(G[X_i])}\bigr)\ge2^{-d-1}$ and
+$\PP(E_i\cap E_j)=2^{\ell(X_i,X_j)-1}p_ip_j$ for $i\ne j$. If $\ell(X_i,X_j)\ge3$, we use
+$\PP(E_i\cap E_j)\le p_i$; by Lemma~\ref{lem:exc} this happens for at most $d$ indices $j$, for
+each $i$. Let $W_2$ be the sum of $p_ip_j$ over the ordered pairs $(i,j)$ with
+$\ell(X_i,X_j)=2$. Then $\EE Z^{2}\le\mu^{2}+W_2+(d+1)\mu$. If $\xi\cap E(G-P)$ is a forest,
+then no event $E_i$ occurs, and $Z=0$.
+
+So Proposition~\ref{prop:heavy} applies to the sets $X_i$ with the weights $p_i$, and with
+$\Lambda=d$, $m=5$, $\kappa=1$ and $K=d+1$; property~(b) holds because the sets are pairwise
+disjoint and $p_i\le1$. If $d<\Lambda_0$, then $\nu_d(G,P)=0$ and $\Phi(d)=C_2$, so
+\[
+  \mu\;\le\;\tfrac32(d+1)+3d\,(d+3)\bigl(\lceil2dC_2/5\rceil+1\bigr)\;\le\;4\,C_2\,d^{3},
+\]
+and $n\le2^{d+1}\mu\le C_3\,2^{d}d^{3}$. If $d\ge\Lambda_0$, then
+$\lceil2C_1d^{5}/5\rceil+1\le C_1d^{5}$ and $d+3\le d^{\,C_0+1}$. With~(ii),
+\[
+  \mu\;\le\;\tfrac32(d+1)+3d\,\bigl(d+3+2\,C_3\,d^{\,C_0+1}\bigr)\,C_1d^{5}
+  \;\le\;10\,C_1C_3\,d^{\,C_0+7}.
+\]
+Hence $n\le2^{d+1}\mu\le20\,C_1C_3\,2^{d}d^{\,C_0+7}\le C_3\,2^{d}d^{\,C_0+9}$, by the choice of
+$\Lambda_0$. This is~(i).
+\end{proof}
+
+\subsection{Proof of Theorem~\ref{thm:half}}\label{sec:halfproof}
+
+Let $G$ and $P$ be as in the theorem, and suppose that $q(G,P)\ge\frac25$. We derive a
+contradiction when $r$ is large. All limits below are for $r\to\infty$, and they are uniform in
+$G$ and $P$. Put
+\[
+  x=\log r,\qquad A=6\,e^{9},\qquad L=\lfloor Ax\rfloor,\qquad D=\lceil x/16\rceil .
+\]
+
+\paragraph{Cycles of moderate length.}
+Let $S$ be the union of the vertex sets of a maximal family of pairwise disjoint cycles of length
+at most $D$ in $G-P$. By Proposition~\ref{prop:packing}(i),
+$|S|\le C_3\,2^{D}D^{\,C_0+10}\le r/x^{2}$ for large $r$. We use
+Proposition~\ref{prop:loggirth} for $\Gamma=G$, $P$, $D$, $L$ and $S$. Its hypotheses hold for
+large $r$: the set $P$ has at most $3x$ vertices and $G[P]$ is connected, $x/16\le D\le x/8$, and
+$7x\le L\le x\sqrt{\log x}$. Let $J=G-(P\cup S)$, $\mathcal C$, $a_C$, $\mu$, $W_2$ and $Z$ be as
+in the proposition, and put $\eta=r^{-1/60}$. Then
+\[
+  \mu\;\ge\;\frac14\ln\frac{L}{6x}-\frac1{\sqrt x}\;>\;2,\qquad
+  \EE Z^{2}\;\le\;\mu^{2}+W_2+(1+\eta)\mu .
+\]
+The bound $\mu>2$ holds because $L/(6x)\ge e^{9}-1$.
 
 \paragraph{The contradiction.}
-Two of the remaining sets satisfy the hypotheses of Proposition~\ref{prop:blocks}(b) with
-$\Lambda=L$ and $D=D^{-}$: they are disjoint, they avoid $P$, each has at least $8L^{2}$ vertices
-and at most $2L$ boundary edges, and $D^{-}\ge\sqrt x\ge C_0\log(L+2)$ for large $r$. Thus
-$q(G,P)\le\frac9{25}<\frac25$. This contradiction proves Theorem~\ref{thm:half}. \qed
+We apply Proposition~\ref{prop:heavy} to the vertex sets of the cycles of $\mathcal C$, with the
+weights $a_C$, and with $\Lambda=L$, $m=x/16$, $\kappa=\eta$ and $K=1+\eta$. A cycle
+$C\in\mathcal C$ has at most $L$ vertices, each of them has one edge end outside $C$, and the
+girth of $J$ is greater than $D\ge x/16$, by part~(i) of Proposition~\ref{prop:loggirth}. So
+$V(C)$ has at most $L$ boundary edges and at least $x/16$ vertices; this is~(a). A cycle of
+$\mathcal C$ that meets $C$ passes through one of the at most $L$ vertices of $C$, so~(b) holds
+by part~(ii). If $\xi\cap E(G-P)$ is a forest, then $\xi$ contains no cycle of $J$, and $Z=0$
+by part~(iv); this is~(c). For large $r$ we have
+$\Phi(L)=C_1L^{4}$, and $\nu_L(G,P)\le2C_3L^{C_0+1}$ by Proposition~\ref{prop:packing}(ii). So
+\[
+  \mu\;\le\;\tfrac32(1+\eta)+3L\eta\,\bigl(L+2C_3L^{C_0+1}+3\bigr)
+  \bigl(\lceil32C_1L^{5}/x\rceil+1\bigr)\;=\;\tfrac32+o(1),
+\]
+because $L\le Ax$ and $\eta=r^{-1/60}$. This contradicts $\mu>2$, and
+Theorem~\ref{thm:half} is proved. \qed

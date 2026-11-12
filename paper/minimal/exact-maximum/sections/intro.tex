@@ -76,7 +76,7 @@ Petersen graph has rank $27$, and a direct count by computer gives $67\,959\,973
 $H(27)=67\,325\,913$.
 \end{fineprint}
 
-\subsection{The five cases of the proof}
+\subsection{The three cases of the proof}
 
 The number of cycles does not change when we delete a vertex of degree at most one, or replace a
 vertex of degree two and its two edges by one edge. A vertex of degree at least four can be split
@@ -84,9 +84,9 @@ into vertices of degree three, and no cycle is lost. So it suffices to count the
 connected multigraph $G$ of rank $r$ in which all vertices have degree three
 (Lemma~\ref{lem:cubic}). The graphs $R_r$ show that $\psi(r)\ge H(r)$.
 
-For the upper bound there are five cases (Figure~\ref{fig:plan}). A \emph{cyclic cut} is a set of
+For the upper bound there are three cases (Figure~\ref{fig:plan}). A \emph{cyclic cut} is a set of
 edges whose deletion leaves two parts that each contain a cycle. The number $H(r)-2^{r-1}$ is of
-order $r\,2^{r/2}$, so the five bounds give the theorem (Section~\ref{sec:proof}).
+order $r\,2^{r/2}$, so the three bounds give the theorem (Section~\ref{sec:proof}).
 
 \begin{figure}[ht]
 \centering
@@ -98,41 +98,28 @@ order $r\,2^{r/2}$, so the five bounds give the theorem (Section~\ref{sec:proof}
   ar/.style={-{Stealth[length=4.5pt]}, line width=0.6pt, draw=slate},
   lab/.style={font=\sffamily\scriptsize, text=slate, inner sep=1.5pt},
   node distance=5.2mm]
-  \node[ask] (q1) {Does $G$ have a loop?};
-  \node[ask, below=of q1] (q2) {Does $G$ have a cyclic cut of at most three edges?};
-  \node[ask, below=of q2] (q3) {Does $G$ have a cyclic cut of four edges?};
-  \node[ask, below=of q3] (q4) {Does $G$ have a cycle of length less than $D_*$?};
-  \node[res, right=13mm of q1] (o1) {at most $2^{r-1}$ cycles\\ \textcolor{slate}{for a trivial reason}};
+  \node[ask] (q2) {Does $G$ have a cyclic cut of at most three edges?};
+  \node[ask, below=of q2] (q3) {Does $G$ have a cycle of length four?};
   \node[res, right=13mm of q2] (o2) {at most $2^{r-1}+O(2^{r/2})$ cycles\\ \textcolor{slate}{Proposition~\ref{prop:threecut}}};
   \node[res, right=13mm of q3] (o3) {a ring, with at most $H(r)$ cycles, or fewer than $2^{r-1}$ cycles\\ \textcolor{slate}{Theorem~\ref{thm:fourcut}, Corollary~\ref{cor:ringmax}}};
-  \node[res, right=13mm of q4] (o4) {fewer than $2^{r-1}$ cycles\\ \textcolor{slate}{Theorem~\ref{thm:girth}}};
-  \node[res, below=of q4, text width=4.6cm, align=center] (o5) {fewer than $2^{r-1}$ cycles\\ \textcolor{slate}{Theorem~\ref{thm:half}}};
-  \foreach \a/\b in {q1/o1,q2/o2,q3/o3,q4/o4} \draw[ar] (\a) -- node[lab, above] {yes} (\b);
-  \foreach \a/\b in {q1/q2,q2/q3,q3/q4,q4/o5} \draw[ar] (\a) -- node[lab, right] {no} (\b);
+  \node[res, below=of q3, text width=4.6cm, align=center] (o4) {girth at least five, and fewer than $2^{r-1}$ cycles\\ \textcolor{slate}{Theorem~\ref{thm:half}}};
+  \foreach \a/\b in {q2/o2,q3/o3} \draw[ar] (\a) -- node[lab, above] {yes} (\b);
+  \foreach \a/\b in {q2/q3,q3/o4} \draw[ar] (\a) -- node[lab, right] {no} (\b);
 \end{tikzpicture}
-\caption{The five cases for a connected cubic multigraph $G$ of large rank $r$. The number $D_*$
-is an absolute constant.}
+\caption{The three cases for a connected cubic multigraph $G$ of large rank $r$.}
 \label{fig:plan}
 \end{figure}
 
 \subsection{Outside parts and the forest estimate}
 
-Fix a subgraph $W$ of $G$. For an even subgraph $\xi$ we call $\xi\sm E(W)$ its \emph{outside
-part} (Figure~\ref{fig:outside}). If a cycle uses an edge of $W$, then its outside part is a proper
-subset of a cycle, so it is a forest.
-
-\begin{idea}{cycles and outside parts}
-Let $W$ be a cycle and $e$ an edge of $W$. Different cycles through $e$ have different outside
-parts, and each of these outside parts is a forest (Lemma~\ref{lem:edge}). By the \emph{forest
-estimate} (Theorem~\ref{thm:forest}), at most $\half+o(1)$ of all outside parts are forests when
-$W$ is small. An edge recursion then gives $\psi(r)\le(\half+o(1))2^{r}$
-(Corollary~\ref{cor:cycles}).
-\end{idea}
+Fix a set $P$ of vertices of $G$. For an even subgraph $\xi$ we call the set of its edges without
+an end in $P$ its \emph{outside part} (Figure~\ref{fig:outside}). If a cycle meets $P$, then its
+outside part is a proper subset of a cycle, so it is a forest.
 
 \begin{figure}[ht]
 \centering
 \begin{tikzpicture}[x=1cm,y=1cm]
-  % W: a hexagon
+  % the set P: a hexagon
   \foreach \i in {0,...,5} \coordinate (w\i) at ({60*\i+30}:0.9);
   \draw[cool] (w0)--(w1)--(w2)--(w3)--(w4)--(w5)--cycle;
   % outside vertices
@@ -145,91 +132,54 @@ $W$ is small. An edge recursion then gives $\psi(r)\le(\half+o(1))2^{r}$
   \draw[edge] (w3)--(d) (w2)--(d) (w3)--(f);
   \draw[edge] (d)--(e)--(f) (a)--(c);
   % the cycle C: w0 - a - b - c - w5 - w0 ; outside part thick
-  \draw[hot] (w0)--(a)--(b)--(c)--(w5);
-  \draw[hot, dash pattern=on 2.2pt off 1.6pt] (w5)--(w0);
+  \draw[hot] (a)--(b)--(c);
+  \draw[hot, dash pattern=on 2.2pt off 1.6pt] (w5)--(w0) (w0)--(a) (c)--(w5);
   \foreach \p in {w0,w1,w2,w3,w4,w5,a,b,c,d,e,f} \node[vtx] at (\p) {};
-  \node[note, text=accent] at (0,0) {$W$};
+  \node[note, text=accent] at (0,0) {$P$};
   \node[note, text=warm, anchor=west] at (3.45,0.25) {the outside part of the cycle $C$: a path};
-  \node[note, text=warm, anchor=west] at (1.0,-0.02) {\scriptsize edge of $C$ in $W$};
 \end{tikzpicture}
-\caption{A subgraph $W$ and a cycle $C$ through an edge of $W$ (dashed). The part of $C$ outside
-$W$ is a forest. An even subgraph whose outside part contains a cycle is not a cycle through $W$.}
+\caption{A set $P$ of six vertices and a cycle $C$ that meets $P$. The edges of $C$ with an end
+in $P$ are dashed. The other edges of $C$ form its outside part, which is a path. An even
+subgraph whose outside part contains a cycle is not a cycle that meets $P$.}
 \label{fig:outside}
 \end{figure}
 
-In the cases 2, 3 and 4 a cycle consists of paths in the parts of $G$. By the forest estimate,
+\begin{idea}{cycles and outside parts}
+Let $P$ be a small set of vertices such that $G[P]$ is connected. By the \emph{forest estimate}
+of the companion paper~\cite{Forest} (Theorem~\ref{thm:forest}), the outside part is a forest for
+at most $\half+o(1)$ of all even subgraphs. So at most $(\half+o(1))2^{r}$ cycles meet $P$. A cycle that avoids $P$ is a cycle of
+$G-P$, and if $G$ has no bridge, the rank of $G-P$ is at most $r-1-|P|/2$
+(Lemma~\ref{lem:marked}). This gives $\psi(r)\le(\half+o(1))2^{r}$ (Corollary~\ref{cor:cycles}).
+\end{idea}
+
+In Cases~1 and~2 a cycle consists of paths in the parts of $G$. By the forest estimate,
 a part with more than half of the possible paths between two of its ends, by a fixed margin, is a
-ladder up to a bounded error, and it has few cycles (Section~\ref{sec:poles}). In the case 5 the
+ladder up to a bounded error, and it has few cycles (Section~\ref{sec:poles}). In Case~2 we
+also put a small tree, a \emph{cap}, in the place of the cycle of length four, and apply the
+bound $(\half+o(1))2^{r}$ to the graph that arises (Lemma~\ref{lem:cap}). In Case~3 the
 forest estimate is not sufficient, because we need a bound below $\half$ and its error term is
 positive. In this case a second-moment argument gives two disjoint pieces of $G$ with small
-boundaries and large girth, and each piece contributes a factor of at most $\frac35$ to the
-proportion of forests (Section~\ref{sec:half}).
+boundaries, and each piece contributes a factor of at most $\frac35$ to the proportion of
+forests (Section~\ref{sec:half}).
 
 \subsection{Authorship and verification}\label{sec:status}
 
-KNT is a person. Astra and Fable~5.2 are language models: GPT-6 Astra and Claude Fable~5.2. KNT
-directed the work at each step. The forest estimate and its proof are from~\cite{KNT}; KNT
-obtained them in September 2026 with Astra, for a problem of Erd\H{o}s on pancyclic graphs (see
-also~\cite{Pan}). In November 2026 the two models studied the number of cycles in parallel, in one
-shared set of files.
+KNT is a person. Astra and Fable~5.2 are the language models GPT-6 Astra and Claude Fable~5.2.
+KNT directed the work at each step. KNT obtained the forest estimate in September 2026 with
+Astra, for a problem of Erd\H{o}s on pancyclic graphs~\cite{KNT}; its proof is
+in~\cite{Forest}. For the number of cycles, Astra found the path structure of
+Section~\ref{sec:poles}, the gap theorem, the count for rings, the cap, and the first proof of
+the last case. Fable~5.2 found the lemma on layers, the chain of separators and the pieces at
+girth five, and wrote this text. The present forms of the proofs contain steps of both models.
 
-The parts have these origins. Fable~5.2 found the edge recursion, the localisation and layer
-argument, the chain of nested cycles, the parallel-link lemma and Lemma~\ref{lem:star}. Astra found
-the path structure of Section~\ref{sec:poles}, the gap theorem, the first analysis of cuts, the
-count for rings, the argument for bounded girth, and the packing and the two girth scales of
-Section~\ref{sec:half}. In its first form, Section~\ref{sec:half} gave the bound $\half$ for the
-proportion of forests, and the proof of Theorem~\ref{thm:exact} then used an induction on the
-rank. Astra improved the bound to a constant below $\half$, and the induction is no longer
-necessary. Fable~5.2 shortened the arguments for paths and cuts and wrote this text.
-
-Theorem~\ref{thm:exact} has a formal proof in Lean~4. The formal statement is
-\lean{Erdos1016.ExactMaximum.exactMaximum}: there is a number $R$ such that
+Theorem~\ref{thm:exact} has a formal proof in Lean~4. The statement
+\lean{Erdos1016.ExactMaximum.exactMaximum} says that there is a number $R$ such that
 \lean{maxCycles r = horakKim r} for every $r\ge R$. Here \lean{maxCycles r} is the largest number
-of cycles of a simple graph with cyclomatic number $r$ on a vertex set $\{0,\dots,n-1\}$, a cycle
-is counted by its edge set, and \lean{horakKim r} is $H(r)$. A reader who trusts the Lean kernel
-needs to read these definitions only. The table lists the formal statements of the main steps.
-All of them are proved.
+of cycles of a simple graph with cyclomatic number $r$, and \lean{horakKim r} is $H(r)$. The Lean
+kernel accepts the proof with the axioms \lean{propext}, \lean{Classical.choice} and
+\lean{Quot.sound} only. The files are in~\cite{Repo}, at commit \texttt{3a80aa9}.
 
-\begin{center}\small
-\begin{tabular}{@{}p{6.3cm}p{8.1cm}@{}}
-\toprule
-\textsf{\textbf{Statement}} & \textsf{\textbf{Declaration}}\\
-\midrule
-Theorem~\ref{thm:forest} & \lean{Erdos1016.ShortProof.fewComponentForestEstimate_logSquared}\\
-Corollary~\ref{cor:cycles} & \lean{Erdos1016.cycleCountTheorem}; with parallel edges: \lean{EM.numCycles_le_of_large_rank_margin}\\
-Lemma~\ref{lem:cubic}, as the upper bound uses it & \lean{EMS.CubicReduction.cubicReductionStatement}\\
-Equation~\eqref{eq:glue23} and the count of Lemma~\ref{lem:glue4} & \lean{Net.numCycles_of_three_crossing}, \lean{Net.numCycles_of_four_crossing}\\
-Lower bound of Corollary~\ref{cor:ringmax}: for every $r\ge3$ a graph of rank $r$ with at least $H(r)$ cycles & \lean{EM.lowerBoundStatement}\\
-Case 1 of Section~\ref{sec:proof} (a loop) & \lean{EM.numCycles_le_horakKim_of_loop}\\
-Theorem~\ref{thm:fewcycles} for $\varepsilon=\frac1{1000}$, with Lemma~\ref{lem:reduction} and Proposition~\ref{prop:thin}; Lemma~\ref{lem:gadgets} & \lean{EM.fewCyclesStatement}, \lean{EM.gadget_third_pair}, \lean{EM.gadget_cross_pairs}, \lean{EM.gadget_opposite_pair}\\
-Case 2: Proposition~\ref{prop:threecut} with some constant & \lean{EM.threeCutStatement}\\
-Theorem~\ref{thm:gap} & \lean{EMS.gapStatement}\\
-Lemma~\ref{lem:star}; Lemmas~\ref{lem:low} and~\ref{lem:rigid} and the cases of Theorem~\ref{thm:fourcut}, as arithmetic & \lean{Net.two_mul_numPathPairs_le_of_full}, \lean{EMS.FourCutArithmeticProof.fourCutArithmeticStatement}\\
-The last step of Theorem~\ref{thm:fourcut}: four full pairs in both sides give at most $H(r)$ cycles & \lean{EMS.ringCaseStatement}\\
-Case 3: Theorem~\ref{thm:fourcut} with the rings & \lean{EM.fourCutStatement}\\
-Corollary~\ref{cor:nodense}, for the pole alone & \lean{EMS.cyclicShoreStatement}\\
-Case 4: Theorem~\ref{thm:girth} & \lean{EM.shortCycleStatement}\\
-Case 5 (large girth), with Theorem~\ref{thm:half} & \lean{EMS.LargeGirth.largeGirthStatement}\\
-Upper bound: at most $H(r)$ cycles for large $r$ & \lean{EM.upperBoundStatement}\\
-Theorem~\ref{thm:exact}; equation~\eqref{eq:H} for both parities & \lean{EM.exactMaximum}; \lean{EM.maxCycles_formula}\\
-\bottomrule
-\multicolumn{2}{@{}p{14.4cm}@{}}{\rule{0pt}{2.8ex}Short names: \lean{EM} is \lean{Erdos1016.ExactMaximum}, \lean{EMS} is \lean{Erdos1016.ExactMaximumSupport}, and \lean{Net} is \lean{Erdos1016.BoundaryTrace.Network}.}\\
-\end{tabular}
-\end{center}
-
-The declarations are at commit \texttt{3a80aa9} of~\cite{Repo}, on the branch
-\texttt{feat/cycle-count-bound}. The files contain no \lean{sorry}: Fable~5.2 wrote
-\lean{Erdos1016/ExactMaximum/}, and Astra wrote \lean{Erdos1016/ExactMaximumSupport/} and the
-formal proof of Theorem~\ref{thm:forest}. Astra's files contain the formal proofs of Section~\ref{sec:full}, of
-the upper bound for rings, and of Section~\ref{sec:half}. The Lean kernel accepts the formal
-proofs with the axioms \lean{propext}, \lean{Classical.choice} and \lean{Quot.sound} only.
-
-The kernel check covers the formal statements, and no machine has checked the text of this
-paper. A formal proof can differ from the text in details. For example, the formal proof of
-Case 5 marks a connected set of eight vertices where the text marks a shortest cycle, the formal
-proof of Theorem~\ref{thm:fewcycles} calls a thin layer ordinary if at most one of its two
-vertices is on a pair of parallel edges, and the formal proof of Theorem~\ref{thm:girth} allows
-$12g+2$ ports for the poles $K_p$. So the text can contain errors that the formal proof does
-not have. The two models have read the text, and no referee has.
-Scripts in the repository test the statements of Sections~\ref{sec:poles} and~\ref{sec:cuts} on
-small graphs. These tests do not replace a proof.
+The formal proof follows an earlier and longer form of the argument. Theorem~\ref{thm:half}
+has no formal proof: in its place the formal proof has a case of bounded girth and a case of
+large girth. It also treats a cut of size four with two arbitrary sides. So the kernel check
+covers the theorem, and it does not cover the text of this paper. No referee has read the text.

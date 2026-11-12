@@ -1,0 +1,731 @@
+\documentclass[11pt]{article}
+\input{../style/preamble}
+
+\renewcommand{\papertitle}{Three cases:\\ four reductions in the cut analysis and the final count}
+\renewcommand{\papersubtitle}{A third research note on ``The maximum number of cycles in a graph of large rank''}
+\renewcommand{\paperrunning}{Three cases}
+\renewcommand{\paperauthors}{Fable~5.2, for KNT}
+\renewcommand{\paperdate}{Research note of 12 November 2026}
+\hypersetup{pdftitle={Three cases: four reductions in the cut analysis and the final count},pdfauthor={Fable 5.2, for KNT}}
+
+\newcommand{\M}[1]{[M,~#1]}
+\newcommand{\NN}[1]{[N2,~#1]}
+
+\begin{document}
+\maketitleblock
+
+This note answers the request of 12 November 2026 to search for more efficiencies. It has four
+reductions of the proof in~[M], outside the last section, and a list of attempts that failed.
+The numbers of the statements of~[M] are those of the draft of 42~pages. [N1] and [N2] are the
+first two notes, \texttt{one-scale.pdf} and \texttt{girth-five.pdf}. The manuscript is not changed.
+
+\fronthead{The result in eight sentences}
+\begin{enumerate}[leftmargin=1.6em]
+\item \emph{The gap theorem is a corollary.} A bridgeless $2$-pole is a capped ladder if and only
+if the graph $J$ outside a shortest path between its ports is a forest; this is what the proof of
+\M{Lemma~5.8} shows. If $J$ has a cycle and the pole has many paths, then $J$ has a short cycle,
+by Step~2 of the proof of \M{Proposition~5.3}, and \M{Lemma~5.1} gives a gap. So
+\M{Lemma~5.9} (a third port, four cases) and the induction in \M{Theorem~5.10} are not necessary
+(Theorem~\ref{thm:gap}).
+\item \emph{A cycle of length four in the place of a cut of size four.} By~[N2], the last case
+needs girth five and no hypothesis on cuts. So \M{Theorem~6.8} is necessary only for a graph with
+a cycle $C$ of length four. Then one side of the cut is $C$, the count is explicit, and it is the
+sum of the counts for two caps (equation~\eqref{eq:four}). \M{Lemma~6.4} (gluing) and all steps
+for the second side are not necessary (Theorem~\ref{thm:fourcycle}).
+\item \emph{Three cases.} A loop gives a cyclic cut of size one, so the case of a loop is a part
+of \M{Proposition~6.3}. The proof of the main theorem then has three cases: a cyclic cut of size
+at most three; a cycle of length four; girth at least five.
+\item \emph{One count.} The count with a marked set of eight vertices, which the last case of~[M]
+uses, also gives $\psi(r)\le(\half+o(1))2^{r}$ with a marked set of $4\log r$ vertices. So the
+edge recursion in the proof of \M{Corollary~3.7} is not necessary
+(Lemma~\ref{lem:marked}, Corollary~\ref{cor:cycles}).
+\item \emph{Measured.} A copy of the paper with the lean form of~[N2] and the four reductions
+builds: 41~pages and 1587 typeset lines (now 42 and 1624), 39 numbered statements (now 40), and
+three cases (now five). Without the first reduction the copy has 42~pages and 1607 lines.
+\item \emph{The price.} The gap constant is $\gamma_0=2^{-20\Theta}$ with a very large $\Theta$,
+in the place of $\frac1{16}$. So Section~6 has a small number $\varepsilon_0=\gamma_0/20$ in the
+place of $\frac1{1000}$, and the gap theorem now depends on the forest estimate. The text differs
+more from the formal proof.
+\item \emph{Tests.} A script tests the ladder criterion, the count for a cycle of length four,
+the count with a marked set, and the arithmetic of the rigidity lemma on small graphs
+(Section~\ref{sec:tests}). All tests pass.
+\item \emph{What failed.} I found no way to remove \M{Proposition~6.3}, the lemma on a full
+star, or the base of the lemma on pieces, and no polynomial bound for pieces at girth five
+without an induction (Section~\ref{sec:failed}).
+\end{enumerate}
+
+\begin{notation}{the status of this note}
+\begin{itemize}[leftmargin=1.2em]
+\item \emph{Established on paper.} Sections~\ref{sec:gap} to~\ref{sec:marked} contain complete
+proofs. They use statements of~[M] with their numbers, and Section~\ref{sec:fourcycle} uses
+\NN{Theorem~5.1} for the order of the cases. I checked each step against these statements.
+\item \emph{Tested by computer.} Section~\ref{sec:tests}. The tests cover small graphs and the
+arithmetic. They do not replace a proof.
+\item \emph{Not done.} There is no formal proof. No other person or model has read this note.
+\item \emph{The manuscript.} It is unchanged. The script \texttt{apply\_fewer\_cases.py} applies
+the four reductions to a copy that \texttt{apply\_girth\_five.py} has changed.
+\end{itemize}
+\end{notation}
+
+\contentsblock
+
+\section{What changes}\label{sec:changes}
+
+\begin{center}\small
+\begin{tabular}{@{}p{4.9cm}p{4.6cm}p{4.9cm}@{}}
+\toprule
+\textsf{\textbf{Part of [M]}} & \textsf{\textbf{Now}} & \textsf{\textbf{With this note}}\\
+\midrule
+\M{Lemma~5.9} (a third port) & a lemma with four cases & not necessary\\
+\M{Theorem~5.10} (gap) & induction on the rank, constant $\frac1{16}$ & eight lines from
+\M{Proposition~5.3} and \M{Lemma~5.8}, constant $\gamma_0$\\
+\M{Lemma~5.1}, last statement & a bound with the number of components of $N-E(Z)$ & the bound
+$2^{b}-2^{b-|Z|}$\\
+\M{Lemma~6.4} (gluing) & a count for two $4$-poles & not necessary; a count for a cycle of
+length four\\
+\M{Theorem~6.8} & a cyclic cut of size four and no smaller one; two sides & a cycle of length
+four and no cyclic cut of size at most three; one side\\
+Case~1 of \M{Section~9} (a loop) & a case & the case $d=1$ of \M{Proposition~6.3}\\
+\M{Corollary~3.7} (leading term) & a recursion over the edges of a shortest cycle & the count
+with a marked set\\
+The count in the last case & in the proof of the main theorem & Lemma~\ref{lem:marked}, used two
+times\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The reductions 1, 3 and~4 do not depend on~[N2]. Reduction~2 needs the last case in the form
+of~[N2]: a graph with a cyclic cut of size four and girth at least five then belongs to the last
+case. The four reductions are independent of each other, with one exception: the constants of
+Section~\ref{sec:fourcycle} are those of the new gap theorem.
+
+\section{The gap theorem without induction}\label{sec:gap}
+
+\subsection{The statements of [M] that we use}
+
+A \emph{pole} is a connected multigraph without loops in which every vertex has degree two or
+three; its vertices of degree two are its \emph{ports}. For two ports $s,t$ of a pole $N$ of rank
+$b$, $P_{st}(N)$ is the number of paths from $s$ to $t$, and the pair is \emph{full} if
+$P_{st}(N)=2^{b}$. We use these statements.
+
+\begin{itemize}[leftmargin=1.2em]
+\item \M{Lemma~5.1}. Every $\{s,t\}$-join is the union of a path from $s$ to $t$ and of cycles,
+pairwise vertex-disjoint. So the pair is full if and only if every cycle meets every path from
+$s$ to $t$.
+\item \M{Lemma~5.2}. If $P_{st}(N)>2^{b-1}$, replace the other ports by edges. The result
+consists of bridges and of bridgeless $2$-poles $N_1,\dots,N_q$ of ranks $b_i\ge1$ with
+$\sum_ib_i=b$, $P_{st}(N)=\prod_iP(N_i)$ and $P(N_i)\,2^{-b_i}\ge P_{st}(N)\,2^{-b}$.
+\item The notation of \M{Section~5.2} for a bridgeless $2$-pole $N$ of rank $b\ge2$: the layers
+$L_j$ (the vertices at distance $j$ from $s$), the distance $\ell$ from $s$ to $t$, a shortest
+path $A=w_0\cdots w_\ell$, and $J=N-V(A)$. The pole has $2b$ vertices and no cut vertex, and
+every vertex of $A$ has at most one edge that is not an edge of $A$.
+\item The count in Step~4 of the proof of \M{Proposition~5.3}. It uses no hypothesis on the
+number of paths: $\ell\le b$; if $J$ is not empty, then $\beta(J)\ge b-\ell$; if $J$ is empty,
+then $2b=\ell+1$.
+\item Steps~1 and~2 of the proof of \M{Proposition~5.3}. Let
+$P_{st}(N)\ge(\half+\varepsilon)2^{b}$ and $\Theta=\Theta_{\varepsilon/2}(1)$. Then every layer
+has fewer than $\Theta$ vertices of $J$ (Step~1, from \M{Lemma~4.1}). If the part of $J$ in an
+interval of layers contains a cycle, choose a cycle $Z$ there that meets as few layers as
+possible; then the layers that $Z$ meets contain at most $20\Theta$ vertices of $J$ (Step~2).
+\end{itemize}
+
+The second item of Step~2, for the interval of all layers, is the following statement. In a copy
+of the paper it is a new item~(iv) of \M{Proposition~5.3}.
+
+\begin{lemma}[A short cycle]\label{lem:short}
+Let $N$ be a bridgeless $2$-pole of rank $b\ge2$ with ports $s,t$ and
+$P_{st}(N)\ge(\half+\varepsilon)2^{b}$, where $0<\varepsilon\le\half$. If $J$ contains a cycle,
+then $J$ contains a cycle with at most $20\,\Theta_{\varepsilon/2}(1)$ vertices.
+\end{lemma}
+
+\subsection{Ladders}
+
+\begin{lemma}[Ladders]\label{lem:ladders}
+Let $N$ be a bridgeless $2$-pole with ports $s,t$ and rank $b$. If $b=1$, then $N$ consists of two
+vertices and two parallel edges, and the pair $s,t$ is full. If $b\ge2$, the following statements
+are equivalent:
+\begin{enumerate}
+\item[\textup{(i)}] the pair $s,t$ is full;
+\item[\textup{(ii)}] the graph $J=N-V(A)$ is a forest;
+\item[\textup{(iii)}] $N$ is a capped ladder whose caps are $s$ and $t$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+If $b=1$, then $N$ has two vertices, and it is a cycle. Let $b\ge2$.
+
+\step{From \textup{(i)} to \textup{(ii)}.} By \M{Lemma~5.1}, every cycle meets the path $A$.
+
+\step{From \textup{(ii)} to \textup{(iii)}.} This is the proof of \M{Lemma~5.8}, which uses the
+full pair only to see that $J$ is a forest. We repeat it. The count gives $\ell\le b$. The graph
+$J$ is not empty, because $2b>b+1\ge\ell+1$. So $b-\ell\le\beta(J)=0$, and $\ell=b$. Then equality
+holds in every estimate of the count: every layer $L_j$ with $0<j<b$ consists of $w_j$ and of one
+vertex $y_j$ of $J$, there are no other vertices outside $A$, every vertex of $A$ has a further
+edge that leads to $J$, and $J$ is a tree. An edge joins vertices of equal or consecutive layers.
+So $J$ is the path $y_1\cdots y_{b-1}$, the further edge of $s$ leads to $y_1$, that of $t$ leads
+to $y_{b-1}$, and the further edge of $w_j$ leads to a vertex $y_{\pi(j)}$ with
+$|\pi(j)-j|\le1$. Every $y_i$ has degree three, so $\pi$ is a permutation of $\{1,\dots,b-1\}$
+that moves every number by at most one. A fixed point $j$ is a single rung $w_jy_j$. An exchange
+of $j$ and $j+1$ is a square with the left pair $w_j,y_j$ and the right pair $w_{j+1},y_{j+1}$.
+The other edges of $A$ and $J$ are the interfaces and the edges at the caps.
+
+\step{From \textup{(iii)} to \textup{(i)}.} Let the tiles have total weight $W$, so $b=W+1$. A path
+from $s$ to $t$ passes the tiles in order. It enters a tile at a vertex of the left pair and
+leaves it at a vertex of the right pair. In a square there are two paths to each vertex of the
+right pair. In a single rung the path stays or crosses. So there are $2\cdot2^{W}=2^{b}$ paths.
+\end{proof}
+
+The count of the last step is in~[M], before \M{Lemma~5.9}.
+
+\subsection{The gap}
+
+\begin{theorem}[Gap]\label{thm:gap}
+There is a constant $\gamma_0\in(0,\frac14]$ with the following property. Let $N$ be a pole of
+rank $b$, and let $s,t$ be two of its ports. Then
+\[
+  P_{st}(N)=2^{b}\qquad\text{or}\qquad P_{st}(N)\le(1-\gamma_0)\,2^{b}.
+\]
+\end{theorem}
+
+\begin{proof}
+Put $\Theta=\Theta_{1/8}(1)$ and $\gamma_0=2^{-20\Theta}$. Let $P_{st}(N)>(1-\gamma_0)2^{b}$. By
+\M{Lemma~5.2}, the path counts of the bridgeless $2$-poles $N_1,\dots,N_q$ multiply, and
+$P(N_i)>(1-\gamma_0)2^{b_i}$ for every $i$. So it suffices to show that the pair of ports of each
+$N_i$ is full.
+
+Let $N$ be one of them, with rank $b$. If $b=1$, the pair is full. Let $b\ge2$. Suppose that $J$
+contains a cycle. We have $P_{st}(N)\ge\frac34\,2^{b}$. So $J$ contains a cycle $Z$ with at most
+$20\Theta$ vertices, by Lemma~\ref{lem:short} with $\varepsilon=\frac14$. The cycle $Z$ is
+disjoint from the path $A$. So $A$ is an $\{s,t\}$-join of $N-E(Z)$, and $N-E(Z)$ has
+$2^{\beta(N-E(Z))}\ge2^{b-|Z|}$ such joins. The union of each of them with $E(Z)$ is an
+$\{s,t\}$-join of $N$ that is not a path. Hence $P_{st}(N)\le2^{b}-2^{b-|Z|}\le(1-\gamma_0)2^{b}$.
+This is a contradiction. So $J$ is a forest, and the pair is full by Lemma~\ref{lem:ladders}.
+\end{proof}
+
+\begin{idea}{what the new proof uses, and what it does not use}
+The proof in~[M] is an induction on the rank. It deletes the port $s$ and needs a lemma on a
+$3$-pole with one full pair (\M{Lemma~5.9}), which examines four positions of the third port in
+a capped ladder. That proof is elementary, and its constant is $\frac1{16}$. The new proof has no
+induction and no third port. It uses the layers of \M{Proposition~5.3}, hence \M{Lemma~4.1} and
+the forest estimate. Its constant is not explicit in a useful sense:
+$\Theta=\Theta_{1/8}(1)\ge2^{102}$.
+\end{idea}
+
+The last statement of \M{Lemma~5.1} has the bound $2^{b}-2^{b-|Z|+k-1}$, where $k$ is the number
+of components of $N-E(Z)$. Only \M{Lemma~5.9} uses the number $k$. The proof above uses the bound
+with $k=1$.
+
+\subsection{The constants of Section~6}\label{sec:constants}
+
+In~[M] the gap is $\frac1{16}$, and Section~6 has the numbers $0.501$, $1.002$, $2.004$,
+$4.001$ and $3.99$, which come from $\varepsilon_0=\frac1{1000}$. With the new theorem we put
+\[
+  \varepsilon_0=\tfrac1{20}\,\gamma_0,\qquad K_0=K_{\varepsilon_0},\qquad\kappa(h)=2K_0\,2^{-h/2},
+\]
+with $K_\varepsilon$ as in \M{Theorem~5.4}. Then $\varepsilon_0\le\frac1{80}$. \M{Lemma~5.7} holds
+with $\half+\varepsilon_0$, $1+2\varepsilon_0$, $2+4\varepsilon_0$ and $1+2\varepsilon_0$ in the
+place of $0.501$, $1.002$, $2.004$ and $1.002$; its proof is the same. In the proof of
+\M{Proposition~6.3} the same replacements are sufficient: Case~A needs
+$\frac9{32}+\half+\varepsilon_0<1$ and $\frac9{32}+\frac32+3\varepsilon_0<2$, and Case~B needs
+$\half+2\varepsilon_0<1$, $\frac32+4\varepsilon_0<2$ and $1+4\varepsilon_0<2$. The order of
+Section~5 changes: the constants and \M{Lemma~5.7} come after the gap theorem.
+
+\section{A cycle of length four in the place of a cut of size four}\label{sec:fourcycle}
+
+\subsection{Why a cycle of length four is sufficient}
+
+In~[M] the cases are ordered by cuts: a cyclic cut of size at most three; a cyclic cut of size
+four and no smaller one (\M{Theorem~6.8}); no cyclic cut of size at most four. The last case
+needs the hypothesis on cuts only to see that the girth is large. By \NN{Theorem~5.1},
+\M{Theorem~8.1} holds when $G-P$ has girth at least five, with no hypothesis on cuts, and the
+final count needs only that $G$ has no bridge. So every cubic graph of large rank without a
+bridge and of girth at least five has fewer than $2^{r-1}$ cycles, also if it has a cyclic cut of
+size four. A graph without a cyclic cut of size at most three has no cycle of length at most
+three, for large rank. So the middle case is necessary only for a graph with a cycle of length
+four.
+
+\subsection{States, the cap, and rigidity}
+
+Let $Y$ be a $4$-pole of rank $h$ with ports $1,2,3,4$. As in \M{Section~6.3}, a \emph{pairing}
+is one of the partitions $12|34$, $13|24$, $14|23$, and
+\[
+  a_{ij}=2^{-h}P_{ij}(Y),\qquad u_\alpha=2^{-h}f_{ij|kl}(Y)\ \ (\alpha=ij|kl),\qquad
+  S=\sum_{ij}a_{ij},\qquad F=\sum_\alpha u_\alpha ,
+\]
+where $f_{ij|kl}(Y)$ is the number of pairs of disjoint paths, one from $i$ to $j$ and one from
+$k$ to $l$. Then $a_{ij}\le1$ and $F\le1$. With the constants of Section~\ref{sec:constants} and
+$\kappa=\kappa(h)$, \M{Lemma~5.7} reads
+\begin{align}
+  &a_{ik}+a_{jk}\ge1+2\varepsilon_0\ \Longrightarrow\ a_{ij}\le\kappa;\label{eq:T1}\\
+  &a_{ik}+a_{il}+a_{jk}+a_{jl}\ge2+4\varepsilon_0\ \Longrightarrow\ u_{ik|jl}+u_{il|jk}\le\kappa;\label{eq:T2}\\
+  &a_{kl}>\kappa\ \Longrightarrow\ a_{ij}+F-u_{ij|kl}<1+2\varepsilon_0.\label{eq:T3}
+\end{align}
+Fix $h_0$ such that $\kappa(h)\le\varepsilon_0$ for $h\ge h_0$.
+
+\begin{lemma}[Cap; \M{Lemma~6.5}]\label{lem:cap}
+There is $h_1\ge h_0$ with the following property. Let $Y$ be a $4$-pole of rank $h\ge h_1$, and
+put $z=2^{-h}c(Y)$. Then $z+S+F-u_\alpha\le4+\varepsilon_0$ for every pairing $\alpha$.
+\end{lemma}
+
+\begin{proof}
+This is the proof of~[M]. Let $\alpha=ij|kl$. Add two new vertices $x$ and $y$ and an edge
+between them, join $x$ to the ports $i,j$ and $y$ to the ports $k,l$. The new multigraph
+$\hat Y$ is cubic of rank $h+3$, and it has at least $c(Y)+(S+F-u_\alpha)2^{h}$ cycles: the cycles
+of $Y$; a path of $Y$ between two ports with the path of the new tree between its ends; and a
+pair of disjoint paths of $Y$ whose pairing is not $\alpha$ with the four new edges at the ports.
+By \M{Corollary~3.7}, $c(\hat Y)\le(\half+\frac18\varepsilon_0)2^{h+3}=(4+\varepsilon_0)2^{h}$ for
+large $h$.
+\end{proof}
+
+\begin{lemma}[Rigidity; \M{Lemma~6.6} with the new constants]\label{lem:rigid}
+Let $Y$ be a $4$-pole of rank $h\ge h_0$ with $S+F\ge4-2\varepsilon_0$. Then three pairs with a
+common port are full, or the four pairs between two disjoint pairs of ports are full.
+\end{lemma}
+
+\begin{proof}
+The proof is that of~[M], with other numbers. Write $\eta$ for $\varepsilon_0$; then
+$\kappa\le\eta\le\frac1{80}$. For a partition of the ports into two pairs, the \emph{cross sum} is
+the sum of $a_{ij}$ over the four pairs $ij$ that are not pairs of the partition. Each pair
+occurs in two of the three cross sums. By Theorem~\ref{thm:gap}, a pair $ij$ with
+$a_{ij}>1-20\eta$ is full.
+
+\step{Case 1: some cross sum is at least $2+4\eta$.} Let it be the cross sum $X$ of $12|34$. Then
+$a_{13}+a_{23}\ge1+2\eta$ or $a_{14}+a_{24}\ge1+2\eta$, so $a_{12}\le\kappa$ by~\eqref{eq:T1}. In
+the same way $a_{34}\le\kappa$. By~\eqref{eq:T2}, $u_{13|24}+u_{14|23}\le\kappa$. Put
+$u=u_{12|34}$. Then $S+F\le X+u+3\kappa$. At most one of the four numbers in $X$ is at most
+$\kappa$, because $X\ge2+4\eta$. Let $ij$ be one of the four pairs and $kl$ the opposite pair. If
+$a_{kl}>\kappa$, then~\eqref{eq:T3} gives $u<1+2\eta-a_{ij}$.
+
+Suppose that all four numbers are larger than $\kappa$. Then $u<1+2\eta-m$, where $m$ is the
+largest of them. So $S+F$ is less than the sum of the three smallest of them plus $1+5\eta$. As
+$S+F\ge4-2\eta$, each of the three is larger than $1-7\eta$. So all four pairs are full.
+
+Suppose that one of the four numbers is at most $\kappa$, say $a_{24}$. Then
+$u<1+2\eta-\max\{a_{14},a_{23}\}$, and
+$S+F<a_{13}+\min\{a_{14},a_{23}\}+1+2\eta+4\kappa\le3+6\eta$. This contradicts $S+F\ge4-2\eta$.
+
+\step{Case 2: all cross sums are less than $2+4\eta$.} Their sum is $2S$, so $S<3+6\eta$. Hence
+$F>1-8\eta$ and $S\ge3-2\eta$, and the sum of two opposite numbers is more than $1-6\eta$.
+
+Suppose that all six numbers are larger than $\kappa$. For a pairing $\alpha=ij|kl$,
+\eqref{eq:T3} gives $\max\{a_{ij},a_{kl}\}+F-u_\alpha<1+2\eta$, and the maximum is at least
+$\half-3\eta$. So $F-u_\alpha<\half+5\eta$. Adding this for the three pairings gives
+$2F<\frac32+15\eta$. This contradicts $F>1-8\eta$, because $31\eta<\half$.
+
+So one number is at most $\kappa$, say $a_{34}$. Then $a_{12}>1-7\eta$, so $12$ is full.
+By~\eqref{eq:T1}, $a_{13}<2\eta$ or $a_{23}\le\kappa$; also $a_{14}<2\eta$ or $a_{24}\le\kappa$.
+If a number is less than $2\eta$, its opposite is more than $1-8\eta$, hence full. If
+$a_{13}<2\eta$, then $24$ is full, so $a_{14}<2\eta$, and $23$ is full. Then the pairs
+$12,23,24$ are full. If $a_{23}<2\eta$, then $14$ is full, so $a_{24}<2\eta$, and $13$ is full.
+Then the pairs $12,13,14$ are full.
+\end{proof}
+
+We also use \M{Lemma~6.7} (full star) without change: if the pairs $12,13,14$ are full in a
+$4$-pole $Y$, then $u_\alpha(Y)\le\half$ for every pairing $\alpha$. And we use
+\M{Corollary~5.11}: a $4$-pole without bridge in which the four pairs between two disjoint pairs
+of ports are full is a chain of tiles between these two pairs.
+
+\subsection{The theorem}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \foreach \ox/\lab in {0/a,5/b,10/c}{
+    \draw[region] (\ox,0) ellipse [x radius=1.0, y radius=1.5];
+    \node[text=accent] at (\ox-0.4,0) {$Y$};
+    \foreach \i/\y in {1/1.05,2/0.35,3/-0.35,4/-1.05}{
+      \coordinate (\lab p\i) at (\ox+0.62,\y);
+      \node[note, text=accent] at (\ox+0.3,\y) {\scriptsize\i};}
+  }
+  \foreach \i/\y in {1/1.05,2/0.35,3/-0.35,4/-1.05} \coordinate (c\i) at (2.1,\y);
+  \draw[edge] (ap1)--(c1) (ap2)--(c2) (ap3)--(c3) (ap4)--(c4);
+  \draw[cool] (c1)--(c2)--(c3)--(c4);
+  \draw[cool] (c4) .. controls (3.1,-0.9) and (3.1,0.9) .. (c1);
+  \foreach \i in {1,2,3,4} \node[vtx] at (c\i) {};
+  \node[note, text=accent] at (2.45,0) {$C$};
+  \coordinate (x1) at (7.0,0.7);
+  \coordinate (y1) at (7.0,-0.7);
+  \draw[hot] (bp1)--(x1)--(bp2) (bp3)--(y1)--(bp4) (x1)--(y1);
+  \node[vtx] at (x1) {};
+  \node[vtx] at (y1) {};
+  \coordinate (x2) at (12.5,0);
+  \coordinate (y2) at (11.5,0);
+  \draw[hot] (cp1)--(x2)--(cp4) (cp2)--(y2)--(cp3) (x2)--(y2);
+  \node[vtx] at (x2) {};
+  \node[vtx] at (y2) {};
+  \foreach \lab in {a,b,c} \foreach \i in {1,2,3,4} \node[port] at (\lab p\i) {};
+  \node[note] at (1.1,-1.95) {the graph $G$};
+  \node[note] at (6.0,-1.95) {the cap for $12|34$};
+  \node[note] at (11.1,-1.95) {the cap for $14|23$};
+\end{tikzpicture}
+\caption{A cycle $C$ of length four and the rest $Y$ of the graph, and the two caps of
+Lemma~\ref{lem:cap} that take the place of $C$. By~\eqref{eq:four}, the cycles of $G$ that meet
+$C$ and $Y$ are as many as the cycles through the new vertices in the two capped graphs
+together.}
+\label{fig:caps}
+\end{figure}
+
+\begin{theorem}\label{thm:fourcycle}
+There is a constant $r_4$ with the following property. Let $G$ be a connected cubic multigraph
+of rank $r\ge r_4$ that has no cyclic cut of size at most three and has a cycle of length four.
+Then $G$ is a ring, or $c(G)<2^{r-1}$.
+\end{theorem}
+
+\begin{proof}
+Let $C=c_1c_2c_3c_4$ be a cycle of length four, and put $Y=G-V(C)$. By the remark at the start
+of \M{Section~6}, every cut of size at most two is cyclic, and a cut of size three is cyclic
+unless one side is a single vertex. So $G$ has no loop and no cut of size at most two, and every
+cut of size three has a single vertex on one side. The graph has $2r-2$ vertices, so a set of at
+most five vertices and its complement both have more than one vertex.
+
+\step{The rest is a $4$-pole without bridge.} No edge outside $C$ joins two vertices of $C$:
+such an edge and a path of $C$ form a cycle with at most three vertices, and the cut around
+these vertices has size at most three. So exactly four edges leave $V(C)$, one at each vertex.
+Let $c_i$ be joined to the vertex $i$ of $Y$. The vertices $1,2,3,4$ are distinct: if two of
+them are one vertex $v$, the cut around $V(C)\cup\{v\}$ has size at most three. The multigraph
+$Y$ is connected: otherwise some component of $Y$ is joined to $C$ by at most two edges, and
+these form a cut. So $Y$ is a $4$-pole with the ports $1,2,3,4$. Let $k$ be its rank. Then
+$r=k+4$.
+
+Let $e$ be a bridge of $Y$, and let $A$ and $B$ be the vertex sets of the two components of
+$Y-e$. In $G[A]$ every vertex has degree at least two, except the end of $e$, which has degree at
+least one. A forest with an edge has two vertices of degree one, so $G[A]$ contains a cycle. The
+same holds for $G[B]$. Each of the four edges between $C$ and $Y$ is in exactly one of the cuts
+$\delta A$ and $\delta B$, and $e$ is in both. So $|\delta A|+|\delta B|=6$, and one of them is a
+cyclic cut of size at most three. Hence $Y$ has no bridge.
+
+\step{The count.} We use the notation above for $Y$, with $h=k$ and $z=2^{-k}c(Y)$. A cycle of
+$G$ that is neither $C$ nor a cycle of $Y$ uses two or four of the edges between $C$ and $Y$.
+With two, at $c_i$ and $c_j$, it consists of a path of $Y$ between the ports $i$ and $j$ and of
+one of the two paths of $C$ between $c_i$ and $c_j$. With four, it consists of a pair of disjoint
+paths of $Y$ and of two disjoint edges of $C$. The edges $c_1c_2$ and $c_3c_4$ close the pair to
+one cycle if and only if its pairing is not $12|34$. The edges $c_1c_4$ and $c_2c_3$ do this if
+and only if its pairing is not $14|23$. Hence
+\begin{equation}\label{eq:four}
+  \frac{c(G)}{2^{k}}\;=\;2^{-k}+z+\bigl(S+F-u_{12|34}\bigr)+\bigl(S+F-u_{14|23}\bigr).
+\end{equation}
+Let $r$ be so large that $k\ge h_1$ and $2^{-k}\le\varepsilon_0$. Suppose that
+$c(G)\ge2^{r-1}=8\cdot2^{k}$. We show that $G$ is a ring. By Lemma~\ref{lem:cap} for the pairing
+$14|23$, the term $z$ and the second bracket of~\eqref{eq:four} are together at most
+$4+\varepsilon_0$. So $S+F-u_{12|34}\ge4-2\varepsilon_0$. By Lemma~\ref{lem:cap} for the pairing
+$12|34$, this gives $z\le3\varepsilon_0$. Also $S+F\ge4-2\varepsilon_0$, so
+Lemma~\ref{lem:rigid} applies to $Y$. It gives two cases.
+
+\step{Case 1: three pairs with a common port are full.} By~\eqref{eq:T1}, the other three numbers
+$a_{ij}$ are at most $\kappa$, so $S\le3+3\kappa$. By \M{Lemma~6.7}, every number $u_\alpha$ is at
+most $\half$. The sum of the two brackets in~\eqref{eq:four} is $2S+F+u_{13|24}$, and this is at
+most $6+6\kappa+\frac32$. So $c(G)\,2^{-k}\le\frac{15}2+10\varepsilon_0<8$. This case does not
+occur.
+
+\step{Case 2: the four pairs between two disjoint pairs of ports are full.} The pole $Y$ has no
+bridge. By \M{Corollary~5.11} it is a chain of tiles; one of the two pairs of ports is the left
+pair of its first tile, and the other is the right pair of its last tile. If the pairs are $1,3$
+and $2,4$, then $C$ is a square with the pairs $c_1,c_3$ and $c_2,c_4$. In the other case let the
+pairs be $1,2$ and $3,4$, by symmetry. Then the edges $c_1c_2$ and $c_3c_4$ are single rungs, and
+the edges $c_2c_3$ and $c_1c_4$ are the interface between them. In both cases the edges between
+$C$ and $Y$ are two interfaces. So $G$ is a ring.
+\end{proof}
+
+\begin{idea}{a comparison with the proof of \M{Theorem~6.8}}
+In~[M] the cut has two sides $X$ and $Y$ of ranks $h\le k$. \M{Lemma~6.4} counts the cycles
+across the cut by the states of both sides and gives the estimate
+$\mathcal B\le S(Y)+F(Y)-\min_\alpha u_\alpha(Y)$. Then both cases of the proof first show that
+the pairs that are full in $Y$ are full in $X$, with the gap theorem for $X$, and then use
+\M{Lemma~6.7} or \M{Corollary~5.11} for both sides. Here the side $X$ is the cycle $C$. Its
+states are known: every $a_{ij}(C)$ is $1$, and $u_\alpha(C)$ is $\half,0,\half$. So the count is
+the equation~\eqref{eq:four}, there is no step for the second side, and the cap is used for the
+two pairings of~\eqref{eq:four}.
+\end{idea}
+
+\section{Three cases}\label{sec:three}
+
+Let $G$ be a connected cubic multigraph of rank $r\ge2$ with a loop at a vertex $v$. The loop
+uses two of the three edge ends at $v$. So $v$ has one other edge $e$, the set $\delta\{v\}$
+consists of $e$, and it is a cyclic cut of size one: one side contains the loop, and the other
+side has rank $r-1$. The case $d=1$ in the proof of \M{Proposition~6.3} uses no property of the
+sides: if $\delta X$ is a cut of size one, then every cycle lies in one side, the ranks $b_1,b_2$
+of the sides are positive with $b_1+b_2=r$, and $c(G)\le(2^{b_1}-1)+(2^{b_2}-1)\le2^{r-1}$. So
+\M{Proposition~6.3} holds for multigraphs with loops, with one more sentence in its proof: if
+the least size $d$ of a cyclic cut is two or three, then $G$ has no loop, and the sides are
+poles. Case~1 of \M{Section~9} is then a part of Case~2.
+
+With \NN{Theorem~5.1} and Theorem~\ref{thm:fourcycle}, the proof of the main theorem reads as
+follows. Let $G$ be a connected cubic multigraph of large rank $r$ with $\psi(r)$ cycles.
+
+\begin{enumerate}[leftmargin=1.6em]
+\item \emph{$G$ has a cyclic cut of size at most three.} Then
+$c(G)\le2^{r-1}+5K_0^{2}\,2^{r/2}$ by \M{Proposition~6.3}.
+\item \emph{$G$ has no such cut, and it has a cycle of length four.} Then $G$ is a ring or
+$c(G)<2^{r-1}$, by Theorem~\ref{thm:fourcycle}.
+\item \emph{$G$ has no such cut and no cycle of length four.} A cycle $Z$ with at most three
+edges would give the cyclic cut $\delta V(Z)$ of size at most three. So $G$ has girth at least
+five. Choose a set $P$ of eight vertices such that $G[P]$ is connected. Then $q(G,P)<\frac25$ by
+\NN{Theorem~5.1}. The graph has no bridge, and Lemma~\ref{lem:marked} below gives
+$c(G)<\frac25\,2^{r}+2^{r-5}<2^{r-1}$.
+\end{enumerate}
+
+\section{The count with a marked set}\label{sec:marked}
+
+Recall that $q(G,P)$ is the probability that the edges of a random even subgraph without an end
+in $P$ form a forest.
+
+\begin{lemma}[Cycles and a marked set]\label{lem:marked}
+Let $G$ be a connected cubic multigraph of rank $r$ without a bridge. Let $P$ be a set of $p$
+vertices, not all vertices of $G$, such that $G[P]$ is connected. Then
+\[
+  c(G)\;\le\;q(G,P)\,2^{r}+2^{\,r-1-p/2}.
+\]
+\end{lemma}
+
+\begin{proof}
+This is the count in the last case of~[M], for $p$ in the place of $8$. Let $Z$ be a cycle of $G$
+that meets $P$. Its edges in $G-P$ form a proper subset of $Z$, hence a forest. So at most
+$q(G,P)\,2^{r}$ cycles meet $P$. The other cycles are cycles of $G-P$, and there are at most
+$2^{\beta(G-P)}$ of them. Let $a$ be the number of edges of $G[P]$. Then $3p-2a$ edges leave $P$,
+and $G-P$ arises from $G$ by the deletion of $p$ vertices and $3p-a$ edges. So
+$\beta(G-P)=r-1-2p+a+\comp(G-P)$. The graph $G$ has no bridge, so every component of $G-P$
+contains the ends of at least two of the edges that leave $P$. Hence $\comp(G-P)\le(3p-2a)/2$ and
+$\beta(G-P)\le r-1-p/2$.
+\end{proof}
+
+\begin{corollary}[Leading term; \M{Corollary~3.7}]\label{cor:cycles}
+There is $r_1$ such that every graph of rank $r\ge r_1$ has at most
+$\bigl(\half+21/\lgk3r\bigr)2^{r}$ cycles.
+\end{corollary}
+
+\begin{proof}
+Let $r$ be large, and let $G$ be a connected cubic multigraph of rank $r$ with $\psi(r)$ cycles
+(\M{Lemma~3.6}). Suppose first that $G$ has a bridge $e$, and let $b_1$ and $b_2$ be the ranks of
+the two components of $G-e$. A component with $n$ vertices has $(3n-1)/2\ge n$ edges, so
+$b_1,b_2\ge1$, and $b_1+b_2=r$. Every cycle lies in one component. So
+$c(G)\le(2^{b_1}-1)+(2^{b_2}-1)\le2^{r-1}$.
+
+In the other case choose a set $P$ of $\lceil4\log r\rceil$ vertices such that $G[P]$ is
+connected. Then $|P|\le2r/\log^{2}r$. By \M{Theorem~3.1} and Lemma~\ref{lem:marked},
+\[
+  c(G)\;\le\;\Bigl(\frac12+\frac{20}{\lgk3r}\Bigr)2^{r}+2^{\,r-1-2\log r}
+  \;\le\;\Bigl(\frac12+\frac{21}{\lgk3r}\Bigr)2^{r}.\qedhere
+\]
+\end{proof}
+
+The proof in~[M] takes a shortest cycle $W$, shows that it has at most $2\log(2r)+2$ vertices,
+counts the cycles through one edge $e$ of $W$ with the map $C\mapsto C+W$, and solves the
+recursion $\psi(r)\le\psi(r-1)+(\half+\delta_r)2^{r-1}$. The proof above has no shortest cycle
+and no recursion. In typeset lines the two forms are equal: Section~3 has seven lines more, and
+the proof of the main theorem has nine lines less. The gain is that one count serves two
+places.
+
+\section{Accounting}\label{sec:accounting}
+
+\subsection{Measured copies}
+
+The numbers below are for built copies of the paper. A typeset line is a line of the text that
+\texttt{pdftotext} gives for the body of the paper. ``Lean'' and ``clean'' are the two forms
+of~[N2].
+
+\begin{center}\small
+\begin{tabular}{@{}p{5.3cm}rrrrr@{}}
+\toprule
+ & \textsf{\textbf{Now}} & \textsf{\textbf{[N2] lean}} & \textsf{\textbf{Lean, 2--4}} & \textsf{\textbf{Lean, 1--4}} & \textsf{\textbf{Clean, 1--4}}\\
+\midrule
+Pages & 42 & 42 & 42 & 41 & 41\\
+Typeset lines & 1624 & 1617 & 1607 & 1587 & 1610\\
+Numbered statements & 40 & 40 & 40 & 39 & 40\\
+Cases in the proof of the main theorem & 5 & 4 & 3 & 3 & 3\\
+Section~3 (forest estimate), lines & 265 & 267 & 272 & 272 & \\
+Section~5 (poles), lines & 339 & 301 & 300 & 276 & \\
+Section~6 (rings and cuts), lines & 275 & 276 & 261 & 258 & \\
+Proof of the main theorem, lines & 30 & 31 & 20 & 20 & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent ``Lean, 1--4'' is the lean form of~[N2] with the four reductions. The file
+\texttt{trial-fewer-cases.pdf} is this copy. It has one new statement
+(Lemma~\ref{lem:marked}) and does not have \M{Lemma~5.9} and \M{Lemma~6.4}. ``Lean, 2--4'' is the copy without the first reduction
+(the mode \texttt{keepgap} of the script): the gap theorem keeps its proof by induction and the
+constant $\frac1{16}$, and Section~6 keeps its numbers. So the first reduction gives 20 of the 30
+lines, and the other three change the cases and the statements.
+
+\subsection{Mathematical steps that the copy does not have}
+
+\begin{itemize}[leftmargin=1.2em]
+\item The lemma on a third port with its four positions of the port, and the count of paths from
+an inner vertex of a capped ladder.
+\item The induction on the rank in the gap theorem, with the deletion of a port.
+\item The count for two $4$-poles, and the estimate of $\mathcal B$ by the states of one side.
+\item In the theorem on a cut of size four: the proof that both sides are $4$-poles without
+bridge (now one side), and in each of the two cases the step ``the pairs are full in $X$ as
+well''.
+\item The case of a loop.
+\item The bound for the length of a shortest cycle, the map $C\mapsto C+W$, and the recursion in
+the proof of the leading term.
+\end{itemize}
+
+\subsection{What is new in the copy}
+
+\begin{itemize}[leftmargin=1.2em]
+\item Item~(iv) of \M{Proposition~5.3} (Lemma~\ref{lem:short}), with one sentence in Step~2 of
+its proof.
+\item The equivalence of three statements in the lemma on ladders, in the place of one
+implication. The proofs are those of~[M].
+\item The count~\eqref{eq:four} for a cycle of length four, and a figure with the two caps.
+\item Lemma~\ref{lem:marked}. Its proof was a part of the proof of the main theorem.
+\item The symbol $\varepsilon_0$ in the place of the numbers of Section~6.
+\end{itemize}
+
+\subsection{The price}
+
+\begin{itemize}[leftmargin=1.2em]
+\item \emph{Dependence.} In~[M] the gap theorem and \M{Lemmas~5.8 and~5.9} are elementary: they
+do not use the forest estimate. The new proof of the gap theorem uses \M{Proposition~5.3}, hence
+\M{Lemma~4.1} and \M{Theorem~3.1}. The main theorem uses these in every case, so no result of the
+paper becomes weaker. But the gap theorem alone is no longer an elementary statement with the
+constant $\frac1{16}$.
+\item \emph{Constants.} $\gamma_0=2^{-20\Theta}$ with $\Theta=\Theta_{1/8}(1)\ge2^{102}$, and
+$K_0=K_{\varepsilon_0}$ with $\varepsilon_0=\gamma_0/20$. The theorem is for large $r$ without a
+value of $R$, as before.
+\item \emph{The formal proof.} The formal proof has the gap with the constant $\frac1{16}$ by
+induction, the count for two sides, a cut of size four in the place of a cycle of length four,
+and the edge recursion. The trial copy says this in its Section~1.4: six places with another
+method, in the place of four.
+\item \emph{Reduction~2 needs~[N2].} Without the theorem for girth five, a graph with a cyclic
+cut of size four and no cycle of length four has no case.
+\end{itemize}
+
+\section{What I tried without success}\label{sec:failed}
+
+I record these attempts so that nobody repeats them without a new idea.
+
+\begin{enumerate}[leftmargin=1.6em]
+\item \emph{No proposition for small cuts.} With the theorem for girth five, a graph of large rank
+without a bridge and of girth at least five has fewer than $2^{r-1}$ cycles. So one can order
+the cases by short cycles: a cycle of length two, three or four. This does not remove
+\M{Proposition~6.3}. Two capped ladders, joined at their caps by two edges, form a graph with a
+cut of size two and $2^{r-1}+c(T_1)+c(T_2)$ cycles. So a bound of the form
+$2^{r-1}+O(2^{r/2})$ is necessary for cuts with two large sides, and it needs
+\M{Theorem~5.4} with the exponent $b/2$. A graph with a cycle of length four can also have such
+a cut, so Theorem~\ref{thm:fourcycle} needs the hypothesis on cuts.
+\item \emph{An induction on the rank.} Close a $2$-pole $T$ of rank $b$ by an edge between its
+ports. This gives $c(T)+P(T)\le\psi(b+1)$, and for a cut of size two it would give
+$c(G)\le2^{r-1}+(\psi(b_1+1)-2^{b_1})+(\psi(b_2+1)-2^{b_2})$. With $\psi=H$ on the right side
+this is less than $H(r)$. The equation~\eqref{eq:four} also has this form: the count in the proof
+of Lemma~\ref{lem:cap} is exact, so
+$c(G)+c(Y)=1+c(\hat Y_{12|34})+c(\hat Y_{14|23})$, and the two capped graphs have rank $r-1$. But
+the main theorem is false for small rank (the example of rank~27 in~[M]), so an induction has no
+start. The text of~[M] removed an earlier induction for the same reason.
+\item \emph{Rigidity with fewer tools.} The proof of Lemma~\ref{lem:rigid} uses
+\eqref{eq:T1}, \eqref{eq:T2}, \eqref{eq:T3}, and Theorem~\ref{thm:fourcycle} also uses the cap and
+the lemma on a full star. Each of them is necessary for this arithmetic. The state
+$a_{13}=a_{14}=a_{23}=1$, $a_{24}=\half$, $u_{12|34}=\half$ (all other numbers $0$) has $S+F=4$
+and satisfies \eqref{eq:T1}, \eqref{eq:T2} and the three cap inequalities; only \eqref{eq:T3}
+excludes it. The state $a_{13}=a_{14}=a_{23}=1$, $u_{14|23}=1$ satisfies \eqref{eq:T1},
+\eqref{eq:T3} and the caps; only \eqref{eq:T2} excludes it. The star $a_{12}=a_{13}=a_{14}=1$,
+$u_{13|24}=1$ satisfies all of them and gives the value $8$ in~\eqref{eq:four}; only the lemma on
+a full star excludes it. Test~E of the script verifies these three statements.
+\item \emph{A gap theorem with a good constant and without induction.} If
+$P_{st}(N)>(1-\gamma)2^{b}$, then every cycle of $J$ has more than $\log(1/\gamma)$ vertices. I
+found no elementary reason why $J$ then has no cycle; the argument through the layers needs the
+forest estimate and gives the small constant.
+\item \emph{A polynomial bound for pieces at girth five without induction.} A thin piece has
+many disjoint cycles of length $O(\log k)$ far from its boundary. If the joins can avoid the
+edges around many of them, \M{Lemma~2.4} gives the bound. If not, each of these cycles separates
+the set $T$, and the piece is a chain of blocks with small boundaries; the bound for a block is
+the statement for a smaller $k$. So the induction of \NN{Theorem~4.2} with a base for bounded
+$k$ is the natural form. The base needs a statement on rigid sets, because a block of bounded
+size gives only a factor $1-2^{-\text{rank}}$.
+\item \emph{The base without rigid sets.} For a set $T$ with forest proportion more than
+$\half+\varepsilon$, the marker argument and \M{Lemma~2.4} show that the graph outside the
+marker has bounded rank, as in \M{Proposition~5.3}. For two boundary vertices this gives the
+ladder. For more boundary vertices the count gives only that about half of the vertices are
+outside the marker, and I found no cycle of length four from this.
+\item \emph{One lemma for the marker.} Step~1 of the proof of \M{Proposition~5.3} and the step
+``a marker'' in the lemma on pieces are the same argument. One lemma can serve both. This is a
+change of the presentation only, and it saves no step, so the trial copy does not have it.
+\item \emph{The last section.} I found nothing new for the chain, the heavy families and the
+packing bound after~[N1] and~[N2]. The threshold $\frac25$ can be any number below $\half$ if the
+marked set is larger (Lemma~\ref{lem:marked}), but the proof needs two pieces for every such
+threshold, so this does not simplify it.
+\end{enumerate}
+
+\section{Tests}\label{sec:tests}
+
+The script \texttt{checks/gap\_and\_square\_check.py} has five tests. Exit code $0$ means that
+all of them passed. With the arguments \texttt{1500 1} it prints:
+
+\begin{center}\small
+\begin{tabular}{@{}p{1.2cm}p{13.3cm}@{}}
+\toprule
+\textsf{\textbf{Test}} & \textsf{\textbf{Content and result}}\\
+\midrule
+A & 1500 random bridgeless $2$-poles of rank $2$ to $6$, 206 with a full pair. For every shortest
+path $A$: the graph $J$ is a forest if and only if the pair is full (454 and 1578 paths). If $J$
+has a cycle $Z$, then $P_{st}\le2^{b}-2^{b-|Z|+k-1}$.\\
+B & 50 cubic graphs with 10 to 14 vertices and a cycle of length four. The count behind
+equation~\eqref{eq:four} and the identity $c(G)+c(Y)=1+c(\hat Y_{12|34})+c(\hat Y_{14|23})$ agree
+with a direct count of the cycles.\\
+C & 50 cubic graphs without a bridge and a connected set $P$ of 2 to 6 vertices: $q(G,P)$ by
+enumeration of all even subgraphs; Lemma~\ref{lem:marked} and the bound for $\beta(G-P)$ hold.\\
+D & The arithmetic of Lemma~\ref{lem:rigid}: 181 local searches over the states that satisfy
+\eqref{eq:T1}--\eqref{eq:T3} and do not have the conclusion of the lemma, for
+$\eta\in\{\frac1{80},\frac1{400},\frac1{5000}\}$. The largest value of $S+F$ was
+$4-2\eta-0.507\eta$, below $4-2\eta$.\\
+E & The three states of Section~\ref{sec:failed}, item~3.\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The tests A, B, C are complete counts on small graphs. They test the statements that
+do not contain large constants. Theorem~\ref{thm:gap} and Theorem~\ref{thm:fourcycle} are
+statements with large constants, and no computation tests them.
+
+\section{Limits}\label{sec:limits}
+
+\begin{itemize}[leftmargin=1.2em]
+\item The proofs are on paper. There is no formal proof of the new statements, and no second
+reader.
+\item The new gap theorem is weaker than \M{Theorem~5.10} as a statement: its constant is
+smaller. The paper uses only that the constant is positive and fixed.
+\item The four reductions change Sections~3, 5, 6 and~9. They do not change the last section,
+which is the longest one.
+\item I did not build a copy of the present text with the reductions 1, 3 and~4 alone. For that
+copy the proof of \M{Theorem~6.8} needs the numbers of Section~\ref{sec:constants}; the changes
+are of the same kind as in Lemma~\ref{lem:rigid}.
+\end{itemize}
+
+\section{Files}\label{sec:files}
+
+\begin{center}\small
+\begin{tabular}{@{}p{6.1cm}p{8.4cm}@{}}
+\toprule
+\textsf{\textbf{File}} & \textsf{\textbf{Content}}\\
+\midrule
+\texttt{research/fewer-cases.tex}, \texttt{.pdf} & this note\\
+\texttt{research/apply\_fewer\_cases.py} & writes the four reductions into a copy that
+\texttt{apply\_girth\_five.py} has changed; with the argument \texttt{keepgap} it writes the
+reductions 2, 3 and~4 only; every replacement must match exactly once\\
+\texttt{research/trial-fewer-cases.pdf} & the copy: lean form of~[N2] and the four reductions,
+41~pages\\
+\texttt{checks/gap\_and\_square\_check.py} & the five tests of Section~\ref{sec:tests}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent To build the copy, copy the folders \texttt{exact-maximum} and \texttt{style} to a
+new folder. On the copy of \texttt{exact-maximum} run the two scripts in this order:
+\begin{center}
+\texttt{python3 apply\_girth\_five.py <copy> lean}\\
+\texttt{python3 apply\_fewer\_cases.py <copy>}
+\end{center}
+Then build \texttt{exact-maximum.tex} with \texttt{tectonic}.
+
+\begin{thebibliography}{9}\small
+\bibitem[M]{M} KNT, Astra and Fable~5.2, \emph{The maximum number of cycles in a graph of large
+rank}, draft of 12 November 2026, 42~pages, \texttt{exact-maximum/exact-maximum.pdf}.
+\bibitem[N1]{N1} Fable~5.2, \emph{The large-girth theorem with one family of short cycles},
+research note of 12 November 2026, \texttt{research/one-scale.pdf}.
+\bibitem[N2]{N2} Fable~5.2, \emph{Pieces at girth five: the case of bounded girth is not
+necessary}, research note of 12 November 2026, \texttt{research/girth-five.pdf}.
+\end{thebibliography}
+
+\end{document}
