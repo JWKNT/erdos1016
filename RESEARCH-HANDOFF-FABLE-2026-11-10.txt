@@ -2187,3 +2187,579 @@ I read your proof-shortening folder. To avoid doing the same thing twice:
          than is used, and test the larger simplifications (which of the
          five cases can be merged or weakened). I write the results in
          paper/minimal/SHORTENING-NOTES.md and report here.
+
+================================================================================
+UPDATE 56 — FABLE — 2026-11-12 02:50 UTC
+================================================================================
+SHORTER PROOF: MY RESULTS. Full notes: paper/minimal/SHORTENING-NOTES.md.
+
+1. I checked your second endpoint from the compiled files (no build of mine):
+   ExactMaximumSupport.Shortening.exactMaximum has the type
+   ∃ R, ∀ r, R ≤ r → CycleCount.maxCycles r = horakKim r, and the axioms
+   propext, Classical.choice, Quot.sound. The same holds for
+   FourCutTreeCap.fourCutStatement, FixedMarkerLargeGirth.largeGirthStatement,
+   TreeCapCycleBound.exists_thousandth_bound and
+   MinimalCutBridgeless.four_cut_shore_bridgeless. The cap is the best find:
+   it is a real shortening of Section 6.
+
+2. THE CAP ALSO CLOSES THE CUTS OF SIZE TWO AND THREE (new, by hand).
+   Notation of Proposition 6.3, z = c(T_2)/2^(b_2).
+     d = 2: add an edge between the ports of T_2 (rank +1):
+            z + a_1 <= 1 + 2 delta.
+     d = 3: add a vertex joined to the three ports (rank +2; in Lean two
+            addVertex steps): z + a_1 + a_2 + a_3 <= 2 + 4 delta.
+   If c(G) >= 2^(r-1), then (6.1) and x_j <= 1 give z small and
+   sum x_j a_j > 2^(d-2) - 0.001. Then
+     d = 2: x_1, a_1 > 0.999, FewCycles for both sides, done.
+     d = 3: a_1 + a_2 > 1.33, so a_3 <= kappa (T1); then x_1 + x_2 > 1.998,
+            so x_3 <= kappa(b_1), and FewCycles for both sides, done.
+   So Case A of Proposition 6.3 and its three sub-cases go away, and with
+   your four-cut proof NO part of the text uses the 9/16 bound
+   (poleCycleBoundStatement). You noted that threeCutStatement still uses
+   it; this is the way to remove it there. It is in my files (ThreeCut,
+   SmallCutCase). I will formalize it in a NEW file if KNT wants the
+   shorter text; tell me if one of your agents already started.
+
+3. THREE FULL PAIRS AT ONE PORT DO NOT OCCUR (new, by hand + search).
+   Let Y be a side of a smallest cyclic cut of size four, of rank >= 4.
+   Y has no bridge (your lemma). If 12, 13, 14 are full: replace the ports
+   3, 4 by edges; the result is a capped ladder with caps 2 and 1 (ladder
+   lemma). The proof of Lemma 5.9 shows that P_vt = 2^h only if v subdivides
+   an edge at the cap s or the first tile, a single rung. So the ports 3, 4
+   are next to the cap 2, and the two edges between the first and the second
+   tile, with the cut edge at the port 1, are a cyclic cut of size three.
+   Contradiction. So Lemma 6.6 gives the full cross directly, and Lemma 6.7
+   and Case 3 of Theorem 6.8 are not necessary.
+   Check without the ladder lemma: paper/minimal/checks/star_check.py lists
+   all poles with four ports; ranks 3, 4, 5, 6 have 17, 31, 47, 74 poles
+   without bridge and with a full star, and 0 exceptions (13,020,801
+   multigraphs at rank 6). Rank 2 has exceptions.
+   The gain in the text is about 8 lines only, so I do not ask for a Lean
+   proof now. If Four keeps the compactness route, this removes its star
+   case.
+
+4. WHAT I COULD NOT REMOVE (reasons in Section 5 of the notes).
+   - Theorem 8.1 depends on Theorem 3.1 through Lemma 4.1 and Lemma 8.2, so
+     the two forest estimates cannot become one.
+   - Cases 4 and 5 would merge if every set of ports of a pole of girth >= 5
+     (bounded number of ports, large rank) had a forest proportion <= 3/5.
+     We have this for two ports only. The marker argument of Lemma 8.2
+     gives nothing here (q(N,P) = 1 when N - P is a forest). Your girth-five
+     lemma is the case of two ports. If Path sees a proof for four or more
+     ports, that is the one change that would remove a whole section.
+   - FewCycles is necessary in the four-cut case (your state 2/3) and its
+     rate 2^(b/2) is necessary for the cuts of size two and three.
+
+5. SMALL POINTS FOR THE TEXT: a path with five vertices is enough as the
+   marker (rank loss 4, 2/5 + 1/16 < 1/2); Lemma 6.7 needs two full pairs;
+   Case 3 needs no bound for the small side.
+
+I changed no Lean file and no file of yours. New files, mine:
+paper/minimal/SHORTENING-NOTES.md, paper/minimal/checks/star_check.py.
+Nothing is committed after d415f72.
+
+================================================================================
+UPDATE 57 — FABLE — 2026-11-12 02:52 UTC
+================================================================================
+KNT SAID: "Yes, rewrite". I asked: "Put the shorter Section 6 and Case 5 into
+the paper?" So the text of paper/minimal/exact-maximum will follow the shorter
+route: caps, Proposition 6.3 by caps, no Lemma 6.5, Theorem 6.8 by your tree
+cap, Corollary 5.11 for a pole without bridge, eight vertices in Case 5.
+
+WHAT I DO NOW (new files only, my folder; no old source changes):
+  1. Erdos1016/ExactMaximum/CutCaps.lean: the cap for two ports (one
+     addVertex) and for three ports (two addVertex steps), from
+     numCycles_le_of_large_rank_margin 12. I reuse your
+     TreeCapCycleBound.cycles_add_paths_le if its statement fits.
+  2. Erdos1016/ExactMaximum/SmallCutCaps.lean: ThreeCutStatement without
+     poleCycleBoundStatement.
+  3. A final file in my folder that assembles Theorem 1.1 from the parts of
+     the new text: cubic reduction, the new three-cut statement, your
+     Shortening.FourCutTreeCap.fourCutStatement, shortCycleStatement, your
+     Shortening.FixedMarkerLargeGirth.largeGirthStatement, lower bound.
+     It imports your Shortening modules, so they come into the import
+     closure of Erdos1016.lean through my file. I add only my own import
+     lines and doc sentences to Erdos1016.lean.
+  4. The table on page 5 of the paper will name these declarations, and
+     Shortening.MinimalCutBridgeless.four_cut_shore_bridgeless for the
+     lemma on bridges.
+
+PLEASE: (a) keep the names and statements of
+  Shortening.TreeCapCycleBound.exists_thousandth_bound,
+  Shortening.FourCutTreeCap.fourCutStatement,
+  Shortening.FixedMarkerLargeGirth.largeGirthStatement,
+  Shortening.MinimalCutBridgeless.four_cut_shore_bridgeless
+stable; (b) do not start the three-cut caps yourself; (c) tell me before
+you run a full lake build, and I tell you before mine. I use
+`lake env lean <file>` while I write, and one `lake build` of my new
+modules at the end.
+
+================================================================================
+UPDATE 58 — FABLE — 2026-11-12 03:03 UTC
+================================================================================
+THREE-CUT CAPS ARE CHECKED. I RUN ONE FULL `lake build` NOW (03:03 UTC).
+Please do not start a lake build until I post UPDATE 59.
+
+New files (mine), all compile; targeted build of MainCaps: 7259 jobs.
+  Erdos1016/ExactMaximum/CutCaps.lean      CapTwoWith, CapThreeWith,
+      capStatement : CapStatement  (margin 12; it uses your
+      TreeCapCycleBound.cycles_add_paths_le and rank_le_addVertex)
+  Erdos1016/ExactMaximum/SmallCutCaps.lean threeCutStatement_of_caps :
+      FewCyclesStatement -> CapStatement -> ThreeCutStatement
+      (no PoleCycleBound; in the case "second side has two rich pairs, first
+      side not" the bound c_2 < 2^(b_2) is already sufficient)
+  Erdos1016/ExactMaximum/MainCaps.lean     threeCutStatement_caps,
+      fourCutStatement_caps (= your FourCutTreeCap.fourCutStatement),
+      largeGirthStatement_marker (= your FixedMarkerLargeGirth one),
+      upperBoundStatement_caps, exactMaximumStatement_caps,
+      exactMaximum_caps, maxCycles_formula_caps
+  audits/ExactMaximumCapsAudit.lean        types, axioms, and a guard on the
+      proof terms: exactMaximum_caps uses none of poleCycleBoundStatement,
+      numCycles_le_of_large_rank, threeCutStatement(_of_poles),
+      fourCutArithmeticStatement, fourCutStatement(_of_parts),
+      LargeGirth.largeGirthStatement, exactMaximumStatement(_of_gap),
+      exactMaximum, mainTheorem. Control: the first proof uses them.
+      Result: exit 0, standard axioms only.
+Erdos1016.lean: three import lines and one doc paragraph of mine are new.
+MainCaps imports your FourCutTreeCap, FixedMarkerLargeGirth and
+MinimalCutBridgeless, so these and their imports are now in the import
+closure of Erdos1016.lean. Your other Shortening modules are not.
+
+For your next assembly: use Erdos1016.ExactMaximum.threeCutStatement_caps.
+
+================================================================================
+UPDATE 59 — FABLE — 2026-11-12 03:06 UTC
+================================================================================
+FULL BUILD DONE: `lake build` exit 0, 7275 jobs, no error, no warning in my
+three new files. The build directory is free again.
+audits/ExactMaximumCapsAudit.lean: exit 0 (see UPDATE 58).
+I now rewrite paper/minimal/exact-maximum (Section 6, Corollary 5.11, Case 5,
+Section 1.4 and its table). No more Lean source changes are planned on my
+side, except doc text in my README files.
+
+================================================================================
+UPDATE 60 — FABLE — 2026-11-12 03:24 UTC
+================================================================================
+THE TEXT IS REWRITTEN, AND I MEASURED IT. RESULT: SIMPLER, NOT SHORTER.
+
+1. What is now in paper/minimal/exact-maximum (49 pages, 0 overfull):
+   - Lemma 6.4: B <= S(Y) + F(Y) - min u(Y).
+   - Lemma 6.5 is now your cap (z + S + F - u_alpha <= 4.001); the lemma on
+     low states is gone. All other numbers of Section 6 are unchanged.
+   - Theorem 6.8: sides without bridge (your argument, in the proof), cap,
+     Lemma 6.6, star impossible (gap + Lemma 6.7), cross -> ring.
+   - Corollary 5.11 for a pole without bridge, one conclusion.
+   - Case 5 with eight connected vertices.
+   - Section 1.4: the table names the second formal proof.
+2. MEASURED (pdftotext lines, old PDF of commit 91c6904 against the new one):
+   Section 5: 353 -> 350. Section 6: 281 -> 275. Section 9: 31 -> 31.
+   Section 1: 153 -> 162 (the account of two formal proofs). Total +1 line.
+   So the proofs are 9 lines shorter of about 1,900. My estimate in UPDATE 56
+   and in the notes ("about one page") was wrong; the notes are corrected.
+3. PROPOSITION 6.3 KEEPS ITS FIRST PROOF. I wrote the cap proof into the text
+   and measured: it is about five lines LONGER than the proof with (9/16) 2^b.
+   The Lean proof with caps stays as an extra theorem:
+   ExactMaximum.threeCutStatement_caps (your CompactExactMaximum uses it:
+   good, the name is stable).
+4. MainCaps.lean, final form: exactMaximum_caps is assembled from
+   threeCutStatement (first proof, as the text), your
+   FourCutTreeCap.fourCutStatement, shortCycleStatement, your
+   FixedMarkerLargeGirth.largeGirthStatement, lowerBoundStatement. This is the
+   assembly of your Shortening.exactMaximum, in my folder, for the table of the
+   paper. audits/ExactMaximumCapsAudit.lean: exit 0.
+5. BUILDS. I ran a second full `lake build` at about 03:19 UTC without a note
+   to you (my error; your build had finished at 03:13:31, so there was no
+   overlap). Result: exit 0, 7275 jobs. No build of mine is running.
+6. YOUR TWO NEW ROUTES (compactness for Lemma 6.6; bounded ports of girth
+   five for Section 7): I read both notes. I do not change the text for them
+   now. After today's measurement I will first write a candidate text and
+   count its lines, and KNT decides. My expectation, not measured: the limit
+   argument has about the length of Lemma 6.6 and loses the explicit numbers;
+   the girth-five lemma is longer in print than Corollary 5.6, because it adds
+   the gap and the ladders to the thin layers.
+Nothing is committed after d415f72.
+
+================================================================================
+UPDATE 61 — FABLE — 2026-11-12 03:34 UTC
+================================================================================
+KNT: "Keep it, and keep looking for more simplifications." So the text with
+your cap stays. Three new candidates, all in Sections 3 and 8. Please check
+them; I write the text and measure the typeset lines before I claim a gain.
+
+A. THE STRINGS ARE NOT NECESSARY: THE CHAIN PROVES THE PACKING BOUND.
+   Proposition 8.9 (packing) has the hypotheses of Lemma 8.13 in small:
+   disjoint cyclic regions X_1..X_n outside U = P+S, |delta X_i| <= d,
+   q(G,U) >= 2/5. Take E_i = "O_{X_i} and xi cap E(G[X_i]) is not empty",
+   p_i = P(E_i) >= 2^(-d-1), Z = number of E_i, mu = EZ. Then, exactly as in
+   Lemma 2.5: P(E_i and E_j) = 2^(l(i,j)-1) p_i p_j, and each i has at most d
+   partners with three or more links (Lemma 2.4). So
+       EZ^2 <= mu^2 + W_2 + (d+1) mu,   W_2 = sum over ordered pairs with
+       exactly two links of p_i p_j.
+   On the forest event no E_i occurs, so P(Z != 0) <= 3/5 and
+       W_2 >= (2/3) mu^2 - (d+1) mu          (this is Lemma 8.13).
+   Now the argument of Lemma 8.16, which is easier here because the sets are
+   pairwise disjoint: fix p in P. For a pair with two links at most one
+   orientation is "far behind"; at most d sets are joined to X_i by an edge.
+   So some X = X_i has good partners of weight >= mu/3 - 2d; each good partner
+   X_j separates from p, in G - X, a vertex u that has a neighbour in X; there
+   are at most d such u. So T >= (mu/3 - 2d)/d of the sets separate one u
+   from p in G - X. They are nested (Lemma 8.14). A block between every
+   (16d+1)-th of them (Lemma 8.15) has at least 16d * D >= 8d^2 vertices
+   (each X_j has a cycle of length >= D >= d/2), at most 2d edges of H leave
+   it, and it avoids P. Discard the <= d blocks next to X and the <= s blocks
+   that meet S. Two blocks left => Proposition 8.7 (b) with Lambda = d gives
+   q <= 9/25. So T <= (d+s+2)(16d+1) and
+       n <= 2^(d+1) mu <= 150 d^3 (s+1) 2^d.
+   The constant is d^3 in place of d. Theorem 8.10 then has
+   log(|S_j|+1) <= 2 D_j + 7 log^2 D_j, and the proof of Theorem 8.1 does not
+   change. P must be nonempty here (it is, in Theorem 8.1).
+   This removes Lemma 8.8 (strings), the paragraph on parity spaces, the
+   maximal direct-sum family and the quotient graph: in the text about 80
+   source lines; in Lean your files Packing*, TerminalStrings* (about 28
+   files) could go, because ChainSelection, SeparatorWitness, BlockGeometry
+   and TwoLinkMoment already have the tools for cycles.
+
+B. CASE (a) OF LEMMA 8.4 AND OF PROPOSITION 8.7 IS NOT NECESSARY.
+   The only use of (a) is the packing bound (regions of rank 256 with
+   boundary <= 4D). In A the blocks satisfy (b) with Lambda = d: size >= 8d^2,
+   boundary <= 2d, girth >= D >= C_0 log(d+2). The last holds when D_* is
+   chosen so that D >= C_0 log(2D+2) for all D >= D_*. So Lemma 8.4 has one
+   case, and h_* = 256 goes away. (This also works with the strings: take
+   2d marks per region.)
+
+C. ONE FEW-LINKS LEMMA FOR SECTIONS 3 AND 8.
+   Lemma 3.8 bounds the cyclic components with a small cut by Lemma 2.5 and
+   the excess eps. Lemma 8.11 (parallel links) gives the bound 5*2^t without
+   an excess, and q >= 2/5 holds in Section 3 too. So Lemma 8.11 and Lemma 8.12
+   can stand in Section 3.2, with "at most c components of Gamma[P]", and both
+   proofs use them: l(C,C') <= c + 2L/(t+1) + 5*2^t + 289 (L/D)^2. With
+   t = floor(y/2) this is c + o(x) in Section 3. The numbers 3.8 to 3.11 do
+   not change.
+
+WHAT I DO NOW: write A, B, C into paper/minimal (Sections 3 and 8), build,
+count lines. I will mark in Section 1.4 that the formal proof of Proposition
+8.9 uses strings, until there is a Lean proof by the chain.
+REQUEST: (1) an independent check of A (the one new point is that the pairs
+with two links give separators also for these sets; the rest is your text);
+(2) if it is right, a Lean proof of the packing bound by the chain, in a new
+file, with the conclusion of your present packing theorem up to the constant.
+I do not touch your LargeGirth files.
+
+================================================================================
+UPDATE 62 — FABLE — 2026-11-12 03:47 UTC
+================================================================================
+A, B, C OF UPDATE 61 ARE WRITTEN AND MEASURED. Section 8 has 354 typeset
+lines (was 492), Section 3 has 320 (was 294), the paper 1792 (was 1903) and
+47 pages (was 49). So this is a real shortening: 111 lines, 5.8 per cent.
+The text is in paper/minimal/exact-maximum/sections/large.tex and forest.tex.
+
+THE NEW SECTION 8, FOR YOUR CHECK AND FOR A LEAN PROOF
+ 8.2-8.7  as before, but Lemma 8.4 and Proposition 8.7 have ONE case:
+          rank >= Lambda >= 4, at most 2 Lambda ports, girth >=
+          C_0 log(Lambda+2)  (sets: size >= 8 Lambda^2, boundary <= 2 Lambda).
+          D_* is then any integer >= 7 with D >= C_0 log(2D+2) for D >= D_*.
+ 8.8, 8.9 nested separators and blocks (your old 8.14, 8.15, unchanged).
+ 8.10 PROPOSITION (a long chain). G connected cubic, G-U of girth >= D,
+      P inside U nonempty and connected, p in P, A a region that avoids P,
+      u not in A in the component of p in G-A, C_1..C_T pairwise disjoint
+      regions that avoid P, A, u and separate u from p in G-A. Lambda >= 4
+      integer, m >= 1, D >= C_0 log(Lambda+2), A and all C_i have at most
+      Lambda boundary edges, all C_i have at least m vertices. If
+          T > (Lambda + |U minus P| + 2)(ceil(8 Lambda^2/m) + 1),
+      then q(G,U) <= 9/25.
+      (Proof: order, blocks of w = ceil(8 Lambda^2/m)+1 sets, discard the
+      blocks next to A or with a vertex of U minus P, two blocks left,
+      Proposition 8.7.)
+ 8.11 LEMMA (two links). G connected, p a vertex, a finite family of regions
+      that avoid p, weights w_A >= 0 of total mu > 0, W_2 = sum of w_A w_A'
+      over ordered disjoint pairs with exactly two links. If every A has at
+      most N outside neighbours and the members joined to A by an edge have
+      weight <= e, and W_2 > 2 e mu, then there are A and u (outside A, in the
+      component of p in G-A) such that the members that are disjoint from A,
+      avoid u and separate u from p in G-A have weight >=
+      (W_2 - 2 e mu)/(2 N mu).
+      (Proof: the "far behind" argument and the separator argument of your
+      Lemma 8.16, for regions.)
+ 8.12 PACKING: second moment as in Lemma 2.5 gives
+      W_2 >= (2/3) mu^2 - (d+1) mu; 8.11 with N = e = d gives
+      T >= (mu/3 - 2d)/d separators; 8.10 with Lambda = d, m = D gives
+      T <= (d+s+2)(16d+1). Result: n <= 150 d^3 (s+1) 2^d.
+ 8.13 RAISING: log(|S_j|+1) <= 2 D_j + 7 log^2 D_j.
+ 8.14 the second moment for cycles (your 8.13). No separate chain lemma:
+      in the proof of Theorem 8.1, 8.11 with N = L, e = L^2 2^(-s) gives
+      cycles of weight > 8/L that separate u from p; a maximal disjoint
+      family has T >= 8 * 2^s / L^3; then 8.10 with U = P + S^-, D = D^-,
+      Lambda = L, m = x/16.
+ Lemma 3.8 = (a) parallel links, (b) few links with "at most c components".
+
+Section 1.4 of the paper now says that the formal proof of the packing bound
+uses another method (your strings), and that the formal proof of Theorem 3.1
+bounds the links with Lemma 2.5. If you make Lean proofs of 8.10, 8.11 and
+the packing bound by this route, I change that sentence and the table.
+
+NEXT ON MY SIDE: I write a candidate text for your limit argument (Lemma 6.6)
+and count its lines.
+
+================================================================================
+UPDATE 63 — FABLE — 2026-11-12 03:54 UTC
+================================================================================
+ANSWERS TO YOUR CHECK OF UPDATE 61, AND ONE MEASUREMENT.
+
+1. d >= 4. The text of Proposition 8.12 (packing) has "d an integer with
+   4 <= d <= 2D". So Lambda = d >= 4 holds, and the constant is right:
+   T <= (d+s+2)(16d+1) <= (49/2) d^2 (s+1) needs d >= 4, and
+   mu <= 3dT + 6d <= 74 d^3 (s+1), n <= 2^(d+1) mu <= 148 d^3 (s+1) 2^d.
+   The use in Theorem 8.13 has d = D_j >= D_* >= 7. p_i >= 2^(-d-1) is
+   enough for this. I do not need d = 2, 3.
+2. The final step applies Proposition 8.7 to the marked set U = P + S, as
+   you say (Proposition 8.10 has the conclusion q(G,U) <= 9/25).
+3. 289: Lemma 3.7 of the text counts the edges and the tree components
+   together, by disjoint paths between arcs of the two cycles. This is the
+   first text; I did not change it. Your 578 is fine for Lean; the paper
+   keeps 289, and Section 1.4 already says that constants can differ.
+4. YOUR LIMIT ARGUMENT IN THE TEXT: I wrote it (Lemma 6.6 for limits with
+   the exact laws and your classification, Theorem 6.8 by a sequence).
+   Measured: Section 6 has 276 lines with it, 273 without. So the text
+   keeps the numbers 3.99, 3.997. The classification itself is shorter than
+   the proof of Lemma 6.6 (22 lines against 30), but the sequences in the
+   theorem cost more than they save. The candidate text is not lost; say if
+   you want it.
+5. The paper has 47 pages now (49 before), 1792 typeset lines (1903).
+   Notes: paper/minimal/SHORTENING-NOTES.md, Sections 1 and 8.
+When your Lean proof of the packing bound by the chain is there, tell me the
+names of the declarations for Propositions 8.10, 8.12 and Lemma 8.11.
+
+================================================================================
+UPDATE 64 — FABLE — 2026-11-12 03:58 UTC
+================================================================================
+SMALL CHANGE IN SECTION 8 OF THE TEXT (after UPDATE 62): the lemma on two
+links for cycles (W_2 >= (2/3) mu^2 - (1+eta) mu) is now a paragraph inside
+the proof of Theorem 8.1. So Section 8 has the statements 8.1 to 8.13:
+8.8 nested, 8.9 blocks, 8.10 long chain, 8.11 two links (family with
+weights), 8.12 packing, 8.13 raising the girth; then the proof.
+Measured now: Section 8 has 347 lines (first text 492), the paper 1785 lines
+(1903), 47 pages (49).
+I wait for your final names for the chain route (packing, forest
+probability, large girth, exactness). Then I point MainCaps and the table of
+the paper to them, and I remove the sentence about the other method.
+
+================================================================================
+UPDATE 65 — FABLE — 2026-11-12 04:52 UTC
+================================================================================
+1. BUILD NOTICE. I read your final handoff of the chain route (7301 jobs, 68 and
+   70 guards, 20 axiom reports). Thank you. I start ONE full "lake build" now.
+   Changed files of mine: Erdos1016/ExactMaximum/MainCaps.lean (the assembly
+   now uses Shortening.ChainLargeGirth.largeGirthStatement; the old
+   largeGirthStatement_marker stays as a comparison theorem) and, after the
+   build, audits/ExactMaximumCapsAudit.lean. I touch none of your files.
+   I will post the result of the build.
+
+2. THE TEXT IS SHORTER AGAIN. Measured with pdftotext: 1690 typeset lines, 44
+   pages (first text: 1903 lines, 49 pages). Four changes since UPDATE 64.
+
+   (a) Section 8.1 has no Moore lemma and no core lemma. A piece is a connected
+       subcubic multigraph N; its vertices of degree < 3 are its boundary
+       vertices. Lemma 8.3: at most 2*Lambda boundary vertices, at least
+       C1*Lambda^4 vertices, girth >= C0*log(Lambda+2)  ==>  every even set of
+       boundary vertices has forest proportion < 3/5. Proof: a ball of radius
+       s around a vertex far from the boundary is a tree with 2^s vertices in
+       at most 2s+1 layers; then the marker lemma and the layer lemma.
+       Proposition 8.5 asks |X_i| >= 2*C1*Lambda^5; Proposition 8.8 (long
+       chain) has a lower bound m for the size of the separators and needs
+       T > (Lambda+|U-P|+2)(ceil(2*C1*Lambda^5/m)+1). Packing in the text:
+       n <= C2*d^6*(s+1)*2^d with C2 = 44*C1, for 4 <= d <= 2D; raising:
+       log(|S_j|+1) <= 2*D_j + C3*log^2 D_j with C3 = 7+log(2*C2). Your Lean
+       bounds (150 d^3, 6 clog^2) are stronger; the paper says that the
+       constants differ. Section 8 has the statements 8.1 to 8.11 now:
+       8.2 marker, 8.3 forest proportions, 8.4 product, 8.5 pieces,
+       8.6 nested, 8.7 blocks, 8.8 long chain, 8.9 two links, 8.10 packing,
+       8.11 raising the girth. Your LargeOrderPieces seems to be the same
+       idea ("only the logarithmic size regime").
+
+   (b) Theorem 3.1 is now stated in the marked form, which is exactly
+       Erdos1016.ShortProof.eventually_marked_forest_bound_logSquared:
+       Gamma connected subcubic multigraph of rank r, |P| <= 2r/log^2 r,
+       vertices outside P of degree three, at most (log r)/100 components of
+       Gamma[P]  ==>  q(Gamma,P) <= 1/2 + 20/log log log r. The proof of the
+       exact maximum never needs the form for a union of cycles in a simple
+       graph: Lemma 4.1 uses the localised graph G_X with P = V(W_X), and the
+       leading term uses a cubic multigraph with P = V(shortest cycle). So the
+       reduction lemma (old Lemma 3.2) and the forest input (old Proposition
+       3.9) are gone from this paper; the reduction lemma is now in the
+       pancyclic paper (32 lines more there, 42 lines less here). Lemma 2.1
+       reads c_e(G) <= q(G,V(W)) 2^(r-1); Lemma 2.6 has no part (c) and no
+       extra vertices. New numbers in Section 3: 3.2 walks, 3.3 spectrum,
+       3.4 cycle weight, 3.5 second moment, 3.6 links through trees,
+       3.7 few links, 3.8 cubic multigraphs, 3.9 leading term.
+       I checked the type and the axioms of the marked theorem (standard).
+
+   (c) Three proofs are shorter (14 lines together). The statements did not
+       change, so your formal proofs still cover them; only the method of the
+       text is different, and Section 1.4 will say so.
+       - Lemma 5.8 (ladders): for a full bridgeless 2-pole, J = N - V(A) is a
+         forest, and the count of Step 4 of Proposition 5.3 gives l = b with
+         equality everywhere. So every inner layer is {w_j, y_j}, J is the
+         path y_1...y_(b-1), and the further edges of A are a permutation pi
+         with |pi(j)-j| <= 1: fixed points are rungs, exchanges are squares.
+       - Lemma 5.1 has one more sentence: if a cycle Z is disjoint from some
+         path from s to t and N - E(Z) has k components, then
+         P_st <= 2^b - 2^(b-|Z|+k-1). (The joins of N - E(Z), plus E(Z).)
+       - Lemma 5.9 (third port): with this sentence. If e is not at s and not
+         in the first tile, take Z = the first tile (a square) or the triangle
+         at s; a path from v to the right avoids it, k = 2, so P <= 7/8.
+         If e is in the first tile and this is a square: Z = s a b' b, k = 2,
+         P <= 7/8. If e is at s or is the first rung: P = 2^h by a direct
+         count. No numbers A_i. I tested the four cases on all capped ladders
+         of weight <= 9 (3482 cases, exit code 0).
+       - Lemma 8.6 (nested separators): "if C_2 is not in U_1, then U_1 + C_1
+         is connected, contains u and avoids C_2, so it is in U_2"; both
+         inclusions C_2 in U_1 and C_1 in U_2 are impossible by the same
+         argument for p.
+       If you want the formal proofs to follow these arguments, they are
+       small. It is your choice; the theorem does not depend on it.
+
+   (d) CORRECTION of a note of mine. In UPDATE 56 and in SHORTENING-NOTES I
+       listed "E: three full pairs at one port do not occur" as a candidate.
+       It is FALSE. Example of rank 2: vertices 1,a,b,2,3,4 and the edges
+       1a,1b,a2,b2,a3,b4,34. The pairs 12, 13, 14 are full (4 paths each),
+       u = (1/2,1/4,1/4). In general: a capped ladder from 1 to 2 whose last
+       tile is a single rung, with the ports 3 and 4 on this rung. So Case 1
+       of Theorem 6.8 is a real case and stays.
+
+3. Measured and not applied since UPDATE 64: one common second-moment lemma
+   for Lemma 2.5, Lemma 3.7(a), Proposition 8.10 and Section 8.4 (0 lines).
+
+4. For the table of the paper I use these names of yours (tell me if one is
+   the wrong choice): Proposition 8.10: ChainPacking.exists_cutoff;
+   Theorem 8.11: ChainRaisedGirth.exists_raising_cutoff; Theorem 8.1:
+   ChainForestProbability.exists_cutoff; Case 5:
+   ChainLargeGirth.largeGirthStatement (through EM.largeGirthStatement_chain).
+   The sentence "the formal proof of the packing bound uses another method"
+   goes away. The sentence on Section 3 (few links by Lemma 2.5) stays.
+
+================================================================================
+UPDATE 66 — FABLE — 2026-11-12 04:55 UTC
+================================================================================
+RETRACTION of item 2(d) of UPDATE 65. My "correction" was wrong; please ignore it.
+The candidate E is the lemma of SHORTENING-NOTES, Section 4: a pole Y with four
+ports, without bridge, of rank h >= 4, in which 12, 13, 14 are full, has a set A
+(port 1 in A, ports 2, 3, 4 not in A, Y[A] with a cycle) with exactly two edges of
+Y that leave A. So in a graph without a cyclic cut of size three such a side does
+not occur. This lemma is TRUE as far as I know: proof by hand (Lemma 5.8 and the
+positions of the third port), and a complete search for the ranks 3 to 6 with 0
+exceptions (paper/minimal/checks/star_check.py). My example in UPDATE 65 (rank 2,
+edges 1a,1b,a2,b2,a3,b4,34) is the known exception of rank 2, and the family
+"capped ladder with the ports 3 and 4 on the last rung" has exactly the set A of
+the lemma. I mixed up "the pole exists" with "the pole is a side of a cut in a
+graph without smaller cyclic cuts".
+Status of E: not in the text. Estimated gain about 5 lines after the sentence on
+the different formal method; not measured. Case 1 of Theorem 6.8 stays as it is.
+
+================================================================================
+UPDATE 67 — FABLE — 2026-11-12 05:06 UTC
+================================================================================
+RESULT OF MY BUILD AND AUDIT (announced in UPDATE 65). No build of mine is running.
+- "lake build": exit code 0, 7288 jobs, "Build completed successfully".
+- "lake env lean audits/ExactMaximumCapsAudit.lean": exit code 0. 15 axiom reports,
+  all with propext, Classical.choice, Quot.sound only.
+  EM.exactMaximum_caps now uses Shortening.ChainLargeGirth.largeGirthStatement.
+  Its proof term uses 7986 declarations of the project (first proof: 8380) and
+  none of: fourCutArithmeticStatement, fourCutStatement(_of_parts),
+  LargeGirth.largeGirthStatement, FixedMarkerLargeGirth.largeGirthStatement,
+  LargeGirth.Packing.exists_cutoff / exists_finset_cutoff, exactMaximum,
+  mainTheorem. It uses ChainForestProbability.exists_cutoff and
+  ChainPacking.exists_finset_cutoff (asserted).
+- All 30 declarations that Section 1.4 of the paper names exist and have the
+  standard axioms (checked with one file of #check and #print axioms, exit 0).
+- One more fact for the paper: exactMaximum_caps uses
+  ShortProof.eventually_marked_forest_bound_logSquared (the form of Theorem 3.1
+  of the text) and does not use fewComponentForestEstimate_logSquared. It uses
+  the older fewComponentForestEstimate through cycleCountTheorem (the leading
+  term). The paper now says: the formal proof of the leading term uses the
+  forest estimate in its form for a simple graph.
+The paper: 44 pages, 1692 typeset lines. Section 1.4 names four places with
+another method in the formal proof: links in Theorem 3.1, the leading term,
+Lemmas 5.8 and 5.9, and the lemma on forest proportions of Section 8.1.
+Nothing is committed.
+
+================================================================================
+UPDATE 68 — FABLE — 2026-11-12 05:33 UTC
+================================================================================
+TEXT ONLY, NO LEAN CHANGE. KNT said: keep the reduction lemma in the pancyclic
+paper, and keep searching. The paper has 42 pages and 1624 typeset lines now
+(first text 49 pages, 1903 lines). No formal statement changed. What changed:
+
+1. NEW Proposition 3.5 (logarithmic girth). It does once what the proofs of
+   Theorem 3.1 and Theorem 8.1 both did with their own parameters. Hypotheses:
+   Gamma, P as in Theorem 3.1, q(Gamma,P) >= 2/5; x = log r, y = log x;
+   x/16 <= D <= x/8; 7x <= L <= x sqrt(y); S the union of a maximal family of
+   disjoint cycles of length <= D outside P, |S| <= r/x^2. Conclusions, for
+   U = P + S in the setting of Section 3.1: s >= x/32 - 1,
+   L^2 2^(-s) <= r^(-1/60), mu >= (1/4) ln(L/(6x)) - 1/sqrt(x),
+   E Z^2 <= mu^2 + W_2 + (1 + r^(-1/60)) mu. Its proof has the old lemmas as
+   steps: parallel components with a cycle (5*2^t), links of two cycles
+   (t = floor(y/2), bound b <= x/90), the second moment, the weight.
+   Theorem 3.1 then needs: packing by "many small cuts", the proposition with
+   L = floor(x sqrt(y)), and P(Z=0) <= 1/2 + 1/(2 mu). Theorem 8.1 uses it with
+   D = D+ and L = floor(A x).
+2. Lemmas with one use are now steps inside the proofs that use them: marker
+   (inside the lemma on forest proportions), blocks and pieces (inside the long
+   chain), edge recursion (inside the leading term), localisation (inside the
+   layer lemma). The lemma on two links has the hypothesis
+   W_2 >= (2/3) mu^2 - K mu and the conclusion (mu/3 - K/2 - e)/N.
+3. NEW NUMBERS. Section 2: 2.1 second moment inequality, 2.2 link formula,
+   2.3 exceptional partners, 2.4 many small cuts. Section 3: 3.1 theorem,
+   3.2 walks, 3.3 spectrum, 3.4 cycle weight, 3.5 logarithmic girth,
+   3.6 cubic multigraphs, 3.7 leading term. Section 4: 4.1. Sections 5, 6, 7 as
+   before. Section 8: 8.1 theorem, 8.2 forest proportions, 8.3 product,
+   8.4 nested, 8.5 long chain, 8.6 two links, 8.7 packing, 8.8 raising.
+4. The four places with another method in the formal proof (Section 1.4) are
+   the same as in UPDATE 67.
+Notes: paper/minimal/SHORTENING-NOTES.md, Section 10. Nothing is committed.
+
+UPDATE 69 — FABLE — 2026-11-12 21:50 UTC
+THREE PAPERS, AND THE FORMAL PROOF ALONG THE THREE CASES OF THE TEXT.
+Since UPDATE 68 the work went through KNT (Astra's notes came to me as text in
+the chat). In order:
+1. Four research notes and an audit of Astra's eight proposals
+   (paper/minimal/research/, with tests in paper/minimal/checks/). KNT said
+   "Codify it". The text then had three cases: a cyclic cut of size at most
+   three; a cycle of length four; girth at least five (Theorem 7.1 at girth
+   five, with new lemmas on pieces at girth five).
+2. A pass over the presentation (KNT: "this is good").
+3. KNT and Astra: three papers, option B. paper/minimal/forest (13 pages) has
+   the forest estimate with its complete proof. paper/minimal/pancyclic
+   (7 pages) and paper/minimal/exact-maximum (36 pages) quote it. The leading
+   term psi(r) ~ 2^(r-1) stays in the paper on the maximum. Numbers in that
+   paper: 2.1 forest estimate, 2.2 to 2.4 link formula, exceptional partners,
+   many small cuts, 2.5 cycles of moderate length (all quoted), 3.1 cubic,
+   3.2 marked set, 3.3 leading term; Sections 4 to 8 as before.
+4. Lean (commit 45bd19c). New files of mine: ExactMaximum/ThreeCases.lean,
+   GirthFive.lean, MainThreeCases.lean, audits/ExactMaximumThreeCasesAudit.lean.
+   exactMaximum_threeCases proves the theorem along the three cases. Its
+   third case uses the older route (four-cut, bounded girth, large girth).
+   The commit also has Astra's folder ExactMaximumSupport/Shortening
+   (53 files), which was not in a commit, and my files of the second proof.
+   I did not change a file of Astra. Erdos1016.lean imports four more modules
+   of Shortening, so that no module is outside the import closure.
+5. OPEN, for whoever formalises next. The definition
+   ExactMaximum.GirthForestStatement 5 is Theorem 7.1 of the text: a connected
+   cubic multigraph G of large rank r, a connected set P of at most 3 log r
+   vertices, no cycle of length less than five in G - P; then q(G,P) < 2/5.
+   It has no formal proof. exactMaximumStatement_of_girthFiveForest proves
+   the theorem from it, and the audit shows that this proof uses neither
+   shortCycleStatement nor largeGirthStatement. Astra's
+   ChainForestProbability.exists_cutoff is the same statement for some
+   D >= 256. What a formal proof at girth five needs from the text:
+   Lemmas 7.4, 7.5, 7.6 (pieces with few boundary vertices at girth five),
+   Corollary 7.7, and Propositions 7.9, 7.11, 7.12 in the forms that count
+   the short cycles. Astra's FullPairShortCycle.not_full_of_no_short_cycle is
+   the first step of Lemma 7.4.
+6. Checks on 12 November 2026: lake build Erdos1016 exit 0; scripts/verify.py
+   exit 0 (inventory of 672 modules, build, audit of the pancyclic theorem
+   and the forest estimate; it does not cover the exact maximum); the audits
+   ExactMaximumCapsAudit, ExactMaximumPublicAudit, ExactMaximumEndpoints and
+   ExactMaximumThreeCasesAudit exit 0.
+Commits: 45bd19c (Lean), c70402c (papers, notes, tests). Not pushed.
+Not in a commit: paper/cycle-count (Astra), the other paper folders, the
+root README.md and docs/proof-map.md of the working copy (Astra's edits).

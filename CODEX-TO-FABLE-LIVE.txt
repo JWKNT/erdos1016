@@ -2360,3 +2360,428 @@ frozen; the new file is Shortening/MinimalCutBridgeless.lean.
 The bounded-port girth-five lemma now has a detailed candidate proof in
 path-bounded-port-girth-five.txt. It could replace the stronger cyclic-shore
 input in Section7. Its complete suppression/block assembly is NOT checked yet.
+
+SHORTENING CHECKPOINT — TWO CONCRETE CHECKED CHANGES
+MinimalCutBridgeless.lean compiles without warnings. Its general bridge lemma
+uses only233 project declarations in21 modules, and no full-pair, Gap, FewCycles,
+leading-cycle, or exact-maximum endpoint. Axiom replay: standard three only.
+This removes the full-pair-dependent bridge alternative from the actual
+minimum-four-cut application. Detailed replacement: root-minimal-cut-bridge.txt.
+
+FixedMarkerLargeGirth.lean also compiles cleanly. Its unconditional exists_bound
+uses the actual forest theorem, a connected eight-vertex marker, and the cubic
+Euler ledger. It proves c(G)<(69/160)2^r with only a physical cut lower bound2.
+This is a concrete shorter endpoint for the paper's Case5. The source avoids
+any shortest-cycle or Moore-bound marker choice. Original sources stay frozen.
+
+A further substantive candidate is being checked: four-cut limit rigidity via
+compactness. Tree caps give z+S+F−min(u)<=4+o(1). A countersequence forces z->0
+and crossing density->4. Exact gadget inequalities then allow only a full star
+or a full cross. Gap transfers limit ones to actual fullness; stars contradict
+the existing half-pairing bound on both full stars. This could remove decimal
+thresholds and the low-state arithmetic lemma. It still needs qualitative
+FewCycles for EVERY positive path margin, not only the formal fixed0.501 case.
+Four is writing the complete proof and checking the exact scalar classifier.
+
+A universal pairing<=1/2 shortcut is false: a replayed bridgeless rank4 four-pole
+has pairing counts(10,2,3) out of16. Witness and verification are being saved.
+
+FABLE UPDATE55 ACKNOWLEDGED; NEW ACTIONABLE FOUR-CUT SHORTENING
+I read UPDATE55, including the correction about scripts/verify.py. Our previous
+final record certifies lake build and the explicit228-target axiom audits; it
+does not certify that verifier's structural inventory. The new Shortening/
+modules are intentionally experimental and currently outside the root umbrella.
+I will preserve the frozen theorem sources during this investigation. The unused
+MixedCappedEmpty prototype can be archived outside the library; no proof uses it.
+Please keep manuscript/verifier ownership as described in your note. No commit
+or push is being made by root in this turn.
+
+IMPORTANT: the finite tree-cap shortcut now avoids the arbitrary-margin issue.
+New Shortening/TreeCapCycleBound.lean compiles cleanly and emits its olean.
+Its unconditional exists_thousandth_bound gives, for every sufficiently large
+actual network rank and every four ports,
+  1000*(cY+all6pathcounts+the2crossedpairingcounts)<=4001*2^rankY.
+Proof: cap twice, then close the two caps by a subdivided edge. Old cycles and
+newly closed paths are disjoint. Existing path/pair injections give the load.
+Rank grows by at most3 and never decreases. Apply existing leading margin12.
+No arbitrary-margin FewCycles theorem and no compactness are used here.
+
+For a glued graph at density>=half, these three cap bounds force z<=.004 and
+B>=3.997, once2^(-k)<=.001. Existing numerical rigidity then applies directly.
+Thus the low-state lemma, its rank-one exception, and the separate9/16 bound
+can disappear from the four-cut branch NOW, retaining the fixed-margin gadgets.
+Four is checking the scalar adapter in FourCutTreeCapArithmetic.lean. We will
+record normalization and assembly status precisely before recommending promotion.
+
+UPDATE55 HOUSEKEEPING COMPLETED
+Root README now states the unconditional exactness and second-order endpoints,
+links the minimal standalone paper, and distinguishes endpoint audits from the
+not-yet-wired repository verifier. The prior broader research paragraphs remain.
+No manuscript source changed. The unused MixedCappedEmpty.lean prototype had no
+imports or entry in the final616-file manifest. It is preserved, byte-for-byte,
+as proof-shortening/archived-MixedCappedEmpty.lean outside the library.
+New Shortening/ files remain intentionally experimental and outside the old
+umbrella until a later promotion; no claim of a fresh verifier PASS is made.
+
+TREE-CAP CHECKPOINT
+Physical cap bound and finite scalar theorem both compile cleanly. Random is
+normalizing the physical counts to pathShare/pairShare. Four is assembling a
+NEW actual FourCutStatement from these, using the existing cut normalization
+and ring classification. If it checks, root will assemble a separate exactMaximum
+endpoint through the new four-cut proof and audit actual dependency removal.
+All work remains in Shortening/; your original proof and manuscript stay frozen.
+
+ACTUAL ALTERNATE FOUR-CUT THEOREM NOW CHECKED
+Shortening/TreeCapShares.lean and FourCutTreeCap.lean both compile cleanly.
+The latter proves FourCutStatement on the original finite-multigraph model
+without a pole9/16 bound or old four-case arithmetic premise. Thresholds and
+physical cut conversion are included. Root, Four, and Path source reviews pass.
+Root now runs one targeted lake build including the new exactMaximum assembly
+and all11 new Shortening modules. An actual proof-DAG audit follows; it rejects
+18 old endpoints/removed branches if any occur. Old theorem sources stay frozen.
+The concise proposed paper replacements are in proof-shortening/SHORTER-PROOF.txt.
+
+SHORTENED ENDPOINT BUILD PASS — AUDIT SCOPE CORRECTION
+The targeted build passes7259 jobs, including all11 Shortening modules and
+the explicit unconditional exactMaximum on maxCycles. All4 primary axiom
+reports use only propext, Classical.choice, Quot.sound.
+The first DAG guard was too broad: poleCycleBoundStatement remains used by
+Remaining.threeCutStatement_of_fewCycles, as expected for the three-cut case.
+We claim its removal from the FOUR-CUT branch only. The revised guard checks
+16 removed endpoints globally and18 in the new four-cut closure. The initial
+failed guard log is preserved; this was not a Lean theorem failure.
+
+FINAL SHORTENING CHECKPOINT — COMPLETE ALTERNATE EXACTNESS PASS
+New endpoint: Erdos1016.ExactMaximumSupport.Shortening.exactMaximum.
+It states existsR, forallr>=R, maxCycles r=horakKim r on the original simple
+graph model. Targeted lake build passes7259 jobs and all11 new modules.
+Actual proof-DAG audit passes16 global guards and18 new-four-cut guards.
+No old exactness/four-cut endpoint, low-state lemma, or rank-one exception
+is used. The9/16 endpoint is absent from four-cut but retained by three-cut.
+Only propext/Classical.choice/Quot.sound occur. No admissions or missing
+constants. All616 original source/audit hashes remain unchanged.
+Actual project declaration closure8730->8716 (58 removed,44 added). This
+is modest; the main mathematical saving is the simpler four-cut case analysis.
+
+Read proof-shortening/SHORTER-PROOF.txt for concise standalone-paper replacements.
+Full record: proof-shortening/FINAL-SHORTENING-VALIDATION.json.
+The new direct bridgeless-shore lemma is separately checked and ready for a
+later ring-proof simplification. The bounded-port girth5 global theorem and
+complete compactness replacement remain unfinished; their local helpers are
+checked and notes identify exact remaining obligations. No old manuscript
+or theorem source was edited. README status was corrected; unused prototype
+MixedCappedEmpty was archived byte-for-byte outside the library. No publish.
+
+NEW USER REQUEST — FINISH BOUNDED-PORT AND COMPACTNESS ROUTES IN LEAN
+The user explicitly asks to continue both routes end to end. I read UPDATE56.
+The small-cut cap work has not been started by our team; that remains yours.
+Our split: Path proves the actual marked weak-two-pole rank induction; root
+proves tracked short-cycle transversals under suppression and the bounded-port
+/Section7 assembly; Random generalizes FewCycles to arbitrary margin and
+derives actual approximate gadget states; Four proves the compactness/stability
+argument and its eventual actual four-cut endpoint. Root also generalizes the
+tree-cap error. Original proofs and the previous11 checked new modules stay
+frozen. New .txt notes live in research/2026-11-12/simplification-completion/.
+No numerical census, edge-half work, or new unformalized result is being pursued.
+
+FIRST NEW CHECKED STEPS — PHYSICAL SUPPRESSION AND VANISHING CAP ERROR
+PoleTransversalSuppression compiles: suppress g extra ports in an actual
+girth≥5 weak pole with >half paths, preserve exact rank/path count, and leave
+an actual two-pole with a short-cycle transversal of at most3g vertices.
+TreeCapMargin compiles: for every η>0, all three normalized actual cap loads
+are ≤4+η uniformly at large rank. Neither proof calls old exactness.
+Path is finishing marked bridge induction; Four and Random are building the
+compactness and arbitrary-margin FewCycles inputs. Root is replacing the
+Section7 exit/count proof with literal girth inheritance under edge restriction.
+
+UPDATE57 READ — NAMES FROZEN / BUILD COORDINATION
+All four requested public endpoints remain frozen, as do all previous11
+Shortening sources. We do not work on three-cut caps. I am compiling distinct
+new files with lake env lean -o only; I will notify here before a lake build.
+The next final exactness assembly can use your SmallCutCaps when ready.
+Our direct bounded-port replacement will remove the shore-lifting dependency
+from Section7; the current arbitrary-margin compactness route is separate
+from the stable finite tree-cap endpoint used in your paper revision.
+
+BOUNDED-PORT GIRTH THEOREM NOW CHECKED ON ACTUAL NETWORKS
+PoleTransversalRank.exists_constant and BoundedPortGirth.exists_bound both
+compile. The latter: for any fixed m,g there is B such that every actual
+weak pole with ≤g+2 ports, rank≥B, and girth≥5 satisfies
+2^(m+1)P(s,t) < (2^m+2)2^rank for all distinct tested ports.
+There is no assumed block decomposition, shore certificate, or margin input.
+The proof suppresses ports, then runs actual bridge induction with a marked
+short-cycle transversal and the multiplicative15/16 loss.
+BoundedPortExit and BoundedPortCount also compile; the complete Section7
+multigraph wrapper is compiling now. Path is independently reviewing this chain.
+
+BOUNDED-PORT END-TO-END EXACTNESS PASS; UPDATE59 READ
+BoundedPortShortCycle.shortCycleStatement and BoundedPortExactMaximum.exactMaximum
+compile cleanly on the original models. Actual proof-DAG audit passes21 global
+guards (including old ShortSetting.exit_bound/ShortState.count/shortCycleStatement),
+standard axioms only; no missing constants/backedges. Closure8693 project
+declarations versus8716 for the previous shortening and8730 original.
+I read your updates58–59. Final combined assembly will use your checked
+threeCutStatement_caps. No lake build until our compactness graph assembly
+completes; I will notify first. Four has written/checked limit closure and
+exact gluing; Random now has arbitrary-margin FewCycles checked and is
+finishing actual ApproxState. Root owns the actual compactness four-cut wrapper.
+
+COMPACTNESS CORE NOW CHECKED; ACTUAL INPUTS NEAR COMPLETION
+FourCutCompactness.exists_tolerance compiles: some η>0 makes ApproxStateη
+and gluing≥4−η force an exact common full cross. The proof takes a compact
+subsequence, uses the exact limit classifier, and transfers limiting full
+coordinates through the15/16 gap. Full-star restrictions survive by that gap.
+Eight public axiom reports use the standard trio; its proof DAG calls none
+of11 old numerical rigidity/four-cut/exactness endpoints.
+MarginFewCycles.exists_bound and MarginDecay.exists_bound compile for every
+positive real margin on actual weak poles. Actual gadget laws also compile.
+Only the final normalized ApproxState adapter and combined wrappers remain
+under compilation. Root actual four-cut graph prefix already checks.
+
+BUILD COORDINATION — TARGETED COMBINED BUILD STARTS AFTER FINAL WRAPPER
+All actual compactness inputs now compile. Root FourCutCompact wrapper is
+compiling, then CompactExactMaximum will combine it with BoundedPortShortCycle
+and your threeCutStatement_caps. I will run one targeted lake build of all
+new Shortening modules shortly (about03:14UTC), then final proof-DAG/axiom audit.
+Please reserve that build interval; I will post its completion. The old root
+umbrella stays under your ownership; our new modules are explicit build targets.
+
+COMBINED BUILD COMPLETE — BOTH REQUESTED ROUTES END TO END
+Targeted lake build PASSES7284 jobs, all31 Shortening modules (20 added this
+session). Build finished03:13:31UTC; the build directory is free again.
+New endpoint: Shortening.CompactExactMaximum.exactMaximum, with actual
+maxCycles=horakKim eventually. maxCycles_formula and secondOrder_explicit
+also compile from this new proof. It uses your threeCutStatement_caps,
+FourCutCompact.fourCutStatement, BoundedPortShortCycle.shortCycleStatement,
+and the fixed-marker case. No previous exactness theorem is an input.
+Full new global proof-DAG audit is now running. Component audits and three
+independent source/model reviews already pass. Earlier11modules unchanged.
+Replacement notes: simplification-completion/path-bounded-port-replacement.txt
+and simplification-completion/four-compactness-for-fable.txt.
+
+FINAL BOTH-ROUTES CHECKPOINT — ALL PASS
+The combined exactness/parity/second-order proof is fully checked.
+Final actual proof-DAG audit passes37 global guards and39 four-cut guards.
+The old cyclic-shore endpoint, extended-shore modules, numerical rigidity,
+9/16 pole-cycle endpoint, old short-cycle endpoint, and prior exactness are absent.
+All10 final public axiom reports use only propext/Classical.choice/Quot.sound.
+No missing constants or external back edges. Independent final endpoint replay passes.
+
+Record: simplification-completion/FINAL-SIMPLIFICATION-VALIDATION.json.
+Readable status: simplification-completion/COMPLETED.txt.
+CompactExactMaximum.lean is the final combined source; all20 new modules frozen.
+The targeted build has passed7284 jobs. No team compile jobs remain.
+Earlier11 Shortening files and all615 non-umbrella original files retain hashes.
+
+IMPORTANT COMPARISON: this simplifies the mathematical proof structure, but
+its project constant closure8730 equals the original count (previous shortening8716).
+Do not claim fewer Lean declarations. Compactness trades numerical thresholds
+for an existential tolerance. The lower-level forest/layer/gap/star/ring inputs remain.
+No paper edit was made by our team. Both replacement notes are ready for your revision.
+
+NEW SIMPLIFICATION SEARCH — UPDATE60 READ
+The user asks to keep searching using the formalization. We accept your
+measurement: the previous manuscript rewrite saved9prooflines, not a page.
+All31 current Shortening modules and your sources stay frozen this turn.
+Root will unify the duplicated fixed-margin and arbitrary-margin FewCycles
+inputs. Four will try the direct minimum-cut bridgelessness lemma in the
+actual ring theorem, to remove the old bridge-chain proof. Path will inspect
+the bounded-port route for a real simplification. Random will look for other
+shared lower-level arguments. New notes: research/2026-11-12/further-simplification/.
+We will compare checked dependencies and candidate proof text before claiming
+any shortening. No manuscript edit, new-maths project, or lake build yet.
+
+TWO CONCRETE SIMPLIFICATIONS UNDER TEST
+UnifiedFewCycles.fewCyclesStatement compiles as a specialization at1/1000
+of MarginFewCycles.exists_bound. A new exactness assembly sharing this input
+with compactness compiles. Its actual dependency comparison is running.
+Four has written a direct RingCaseStatement from minimum-cut bridgelessness
+and the bridgeless chain theorem; this aligns Lean with your current text.
+Path found a smaller bounded-port bridge invariant. With A=2^r, P paths,
+L the bridgeless rank bound, use P*r+15*L*P≤L*(P*|X|+15*A).
+Its composition is the nonnegative product(A1−P1)(A2−P2). It should remove
+the auxiliary q and powers16^q/15^q, changing the harmless10 to15.
+This is being checked in Lean before we claim it. The ambient block-port
+alternative was rejected as just a restatement of the existing proof.
+
+MEASURED GAINS — SHARED FEWCYCLES AND BRIDGELESS RINGS
+Unifying the fixed-margin input with MarginFewCycles reduces the actual final
+project declaration closure8730→8684 (net46), with43 old-endpoint guards passed.
+The direct bridgeless ring proof compiles and its own closure falls1643→1612
+(net31). These are Lean dependency savings, not claimed manuscript line savings.
+OneMarkSuppression now compiles: one endpoint mark per suppressed thread
+suffices, replacing3g marks by g. Path's additive potential also compiles.
+The revised bounded-port threshold is (g+15)(5C+4g+4)+1. Root is connecting
+these two changes to the short-cycle and final exactness endpoints.
+
+ONE-MARK / POTENTIAL ASSEMBLY CHECKED; SMALL-CUT FOLLOW-UP
+PotentialGirth and PotentialShortCycle compile. Independent audits pass for
+the one-mark suppression, potential, original-model transport and final assembly.
+The additive invariant itself saves only3Leanlines and1reachable declaration;
+we do not claim substantial paper savings. Its proof text is clearer but
+slightly longer in characters. One-mark suppression reduces3g to g marks.
+The revised threshold need not improve g=0,1,2, but improves all g≥3,
+including the actual Section7 choice g=12D.
+
+Following your measurement, Random is checking one more small-cut option:
+keep the shorter original Proposition6.3 proof, but supply its9/16 input
+by instantiating the already-used general leading-cycle margin theorem at3.
+Together with shared FewCycles this may remove duplicate formal routes
+without lengthening the printed proof. No edits to your source or text.
+
+UPDATE61 INDEPENDENT CHECK IN PROGRESS
+A's actual separator geometry is confirmed and a new DisjointRegionChain.lean
+has compiled: arbitrary connected regions suffice, with no support-size bound.
+The actual RegionCycleEvent marginal/pair laws and exceptional-partner count
+also already exist. Root is assembling their inverse moment and good row;
+Path is assembling the chain-to-packing contradiction.
+Two constants details need explicit repair: the written p>=2^(-d-1) does not
+imply150*d^3(s+1) at d=2,3; we are checking the sharper cut-parity bound p>=2^-d.
+Regime(b) requires Lambda>=4, so use max(d,4) for small d; large girth handles
+the resulting size bound. Apply the final two-piece theorem to marker P union S.
+B looks sound once A is closed, but a wrapper of the old two-regime endpoint
+would retain its fixed-rank dependencies. Random is checking a branch-only proof.
+C already has an actual uniform LinkBound with 3*2^t+1 and coefficient578;
+the sharper printed289 needs its combined path-packing count checked separately.
+The shared original small-cut route saves9 declarations globally versus caps,
+so we are adopting it, matching your measured shorter printed proof.
+No lake build is active; all new work is in separate Shortening modules.
+
+UPDATE62 FOLLOW-UP: KEY PIECES NOW CHECKED
+The sharper lower bound p>=2^-d has compiled, including the empty-cut case:
+cut parity determines one coordinate; no properness/connectedness assumption
+is needed beyond d>=1 and a nonzero internal cycle word. ChainPackingMoment
+now compiles too, deriving the actual inverse moment and row >=mu/3-2d.
+DisjointRegionChain compiles and preserves all original vertex/edge labels.
+
+A useful additional improvement: the recurrence still fits your OLD
+2*D_j+6*clog(D_j)^2 exponent, not merely7, for initial D>=9. New packing gives
+151*b^4*2^b, bounded by2^(b+4clog b+8). Since L=clog D_j>=4 and stages<=L,
+L(4L+8)<=6L^2. ChainGirthRaiseBounds proves the actual selected-set recurrence
+with this unchanged final budget. Thus the existing global budget proof needs
+no changes. We are now wiring through the final original-model exactness.
+Please retain the small-d repairs from our previous note in the text; Lambda
+must be max(d,4), or restrict d>=4 and deal with d=2,3 separately. At present
+we keep the safe large-girth cutoff>=256; this no longer means a rank-256 case.
+
+UPDATE63 ACKNOWLEDGED
+Your d>=4 restriction makes the original weaker event bound sufficient; our
+small-d caution concerned the old Lean packing interface, which allowed d>=2.
+The new Lean theorem keeps that broader range using the checked parity lemma.
+Thus there is no discrepancy in your restricted printed statement.
+We also read your compactness measurement: retain the explicit numeric proof
+in print if shorter; the alternative remains useful in the formal dependency
+comparison, with no paper-length saving claimed.
+
+Current names (final assembly still replaying):
+ChainPacking.exists_logarithmic_bound / exists_cutoff / exists_finset_cutoff;
+DisjointRegionChain.exists_separatorFamily_of_good_row and
+ChainPackingMoment.exists_good_row supply the actual two-link selection.
+The generic clean-block proof is DisjointRegionChain.exists_clean_chain_blocks.
+These correspond to the new route, but are not yet literal full-statement
+wrappers of your general Propositions8.10 and Lemma8.11. We will distinguish
+this in the final handoff. Random is removing the remaining old two-regime
+piece theorem from the retained-cycle contradiction too.
+
+LARGE-ORDER BRANCH REPLACEMENT COMPILED
+LargeOrderPieces.exists_constant proves the actual two-piece bound using only
+the logarithmic size regime. Its local dependency closure falls3154->3130.
+LargeOrderChain.lean has now compiled too: exists_constant, constant,
+constant_pos, bound_of_mass, bound_of_budgets. The last three replace the old
+retained-cycle chain assembly, so the global new proof can remove the fixed-rank
+case as well. The original physical block and cycle-supply lemmas remain.
+The root ChainForestProbability source now uses these declarations. Its final
+replay waits for the new actual packing endpoint, then the shared proof of
+exactness will be checked again. No old source or paper file is being edited.
+
+ACTUAL PACKING ENDPOINT NOW COMPILED
+ChainPacking.exists_cutoff and exists_finset_cutoff have clean Lean replay,
+with150*d^3*(|S|+1)*2^d for all d>=2. No probability or geometry certificates
+remain as premises. All new chain geometry, probability, parity, recurrence,
+and large-order-piece modules compile and have independent source reviews.
+The root sequence ChainRaisedGirth -> ChainForestProbability -> ChainLargeGirth
+-> ChainExactMaximum is now being replayed. I will report exact final names
+with the centralized build and dependency audit before you switch MainCaps.
+
+END-TO-END CHAIN ASSEMBLY COMPILED; TARGETED LAKE BUILD STARTING
+All four root adapters now have clean standalone Lean/olean replay:
+Shortening.ChainRaisedGirth.exists_raising_cutoff
+Shortening.ChainForestProbability.exists_cutoff
+Shortening.ChainLargeGirth.largeGirthStatement
+Shortening.ChainExactMaximum.exactMaximum
+The latter also has maxCycles_formula (both parities) and secondOrder_explicit.
+I am starting a targeted lake build of ChainExactMaximum and SharedExactMaximum,
+then one centralized dependency/axiom audit. Please hold your lake build until
+my completion note. Your text work can continue. I will freeze final hashes
+and provide measured dependency savings after those checks.
+Only the packing-method mismatch is resolved here. Section3's few-links
+unification remains assessed but unimplemented, so its formal-proof-method
+note should remain if it currently distinguishes that proof from the text.
+
+TARGETED BUILD PASSED
+The combined ChainExactMaximum + SharedExactMaximum lake build completed with
+exit0,7301 jobs. All22 new modules are checked from their final sources.
+I am now running one centralized declaration-dependency and axiom audit,
+including a fresh same-environment before/after comparison. No lake build is
+running. Please keep the new modules stable until this audit finishes; final
+proof/model checks and hashes will follow immediately.
+
+AUDIT SCOPE REFINEMENT, NO PROOF FAILURE
+The central audit passed all68 old-endpoint exclusion guards and reported only
+propext/Classical.choice/Quot.sound for all20 public targets. Its broader
+module-name guard found PackingLocalSpaces.DualCycle still reachable. This is
+used by the independent VertexRankDeletion rank-loss lemmas (then thin intervals
+and short-cycle arguments), not by the removed string-packing proof. We are
+recording the exact retained coordinate-algebra helpers and their dependency
+paths before refining that module guard. We will not copy or rename those
+helpers just to make a module count smaller. The theorem sources and successful
+7301-job build are unchanged. The original strict audit failure is preserved.
+
+FINAL HANDOFF — CHAIN ROUTE CHECKED END TO END
+No compiler or audit jobs remain. The new sources are frozen in
+paper/cycle-count/research/2026-11-12/further-simplification/FINAL-SOURCE-MANIFEST.json.
+The completed record is FINAL-FURTHER-SIMPLIFICATION-VALIDATION.json there.
+Your builds and MainCaps/table update can proceed.
+
+Public names, all under Erdos1016.ExactMaximumSupport.Shortening:
+  ChainPacking.exists_logarithmic_bound
+  ChainPacking.exists_cutoff
+  ChainPacking.exists_finset_cutoff
+  ChainGirthRaiseBounds.vertices_size_bound
+  ChainRaisedGirth.exists_raising_cutoff
+  ChainForestProbability.exists_cutoff
+  ChainLargeGirth.largeGirthStatement
+  ChainExactMaximum.exactMaximum
+  ChainExactMaximum.maxCycles_formula
+  ChainExactMaximum.secondOrder_explicit
+
+The actual two-link steps are ChainPackingMoment.exists_good_row and
+DisjointRegionChain.exists_separatorFamily_of_good_row; the generic block
+geometry is DisjointRegionChain.exists_clean_chain_blocks. LargeOrderPieces
+and LargeOrderChain remove the rank-256 branch from both uses of two pieces.
+These prove the needed steps of your8.10/8.11, but are not separate wrappers
+of every hypothesis/conclusion in those broader printed statements.
+For MainCaps matching the printed Section6, you can retain FourCutTreeCap's
+numeric proof and substitute ChainLargeGirth.largeGirthStatement. The separate
+ChainExactMaximum assembly uses the compactness four-cut variant, the shared
+original small-cut proof, one-mark suppression, and the additive potential.
+
+Validation: combined lake build exit0,7301 jobs, no warnings in the22 new sources.
+Final validated dependency audit:68 global and70 four-cut exclusion guards;
+20 public axiom reports, only propext/Classical.choice/Quot.sound; no missing
+constants or external back edges. Original8730 -> final8275 declarations
+(net455 fewer); fresh intermediateShared8666 ->8275 (net391 fewer).
+The old packing/string argument no longer contributes22 of its modules.
+We retain45 generic coordinate/rank/support lemmas and one generated equation
+through exact audited allowlists; their shortest use paths are saved. The
+original overbroad guard failure is preserved, not hidden. No production proof
+changed to refine that audit. Original31 Shortening files remain unchanged.
+
+C remains assessed but unimplemented: the Section3 formal proof still uses its
+old excess-based link estimate. Keep that distinction if the paper describes
+proof-method differences. The new packing route itself is now fully checked.
+The unchanged Lean raising budget has6*Nat.clog²; your continuous-log wording
+with coefficient7 should retain the appropriate eventual threshold.
+
+A concise mathematical account, remaining scope and validation links are in
+root-end-to-end-notes.txt. No edits to your manuscript or MainCaps were made.

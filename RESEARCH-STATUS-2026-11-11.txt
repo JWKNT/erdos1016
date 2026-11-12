@@ -1,112 +1,372 @@
-SECOND-ORDER CYCLE RESEARCH: CURRENT STATUS
-2026-11-11 06:11 UTC
+CYCLE RESEARCH: SESSION CHECKPOINT
+11 November 2026
 
-UNRESTRICTED SHARP-ORDER BOUND: MATHEMATICAL PROOF COMPLETED
-For an absolute constant K and every finite graph of rank r>=1,
-  c(G) <= 2^(r-1) + K*r*2^(r/2).
-The known Horak-Kim cyclic-square family has excess Theta(r*2^(r/2)),
-so the order is necessary. The optimal constant and exact psi(r) remain open.
+EVENTUAL EXACT MAXIMUM: INTERNALLY AUDITED WORKING PROOF
+For all sufficiently large ranks,
+ psi(2q+1)=2^(2q)+(2q+1/2)2^q−3q,
+ psi(2q+2)=2^(2q+1)+(2q+9/2)2^q−3q−4.
+Consequently the coefficient of r*2^(r/2) is1/sqrt(2) at odd ranks and1/2
+at even ranks. The Horak--Kim rings attain the counts. The absolute rank
+threshold is not evaluated. These new results are not Lean formalized or
+externally peer reviewed.
 
-This is a written mathematical working proof with independent internal
-line audits. It is not yet a complete Lean formalization or an externally
-peer-reviewed result. Publication priority has not been established.
+Primary packet, under paper/cycle-count/research/2026-11-11/:
+ eventual-exact-cycle-maximum.tex/.pdf
+ 18 pages; zero TeX warnings; every rendered page visually reviewed.
+ verification-eventual-exact-2026-11-11.json records source hashes,
+ mathematical audits, and exact verification scope.
 
-PRIMARY DELIVERABLE
-paper/cycle-count/research/2026-11-10/unrestricted-sharp-cycle-bound.tex
-paper/cycle-count/research/2026-11-10/unrestricted-sharp-cycle-bound.pdf
-The focused packet has 20 pages and builds with zero TeX warnings.
-The final verification record is verification-unrestricted-sharp-2026-11-11.json
-in the same directory. It records source hashes, audits, exact checks, and
-visual review. Earlier packets marked OPEN are historical checkpoints.
-The preceding status is preserved in research-status-before-sharp-bootstrap-2026-11-11.txt.
+The packet now proves substantially more than the leading coefficient:
+- Eventual uniqueness of the cubic maximizer.
+- All general maximizers: one cyclic component whose2-core is a subdivision
+  of the HK ring, with arbitrary attached trees; other components are forests.
+- For each epsilon>0, every sufficiently large connected cubic graph with
+  excess>=epsilon*r*2^(r/2) is a mixed square/single-rung ring. All other
+  connected cubic graphs have excess o(r*2^(r/2)).
+- In the scale F_r=r*2^floor((r−1)/2), the only positive limiting excess
+  coefficients for connected cubic graphs are1,1/2,1/4,1/8,... .
+- The eventual exact SECOND maximum among ALL graphs is
+   H2(2q+1)=2^(2q)+2^(q−1)(2q+15/2)−3q−4,
+   H2(2q+2)=2^(2q+1)+2^(q−1)(2q+27/2)−3q−6.
+  Its unique cubic core has q−1 squares and two/three consecutive single
+  rungs respectively. General equality cases again allow subdivisions,
+  attached trees, and additional forest components.
 
-THE DECISIVE NEW ARGUMENT
-1. Localization works for a disconnected retained region whenever its
-   complement is connected. A cap cycle preserves the full interior law.
-   Removing cap-cycle EDGES leaves pendant spokes, so the original marked-
-   cycle forest theorem applies to the interior forest event exactly.
-2. A connected BFS-tree marker for all ports has at most k vertices per layer.
-   Localization and the growing-window argument bound each layer by B(k+1)^2
-   whenever an affine forest sector has density at least .6. Only the original
-   qualitative forest theorem at fixed error .05 is needed.
-3. A weighted-kernel Moore bound supplies a large port-free ball. It gives
-   conditional affine forest density <=.6 for either of two core regimes:
-   (a) rank>=256, ports<=4D, and girth>=D above a fixed absolute threshold;
-   (b) rank>=L, ports<=2L, and girth>=C0*log2(L+2).
-4. The quotient star-space argument gives long classes of articulation
-   vertices with identical actual terminal bipartitions. Split a long class
-   into disjoint middle regions of rank>=256 and boundary<=4D. At most|S|+1
-   regions meet the previous deletion S or the connected marker P. Two clean
-   regions would give forest probability <=(.6)^2=.36, a contradiction.
-   Therefore the next cycle packing is bounded independently of its excess.
-5. Iterating maximal packings on common dyadic scales gives
-     log2(|S(D)|+1) <= 2D + O(log2(D+2)^2).
-   At D0 in[sqrt(log2 r),2sqrt(log2 r)), S0=r^o(1).
-   At D1 in[(log2 r)/16,(log2 r)/8), S1<=r^(1/4+o(1)).
-6. Fable's parallel-link and nested-chain machinery applies at D1. Its first
-   moment conclusion needs only forest probability>1/2. It produces at least
-   a constant times r^(1/32)/(log r)^3 nested separators. Restoring medium
-   deletions yields many blocks of order>=8L^2 and boundary<=2L, L=A*log2 r.
-   After discarding r^o(1) dirty blocks, two clean blocks remain. Their
-   independent conditional affine probabilities again give .36<.5.
-7. Thus the marked forest probability is EXACTLY <=1/2 above a fixed girth
-   threshold, for connected markers of size<=3log2 r at sufficiently large rank.
-   Each edge of a shortest cycle then lies on at most 2^(r-2) cycles.
-   General-graph rank induction, the sharp <=4-cut theorem, and the bounded-
-   girth deficit prove the unrestricted result.
+Key new proof sources:
+ four-coefficient-rings.tex: exact ring/chain counts and strict optimization.
+ four-coefficient-rigidity.tex: uniform fixed gap outside a full star/K22,
+ including unbalanced shores; aligned K22 closes to a ring.
+ root-sharp-coefficient-transfer.tex: exact running maximum
+ E_r<=max(B_r,E_(r−1),0), followed by increasing divergent HK excess.
+ four-coefficient-general-maximizers.tex: strict contraction argument.
+ four-coefficient-stability.tex: fixed-length repeated quarter-edge deletion,
+ discrete coefficients, and cubic second maximum.
+ four-coefficient-general-second-maximum.tex: exact HK contraction losses
+ extend the second maximum and equality classification to all graphs.
+All have independent analytic audits. Finite checks corroborate the proofs:
+527520 ring states,86 open chains,62491 optimization comparisons,1059
+rational endpoint profiles;21768 ordered-ring/twist cases and62000 second-
+maximum comparisons;684 contraction losses,52 independent contracted-graph
+DFS counts, and992 further integer comparisons.
 
-FOCUSED SOURCE MODULES
-- path-qualitative-affine-bootstrap.tex
-- four-unrestricted-iterative-packing.tex
-- unrestricted-sharp-foundations.tex
-- unrestricted-sharp-parallel-links.tex
-- second-order-unrestricted-sharp-bootstrap.tex
+MAIN TARGET: EDGE-HALF REMAINS OPEN
+New theorem: every sufficiently large connected simple cubic graph with
+ c(G)>=2^(r−1) has an edge e satisfying2c_e(G)<=c(G), INCLUDING all small cuts.
+Thus every sufficiently large counterexample must be belowhalf density.
+Sources: root-edge-half-reductions.tex and four-edge-half-dense-small-cuts.tex.
+The finite ranks below the unspecified threshold remain part of the problem.
 
-The three established inputs are stated explicitly in the primary packet:
-original qualitative marked-cycle forest estimate; sharp cyclic-cut<=4 bound;
-strict bounded-girth deficit without such small cuts. No polynomial error
-theorem or assumed unrestricted sharp bound is used in the focused proof.
+Weighted three-pole target, still OPEN:
+ for every w_ij>=0, some edge satisfies
+ 2c_e+2sum(w_ij*p_ij(e))<=c+1+sum(w_ij*p_ij).
+Proved for poles with a triangle or square, and for poles with no two
+vertex-disjoint cycles. A smallest counterexample must have pole girth>=5,
+two disjoint cycles, and a cubic cap with no nontrivial cut of size<=3.
+An exact four-pole functional isolates the remaining case when a cap square
+passes through the removed cap vertex. Its final inequality is not proved.
+Sources: path-edge-half-weighted.tex,
+path-edge-half-disjoint-cycle-reduction.tex, path-edge-half-cap-square.tex.
 
-AUDITS AND EXACT CHECKS
-Root, path_stability, and four_regular separately audited the full assembly.
-Random_hosts assembled it and independently audited supporting proofs and
-the focused exposition. All mathematical audits passed.
-See four-unrestricted-sharp-bootstrap-audit.txt,
-path-sharp-bootstrap-independent-audit.txt,
-random-unrestricted-focused-audit.txt, and sharp-bootstrap-audit-handoff.txt.
+The weighted target is equivalent to a common four-constraint distribution
+on edges. A convex mixture of internal-vertex star distributions is a
+stronger surviving candidate, not a theorem. The SINGLE-vertex version is
+false: three order20 girth5 cap examples fail, all with cyclic connectivity
+at least5 and above-half density. Allthree admit exact two-vertex mixtures.
+The restriction to below-half caps remains open. Small-cut closure and
+pentagon identities are recorded in four-common-vertex-structure.tex.
 
-The new packing checker passes 5,572 selected-star sets, 636 middle intervals,
-114 disjoint segment pairs, 4,482 core prunings, and 4,163 full conditional
-affine fibers from 421 core pairs. Adjacent cores are included.
-Other independent checks cover 1,193 localization laws, 292 shortest-cycle
-prefix identities, 198 minimum-cut edge incidences, and the exact cyclic-square
-formula. These checks support finite identities; they are not numerical
-proofs of the asymptotic thresholds.
+Computational scope: all556471 connected simple cubic caps through order20,
+covering10996668 connected vertex-deleted poles, pass the weighted target.
+Only228 require mixed edge distributions; their rational certificates have
+independent DFS checks. Many larger random/structured examples also pass.
+These are finite checks, not a proof or an evaluated asymptotic threshold.
 
-SIX-CUT CASES AND OTHER RESULTS PRESERVED
-The remaining six-edge-cut cases were resolved earlier in this continuation,
-including both large shores and all bounded-shore configurations.
-The independent proof is six-cut-sharp-bound.tex/.pdf (16 pages).
-A separate induction proves, for every fixed minimum cyclic cut order k>=5,
-  c(G) <= 2^(r-1)-2^(r-k-1)+o_k(2^r).
-The earlier all-fixed-cut-cycle-bound.pdf records the structural stage before
-the final unrestricted bootstrap. Its open-status sentences are historical.
+FALSE SHORTCUTS: DO NOT USE THESE AS LEMMAS
+1. Global mean cycle length<=3n/4 fails even for arbitrarily large simple
+   cubic girth5 cyclically4edgeconnected graphs. An explicit40vertex example
+   has509993 cycles and total length15365956, mean30+66166/509993>30.
+   It is belowhalf density and still has an edge in only217298 cycles.
+   Three independent counting methods and allcuts<=3 agree. The exact ring
+   transfer extends the counterexample to arbitrarily large orders.
+   Source: random-edge-half-ring40.tex and its standalone checker.
+2. The general LINEAR binary-code density implication is FALSE: rank21,
+   length120,1038370 minimal words<1048576, but every coordinate occurs
+   519692 times, a strict majority. The coupled-code construction is proved
+   nongraphic. A full generator-rank test checks all2097151 nonzero words;
+   independent factor-containment checks agree.
+   Source: root-code-half-density-counterexample.tex.
+3. The analogous AFFINE minimal-support rigidity is FALSE too. Odd-T cuts
+   of K12 minus a perfect matching give1018 minima among1024 affine states,
+   each coordinate occurring510 times. This is not a graphical terminal-
+   path counterexample. Source: path-edge-half-affine-counterexample.tex.
+4. Terminal-only averaging, uniform averaging on all edges, uniform
+   pentagon averaging, and the unrestricted single-internal-vertex rule
+   each have exact counterexamples. A weighted-majority edge set need not
+   be a forest. See random-edge-half-computational-handoff.txt.
+The purely GRAPHICAL path-majority and relative-saturation questions remain
+open; the general binary-code counterexamples cannot be substituted for them.
 
-Additional independent results include quantitative additive path stability,
-uniform high-girth terminal forests, weighted and entropy Moore bounds,
-growing-girth and cut ranges, and counterexamples to the proposed shortcut
-that a minimum cyclic cut must contain an edge on a short cycle.
-These are described in the archived preceding status and their source notes.
-The general polynomial-prefactor exponential rank-distance path bound remains
-unresolved; it is not required for the cycle theorem.
+FABLE / FORMALIZATION / SHARED WORK
+Fable's UPDATE11 records an independent line audit PASS of the focused
+unrestricted sharp-order modules. Chain.lean and Product.lean formalize
+separator blocks and the conditional product inequality. The sharp/exact
+endpoint is still not formalized; earlier asymptotic and pancyclic results
+are identified as formalized in Fable's manuscript.
 
-FABLE AND FORMAL STATUS
-Latest observed Fable handoff remains UPDATE10, stopped at usage limit,
-mtime 2026-11-11 03:11 UTC. No new Fable source was seen during this continuation.
-CODEX-TO-FABLE-LIVE.txt contains the intermediate discoveries and final proof
-outline. The existing eight completed PolynomialBound modules were built
-in the preceding continuation with standard axioms only. Chain.lean.wip is
-unfinished. None of those sources was edited here.
-The new affine-core lemmas, iterative packing, and final exact-half assembly
-remain to be formalized. No tracked manuscript, root import, site, commit,
-or publication was changed.
+Fable subsequently rewrote sharp-cycle-paper.tex at03:53EST to incorporate
+the eventual EXACT formula, with new sections/ sources and shortened pole/
+cut arguments. Its introduction explicitly says the shortened proofs had
+not yet been checked by Astra. Those new pole, cut, girth, and global assembly proofs have now passed
+separate root/four/path/random-fable-exact-*-audit.txt reviews, subject to
+one required gadget-lemma scope clarification (2/3ports in parts(a)/(b))
+and one wording correction. A ready, dry-run-checked patch is saved as
+fable-exact-clarifications.patch; it has not been applied to Fable's files.
+The isolated small-cut checker passed all assertions. The independently
+audited18page packet and its stable inputs are unchanged.
+We have not edited Fable's manuscript or Lean files, nor run a competing
+Lean build. Partial discoveries and corrections are shared continuously
+in CODEX-TO-FABLE-LIVE.txt. No commit or publication was made by this agent.
+
+Earlier status snapshots remain in today's research directory. All new
+proofs, counterexamples, checkers, and unfinished leads are kept separate
+from the stable10November proof sources used by the formalization.
+
+
+OVERNIGHT SESSION UPDATE — 2026-11-11 10:14 UTC
+
+The user now wants three separate papers. The foundational cycle-count
+paper must contain all project proof dependencies. New working paths are:
+ paper/cycle-count/foundations-paper.tex and foundations/
+ paper/pancyclic/pancyclic-paper.tex
+ paper/edge-half/edge-half-paper.tex
+The pancyclic paper is five pages and has passed an independent full proof
+audit and visual review. The edge-half baseline is 22 pages, with proof
+and visual audits and a local finite-certificate bundle. The conjecture
+remains open. Foundation integration is continuing after new discoveries.
+
+New internally audited research in research/2026-11-11:
+- Uniform nonring O(2^(r/2)) excess and arbitrary ring-kernel rigidity.
+- Optimal logarithmic edit stability, with matching lower examples.
+- Exact placement defects and eventual third maximum, including equality.
+- Fable's necklace decomposition outside an absolute additive excess.
+- Strict-half forest strengthening and integer-drift upgrade to exact
+  eventual above-half necklace classification, cubic and arbitrary kernels.
+  Root, Four and Path have completed line audits. Fable's base has not yet
+  incorporated the strict patch; final integration and Fable review remain.
+- Exact rank13 computer-assisted result: psi(13)=5608, unique McGee cubic
+  core, all general equality cases by subdivision and attached forests.
+  A new full rank12 repeat and independent 1,620,479-graph rank13 girth>=5
+  repeat confirm the complete reduction and census. No Lean claim is made.
+
+The higher exact results remain written working proofs, not externally
+refereed or formalized endpoints. All-rank exactness is still open.
+
+2026-11-11T10:45:56.601281+00:00 CONSOLIDATED RESEARCH UPDATE
+The authoritative integration target is paper/cycle-count/foundations-paper.tex and foundations/. It now contains Fable's full necklace architecture and the audited exact enumeration, refined stability and finite-rank proofs. Its current clean build is69pages, with a smaller rank13 proof being integrated and new low-spectrum corollaries next. Every project mathematical dependency is proved inside the paper.
+(1) Sharp second order: proved in the written argument.
+(2) Eventual exact Horak–Kim formulas and all equality cases: proved in the written argument, threshold not evaluated.
+(3) Rigidity/stability: exact classification of ALL sufficiently large graphs at or above half as matching contractions of necklaces. Optimal9/2 square-root threshold for cubic ring kernels; logarithmic kernel edit stability; exact placement defects; second and third maxima. Total multiplicative near-maximality alone does NOT force proximity to Horak–Kim, and explicit counterexamples are included.
+(4) All-rank: still OPEN. Complete computer-assisted classification through13, with psi13=5608 and unique McGee core. Rank14 all short-cycle candidates eliminated by adjacent-deletion filter; full31,478,584-graph girth5 census running. Published lower bounds show eventualHK threshold at least23.
+(5) Decomposition: exact long affine family plus surviving interval remainder. Least count above half is half+r−1, with all equality kernels classified. Bounded defect gives bounded nontrivial bead rank; every integer in an asymptotically quadratic interval above this minimum is attained. Exact maxima outside ring class and among noncubic kernels are proved.
+Side problem edge-half remains OPEN below half. New root proof extends the eventual dense result to every finite multigraph and replaces lengthy casework by two-edge or short-rim averaging. Root/Four/Path audits PASS. Seven-edge cap-square support is now FALSE even in cyclically4connected reduced caps; this is a support obstruction, not an edge-half counterexample. Path/Fable continue full-edge weighted reductions.
+All later results remain internally audited written proofs, not externally refereed or Lean-formalized endpoints. The separate pancyclic paper is5pages and fully reviewed. The updated edge-half paper is23pages, in final visual review. Required legacy manuscript PDF was rebuilt, all9pages reviewed, and copied byte-identically to site/paper.pdf.
+
+2026-11-11T11:24:18.210305+00:00
+QUANTITATIVE FOREST RATE, INTEGRATION AND PAPER GUIDE
+Root found a paired-trace improvement: pair even length l with odd length l+1. Every negative real NB eigenvalue contributes nonnegatively to their weighted trace sum; all nonreal eigenvalues have modulus≤sqrt2. This doubles the spectral cycle supply to(1/2−o(1))ln(L/6logr). With x=log2r,z=log2x,A=z/128 andtheta=(2+epsilon)/lnz, the symmetric two-link argument gives q≤(2+o(1))/lnz at SAME fixed exteriorgirth. Full root-quantitative-vanishing.tex independently passed Path and Random line audits. It is now included in foundations/half.tex with every proof local.
+The foundation build is74pages, zero TeX warnings. It now has vanishingq, uniformglobaldensitygap, directclassification(no rankinduction), exactenumeration, optimal9/2mainstabilitytheorem andfullfiniterankproofs. I removedthe superseded53-bound stabilityproof and retained the sharperfullproof inrefinements. Your clearer16-edge-edit wording iscoveredbytheexplicit8deletion8insertionproof there. README files now identifyfoundations-paper asoneauthoritativemanuscript; sharp-cycle-paper/sections remainanearliercheckpoint, preservedintact.
+GPapplication is3pages, fullyrenderedreviewed, explicitn21counterexampleincluded; thenonprismboundstrengthenedto(1−epsilon)2^n. Edgehalfpapernowcoversallgraphswithc>(1/2−delta)2^r andpositive(aswellaslogarithmicallyvanishing)densitiesatfixedlargegirth. Unrestrictededgehalfstillopen. Rank14is50/64residues,23875933graphs; nofinishedtheoremyet.
+Four isexploringoptimalnonnecklacedensity15/32. Newexactcaps prove4polecrosssumis4or≤15/4, andthreepole2pathsumis2or≤15/8. A rank2fourpoleECxohasthreefullcrosspairsandfourth3/4,soforcingall4from3isfalse. Fullstaralignmentsalsohavecrosscoefficient≤15/4 viaaC4capand15/16pathgap. Thegeneral4cutandboundedgirthbranchesremainopenatthatsharperconstant. Path isimplementingthecorrect152-state6porttransfer(includingpartialmatchingsandclosedcomponents); theoldfixedstrandPerroncomparisonsareinsufficient.
+
+2026-11-11T12:16:36.710701+00:00 ALMOST-ALL EDGE-HALF THEOREM: COMPLETE INTERNAL AUDITS
+The complete proof now passes root, Four and Path audits. For a uniform simple cubic graph on even n vertices, its mean cycle length is3n/4−1/4+o_P(1). Therefore min_e c_e/c≤1/2−(1+o_P(1))/(6n), and edge-half holds with probability tending to one. Exact firstmoment: path-cycle-first-moment.tex; exact two-cycle enumeration: root-cycle-pair-moments.tex; global saddle and C² remainder: four-pairing-saddle-analysis.tex; self-contained conditioning/lower-tail proof: root-random-edge-half-ssc.tex. Validation record root-random-edge-half-theorem-validation.json.
+The proof uses no numerical asymptotic inference and no unverified functional-conditioning input. Path is integrating every proof into local sources of the separate edge-half paper. Unrestricted edge-half remains open. No new Lean or external-referee claim. Four is checking prior long-cycle literature, especially Garmo1999; no priority claim is made.
+
+2026-11-11T12:55:51.485351+00:00
+ODD-GIRTH DENSITY AND RANK-FIFTEEN PROGRESS
+A new short structural theorem passed root, Four and Path audits: for fixed oddg>=5, cubic graphs of girthg and cyclic connectivity>=g with t mutually distance-three g-cycles satisfy c/2^r <= (2^g-1)/(t+2^g-1)+t/2^r. Two separated shortest odd cycles have connected joint complement, by a parity contradiction between two cyclic cuts. Their isolated-component indicators in the uniform cycle space are pairwise independent. For pentagons, a greedy packing gives c/2^r <=3720/(N5+3720)+(2r-2)/(5*2^r). Source root-odd-girth-density.tex; integration pending.
+Rank15 girth>=6 is now complete: all4,624,501 connected simple cubic graphs, unique maximum21192 at Coxeter, independently verified. This is a restricted theorem; unrestrictedrank15 remainsopen. The local pentagon cap criterion also passed independent audits. A complete predecessor route is running to cover caps with triangles/squares as well as good caps.
+A proposed10430 cap threshold was withdrawn after root caught a confusion between two different forest-pairing totals. The corrected stronger averaging weights11/60 for eachAi and1/60 for eachBi give the exact identity ctilde=(cG-1+C)/2-F/20+3B/20. With connectedrank10 remainder C>=10 andF<=5120, a rank15 target21192 forces some rank14 cap>=10345. Random and Path are checking this source-based refinement. No computation or theorem relied on the withdrawn threshold.
+The separate edge-half paper now contains all random-cubic proof components locally,36pages, zero warnings, all pages reviewed; PDFsha a558d36a28403530e2db79455eeaec0f11160b122886371f0d20846697d8745a. Its graphwise mean theorem is3n/4-1/4+o_P(1). Classical first-moment/conditioning methods are attributed, and no priority claim is made. Generaledgehalf remainsopen.
+
+2026-11-11T13:57:52.820904+00:00
+
+CYCLICALLY FIVE-CONNECTED DENSITY: COMPLETE PROOF COMPONENTS, ASSEMBLY UNDER AUDIT
+New target theorem: every connected cubic graph with cyclic edge connectivity at least five has c(G)=o(2^r), uniformly as r tends to infinity. All components now have multiple independent line audits; Path is assembling a local, standalone foundations/cyclic5-density.tex before final promotion.
+1. root-high-girth-cycle-density.tex: same fixed D_* as the forest theorem gives c=o(2^r) for all connected cubic graphs of girth>=D_*. For bridgeless graphs choose connected |P|=floor(3 log2 r). Every exterior component has >=2 boundary edges, so beta(G-P)<=r-|P|/2-1. Hence c/2^r<=q(G,P)+2^(-|P|/2-1). Bridge-block capping handles general cubic graphs. Root/Four/Path audits PASS. Integrated foundations/half.tex source.
+2. four-separating-cycle-covariance.tex: for distance-three clean g-cycles, isolated-cycle events have p_i=2^(-g+a_i-1), p_ij=2^(-2g+a_ij-1). Covariance exponent kappa=a_ij-a_i-a_j+1 is nonnegative and localizes to their common block. Pairwise-dependent families share one block by subtree Helly. Pairwise independent families force low density by Cauchy. Full root/Random audits PASS plus exact atlas/cycle-space checks.
+3. random-separating-cycle-branches.tex: many marked cutvertices in that common block yield disjoint cyclic pendant regions with connected common complement. Zero-boundary/nonempty-interior events are independent with probability>=2^-g. A single cycle permits at most one. Thus positive density bounds the number of articulation marks; the remaining arbitrarily many marks have connected individual complements. Root/Four/Path audits PASS.
+4. path-cyclic5-short-cycle-density.tex: anchor-free block-tree extraction now applies to any fixed g using step3, not only g<=9. It yields a long cyclic necklace with fixed side sizes s,t>=3. All but boundedly many intervening poles have girth>=g. Full-cross poles are C_g; otherwise a15/16 path deficit gives uniform odd-sector loss. Three consecutive C_g cells also lose a fixed fraction by1-to-3-to-1 connectivity. Even-sector isolated-cycle events independently forbid two selected components. Root/Four audits PASS.
+5. random-full-pole-euler.tex gives a shorter full-pole proof for g>=7: one full pair makes a pole planar. For a normalized k-pole of girth>=g and k<=g, Euler gives(g-6)n<=(g-2)k-4g; n>=k forces k=n=g, hence C_g. The g6 local proof remains separate. Root audit PASS.
+6. Induct on every fixed short-cycle length. Remove the bounded number near shorter cycles; Ramsey and steps2-4 bound the clean cycles. Then root-bounded-short-cycle-transversal.tex connects a bounded short-cycle hitting set by a new cycle on subdivided edges, adds only B rank, preserves all original cycles, and creates a bounded connected marker with exterior girth>=D_*. The forest theorem gives densityo. Path/Random independent audits PASS.
+No circularity: the argument uses only elementary cycle-space counts, the existing path gap/classification and the exterior-girth forest theorem. It does not invoke the structure theorem being strengthened. Combined with the audited sharp small-cut theorem, it should give the global optimal15/32 limsup outside the necklace class. The allgraph extension follows because a forbidden necklace contraction loses>=2^(r-4), leaving<=7/16+o. Four is checking and writing these consequences. No Lean or external-referee claim.
+RANK15 STATUS: exact girth>=6 census complete, unique Coxeter21192. Full girth5 predecessor census currently41/128 parts; both pentagon inverse and short-rim consumer are caught up, with zero target children. Do NOT state unrestricted psi(15) yet. Complete short-girth rank14 predecessor list has28 classes>=10345, maximum10426, all inverted and independently verified. Several-hour session continues.
+
+2026-11-11T14:09:51.067826+00:00
+
+CYCLIC5 AND GLOBAL15/32 PROMOTED TO STANDALONE FOUNDATION CHECKPOINT
+Complete multi-agent line audits PASS for foundations/cyclic5-density.tex, including the Euler planarity shortcut. The theorem c(G)=o(2^r) holds uniformly for connected simple cubic graphs with cyclic edge connectivity>=5. The sharp global limiting density outside cubic necklaces and all permitted necklace kernels is15/32, separately in both rank parities. Four/Root/Random audited allgraph contraction argument. No finite-rank endpoint inequality is asserted.
+The foundation now builds cleanly to89pages,16localactivefiles,189labels,394references, no missing or duplicate labels. All89pages rendered and visually reviewed; new pole/transfer/global-gap pages reviewed at full size. PDFsha736fff87775fec935b4d4b8b093a6d6e54a5e655e272fe01d709882a29eab1ec. Manifests and validation current. The old bounded-girth casework and even-girth intermediate proof are no longer active; prior sources preserved in drafts/foundations-before-cyclic5-20261111. The explicit odd-girth quantitative corollary remains, shortened using the new covariance lemma.
+The separate edge-half paper now proves its deterministic density theorem above(15/32+epsilon)2^r, for each fixed epsilon>0 at sufficiently large rank. Its36pagecheckpoint is clean and fully visually reviewed; PDFshafaac6e41ffe4fa768574bf2821debe814683486774e4651c56cf50e16e2dba2d. This is not a claim that15/32 is the optimal threshold for edge-half itself. Unrestrictededgehalf remainsopen. The almost-all simplecubic theorem is unchanged.
+ONGOING: Path/Random/Four are testing a stronger densityo theorem for ALL cubic graphs of girth>=5, using full-pole exceptions at interface widths1/2. It is not yet promoted. Rank15 precursor census56/128parts,14,726,776graphs; no target children found. Restrictedrank16girth>=7 census also completed:546graphs,35,782,110nonzeroevenstates, unique maximum41400 ofactualgirth8. This is NOT unrestrictedrank16exactness.
+
+2026-11-11T14:25:44.720198+00:00
+
+STRONGER GENERAL DENSITY THEOREM AND POSITIVE-DENSITY EDGE-HALF
+The complete new theorem is stronger than cyclic5: for every fixed B, ALL connected cubic multigraphs with at most B cycles of lengths1 through4 have c(G)=o(2^r), uniformly. In particular every cubic graph of girth>=5 has vanishing density, with no connectivity restriction. Full Root/Path/Four/Random line audits of components and assembled proof PASS. Main local source foundations/short-cycle-density.tex,817lines. The earlier cyclic5-density.tex remains an inactive checkpoint.
+New local ingredient: narrow full-cross poles are only C_g, theta(2,3,3) at g5 with a singleton on its short arm or both ports of a long arm, and theta(3,3,3) at g6 with two ports on one arm. Their three-large/one-small affine sectors have all three pairing types with multiplicities2,1,1. This forces a closed component in a1-to-3-to-1 two-cell continuation. Thus the generic block extraction needs no cyclic-connectivity hypothesis. The short-cycle induction starts with boundedC<=4. Bridge blocks are handled by a cap of bounded size, adding at most45b short cycles, so no false girth-preservation claim is needed.
+Foundation now92pages,16activefiles,197labels,404references; cleanbuild, all92pagesrenderedreviewed, selectednewpagesreviewedatfullsize. PDFshaac9ef7909fdd3e6b3bbb64ec5785fd50ea83afc84a88edc380c393835b9c8006. The duplicated older high-girth bridge argument was shortened to this stronger theorem; no circularity because the latter uses only the forest theorem. Validation/manifests current.
+EDGE-HALF CONSEQUENCE: for EVERY fixed delta>0, all finite multigraphs of sufficiently large rank satisfying c>=delta2^r obey edge-half. Reduce toonecycliccomponent and suppressdegree2. Loops/bridgesarecertificates; degree>=4 uses sumincidentce=2cv<=2c; parallelpairsproduce2cuts; simplecubictriangles/squareshaveexactlocalcertificates. A remainingcounterexamplekernelhasgirth>=5, soitsdensitytendstozero. ThusunrestrictedEHremainsopenONLY in the asymptoticallyvanishing-densityregime (plusunresolvedfiniteranks). Quantitativerefinement2ce<=c-r+5 alsofullyaudited. Fourisintegratingthenewshorterproofandremovingobsolete15/32densityargumentfromactiveedgepaper.
+GP CONSEQUENCE: ALLnonprismGP(n,m), uniformlyovervaryingm, havec=o(2^n). Putell=n/gcd(n,m). Ifell>=5,thegraphhasgirth>=5. Ifell3or4,itsdisjointinnercyclesareindependentregionswithconnectedoutercomplement, eachisolatedwithp=2^-ell. Hencec/2^(n+1)<=(1+n/21)e^(-n/64). This givesvanishingratioagainsttheprismcount2^n+n(n-1). RandomrewritingstandaloneGPpaperwiththisshorterproof; n21exceptionandunknownthresholdretained.
+RANK15isstillpending:74/128precursorresidueslastchecked,18,454,283graphs; target21192hasnochallengersyet. No prematureunrestrictedrank15claim. Rank16girth>=7restricted546graphcensusiscompleteandnowincludedexplicitlyasrestricted.
+
+UPDATE (2026-11-11 14:44 UTC). Two further structural consequences and a sharp edge-half margin.
+
+1. The bounded-short-cycle theorem now yields vanishing forest probability in EVERY affine terminal class of a fixed-k normalized pole, assuming only boundedly many cycles of lengths <=4. The explicit pairing-specific cycle cap raises rank by k and adds <=21k short cycles. Random wrote the proof; Path/Four/root audited it; 8444 edge subsets and 921 forest injections pass independent checks. A fixed cut with one such shore of unbounded rank forces the entire cubic graph's density to zero, with no condition on the other shore. Both statements are now local proofs in foundations/short-cycle-density.tex, awaiting the next integrated build.
+
+2. Root found a sharp additive dense edge-half margin: for every fixed delta>0, at sufficiently large rank, c>=delta*2^r implies some edge with 2*c_e<=c-r+3. Doubled cycles attain equality for every edge, so +3 is optimal. Elementary input: every simple subcubic H with rank h, a components, and degree deficit k has c(H)>=(3h-k+2a)/2. Delete bridges; use open ears in each noncircuit block and the degree-deficit identity. Diamond chains attain this lower bound. Four audited the proof and is integrating it into the separate edge-half paper. All254 simple subcubic atlas graphs through7vertices and doubled cycles on3..9vertices pass direct checks. Files root-simple-subcubic-surplus.tex and root-simple-subcubic-surplus-check.py/.json.
+
+3. The separate GP paper is complete at3pages: uniformly over ALL nonprism GP(n,m), c=o(2^n); prism count 2^n+n(n-1), eventual unique maximum, ratio gap tends to zero. The finite transition is still unknown; GP(21,8) remains a stated exception. PDF SHA256 256fdad0c5293da11a267660fda0ad29a5836a7108ec14a17d88f063d43fe205.
+
+4. Rank15 pipeline is still running (last agent snapshot92/128 residues). No target child outside the certified girth>=6 Coxeter class. NO unrestricted psi15 claim yet.
+
+UPDATE (2026-11-11 15:18 UTC). New finite progress beyond the old64-bit ceiling.
+
+Path's isolated128-bit exact cycle-space counter and root's independent vertex-simple DFS agree on four new Horak–Kim counterexamples:
+ rank23: GP(22,6),4509013 cycles > H(23)=4240351;
+ rank24: GP(23,5),8787727 > H(24)=8442843;
+ rank25: GP(24,7),17362350 > H(25)=16877532;
+ rank26: GP(25,7),34608467 > H(26)=33671128.
+Thus eventual HK exactness can start no earlier than rank27. The n26 GP family is still being counted; no later witness is asserted. Source/provenance: path-gp-cycle-counter128.c, per-order path-gp128-n*.json; independent root-gp-independent-dfs.c/.json (source audited byFour). These are explicit lower witnesses, not unrestricted maxima.
+
+Four's complete tiny three-pole census also yields finite cubic girth-five bounds for cyclic cuts of size≤3: at rank15 at most20576 cycles, at rank16 at most41118. This excludes that cut class from extremality at the known construction targets21192 and41400. Complete method/table/proof now integrated locally in foundations/finite-ranks.tex, with no psi16 assertion. Root/Random/Path/Four analytic audits and independent finite verifier PASS.
+
+Important research correction: full terminal pairs ARE possible in girth-five FOUR-poles. Subdivide two opposite square edges of a one-square capped ladder; the original cap pair remainsfull. The k≤3 fullpair exclusion remainsvalid and is all the new finite3cut argument needs. No active main theorem depends on the stronger false suggestion.
+
+Foundation currentlyhas a94-page verified PDF checkpoint, plus pending finite-rank updates. Edge-half is37pages with the sharp dense margin c−2c_e≥r−3. The rank15 unrestricted pipeline stillawaits its final source residue and pentagon-inversion backlog; no unrestricted rank15 assertion until the final verifier passes. Fable's lastincoming update isstill11:06UTC.
+
+
+FINAL SESSION CHECKPOINT (2026-11-11 15:35 UTC)
+This entry supersedes all earlier pending-rank15 and threshold27 status entries.
+
+The unrestricted rank-15 theorem is COMPLETE: psi(15)=21192. The Coxeter graph is the unique cubic maximizer. Every arbitrary-graph equality case has a sole cyclic component that is a subdivision of Coxeter with trees attached at individual vertices; extra forest components are allowed. The final certificate PASS_UNRESTRICTED_RANK15_CERTIFICATE was independently rerun by root. It covers 31,478,584 girth-five predecessor graphs, 586,627 retained caps, all 128 residues in all three stages, 485,438,880 exact pentagon orders, the triangle/square reduction, and the complete 4,624,501-graph girth-six census. Random/Four/Path/root mathematical and source audits passed. Certificate: paper/cycle-count/research/2026-11-11/random-all-rank-r15-final-verification.json.
+
+Exact values and equality cases now extend through rank15. This is NOT an all-rank solution. The rank16 girth-seven census gives 41400 uniquely within that class; the new cyclic-cut-of-size-at-most-three bound is 41118 at rank16 (20576 at rank15). Girth<=6 outside the excluded cuts is still unresolved at rank16.
+
+Five new generalized Petersen witnesses at ranks23..27 were counted independently by a128-bit cycle-space counter and a separately implemented vertex-simple DFS:
+  r23 GP(22,6): 4509013 cycles;
+  r24 GP(23,5): 8787727;
+  r25 GP(24,7): 17362350;
+  r26 GP(25,7): 34608467;
+  r27 GP(26,10): 67959973.
+Each exceeds the corresponding Horak-Kim value. Therefore the eventual HK threshold is at least28. These are lower witnesses, not unrestricted maxima. Complete GP family scans through outer order26 are done. The outer-order27 tests covered only steps8,6,7,5 and found no witness; do not call that a complete scan or infer a threshold.
+
+The standalone foundation now contains the stronger bounded-short-cycle density theorem for ALL connected cubic multigraphs, including bridges: boundedly many cycles of lengths1..4 imply c=o(2^r). Its fixed-terminal version gives vanishing forest density in every affine terminal class. A fixed cut with one such shore of unbounded rank forces global density0; repeated cut endpoints are handled by bounded triangle expansions. All full proofs are local. The resulting global nonnecklace limiting constant15/32 is sharp in both parities. The earlier bounded-girth/rank-induction architecture is archived; the active structure proof is shorter.
+
+The edge-half paper proves, for each fixed delta>0 and sufficiently large rank, that c>=delta*2^r implies an edge with 2*c_e<=c-r+3, for all finite multigraphs. Doubled cycles attain equality, so the additive constant3 is sharp. Its complete elementary subcubic surplus lemma is local. The almost-all simple cubic theorem is also complete: mean cycle length3n/4-1/4+o_P(1), hence an edge fraction at most1/2-(1+o_P(1))/(6n). UNRESTRICTED EDGE-HALF REMAINS OPEN, including the vanishing-density regime and unresolved finite ranks.
+
+The separate three-page generalized Petersen paper now proves uniformly that every nonprism GP(n,m) has o(2^n) cycles, while the prism has 2^n+n(n-1), and is the eventual unique maximizer. GP(26,10) beats the order26 prism, so the outer-order transition is at least27; its actual value is unknown. This is distinct from the unrestricted HK rank threshold>=28.
+
+Research corrections and next routes:
+* The universal girth-five7/8 terminal-path gap is OPEN. The general15/16 gap and new asymptotic vanishing theorem are proved.
+* Full terminal pairs CAN occur in a girth-five four-pole. There is a unique full-pair example: subdivide opposite square edges of the one-square capped ladder. Its six path counts are8,7,7,7,7,8 and its three full forest counts are2,3,3. The needed k<=3 exclusion remains valid. See four-terminal-girth-five-gap-notes.tex and four-full-girth-five-four-pole-check.py/.json.
+* The four-pole reduction for a possible7/8 counterexample gives the functional P_yt+P_ut+P_vt+F-f_(yt|uv) and requires a(7/2)*2^h bound. The full-pair case is settled by the unique example; the nonfull case remains open.
+* The periodic theta certificates and unequal-diagonal positive2x2 transfer argument cover a further concrete family. They do not prove general edge-half. See path-edge-half-periodic-certificate.tex and path-edge-half-theta-handoff.txt.
+* The withdrawn10430 pentagon threshold was never used. The correct10345 threshold and11/60,1/60 weighting are the ones in the final proof.
+
+Final papers and verification:
+  paper/cycle-count/foundations-paper.pdf:98 pages, SHA256 87dbc030f02da61f3488cf3453b0cd8125424ab4877fe037437fd251a4db11b4.
+  paper/edge-half/edge-half-paper.pdf:37 pages, SHA256 3265363a37995aae0b4a1150a30cc1f648964d93e0bdb5c107f700bf2b01ea8d.
+  paper/pancyclic/pancyclic-paper.pdf:5 pages, SHA256 c384cb84780aeaffc7825fd566ba3dfc5263131e1e10286a3626ee8ac7551ff6.
+  paper/generalized-petersen/generalized-petersen-paper.pdf:3 pages, SHA256 6d415e90437c612abe9ea329e3f8ae39637b9d262f24c6c38fb3a9302477a467.
+All four final PDFs were rendered and visually reviewed. The foundation has16 local active sources,206 labels,423 references, no missing/duplicate labels and no TeX warnings. Source/dependency/certificate hashes pass the final checkpoint in paper/cycle-count/research/2026-11-11/root-final-session-checkpoint.json. The required legacy paper was also rebuilt and visually checked; site/paper.pdf is byte-identical. No publishing or commit was performed.
+
+All owned numerical jobs have finished. All agent source ownership is released. No additional background computation is being promised. Fable's last incoming entry remains Update24 at11:06UTC; these notes are ready for the next resumed session. New mathematical results have internally audited written proofs and explicitly identified computer-assisted parts; no new Lean formalization or external refereeing is claimed.
+
+
+CONTINUATION UPDATE (2026-11-11 16:00 UTC)
+The goal resumed after the previous final checkpoint. New rank16 progress: all connected cubic girth-at-least-five graphs with a cyclic cut of size at most four have fewer than41400 cycles. The proved finite bound is41387. The complete smaller-shore catalog has591 path/forest profiles at ranks3..6, each independently recounted. An explicit rational cap formula handles ranks4..6. Rank3 reduces to four already certified rank13 caps; all144 adjacent-vertex deletions and3456 port gluings have maximum36451. Root reran Four's independent exact dual/DFS verifier PASS. Random is finishing local manuscript integration; unrestricted psi16 remains OPEN. Files random-r16-four-cut-bound.tex, random-r16-four-cut-verify.py/.json, four-r16-four-cut-independent-audit.py/.json.
+
+Root's audited complement lemma shows that, after this cut exclusion, a shortest pentagon or hexagon has a connected bridgeless exterior. The elementary two-connected lower bound c>=binom(h+1,2) improves required rank15 cap thresholds to20221 for a pentagon and19630 for a hexagon. These do not supply the missing complete cap lists. A stronger41346 cyclic4 bound follows from the same data and the binomial lower bound, but the active proof retains41387, which suffices for the target. See root-r16-short-cycle-complements.tex.
+
+New exact cap identities and a universally valid girth-five path/forest bound are in root-four-pole-cap-inequalities.tex. Root's independent stdlib check passes all591 profiles,3546 cycle caps and3546 terminal caps. The new smaller7/8 target is P_st+f_sa|tb+f_sb|ta <=(7/4)2^h on a girth-five four-pole with dist(a,b)>=3. root-seven-eighths-reduction.tex proves equivalence with the joint two/three-pole conjecture, including bridge and adjacent-port reductions. Four and Path audited it. The inequality itself is OPEN. All saved profiles through rank6 satisfy even the version without the distance condition, with maxima14,28,56,112; this is finite evidence only.
+
+Path proved a new weighted edge-half reduction when a minimum counterexample cap has two squares. Their union is theta(1,3,3); arm-average formulas cancel all four-terminal forests and certify two explicit weight regions. Full root/Four audits and24048 exact rational identity checks passed; root independently reran the checker. Remaining weight cones and unrestricted edge-half remain OPEN. Files path-edge-half-two-cap-squares.tex and its independent checker.
+
+No new Fable entry was found; last incoming Update24 remains11:06UTC. New research files are separate from the four validated paper checkpoints until the current finite-section integration is built and checked.
+
+
+CONTINUATION CHECKPOINT (2026-11-11 16:20 UTC)
+The rank16 cyclic-four-cut proof is now integrated locally, with complete census specification and exact rational formula. The foundation builds to102pages with zero warnings,211labels,432references, and no missing or duplicate labels. Every page was rendered and reviewed; newproofpages93..96 were also inspected at fullsize. PDF SHA256 a218b571bf1606e525e37f4954e5ca8e764d47152f2f14d32c2bf3b6c8c0ffd9. The98-page checkpoint is preserved in drafts/foundations-before-rank16-four-cut-20261111. Source/dependency manifests and the required legacy/site PDF pair are current. Validation: root-r16-fourcut-checkpoint.json.
+
+A bounded rank16 girth-six pilot checked197graphs in3.38seconds, with the certified41400 positive control passing. Generator partition overhead makes raw extrapolation unreliable; counting-only and previous-rank scaling suggest roughly78–85 CPUhours, or20–25hours on4workers. No full census was launched. Manifest random-r16-girth6-pilot.json records exact flags and hashes. The unresolved rank16 cases remain simple cubic short-girth expansions and the cyclically-five-connected girth-five/six branches.
+
+Further proved research reductions:
+* A minimal counterexample to the joint girth-five7/8 two-/three-pole conjecture has a TWO-CONNECTED four-pole exterior. Four's bridge-split formulas give49/32 or33/32, both below7/4. Root/Path auditsPASS. File four-seven-eighths-bridgeless-exterior.tex.
+* The weighted cap-square ray(z,0,0) reduces exactly to allthree weights1+z in a pole four vertices smaller, with a favourable additive shift−z. Together with the earlier two rays, a minimum cap-square counterexample needs at least two positive weights. Root auditPASS plus153constructions/9612rationaledgeidentities. File path-edge-half-common-neighbour-ray.tex.
+* The local eight-edge support around two cap squares is insufficient. A33vertex girth-five pole has27588cycles; all8localedges fail even atzero weights, and throughout0<=w_i<=1/200. Its cap meets the reduced connectivity assumptions. Twenty internal edges still give universal certificates, so this is NOT a weighted-conjecture counterexample. Independent DFS,262144affinestates and22151cuttests agree. File path-edge-half-two-square-support-obstruction.tex.
+* The zero-weight two-cap-square class already contains subdivisions of arbitrary cyclically-four-connected girth-five cubic graphs. Thus solving it would itself give a general near-edge-half theorem. Its apparent local simplicity must not be mistaken for an easy reduction.
+
+Withdrawn exploratory sketches (never used in an active proof):
+1. A square through one tested terminal can have TWO valid completions in its all-three-boundary forest sector. The proposed naive7/8 count using one completion was false.
+2. In theta(2,3,3), paths from a long-arm vertex to the three other long-arm vertices have counts(3,4,4), not(3,3,4). The four-long-arm forest counts are(3,1,0). Therefore the proposed one-tested-terminal theta7/8 elimination is unproved; the preliminary conceptual audit was withdrawn after exact enumeration. No single-square normal-form theorem is claimed.
+The stronger distance-free7/4 four-pole inequality, the related star-sum11/4 bound, unrestrictededgehalf, and all-rank exactness all remainOPEN. A161-extension equality probe found no counterexample; it was not a census.
+
+New results remain internally audited written mathematics and explicitly identified computer-assisted bounds, without new Lean or external-referee claims. Fable's lastincoming entry remainsUpdate24. Shared research notes are ready for continuation.
+
+
+CONTINUATION UPDATE (2026-11-11 16:43 UTC)
+The full rank16 girth-at-least-six census is now RUNNING. It uses four workers,256 deterministic residues, and the separate audited eight-lane cycle counter. The larger13902graph sample predicts about18CPUhours, or4–6hours wall. Expected coverage is122090544 graphs. Runner session52683; progress/provenance file paper/cycle-count/research/2026-11-11/random-all-rank-r16-girth6-full-batched.json. The41400cycle positive control passed separately. Root and Path audited the traversal/batching; exact controls include4681smallcubicgraphs,546rank16girth7graphs,and independent vertexDFS. No complete-census or unrestricted rank16 conclusion yet.
+
+Root saved exact component-deficit identities and predecessor-free component-event bounds in root-cycle-component-deficits.tex. Its independent checker passes621connected simplecubicgraphs through14vertices,12588edge identities, event-intersection counts, strict-rejection controls,and the rank16positive witness. For a nonbridge e, 2^(r-1)=sum_{C containing e}2^beta(G-V(C)); the partial deficit gives certified cycle-count rejection. The short-cycle filter does not improve the new eight-lane counter, so it is not used in the full run.
+
+Path proved a stronger global weighted reduction: a minimum-order counterexample has at leastTWOpositiveweights, without a cap-square/common-neighbor hypothesis. Delete one tested terminala, suppress unusedportc; exact counts transfer weights(z,0,0) to(1,z,z) in a three-pole2vertices smaller, preserving every lifted-edge surplus. Root auditPASS;310labeledconstructions/23632rationaledgeidentitiesPASS. File path-edge-half-single-weight-reduction.tex. This is a minimum-counterexample reduction, not an unconditional proof of the one-weight subproblem.
+
+Four proved equivalence between the girth-five7/8 two/three-pole conjecture and the DISTANCE-FREE four-pole inequality P_st+f_sa|tb+f_sb|ta <=(7/4)2^h. Dropping the distance restriction does not strengthen the conjecture. Root and Path checked the close-port cases; the universal inequality remainsOPEN. The two-square one-tested-terminal theta case has a promising new proximity split but is still being audited. Earlier incorrect(3,3,4)coefficients remainwithdrawn.
+
+The active papers remain the validated102pagefoundation/37pageedge-half/5pagepancyclic/3pageGPcheckpoint. No newFableentry beyondUpdate24 was found. New research is separate pending final proof and manuscript review.
+
+
+CONTINUATION UPDATE (2026-11-11 17:14 UTC)
+The edge-half paper now has38pages and a complete local proof that every minimum weighted counterexample has at least2positiveweights (Section7.8). Root/Path analytic and integration auditsPASS;310constructions/23632exactedgeidentitiesPASS. Cleanbuild,75labels/64references,19localbuildfiles; everypage rendered/reviewed and newpages25–26fullsize. PDFSHA ca689fcebe8a3946eb287993f9bedf36fdfd375ea5a101298af7235c8f1b50c0. Checkpoint root-edge-half-single-weight-checkpoint.json. The prior37pagePDF,manifest,validation,andweightedsource are preserved. Requiredlegacy/sitePDFs were rebuilt and byte-synced; all9renders matchthepreviousreviewedpages. Foundation remains102pages.
+
+The7/8pathgap research now PROVES that a minimumcounterexample has exactlyONEsquare aftersuppressingtheunusedport. Thefulltwo-squareelimination coversalltested-terminalplacements, repeatedattachments,anddisconnectedcomplements. BothrootandPath fullanalytic auditsPASS, withindependenttinyDFS tables. File four-seven-eighths-two-square-reduction.tex. Foronesquarecontainingonetestedterminal, root-seven-eighths-single-square-far.tex proves that a specifiedattachmentpair musthaveexteriordistance2. Foraninternal square, four-seven-eighths-internal-square-caps.tex givesanexacttwo-tree-capidentity andclosesallfourcyclicadjacentpairsfar. Thegeneral7/8statement remainsOPEN.
+
+Thelargerone-close-pairtheta body hasforestprobability57/64, soitslocalforesthoodalonemisses7/8. Itsquartetprofilecannotbeaveragedbyfourbinarytreecaps, butFournowrepairsitexactlywithoneC5capandtwotreecaps, withbalancedrankcosts. Newshortcyclesinthereplacementcapsremainunresolved. Theseareprecisebarriers/conditionalreductions,notcounterexamples.
+
+Root's component-deficit note nowalsoincludesaffinepathidentities: forcyclesCavoidings,t, thecomponent-eventsizeis2^beta(N−V(C)) exactlywhen s,tremainconnectedoutside, andzerootherwise. Pairwiseintersectingcyclesgivedisjointevents. The resultingconditionalpentagon/hexagoncluster certificatesareproved. FullFourauditPASS; independentchecksinclude621smallcubic-derivedpolesandallpair-eventcounts.
+
+Randomcompletedanadditionalrank15short-cycle replay: all586655certifiedrank14parents,129parts,1170748513states, nochildat20690. Hence allrank15cubicgraphswithatriangle/square haveatmost20689cycles; nonsimplecasesatmost19065. Thisexcludesallshort-girthparentsfortherank16short-cycletarget41400. Finalcertificate random-r16-short-cap20690-verification.json. Fullrank16g6census remainsRUNNING; itsmanifest isauthoritative. Lower-thresholdcap-list reconstructionisbeingcosted,notyetlaunched. Safe20221pentagon-capthresholdis9859,not9860.
+
+Fable Update25 at17:08UTC arrived while this checkpoint was written; see acknowledgment below. Unrestrictededgehalf,all-rankexactness,andunrestrictedrank16remainOPEN.
+
+
+TO FABLE — UPDATE25 RECEIVED (2026-11-11 17:15 UTC)
+Thank you. We have read your newfull-lineaudit andindependent128bitcounts. Your completeGP27scan resolves ourremainingsteps: theprismwinsatouterorder27, buttheeventualtransitionisstillunknown. I willaddthisfiniteorderresulttotheGPpaper atthenextartifactcheckpoint, keepingyourthreshold28..32comment explicitlyheuristic. Theorder30witnessisnow independentlyidentifiedasTutte–Coxeter.
+
+Thecensususes4pipelines, hence8processes (4generators+4counters); generatorsareusuallyblockedbythecounters. Theaudit/provenanceandcompletionverifierareinrandom-r16-batched-counter-audit.txt andrandom-r16-girth6-final-verify.py. Theoneextra20690short-capreplay hasfinished. Lower-thresholdcapreconstructioniscurrentlyonlybeingbenchmarked.
+
+Theproposedshort-cycle-density.tex lineauditwouldbevaluable; itisfrozenat SHA ec91f4bd8a650c4dd1d82b9966457d96461a6e92f22e0580e4a5cd7134c2e4ab. We have noeditsplannedthere. ThecurrentfoundationPDFis102pages, SHA a218b571bf1606e525e37f4954e5ca8e764d47152f2f14d32c2bf3b6c8c0ffd9. Theweightedpaperjustaddedthegeneralminimum-counterexampletwo-positive-weightreduction andis38pages, withtheprooflocalinSection7.8.
+
+Please seeournew17:xxcontinuationentryforthesingle-square7/8frontierand20689short-cyclebound. Thoseareinternallyauditedresearchresults; no7/8orunrestrictedEHclaim. A future non-GP rank28recordsearch nowlooks useful, butwehavenotstartedalargeonewhilethecensusruns.
+
+
+STANDALONE FOUNDATION CHECKPOINT — 2026-11-11T18:29:15.039456+00:00
+The sharp7/8 path theorem is now included in the standalone foundation paper. The paper has115pages; all17 local sources are recorded. Its226labels and461references pass; the build has no warnings. All115pages were rendered and reviewed. Pages24–38 also passed an independent130dpi review. PDF SHA256: 040b20a9b6e0ed5aa26962f025d14c931495faa4fc550d9e9eb7e229329dc32d. Checkpoint: root-clean-terminal-checkpoint.json.
+The theorem covers normalized two-poles with one tested terminal on no triangle or square, and all terminal pairs in girth-five two- or three-poles. The proof includes every local reduction, finite case table, and the complete finite-base algorithm. A standard-library-only implementation independently checks649920labelings and obtains Phi/2^h<=26 in ranks1..4. It agrees with the independent595-class census and direct path/forest recount. These are internally audited, explicitly computer-assisted results; no new Lean or external-referee claim is made.
+The required legacy manuscript was rebuilt and all9renders match the previous reviewed checkpoint. Its PDF and site/paper.pdf are byte-identical. The broader exact maximum remains proved only through rank15; unrestricted edge-half remains open.
+A bounded rank28 search found an explicit girth-eight graph with133928622cycles. Two independent exact counters agree. This is538919 below H(28), so it gives no new Horak–Kim exception. It is not claimed to be a local maximum. The three rank16-related exact pipelines remain active; their manifests report progress and incomplete scope.
+Fable Update26 is acknowledged. We made no changes to paper/minimal/. Root and Path read-only audits of its new cuts, forest, large-girth, and final assembly sections all pass; the detailed audit files are in the shared research directory.
+
+
+TO FABLE — UPDATES27–28 RECEIVED (2026-11-11T18:47:23.304436+00:00)
+We read the new paper design and exact-maximum formalization division. Your ExactMaximum/ and paper/minimal/ folders remain yours. Path is inspecting A1 now: the larger marked-set bound and the retained-cycle supply step. We will first report a precise isolated-file plan, then take A1 and the dependent A2 work. I will inspect A3 and A4 for a clean split. We will not edit your new files or shared imports without a coordination note. The exact maximum is still NOT fully formalized; the six Props and their implication theorem are distinguished from proofs.
+The new clean-terminal7/8 theorem is fully integrated in the115-page standalone foundation checkpoint. Further research now proves that any simple normalized five-pole with all five quartet forest sectors full has rank at most4, even without a girth assumption. The girth-free written proof is undergoing its final adversarial read; its finite rank≤4 census gives24 candidates. The proof is analytic and does not use the computer-assisted7/8 theorem.
+For girth-five five-poles, a bridge/two-cut forces total quartet deficit D≥2^(h−3); a planar core at h≥8 forces D≥2^(h−4). These bounds are audited. Together with the checked20vertex core census, they improve the rank16 cap precursor from20486 to20492. The complete nonplanar20vertex cubic-core minimum is now650, with planar rotations below650 and a verified K3,3 subdivision at650. Live runs retain their original lower thresholds.
+A further independent finite probe on all6120 eligible five-subdivision placements of the20 minimum-cycle cores C=596 gives D≥2361. Its completeness and witnesses are being cross-checked; no stronger global threshold is claimed yet. The rank16/girth6 census,10014 parent source, and20486 inverse pipeline continue. One partial rank15 cap now has20722cycles; the exact rank16 short-cycle extension filter rejects that currently known parent. None of this is an unrestricted rank16 maximum claim.
+
+
+FOUNDATION AND FORMALIZATION CHECKPOINT — 2026-11-11T19:09:04.290391+00:00
+The standalone foundation paper now has123pages. It includes the full girth-free quartet-saturation theorem, the complete24-graph list with exact literal encodings, and the quantitative girth-five small-cut/planar deficits. All18local sources are recorded;239labels and471references pass, with no TeX warnings. All123pages were rendered/reviewed; new key pages were checked at130dpi. PDF SHA256 37b5c432a96defbd48df73178e72d329437a10fef059efa5167612bb05065d28. Validation: root-quartet-saturation-checkpoint.json. The required9page legacy/site pair was rebuilt, rendered, and byte-synchronized.
+A1 is now proved in Lean: the marked forest bound allows |P|<=2*2^x/x^2, and the corresponding cycle-union estimate allows rank/log-squared support. A3 is also proved: ExactMaximumSupport.CubicReduction.cubicReductionStatement is an unconditional proof of Fable's exact CubicReductionStatement. All new axioms are only propext, Classical.choice, Quot.sound. Path/Four independent source audits PASS. A2 now has the loop-preserving localization construction, connectedness and rank ledgers; the final internal-coordinate law is still in progress. A4 has six compiled finite averaging/product adapters; the geometric large-girth proof is still incomplete. No shared imports or Fable-owned files changed.
+The low-core rank16 check is complete:6792eligible five-poles and all81504pentagon orders have at most33679cycles. Thus a41400competitor must have exterior core countC>=650, which forces a rank15cap>=20513. Independent vertexDFS checks allfour core-layer maxima, and Random independently checked the overall maximum. This remains a reduction, not the unrestricted rank16 maximum. A bounded larger low700 completion check is running beside the existing three pipelines. All-rank exactness and unrestricted edge-half remain open.
