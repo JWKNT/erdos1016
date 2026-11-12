@@ -39,13 +39,28 @@ The bound is asymptotic and its threshold is not explicit. The bound is below th
 
 A draft manuscript gives the proof: [PDF](paper/cycle-count/sharp-cycle-paper.pdf) and [LaTeX source](paper/cycle-count/sharp-cycle-paper.tex). The folder [`paper/cycle-count`](paper/cycle-count/README.md) also contains tests on small graphs, earlier drafts, and research notes.
 
+## The exact maximum for large cyclomatic number
+
+```lean
+theorem Erdos1016.ExactMaximum.exactMaximum :
+    ∃ R : ℕ, ∀ r, R ≤ r → CycleCount.maxCycles r = horakKim r
+```
+
+For every sufficiently large cyclomatic number `r`, the largest number of cycles of a simple graph is the number `H(r)` of Horak and Kim:
+
+$$H(2q+1)=2^{2q}+\bigl(2q+\tfrac12\bigr)2^{q}-3q,\qquad H(2q+2)=2^{2q+1}+\bigl(2q+\tfrac92\bigr)2^{q}-3q-4.$$
+
+The theorem is unconditional. It is in [Main.lean](Erdos1016/ExactMaximum/Main.lean), with the upper bound for every simple graph (`upperBoundStatement`), the two parities (`maxCycles_parity`, `maxCycles_formula`), and the second term `ψ(r) - 2^(r-1) = Θ(r 2^(r/2))` (`maxCycles_secondOrder`, `maxCycles_secondOrder_explicit`). The threshold on `r` is not explicit. `CycleCount.maxCycles r` is the largest number of cycles of a simple graph on `Fin n` with cyclomatic number `r`, and `horakKim` is defined in [HorakKim.lean](Erdos1016/ExactMaximum/HorakKim.lean).
+
+The manuscript is [`paper/minimal/exact-maximum`](paper/minimal/exact-maximum/exact-maximum.pdf). The file [`Erdos1016/ExactMaximum/README.md`](Erdos1016/ExactMaximum/README.md) lists the declarations and says who proved which part: Fable 5.2 wrote `Erdos1016/ExactMaximum/`, and Astra wrote `Erdos1016/ExactMaximumSupport/`. The Lean kernel checks the formal statement. It does not check the text of the manuscript, and no referee has read the text. The verification script of this repository does not audit this theorem yet; check it with `lake build` and `#print axioms Erdos1016.ExactMaximum.exactMaximum`, or with the files `audits/ExactMaximumEndpoints.lean` and `audits/ExactMaximumPublicAudit.lean`.
+
 ## The sharp cycle bound: a written proof with formalized steps
 
 The same manuscript states a stronger result. A graph with cyclomatic number `r` has at most
 
 $$2^{r-1}+K\,r\,2^{r/2}$$
 
-cycles, for an absolute constant `K`. Examples of Horak and Kim show that the order of the second term is correct. This result is **not formalized**. Its proof is a written proof that two language models checked. No referee has read it. A part of the proof is in research reports in [`paper/cycle-count/research/2026-11-10`](paper/cycle-count/research/2026-11-10).
+cycles, for an absolute constant `K`. Examples of Horak and Kim show that the order of the second term is correct. The written proof in that manuscript is **not formalized**; two language models checked it, and no referee has read it. For all sufficiently large `r`, the bound follows from the formalized exact maximum above (`Erdos1016.ExactMaximum.maxCycles_secondOrder_explicit`, with the constant 2). A part of the proof is in research reports in [`paper/cycle-count/research/2026-11-10`](paper/cycle-count/research/2026-11-10).
 
 The modules in `Erdos1016/PolynomialBound/` formalize some steps of the proof: the parallel-link lemma, the link bound without a forest excess, the two-link moment inequality, the order of nested separators with its blocks, and the product lemma for two regions. They contain no endpoint theorem. See the [proof map](docs/proof-map.md#steps-towards-the-sharp-cycle-bound) for the modules, and the manuscript for the list of the steps that are not formalized.
 
