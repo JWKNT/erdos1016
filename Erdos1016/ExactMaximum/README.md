@@ -35,6 +35,133 @@ is the number `H(r)` of Horak and Kim (`HorakKim.lean`). The theorem depends on 
 | `maxCycles_secondOrder_explicit` | `r 2^(r/2) / 8 ≤ ψ(r) - 2^(r-1) ≤ 2 r 2^(r/2)` for large `r` |
 | `gapStatement`, `fourCutStatement` | Theorem 5.10; Theorem 6.8 with Corollary 6.2 |
 
+## The third proof: the three cases of the present text (12 November 2026)
+
+The present text (36 pages; the forest estimate is in a paper of its own,
+`paper/minimal/forest/`) has three cases for a connected cubic multigraph of large rank `r`:
+
+1. a cyclic cut of size at most three (a loop gives a cut of size one);
+2. no such cut, and a cycle of length four;
+3. no such cut and no cycle of length four; then the girth is at least five.
+
+`ThreeCases.lean`, `GirthFive.lean` and `MainThreeCases.lean` follow this structure.
+
+```lean
+theorem Erdos1016.ExactMaximum.exactMaximum_threeCases :
+    ∃ R : ℕ, ∀ r, R ≤ r → CycleCount.maxCycles r = horakKim r
+
+theorem Erdos1016.ExactMaximum.exactMaximumStatement_of_girthFiveForest
+    (h : GirthForestStatement 5) : ExactMaximumStatement
+```
+
+The first theorem has no hypothesis. Its Case 3 is **not** proved in the way of the text: it
+uses the case of a cyclic cut of size four, the case of bounded girth and the case of girth at
+least `D ≥ 256` of the earlier texts. The second theorem is the proof of the text with one
+hypothesis, `GirthForestStatement 5`. This is Theorem 7.1 of the text (the bound `q(G,P) < 2/5`
+at girth five), and **it has no formal proof**. The second theorem uses neither the case of
+bounded girth nor the case of large girth (`audits/ExactMaximumThreeCasesAudit.lean` checks this
+in the proof terms).
+
+| Declaration | Content | Text |
+|---|---|---|
+| `SmallCutCaseStatement`, `smallCutCaseStatement` | Case 1: a loop or a cyclic cut of size at most three gives at most `H(r)` cycles. From the case of a loop and `ExactMaximumSupport.Shortening.SharedSmallCut.threeCutStatement` | Section 8, Case 1; Proposition 6.3 |
+| `FourCycleCaseStatement`, `fourCycleCaseStatement` | Case 2: no loop, no cyclic cut of size at most three, and a cycle of length at most four give at most `H(r)` cycles. The vertex set of the cycle is one side of a cyclic cut of size at most four (`ExactMaximumSupport.ShortCycleCyclicCut.hasCyclicCutLE_four_of_rank_ge_nine`), and the theorem on such a cut with two arbitrary sides applies (`ExactMaximumSupport.Shortening.ChainExactMaximum.fourCutStatement`, by a limit of states) | Section 8, Case 2; Theorem 6.6 with Corollary 6.2 |
+| `GirthFiveCaseStatement`, `girthFiveCaseStatement` | Case 3 with the bound `H(r)`. **Not the proof of the text**: `girthFiveCaseStatement_of_cases` uses `FourCutStatement`, `ShortCycleStatement` and `LargeGirthStatement` | Section 8, Case 3 |
+| `GirthForestStatement D` | A definition: the statement of Theorem 7.1 with girth at least `D`. **`GirthForestStatement 5` is Theorem 7.1 of the text and has no formal proof** | Theorem 7.1 |
+| `exists_girthForestStatement` | `GirthForestStatement D` for some `D ≥ 256` (`ExactMaximumSupport.Shortening.ChainForestProbability.exists_cutoff`, Astra) | Theorem 7.1 at large girth |
+| `GirthCaseStatement D`, `girthCaseStatement_of_forest` | Case 3 by the method of the text: `GirthForestStatement D` with `D ≥ 3` gives fewer than `2^(r-1)` cycles for a graph without a cyclic cut of size at most three and without a cycle shorter than `D`. A connected set of eight vertices is marked | Section 8, Case 3 |
+| `exists_girthCaseStatement` | The case of girth at least some `D ≥ 256` without a hypothesis on cuts of size four | Section 8, Case 3, at large girth |
+| `numCycles_le_marked` | Lemma 3.2: `c(G) ≤ q(G,P) 2^r + 2^(r - 1 - ⌈|P|/2⌉)` for a connected cubic multigraph without loops in which every cut has at least two edges | Lemma 3.2 |
+| `three_le_cut_of_no_cyclic_cut` | Without a cyclic cut of size at most three every cut has at least three edges | Section 8, Case 3 ("no bridge") |
+| `not_hasCycleShorterThan_four` | Without a cyclic cut of size at most three, and with rank at least seven, there is no cycle of length at most three | Section 8, Case 3, first step |
+| `upperBoundStatement_of_three_cases`, `exactMaximumStatement_of_three_cases` | The reduction to cubic multigraphs, the three cases and the lower bound give the theorem | Section 8 |
+| `upperBoundStatement_threeCases`, `exactMaximumStatement_threeCases`, `exactMaximum_threeCases`, `maxCycles_formula_threeCases` | The upper bound, Theorem 1.1 and equation (1.1) | Theorem 1.1 |
+| `exactMaximumStatement_of_girthFiveForest` | Theorem 1.1 from Theorem 7.1 of the text as a hypothesis | Sections 6 to 8 |
+
+All of these depend on the axioms `propext`, `Classical.choice` and `Quot.sound` only. Run
+`lake env lean audits/ExactMaximumThreeCasesAudit.lean` (exit code 0 on 12 November 2026).
+
+### The present text and the formal statements
+
+"same" means: a formal statement with the method of the text; details and constants can
+differ. "other" means: a formal statement of the same content, or of a stronger one, with
+another method. This table is by Fable 5.2 from the file headers and the statements; the
+proofs of Astra's files were not compared line by line with the text.
+
+| Text | Formal | Relation |
+|---|---|---|
+| Theorem 2.1 (forest estimate; Theorem 1.1 of the forest paper) | `Erdos1016.ShortProof.eventually_marked_forest_bound_logSquared` | same, with one difference (the links of two cycles) |
+| Lemmas 2.2, 2.3, 2.4 (link formula, exceptional partners, many small cuts) | `Erdos1016/CycleSpace/Graphical/RegionCutLaw.lean`, `DisjointRegionCuts.lean`, `ExceptionalPartners.lean`; `Erdos1016/Probability/Moments/SmallCutRegionBound.lean` | same |
+| Proposition 2.5 (cycles of moderate length) | no single statement; its parts are in the formal proof of Theorem 2.1, under the hypothesis `q > 1/2 + ε` | parts |
+| Lemma 3.1 (cubic multigraphs) | `ExactMaximumSupport.CubicReduction.cubicReductionStatement` | same |
+| Lemma 3.2 (cycles and a marked set) | `numCycles_le_marked` | same |
+| Corollary 3.3 (leading term) | `Erdos1016.cycleCountTheorem`, `numCycles_le_of_large_rank_margin` | other (the forest estimate for a simple graph, and chords that close triangles) |
+| Lemma 4.1 (layers) | the two uses: `PoleLayerBoundStatement` and the files `Probability/Avoidance/LevelWindowBoundary.lean`, `SymmetricWindow.lean`, `ThinMarkerLayers.lean`, `LocalizedForestBound.lean` | the uses, not the lemma with a level function |
+| Lemmas 5.1, 5.2 (joins, reduction) | `Network.IsPathWord.add_cycle_not_path`, `exists_bridge_split`, `twoPoleFewCyclesStatement_of_bridgeless` and the lemmas near them | same |
+| Lemma 5.3 (a shortest path) | none in this form | — |
+| Proposition 5.4 (away from the shortest path) | `PoleOutsideRankStatement`, for every margin (Astra) | same |
+| Theorem 5.5 (few cycles) | `fewCyclesStatement` for `ε = 1/1000`; `ExactMaximumSupport.Shortening.MarginFewCycles.exists_bound` for every margin | other (thin layers and a count of matchings in the place of Lemma 5.3) |
+| Lemma 5.6 (ladders) | the classification of full pairs in `Erdos1016/ExactMaximumSupport/` | other (two disjoint paths; exact numbers of paths in a capped ladder) |
+| Theorem 5.7 (gap) | `ExactMaximumSupport.gapStatement`, with the constant `1/16` | other (induction on the rank, with a third port) |
+| Corollary 5.8, Proposition 6.1, Corollary 6.2 (four ports, rings) | `ExactMaximumSupport.ringCaseStatement`, `ExactMaximumSupport.Shortening.BridgelessRingCase.ringCaseStatement`, `lowerBoundStatement` | same content |
+| Lemma 5.9 (three gadgets) | `gadget_third_pair`, `gadget_cross_pairs`, `gadget_opposite_pair`; `ExactMaximumSupport.Shortening.MarginGadgets` for every margin | same |
+| Proposition 6.3 (cuts of size at most three) | `threeCutStatement`, `ExactMaximumSupport.Shortening.SharedSmallCut.threeCutStatement` | same |
+| Lemma 6.4 (cap) | `ExactMaximumSupport.Shortening.TreeCapMargin.exists_bound`, for every `η` | same |
+| Lemma 6.5 (rigidity) | `ExactMaximumSupport.Shortening.FourCutLimitRigidity.rigidity`, `FourCutCompactness.exists_tolerance` | same method (a limit of states), for a cut with two sides |
+| Theorem 6.6 (a cycle of length four) | `fourCycleCaseStatement` | other (a cyclic cut of size four with two arbitrary sides) |
+| Theorem 7.1 (girth five) | `GirthForestStatement 5`, a definition | **no formal proof**; for some `D ≥ 256`: `exists_girthForestStatement` |
+| Lemmas 7.2, 7.3 (forest proportions at large girth, product) | `ExactMaximumSupport.Shortening.LargeOrderPieces`, `ExactMaximumSupport.LargeGirth.PoleProduct` | same idea |
+| Lemmas 7.4, 7.5, 7.6 and Corollary 7.7 (pieces at girth five) | none. One ingredient exists: at girth five no pair of ports of a bridgeless 2-pole is full (`ExactMaximumSupport.Shortening.FullPairShortCycle.not_full_of_no_short_cycle`) | **no formal proof** |
+| Lemma 7.8 to Proposition 7.12 (separators, chain, two links, heavy families, packing) | at large girth: `ExactMaximumSupport.Shortening.DisjointRegionChain`, `ChainPackingMoment`, `ChainPackingGeometry`, `ChainPacking.exists_cutoff`, `LargeOrderChain` | other forms: the formal statements have no short cycles outside a deleted set; the text counts the `Λ`-short cycles |
+| Section 8 | `upperBoundStatement_of_three_cases`, `girthCaseStatement_of_forest` | same |
+
+The tables below this section are older. Their column "Paper" has the numbers of the first text
+(commit `3a80aa9`), in which Theorem 5.4 is the theorem on few cycles, Theorem 6.8 is the case of
+a cyclic cut of size four, Theorem 7.1 is the case of bounded girth and Theorem 8.1 is the case
+of large girth.
+
+## The second proof: the proof of the shorter text (12 November 2026)
+
+After 12 November 2026 the text of the paper proves the case of a cyclic cut of size four with a
+*cap*, Case 5 with a connected set of eight vertices, and the packing bound of the section on
+large girth with the chain of nested separators. `MainCaps.lean` has the theorem by these parts:
+
+```lean
+theorem Erdos1016.ExactMaximum.exactMaximum_caps :
+    ∃ R : ℕ, ∀ r, R ≤ r → CycleCount.maxCycles r = horakKim r
+```
+
+| Declaration | Content |
+|---|---|
+| `fourCutStatement_caps` | The case of a cyclic cut of size four with the rings, by the cap: `ExactMaximumSupport.Shortening.FourCutTreeCap.fourCutStatement` (Astra) |
+| `largeGirthStatement_chain` | Case 5 with eight vertices, the bound `(69/160) 2^r`, and the chain of separators for the packing bound and for the two final pieces: `ExactMaximumSupport.Shortening.ChainLargeGirth.largeGirthStatement` (Astra) |
+| `upperBoundStatement_caps`, `exactMaximumStatement_caps`, `exactMaximum_caps`, `maxCycles_formula_caps` | The upper bound, Theorem 1.1 and equation (1.1), from `threeCutStatement`, `fourCutStatement_caps`, `shortCycleStatement`, `largeGirthStatement_chain`, the reduction and the lower bound |
+| `largeGirthStatement_marker` | For comparison: Case 5 with eight vertices and the first proof of the packing bound (`ExactMaximumSupport.Shortening.FixedMarkerLargeGirth.largeGirthStatement`, Astra) |
+| `threeCutStatement_caps` | For comparison: the case of a cyclic cut of size at most three by caps, without the bound `(9/16) 2^b` (`CutCaps.lean`, `SmallCutCaps.lean`). The text does not use it: the proof with caps is not shorter than the proof with the bound |
+
+The cap for four ports is `ExactMaximumSupport.Shortening.TreeCapCycleBound.exists_thousandth_bound`
+(Astra): for a network `N` of large rank `b` and four vertices, the cycles of `N`, the paths
+between the six pairs and the pairs of disjoint paths of two pairings are together at most
+`4.001 · 2^b`. The proof closes `N` by a small tree and uses `numCycles_le_of_large_rank_margin`.
+The first proof (`Main.lean`) uses the arithmetic of a lemma on poles without a pair of ports
+with many paths (`FourCutArithmeticStatement`) in this place. Both proofs stay in the library.
+
+The packing bound by the chain is `ExactMaximumSupport.Shortening.ChainPacking.exists_cutoff`
+(Astra): at most `150 d^3 (|S|+1) 2^d` pairwise disjoint cyclic regions with at most `d` boundary
+edges. The bound `q(G,P) < 2/5` is
+`ExactMaximumSupport.Shortening.ChainForestProbability.exists_cutoff` (Astra).
+
+The forest estimate of the text (Theorem 3.1, for a subcubic multigraph with a marked set) is
+`Erdos1016.ShortProof.eventually_marked_forest_bound_logSquared` (Astra).
+
+`audits/ExactMaximumCapsAudit.lean` checks the types and the axioms of the second proof, and it
+follows the proof terms: `exactMaximum_caps` does not use `fourCutArithmeticStatement`,
+`fourCutStatement`, `LargeGirth.largeGirthStatement`, the first proof of the packing bound
+(`LargeGirth.Packing.exists_cutoff`) or `exactMaximum`; `threeCutStatement_caps` does not use
+`poleCycleBoundStatement`. Run `lake env lean audits/ExactMaximumCapsAudit.lean`.
+
+## Who proved which part
+
 The proof has six parts (`Cases.lean`). Who proved which part:
 
 * Fable 5.2 (this folder): the statement and the reduction to the six parts; the lower bound
@@ -233,7 +360,7 @@ earlier form (`Erdos1016/PolynomialBound/`).
 
 ## Size
 
-This folder has about 18,900 lines in 64 files.
+This folder has about 19,800 lines in 67 files.
 
 ## Files
 
@@ -303,10 +430,13 @@ This folder has about 18,900 lines in 64 files.
 | `ShortCycle.lean` | 363 | Theorem 7.1 from the pole statement |
 | `Corollaries.lean` | 83 | The printed forms of the theorem, from the exact maximum |
 | `Main.lean` | 103 | **The theorem without hypothesis**, and its forms |
+| `CutCaps.lean` | 102 | The caps for two and for three vertices of a network |
+| `SmallCutCaps.lean` | 667 | Proposition 6.3 from the caps, without the bound `(9/16) 2^b` |
+| `MainCaps.lean` | 105 | **The theorem by the cases of the text** (cap for Theorem 6.8, eight vertices in Case 5) |
 
 Every file names its local `Decidable` instance (`netCutDecidable` and so on). Two files with an
 unnamed local instance in the same namespace get the same generated name, and a module that
 imports both does not load.
 
-Check: `lake build` and `lake env lean` on a file with
-`#print axioms Erdos1016.ExactMaximum.exactMaximum`.
+Check: `lake build`, and `lake env lean` on a file with
+`#print axioms Erdos1016.ExactMaximum.exactMaximum` or on `audits/ExactMaximumCapsAudit.lean`.

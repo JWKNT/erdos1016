@@ -34,7 +34,17 @@ import Erdos1016.ExactMaximum.ShortCycleCount
 import Erdos1016.ExactMaximum.ShortCycle
 import Erdos1016.ExactMaximum.Corollaries
 import Erdos1016.ExactMaximum.Main
+import Erdos1016.ExactMaximum.CutCaps
+import Erdos1016.ExactMaximum.SmallCutCaps
+import Erdos1016.ExactMaximum.MainCaps
+import Erdos1016.ExactMaximum.ThreeCases
+import Erdos1016.ExactMaximum.GirthFive
+import Erdos1016.ExactMaximum.MainThreeCases
 import Erdos1016.ExactMaximumSupport.Stable
+import Erdos1016.ExactMaximumSupport.Shortening.ExactMaximum
+import Erdos1016.ExactMaximumSupport.Shortening.BoundedPortExactMaximum
+import Erdos1016.ExactMaximumSupport.Shortening.CompactExactMaximum
+import Erdos1016.ExactMaximumSupport.Shortening.SharedExactMaximum
 
 /-!
 # Erdős problem 1016
@@ -129,6 +139,29 @@ without hypothesis: `ExactMaximum.exactMaximum`, the upper bound
 (`ExactMaximum.maxCycles_parity`, `ExactMaximum.maxCycles_formula`), and the second term
 `ψ(r) - 2^(r-1) = Θ(r 2^(r/2))` (`ExactMaximum.maxCycles_secondOrder`,
 `ExactMaximum.maxCycles_secondOrder_explicit`).
+`MainCaps` proves the theorem a second time, from the parts that the text of the paper uses after
+12 November 2026 (`ExactMaximum.exactMaximum_caps`). In the case of a cyclic cut of size four
+the larger side of the cut is closed by a small tree, a cap, and Corollary 3.11 for the result
+replaces the lemma on poles without a pair of ports with many paths
+(`ExactMaximumSupport.Shortening.FourCutTreeCap.fourCutStatement`, with the cap
+`ExactMaximumSupport.Shortening.TreeCapCycleBound.exists_thousandth_bound`). In the case of large
+girth the marked set is a connected set of eight vertices
+(`ExactMaximumSupport.Shortening.FixedMarkerLargeGirth.largeGirthStatement`). The other cases
+are those of `Main`. `CutCaps` and `SmallCutCaps` prove Proposition 6.3 with caps in the place
+of the bound `(9/16) 2^b` for a pole (`ExactMaximum.capStatement`,
+`ExactMaximum.threeCutStatement_caps`); the text does not use this second proof, because it is
+not shorter. `audits/ExactMaximumCapsAudit.lean` checks which declarations each proof uses.
+`ThreeCases`, `GirthFive` and `MainThreeCases` follow the text of 12 November 2026 with three
+cases: a loop or a cyclic cut of size at most three; a cycle of length at most four; girth at
+least five. `ExactMaximum.exactMaximum_threeCases` proves the theorem along these cases. Its
+third case is not proved in the way of the text: it uses the cases of a cyclic cut of size four,
+of bounded girth and of large girth. `ExactMaximum.exactMaximumStatement_of_girthFiveForest`
+proves the theorem from `ExactMaximum.GirthForestStatement 5`, which is Theorem 7.1 of the text
+and has no formal proof; `ExactMaximum.numCycles_le_marked` is Lemma 3.2 of the text.
+`audits/ExactMaximumThreeCasesAudit.lean` checks the axioms and the declarations that each of
+the two proofs uses. The files `ExactMaximumSupport/Shortening/ExactMaximum`,
+`BoundedPortExactMaximum`, `CompactExactMaximum`, `SharedExactMaximum` and `ChainExactMaximum`
+(by Astra) have further proofs of the theorem from other choices of the parts.
 `PoleInputs` states the two facts that the proof of `FewCyclesStatement` takes from the forest
 estimate (`ExactMaximum.PoleLayerBoundStatement`, `ExactMaximum.PoleCyclePackingStatement`), and
 their consequence `ExactMaximum.PoleOutsideRankStatement`. The proofs of these statements are in
