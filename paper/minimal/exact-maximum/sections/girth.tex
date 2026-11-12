@@ -1,0 +1,62 @@
+\section{Bounded girth}\label{sec:girth}
+
+\begin{theorem}[Bounded girth]\label{thm:girth}
+For every integer $g_0\ge2$ there is $R(g_0)$ with the following property. Let $G$ be a connected
+cubic multigraph without loops, of rank $r\ge R(g_0)$ and girth at most $g_0$, that has no cyclic
+cut of size at most four. Then $c(G)<2^{r-1}$.
+\end{theorem}
+
+\begin{idea}{outline of the proof}
+Sort the cycles through an edge $e$ of a shortest cycle $C$ by the vertex where they leave $C$.
+The cycles that leave after $p$ steps are paths in a pole of rank at most $r-1-p$, and such a
+pole has about half of the possible paths at most. The sum over $p$ is a geometric series with
+fewer terms than the length $g$ of $C$. So it is smaller than the full series by a factor
+$1-2^{1-g}$, and this difference gives the bound.
+\end{idea}
+
+\begin{proof}
+Let $r\ge9$, and let $g$ be the girth of $G$. A cycle $Z$ of length at most four would give the
+cyclic cut $\delta V(Z)$ of size at most four, as in the proof of Corollary~\ref{cor:nodense}. So
+$5\le g\le g_0$. Let $C=v_0v_1\cdots v_{g-1}$ be a shortest cycle. It has no chord. A vertex
+outside $C$ has at most one neighbour on $C$, because two neighbours would give a cycle of length
+at most $\lfloor g/2\rfloor+2<g$. So each $v_i$ has exactly one neighbour $w_i$ outside $C$, the
+vertices $w_i$ are distinct, and every vertex of $G-V(C)$ has degree at least two in $G-V(C)$.
+Hence every component of $G-V(C)$ contains a cycle.
+
+Let $e$ be the edge $v_0v_{g-1}$, and put $N=G-e$ and $b=r-1$. Then $N$ is connected of rank $b$,
+and $c(G)=c(N)+P$, where $P$ is the number of paths from $v_0$ to $v_{g-1}$ in $N$. One of these
+paths follows $C$. Every other path leaves $C$ for the first time at a vertex $v_{p-1}$ with
+$1\le p\le g-1$, through the edge $v_{p-1}w_{p-1}$. Its remaining part is a path from $w_{p-1}$ to
+$v_{g-1}$ in $N-\{v_0,\dots,v_{p-1}\}$. Let $K_p$ be the component of $v_{g-1}$ in this
+multigraph, and let $P_p$ be the number of paths from $w_{p-1}$ to $v_{g-1}$ in $K_p$; put $P_p=0$
+if $w_{p-1}\notin K_p$. Then
+\[
+  P=1+\sum_{p=1}^{g-1}P_p .
+\]
+
+\step{The rank of $K_p$.} We get $N-\{v_0,\dots,v_{p-1}\}$ from $N$ when we delete $p$ vertices
+and $2p$ edges. So the ranks of its components add up to $b-p$ plus the number of components
+other than $K_p$. Each of these is a component of $G-V(C)$ and contains a cycle. Hence
+$\beta(K_p)\le b-p$.
+
+\step{The shape of $K_p$.} Let $p\le g-2$. Then $K_p$ is an induced subgraph of $G$. Its vertices
+have degree three in $K_p$, except $v_p$, $v_{g-1}$ and the vertices $w_i$ with $i<p$, which have
+degree two. So $K_p$ is a pole with at most $g$ ports, and $w_{p-1}$ and $v_{g-1}$ are two of its
+ports if $P_p>0$. For $p=g-1$, the vertex $v_{g-1}$ has degree one in $K_p$. Delete it. The result
+is an induced subgraph of $G$ of the same rank. It is a pole with ports among the $w_i$, and $P_p$
+is the number of its paths from $w_{g-2}$ to $w_{g-1}$.
+
+\step{The count.} Put $\varepsilon=2^{-g-2}$, and let $b_1=b_1(\varepsilon,g-2)$ be as in
+Corollary~\ref{cor:nodense}. If $\beta(K_p)\ge b_1$, the corollary gives
+$P_p<(\half+\varepsilon)2^{\beta(K_p)}\le(\half+\varepsilon)2^{b-p}$. If $\beta(K_p)<b_1$, then
+$P_p\le2^{b_1}$ by~\eqref{eq:joinbound}. Hence
+\[
+  P\;\le\;1+g\,2^{b_1}+\Bigl(\frac12+\varepsilon\Bigr)\sum_{p=1}^{g-1}2^{b-p}
+  \;\le\;2^{b-1}-\frac34\,2^{b-g}+g\,2^{b_1}+1 .
+\]
+By Corollary~\ref{cor:cycles}, $c(N)\le\psi(r-1)\le2^{r-2}+o(2^{r})$. So
+\[
+  c(G)\;\le\;2^{r-1}-\frac34\,2^{r-1-g}+o(2^{r})+g\,2^{b_1}+1 .
+\]
+The numbers $g$ and $b_1$ are bounded in terms of $g_0$. So $c(G)<2^{r-1}$ when $r$ is large.
+\end{proof}

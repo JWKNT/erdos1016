@@ -1,0 +1,216 @@
+\section{Tools}\label{sec:tools}
+
+\begin{notation}{multigraphs, cuts and regions}
+\begin{itemize}[leftmargin=1.2em]
+\item From here on a graph may have loops and parallel edges. We say \emph{multigraph} to stress
+this, and \emph{simple graph} to exclude it. A loop adds two to the degree of its vertex. A loop is
+a cycle of length one, and two parallel edges form a cycle of length two.
+\item A multigraph is \emph{cubic} if every vertex has degree three, and \emph{subcubic} if every
+vertex has degree at most three. The \emph{girth} is the length of a shortest cycle.
+\item $c(G)$ is the number of cycles of $G$, and $c_e(G)$ is the number of cycles through an edge
+$e$. If we replace an edge by a path, the rank and the number of cycles do not change. So
+$\psi(r)$ is also the largest number of cycles of a multigraph of rank $r$.
+\item For a set $A$ of vertices, $G[A]$ is the induced subgraph, $G-A$ is $G[V(G)\sm A]$, and
+$\delta A$ is the set of edges with exactly one end in $A$.
+\item A \emph{region} is a nonempty set $A$ such that $G[A]$ is connected. A region is
+\emph{cyclic} if $G[A]$ contains a cycle.
+\item A \emph{cyclic cut} is a set $\delta X$ such that $G[X]$ and $G-X$ each contain a cycle; its
+\emph{size} is $|\delta X|$.
+\item Throughout, $\xi$ is a uniformly random element of $\Z(G)$.
+\end{itemize}
+\end{notation}
+
+\subsection{Outside parts}\label{sec:count}
+
+Let $W$ be a subgraph of $G$, with $r=\beta(G)$ and $t=\beta(W)$. For an even subgraph
+$\xi$ we call $\xi\sm E(W)$ its \emph{outside part}. The map $\xi\mapsto\xi\sm E(W)$ is linear on
+$\Z(G)$ with kernel $\Z(W)$. So there are $2^{r-t}$ outside parts, each is the outside part of
+exactly $2^{t}$ even subgraphs, and the outside part of a uniform $\xi$ is uniform. Put
+\[
+  p(G,W)=\PP\bigl(\xi\sm E(W)\text{ is a forest}\bigr),\qquad
+  q(G,P)=\PP\bigl(\xi\cap E(G-P)\text{ is a forest}\bigr)
+\]
+for a subgraph $W$ and a set $P$ of vertices.
+
+\begin{lemma}[Edge recursion]\label{lem:edge}
+Let $G$ be a connected multigraph of rank $r$, let $W$ be a cycle of $G$, and let $e$ be an edge of
+$W$. Then $G-e$ is connected and has rank $r-1$, and
+\[
+  c(G)=c(G-e)+c_e(G),\qquad c_e(G)\;\le\;p(G,W)\,2^{r-1}.
+\]
+\end{lemma}
+
+\begin{proof}
+The edge $e$ lies on a cycle, so $G-e$ is connected with one edge less. A cycle of $G$ avoids $e$
+or contains $e$. This is the first formula.
+
+Let $C$ and $C'$ be cycles through $e$ with the same outside part. Then $C+C'$ is an even subgraph
+inside $W$, so it is empty or equal to $W$. But $C+W$ does not contain $e$. So $C'=C$. Hence the
+cycles through $e$ have distinct outside parts. Each of these is a proper subset of a cycle, so
+it is a forest. There are $p(G,W)\,2^{r-1}$ outside parts that are forests, because
+$\beta(W)=1$.
+\end{proof}
+
+\subsection{Cuts and links}\label{sec:links}
+
+For a region $A$ let $\cO_A$ be the event $\xi\cap\delta A=\emptyset$.
+
+\begin{lemma}\label{lem:second}
+Let $Z\ge0$ be a random variable with $\mu=\EE Z>0$ and $\EE Z^{2}\le2\mu^{2}+K\mu$. Then
+$\PP(Z=0)\le\half+K/(4\mu)$.
+\end{lemma}
+
+\begin{proof}
+By the Cauchy--Schwarz inequality $\mu^{2}\le\EE Z^{2}\cdot\PP(Z>0)$, so
+$\PP(Z=0)\le1-\mu/(2\mu+K)\le\half+K/(4\mu)$.
+\end{proof}
+
+Let $A$ and $B$ be disjoint regions of a connected multigraph $G$. A \emph{link} between them is an
+edge with one end in $A$ and the other in $B$, or a component of $G-(A\cup B)$ that is joined by an
+edge to $A$ and by an edge to $B$ (Figure~\ref{fig:links}). Let $\ell(A,B)$ be the number of links.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}
+  \draw[region] (0,0) ellipse [x radius=0.75, y radius=1.0];
+  \draw[region] (6,0) ellipse [x radius=0.75, y radius=1.0];
+  \draw[draw=warm, fill=warm!8, line width=0.6pt] (3,-0.7) ellipse [x radius=0.85, y radius=0.38];
+  \draw[draw=slate!70, fill=black!4, line width=0.6pt] (-2.9,0.2) ellipse [x radius=0.85, y radius=0.38];
+  \draw[draw=slate!70, fill=black!4, line width=0.6pt] (8.9,-0.2) ellipse [x radius=0.85, y radius=0.38];
+  \node[text=accent] at (0,0) {$A$};
+  \node[text=accent] at (6,0) {$B$};
+  \node[text=warm] at (3,-0.7) {$Y_1$};
+  \node[text=slate] at (-2.9,0.2) {$Y_2$};
+  \node[text=slate] at (8.9,-0.2) {$Y_3$};
+  \draw[hot] (0.45,0.55) -- node[above=-1pt, text=warm] {\small$e$} (5.55,0.55);
+  \draw[edge] (0.5,-0.45) -- (2.25,-0.58);
+  \draw[edge] (0.4,-0.75) -- (2.3,-0.86);
+  \draw[edge] (5.5,-0.5) -- (3.75,-0.63);
+  \draw[edge] (-0.5,0.35) -- (-2.12,0.32);
+  \draw[edge] (-0.55,0.05) -- (-2.1,0.1);
+  \draw[edge] (6.55,-0.15) -- (8.07,-0.2);
+  \foreach \p in {(0.45,0.55),(5.55,0.55),(0.5,-0.45),(2.25,-0.58),(0.4,-0.75),(2.3,-0.86),(5.5,-0.5),
+                  (3.75,-0.63),(-0.5,0.35),(-2.12,0.32),(-0.55,0.05),(-2.1,0.1),(6.55,-0.15),(8.07,-0.2)}
+    \node[vtx] at \p {};
+  \node[note, text=warm] at (3,1.05) {two links: the edge $e$ and the component $Y_1$};
+  \node[note] at (-2.9,-0.45) {not a link};
+  \node[note] at (8.9,-0.85) {not a link};
+\end{tikzpicture}
+\caption{Links between two regions $A$ and $B$. The edge $e$ and the component $Y_1$ of
+$G-(A\cup B)$ are links. The components $Y_2$ and $Y_3$ are joined to one region only, so they are
+not links. Here $\ell(A,B)=2$.}
+\label{fig:links}
+\end{figure}
+
+\begin{lemma}[Link formula]\label{lem:link}
+Let $A$ and $B$ be disjoint regions of a connected multigraph $G$. Then
+$\PP(\cO_A)=2^{\comp(G-A)-|\delta A|}\ge2^{-|\delta A|}$ and
+\[
+  \PP(\cO_A\cap\cO_B)=2^{\ell(A,B)-1}\,\PP(\cO_A)\,\PP(\cO_B).
+\]
+Conditionally on $\cO_A$, the set $\xi\cap E(G[A])$ is uniform on $\Z(G[A])$. Conditionally on
+$\cO_A\cap\cO_B$, the sets $\xi\cap E(G[A])$ and $\xi\cap E(G[B])$ are independent and uniform on
+$\Z(G[A])$ and $\Z(G[B])$.
+\end{lemma}
+
+\begin{proof}
+The even subgraphs that avoid $\delta A$ are the sums of an even subgraph of $G[A]$ and an even
+subgraph of $G-A$. So $\PP(\cO_A)=2^{\beta(G[A])+\beta(G-A)-\beta(G)}$, and a count of edges and
+vertices shows that the exponent is $\comp(G-A)-|\delta A|$. In the same way
+\[
+  \PP(\cO_A\cap\cO_B)=2^{\beta(G[A])+\beta(G[B])+\beta(G-A-B)-\beta(G)}
+     =2^{\comp(G-A-B)+1-|\delta A|-|\delta B|+e(A,B)},
+\]
+where $e(A,B)$ is the number of edges between $A$ and $B$. Let $a$, $b$ and $k$ be the numbers of
+components of $G-A-B$ that are joined to $A$ only, to $B$ only, and to both. Then
+$\comp(G-A-B)=a+b+k$, $\comp(G-A)=a+1$ and $\comp(G-B)=b+1$. The formula follows, because
+$\ell(A,B)=k+e(A,B)$. The conditional laws are read off from the two decompositions as direct sums.
+\end{proof}
+
+\begin{idea}{the correlation of two cut events}
+By Lemma~\ref{lem:link}, two cut events are independent when the regions have one link, and
+their joint probability is twice the product when the regions have two links. The constant
+$\half$ of the forest estimate comes from this factor two, through Lemma~\ref{lem:second}.
+\end{idea}
+
+Pairs with three or more links are rare:
+
+\begin{lemma}[Exceptional partners]\label{lem:exc}
+Let $A$ be a region of a connected multigraph $G$, and let $B_1,\dots,B_k$ be pairwise disjoint
+regions, disjoint from $A$, with $\ell(A,B_i)\ge3$ for all $i$. Then $k\le|\delta A|$.
+\end{lemma}
+
+\begin{proof}
+Contract $A$ to a vertex $a$ and each $B_i$ to a vertex $b_i$, and delete the loops that arise.
+This changes neither $d=|\delta A|$ nor the numbers $\ell(A,B_i)$, because the sets $B_j$ with
+$j\ne i$ are connected and are contracted inside components of $G-(A\cup B_i)$. Let $F$ be a
+spanning forest of $G-a$, and for every edge $e=au$ at $a$ attach a new leaf $\tau_e$ to $u$. Call
+the resulting forest $F^{+}$ and its $d$ new leaves \emph{terminals}.
+
+Fix $i$. Every link between $a$ and $b_i$ yields a path of $F^{+}$ from $b_i$ to a terminal. For an
+edge $e=ab_i$ it is the edge $b_i\tau_e$. For a component $Y$ of $G-\{a,b_i\}$ joined to both,
+choose an edge $e=au$ with $u\in Y$ and take the path of $F^{+}$ from $b_i$ to $\tau_e$; after its
+first vertex it stays in $Y\cup\{\tau_e\}$. Paths that come from different links start with
+different edges at $b_i$, and the union of any two of them is a path between two terminals. Let
+$F^{\circ}\subseteq F^{+}$ be the union of all paths between terminals. As $\ell(a,b_i)\ge3$, the
+vertex $b_i$ has degree at least $3$ in $F^{\circ}$. All leaves of $F^{\circ}$ are terminals, and a
+forest with at most $d$ leaves has at most $d-2$ vertices of degree at least $3$. Hence $k\le d-2$
+if $k\ge1$.
+\end{proof}
+
+\begin{lemma}[Many small cuts]\label{lem:smallcuts}
+Let $A_1,\dots,A_k$ be pairwise disjoint cyclic regions of a connected multigraph $G$ with
+$|\delta A_i|\le d$ for all $i$. Then
+\[
+  \PP\bigl(\xi\cap E(G[A_i])\text{ is a forest for every }i\bigr)\;\le\;\frac12+\frac{(d+1)\,2^{d-1}}{k}.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $E_i$ be the event that $\cO_{A_i}$ holds and $\xi\cap E(G[A_i])\ne\emptyset$. On $E_i$ the set
+$\xi\cap E(G[A_i])$ is a nonempty even subgraph, hence not a forest. So it suffices to bound
+$\PP(Z=0)$ for $Z=\sum_i\mathbf{1}_{E_i}$. By Lemma~\ref{lem:link},
+$p_i:=\PP(E_i)=\PP(\cO_{A_i})\bigl(1-2^{-\beta(G[A_i])}\bigr)\ge2^{-d-1}$ and
+$\PP(E_i\cap E_j)=2^{\ell(A_i,A_j)-1}p_ip_j$ for $i\ne j$. If $\ell(A_i,A_j)\le2$, this is at most
+$2p_ip_j$. Otherwise we use $\PP(E_i\cap E_j)\le p_i$; by Lemma~\ref{lem:exc} this happens for at
+most $d$ indices $j$, for each $i$. Hence $\EE Z^{2}\le\mu+2\mu^{2}+d\mu$ with
+$\mu=\EE Z\ge k\,2^{-d-1}$, and Lemma~\ref{lem:second} gives the claim.
+\end{proof}
+
+\subsection{Localisation}\label{sec:loc}
+
+By the next lemma, the part of $\xi$ inside a set $X$ has the same distribution as the part of a
+random even subgraph of a smaller graph outside one cycle.
+
+\begin{lemma}[Localisation]\label{lem:loc}
+Let $G$ be a connected multigraph, and let $X$ be a nonempty proper set of vertices such that
+$G-X$ is connected. Put $d=|\delta X|$. Form $G_X$ from $G[X]$ as follows. For each edge of
+$\delta X$ add a new vertex and join it to the end of that edge in $X$. Join the new vertices by a
+cycle $W_X$ through all of them; if $d<3$, first add $3-d$ further new vertices on that cycle. Then
+\begin{enumerate}
+\item[\textup{(a)}] $G_X$ is connected, and if every vertex of $X$ has degree three in $G$, then
+$\beta(G_X)=(|X|+d)/2+1$;
+\item[\textup{(b)}] the set $\xi\cap E(G[X])$ has the same distribution for $\xi$ uniform on
+$\Z(G)$ and for $\xi$ uniform on $\Z(G_X)$;
+\item[\textup{(c)}] an even subgraph $\xi$ of $G_X$ has a forest outside $E(W_X)$ if and only if
+$\xi\cap E(G[X])$ is a forest.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Every component of $G[X]$ has an edge to $G-X$, so the cycle $W_X$ joins all components.
+Without the extra vertices, $G_X$ has $d$ more vertices and $2d$ more edges than $G[X]$, so
+$\beta(G_X)=|E(G[X])|+2d-|X|-d+1$. Extra vertices on the cycle add as many edges as vertices. If
+all degrees in $X$ are three, then $3|X|=2|E(G[X])|+d$.
+
+(b) Contract the connected set $V(G)\sm X$ of $G$ to one vertex, and delete the loops that arise.
+Call the result $G/X$. An even subgraph of $G$ restricts to an even subgraph of $G/X$. Every even
+subgraph of $G/X$ arises in this way: the missing edges inside the contracted set can be chosen in
+a spanning tree of that set. So the restriction is a surjective linear map $\Z(G)\to\Z(G/X)$, and
+it sends the uniform distribution to the uniform distribution. Now contract $W_X$ in $G_X$. The
+result is the same multigraph $G/X$, with the new edges in the place of the edges of $\delta X$.
+
+(c) The edges of $G_X$ outside $W_X$ are the edges of $G[X]$ and the $d$ new edges at $X$. In
+$G_X-E(W_X)$ each of these new edges has an end of degree one, so it lies on no cycle.
+\end{proof}
+

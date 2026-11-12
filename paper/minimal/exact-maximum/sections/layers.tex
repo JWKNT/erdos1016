@@ -1,0 +1,78 @@
+\section{Layers}\label{sec:layers}
+
+The later sections use Theorem~\ref{thm:forest} through Corollary~\ref{cor:cycles} and through
+one lemma.
+
+\begin{idea}{the content of the lemma}
+If more than half of the outside parts are forests, by a fixed margin, then every distance layer
+around the marked set is small. In the other case a window of consecutive layers is a large set
+with a small boundary, and the forest estimate applies inside this set. We use the lemma for
+paths in Section~\ref{sec:poles} and for large girth in Section~\ref{sec:half}.
+\end{idea}
+
+Let $G$ be a multigraph and $P$ a set of vertices. A \emph{level function} is a map
+$\lambda\colon V(G)\to\mathbb{Z}$ such that $|\lambda(u)-\lambda(w)|\le1$ for every edge $uw$ that
+has an end outside $P$. The distance from a fixed vertex is a level function. For $\delta>0$ let
+$R_\delta$ be as in Proposition~\ref{prop:input}, and for an integer $k\ge1$ put
+\[
+  \Theta_\delta(k)=\max\bigl\{2R_\delta,\;2^{100}(k+1)^{2}\bigr\}.
+\]
+
+\begin{lemma}[Layers]\label{lem:width}
+Let $G$ be a connected subcubic multigraph, and let $P$ be a nonempty set of vertices such that
+$G[P]$ is connected and every vertex outside $P$ has degree three. Let $\lambda$ be a level
+function such that at most $k$ vertices of $P$ have any given level. Let $\delta\in(0,\half)$, and
+suppose that $q(G,P)>\half+\delta$. Then, for every $j$, fewer than $\Theta_\delta(k)$ vertices
+outside $P$ have level $j$.
+\end{lemma}
+
+\begin{proof}
+Put $\Phi(m)=m/\log^{2}m$ and $\Theta=\Theta_\delta(k)$.
+
+\step{Step 1: no large set outside $P$ has a small boundary.} We claim that no set
+$X\subseteq V(G)\sm P$ has $|X|=m\ge\Theta$ and $|\delta X|\le\Phi(m)/4$. Suppose that $X$ is such a
+set. Let $C_0$ be the component of $G-X$ that contains $P$, and put $X^{+}=V(G)\sm V(C_0)$. Then
+$X\subseteq X^{+}$, the set $X^{+}$ avoids $P$, and $G-X^{+}=C_0$ is connected. Different components
+of $G-X$ have no edge between them, so $\delta X^{+}\subseteq\delta X$. Every vertex of $X^{+}$ has
+degree three. Let $d^{+}=|\delta X^{+}|\ge1$ and apply Lemma~\ref{lem:loc} to $X^{+}$. The rank of
+$G_{X^{+}}$ is
+\[
+  \rho=\frac{|X^{+}|+d^{+}}2+1\;\ge\;\frac m2\;\ge\;R_\delta .
+\]
+The cycle $W_{X^{+}}$ has $\max\{d^{+},3\}$ edges. The function $\Phi$ is increasing on
+$[8,\infty)$, and $\Phi(m)/4\le\Phi(m/2)$. So
+$d^{+}\le\Phi(m)/4\le\Phi(m/2)\le\Phi(\rho)$, and also $3\le\Phi(\rho)$. By
+Proposition~\ref{prop:input} and Lemma~\ref{lem:loc}(b),(c),
+\[
+  \PP\bigl(\xi\cap E(G[X^{+}])\text{ is a forest}\bigr)\;\le\;\frac12+\delta .
+\]
+But $G[X^{+}]$ is a subgraph of $G-P$, so this probability is at least $q(G,P)>\half+\delta$. This
+contradiction proves the claim.
+
+\step{Step 2: a window of levels.} Let $m_j$ be the number of vertices outside $P$ of level $j$.
+For $i\le i'$ let $X(i,i')$ be the set of vertices outside $P$ with a level in $[i,i']$. An edge
+that leaves $X(i,i')$ ends outside $P$ at level $i-1$ or $i'+1$, or it ends in $P$ at a level in
+$[i-1,i'+1]$. So
+\begin{equation}\label{eq:window}
+  |\delta X(i,i')|\;\le\;3m_{i-1}+3m_{i'+1}+3k(i'-i+3).
+\end{equation}
+Suppose that $m_j\ge\Theta$ for some $j$. Start with the window $i=i'=j$. As long as a level next
+to the window has more than $m/(48\log^{2}m)$ vertices outside $P$, where $m=|X(i,i')|$ is the
+present size, add that level to the window. The graph is finite, so this stops. Let $\mu$ be the
+final size and $\gamma=\log\mu\ge100$. Each step multiplies the size by more than
+$1+1/(48\gamma^{2})$. So the number of steps is at most
+\[
+  \frac{\ln\mu}{\ln\bigl(1+1/(48\gamma^{2})\bigr)}\;\le\;96\gamma^{2}\ln\mu\;<\;67\gamma^{3}.
+\]
+At the end both levels next to the window have at most $\mu/(48\gamma^{2})$ vertices outside $P$.
+By~\eqref{eq:window},
+\[
+  |\delta X(i,i')|\;\le\;\frac{\mu}{8\gamma^{2}}+3k\bigl(67\gamma^{3}+3\bigr)
+  \;\le\;\frac{\mu}{4\gamma^{2}}=\frac{\Phi(\mu)}4 .
+\]
+The second inequality is equivalent to $24k\gamma^{2}(67\gamma^{3}+3)\le2^{\gamma}$. This holds because
+$k\le2^{\gamma/2-50}$, by $\mu\ge\Theta\ge2^{100}(k+1)^{2}$, and because
+$24\gamma^{2}(67\gamma^{3}+3)\le2000\gamma^{5}\le2^{\gamma/2+50}$ for $\gamma\ge100$. So the final
+window contradicts Step~1.
+\end{proof}
+

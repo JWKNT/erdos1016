@@ -1,0 +1,383 @@
+\section{Rings and cyclic cuts of size at most four}\label{sec:cuts}
+
+In this section $G$ is a connected cubic multigraph without loops, of rank $r$.
+
+\begin{idea}{the results of this section}
+We count the cycles of the rings. Then we show that a graph of large rank with a cyclic cut of
+size at most four is a ring, or it has at most $2^{r-1}+O(2^{r/2})$ cycles
+(Proposition~\ref{prop:threecut} and Theorem~\ref{thm:fourcut}). The proof uses the gap of
+Section~\ref{sec:poles}: a side of the cut has all possible paths between two ends, or a fixed
+proportion of them is missing.
+\end{idea}
+
+Let $X$ be a set of $n\ge1$ vertices of $G$ with $|\delta X|=d$. Counting edge ends gives
+$\beta(G[X])=(n-d)/2+\comp(G[X])$. So $G[X]$ contains a cycle if $d\le2$, and also if $d=3$ and
+$n\ge2$. Hence every cut of size at most two is cyclic, and a cut of size three is cyclic unless
+one of its sides is a single vertex.
+
+\subsection{Rings}\label{sec:rings}
+
+A \emph{ring} consists of pairwise disjoint tiles $\tau_1,\dots,\tau_m$ and of two disjoint edges
+from the right pair of $\tau_i$ to the left pair of $\tau_{i+1}$ for every $i$, with indices modulo
+$m$. These pairs of edges are the \emph{interfaces}. Let the ring have $a$ squares and $s$ single
+rungs, and let $W=2a+s$ be its weight. We assume that $W\ge7$. Then the ring is a cubic graph with
+$2W$ vertices and rank $W+1$. Put
+\[
+  E(a,s)=2^{a}\Bigl(2a+4s+\tbinom s2+\tfrac12\Bigr)-3a-4s+\tbinom s2 .
+\]
+Then $2^{2q}+E(q,0)$ and $2^{2q+1}+E(q,1)$ are the numbers $H(2q+1)$ and $H(2q+2)$
+of~\eqref{eq:H}.
+
+\begin{proposition}[Rings]\label{prop:rings}
+A ring with $a\ge1$ squares and $s$ single rungs, of weight $W\ge7$, has at most $2^{W}+E(a,s)$
+cycles. Equality holds if $s\le1$. A ring of weight
+$W\ge7$ without squares has at most $2^{W}+W^{2}$ cycles.
+\end{proposition}
+
+\begin{proof}
+Two interfaces together form a cut. So a cycle uses an odd number of edges of every interface, or
+an even number of edges of every interface.
+
+\step{One edge of every interface.} There are $2^{m}$ ways to choose the edges. The cycle then
+enters each tile at one vertex of its left pair and leaves it at one vertex of its right pair. In a
+square there are two such paths. In a single rung there is one: the cycle stays at the vertex or
+crosses the rung. Every choice gives a cycle. So there are $2^{m+a}=2^{W}$ cycles of this kind.
+
+\step{No interface.} These cycles are the $a$ squares.
+
+\step{Both edges of every interface.} In a square the cycle then uses two disjoint edges, and there
+are two ways to choose them. In a single rung it does not use the rung. Each of the $2^{a}$ choices
+is a cycle or a union of two cycles. Changing the choice in one square changes one into the other.
+So there are $2^{a-1}$ such cycles if $a\ge1$, and at most one if $a=0$.
+
+\step{Both edges of some interfaces, but not of all.} Let the cycle use the interface after
+$\tau_i$ and not the interface before $\tau_i$. Then it turns in $\tau_i$: it joins the two
+vertices of the right pair inside the tile. It passes the next tiles on two disjoint paths, until
+it turns in a tile $\tau_j$. This is already a closed curve, so the cycle uses exactly the
+interfaces from $\tau_i$ forward to $\tau_j$. In each tile from $\tau_i$ to $\tau_j$ it has two
+possibilities if the tile is a square, and one if it is a single rung, in either role. Every
+choice gives a cycle. Let $I(i,j)$ be the set of the other tiles, those strictly after $\tau_j$
+and strictly before $\tau_i$. Then the number of these cycles is $2^{a}\,\omega(i,j)$, where
+$\omega(i,j)=2^{-n}$ and $n$ is the number of squares in $I(i,j)$. Every cycle of the present kind
+arises for exactly one ordered pair $(i,j)$ of distinct tiles.
+
+So a ring with $a\ge1$ has $2^{W}+a+2^{a-1}+2^{a}\,\Omega$ cycles, where $\Omega$ is the sum of
+$\omega(i,j)$ over the ordered pairs of distinct tiles. We compute $\Omega$. Let $\tau_j$ be a
+square. The squares $\tau_i\ne\tau_j$ give $\omega=1,\frac12,\dots,2^{2-a}$, in the order in which
+they follow $\tau_j$. So the pairs of two squares contribute $a(2-2^{2-a})$. Let $\tau_i$ be a
+single rung. The squares $\tau_j$ give $\omega=1,\frac12,\dots,2^{1-a}$, in the order in which they
+precede $\tau_i$. The same holds with the roles of $i$ and $j$ exchanged. So the pairs of a single
+rung and a square contribute $2s(2-2^{1-a})$. Finally let $\tau_i,\tau_j$ be two single rungs, with
+$n$ squares on one side between them and $a-n$ on the other. The two ordered pairs contribute
+$2^{-n}+2^{-(a-n)}\le1+2^{-a}$, with equality if and only if $n=0$ or $n=a$. Hence
+\[
+  \Omega\;\le\;2a+4s+\tbinom s2-2^{-a}\Bigl(4a+4s-\tbinom s2\Bigr),
+\]
+with equality if $s\le1$, because then there is no pair of two single rungs. This is the first
+statement.
+
+If $a=0$, every ordered pair of distinct tiles gives one cycle. There are $W(W-1)$ pairs, and at
+most one further cycle uses both edges of all interfaces.
+\end{proof}
+
+\begin{corollary}\label{cor:ringmax}
+Let $r\ge8$. Every ring of rank $r$ has at most $H(r)$ cycles. A ring of rank $r$ with
+$\lfloor(r-1)/2\rfloor$ squares and at most one single rung has exactly $H(r)$ cycles.
+\end{corollary}
+
+\begin{proof}
+Let $W=r-1$. A ring of weight $W$ with $a=\lfloor W/2\rfloor$ squares has $s=W-2a\le1$ single
+rungs, and it has $2^{W}+E(a,s)=H(r)$ cycles by Proposition~\ref{prop:rings}. For $a\ge2$ and
+$2a+s=W$, a direct computation gives
+\[
+  E(a-1,s+2)-E(a,s)=-2^{a-1}\Bigl(W+\frac{s^{2}+s}2-\frac{13}2\Bigr)+2s-4\;<\;0,
+\]
+because $W\ge7$. So $2^{W}+E(a,s)\le H(r)$ for every ring of weight $W$ with a square. The number
+$H(r)-2^{W}$ is $71$ for $W=7$ and $124$ for $W=8$, and it more than doubles when $W$ grows by
+two. So it exceeds $W^{2}$, and a ring without squares has fewer than $H(r)$ cycles.
+\end{proof}
+
+We write $R_r$ for a ring of rank $r\ge8$ with $\lfloor(r-1)/2\rfloor$ squares and at most one
+single rung. In the notation of Horak and Kim~\cite{HK} it is the graph $MC_{r-1}$, and they
+computed $c(R_r)=H(r)$.
+
+\subsection{Cuts of size at most three}
+
+\begin{proposition}\label{prop:threecut}
+There is a constant $r_3$ with the following property. Let $G$ be a connected cubic multigraph
+without loops, of rank $r\ge r_3$, that has a cyclic cut of size at most three. Then
+\[
+  c(G)\;\le\;2^{r-1}+5K_0^{2}\,2^{r/2}.
+\]
+\end{proposition}
+
+\begin{proof}
+Let $d\le3$ be the least size of a cyclic cut, and let $\delta X$ be a cyclic cut of size $d$. By
+the remark at the start of this section, $G$ has no cut of size less than $d$. So $G[X]$ and
+$G-X$ are connected, and no vertex is on two edges of $\delta X$ if $d\ge2$: otherwise we could
+move that vertex to the other side and get a smaller cut. Let $T_1$ and $T_2$ be the two sides,
+with ranks $b_1\le b_2$. Then $b_1\ge1$ and $r=b_1+b_2+d-1$.
+
+If $d=1$, then $c(G)=c(T_1)+c(T_2)\le(2^{b_1}-1)+(2^{b_2}-1)\le2^{r-1}$, because $b_1+b_2=r$.
+
+Let $d\in\{2,3\}$. Then $T_1$ and $T_2$ are $d$-poles, and the cut edges match their ports. A cycle
+that crosses the cut uses exactly two cut edges, and it consists of these and of one path in each
+side. For a pair $j$ of cut edges let $x_j\,2^{b_1}$ and $a_j\,2^{b_2}$ be the numbers of paths
+between the corresponding ports of $T_1$ and of $T_2$. Then $0\le x_j,a_j\le1$
+by~\eqref{eq:joinbound}, and
+\begin{equation}\label{eq:glue23}
+  c(G)\;=\;c(T_1)+c(T_2)+2^{b_1+b_2}\sum_jx_ja_j,
+  \qquad 2^{r-1}=2^{d-2}\,2^{b_1+b_2}.
+\end{equation}
+There is one pair for $d=2$, and there are three pairs for $d=3$. Let $r$ be large. Then
+$b_2\ge(r-2)/2$ is large, and $\kappa(b_2)\le\frac1{1000}$. We have $c(T_1)<2^{b_1}$.
+
+\step{Case A: $a_j\le0.501$ for all $j$.} By Corollary~\ref{cor:cycles},
+$c(T_2)\le\frac9{16}2^{b_2}\le\frac9{32}2^{b_1+b_2}$. So $c(G)\,2^{-b_1-b_2}$ is less than
+$2^{-b_2}+\frac9{32}+0.501$ for $d=2$, and less than $2^{-b_2}+\frac9{32}+1.503$ for $d=3$. In
+both cases $c(G)<2^{r-1}$.
+
+\step{Case B: $a_j>0.501$ for some $j$.} Then $c(T_2)\le K_0\,2^{b_2/2}$ by
+Lemma~\ref{lem:gadgets}(a). So $c(T_1)+c(T_2)<2^{b_1}+K_0\,2^{b_2/2}\le\frac1{1000}2^{b_1+b_2}$.
+
+Let $d=2$. If $x_1<0.501$, then $c(G)<0.502\cdot2^{b_1+b_2}<2^{r-1}$ by~\eqref{eq:glue23}.
+Otherwise $c(T_1)\le K_0\,2^{b_1/2}$ by Lemma~\ref{lem:gadgets}(a), and
+\[
+  c(G)\;\le\;2^{r-1}+K_0\bigl(2^{b_1/2}+2^{b_2/2}\bigr)\;\le\;2^{r-1}+2K_0\,2^{r/2}.
+\]
+
+Let $d=3$, and number the pairs so that $a_1\ge a_2\ge a_3$. Any two pairs of ports of a $3$-pole
+have one port in common. If $a_1+a_2<1.002$, then $\sum_jx_ja_j<1.503$ and $c(G)<2^{r-1}$.
+Otherwise $a_3\le\kappa(b_2)$ by Lemma~\ref{lem:gadgets}(b). If $x_1+x_2<1.002$, then
+$\sum_jx_ja_j<1.003$ and $c(G)<2^{r-1}$. Otherwise $x_3\le\kappa(b_1)$ and
+$c(T_1)\le K_0\,2^{b_1/2}$ by Lemma~\ref{lem:gadgets}(b) and~(a). Then~\eqref{eq:glue23} gives
+\[
+  c(G)\;\le\;2K_0\,2^{b_2/2}+2^{b_1+b_2}\bigl(2+\kappa(b_1)\kappa(b_2)\bigr)
+  \;=\;2^{r-1}+2K_0\,2^{b_2/2}+4K_0^{2}\,2^{(b_1+b_2)/2}
+  \;\le\;2^{r-1}+5K_0^{2}\,2^{r/2}.\qedhere
+\]
+\end{proof}
+
+\subsection{States of a pole with four ports}
+
+Let $Y$ be a $4$-pole of rank $h$ with ports $1,2,3,4$. A \emph{pairing} is one of the three
+partitions $12|34$, $13|24$, $14|23$ of the ports into two pairs; the two pairs of a pairing are
+\emph{opposite}. For a pair $ij$ and a pairing $\alpha=ij|kl$ put
+\[
+  a_{ij}=2^{-h}P_{ij}(Y),\qquad u_\alpha=2^{-h}f_{ij|kl}(Y),\qquad
+  S=\sum_{ij}a_{ij},\qquad F=\sum_\alpha u_\alpha .
+\]
+A pair of disjoint paths that joins the four ports is a join for the set of all four ports, and
+there are $2^{h}$ such joins. So $a_{ij}\le1$ and $F\le1$. We write $a_{ij}(Y)$, $S(Y)$ and so on
+when several poles are present. In this notation Lemma~\ref{lem:gadgets} reads as follows, for
+distinct ports $i,j,k,l$ and with $\kappa=\kappa(h)$:
+\begin{align}
+  &a_{ik}+a_{jk}\ge1.002\ \Longrightarrow\ a_{ij}\le\kappa;\label{eq:T1}\\
+  &a_{ik}+a_{il}+a_{jk}+a_{jl}\ge2.004\ \Longrightarrow\ u_{ik|jl}+u_{il|jk}\le\kappa;\label{eq:T2}\\
+  &a_{kl}>\kappa\ \Longrightarrow\ a_{ij}+F-u_{ij|kl}<1.002.\label{eq:T3}
+\end{align}
+Fix $h_0$ such that $\kappa(h)\le\frac1{1000}$ for $h\ge h_0$.
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[region] (0,0) ellipse [x radius=1.5, y radius=1.55];
+  \draw[region] (6,0) ellipse [x radius=1.5, y radius=1.55];
+  \node[text=accent] at (-0.75,0) {$X$};
+  \node[text=accent] at (6.75,0) {$Y$};
+  \foreach \i/\y in {1/1.05,2/0.35,3/-0.35,4/-1.05}{
+    \coordinate (x\i) at (1.0,\y);
+    \coordinate (y\i) at (5.0,\y);}
+  \draw[edge] (x2)--(y2) (x4)--(y4);
+  % a cycle through the cut edges 1 and 3
+  \draw[hot] (x1)--(y1) (x3)--(y3);
+  \draw[hot] (x1) .. controls (0.1,0.9) and (0.0,-0.3) .. (x3);
+  \draw[hot] (y1) .. controls (5.9,0.9) and (6.0,-0.3) .. (y3);
+  \foreach \i in {1,2,3,4}{ \node[port] at (x\i) {}; \node[port] at (y\i) {};
+    \node[note, text=accent] at (3,{1.4-0.7*\i+0.17}) {\scriptsize\i}; }
+  \node[note, text=warm, align=left, anchor=west] at (7.9,0.45) {a cycle through two cut edges:\\ one path in $X$, one path in $Y$};
+  \node[note, align=left, anchor=west] at (7.9,-0.55) {a cycle through all four cut edges:\\ two disjoint paths in each side};
+\end{tikzpicture}
+\caption{Two $4$-poles $X$ and $Y$, joined at their ports. The number $a_{ij}$ counts the paths
+between the ports $i$ and $j$ of one side, and $u_\alpha$ counts the pairs of disjoint paths for
+a pairing $\alpha$ of the ports, both as a proportion of the largest possible number.}
+\label{fig:glue}
+\end{figure}
+
+\begin{lemma}[Gluing]\label{lem:glue4}
+Let $X$ and $Y$ be $4$-poles of ranks $h$ and $k$, and let $G$ arise from them when we join each
+port of $X$ to the port of $Y$ with the same number. Then $\beta(G)=h+k+3$ and
+\[
+  c(G)=c(X)+c(Y)+2^{h+k}\,\mathcal B,\qquad
+  \mathcal B=\sum_{ij}a_{ij}(X)\,a_{ij}(Y)+\sum_{\alpha\ne\beta}u_\alpha(X)\,u_\beta(Y)
+  \;\le\;S(Y)+F(Y).
+\]
+\end{lemma}
+
+\begin{proof}
+A cycle that crosses the cut uses two or four of the new edges. With two, at the ports $i$ and $j$,
+it consists of a path between these ports in each pole. With four, it consists of a pair of
+disjoint paths in each pole. If the pairings in $X$ and $Y$ are equal, the union is two cycles. If
+they differ, it is one cycle. The inequality holds because $a_{ij}(X)\le1$ and $F(X)\le1$.
+\end{proof}
+
+\begin{lemma}[Low states]\label{lem:low}
+Let $Y$ be a $4$-pole of rank $h\ge h_0$ with $a_{ij}\le0.51$ for all six pairs. Then
+$S+F\le3.82$, and $S+\half F+\half u_\gamma\le3.7$ for every pairing $\gamma$.
+\end{lemma}
+
+\begin{proof}
+For a pairing $\alpha=ij|kl$ let $M_\alpha=\max\{a_{ij},a_{kl}\}$. If both numbers are larger than
+$\kappa$, then $M_\alpha+F-u_\alpha<1.002$ by~\eqref{eq:T3}.
+
+If $S\le2.75$, the first claim holds because $F\le1$. Otherwise every $a_{ij}$ is at least
+$S-5\cdot0.51>0.2$. Adding the three inequalities gives $\sum_\alpha M_\alpha+2F<3.006$. As
+$S\le2\sum_\alpha M_\alpha$ and $S\le3.06$, we get $S+F<1.503+\frac34S\le3.8$.
+
+If $S\le2.7$, the second claim holds because $u_\gamma\le F\le1$. Otherwise every $a_{ij}$ is at
+least $0.15$. Adding the inequalities for the two pairings $\alpha,\beta$ other than $\gamma$ gives
+$M_\alpha+M_\beta+F+u_\gamma<2.004$. Hence
+$S+\half F+\half u_\gamma<S-\half M_\alpha-\half M_\beta+1.002$. In this bound the two pairs of
+$\alpha$ contribute at most $\frac32\cdot0.51$, and so do the two pairs of $\beta$. The two pairs
+of $\gamma$ contribute at most $2\cdot0.51$. The total is at most $2.55+1.002$.
+\end{proof}
+
+\begin{lemma}[Rigidity]\label{lem:rigid}
+Let $Y$ be a $4$-pole of rank $h\ge h_0$ with $S+F\ge3.99$. Then three pairs with a common port
+are full, or the four pairs between two disjoint pairs of ports are full.
+\end{lemma}
+
+\begin{proof}
+For a partition of the ports into two pairs, the \emph{cross sum} is the sum of $a_{ij}$ over the
+four pairs $ij$ that are not pairs of the partition. Each pair $ij$ occurs in two of the three
+cross sums. We use Theorem~\ref{thm:gap} in this form: if $a_{ij}>\frac{15}{16}$, then $ij$ is
+full.
+
+\step{Case 1: some cross sum is at least $2.004$.} Let it be the cross sum $X$ of $12|34$. Then
+$a_{13}+a_{23}\ge1.002$ or $a_{14}+a_{24}\ge1.002$, so $a_{12}\le\kappa$ by~\eqref{eq:T1}. In the
+same way $a_{34}\le\kappa$. By~\eqref{eq:T2}, $u_{13|24}+u_{14|23}\le\kappa$. Put $u=u_{12|34}$.
+Then
+\[
+  S+F\;\le\;X+u+3\kappa .
+\]
+At most one of the four numbers in $X$ is at most $\kappa$, because $X\ge2.004$. Let $ij$ be one
+of the four pairs, and $kl$ the opposite pair. If $a_{kl}>\kappa$, then~\eqref{eq:T3} gives
+$u<1.002-a_{ij}$.
+
+Suppose that all four numbers are larger than $\kappa$. Then $u<1.002-m$, where $m$ is the largest
+of them. So $S+F$ is less than the sum of the three smallest of them plus $1.005$. As
+$S+F\ge3.99$, each of the three is larger than $0.985$. So all four pairs are full.
+
+Suppose that one of the four numbers is at most $\kappa$, say $a_{24}$. Then
+$u<1.002-\max\{a_{14},a_{23}\}$, and
+$S+F<a_{13}+\min\{a_{14},a_{23}\}+1.002+4\kappa\le3.006$. This contradicts $S+F\ge3.99$.
+
+\step{Case 2: all cross sums are less than $2.004$.} Their sum is $2S$, so $S<3.006$. Hence
+$F>0.984$ and $S\ge2.99$, and the sum of two opposite numbers is more than $2.99-2.004=0.986$.
+
+Suppose that all six numbers are larger than $\kappa$. For a pairing $\alpha=ij|kl$,
+\eqref{eq:T3} gives $\max\{a_{ij},a_{kl}\}+F-u_\alpha<1.002$, and the maximum is at least $0.493$.
+So $F-u_\alpha<0.509$. Adding this for the three pairings gives $2F<1.527$, a contradiction.
+
+So one number is at most $\kappa$, say $a_{34}$. Then $a_{12}>0.985$, so $12$ is full.
+By~\eqref{eq:T1}, $a_{13}<0.002$ or $a_{23}\le\kappa$; also $a_{14}<0.002$ or $a_{24}\le\kappa$.
+If a number is less than $0.002$, its opposite is more than $0.984$, hence full. If
+$a_{13}<0.002$, then $24$ is full, so $a_{14}<0.002$, and $23$ is full. Then the pairs
+$12,23,24$ are full. If $a_{23}<0.002$, then $14$ is full, so $a_{24}<0.002$, and $13$ is full.
+Then the pairs $12,13,14$ are full.
+\end{proof}
+
+\begin{lemma}[Full star]\label{lem:star}
+Let $Y$ be a $4$-pole in which the pairs $12$, $13$ and $14$ are full. Then
+$u_\alpha(Y)\le\half$ for every pairing $\alpha$.
+\end{lemma}
+
+\begin{proof}
+Let $\alpha=1j|kl$, and let $h$ be the rank of $Y$. Consider a path $Q$ from $1$ to $j$ and a
+disjoint path $Q'$ from $k$ to $l$. The pair $1j$ is full, so every cycle of $Y$ meets $Q$
+(Lemma~\ref{lem:joins}). So $Y-V(Q)$ is a forest, and $Q$ determines $Q'$. Hence $f_{1j|kl}(Y)$
+is at most the number of paths from $1$ to $j$ in $Y-k$.
+
+The port $k$ lies on a cycle of $Y$. Otherwise both edges at $k$ are bridges, and one of them
+has a side that contains neither $k$ nor the port $1$. This side contains a cycle, by the count
+of edge ends in the proof of Lemma~\ref{lem:reduction}, and no path from $1$ to $k$ meets it.
+This contradicts Lemma~\ref{lem:joins} for the full pair $1k$. So $Y-k$ is connected of rank
+$h-1$, and it has at most $2^{h-1}$ paths from $1$ to $j$ by~\eqref{eq:joinbound}.
+\end{proof}
+
+\subsection{Cuts of size four}
+
+\begin{idea}{outline of the proof of Theorem~\ref{thm:fourcut}}
+Let $Y$ be the larger side of a cut of size four. In units of $2^{h+k}$, the number of cycles
+across the cut is at most $S(Y)+F(Y)$, and $c(G)\ge2^{r-1}$ requires the value $4$. If no pair of
+ports of $Y$ is close to full, then $S+F\le3.82$ by Lemma~\ref{lem:low}. In the other case $Y$
+has few cycles, and by Lemma~\ref{lem:rigid} there are two possible shapes. If three pairs at one
+port are full, then $c(G)<2^{r-1}$ by Lemma~\ref{lem:star}. If the four pairs between two pairs
+of ports are full in both sides, then both sides are chains of tiles, and $G$ is a ring.
+\end{idea}
+
+\begin{theorem}\label{thm:fourcut}
+There is a constant $r_4$ with the following property. Let $G$ be a connected cubic multigraph
+without loops, of rank $r\ge r_4$, that has a cyclic cut of size four and no cyclic cut of
+smaller size. Then $G$ is a ring, or $c(G)<2^{r-1}$.
+\end{theorem}
+
+\begin{proof}
+Let $\delta X$ be a cyclic cut of size four. By the remark at the start of the section, $G$ has no
+cut of size at most two, and every cut of size three has a single vertex on one side. So $G[X]$
+and $G-X$ are connected. No vertex $v$ is on two edges of $\delta X$: otherwise the cut around
+$X\sm\{v\}$, or around $X\cup\{v\}$, would be a cyclic cut of size three. So the two sides are
+$4$-poles. Call them $X$ and $Y$, with ranks $h\le k$, and number the ports so that
+Lemma~\ref{lem:glue4} applies. Then $r=h+k+3$, and $k$ is large when $r$ is large. We write
+$\kappa$ for $\kappa(k)$ and assume that $k\ge h_0$. By Lemma~\ref{lem:glue4},
+\begin{equation}\label{eq:four}
+  \frac{c(G)}{2^{h+k}}\;=\;\frac{c(X)}{2^{h+k}}+\frac{c(Y)}{2^{h+k}}+\mathcal B,
+  \qquad 2^{r-1}=4\cdot2^{h+k},\qquad c(X)<2^{h}.
+\end{equation}
+
+\step{Case 1: $a_{ij}(Y)\le0.51$ for all pairs.} By Corollary~\ref{cor:cycles},
+$c(Y)\le\frac9{16}2^{k}$. If $h\ge2$, then $\mathcal B\le S(Y)+F(Y)\le3.82$ by
+Lemma~\ref{lem:low}, and the right side of~\eqref{eq:four} is less than
+$2^{-k}+\frac9{64}+3.82<4$. If $h=1$, then $X$ has four vertices and is a cycle. Number its
+vertices $1,2,3,4$ along the cycle. Then all $a_{ij}(X)$ are $1$, and
+$u_{12|34}(X)=u_{14|23}(X)=\half$ and $u_{13|24}(X)=0$. So
+$\mathcal B=S(Y)+\half F(Y)+\half u_{13|24}(Y)\le3.7$ by Lemma~\ref{lem:low}, and the right side
+of~\eqref{eq:four} is less than $2^{-k}+\frac9{32}+3.7<4$. In both cases $c(G)<2^{r-1}$.
+
+In the other cases $a_{ij}(Y)>0.51$ for some pair, so $c(Y)\le K_0\,2^{k/2}$ by
+Lemma~\ref{lem:gadgets}(a). The first two terms on the right of~\eqref{eq:four} are then less
+than $2^{-k}+K_0\,2^{-k/2}$.
+
+\step{Case 2: $S(Y)+F(Y)<3.99$.} Then $\mathcal B<3.99$ and $c(G)<2^{r-1}$.
+
+\step{Case 3: $S(Y)+F(Y)\ge3.99$, and the pairs $12,13,14$ are full in $Y$.} By~\eqref{eq:T1}, the
+other three numbers $a_{ij}(Y)$ are at most $\kappa$. If one of the pairs $12,13,14$ is not full
+in $X$, then $a_{ij}(X)\le\frac{15}{16}$ for this pair by Theorem~\ref{thm:gap}. So
+$\mathcal B\le3-\frac1{16}+3\kappa+F(X)F(Y)<4-\frac1{32}$, and $c(G)<2^{r-1}$.
+
+Let the three pairs be full in $X$ as well. Then the other three numbers $a_{ij}(X)$ are at most
+$\kappa(h)$, and $c(X)\le K_0\,2^{h/2}$, by Lemma~\ref{lem:gadgets}. By Lemma~\ref{lem:star}, all
+numbers $u_\alpha(X)$ and $u_\alpha(Y)$ are at most $\half$. Let $v$ be the largest $u_\alpha(Y)$.
+The numbers $u_\alpha(X)$ are at most $\half$ and add up to at most $1$, so
+\[
+  \sum_{\alpha\ne\beta}u_\alpha(X)\,u_\beta(Y)=\sum_\alpha u_\alpha(X)\bigl(F(Y)-u_\alpha(Y)\bigr)
+  \;\le\;\frac{F(Y)+v}2\;\le\;\frac34 .
+\]
+Hence $\mathcal B\le3+3\kappa(h)\kappa(k)+\frac34$, and the right side of~\eqref{eq:four} is less
+than $4$ when $k$ is large. So $c(G)<2^{r-1}$.
+
+\step{Case 4: $S(Y)+F(Y)\ge3.99$, and the pairs $13,14,23,24$ are full in $Y$.}
+By~\eqref{eq:T1}, \eqref{eq:T2} and~\eqref{eq:T3}, $a_{12}(Y)$ and $a_{34}(Y)$ are at most
+$\kappa$, and $F(Y)\le0.002+\kappa$. If one of the four pairs is not full in $X$, then
+$\mathcal B\le4-\frac1{16}+2\kappa+F(Y)<4-\frac1{32}$, and $c(G)<2^{r-1}$.
+
+Otherwise the four pairs are full in $X$ and in $Y$, and Corollary~\ref{cor:fourports} applies to
+both. In its case~(ii) the pole has a bridge $e$, and the component of the pole without $e$ that
+contains the ports $1,2$ contains a cycle. Its vertex set has three edges of $G$ that leave it:
+$e$ and the two edges at the ports. The other side contains a cycle as well. This is a cyclic cut
+of size three, which $G$ does not have. So $X$ and $Y$ are chains of tiles, from the pair $1,2$ to
+the pair $3,4$. The edges of the cut join the first tile of $X$ to the first tile of $Y$ and the
+last tile of $X$ to the last tile of $Y$. So $G$ is a ring.
+
+By Lemma~\ref{lem:rigid}, these are all cases, up to the numbering of the ports.
+\end{proof}

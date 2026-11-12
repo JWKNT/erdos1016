@@ -1,0 +1,371 @@
+\documentclass[11pt]{article}
+\input{../style/preamble}
+
+\renewcommand{\papertitle}{The minimum number of edges\\ in a pancyclic graph}
+\renewcommand{\papersubtitle}{A short proof for Erd\H{o}s Problem \#1016}
+\renewcommand{\paperrunning}{The minimum number of edges in a pancyclic graph}
+\hypersetup{pdftitle={The minimum number of edges in a pancyclic graph: a short proof},pdfauthor={KNT, Astra, Fable 5.2}}
+
+\begin{document}
+\maketitleblock
+
+A graph on $n$ vertices is pancyclic if it has a cycle of every length from $3$ to $n$. Let
+$n+h(n)$ be the least number of edges of such a graph. We prove that
+\[
+  \log_2n+\log^{*}n-O(1)\;\le\;h(n)\;\le\;\lfloor\log_2n\rfloor+\log^{*}n+1 .
+\]
+This answers Problem~\#1016 of Erd\H{o}s. The lower bound follows from one estimate for random
+even subgraphs, which is proved in~\cite{Max}. The upper bound is a construction. Both bounds are
+formalised in Lean~4. Astra and Fable~5.2 are language models. Section~\ref{sec:status} states
+the part of each author.
+
+\fronthead{The proof in five sentences}
+\begin{enumerate}[leftmargin=1.6em]
+\item A pancyclic graph with $n$ vertices and $n+h$ edges has rank $h+1$, and its cycles have
+$n-2$ different lengths. A graph of rank $r$ has fewer than $2^{r}$ cycles. This gives only
+$h\ge\log_2n-1$.
+\item Take a small subgraph $W$ that already contains cycles of all short lengths. A cycle through
+an edge of $W$ is determined by its part outside $W$, up to at most $|E(W)|$ lengths, and this
+part is a forest.
+\item By the \emph{forest estimate}, at most $\half+o(1)$ of all outside parts are forests. So
+the largest possible density of cycle lengths decreases by a factor of almost two when the rank
+grows from $R$ to $2^{256R}$.
+\item The halving repeats at each scale of a tower of exponentials. This gives the term
+$\log^{*}n$ of the lower bound.
+\item For the upper bound, $k$ chords with path lengths $1,2,4,\dots$ give $2^{k}$ consecutive
+cycle lengths, and $\log^{*}k$ further chords supply the short lengths.
+\end{enumerate}
+
+\section{The result}
+
+A simple graph on $n$ vertices is \emph{pancyclic} if it contains a cycle of every length
+$3,4,\dots,n$. Write $n+h(n)$ for the least number of edges of such a graph. Throughout, $\log$ is
+the binary logarithm, and $\lgk j$ is its $j$-fold iterate. The number $\lgs x$ is the least
+nonnegative integer $j$ with $\lgk jx\le1$.
+
+\begin{maintheorem}{the minimum excess of a pancyclic graph}\label{thm:main}
+There is a constant $A$ such that, for every $n\ge3$,
+\[
+  \log n+\lgs n-A\;\le\;h(n)\;\le\;\lfloor\log n\rfloor+\lgs n+1 .
+\]
+\end{maintheorem}
+
+\begin{center}\small
+\begin{tabular}{@{}p{5.4cm}p{3.9cm}p{4.3cm}@{}}
+\toprule
+ & \textsf{\textbf{lower bound for $h(n)$}} & \textsf{\textbf{upper bound for $h(n)$}}\\
+\midrule
+Bondy~\cite{Bondy}, stated without proof & $\log(n-1)-1$ & $\log n+\lgs n+O(1)$\\
+Theorem~\ref{thm:main} & $\log n+\lgs n-A$ & $\lfloor\log n\rfloor+\lgs n+1$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+A count of cycles gives the lower bound of Bondy: a connected graph with $n+h$ edges has at most
+$2^{h+1}-1$ cycles, and a pancyclic graph needs $n-2$ of them. Griffin~\cite{Griffin} gave a
+written proof and computed small values. Problem~\#1016 of Erd\H{o}s~\cite{Bloom} asks if the
+lower bound can increase to $\log n+\lgs n-O(1)$, and if at least $h(n)-\log n\to\infty$.
+Theorem~\ref{thm:main} answers both questions.
+
+The theorem and its proof are from~\cite{KNT}. This paper gives the proof in a short form. It
+uses one result of~\cite{Max}, the forest estimate, which we state in Section~\ref{sec:input}.
+
+\section{The forest estimate}\label{sec:input}
+
+\begin{notation}{even subgraphs and outside parts}
+\begin{itemize}[leftmargin=1.2em]
+\item For a graph $G$, an \emph{even subgraph} is a set of edges that meets every vertex an even
+number of times. With symmetric difference as addition, the even subgraphs form a vector space
+$\Z(G)$ over $\mathbb{F}_2$.
+\item Its dimension is the \emph{rank} $\beta(G)=|E(G)|-|V(G)|+\comp(G)$, where $\comp(G)$ is the
+number of components. A cycle is a nonzero element of $\Z(G)$, so a graph of rank $r$ has at most
+$2^{r}-1$ cycles.
+\item Let $W$ be a subgraph of $G$, with $r=\beta(G)$, $t=\beta(W)$ and $m=|E(W)|$. For an even
+subgraph $\xi$ we call $\xi\sm E(W)$ its \emph{outside part}. The map $\xi\mapsto\xi\sm E(W)$ is
+linear on $\Z(G)$ with kernel $\Z(W)$. So there are $2^{r-t}$ outside parts.
+\item $p(G,W)$ is the proportion of the outside parts that are forests.
+\end{itemize}
+\end{notation}
+
+\begin{theorem}[Forest estimate, {\cite[Theorem~3.1]{Max}}]\label{thm:forest}
+There is $r_0$ such that the following holds for all $r\ge r_0$. Let $G$ be a connected simple graph
+of rank $r$. Let $W\subseteq G$ be a nonempty union of cycles with at most $r/\log^{2}r$ edges and
+at most $(\log r)/100$ components. Then
+\[
+  p(G,W)\;\le\;\frac12+\frac{20}{\lgk{3}r}.
+\]
+\end{theorem}
+
+\begin{lemma}[Lengths]\label{lem:count}
+The cycles of $G$ have at most $2^{r-t}\bigl(p\,m+1-p\bigr)$ different lengths, where $p=p(G,W)$.
+\end{lemma}
+
+\begin{proof}
+Let $x$ be an outside part, and let $C$ be a cycle with the outside part $x$. If $x$ is not a
+forest, then $x\subseteq C$ contains a cycle, so $C=x$. Such an $x$ accounts for at most one
+length. If $x$ is a forest, then $C$ has an edge in $W$, and the length of $C$ is
+$|x|+|C\cap E(W)|$ with $1\le|C\cap E(W)|\le m$. Such an $x$ accounts for at most $m$ lengths.
+There are $p\,2^{r-t}$ outside parts of the second kind and $(1-p)2^{r-t}$ of the first.
+\end{proof}
+
+\section{The lower bound}\label{sec:lower}
+
+\begin{idea}{outline of the proof}
+A number $\Phi(R)\le1$ measures how well a graph of rank at least $R$ can fill an interval of cycle
+lengths. In a graph with many cycle lengths we find a small subgraph $W$ that already contains the
+short cycles. By the forest estimate for $W$, the number $\Phi$ decreases by a factor of almost
+two when the rank grows from $R$ to $2^{256R}$ (Figure~\ref{fig:tower}).
+\end{idea}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[slate!80, line width=0.5pt, -{Stealth[length=4pt]}] (-0.3,0) -- (11.2,0);
+  \node[note, anchor=west] at (11.25,0) {rank (not to scale)};
+  \foreach \j/\x/\hh in {0/0.8/2.4,1/3.4/1.2,2/6.0/0.6,3/8.6/0.3}{
+    \fill[accent!18] (\x-0.33,0) rectangle (\x+0.33,\hh);
+    \draw[cool] (\x-0.33,\hh) -- (\x+0.33,\hh);
+    \draw[slate!80, line width=0.5pt] (\x,0) -- (\x,-0.1);
+    \node[note, text=accent, above=1pt] at (\x,\hh) {$\Phi(R_{\j})$};
+  }
+  \node[note, below=3pt] at (0.8,0) {$R_0$};
+  \node[note, below=3pt] at (3.4,0) {$R_1=2^{256R_0}$};
+  \node[note, below=3pt] at (6.0,0) {$R_2=2^{256R_1}$};
+  \node[note, below=3pt] at (8.6,0) {$R_3=2^{256R_2}$};
+  \foreach \a/\b/\y in {1.25/2.95/1.9,3.85/5.55/1.0,6.45/8.15/0.55}
+    \draw[warm, line width=0.6pt, -{Stealth[length=4pt]}] (\a,\y) -- node[note, text=warm, above=-1pt] {\scriptsize almost $\times\frac12$} (\b,\y-0.25);
+\end{tikzpicture}
+\caption{The density $\Phi$ of cycle lengths at the scales $R_{j+1}=2^{256R_j}$. Each step almost
+halves it (Proposition~\ref{prop:halving}). The number of steps below a rank $r$ is $\lgs r-O(1)$.}
+\label{fig:tower}
+\end{figure}
+
+For an integer $R\ge1$ let
+\[
+  \Phi(R)=\sup\,\frac{L-2}{2^{\beta(G)}} ,
+\]
+where the supremum is over all simple graphs $G$ with $\beta(G)\ge R$ and all integers $L\ge2$ such
+that $G$ contains a cycle of each length $3,\dots,L$. A graph of rank $\beta$ has at most
+$2^{\beta}-1$ cycles, so $\Phi(R)\le1$. The function $\Phi$ is non-increasing.
+
+\begin{lemma}[Witness]\label{lem:witness}
+Let $R\ge1$ and $\varphi=\Phi(R)$, and let $G$ contain a cycle of each length $3,\dots,L$, where
+$L\ge2^{2R}$. Then $G$ has a subgraph $W$ that is a union of at most $2R$ cycles, with
+$\beta(W)\ge2R$ and $|E(W)|\le\varphi\,2^{2R}+2^{R}+5R$.
+\end{lemma}
+
+\begin{proof}
+Put $W_0=\emptyset$ and $W_{i+1}=W_i\cup C_i$, where $C_i$ is a cycle of $G$ whose length $\ell_i$ is
+the least integer $\ge3$ that is not the length of a cycle of $W_i$. Stop as soon as the rank is at
+least $2R$. Consider a step, and let $s=\beta(W_i)<2R$. The graph $W_i$ contains cycles of the
+$\ell_i-3$ lengths $3,\dots,\ell_i-1$. Therefore $\ell_i-3\le2^{s}-1$. This gives
+$\ell_i\le2^{2R-1}+2\le L$, so $C_i$ exists. If $s\ge R$, then also $\ell_i-3\le\varphi\,2^{s}$, by
+the definition of $\Phi$. The cycle $C_i$ is not a subgraph of $W_i$, so the rank increases at every
+step. So there are at most $2R$ steps, their ranks $s$ are distinct, and
+\[
+  |E(W)|\;\le\;\sum_i\ell_i\;\le\;\sum_{s=0}^{R-1}\bigl(2^{s}+2\bigr)+\sum_{s=R}^{2R-1}\bigl(\varphi\,2^{s}+3\bigr)
+  \;\le\;\varphi\,2^{2R}+2^{R}+5R .\qedhere
+\]
+\end{proof}
+
+\begin{proposition}[Near-halving]\label{prop:halving}
+For every sufficiently large integer $R$,
+\[
+  \Phi\bigl(2^{256R}\bigr)\;\le\;\Bigl(\frac12+\frac{20}{\lgk{2}R}\Bigr)\Phi(R)+2^{2-R}.
+\]
+\end{proposition}
+
+\begin{proof}
+Let $G$ be a simple graph of rank $r\ge2^{256R}$ with a cycle of each length $3,\dots,L$. We bound
+$(L-2)\,2^{-r}$. Identifying a vertex of one component with a vertex of another changes neither the
+rank nor the set of cycles, so we may assume that $G$ is connected. If $L<2^{2R}$, then
+$(L-2)\,2^{-r}<2^{2-R}$, and we are done.
+
+Otherwise let $W$ be as in Lemma~\ref{lem:witness}, with $m$ edges and rank $t\ge2R$, and let
+$\varphi=\Phi(R)$. Then $m\le2^{2R+1}\le\sqrt r\le r/\log^{2}r$ and
+$\comp(W)\le2R\le(\log r)/100$. So Theorem~\ref{thm:forest} gives
+\[
+  p(G,W)\;\le\;\frac12+\frac{20}{\lgk3r}\;\le\;\frac12+\delta,
+  \qquad\text{where }\delta=\frac{20}{\lgk2R}.
+\]
+The second inequality holds because $\lgk3r\ge\log(8+\log R)\ge\lgk2R$. The graph $G$ has cycles of
+at least $L-2$ lengths. So Lemma~\ref{lem:count}, with $p=p(G,W)$, and the bounds on $t$ and $m$
+give
+\[
+  \frac{L-2}{2^{r}}\;\le\;\frac{pm+1}{2^{t}}
+  \;\le\;\Bigl(\frac12+\delta\Bigr)\bigl(\varphi+2^{-R}+5R\,2^{-2R}\bigr)+2^{-2R}
+  \;\le\;\Bigl(\frac12+\delta\Bigr)\varphi+2^{2-R}.\qedhere
+\]
+\end{proof}
+
+\begin{corollary}\label{cor:phi}
+There is a constant $c$ such that $\Phi(r)\le c\,2^{-\lgs r}$ for all $r\ge1$.
+\end{corollary}
+
+\begin{proof}
+Fix $R_0\ge512$ so large that Proposition~\ref{prop:halving} holds for all $R\ge R_0$. Let
+$R_{j+1}=2^{256R_j}$ and $\delta_j=20/\lgk2R_j$. By Proposition~\ref{prop:halving}, the numbers
+$a_j=2^{j}\Phi(R_j)$ satisfy
+\[
+  a_{j+1}\;\le\;(1+2\delta_j)\,a_j+2^{\,j+3-R_j}.
+\]
+For $j\ge2$ we have $\lgk2R_j=8+256R_{j-2}$, so $\sum_j\delta_j<\infty$. Also
+$\sum_j2^{\,j-R_j}<\infty$. Hence the numbers $a_j$ are bounded, say $\Phi(R_j)\le c_1 2^{-j}$.
+
+The numbers $R_j$ grow like a tower of exponentials. To bound $\lgs R_j$, we compare them with an
+exact tower. Let $U_0=R_0^2$ and $U_{j+1}=2^{U_j}$, so that $\lgs U_j=j+\lgs U_0$. Then
+$R_j\le\sqrt{U_j}$ for all $j$. Indeed, if this holds for $j$, then
+\[
+  R_{j+1}=2^{256R_j}\;\le\;2^{256\sqrt{U_j}}\;\le\;2^{U_j/2}=\sqrt{U_{j+1}},
+\]
+because $\sqrt{U_j}\ge R_0\ge512$. Hence $\lgs R_j\le j+\lgs U_0$.
+
+Finally let $r\ge R_0$, and let $j$ be largest with $R_j\le r$. Then
+$\Phi(r)\le\Phi(R_j)\le c_12^{-j}$ and $\lgs r\le\lgs R_{j+1}\le j+1+\lgs U_0$. Together these give
+$\Phi(r)\le c\,2^{-\lgs r}$ with $c=c_1\,2^{1+\lgs U_0}$. For $r<R_0$ use $\Phi(r)\le1$, and enlarge
+$c$ if necessary.
+\end{proof}
+
+\begin{proof}[Proof of the lower bound in Theorem~\ref{thm:main}]
+Let $G$ be a pancyclic graph with $n$ vertices and $n+h$ edges. It is connected, so its rank is
+$r=h+1$. By the definition of $\Phi$ and by Corollary~\ref{cor:phi},
+\[
+  n-2\;\le\;\Phi(r)\,2^{r}\;\le\;c\,2^{\,r-\lgs r}.
+\]
+The trivial bound $n-2\le2^{r}-1$ gives $n\le2^{r+1}\le2^{2^{r}}$, hence $\lgs n\le\lgs r+2$. Now
+take logarithms in the display:
+\[
+  h=r-1\;\ge\;\log(n-2)+\lgs r-\log c-1\;\ge\;\log n+\lgs n-\log c-5.\qedhere
+\]
+\end{proof}
+
+\section{The construction}\label{sec:upper}
+
+\begin{idea}{outline of the construction}
+The construction is a chain of $k$ segments of one long cycle. Segment $i$ has a chord between
+its two ends. So a path can pass it in two ways, and the two ways differ in length by $2^{i}$.
+The chain therefore has $2^{k}$ paths of consecutive lengths, and it uses $k$ chords. A few more
+chords close shorter and shorter initial parts of the chain, and these give the short cycles.
+The construction follows~\cite{KNT} (Figure~\ref{fig:necklace}).
+\end{idea}
+
+\begin{proposition}\label{prop:upper}
+For every $n\ge3$ there is a pancyclic graph with $n$ vertices and at most
+$n+\lfloor\log n\rfloor+\lgs n+1$ edges.
+\end{proposition}
+
+\begin{proof}
+For $3\le n\le6$ take a cycle $u_0u_1\cdots u_{n-1}$, with the chord $u_0u_2$ if $n\ge4$ and also
+the chord $u_0u_3$ if $n=6$. Now let $n\ge7$.
+
+\step{The necklace.} Let $k\ge2$ be the largest integer with $2^{k}+k+1\le n$, so that
+$n\le2^{k+1}+k+1$. Let $H$ be a cycle of length $n$, and let $Q\subseteq H$ be a path that is
+composed of consecutive segments $Q_0,\dots,Q_{k-1}$, where $Q_i$ has $2^{i}+1$ edges and joins
+$v_i$ to $v_{i+1}$. Thus $Q$ has $2^{k}+k-1\le n-2$ edges. Add the chords $e_i=v_iv_{i+1}$ for
+$0\le i<k$. For $1\le j\le k$ let $N_j$ be the union of $Q_0,\dots,Q_{j-1}$ and
+$e_0,\dots,e_{j-1}$ (Figure~\ref{fig:necklace}).
+
+A path from $v_0$ to $v_j$ in $N_j$ uses either $Q_i$ or $e_i$ for each $i<j$, and it is shorter by
+$2^{i}$ if it uses $e_i$. So $N_j$ has $2^{j}$ such paths, exactly one of each length from $j$ to
+$2^{j}+j-1$. The rest $H-Q$ of the outer cycle is a path from $v_k$ to $v_0$ with $n-2^{k}-k+1$
+edges. Together with $N_k$ it contains a cycle of each length in the interval
+$[\,n-2^{k}+1,\ n\,]$.
+
+\step{Closing chords.} For $2\le j\le k$ the chord $f_j=v_0v_j$ closes the paths of $N_j$ to cycles
+of all lengths in the interval $I_j=[\,j+1,\ 2^{j}+j\,]$. Add the chord $f_j$ for $j=k$, then for
+$j=\lceil\log k\rceil$, and so on: as long as the last value of $j$ is larger than $2$, the next
+value is $\lceil\log j\rceil$. The last value is $2$. If $j'=\lceil\log j\rceil$, then
+$2^{j'}\ge j$, so the intervals $I_{j'}$ and $I_j$ overlap or are adjacent. Since $I_2=[3,6]$, these
+chords give a cycle of each length in $[\,3,\ 2^{k}+k\,]$.
+
+\step{All lengths.} The intervals $[\,3,\ 2^{k}+k\,]$ and $[\,n-2^{k}+1,\ n\,]$ cover all lengths
+from $3$ to $n$, except for the length $2^{k}+k+1$ in the case $n=2^{k+1}+k+1$. In that case add
+one more chord, which joins $v_k$ to the neighbour of $v_0$ on $H-Q$. This chord, the edge from that
+neighbour to $v_0$, and the path $Q$ form a cycle of length $2^{k}+k+1$.
+
+\step{The number of chords.} For an integer $j\ge3$ we have $\lgs\lceil\log j\rceil=\lgs j-1$, and
+$\lgs2=1$. So exactly $\lgs k$ chords $f_j$ were added. The number of all chords is therefore at
+most $k+\lgs k+1\le\lfloor\log n\rfloor+\lgs n+1$.
+\end{proof}
+
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[
+  iv/.style 2 args={postaction={decorate,decoration={markings,
+      mark=between positions #1 and #2 step #1 with {\fill (0,0) circle (1.1pt);}}}}]
+  \coordinate (v0) at (0,0);
+  \coordinate (v1) at (1.8,0);
+  \coordinate (v2) at (4.0,0);
+  \coordinate (v3) at (6.8,0);
+  \coordinate (v4) at (10.8,0);
+  \draw[iv={0.5}{0.51}]    (v0) to[bend left=50] node[pos=0.5,above=-1pt] {\scriptsize$Q_0$} (v1);
+  \draw[iv={0.3333}{0.67}] (v1) to[bend left=50] node[pos=0.5,above=-1pt] {\scriptsize$Q_1$} (v2);
+  \draw[iv={0.2}{0.81}]    (v2) to[bend left=50] node[pos=0.5,above=-1pt] {\scriptsize$Q_2$} (v3);
+  \draw[iv={0.1111}{0.89}] (v3) to[bend left=50] node[pos=0.5,above=-1pt] {\scriptsize$Q_3$} (v4);
+  \draw[iv={0.2}{0.81}]    (v0) .. controls (0.3,3.2) and (10.5,3.2) .. node[pos=0.5,above=-1pt] {\scriptsize$H-Q$} (v4);
+  \foreach \a/\b/\i in {v0/v1/0,v1/v2/1,v2/v3/2,v3/v4/3}
+    \draw[cool] (\a) -- node[pos=0.5,above=-2pt,text=accent] {\scriptsize$e_{\i}$} (\b);
+  \draw[hot,dash pattern=on 3pt off 2pt] (v0) .. controls (0.9,-1.0) and (3.3,-1.0) .. node[pos=0.5,below=-1pt,text=warm] {\scriptsize$f_2$} (v2);
+  \draw[hot,dash pattern=on 3pt off 2pt] (v0) .. controls (0.5,-2.0) and (10.3,-2.0) .. node[pos=0.5,below=-1pt,text=warm] {\scriptsize$f_4$} (v4);
+  \foreach \p in {v0,v1,v2,v3,v4} \fill (\p) circle (1.9pt);
+  \node[left=3pt] at (v0) {$v_0$};
+  \node[below=3pt] at (v1) {$v_1$};
+  \node[anchor=north west,inner sep=3pt] at (v2) {$v_2$};
+  \node[below=3pt] at (v3) {$v_3$};
+  \node[right=3pt] at (v4) {$v_4$};
+\end{tikzpicture}
+\caption{The construction for $n=24$, where $k=4$. The segments $Q_0,\dots,Q_3$ of the outer cycle
+$H$ have $2,3,5,9$ edges and are doubled by the chords $e_0,\dots,e_3$. The chord $f_4$ gives the
+cycle lengths $5,\dots,20$, the rest $H-Q$ of the outer cycle gives $9,\dots,24$, and $f_2$ gives
+$3,\dots,6$.}
+\label{fig:necklace}
+\end{figure}
+
+\section{Authorship and verification}\label{sec:status}
+
+KNT is a person. Astra and Fable~5.2 are language models: GPT-6 Astra and Claude Fable~5.2. KNT
+obtained Theorem~\ref{thm:main}, the forest estimate and their proofs in September 2026 with
+Astra~\cite{KNT}, and directed the work at each step. Fable~5.2 wrote this short form.
+
+The theorem is formalised in Lean~4 with Mathlib, in the repository~\cite{Repo} at commit
+\texttt{a5cb5fa}.
+
+\begin{center}\small
+\begin{tabular}{@{}p{6.6cm}p{7.4cm}@{}}
+\toprule
+\textsf{\textbf{Statement}} & \textsf{\textbf{Lean declaration}}\\
+\midrule
+Both bounds of Theorem~\ref{thm:main}, with absolute additive constants & \lean{Erdos1016.mainTheorem}\\
+The upper bound $\lfloor\log n\rfloor+\lgs n+1$ & \lean{Erdos1016.Problem1016.upper_bound_integer}\\
+Theorem~\ref{thm:forest} for $|E(W)|\le\sqrt r$ & \lean{Erdos1016.ShortProof.fewComponentForestEstimate}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Section~\ref{sec:lower} uses the forest estimate only for $|E(W)|\le\sqrt r$. The Lean kernel
+accepts the proofs with the axioms \lean{propext}, \lean{Classical.choice} and \lean{Quot.sound}
+only. The kernel check covers these formal statements. No machine has checked the text of this
+paper, and no referee has read it.
+
+\begin{thebibliography}{9}\small
+
+\bibitem{Bloom} T.~F.~Bloom, Erd\H{o}s Problem \#1016, \url{https://www.erdosproblems.com/1016},
+accessed November 2026.
+
+\bibitem{Bondy} J.~A.~Bondy, Pancyclic graphs~I, \emph{J.~Combin.\ Theory Ser.~B} \textbf{11}
+(1971), 80--84.
+
+\bibitem{Griffin} S.~Griffin, Minimal pancyclicity, arXiv:1312.0274 (2013).
+
+\bibitem{KNT} KNT, The minimum number of edges in a pancyclic graph, manuscript, September 2026,
+\url{https://jehlp.net/erdos1016/}.
+
+\bibitem{Max} KNT, Astra and Fable~5.2, The maximum number of cycles in a graph of large rank,
+draft, November 2026.
+
+\bibitem{Repo} KNT, Astra and Fable~5.2, Lean~4 formalisation of the results of~\cite{KNT},
+\url{https://github.com/JWKNT/erdos1016}.
+
+\end{thebibliography}
+
+\end{document}
