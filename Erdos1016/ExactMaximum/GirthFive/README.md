@@ -31,7 +31,7 @@ The order is the order of the imports.
 | `RegionRigidity.lean` | `exists_word_two_terminals`, `side_of_other_slab`, `region_not_rigid`: a region with many slabs is not rigid | `LevelRegions` |
 | `LevelRegions.lean` | Level regions and the spine; `window_not_rigid`: a window of cubic levels is not rigid | `Pieces` |
 | `ManyRegions.lean` | `affine_forest_density_le_prod`: the product law for a family of disjoint regions and a fixed base word | `Pieces` |
-| `Pieces.lean` | `exists_affine_bound_girth_five`: pieces at girth five (Lemma 7.6 of the text) | `BasePacking` |
+| `Pieces.lean` | `exists_affine_bound_girth_five`: pieces at girth five (Lemma 7.5 of the text) | `BasePacking` |
 | `BasePacking.lean` | `exists_block_bound` (two blocks), `exists_row_bound`, `exists_base_packing`, `exists_base_finset_packing` | `ForestProbability` |
 | `ForestProbability.lean` | `shifted_size_bound`, `girthForestStatement_five` | `MainThreeCases` |
 
@@ -46,24 +46,32 @@ packing bound at large girth (`ChainPacking.lean`), the sequence of deleted sets
 
 ## The proof and the text
 
-The text proves Theorem 7.1 in Section 7 with these parts: forest proportions at large girth
-and the product (Lemmas 7.2, 7.3), the pieces at girth five (Lemmas 7.4, 7.5, 7.6 and
-Corollary 7.7), separators and the chain (Lemma 7.8 to Proposition 7.11), the packing of short
-cycles (Proposition 7.12), and a second-moment count with the cycles of one scale.
+The numbers are those of the present text (after the change of 13 November 2026, 01:00 UTC).
+The text proves Theorem 7.1 in Section 7 with these parts: forest proportions at large girth and the product (Lemmas 7.2, 7.3), the
+pieces at girth five (Lemmas 7.4, 7.5 and Corollary 7.6), separators and the chain (Lemma 7.7
+to Proposition 7.10), the packing of short cycles (Proposition 7.11), and a second-moment count
+with the cycles of one scale.
 
-The formal proof has the same statement. Two parts are proved in another way.
+The formal proof has the same statement. Its relation to the text:
 
-1. **Lemma 7.6 (pieces at girth five).** The formal statement is
-   `exists_affine_bound_girth_five`. The outer steps are those of the text: thin layers, groups
-   of consecutive layers without a boundary vertex, and the product over the groups. The text
-   shows with Lemma 7.5 (rigid sets, by a tree through the set and capped ladders) that the
-   region of a group is not rigid. The formal proof shows it with slabs and a bound for two
-   terminals (below). It does not use Lemmas 7.4 and 7.5 and no ladder.
-2. **The count at the end.** The formal proof deletes maximal families of short cyclic regions
-   at the scales `D, 2D, 4D, ...` and ends as the formal proof for large girth does
-   (`Shortening/ChainForestProbability.lean`). The only new step is the bound for the first
-   family, which needs girth five only (`exists_base_finset_packing`). The text counts the
-   cycles at one scale.
+1. **Lemma 7.5 (pieces at girth five)** is `exists_affine_bound_girth_five`, with the method of
+   the text: thin layers, groups of consecutive layers without a boundary vertex, slabs across
+   a shortest path in the region of a group, and the product over the groups. The slabs came
+   from this formal proof into the text on 13 November 2026, 01:00 UTC (research note
+   `paper/minimal/research/slabs.pdf`); before, the text had a lemma on rigid sets with a
+   smallest tree through the set. Two details differ: the constants, and the count of side
+   components (the formal proof takes a slab without a side component with an odd number of
+   terminals; the text takes a slab without a terminal in a side component).
+2. **Lemma 7.4 (full pairs at girth five)** is proved in another way. The formal statement is
+   `two_terminal_region`, with the proof below (a shortest path and the rail lemma). The text
+   uses the reduction of a pole and the capped ladders of its Section 5. The same research
+   note has the formal proof as text ("slabs and rails"); it is three lines longer than the
+   proof by ladders is, and KNT chose the form without it.
+3. **The count at the end** is another one. The formal proof deletes maximal families of short
+   cyclic regions at the scales `D, 2D, 4D, ...` and ends as the formal proof for large girth
+   does (`Shortening/ChainForestProbability.lean`). The only new step is the bound for the
+   first family, which needs girth five only (`exists_base_finset_packing`). The text counts
+   the cycles at one scale.
 
 ## The new mathematics, with proofs
 

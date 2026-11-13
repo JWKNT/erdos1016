@@ -816,3 +816,56 @@ the lean files in github too to reflect what things are used where a bit more."
   from the proof terms, which modules each endpoint theorem uses, and `Erdos1016/README.md`
   has the table by folder. No existing file was moved: Astra's files import most modules of
   `Erdos1016/ExactMaximum/`, and I do not edit Astra's files.
+
+## 21. Pieces at girth five by slabs: draft and measurement (13 November 2026)
+
+KNT clicked "Draft and measure" for the new inner step of the formal proof of Lemma 7.6.
+
+- The note `research/slabs.pdf` (6 pages) has the text in two forms, with complete proofs, and
+  `research/apply_slabs.py` applies a form to a copy of the paper.
+- Measured (nonempty lines of `pdftotext -layout` without the running heads):
+
+  | | Pages | Lines | Section 7 | Section 7.2 | Statements | Figures |
+  |---|---|---|---|---|---|---|
+  | The paper now | 36 | 1305 | 378 | 121 | 37 | 15 |
+  | Form "slabs" | 36 | 1288 | 361 | 103 | 36 | 15 |
+  | Form "slabs and rails" | 36 | 1308 | 377 | 120 | 36 | 15 |
+
+- What I learned by the draft. The present proof of Lemma 7.5 (rigid sets) already ends with
+  the two cases of the formal proof (a join outside `B` with a cycle of `B`; or a full pair in
+  `B`). So the new step replaces only the way to find `B`: slabs across a shortest path and a
+  count of side components, in the place of a smallest tree through the rigid set, its
+  segments, a far point and an exchange step. This removes one lemma and 17 lines.
+- The present Lemma 7.4 (full pairs at girth five) is the same statement as the formal lemma
+  on two terminals, because an `{x,y}`-join that is a forest is a path. Its proof by ladders
+  has 22 lines of TeX; the proof by a shortest path and seven integers has 36. So the second
+  form is not shorter than the paper. Its gain is of another kind: Section 7 then refers to no
+  statement of Sections 5 and 6, and Section 7.2 has the method of the formal proof.
+- A human proof of the fact on seven integers is in the note: the steps are 2 or 3 in absolute
+  value; two consecutive steps of the same sign are both 2 or both -2; alternating signs give
+  a repeated position after five or six steps; a pair of equal steps forces its neighbours
+  and gives a repeated position too. `checks/rail_check.py` enumerates all sequences (exit 0).
+- In the text the count is a little stronger than in Lean: for some slab no vertex of `U` is
+  in a side component at all (the formal proof asks only for an even number in each side
+  component).
+- My recommendation to KNT: the form "slabs" if the aim is fewer steps; the form "slabs and
+  rails" if the aim is that the formal proof has the method of the text. The gain is small in
+  both, and the manuscript is not changed.
+
+## 22. The form "slabs" is in the paper (13 November 2026, 01:00 UTC)
+
+KNT chose "Apply slabs". `research/apply_slabs.py` ran on `exact-maximum/`. The paper has 36
+pages, 1288 typeset lines, 36 statements and 15 figures, and its text is equal to the text of
+`research/trial-slabs.pdf` (compared with `pdftotext -layout`).
+
+- Section 7.2 has two lemmas: 7.4 (full pairs at girth five, not changed) and 7.5 (pieces at
+  girth five, with the steps "Slabs", "Side components" and "No rigid set"). The lemma on rigid
+  sets and the figure of the tree are gone; Figure 14 shows the slabs. The statements after
+  7.4 have a number that is smaller by one (7.5 to 7.11).
+- Section 1.4 says: "Lemma 7.4 has a proof without ladders" in the place of "Lemma 7.6 has a
+  proof without rigid sets". The cited commit `b7f9fc9` is the same; no Lean file changed.
+- The tables text-to-Lean in `Erdos1016/ExactMaximum/README.md` and in
+  `Erdos1016/ExactMaximum/GirthFive/README.md` have the new numbers. Lemma 7.5 is now "same";
+  Lemma 7.4 is "other".
+- Not done: the form "slabs and rails" (the proof of Lemma 7.4 by a shortest path). It stays in
+  the note `research/slabs.pdf` and in the copy `research/trial-slabs-rails.pdf`.

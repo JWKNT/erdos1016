@@ -80,8 +80,11 @@ confirms the count `2^(2k)` and `q >= 1/2` (exit code 0; the values of `q` are 1
 Numbers of the statements in the maximum-cycles paper after the split: Theorem 2.1 (forest
 estimate), Lemmas 2.2 to 2.4, Proposition 2.5 (cycles of moderate length), Lemma 3.1 (cubic
 multigraphs), Lemma 3.2 (cycles and a marked set), Corollary 3.3 (leading term). They were 3.1,
-2.2 to 2.4, 3.5, 3.6, 3.7 and 3.8. Sections 4 to 8 keep their numbers. The paper now has 37
-numbered statements and 15 figures. Proposition 2.5 states in one place what Section 7.5 takes
+2.2 to 2.4, 3.5, 3.6, 3.7 and 3.8. Sections 4 to 8 keep their numbers. The paper then had 37
+numbered statements and 15 figures. Since 13 November 2026, 01:00 UTC, it has 36: the lemma on rigid sets
+is gone, and Section 7 has the statements 7.1 to 7.11 (7.4 full pairs at girth five, 7.5 pieces
+at girth five, 7.6 Corollary (pieces), 7.7 nested separators, 7.8 a long chain, 7.9 two links,
+7.10 heavy families, 7.11 packing). Proposition 2.5 states in one place what Section 7.5 takes
 from the forest paper: the girth of `J`, the load of a vertex, the bound for the weight `mu`,
 and a random variable `Z` with the bound for its second moment.
 
@@ -111,18 +114,17 @@ Checked by the Lean kernel, with the axioms `propext`, `Classical.choice` and `Q
 
 Not checked by a machine: the texts of the three papers.
 
-The formal proof of Theorem 7.1 has the statement of the text, and two of its parts are proved
-in another way (`Erdos1016/ExactMaximum/GirthFive/README.md` has the mathematics):
+The formal proof of Theorem 7.1 has the statement of the text. Since 13 November 2026,
+01:00 UTC, the text has the slabs of the formal proof in the proof of Lemma 7.5 (pieces at girth five; see the
+fifth research note below). Two parts are still proved in another way
+(`Erdos1016/ExactMaximum/GirthFive/README.md` has the mathematics):
 
-- Lemma 7.6 (pieces at girth five) is `GirthFive.exists_affine_bound_girth_five`. The formal
-  proof has the outer steps of the text (thin layers, groups of layers, the product). The step
-  "the region of a group is not rigid" is new: slabs along a shortest path, a parity argument,
-  a bound for two terminals, and a small arithmetic fact (the rail lemma). It does not use
-  Lemmas 7.4 and 7.5 and no ladder. This argument is not in the text. It may be a shorter
-  proof of Lemma 7.6 for the text; this is not measured, and the text is not changed.
+- Lemma 7.4 (full pairs at girth five). The text uses the reduction of a pole and capped
+  ladders. The formal proof (`GirthFive.two_terminal_region`) uses a shortest path between the
+  two vertices, a forest beside it, and a fact on seven integers.
 - The end of the proof deletes short cyclic regions at the scales `D, 2D, 4D, ...`, as the
   formal proof for large girth does. The text counts the cycles at one scale
-  (Propositions 7.9, 7.11 and 7.12 in the forms that count the short cycles have no formal
+  (Propositions 7.8, 7.10 and 7.11 in the forms that count the short cycles have no formal
   statement).
 
 Other parts of the text have a formal statement that is proved in another way: Lemma 5.3 (a
@@ -133,6 +135,44 @@ marked set. `Erdos1016/ExactMaximum/README.md` has the table, statement by state
 Readers of the text: the parts from the research notes 1, 2 and 3 have had one reader,
 Fable 5.2. Astra's proposals have had two, Astra and Fable 5.2. No referee has read a text.
 `SHORTENING-NOTES.md` has the history with measured line counts.
+
+## Fifth research note: pieces at girth five by slabs (13 November 2026)
+
+KNT asked for a draft of the new inner step of the formal proof of Lemma 7.6 as text, and for a
+measurement. [research/slabs.pdf](research/slabs.pdf) (6 pages, complete proofs) has the draft
+in two forms. The note and this section use the numbers of the paper before the change
+(commit `805e2ba`): Lemma 7.4 full pairs, Lemma 7.5 rigid sets, Lemma 7.6 pieces.
+
+**Applied on 13 November 2026, 01:00 UTC.** KNT chose the form "slabs". The paper has it now: 36 pages,
+1288 typeset lines, 36 statements, 15 figures; its text is that of `research/trial-slabs.pdf`.
+The script `research/apply_slabs.py` applies to a copy of the paper of commit `805e2ba`, not
+to the present paper.
+
+| | Pages | Typeset lines | Section 7.2 | Statements | Figures |
+|---|---|---|---|---|---|
+| The paper now | 36 | 1305 | 121 | 37 | 15 |
+| Form "slabs" | 36 | 1288 | 103 | 36 | 15 |
+| Form "slabs and rails" | 36 | 1308 | 120 | 36 | 15 |
+
+A typeset line is a nonempty line of `pdftotext -layout` that is not a running head.
+
+- Form "slabs". Lemma 7.5 (rigid sets), with its smallest tree, its segments and its figure, is
+  removed. In the proof of Lemma 7.6 the part `M` of a group of layers has `2W` slabs across a
+  shortest path. A vertex is in a side component for at most one slab. So for one slab `B`
+  every vertex of a set `U` is on one of the two sides of `B`, and a `U`-join meets `M[B]` in
+  an even subgraph or in a join of two vertices. Lemma 7.4 (full pairs at girth five) stays,
+  with its proof by ladders.
+- Form "slabs and rails". In addition Lemma 7.4 has the proof of the formal development: a
+  shortest path between the two vertices, a forest beside it, and a fact on seven integers.
+  Its constant is 133 in the place of 15. Section 7 then refers to no statement of Sections 5
+  and 6 (now it refers to Lemmas 5.2 and 5.6), and Section 7.2 has the method of the formal
+  proof.
+- `python3 research/apply_slabs.py <copy of exact-maximum>` applies the first form to a copy,
+  and with the argument `rails` the second form. The copies are `research/trial-slabs.pdf` and
+  `research/trial-slabs-rails.pdf`. `checks/rail_check.py` tests the fact on seven integers
+  (exit code 0; six integers exist).
+- The gain is small in both forms: 17 lines and one statement in the first form, and three
+  lines more than before in the second form. The page count does not change.
 
 ## Lean statements for the forest paper
 

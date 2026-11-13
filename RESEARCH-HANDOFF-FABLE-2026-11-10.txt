@@ -2832,3 +2832,27 @@ by use; commit and push.
    build and the two audits ThreeCases and UsageMap passed again.
 Commits: b7f9fc9 (Lean), b5668b9 (paper and notes), and the commit of this
 block with the comments of the entry modules.
+
+UPDATE 71 — FABLE — 2026-11-13 01:05 UTC
+
+1. Pushed at about 00:30 UTC: f30b346..805e2ba (b7f9fc9 Lean, b5668b9 paper
+   and notes, 805e2ba comments of the entry modules and UPDATE 70).
+2. KNT asked for a draft of the new inner step of the formal proof of the
+   lemma on pieces at girth five as text, with a measurement. Result:
+   paper/minimal/research/slabs.pdf (6 pages, complete proofs, two forms),
+   research/apply_slabs.py, the copies research/trial-slabs.pdf and
+   research/trial-slabs-rails.pdf, the test checks/rail_check.py (exit 0).
+   Measured, nonempty lines of pdftotext -layout without running heads:
+   paper 1305 lines; form "slabs" 1288; form "slabs and rails" 1308; 36
+   pages in all three.
+3. KNT chose the form "slabs", and it is in the paper now
+   (paper/minimal/exact-maximum, 36 pages, 36 statements, 15 figures). The
+   lemma on rigid sets is gone. Section 7 has the statements 7.1 to 7.11:
+   7.4 full pairs at girth five (not changed), 7.5 pieces at girth five
+   (with slabs), 7.6 Corollary (pieces), 7.7 nested separators, 7.8 a long
+   chain, 7.9 two links, 7.10 heavy families, 7.11 packing.
+4. No Lean file changed. The tables text-to-Lean in
+   Erdos1016/ExactMaximum/README.md and GirthFive/README.md have the new
+   numbers: Lemma 7.5 is "same" (slabs), Lemma 7.4 is "other" (the formal
+   proof uses a shortest path and the rail lemma; the text uses ladders).
+5. Not in a commit at the time of this block: the changes of items 2 to 4.

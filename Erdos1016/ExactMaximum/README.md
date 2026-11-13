@@ -82,6 +82,9 @@ All of these depend on the axioms `propext`, `Classical.choice` and `Quot.sound`
 
 ### The present text and the formal statements
 
+The numbers are those of the present text. Since the change of 13 November 2026, 01:00 UTC,
+Section 7 has the statements 7.1 to 7.11 (the lemma on rigid sets is gone; see
+`paper/minimal/research/slabs.pdf`).
 "same" means: a formal statement with the method of the text; details and constants can
 differ. "other" means: a formal statement of the same content, or of a stronger one, with
 another method. This table is by Fable 5.2 from the file headers and the statements; the
@@ -110,8 +113,10 @@ proofs of Astra's files were not compared line by line with the text.
 | Theorem 6.6 (a cycle of length four) | `fourCycleCaseStatement` | other (a cyclic cut of size four with two arbitrary sides) |
 | Theorem 7.1 (girth five) | `girthForestStatement_five` | same statement; the end of the proof is another one (short cyclic regions are deleted at the scales `D, 2D, 4D, ...`, as in the formal proof for large girth; the text counts the cycles at one scale) |
 | Lemmas 7.2, 7.3 (forest proportions at large girth, product) | `ExactMaximumSupport.Shortening.LargeOrderPieces`, `ExactMaximumSupport.LargeGirth.PoleProduct` | same idea |
-| Lemmas 7.4, 7.5, 7.6 and Corollary 7.7 (pieces at girth five) | Lemma 7.6: `GirthFive.exists_affine_bound_girth_five`. Lemmas 7.4, 7.5 and Corollary 7.7: none, and the formal proof does not need them. (One ingredient of Lemma 7.4 exists: `ExactMaximumSupport.Shortening.FullPairShortCycle.not_full_of_no_short_cycle`) | Lemma 7.6: same outer steps, **other** inner step (slabs, a bound for two terminals and the rail lemma in the place of rigid sets and ladders; see `GirthFive/README.md`) |
-| Lemma 7.8 to Proposition 7.12 (separators, chain, two links, heavy families, packing) | `ExactMaximumSupport.Shortening.DisjointRegionChain`, `ChainPackingMoment`, `ChainPackingGeometry`, `ChainPacking.exists_cutoff`, `LargeOrderChain`; at girth five: `GirthFive.exists_row_bound`, `GirthFive.exists_base_finset_packing` | other forms: the formal statements have no short cycles outside a deleted set; the text counts the `Λ`-short cycles |
+| Lemma 7.4 (full pairs at girth five) | `GirthFive.two_terminal_region`, `GirthFive.two_terminal_card_le` (a set in which every word with two given terminals is a forest has at most `400 (\|D\| + 2)` vertices) | **other**: a shortest path between the terminals, a forest beside it and the rail lemma `GirthFive.rail_bound`; the text uses the reduction of Lemma 5.2 and the ladders of Lemma 5.6. (One ingredient of the proof of the text exists: `ExactMaximumSupport.Shortening.FullPairShortCycle.not_full_of_no_short_cycle`) |
+| Lemma 7.5 (pieces at girth five) | `GirthFive.exists_affine_bound_girth_five`, with `GirthFive.window_not_rigid` and `GirthFive.region_not_rigid` for the slabs | same since 13 November 2026, 01:00 UTC (the text has the slabs of the formal proof); the constants differ, and the formal count of side components uses parities |
+| Corollary 7.6 (pieces) | none; the formal proof does not need it, because its first family has a fixed scale | — |
+| Lemma 7.7 to Proposition 7.11 (separators, chain, two links, heavy families, packing) | `ExactMaximumSupport.Shortening.DisjointRegionChain`, `ChainPackingMoment`, `ChainPackingGeometry`, `ChainPacking.exists_cutoff`, `LargeOrderChain`; at girth five: `GirthFive.exists_row_bound`, `GirthFive.exists_base_finset_packing` | other forms: the formal statements have no short cycles outside a deleted set; the text counts the `Λ`-short cycles |
 | Section 8 | `upperBoundStatement_of_three_cases`, `girthCaseStatement_of_forest` | same |
 
 The tables below this section are older. Their column "Paper" has the numbers of the first text

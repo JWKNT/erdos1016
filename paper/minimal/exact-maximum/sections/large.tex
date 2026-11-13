@@ -113,19 +113,18 @@ is a forest. The conditional probability is therefore at most $f_1\cdots f_m$. A
 \needroom{16\baselineskip}
 \subsection{Pieces with few boundary vertices at girth five}\label{sec:girthfive}
 
-\begin{idea}{outline of Lemmas~\ref{lem:fullfive}, \ref{lem:rigidpiece} and~\ref{lem:piecesfive}}
+\begin{idea}{outline of Lemmas~\ref{lem:fullfive} and~\ref{lem:piecesfive}}
 Lemma~\ref{lem:affine} needs a girth that grows with the number of boundary vertices. For a
 bounded number of boundary vertices, girth five is sufficient. Girth four is not sufficient: in
-a ladder, the two ends of one rail form a rigid set. The proof has three steps.
+a ladder, the two ends of one rail form a rigid set. The proof has two steps.
 \begin{enumerate}[leftmargin=1.5em]
 \item A multigraph of girth five with a full pair is small. It consists of capped ladders, and
 a capped ladder has many cycles with at most four edges (Lemma~\ref{lem:fullfive}).
-\item A thin multigraph of girth five with a rigid set is small. A tree that joins the vertices
-of the set passes through a region far from them, and this region is a tree or has a full pair
-(Lemma~\ref{lem:rigidpiece}, Figure~\ref{fig:rigid}).
 \item A large piece with a forest proportion of at least $\frac35$ is thin and long. So it
-contains many disjoint parts without a rigid set, and each part loses a fixed proportion of the
-forests (Lemma~\ref{lem:piecesfive}).
+contains many disjoint parts that are thin and long. Such a part has many disjoint slabs. For
+one of the slabs, a rigid set of the part would give a full pair in the slab. So the part has no
+rigid set, and each part loses a fixed proportion of the forests
+(Lemma~\ref{lem:piecesfive}, Figure~\ref{fig:slabs}).
 \end{enumerate}
 \end{idea}
 
@@ -156,106 +155,6 @@ both cases at least $b_i/7$ edges of $N_i$ are not plain. Hence $b\le7(d-2)$,
 and~\eqref{eq:deficit} gives $|V(M)|<15d$.
 \end{proof}
 
-\begin{lemma}[Rigid sets]\label{lem:rigidpiece}
-Let $M$ be a connected subcubic multigraph of girth at least five with deficit $d$. Let
-$\lambda\colon V(M)\to\mathbb Z$ be a map with $|\lambda(u)-\lambda(v)|\le1$ for every edge $uv$,
-such that fewer than $W$ vertices have any given value. If some even set $U$ of boundary vertices
-is rigid, then $|V(M)|\le500\,dW(W+d)$.
-\end{lemma}
-
-\begin{figure}[ht]
-\centering
-\begin{tikzpicture}[x=1cm,y=1cm]
-  \draw[draw=slate!70, fill=black!4, line width=0.6pt] (1.75,0) ellipse [x radius=1.8, y radius=1.2];
-  \draw[draw=slate!70, fill=black!4, line width=0.6pt] (11.85,0) ellipse [x radius=1.8, y radius=1.2];
-  \draw[region] (5.1,-1.05) rectangle (8.5,1.05);
-  \coordinate (u1) at (0.5,0.7);
-  \coordinate (u2) at (0.5,-0.05);
-  \coordinate (u3) at (1.0,-0.75);
-  \coordinate (b0) at (1.35,0.3);
-  \coordinate (b1) at (2.3,-0.1);
-  \coordinate (xm) at (5.5,0);
-  \coordinate (s1) at (6.15,0);
-  \coordinate (z0) at (6.8,0);
-  \coordinate (s2) at (7.45,0);
-  \coordinate (xp) at (8.1,0);
-  \coordinate (t1) at (6.15,0.62);
-  \coordinate (t2) at (7.45,0.62);
-  \coordinate (u4) at (12.9,0.15);
-  % the part of M[B] outside the tree
-  \draw[edge] (xm)--(t1)--(t2)--(xp) (s1)--(t1) (s2)--(t2);
-  % the tree S
-  \draw[hot] (u1)--(b0)--(u2) (b0)--(b1)--(u3);
-  \draw[hot] (b1)--(3.1,0)--(3.9,0.05)--(4.7,0)--(xm)--(s1)--(z0)--(s2)--(xp)--(8.9,0)--(9.7,0.05)--(10.5,0)--(11.3,0.08)--(12.1,0.1)--(u4);
-  \foreach \p in {(3.1,0),(3.9,0.05),(4.7,0),(8.9,0),(9.7,0.05),(10.5,0),(11.3,0.08),(12.1,0.1)} \node[vtx] at \p {};
-  \foreach \q in {b0,b1,xm,s1,z0,s2,xp,t1,t2} \node[vtx] at (\q) {};
-  \foreach \q in {u1,u2,u3,u4} \node[port] at (\q) {};
-  \node[note] at (1.75,-1.5) {the component $K^{-}$};
-  \node[note] at (11.85,-1.5) {the component $K^{+}$};
-  \node[note, text=accent] at (6.8,1.3) {the set $B$};
-  \node[note, text=accent] at (5.5,-0.3) {$x^{-}$};
-  \node[note, text=accent] at (6.8,-0.3) {$z_0$};
-  \node[note, text=accent] at (8.1,-0.3) {$x^{+}$};
-  \node[note, text=warm] at (3.9,0.4) {$\sigma$};
-  \node[note, text=warm] at (2.0,0.5) {$S^{-}$};
-  \node[note, text=warm] at (11.3,0.5) {$S^{+}$};
-\end{tikzpicture}
-\caption{The proof of Lemma~\ref{lem:rigidpiece}. The tree $S$ (thick) joins the vertices of the
-rigid set $U$ (circles). A long segment $\sigma$ of $S$ passes through the set $B$ around
-$z_0$, and $S$ meets $B$ in a part of $\sigma$ only. Here $K^{-}\ne K^{+}$, and each of them
-contains an odd number of vertices of $U$. Then every $\{x^{-},x^{+}\}$-join of $M[B]$ is a
-path, and $B$ is small by Lemma~\ref{lem:fullfive}.}
-\label{fig:rigid}
-\end{figure}
-
-\begin{proof}
-If $U=\emptyset$, then $M$ has no cycle, and $|V(M)|=d-2$. Let $U\ne\emptyset$. Let $S$ be a
-connected subgraph of $M$ that contains $U$ and has as few edges as possible. It is a tree, and
-its vertices of degree one are in $U$. Call a vertex of $S$ \emph{special} if it is in $U$ or has
-degree three in $S$. There are at most $2|U|-2$ special vertices. A \emph{segment} is a path of
-$S$ between two special vertices without a special inner vertex. The tree $S$ is the union of at
-most $2|U|-3$ segments.
-
-Put $\rho=30W+8d$ and $\ell_0=(2\rho+1)W+2$. Suppose that some segment $\sigma$ has at least
-$2\ell_0$ edges, and let $z_0$ be a vertex of $\sigma$ with at least $\ell_0$ edges of $\sigma$
-on each side. Let $B$ be the vertex set of the component of $z_0$ in the subgraph of $M$ induced
-by the vertices $v$ with $|\lambda(v)-\lambda(z_0)|\le\rho$. Then $M[B]$ is connected, $B$ has
-fewer than $(2\rho+1)W$ vertices, and it contains the $2\rho+1$ vertices of $\sigma$ nearest to
-$z_0$.
-
-\step{The tree meets $B$ in one part of $\sigma$.} Let $v$ be a vertex of $S$ in $B$, and let
-$\pi$ be a path from $v$ to $z_0$ in $M[B]$. It has fewer than $\ell_0-2$ edges. If $v$ is not an
-inner vertex of $\sigma$, or if $\sigma$ has more edges between $v$ and $z_0$ than $\pi$ has,
-then $\pi$ can replace a part of $\sigma$ with more edges, and $S$ does not have the fewest
-edges. So the vertices of $S$ in $B$ are inner vertices of $\sigma$, and $B$ contains no vertex
-of $U$. Let $S^{-}$ and $S^{+}$ be the components of $S-B$ that contain the two ends of
-$\sigma$ (Figure~\ref{fig:rigid}). They are different, and every vertex of $U$ is in one of them. Let $x^{-}$ be the first
-vertex of $\sigma$ in $B$, seen from the end in $S^{-}$, and let $x^{+}$ be the first one seen
-from the other end. Then $x^{-}\ne x^{+}$, the vertex $x^{-}$ has a neighbour in $S^{-}$, and
-$x^{+}$ has a neighbour in $S^{+}$. Let $K^{-}$ and $K^{+}$ be the components of $M-B$ that
-contain $S^{-}$ and $S^{+}$, and put $U^{-}=U\cap V(S^{-})$.
-
-\step{The set $B$ is small.} We claim that $|B|<15\,d(M[B])$. Suppose first that $K^{-}=K^{+}$
-or that $|U^{-}|$ is even. Then $M-B$ contains a $U$-join. Its union with a cycle of $M[B]$ would
-be a $U$-join that is not a forest. So $M[B]$ is a tree, and $|B|=d(M[B])-2$. Suppose now that
-$K^{-}\ne K^{+}$ and that $|U^{-}|$ is odd. Let $J$ be an $\{x^{-},x^{+}\}$-join of $M[B]$. Add
-an edge from $x^{-}$ to a neighbour $v^{-}$ in $K^{-}$, an edge from $x^{+}$ to a neighbour
-$v^{+}$ in $K^{+}$, a join of $K^{-}$ for the set $U^{-}$ with $v^{-}$ added or removed, and a
-join of $K^{+}$ for the set $U\sm U^{-}$ with $v^{+}$ added or removed. The result is a $U$-join
-of $M$. So $J$ is a forest, and hence a path. The vertices $x^{-}$ and $x^{+}$ have degree at
-most two in $M[B]$, and the claim is Lemma~\ref{lem:fullfive}.
-
-An edge of $M$ that leaves $B$ starts in a vertex $v$ with $|\lambda(v)-\lambda(z_0)|=\rho$.
-There are fewer than $2W$ such vertices, and each has at most two such edges. So
-$d(M[B])<4W+d$, and the claim gives $|B|<60W+15d<2\rho+1$. This is a contradiction. So every
-segment has fewer than $2\ell_0$ edges.
-
-\step{The count.} So $S$ has fewer than $4|U|\,\ell_0\le4d\,\ell_0$ vertices. The set $V(S)$ is
-connected and contains $U$. So $M-V(S)$ is a forest, as in the first case above. Let it have $f$
-vertices. At most $|V(S)|+2$ edges join it to $S$, and a count of edge ends in the forest gives
-$f\le|V(S)|+d$. Hence $|V(M)|\le8d\,\ell_0+d\le500\,dW(W+d)$.
-\end{proof}
-
 \begin{lemma}[Pieces at girth five]\label{lem:piecesfive}
 For every integer $k\ge1$ there is a number $F_0(k)$ with the following property. Let $N$ be a
 connected subcubic multigraph of girth at least five with at most $k$ boundary vertices and at
@@ -263,22 +162,90 @@ least $F_0(k)$ vertices. Then every set of boundary vertices of even size has fo
 less than $\frac35$.
 \end{lemma}
 
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[draw=slate!70, fill=black!4, line width=0.6pt, rounded corners=6pt] (0,-1.25) rectangle (13.6,1.25);
+  \foreach \a in {1.5,4.2,6.9,9.6} \draw[region] (\a,-0.62) rectangle (\a+1.9,0.95);
+  % a branch from the slab B_j back to the first layer
+  \draw[edge] (5.0,-0.62) .. controls (4.8,-0.95) and (4.4,-1.0) .. (3.8,-1.0) -- (1.2,-1.0)
+    .. controls (0.75,-1.0) and (0.5,-0.85) .. (0.5,-0.55);
+  % the path pi
+  \draw[hot] (0.5,0) -- (13.1,0);
+  \draw[edge] (0.5,0) -- (0.5,0.55) (13.1,0) -- (13.1,0.55) (13.1,0) -- (13.1,-0.55);
+  \draw[edge] (7.45,0) -- (7.45,0.6) -- (8.25,0.6) -- (8.25,0);
+  \foreach \p in {(5.0,-0.62),(3.8,-1.0),(2.5,-1.0),(1.2,-1.0),(7.45,0.6),(8.25,0.6),(7.45,0),(7.85,0),(8.25,0)}
+    \node[vtx] at \p {};
+  \foreach \p in {(0.5,0),(13.1,0),(6.55,0),(7.15,0),(8.55,0),(9.15,0)} \node[vtx] at \p {};
+  \foreach \p in {(0.5,0.55),(0.5,-0.55),(13.1,0.55),(13.1,-0.55)} \node[port] at \p {};
+  \node[note, text=accent] at (7.85,1.5) {the set $B=B_i$};
+  \node[note, text=accent] at (5.15,1.5) {$B_j$};
+  \node[note, text=accent] at (6.5,-0.3) {$s$};
+  \node[note, text=accent] at (7.15,-0.3) {$x$};
+  \node[note, text=accent] at (8.55,-0.3) {$y$};
+  \node[note, text=accent] at (9.2,-0.3) {$t$};
+  \node[note, text=warm] at (3.0,0.28) {$\pi$};
+  \node[note, text=accent] at (0.22,-0.55) {$u$};
+  \node[note] at (3.3,-1.55) {the component $K^{-}$ of $M-B$};
+  \node[note] at (11.4,-1.55) {the component $K^{+}$ of $M-B$};
+\end{tikzpicture}
+\caption{The proof of Lemma~\ref{lem:piecesfive}. The part $M$ with the path $\pi$ (thick), four
+of its slabs, and the vertices of $U$ (circles) in the first and in the last layer. The vertex
+$u$ is in a side component of $M-B_j$; for the slab $B$ it is in $K^{-}$. If $K^{-}\ne K^{+}$
+and each of them contains an odd number of vertices of $U$, then a $U$-join of $M$ meets $M[B]$
+in an $\{x,y\}$-join.}
+\label{fig:slabs}
+\end{figure}
+
 \begin{proof}
-Put $W=B(k+1)^{2}$, $h=10^{4}\,W^{3}$ and $F_0(k)=Wh\,(k+2^{Wh}+2)$. Suppose that some even set
-$T$ of boundary vertices has forest proportion at least $\frac35$. If $T$ is empty, then $N$ has
-no cycle and fewer than $2k$ vertices. In the other case fix a boundary vertex $o$, and define the
-layers as in the proof of Lemma~\ref{lem:affine}. The step ``A marker'' of that proof uses no
-girth, and it shows that each layer has fewer than $W$ vertices. So $N$ has at least
+Put $W=B(k+1)^{2}$, $\tau=60\,W$, $h=2W\tau+2$ and $F_0(k)=Wh\,(k+2^{Wh}+2)$. Suppose that some
+even set $T$ of boundary vertices has forest proportion at least $\frac35$. If $T$ is empty, then
+$N$ has no cycle and fewer than $2k$ vertices. In the other case fix a boundary vertex $o$, and
+define the layers as in the proof of Lemma~\ref{lem:affine}. The step ``A marker'' of that proof
+uses no girth, and it shows that each layer has fewer than $W$ vertices. So $N$ has at least
 $h\,(k+2^{Wh}+2)$ layers. Divide the layers $1,2,\dots$ into groups of $h$ consecutive layers. At
 least $2^{Wh}$ groups contain no boundary vertex. In such a group let $M$ be a component of the
 subgraph induced by the group that has a vertex $v$ in the last layer of the group. A shortest
-path from $o$ to $v$ shows that $M$ has a vertex in each layer of the group, so $|V(M)|\ge h$.
-The vertices of $M$ have degree three in $N$, and an edge that leaves $M$ starts in the first or
-in the last layer of the group. So $d(M)<4W$, and the rank of $M$ is less than $Wh$. By
-Lemma~\ref{lem:rigidpiece}, with the distance from $o$ in the place of $\lambda$, a rigid set of
-$M$ would give $|V(M)|<500\cdot4W\cdot W\cdot5W=h$. So no even set of boundary vertices of $M$ is
-rigid, and each of them has forest proportion at most $1-2^{-Wh}$. By Lemma~\ref{lem:product},
-the forest proportion of $T$ is at most $(1-2^{-Wh})^{2^{Wh}}<\half$. This is a contradiction.
+path from $o$ to $v$ has one vertex in each layer of the group; let $\pi_j$ be its vertex in the
+$j$th of these layers. The path $\pi=\pi_1\cdots\pi_h$ lies in $M$. The vertices of $M$ have
+degree three in $N$, and an edge that leaves $M$ starts in the first or in the last layer of the
+group. So the boundary vertices of $M$ are in these two layers, there are fewer than $2W$ of
+them, and the rank of $M$ is less than $Wh$. We show that no even set of boundary vertices of
+$M$ is rigid (Figure~\ref{fig:slabs}).
+
+\step{Slabs.} For $1\le i\le2W$, the $i$th \emph{slab} consists of the layers
+$2+(i-1)\tau,\dots,1+i\tau$ of the group. Let $B_i$ be the vertex set of the component of the
+subgraph of $M$ induced by this slab that contains the $\tau$ vertices of $\pi$ in the slab. Let
+$s_ix_i$ be the edge of $\pi$ that enters $B_i$ and $y_it_i$ the edge that leaves it, with
+$x_i,y_i\in B_i$. The vertices of $B_i$ have degree three in $M$, and an edge of $M$ that leaves
+$B_i$ starts in the first or in the last layer of the slab. So $d(M[B_i])<4W\le|B_i|$. Hence
+$M[B_i]$ has a cycle, by~\eqref{eq:deficit}, and $x_i\ne y_i$ are boundary vertices of
+$M[B_i]$. Call a component of $M-B_i$ a \emph{side component} if it contains neither $s_i$ nor
+$t_i$. The vertices of $\pi$ outside $B_i$ are joined to $s_i$ or to $t_i$ in $\pi-B_i$. A set
+$B_j$ with $j\ne i$ is connected, avoids $B_i$ and contains a vertex of $\pi$. So a side
+component of $M-B_i$ meets no set $B_j$.
+
+\step{Side components.} Let $K$ be a side component of $M-B_i$, and let $j\ne i$. Some
+vertex of $K$ has a neighbour in $B_i$, because $M$ is connected. So $K\cup B_i$ is connected,
+avoids $B_j$ and contains a vertex of $\pi$. Hence it lies in the component of $s_j$ or of
+$t_j$ in $M-B_j$. So a vertex of $M$ is in a side component of $M-B_i$ for at most one~$i$.
+
+\step{No rigid set.} Let $U$ be an even set of boundary vertices of $M$. It has fewer than $2W$
+vertices, and none of them is in a slab. So there is an $i$ such that no vertex of $U$ is in a
+side component of $M-B_i$. Write $B$, $s$, $x$, $y$, $t$ for $B_i$, $s_i$, $x_i$, $y_i$, $t_i$,
+and let $K^{-}$ and $K^{+}$ be the components of $M-B$ that contain $s$ and $t$. Every vertex
+of $U$ is in one of them. Put $U^{-}=U\cap V(K^{-})$. Suppose first that $K^{-}=K^{+}$ or that
+$|U^{-}|$ is even. Then $M-B$ contains a $U$-join, and its union with a cycle of $M[B]$ is a
+$U$-join that is not a forest. Suppose now that $K^{-}\ne K^{+}$ and that $|U^{-}|$ is odd, and
+let $J$ be an $\{x,y\}$-join of $M[B]$. Add the edges $sx$ and $ty$, a join of $K^{-}$ for the
+set $U^{-}$ with $s$ added or removed, and a join of $K^{+}$ for the set $U\sm U^{-}$ with $t$
+added or removed. The result is a $U$-join of $M$. If $U$ is rigid, then $J$ is a forest, and
+hence a path. Then Lemma~\ref{lem:fullfive} gives $|B|<15\,d(M[B])<60\,W=\tau$, and this is
+false.
+
+So each even set of boundary vertices of $M$ has forest proportion at most $1-2^{-Wh}$. By
+Lemma~\ref{lem:product}, the forest proportion of $T$ is at most
+$(1-2^{-Wh})^{2^{Wh}}<\half$. This is a contradiction.
 \end{proof}
 
 \begin{notation}{constants and short cycles for the rest of this section}
