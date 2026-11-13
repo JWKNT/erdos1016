@@ -7,10 +7,13 @@ Static pages, published from this `site/` directory through GitHub Pages.
 | `jehlp.net/erdos1016/` | Erdős 1016 | `papers/pancyclic.pdf`, from `paper/minimal/pancyclic/` |
 | `jehlp.net/erdos1016/forest/` | Forest Estimate | `papers/forest.pdf`, from `paper/minimal/forest/` |
 | `jehlp.net/erdos1016/exact-maximums/` | Exact Maximums | `papers/exact-maximum.pdf`, from `paper/minimal/exact-maximum/` |
+| `jehlp.net/erdos1016/graph-theory/` | Erdős 1016 & Graph Theory: the list of the three tours | |
 | `jehlp.net/erdos1016/paper.pdf` | First manuscript of September 2026 | `paper/erdos1016.pdf` |
 
 The address `jehlp.net/erdos1016/` does not change, because other sites link it. So the tour of
-Erdős problem 1016 is the page at the root, and the two other tours are below it.
+Erdős problem 1016 is the page at the root, and the two other tours are below it. The homepage of
+jehlp.net has one entry for the three tours. It opens the list page, and each tour links the list
+page as "All Tours".
 
 Each tour is a list of numbered stops. A stop has one first sentence, a short text, at most one
 interactive example or figure, and a line with links to pages of the paper.

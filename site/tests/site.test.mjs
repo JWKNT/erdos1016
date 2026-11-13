@@ -32,7 +32,10 @@ const slugs = Object.keys(TOURS);
 const prefix = (slug) => (slug ? '../' : '');
 const name = (slug) => slug || 'root page';
 const html = Object.fromEntries(await Promise.all(slugs.map(async (slug) => [slug, await read(slug ? `${slug}/index.html` : 'index.html')])));
-const everyPage = slugs.map((slug) => [slug, html[slug]]);
+// The list page. The homepage of jehlp.net opens it, and each tour links it as "All Tours".
+const LIST = { slug: 'graph-theory', title: 'Erdős 1016 & Graph Theory' };
+const list = await read(`${LIST.slug}/index.html`);
+const everyPage = [...slugs.map((slug) => [slug, html[slug]]), [LIST.slug, list]];
 const sections = (page) => [...page.matchAll(/<section id="([\w-]+)">([\s\S]*?)<\/section>/g)].map(([, id, body]) => ({ id, body }));
 const text = (fragment) => fragment.replace(/<[^>]+>/g, '');
 
@@ -123,15 +126,17 @@ test('every page has the identity header, a canonical address under /erdos1016/ 
     assert.doesNotMatch(header, /github\.com|href="#contents"/, label);
     assert.doesNotMatch(page, /<footer|class="eyebrow"|class="introduction"/, label);
     assert.equal((page.match(/<h1\b/g) || []).length, 1, `${label}: one h1`);
-    assert.ok(header.includes(`<h1 class="site-title">${TOURS[slug].title}</h1>`), label);
-    assert.ok(page.includes(`<title>${TOURS[slug].title} · jehlp.net</title>`), label);
-    // The header links the two other tours by relative addresses and omits the page itself.
-    const links = [...header.matchAll(/<a href="([^"]*)">/g)].map((m) => m[1]);
-    const others = slugs.filter((other) => other !== slug).map((other) => `${prefix(slug)}${other ? `${other}/` : ''}`);
-    assert.deepEqual(links, [...others, `${prefix(slug)}papers/${TOURS[slug].paper}`], `${label}: header links`);
+    const title = slug === LIST.slug ? LIST.title : TOURS[slug].title;
+    const escaped = title.replaceAll('&', '&amp;');
+    assert.ok(header.includes(`<h1 class="site-title">${escaped}</h1>`), label);
+    assert.ok(page.includes(`<title>${escaped} · jehlp.net</title>`), label);
+    // A tour links the list page and its paper. The list page has its links in the text.
+    const links = [...header.matchAll(/<a href="([^"]*)">([^<]*)<\/a>/g)].map((m) => `${m[2]}: ${m[1]}`);
+    const expected = slug === LIST.slug ? [] : [`All Tours: ${prefix(slug)}${LIST.slug}/`, `Paper: ${prefix(slug)}papers/${TOURS[slug].paper}`];
+    assert.deepEqual(links, expected, `${label}: header links`);
   }
   // Names on jehlp.net have a capital letter on each word, as the homepage list has them.
-  for (const { title } of Object.values(TOURS)) assert.match(title, /^(?:\p{Lu}[\p{L}]*|\d+)(?: (?:\p{Lu}[\p{L}]*|\d+))*$/u, title);
+  for (const title of [LIST.title, ...Object.values(TOURS).map((tour) => tour.title)]) assert.match(title, /^(?:\p{Lu}[\p{L}]*|\d+|&)(?: (?:\p{Lu}[\p{L}]*|\d+|&))*$/u, title);
   // Other sites link the address jehlp.net/erdos1016. It stays the page on Erdős problem 1016.
   assert.equal(TOURS[''].title, 'Erdős 1016');
   assert.ok(html[''].includes('Erdős problem 1016 asks for the least number of edges'));
@@ -173,6 +178,22 @@ test('every interactive example has its code and a text for readers without scri
     assert.ok(new RegExp(`<script type="module" src="${prefix(slug).replace(/\./g, '\\.')}assets/explorers\\.mjs\\?v=[\\w-]+"></script>`).test(html[slug]), name(slug));
   }
   assert.deepEqual([...mounted].sort(), [...used].sort(), 'each example of the code is on one page');
+  assert.doesNotMatch(list, /<script type="module"|-demo"/, 'the list page has no example');
+});
+
+test('the list page names the three tours in order, each with its address, its text and its paper', () => {
+  const items = [...list.matchAll(/<li>\s*<h2><a href="([^"]*)">([^<]*)<\/a><\/h2>\s*<p>([\s\S]*?)<\/p>\s*<p class="paper-line"><a href="([^"]*)">[^<]+<\/a> <span class="paper-meta">PDF, (\d+) pages<\/span><\/p>\s*<\/li>/g)];
+  assert.equal(items.length, slugs.length);
+  slugs.forEach((slug, i) => {
+    const [, href, title, text, paper, pages] = items[i];
+    assert.equal(href, `../${slug ? `${slug}/` : ''}`, `address of ${title}`);
+    assert.equal(title, TOURS[slug].title);
+    assert.ok(text.length > 120, `${title}: a text of one or more sentences`);
+    assert.equal(paper, `../papers/${TOURS[slug].paper}`);
+    assert.equal(Number(pages), TOURS[slug].pages);
+  });
+  assert.equal((list.match(/<li>/g) || []).length, slugs.length, 'no other item');
+  assert.doesNotMatch(list, /class="contents"|class="chapter-number"|class="stop-sentence"/, 'the list page is not a tour');
 });
 
 test('the numbers in the text are the numbers that the code computes', () => {
@@ -257,6 +278,6 @@ test('the written pages are the build of their sources', async (t) => {
     if (/Temml is not available/.test(error.message)) return t.skip('Temml is not installed here');
     throw error;
   }
-  assert.equal(pages.length, 3);
+  assert.equal(pages.length, 4);
   for (const { file, html: built } of pages) assert.equal(await readFile(file, 'utf8'), built, `${file} is not the build of its source`);
 });

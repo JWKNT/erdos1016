@@ -24,7 +24,7 @@ const ROOT = 'https://jehlp.net/erdos1016/';
 const VERSION = {
   base: '20261108-justify',
   components: 'components-20261003-controls',
-  guide: '20261112-graphs',
+  guide: '20261112-list',
   explorers: '20261112-graphs',
 };
 

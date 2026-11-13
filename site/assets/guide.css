@@ -168,6 +168,11 @@ table.values :is(th, td):not(:first-child) { text-align:right; }
 .case-list li { counter-increment:case; display:grid; grid-template-columns:2.2rem minmax(0,1fr) minmax(0,1fr); gap:.2rem 1rem; padding:.7rem 0; border-bottom:1px solid var(--line); font-size:1rem; line-height:1.55; }
 .case-list li::before { content:counter(case); color:var(--muted); font:var(--text-ui)/1.9 var(--ui, var(--serif)); font-variant-numeric:lining-nums; }
 .case-then { color:var(--blue-dark); }
+.tour-list { margin:0; padding:0; list-style:none; }
+.tour-list li { padding:1.6rem 0; border-top:1px solid var(--line); }
+.tour-list li:first-child { border-top:0; padding-top:.4rem; }
+.tour-list h2 { margin:0 0 .5rem; }
+.tour-list p { margin:.5rem 0; text-align:left; -webkit-hyphens:manual; hyphens:manual; }
 .math-nobreak { white-space:nowrap; }
 .lean-names { list-style:none; margin:.9rem 0; padding:0 0 0 .95rem; border-left:1px solid var(--line-strong); }
 .lean-names li { margin:.3rem 0; font-size:.95rem; line-height:1.5; text-align:left; }
