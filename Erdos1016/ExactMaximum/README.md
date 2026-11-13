@@ -44,39 +44,38 @@ The present text (36 pages; the forest estimate is in a paper of its own,
 2. no such cut, and a cycle of length four;
 3. no such cut and no cycle of length four; then the girth is at least five.
 
-`ThreeCases.lean`, `GirthFive.lean` and `MainThreeCases.lean` follow this structure.
+`ThreeCases.lean`, `GirthFive.lean`, the folder `GirthFive/` and `MainThreeCases.lean` follow
+this structure.
 
 ```lean
 theorem Erdos1016.ExactMaximum.exactMaximum_threeCases :
     ∃ R : ℕ, ∀ r, R ≤ r → CycleCount.maxCycles r = horakKim r
 
-theorem Erdos1016.ExactMaximum.exactMaximumStatement_of_girthFiveForest
-    (h : GirthForestStatement 5) : ExactMaximumStatement
+theorem Erdos1016.ExactMaximum.girthForestStatement_five : GirthForestStatement 5
 ```
 
-The first theorem has no hypothesis. Its Case 3 is **not** proved in the way of the text: it
-uses the case of a cyclic cut of size four, the case of bounded girth and the case of girth at
-least `D ≥ 256` of the earlier texts. The second theorem is the proof of the text with one
-hypothesis, `GirthForestStatement 5`. This is Theorem 7.1 of the text (the bound `q(G,P) < 2/5`
-at girth five), and **it has no formal proof**. The second theorem uses neither the case of
-bounded girth nor the case of large girth (`audits/ExactMaximumThreeCasesAudit.lean` checks this
-in the proof terms).
+The first theorem has no hypothesis, and it has the three cases of the text. Its Case 3 is
+proved in the way of the text: Theorem 7.1 at girth five (the second theorem; the bound
+`q(G,P) < 2/5`), Lemma 3.2 and a marked set of eight vertices. It uses neither the case of
+bounded girth nor the case of large girth of the earlier texts
+(`audits/ExactMaximumThreeCasesAudit.lean` checks this in the proof terms). The folder
+`GirthFive/` has the proof of Theorem 7.1 and a README with the mathematics. Since
+12 November 2026 (evening) Theorem 7.1 at girth five has this formal proof; before, it had
+none.
 
 | Declaration | Content | Text |
 |---|---|---|
 | `SmallCutCaseStatement`, `smallCutCaseStatement` | Case 1: a loop or a cyclic cut of size at most three gives at most `H(r)` cycles. From the case of a loop and `ExactMaximumSupport.Shortening.SharedSmallCut.threeCutStatement` | Section 8, Case 1; Proposition 6.3 |
 | `FourCycleCaseStatement`, `fourCycleCaseStatement` | Case 2: no loop, no cyclic cut of size at most three, and a cycle of length at most four give at most `H(r)` cycles. The vertex set of the cycle is one side of a cyclic cut of size at most four (`ExactMaximumSupport.ShortCycleCyclicCut.hasCyclicCutLE_four_of_rank_ge_nine`), and the theorem on such a cut with two arbitrary sides applies (`ExactMaximumSupport.Shortening.ChainExactMaximum.fourCutStatement`, by a limit of states) | Section 8, Case 2; Theorem 6.6 with Corollary 6.2 |
-| `GirthFiveCaseStatement`, `girthFiveCaseStatement` | Case 3 with the bound `H(r)`. **Not the proof of the text**: `girthFiveCaseStatement_of_cases` uses `FourCutStatement`, `ShortCycleStatement` and `LargeGirthStatement` | Section 8, Case 3 |
-| `GirthForestStatement D` | A definition: the statement of Theorem 7.1 with girth at least `D`. **`GirthForestStatement 5` is Theorem 7.1 of the text and has no formal proof** | Theorem 7.1 |
-| `exists_girthForestStatement` | `GirthForestStatement D` for some `D ≥ 256` (`ExactMaximumSupport.Shortening.ChainForestProbability.exists_cutoff`, Astra) | Theorem 7.1 at large girth |
-| `GirthCaseStatement D`, `girthCaseStatement_of_forest` | Case 3 by the method of the text: `GirthForestStatement D` with `D ≥ 3` gives fewer than `2^(r-1)` cycles for a graph without a cyclic cut of size at most three and without a cycle shorter than `D`. A connected set of eight vertices is marked | Section 8, Case 3 |
-| `exists_girthCaseStatement` | The case of girth at least some `D ≥ 256` without a hypothesis on cuts of size four | Section 8, Case 3, at large girth |
+| `GirthFiveCaseStatement`, `girthFiveCaseStatement` | Case 3 with the bound `H(r)`, by the method of the text: from `girthCaseStatement_five`. (`girthFiveCaseStatement_of_cases` in `ThreeCases.lean` is the older route through `FourCutStatement`, `ShortCycleStatement` and `LargeGirthStatement`; the main theorem does not use it) | Section 8, Case 3 |
+| `GirthForestStatement D`, `girthForestStatement_five` | The statement of Theorem 7.1 with girth at least `D` (a definition), and its proof for `D = 5` (`GirthFive/ForestProbability.lean`). The parts: `GirthFive.exists_affine_bound_girth_five` (pieces at girth five), `GirthFive.exists_block_bound`, `GirthFive.exists_base_finset_packing`, and the last step of the proof for large girth | Theorem 7.1 |
+| `GirthCaseStatement D`, `girthCaseStatement_of_forest`, `girthCaseStatement_five` | Case 3 by the method of the text: `GirthForestStatement D` with `D ≥ 3` gives fewer than `2^(r-1)` cycles for a graph without a cyclic cut of size at most three and without a cycle shorter than `D`. A connected set of eight vertices is marked. The third name is the case `D = 5` without a hypothesis | Section 8, Case 3 |
 | `numCycles_le_marked` | Lemma 3.2: `c(G) ≤ q(G,P) 2^r + 2^(r - 1 - ⌈|P|/2⌉)` for a connected cubic multigraph without loops in which every cut has at least two edges | Lemma 3.2 |
 | `three_le_cut_of_no_cyclic_cut` | Without a cyclic cut of size at most three every cut has at least three edges | Section 8, Case 3 ("no bridge") |
 | `not_hasCycleShorterThan_four` | Without a cyclic cut of size at most three, and with rank at least seven, there is no cycle of length at most three | Section 8, Case 3, first step |
 | `upperBoundStatement_of_three_cases`, `exactMaximumStatement_of_three_cases` | The reduction to cubic multigraphs, the three cases and the lower bound give the theorem | Section 8 |
 | `upperBoundStatement_threeCases`, `exactMaximumStatement_threeCases`, `exactMaximum_threeCases`, `maxCycles_formula_threeCases` | The upper bound, Theorem 1.1 and equation (1.1) | Theorem 1.1 |
-| `exactMaximumStatement_of_girthFiveForest` | Theorem 1.1 from Theorem 7.1 of the text as a hypothesis | Sections 6 to 8 |
+| `exactMaximumStatement_of_girthFiveForest` | Theorem 1.1 from Theorem 7.1 of the text as a hypothesis (the same proof, before the hypothesis is discharged) | Sections 6 to 8 |
 
 All of these depend on the axioms `propext`, `Classical.choice` and `Quot.sound` only. Run
 `lake env lean audits/ExactMaximumThreeCasesAudit.lean` (exit code 0 on 12 November 2026).
@@ -109,16 +108,114 @@ proofs of Astra's files were not compared line by line with the text.
 | Lemma 6.4 (cap) | `ExactMaximumSupport.Shortening.TreeCapMargin.exists_bound`, for every `η` | same |
 | Lemma 6.5 (rigidity) | `ExactMaximumSupport.Shortening.FourCutLimitRigidity.rigidity`, `FourCutCompactness.exists_tolerance` | same method (a limit of states), for a cut with two sides |
 | Theorem 6.6 (a cycle of length four) | `fourCycleCaseStatement` | other (a cyclic cut of size four with two arbitrary sides) |
-| Theorem 7.1 (girth five) | `GirthForestStatement 5`, a definition | **no formal proof**; for some `D ≥ 256`: `exists_girthForestStatement` |
+| Theorem 7.1 (girth five) | `girthForestStatement_five` | same statement; the end of the proof is another one (short cyclic regions are deleted at the scales `D, 2D, 4D, ...`, as in the formal proof for large girth; the text counts the cycles at one scale) |
 | Lemmas 7.2, 7.3 (forest proportions at large girth, product) | `ExactMaximumSupport.Shortening.LargeOrderPieces`, `ExactMaximumSupport.LargeGirth.PoleProduct` | same idea |
-| Lemmas 7.4, 7.5, 7.6 and Corollary 7.7 (pieces at girth five) | none. One ingredient exists: at girth five no pair of ports of a bridgeless 2-pole is full (`ExactMaximumSupport.Shortening.FullPairShortCycle.not_full_of_no_short_cycle`) | **no formal proof** |
-| Lemma 7.8 to Proposition 7.12 (separators, chain, two links, heavy families, packing) | at large girth: `ExactMaximumSupport.Shortening.DisjointRegionChain`, `ChainPackingMoment`, `ChainPackingGeometry`, `ChainPacking.exists_cutoff`, `LargeOrderChain` | other forms: the formal statements have no short cycles outside a deleted set; the text counts the `Λ`-short cycles |
+| Lemmas 7.4, 7.5, 7.6 and Corollary 7.7 (pieces at girth five) | Lemma 7.6: `GirthFive.exists_affine_bound_girth_five`. Lemmas 7.4, 7.5 and Corollary 7.7: none, and the formal proof does not need them. (One ingredient of Lemma 7.4 exists: `ExactMaximumSupport.Shortening.FullPairShortCycle.not_full_of_no_short_cycle`) | Lemma 7.6: same outer steps, **other** inner step (slabs, a bound for two terminals and the rail lemma in the place of rigid sets and ladders; see `GirthFive/README.md`) |
+| Lemma 7.8 to Proposition 7.12 (separators, chain, two links, heavy families, packing) | `ExactMaximumSupport.Shortening.DisjointRegionChain`, `ChainPackingMoment`, `ChainPackingGeometry`, `ChainPacking.exists_cutoff`, `LargeOrderChain`; at girth five: `GirthFive.exists_row_bound`, `GirthFive.exists_base_finset_packing` | other forms: the formal statements have no short cycles outside a deleted set; the text counts the `Λ`-short cycles |
 | Section 8 | `upperBoundStatement_of_three_cases`, `girthCaseStatement_of_forest` | same |
 
 The tables below this section are older. Their column "Paper" has the numbers of the first text
 (commit `3a80aa9`), in which Theorem 5.4 is the theorem on few cycles, Theorem 6.8 is the case of
 a cyclic cut of size four, Theorem 7.1 is the case of bounded girth and Theorem 8.1 is the case
 of large girth.
+
+## Which proof uses which file
+
+`audits/UsageMap.lean` computes this table from the proof terms. A file is used by a proof if
+the proof uses a declaration of the file, directly or through other declarations. The columns:
+`T` is `exactMaximum_threeCases` (the three cases of the present text, with equation (1.1)
+and the leading term), `M` is `exactMaximum` (the five cases of the first text), `C` is
+`exactMaximum_caps`. The forest estimate (`F`) and the pancyclic theorem (`P`) use no file of
+this folder. State of 12 November 2026.
+
+| Module | F | P | T | M | C |
+|---|---|---|---|---|---|
+| `Cases` |  |  | x | x | x |
+| `Corollaries` |  |  | x |  |  |
+| `CountTools` |  |  | x | x | x |
+| `CutCaps` |  |  |  |  |  |
+| `CycleBoundMargin` |  |  | x | x | x |
+| `Cycles` |  |  | x | x | x |
+| `CyclicShore` |  |  |  | x | x |
+| `ExitPole` |  |  |  | x | x |
+| `FourCut` |  |  | x | x | x |
+| `FourCutArithmetic` |  |  | x | x | x |
+| `FourCutNumbering` |  |  | x | x | x |
+| `FourCutSides` |  |  | x | x | x |
+| `FourCutStructure` |  |  | x | x | x |
+| `FourPorts` |  |  | x | x | x |
+| `FullPairs` |  |  | x | x | x |
+| `Gadgets` |  |  | x | x | x |
+| `GirthFive` |  |  | x |  |  |
+| `GirthFive.BasePacking` |  |  | x |  |  |
+| `GirthFive.ForestProbability` |  |  | x |  |  |
+| `GirthFive.GeodesicRails` |  |  | x |  |  |
+| `GirthFive.LevelRegions` |  |  | x |  |  |
+| `GirthFive.ManyRegions` |  |  | x |  |  |
+| `GirthFive.Pieces` |  |  | x |  |  |
+| `GirthFive.RailBound` |  |  | x |  |  |
+| `GirthFive.RegionRigidity` |  |  | x |  |  |
+| `GirthFive.RegionWords` |  |  | x |  |  |
+| `GirthFive.TwoTerminal` |  |  | x |  |  |
+| `GirthFive.TwoTerminalRegion` |  |  | x |  |  |
+| `HorakKim` |  |  | x | x | x |
+| `LoopCase` |  |  | x | x | x |
+| `LooplessBridge` |  |  | x | x | x |
+| `LowerBound` |  |  | x | x | x |
+| `Main` |  |  |  | x |  |
+| `MainCaps` |  |  |  |  | x |
+| `MainThreeCases` |  |  | x |  |  |
+| `NetAddVertex` |  |  | x | x | x |
+| `NetBridge` |  |  | x | x | x |
+| `NetBridgeCut` |  |  | x | x | x |
+| `NetCircuits` |  |  | x | x | x |
+| `NetCut` |  |  | x | x | x |
+| `NetCutFour` |  |  | x | x | x |
+| `NetCutRank` |  |  | x | x | x |
+| `NetEmbed` |  |  | x | x | x |
+| `NetGlue` |  |  | x | x | x |
+| `NetJoin` |  |  | x | x | x |
+| `NetMinimal` |  |  | x | x | x |
+| `NetPairs` |  |  | x | x | x |
+| `NetPaths` |  |  | x | x | x |
+| `NetRealization` |  |  | x | x | x |
+| `NetSmallCut` |  |  | x | x | x |
+| `NetSub` |  |  | x | x | x |
+| `NetSubdivide` |  |  | x | x | x |
+| `NetSuppress` |  |  | x | x | x |
+| `NetTransfer` |  |  | x | x | x |
+| `PathFirstEdge` |  |  |  | x | x |
+| `PoleBridges` |  |  | x | x | x |
+| `PoleCycleBound` |  |  |  | x | x |
+| `PoleCycleCount` |  |  | x | x | x |
+| `PoleInputs` |  |  |  | x | x |
+| `PoleLayers` |  |  | x | x | x |
+| `PoleMatchings` |  |  | x | x | x |
+| `PoleReduce` |  |  | x | x | x |
+| `PoleSides` |  |  | x | x | x |
+| `Poles` |  |  | x | x | x |
+| `Remaining` |  |  |  | x | x |
+| `Ring` |  |  | x | x | x |
+| `RingBounds` |  |  | x | x | x |
+| `RingChain` |  |  | x | x | x |
+| `RingCount` |  |  | x | x | x |
+| `RingRank` |  |  | x | x | x |
+| `ShortCycle` |  |  |  | x | x |
+| `ShortCycleCount` |  |  |  | x | x |
+| `ShortCycleExit` |  |  |  | x | x |
+| `ShortestCycle` |  |  |  | x | x |
+| `SmallCutCaps` |  |  |  |  |  |
+| `SmallCutCase` |  |  | x | x | x |
+| `Statement` |  |  | x | x | x |
+| `ThirdPair` |  |  | x | x | x |
+| `ThreeCases` |  |  | x |  |  |
+| `ThreeCut` |  |  | x | x | x |
+| `TwoCut` |  |  | x | x | x |
+
+The proof along the text does not use the files of the case of bounded girth (`CyclicShore`,
+`ExitPole`, `PathFirstEdge`, `ShortCycle`, `ShortCycleCount`, `ShortCycleExit`,
+`ShortestCycle`), and not `PoleCycleBound`, `PoleInputs` and `Remaining`. `CutCaps` and
+`SmallCutCaps` are a second proof of Proposition 6.3 that no main theorem uses.
 
 ## The second proof: the proof of the shorter text (12 November 2026)
 

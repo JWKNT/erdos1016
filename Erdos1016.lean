@@ -1,4 +1,20 @@
+-- The three texts of `paper/minimal/`: one entry module for each text.
+import Erdos1016.ForestEstimate
+import Erdos1016.Pancyclic
+import Erdos1016.MaximumCycles
+-- Other proofs of the theorem on the maximum number of cycles (five cases, caps, and the
+-- proofs of Astra from other choices of the parts).
+import Erdos1016.ExactMaximum.Main
+import Erdos1016.ExactMaximum.MainCaps
+import Erdos1016.ExactMaximumSupport.Shortening.ExactMaximum
+import Erdos1016.ExactMaximumSupport.Shortening.BoundedPortExactMaximum
+import Erdos1016.ExactMaximumSupport.Shortening.CompactExactMaximum
+import Erdos1016.ExactMaximumSupport.Shortening.SharedExactMaximum
+-- The other modules. The imports above reach most of them. They are listed so that every
+-- module of the library is in the import closure of this file; `Erdos1016/README.md` has a
+-- table of the folders that each theorem uses.
 import Erdos1016.Main
+import Erdos1016.ExactMaximumSupport.Stable
 import Erdos1016.PolynomialBound.Statement
 import Erdos1016.PolynomialBound.LinkBound
 import Erdos1016.PolynomialBound.TwoLinkMoment
@@ -33,21 +49,22 @@ import Erdos1016.ExactMaximum.ShortCycleExit
 import Erdos1016.ExactMaximum.ShortCycleCount
 import Erdos1016.ExactMaximum.ShortCycle
 import Erdos1016.ExactMaximum.Corollaries
-import Erdos1016.ExactMaximum.Main
 import Erdos1016.ExactMaximum.CutCaps
 import Erdos1016.ExactMaximum.SmallCutCaps
-import Erdos1016.ExactMaximum.MainCaps
 import Erdos1016.ExactMaximum.ThreeCases
 import Erdos1016.ExactMaximum.GirthFive
 import Erdos1016.ExactMaximum.MainThreeCases
-import Erdos1016.ExactMaximumSupport.Stable
-import Erdos1016.ExactMaximumSupport.Shortening.ExactMaximum
-import Erdos1016.ExactMaximumSupport.Shortening.BoundedPortExactMaximum
-import Erdos1016.ExactMaximumSupport.Shortening.CompactExactMaximum
-import Erdos1016.ExactMaximumSupport.Shortening.SharedExactMaximum
 
 /-!
 # Erdős problem 1016
+
+**Three entry modules.** Each of them imports the formal proof for one text of
+`paper/minimal/`, and its header has the table of the statements:
+`Erdos1016.ForestEstimate` (the forest estimate), `Erdos1016.Pancyclic` (Erdős Problem #1016)
+and `Erdos1016.MaximumCycles` (the maximum number of cycles, along the three cases of the
+text). The other imports of this file are other proofs of the third theorem, and steps that no
+endpoint theorem uses. `Erdos1016/README.md` has a table: which folder is used by which
+theorem. `audits/UsageMap.lean` computes it.
 
 The few-component-witness proof, with unconditional endpoint
 `Erdos1016.mainTheorem : Problem1016.MainTheorem` and the equivalent
@@ -151,17 +168,18 @@ are those of `Main`. `CutCaps` and `SmallCutCaps` prove Proposition 6.3 with cap
 of the bound `(9/16) 2^b` for a pole (`ExactMaximum.capStatement`,
 `ExactMaximum.threeCutStatement_caps`); the text does not use this second proof, because it is
 not shorter. `audits/ExactMaximumCapsAudit.lean` checks which declarations each proof uses.
-`ThreeCases`, `GirthFive` and `MainThreeCases` follow the text of 12 November 2026 with three
-cases: a loop or a cyclic cut of size at most three; a cycle of length at most four; girth at
-least five. `ExactMaximum.exactMaximum_threeCases` proves the theorem along these cases. Its
-third case is not proved in the way of the text: it uses the cases of a cyclic cut of size four,
-of bounded girth and of large girth. `ExactMaximum.exactMaximumStatement_of_girthFiveForest`
-proves the theorem from `ExactMaximum.GirthForestStatement 5`, which is Theorem 7.1 of the text
-and has no formal proof; `ExactMaximum.numCycles_le_marked` is Lemma 3.2 of the text.
-`audits/ExactMaximumThreeCasesAudit.lean` checks the axioms and the declarations that each of
-the two proofs uses. The files `ExactMaximumSupport/Shortening/ExactMaximum`,
-`BoundedPortExactMaximum`, `CompactExactMaximum`, `SharedExactMaximum` and `ChainExactMaximum`
-(by Astra) have further proofs of the theorem from other choices of the parts.
+`ThreeCases`, `GirthFive`, the folder `GirthFive/` and `MainThreeCases` follow the text of
+12 November 2026 with three cases: a loop or a cyclic cut of size at most three; a cycle of
+length at most four; girth at least five. `ExactMaximum.exactMaximum_threeCases` proves the
+theorem along these cases. Its third case uses Theorem 7.1 of the text at girth five,
+`ExactMaximum.girthForestStatement_five` (`GirthFive/ForestProbability.lean`; the folder
+`GirthFive/` has a README with the proof), and Lemma 3.2 of the text,
+`ExactMaximum.numCycles_le_marked`. This proof uses neither the case of bounded girth nor the
+case of large girth of the earlier texts. `audits/ExactMaximumThreeCasesAudit.lean` checks the
+axioms and the declarations that the proof uses. The files
+`ExactMaximumSupport/Shortening/ExactMaximum`, `BoundedPortExactMaximum`, `CompactExactMaximum`,
+`SharedExactMaximum` and `ChainExactMaximum` (by Astra) have further proofs of the theorem from
+other choices of the parts.
 `PoleInputs` states the two facts that the proof of `FewCyclesStatement` takes from the forest
 estimate (`ExactMaximum.PoleLayerBoundStatement`, `ExactMaximum.PoleCyclePackingStatement`), and
 their consequence `ExactMaximum.PoleOutsideRankStatement`. The proofs of these statements are in

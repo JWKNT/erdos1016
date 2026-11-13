@@ -10,23 +10,26 @@ Run: `lake env lean audits/ExactMaximumThreeCasesAudit.lean`.
 
 The paper "The maximum number of cycles in a graph of large rank" (draft of 12 November 2026,
 36 pages) has three cases. `Erdos1016/ExactMaximum/MainThreeCases.lean` proves Theorem 1.1 along
-these cases (`exactMaximum_threeCases`), and it proves the theorem from Theorem 7.1 of the text
-as a hypothesis (`exactMaximumStatement_of_girthFiveForest`). This file checks:
+these cases (`exactMaximum_threeCases`). The third case uses Theorem 7.1 of the text at girth
+five, `girthForestStatement_five` (`Erdos1016/ExactMaximum/GirthFive/ForestProbability.lean`).
+This file checks:
 
-1. the exact types of the new declarations;
+1. the exact types of the declarations;
 2. their axioms (`#print axioms`);
 3. which declarations each proof uses. The command `#assert_not_used` follows all constants in
    the types and in the proof terms; it fails with an error if a listed declaration occurs. The
    command `#assert_all_used` fails if a listed declaration does not occur.
 
-The third check shows two facts.
+The third check shows three facts.
 
-* `exactMaximum_threeCases` uses no earlier proof of Theorem 1.1. Its third case uses the case of
-  bounded girth and the case of large girth of the earlier texts. So the third case is not
-  proved in the way of the text.
-* `exactMaximumStatement_of_girthFiveForest` uses neither of these two cases. Its only
-  hypothesis is `GirthForestStatement 5`, which is Theorem 7.1 of the text. This statement has no
-  formal proof.
+* `exactMaximum_threeCases` uses no earlier proof of Theorem 1.1, not the case of bounded girth
+  and not the case of large girth of the earlier texts.
+* It uses the proof of Theorem 7.1 at girth five and the parts of that proof: the rail lemma,
+  the bound for two terminals, the lemma on a region with slabs, the pieces at girth five, the
+  two blocks, the packing bound of the first family, the packing bound at large girth for the
+  later families (with the pieces at large girth), and the last step of the proof for large
+  girth.
+* `exactMaximumStatement_of_girthFiveForest` is the same proof with Theorem 7.1 as a hypothesis.
 -/
 
 open Lean Elab Command
@@ -97,8 +100,8 @@ example : FourCycleCaseStatement := fourCycleCaseStatement
 example : GirthFiveCaseStatement := girthFiveCaseStatement
 example : GirthForestStatement 5 → ExactMaximumStatement :=
   exactMaximumStatement_of_girthFiveForest
-example : ∃ D : ℕ, 256 ≤ D ∧ GirthForestStatement D := exists_girthForestStatement
-example : ∃ D : ℕ, 256 ≤ D ∧ GirthCaseStatement D := exists_girthCaseStatement
+example : GirthForestStatement 5 := girthForestStatement_five
+example : GirthCaseStatement 5 := girthCaseStatement_five
 example : CubicReductionStatement → SmallCutCaseStatement → FourCycleCaseStatement →
     GirthFiveCaseStatement → UpperBoundStatement := upperBoundStatement_of_three_cases
 example : ThreeCutStatement → SmallCutCaseStatement := smallCutCaseStatement_of_threeCut
@@ -124,8 +127,18 @@ example : GirthCaseStatement 5 → GirthFiveCaseStatement := girthFiveCaseStatem
 #print axioms smallCutCaseStatement
 #print axioms fourCycleCaseStatement
 #print axioms girthFiveCaseStatement
-#print axioms exists_girthForestStatement
-#print axioms exists_girthCaseStatement
+#print axioms girthForestStatement_five
+#print axioms girthCaseStatement_five
+#print axioms GirthFive.rail_bound
+#print axioms GirthFive.two_terminal_card_le
+#print axioms GirthFive.two_terminal_region
+#print axioms GirthFive.region_not_rigid
+#print axioms GirthFive.window_not_rigid
+#print axioms GirthFive.affine_forest_density_le_prod
+#print axioms GirthFive.exists_affine_bound_girth_five
+#print axioms GirthFive.exists_block_bound
+#print axioms GirthFive.exists_base_finset_packing
+#print axioms GirthFive.shifted_size_bound
 #print axioms upperBoundStatement_threeCases
 #print axioms exactMaximumStatement_threeCases
 #print axioms exactMaximum_threeCases
@@ -134,7 +147,8 @@ example : GirthCaseStatement 5 → GirthFiveCaseStatement := girthFiveCaseStatem
 
 /-! ### 3. Which declarations the proofs use -/
 
-/- The proof along the three cases uses no earlier proof of Theorem 1.1. -/
+/- The proof along the three cases uses no earlier proof of Theorem 1.1, and neither the case of
+bounded girth nor the case of large girth. -/
 #assert_not_used Erdos1016.ExactMaximum.exactMaximum_threeCases
   [Erdos1016.ExactMaximum.exactMaximumStatement,
    Erdos1016.ExactMaximum.exactMaximum,
@@ -142,9 +156,17 @@ example : GirthCaseStatement 5 → GirthFiveCaseStatement := girthFiveCaseStatem
    Erdos1016.ExactMaximum.exactMaximum_caps,
    Erdos1016.ExactMaximum.upperBoundStatement_of_cases,
    Erdos1016.ExactMaximumSupport.Shortening.ChainExactMaximum.exactMaximum,
-   Erdos1016.mainTheorem]
+   Erdos1016.mainTheorem,
+   Erdos1016.ExactMaximum.shortCycleStatement,
+   Erdos1016.ExactMaximumSupport.Shortening.PotentialShortCycle.shortCycleStatement,
+   Erdos1016.ExactMaximumSupport.Shortening.BoundedPortShortCycle.shortCycleStatement,
+   Erdos1016.ExactMaximumSupport.LargeGirth.largeGirthStatement,
+   Erdos1016.ExactMaximumSupport.Shortening.ChainLargeGirth.largeGirthStatement,
+   Erdos1016.ExactMaximumSupport.Shortening.FixedMarkerLargeGirth.largeGirthStatement,
+   Erdos1016.ExactMaximumSupport.Shortening.ChainForestProbability.exists_cutoff,
+   Erdos1016.ExactMaximum.girthFiveCaseStatement_of_cases]
 
-/- Its parts. The third case uses the cases of bounded girth and of large girth. -/
+/- Its parts. -/
 #assert_all_used Erdos1016.ExactMaximum.exactMaximum_threeCases
   [Erdos1016.ExactMaximum.upperBoundStatement_of_three_cases,
    Erdos1016.ExactMaximumSupport.CubicReduction.cubicReductionStatement,
@@ -153,14 +175,48 @@ example : GirthCaseStatement 5 → GirthFiveCaseStatement := girthFiveCaseStatem
    Erdos1016.ExactMaximumSupport.Shortening.ChainExactMaximum.fourCutStatement,
    Erdos1016.ExactMaximumSupport.Shortening.FourCutCompactness.exists_tolerance,
    Erdos1016.ExactMaximumSupport.ShortCycleCyclicCut.hasCyclicCutLE_four_of_rank_ge_nine,
-   Erdos1016.ExactMaximumSupport.Shortening.PotentialShortCycle.shortCycleStatement,
-   Erdos1016.ExactMaximumSupport.Shortening.ChainLargeGirth.largeGirthStatement,
-   Erdos1016.ExactMaximumSupport.Shortening.ChainForestProbability.exists_cutoff]
+   Erdos1016.ExactMaximum.girthCaseStatement_of_forest,
+   Erdos1016.ExactMaximum.numCycles_le_marked,
+   Erdos1016.ExactMaximumSupport.LargeGirth.ConnectedMarker.exists_eight,
+   Erdos1016.ExactMaximum.girthForestStatement_five]
 
-/- The proof from Theorem 7.1 of the text uses neither the case of bounded girth nor the case
-of large girth, and no forest bound at large girth. -/
+/- The parts of Theorem 7.1 at girth five. -/
+#assert_all_used Erdos1016.ExactMaximum.girthForestStatement_five
+  [Erdos1016.ExactMaximum.GirthFive.rail_bound,
+   Erdos1016.ExactMaximum.GirthFive.no_rail,
+   Erdos1016.ExactMaximum.GirthFive.two_terminal_card_le,
+   Erdos1016.ExactMaximum.GirthFive.two_terminal_region,
+   Erdos1016.ExactMaximum.GirthFive.exists_word_two_terminals,
+   Erdos1016.ExactMaximum.GirthFive.region_not_rigid,
+   Erdos1016.ExactMaximum.GirthFive.window_not_rigid,
+   Erdos1016.ExactMaximum.GirthFive.affine_forest_density_le_prod,
+   Erdos1016.ExactMaximum.GirthFive.exists_affine_bound_girth_five,
+   Erdos1016.Probability.PoleMarker.exists_supported_demand_layer_bound,
+   Erdos1016.ExactMaximum.GirthFive.exists_block_bound,
+   Erdos1016.ExactMaximumSupport.LargeGirth.PoleProduct.region_product,
+   Erdos1016.ExactMaximum.GirthFive.exists_row_bound,
+   Erdos1016.ExactMaximumSupport.Shortening.DisjointRegionChain.exists_clean_chain_blocks,
+   Erdos1016.ExactMaximum.GirthFive.exists_base_finset_packing,
+   Erdos1016.ExactMaximumSupport.Shortening.ChainPacking.exists_finset_cutoff,
+   Erdos1016.ExactMaximum.GirthFive.shifted_size_bound,
+   Erdos1016.ExactMaximumSupport.Shortening.LargeOrderPieces.exists_constant,
+   Erdos1016.ExactMaximumSupport.Shortening.LargeOrderChain.bound_of_budgets]
+
+/- Theorem 7.1 at girth five uses no case statement and no earlier forest bound for large
+girth as a whole. -/
+#assert_not_used Erdos1016.ExactMaximum.girthForestStatement_five
+  [Erdos1016.ExactMaximumSupport.Shortening.ChainForestProbability.exists_cutoff,
+   Erdos1016.ExactMaximumSupport.Shortening.ChainRaisedGirth.exists_raising_cutoff,
+   Erdos1016.ExactMaximumSupport.Shortening.ChainLargeGirth.largeGirthStatement,
+   Erdos1016.ExactMaximumSupport.Shortening.PotentialShortCycle.shortCycleStatement,
+   Erdos1016.ExactMaximumSupport.Shortening.ChainExactMaximum.fourCutStatement,
+   Erdos1016.ExactMaximumSupport.Shortening.SharedSmallCut.threeCutStatement]
+
+/- The proof from Theorem 7.1 as a hypothesis does not use the proof of Theorem 7.1. -/
 #assert_not_used Erdos1016.ExactMaximum.exactMaximumStatement_of_girthFiveForest
-  [Erdos1016.ExactMaximum.shortCycleStatement,
+  [Erdos1016.ExactMaximum.girthForestStatement_five,
+   Erdos1016.ExactMaximum.GirthFive.exists_affine_bound_girth_five,
+   Erdos1016.ExactMaximum.shortCycleStatement,
    Erdos1016.ExactMaximumSupport.Shortening.PotentialShortCycle.shortCycleStatement,
    Erdos1016.ExactMaximumSupport.Shortening.BoundedPortShortCycle.shortCycleStatement,
    Erdos1016.ExactMaximumSupport.LargeGirth.largeGirthStatement,
@@ -185,9 +241,3 @@ of large girth, and no forest bound at large girth. -/
    Erdos1016.ExactMaximumSupport.LargeGirth.ConnectedMarker.exists_eight,
    Erdos1016.ExactMaximumSupport.CubicReduction.cubicReductionStatement,
    Erdos1016.ExactMaximum.lowerBoundStatement]
-
-/- The large-girth case without a hypothesis on cuts of size four uses the forest bound of the
-formal development and Lemma 3.2. -/
-#assert_all_used Erdos1016.ExactMaximum.exists_girthCaseStatement
-  [Erdos1016.ExactMaximumSupport.Shortening.ChainForestProbability.exists_cutoff,
-   Erdos1016.ExactMaximum.numCycles_le_marked]

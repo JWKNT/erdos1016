@@ -21,9 +21,9 @@ of 12 November 2026) has two inputs.
 This file has:
 
 * `GirthForestStatement D`: the statement of Theorem 7.1 with "girth at least `D`" in the place
-  of "girth at least five". It is a definition. **`GirthForestStatement 5`, which is Theorem 7.1
-  of the text, has no formal proof.** The formal development proves `GirthForestStatement D` for
-  some `D ≥ 256` (`exists_girthForestStatement` in `MainThreeCases.lean`).
+  of "girth at least five". It is a definition. `GirthForestStatement 5`, which is Theorem 7.1
+  of the text, is proved in `GirthFive/ForestProbability.lean` (`girthForestStatement_five`).
+  The files of the proof are in the folder `GirthFive/`.
 * `numCycles_le_marked`: Lemma 3.2 of the text, with `⌈|P|/2⌉` in the exponent.
 * `three_le_cut_of_no_cyclic_cut`: without a cyclic cut of size at most three, every cut has at
   least three edges. The text needs only that there is no bridge.
