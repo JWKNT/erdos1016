@@ -173,13 +173,15 @@ the last case. Fable~5.2 found the lemma on layers, the chain of separators and 
 girth five, and wrote this text. The present forms of the proofs contain steps of both models.
 
 Theorem~\ref{thm:exact} has a formal proof in Lean~4. The statement
-\lean{Erdos1016.ExactMaximum.exactMaximum} says that there is a number $R$ such that
+\lean{Erdos1016.ExactMaximum.exactMaximum_threeCases} says that there is a number $R$ such that
 \lean{maxCycles r = horakKim r} for every $r\ge R$. Here \lean{maxCycles r} is the largest number
 of cycles of a simple graph with cyclomatic number $r$, and \lean{horakKim r} is $H(r)$. The Lean
 kernel accepts the proof with the axioms \lean{propext}, \lean{Classical.choice} and
-\lean{Quot.sound} only. The files are in~\cite{Repo}, at commit \texttt{3a80aa9}.
+\lean{Quot.sound} only. The files are in~\cite{Repo}, at commit \texttt{b7f9fc9}.
 
-The formal proof follows an earlier and longer form of the argument. Theorem~\ref{thm:half}
-has no formal proof: in its place the formal proof has a case of bounded girth and a case of
-large girth. It also treats a cut of size four with two arbitrary sides. So the kernel check
+The formal proof has the three cases of Section~\ref{sec:proof}, and it proves
+Theorem~\ref{thm:half} at girth five. Some of its steps are not those of the text: a cut of
+size four has two arbitrary sides, Lemma~\ref{lem:piecesfive} has a proof without rigid sets,
+and the end of the proof of Theorem~\ref{thm:half} uses short cycles at many scales. So the
+kernel check
 covers the theorem, and it does not cover the text of this paper. No referee has read the text.

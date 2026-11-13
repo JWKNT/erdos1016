@@ -781,3 +781,38 @@ KNT said: "now work on fixing the lean formalization to match: and commit everyt
 - The root file `Erdos1016.lean` imports the three new modules and four modules of Astra's
   folder `Shortening`, so that no module is outside the import closure
   (`scripts/project_inventory.py`: 672 modules, none outside).
+
+## 20. Theorem 7.1 at girth five has a formal proof (12 November 2026, evening)
+
+KNT said: "formalize 7.1 on girth. once done, upload and commit everything. try to reorganize
+the lean files in github too to reflect what things are used where a bit more."
+
+- `Erdos1016.ExactMaximum.girthForestStatement_five : GirthForestStatement 5` is proved
+  (`Erdos1016/ExactMaximum/GirthFive/`, eleven files, about 3400 lines, no `sorry`, the axioms
+  `propext`, `Classical.choice`, `Quot.sound` only). `exactMaximum_threeCases` now uses it, so
+  the formal proof has the three cases of the text and nothing of the cases of bounded girth
+  and of large girth. `audits/ExactMaximumThreeCasesAudit.lean` checks this in the proof terms.
+- The formal proof of Lemma 7.6 (pieces at girth five) has a new inner step. The text shows
+  with Lemmas 7.4 and 7.5 (full pairs, rigid sets, a tree through the set, capped ladders)
+  that the region of a group of layers is not rigid. The formal proof takes slabs along a
+  shortest path. A pigeonhole step gives a slab for which the word outside the slab can be
+  chosen with zero or two terminals at the slab. With zero terminals a cycle of the slab is
+  added. With two terminals the slab is small: the vertices outside a shortest path between
+  the terminals form a forest, each of them has at most one neighbour on the path, and a path
+  of seven such vertices would give seven positions `p_0, ..., p_6` with `p_k ≠ p_l`,
+  `|p_k - p_l| ≤ (l - k) + 2` and `|p_k - p_{k+1}| ≥ 2`, which do not exist (the rail lemma).
+  `Erdos1016/ExactMaximum/GirthFive/README.md` has the statements and the proofs.
+- This step is new mathematics, and it is checked by the kernel. It may give a shorter text
+  for Section 7.2 (no Lemma 7.4, no Lemma 7.5, no figure of the tree). I did not draft it and
+  did not count lines. The manuscript is not changed, with one exception: the two paragraphs
+  on the formal proof in Section 1.4 (the declaration `exactMaximum_threeCases`, the commit
+  `b7f9fc9`, and one sentence on the steps that are not those of the text). The paper has 36
+  pages as before.
+- The end of the formal proof is not that of the text: it deletes short cyclic regions at the
+  scales `D, 2D, 4D, ...` and uses Astra's last step for large girth. Only the bound for the
+  first family is new (`GirthFive.exists_base_finset_packing`).
+- The Lean files. Three entry modules, one for each text: `Erdos1016/ForestEstimate.lean`,
+  `Erdos1016/Pancyclic.lean`, `Erdos1016/MaximumCycles.lean`. `audits/UsageMap.lean` computes,
+  from the proof terms, which modules each endpoint theorem uses, and `Erdos1016/README.md`
+  has the table by folder. No existing file was moved: Astra's files import most modules of
+  `Erdos1016/ExactMaximum/`, and I do not edit Astra's files.

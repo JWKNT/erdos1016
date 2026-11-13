@@ -96,24 +96,34 @@ Checked by the Lean kernel, with the axioms `propext`, `Classical.choice` and `Q
   `Erdos1016.ShortProof.eventually_marked_forest_bound_logSquared` (Theorem 1.1) and
   `Erdos1016.ShortProof.fewComponentForestEstimate_logSquared` (Corollary 1.2). Commit `3a80aa9`.
 - Both bounds of the pancyclic theorem, `Erdos1016.mainTheorem`. Commit `a5cb5fa`.
-- The main theorem of the maximum-cycles paper,
-  `Erdos1016.ExactMaximum.exactMaximum : ∃ R, ∀ r, R ≤ r → CycleCount.maxCycles r = horakKim r`.
-  Commit `3a80aa9`. The paper cites this declaration.
-- The same theorem along the three cases of the present text,
-  `Erdos1016.ExactMaximum.exactMaximum_threeCases` (`Erdos1016/ExactMaximum/MainThreeCases.lean`).
-  Its third case uses the older and longer route (a cyclic cut of size four, bounded girth,
-  girth at least some `D >= 256`). Commit `45bd19c`, with the audit
-  `audits/ExactMaximumThreeCasesAudit.lean`.
+- The main theorem of the maximum-cycles paper along the three cases of the text,
+  `Erdos1016.ExactMaximum.exactMaximum_threeCases : ∃ R, ∀ r, R ≤ r → CycleCount.maxCycles r = horakKim r`
+  (`Erdos1016/ExactMaximum/MainThreeCases.lean`). The paper cites this declaration at the
+  commit `b7f9fc9`. Since the
+  evening of 12 November 2026 its third case is proved in the way of the text: from
+  **Theorem 7.1 at girth five**, `Erdos1016.ExactMaximum.girthForestStatement_five`
+  (`Erdos1016/ExactMaximum/GirthFive/`), Lemma 3.2 and a marked set of eight vertices. The
+  proof uses neither the case of bounded girth nor the case of large girth of the earlier
+  texts; `audits/ExactMaximumThreeCasesAudit.lean` checks this.
+- The same theorem along the five cases of the first text,
+  `Erdos1016.ExactMaximum.exactMaximum` (commit `3a80aa9`), and with caps,
+  `Erdos1016.ExactMaximum.exactMaximum_caps`.
 
-Not checked by a machine: the texts of the three papers. For the maximum-cycles paper one
-statement of the route of the text has no formal proof at all:
+Not checked by a machine: the texts of the three papers.
 
-- **Theorem 7.1 (girth five)**, with Lemmas 7.4, 7.5, 7.6 and Corollary 7.7, and the forms of
-  Propositions 7.9, 7.11 and 7.12 that count the short cycles. In Lean the statement is the
-  definition `Erdos1016.ExactMaximum.GirthForestStatement 5`. The theorem
-  `Erdos1016.ExactMaximum.exactMaximumStatement_of_girthFiveForest` proves the main theorem
-  from this one hypothesis, with the method of Section 8. The formal development proves the
-  statement for some girth `D >= 256` in the place of five.
+The formal proof of Theorem 7.1 has the statement of the text, and two of its parts are proved
+in another way (`Erdos1016/ExactMaximum/GirthFive/README.md` has the mathematics):
+
+- Lemma 7.6 (pieces at girth five) is `GirthFive.exists_affine_bound_girth_five`. The formal
+  proof has the outer steps of the text (thin layers, groups of layers, the product). The step
+  "the region of a group is not rigid" is new: slabs along a shortest path, a parity argument,
+  a bound for two terminals, and a small arithmetic fact (the rail lemma). It does not use
+  Lemmas 7.4 and 7.5 and no ladder. This argument is not in the text. It may be a shorter
+  proof of Lemma 7.6 for the text; this is not measured, and the text is not changed.
+- The end of the proof deletes short cyclic regions at the scales `D, 2D, 4D, ...`, as the
+  formal proof for large girth does. The text counts the cycles at one scale
+  (Propositions 7.9, 7.11 and 7.12 in the forms that count the short cycles have no formal
+  statement).
 
 Other parts of the text have a formal statement that is proved in another way: Lemma 5.3 (a
 shortest path) and the proof of Theorem 5.5 from it; Lemma 5.6; Theorem 5.7 (gap) as a
