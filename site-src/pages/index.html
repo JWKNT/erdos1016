@@ -2,131 +2,87 @@
 {
   "slug": "",
   "title": "Erdős 1016",
-  "description": "A guided tour of the solution of Erdős problem 1016: the least number of edges of a graph on n vertices that has a cycle of every length.",
-  "skip": "Skip to the tour",
-  "contentsTitle": "Tour",
-  "contentsLabel": "Stops of the tour",
+  "description": "The least number of edges of a graph on n vertices that has a cycle of every length. The solution of Erdős problem 1016, step by step.",
+  "skip": "Skip to the text",
   "nav": [
     { "label": "All Tours", "href": "graph-theory/" },
     { "label": "Paper", "href": "papers/pancyclic.pdf" }
   ],
-  "paper": { "file": "papers/pancyclic.pdf", "pages": 7, "short": "The minimum number of edges in a pancyclic graph" },
+  "paper": { "file": "papers/pancyclic.pdf", "pages": 7 },
   "otherPapers": {
-    "forest": { "file": "papers/forest.pdf", "pages": 12, "short": "The forest proportion of a random even subgraph" }
+    "forest": { "file": "papers/forest.pdf", "pages": 12, "label": "Forest paper" }
   }
 }
 -->
 <section id="start" class="tour-start">
-<p class="tour-lead">A graph on \(n\) vertices is <dfn>pancyclic</dfn> if it has a cycle of every length from 3 to \(n\). Erdős problem 1016 asks for the least number of edges of such a graph. The answer is \(n + \log_2 n + \log^{*} n\), with an error of a bounded number of edges.</p>
-<p>The tour has ten stops. Each stop gives one idea of the proof and a link to its place in the paper.</p>
-<p class="paper-line"><a href="~/papers/pancyclic.pdf">The minimum number of edges in a pancyclic graph</a> <span class="paper-meta">PDF, 7 pages</span></p>
-<p class="paper-line"><a href="~/paper.pdf">First manuscript of September 2026</a> <span class="paper-meta">PDF, a longer form of the proof</span></p>
+<p>A <dfn>graph</dfn> is a set of dots, called vertices, joined by lines, called edges. A <dfn>cycle</dfn> is a closed path in a graph, and its <dfn>length</dfn> is its number of edges. A graph on \(n\) vertices is <dfn>pancyclic</dfn> if it has a cycle of every length from 3 to \(n\).</p>
+<p>Erdős problem 1016 asks for the least number of edges of a pancyclic graph on \(n\) vertices. <a href="~/papers/pancyclic.pdf">The answer is \(n + \log_2 n + \log^{*} n\)</a>, with an error of at most a fixed number of edges.</p>
 </section>
 
-<section id="question" data-title="Pancyclic graphs">
-<p class="stop-sentence">A cycle through all \(n\) vertices has \(n\) edges. A pancyclic graph needs more edges for the cycles of the shorter lengths.</p>
-<p>A <dfn>cycle</dfn> is a closed path, and its <dfn>length</dfn> is its number of edges. Write \(n + h(n)\) for the least number of edges of a pancyclic graph on \(n\) vertices.</p>
+<section id="question" data-title="The least number of edges">
+{{in-paper: Theorem 1.1 | 2}}
+<p>A cycle through all \(n\) vertices has \(n\) edges, so a pancyclic graph has at least \(n\) edges. Write \(n + h(n)\) for the least number.</p>
+<div class="statement">
+<p class="statement-title">Theorem 1.1</p>
+<p>There is a fixed number \(A\) such that, for every \(n \ge 3\),</p>
+\[ \log_2 n + \log^{*} n - A \;\le\; h(n) \;\le\; \lfloor \log_2 n \rfloor + \log^{*} n + 1. \]
+</div>
+<figure class="side">{{table:logstar}}<figcaption>The largest \(n\) for each value of \(\log^{*} n\).</figcaption></figure>
+<p>Here \(\log_2 n\) is the power of 2 that gives \(n\), so \(\log_2 1024 = 10\). The brackets \(\lfloor\;\rfloor\) round down to a whole number. The <dfn>iterated logarithm</dfn> \(\log^{*} n\) is the number of times that \(\log_2\) must be applied to \(n\) until the result is at most 1. From 65,536 the results are 16, 4, 2 and 1, so \(\log^{*} 65{,}536 = 4\).</p>
+<p>For one million vertices, \(\log_2 n\) is about 19.9 and \(\log^{*} n\) is 5. So 25 edges above the million are enough, and at least \(24.9 - A\) are necessary.</p>
+<p>The smallest cases are easy to try. A cycle on six vertices with one more edge is never pancyclic. With the right two edges it is, so \(h(6) = 2\).</p>
 <div class="experiment">
 <h3>A graph on six vertices</h3>
 <div id="graph-demo"></div>
 <noscript><p>A cycle on six vertices has only the length 6. With the two more edges 0–2 and 0–3 it has cycles of the lengths 3, 4, 5 and 6.</p></noscript></div>
-<div class="statement">
-<p class="statement-title">Theorem 1.1 <span>the minimum excess of a pancyclic graph</span></p>
-<p>There is a constant \(A\) such that, for every \(n \ge 3\),</p>
-\[ \log_2 n + \log^{*} n - A \;\le\; h(n) \;\le\; \lfloor \log_2 n \rfloor + \log^{*} n + 1. \]
-</div>
-<p>Stop 4 gives the definition of \(\log^{*} n\).</p>
-{{in-paper: Theorem 1.1 | 2}}
 </section>
 
 <section id="count" data-title="A count of cycles">
-<p class="stop-sentence">A graph with few edges has few cycles, and a pancyclic graph needs \(n-2\) cycles of different lengths.</p>
-<p>An <dfn>even subgraph</dfn> is a set of edges that meets every vertex an even number of times. The <dfn>rank</dfn> of a connected graph is its number of edges minus its number of vertices plus one. A graph of rank \(r\) has exactly \(2^{r}\) even subgraphs. Each cycle is one of them, and the empty set is not a cycle.</p>
-<p>A pancyclic graph with \(n + h\) edges has the rank \(h + 1\). Hence</p>
-\[ n - 2 \le 2^{h+1} - 1, \qquad\text{so}\qquad h \ge \log_2(n-1) - 1. \]
-<p>Bondy stated this bound in 1971. It gives the term \(\log_2 n\). It does not give the term \(\log^{*} n\), because many cycles can have the same length.</p>
 {{in-paper: Section 1 | 1 ; Section 2 | 2}}
+<p>An <dfn>even subgraph</dfn> is a set of edges that meets every vertex an even number of times. A cycle is an even subgraph, and so is the empty set. A connected graph with \(e\) edges and \(v\) vertices has the <dfn>rank</dfn> \(r = e - v + 1\), and it has exactly \(2^{r}\) even subgraphs.</p>
+<figure class="side">{{fig:even-subgraphs}}<figcaption>A graph of rank 2 and its four even subgraphs, drawn thick. Two of them are cycles.</figcaption></figure>
+<p>A pancyclic graph with \(n + h\) edges has the rank \(h + 1\), so it has fewer than \(2^{h+1}\) cycles. It needs \(n - 2\) cycles of different lengths. So</p>
+\[ n - 2 \le 2^{h+1} - 1, \qquad\text{and then}\qquad h \ge \log_2(n-1) - 1. \]
+<p>Bondy stated this in 1971.</p>
+<p>This limit would be exact only if all cycles had different lengths. But many cycles of a graph have the same length, and that makes \(\log^{*} n\) more edges necessary.</p>
 </section>
 
 <section id="binary" data-title="Binary shortcuts">
-<p class="stop-sentence">With \(k\) more edges, one graph can contain \(2^{k}\) consecutive cycle lengths.</p>
-<p>Take a path on a long cycle, and divide it into \(k\) segments with \(2, 3, 5, 9, \dots\) edges. Add a <dfn>shortcut</dfn> to each segment: one edge between its two ends. A path can pass each segment along its edges or along its shortcut. The shortcuts make the path shorter by \(1, 2, 4, 8, \dots\) edges. Each number from 0 to \(2^{k}-1\) is a sum of different powers of two. So these paths have \(2^{k}\) consecutive lengths.</p>
+{{in-paper: Proposition 4.1 | 5 ; Figure 2 | 6}}
+<p>The upper limit comes from one graph. Take a path on a long cycle, and divide it into \(k\) segments with 2, 3, 5, 9 and so on edges. Segment number \(i\) has \(2^{i} + 1\) edges, from \(i = 0\). Join the two ends of each segment by one new edge, a <dfn>shortcut</dfn>. A path that takes the shortcut of segment \(i\) is shorter by \(2^{i}\) edges.</p>
+<p>Every number from 0 to \(2^{k} - 1\) is a sum of different powers of 2. So the paths through the \(k\) segments have \(2^{k}\) lengths in a row. In the example, one more edge closes these paths to cycles.</p>
 <div class="experiment">
-<h3>Choose the shortcuts</h3>
+<h3>Four segments</h3>
 <div id="binary-demo"></div>
 <noscript><p>Four segments with 2, 3, 5 and 9 edges and one closing edge give a cycle of length 20. The shortcuts save 1, 2, 4 and 8 edges. So the graph has a cycle of each length from 5 to 20.</p></noscript></div>
-<p>Two ways close these paths to cycles. The first way is one edge between the two ends of the path. The second way is the rest of the long cycle. With \(k\) about \(\log_2 n\), the two ways give the cycle lengths from \(k+1\) to \(n\), with at most one exception. One more edge gives that length.</p>
-{{in-paper: Section 4 | 5 ; Figure 2 | 6}}
-</section>
-
-<section id="logstar" data-title="The short lengths">
-<p class="stop-sentence">A few more edges give the short cycles. Their number is the iterated logarithm.</p>
-<p>The lengths from 3 to \(k\) are still necessary. An edge from the start of the path to the end of segment \(\lceil \log_2 k \rceil\) closes the first segments. It gives the lengths from about \(\log_2 k\) to \(k\). The next edge closes the first \(\lceil \log_2 \lceil \log_2 k \rceil \rceil\) segments. This continues down to the length 3.</p>
-<p>The <dfn>iterated logarithm</dfn> \(\log^{*} n\) is the number of times that \(\log_2\) must be applied to \(n\) until the result is at most 1. In addition to the long cycle, the number of edges of the construction is at most</p>
-\[ \lfloor \log_2 n \rfloor + \log^{*} n + 1. \]
-<p>This is the upper bound of the theorem.</p>
-<div class="experiment">
-<h3>The iterated logarithm</h3>
-<div id="logstar-demo"></div>
-<noscript><p>The iterated logarithm of 1, 2, 4, 16 and 65,536 is 0, 1, 2, 3 and 4. Each of these numbers is the largest number with its value.</p></noscript></div>
-{{in-paper: Proposition 4.1 | 5}}
+<p>The rest of the long cycle also closes these paths, and it gives the longest cycles, up to \(n\). With \(k\) about \(\log_2 n\), all lengths from \(k + 1\) to \(n\) are present. At most one length is an exception, and one more edge gives it.</p>
+<figure class="side">{{table:closing-edges}}<figcaption>For \(k = 16\): the number of segments that each closing edge closes, and the cycle lengths that it gives.</figcaption></figure>
+<p>The lengths from 3 to \(k\) are still missing. A second closing edge closes only the first \(\lceil \log_2 k \rceil\) segments, where the brackets round up. Their cycles reach past the length \(k\). Do the same for these first segments, until the length 3 is present. In total this takes \(\log^{*} k\) closing edges, and the graph has at most \(\lfloor \log_2 n \rfloor + \log^{*} n + 1\) edges above \(n\).</p>
 </section>
 
 <section id="density" data-title="The density of cycle lengths">
-<p class="stop-sentence">The lower bound uses a number \(\Phi\) that measures how well a graph of a given rank can fill an interval of cycle lengths.</p>
-<p>Let a graph of rank \(r\) contain a cycle of each length from 3 to \(L\). Its <dfn>density</dfn> is \((L-2)/2^{r}\): the number of these lengths, divided by the number of even subgraphs. Let \(\Phi(R)\) be the least upper bound of the densities of all graphs of rank at least \(R\). The count of cycles gives \(\Phi(R) \le 1\).</p>
-<p>A pancyclic graph on \(n\) vertices of rank \(r\) has \(n - 2 \le \Phi(r)\,2^{r}\). So a small value of \(\Phi(r)\) means that the rank \(r = h + 1\) is large.</p>
 {{in-paper: Section 3 | 3}}
-</section>
-
-<section id="witness" data-title="A small subgraph with the short cycles">
-<p class="stop-sentence">A graph with many cycle lengths has a small subgraph \(W\) that already contains a cycle of each short length.</p>
-<p>Start with the empty subgraph. Add a cycle of the least length that the subgraph does not contain. Do this again until the rank of the subgraph is at least \(2R\).</p>
-<p>A subgraph of rank \(s \ge R\) contains at most \(\Phi(R)\,2^{s}\) consecutive cycle lengths from 3 on, by the definition of \(\Phi\). So each added cycle is short. The result \(W\) is a union of at most \(2R\) cycles, and it has at most \(\Phi(R)\,2^{2R} + 2^{R} + 5R\) edges.</p>
-{{in-paper: Lemma 3.1 | 3}}
+<p>For the lower limit, measure how well a graph fills a run of cycle lengths. Suppose that a graph of rank \(r\) has a cycle of every length from 3 to \(L\). Its <dfn>density</dfn> is \((L-2)/2^{r}\): the number of these lengths, divided by the number of even subgraphs. Let \(\Phi(R)\) be the least upper limit of the densities of all graphs of rank at least \(R\).</p>
+<p>By the count of cycles, \(\Phi(R) \le 1\). A pancyclic graph on \(n\) vertices with the rank \(r\) has \(n - 2 \le \Phi(r)\,2^{r}\). So a small \(\Phi(r)\) means a large rank, and the rank is \(h + 1\).</p>
 </section>
 
 <section id="outside" data-title="Outside parts">
-<p class="stop-sentence">Remove the edges of \(W\) from a cycle. The rest gives the cycle, or the rest is a forest.</p>
-<p>The <dfn>outside part</dfn> of an even subgraph is the set of its edges that are not in \(W\). A <dfn>forest</dfn> is a set of edges without a cycle. Let the graph have the rank \(r\), and let \(W\) have the rank \(t\) and \(m\) edges. Then the even subgraphs have \(2^{r-t}\) different outside parts.</p>
-<p>Look at a cycle \(C\). If its outside part contains a cycle, then that cycle is \(C\). So this outside part belongs to one cycle length. If its outside part is a forest, then \(C\) has between 1 and \(m\) edges in \(W\). So this outside part belongs to at most \(m\) cycle lengths.</p>
-<p>Let \(p\) be the proportion of the outside parts that are forests. Then the number of different cycle lengths is at most</p>
+{{in-paper: Lemma 3.1 | 3 ; Lemma 2.2 | 3}}
+<p>Take a graph with a cycle of every length from 3 to \(L\). Build a subgraph \(W\) in steps. In each step, add a cycle of the least length that \(W\) does not have. Stop when the rank of \(W\) is at least \(2R\). Then \(W\) is a union of at most \(2R\) cycles, and its number \(m\) of edges is at most \(\Phi(R)\,2^{2R} + 2^{R} + 5R\).</p>
+<figure class="side">{{fig:outside-part}}<figcaption>\(W\) is the blue triangle. The cycle around the square has two edges in \(W\). Its outside part, in ochre, is a path.</figcaption></figure>
+<p>For an even subgraph, the <dfn>outside part</dfn> is the set of its edges that are not in \(W\). A <dfn>forest</dfn> is a set of edges that contains no cycle. Look at a cycle \(C\) of the graph. If its outside part contains a cycle, that cycle is \(C\). If its outside part is a forest, then \(C\) has between 1 and \(m\) edges in \(W\).</p>
+<p>So an outside part with a cycle belongs to one cycle length, and a forest belongs to at most \(m\) lengths. Let the graph have the rank \(r\), and let \(W\) have the rank \(t\). Then there are \(2^{r-t}\) outside parts. If the fraction \(p\) of them are forests, the number of cycle lengths is at most</p>
 \[ 2^{r-t}\,(p\,m + 1 - p). \]
-<div class="experiment">
-<h3>Remove the edges of W</h3>
-<div id="restriction-demo"></div>
-<noscript><p>Two triangles have a common edge, and W is one of them. The sum of the two triangles is a cycle of length four. Its outside part is a path with two edges, which is a forest.</p></noscript></div>
-{{in-paper: Lemma 2.2 | 3}}
 </section>
 
-<section id="half" data-title="Half of the outside parts">
-<p class="stop-sentence">At most about half of the outside parts are forests. So the density decreases by a factor of almost two.</p>
-<p>The subgraph \(W\) is a union of few cycles with few edges. So the <a href="~/forest/">forest estimate</a> gives \(p \le \frac12 + 20/\log\log\log r\). Put this bound and the size of \(W\) into the count of stop 7. For every large \(R\) the result is</p>
-\[ \Phi\bigl(2^{256R}\bigr) \le \Bigl(\frac12 + \frac{20}{\log\log R}\Bigr)\,\Phi(R) + 2^{2-R}. \]
-<p>The forest estimate has its own paper and its own tour.</p>
-{{in-paper: Theorem 2.1 | 2 ; Proposition 3.2 | 4}}
-{{in-paper@forest: Corollary 1.2 | 3}}
+<section id="recurrence" data-title="The recurrence">
+{{in-paper: Proposition 3.2 | 4 ; Corollary 3.3 | 4 ; forest: Corollary 1.2 | 3}}
+<p>The <a href="~/forest/">forest estimate</a> is a separate result. For a graph of large rank \(r\) and a subgraph \(W\) of this kind, it says that \(p\) is at most \(\frac12 + 20/\log_2\log_2\log_2 r\). With the count above, this gives for every large \(R\)</p>
+\[ \Phi\bigl(2^{256R}\bigr) \le \Bigl(\frac12 + \frac{20}{\log_2\log_2 R}\Bigr)\,\Phi(R) + 2^{2-R}. \]
+<figure class="side">{{fig:tower}}<figcaption>The density at the ranks \(R_0\), \(R_1 = 2^{256R_0}\), \(R_2 = 2^{256R_1}\) and \(R_3 = 2^{256R_2}\). Each step almost halves it.</figcaption></figure>
+<p>So from the rank \(R\) to the rank \(2^{256R}\), the density falls by a factor of almost 2. Apply this again and again, along the ranks in the figure. The errors of all steps add up to a fixed number, so \(\Phi(R_j)\) is at most a fixed number times \(2^{-j}\). About \(\log^{*} r\) of these ranks are below \(r\). So \(\Phi(r)\) is at most a fixed number times \(2^{-\log^{*} r}\), and this gives the lower limit of the theorem.</p>
 </section>
 
-<section id="tower" data-title="A tower of scales">
-<p class="stop-sentence">Each scale of a tower of exponentials almost halves the density, and about \(\log^{*} r\) scales are below \(r\).</p>
-<p>Take the scales \(R_{j+1} = 2^{256R_j}\). The errors of all steps have a finite sum. So \(\Phi(R_j) \le c\,2^{-j}\) for a constant \(c\). This gives \(\Phi(r) \le c'\,2^{-\log^{*} r}\) for all \(r\), with a second constant \(c'\).</p>
-<p>A pancyclic graph has \(n - 2 \le \Phi(r)\,2^{r}\) and \(r = h + 1\). Take logarithms. The result is the lower bound \(h(n) \ge \log_2 n + \log^{*} n - A\).</p>
-<div class="experiment">
-<h3>One half at each scale</h3>
-<div id="recurrence-demo"></div>
-<noscript><p>After 3 steps the model density is 1/8. After 8 steps it is 1/256. Each step is one more level of the tower.</p></noscript></div>
-{{in-paper: Corollary 3.3 | 4 ; Figure 1 | 3}}
-</section>
-
-<section id="lean" data-title="The formal proof">
-<p class="stop-sentence">Lean is a computer program that checks each step of a proof. It has checked the two bounds of the theorem.</p>
-<p>The first formal statement has the two bounds with constants. The second statement is the upper bound of this page.</p>
-<ul class="lean-names">
-<li><code>Erdos1016.mainTheorem</code></li>
-<li><code>Erdos1016.Problem1016.upper_bound_integer</code></li>
-</ul>
-<p>The check covers these two statements. It does not cover the text of the paper, and no referee has read the text.</p>
-<p>The paper states the part of each of its three authors. Two of them are language models. The Lean files are in the <a href="https://github.com/JWKNT/erdos1016">repository</a>. The first manuscript of September 2026 has a longer form of the proof.</p>
-{{in-paper: Section 5 | 6}}
+<section id="about">
+<p>KNT found the theorem and its proof in September 2026 with the language model GPT-6 Astra. The <a href="~/paper.pdf">first paper</a> has a longer form of the proof, and the language model Claude Fable 5.2 wrote the short one. A <a href="https://github.com/JWKNT/erdos1016">formal copy</a> of the two limits passes Lean, a computer program that checks each step of a proof. No referee has read the papers.</p>
 </section>

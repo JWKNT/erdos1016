@@ -3,10 +3,14 @@
 //   node site-src/build.mjs           write the pages
 //   node site-src/build.mjs --check   fail if a written page differs from the build
 //
-// A source is HTML with a small header and four directives.
+// A source is HTML with a small header and a few directives.
 //   <!--page { ...JSON... } -->                 title, description, address, paper
-//   <section id="x" data-title="Title">         a numbered stop of the tour
-//   {{in-paper: Lemma 2.2 | 5 ; Figure 2 | 4}}  links to pages of the paper
+//   <section id="x" data-title="Title">         a numbered section of the tour
+//   {{in-paper: Lemma 2.2 | 5 ; Figure 2 | 4}}  links to pages of the paper, directly after the
+//                                               section tag. An item "forest: Theorem 1.1 | 2"
+//                                               is a page of the paper `otherPapers.forest`.
+//   class="side"                                one figure, table or example of a section for
+//                                               the margin column
 //   href="~/forest/"                            a link from the root of the site
 //   {{fig:name}} and {{table:name}}             a figure or a table of figures.mjs
 //   \( ... \) and \[ ... \]                     TeX, which Temml changes to MathML
@@ -24,8 +28,8 @@ const ROOT = 'https://jehlp.net/erdos1016/';
 const VERSION = {
   base: '20261108-justify',
   components: 'components-20261003-controls',
-  guide: '20261112-list',
-  explorers: '20261112-graphs',
+  guide: '20261113-margin',
+  explorers: '20261113-margin',
 };
 
 async function loadTemml() {
@@ -73,18 +77,25 @@ function expandDirectives(name, meta, body, prefix) {
     stops.push({ id, title });
     return `<section id="${id}">\n<h2><span class="chapter-number">${stops.length}</span> ${title}</h2>`;
   });
-  html = html.replace(/\{\{in-paper(?:@([\w-]+))?:([^}]+)\}\}/g, (_, key, list) => {
-    const paper = key ? meta.otherPapers?.[key] : meta.paper;
-    if (!paper) throw new Error(`${name}: no paper for {{in-paper${key ? `@${key}` : ''}}}`);
-    const links = list.split(';').map((item) => {
-      const [label, page] = item.split('|').map((part) => part.trim());
-      if (!label || !/^\d+$/.test(page ?? '') || Number(page) < 1 || Number(page) > paper.pages) {
-        throw new Error(`${name}: bad reference "${item.trim()}"`);
-      }
-      return `<a href="${prefix}${paper.file}#page=${page}">${label}, page ${page}</a>`;
-    });
-    const label = key ? `In the paper “${paper.short}”` : 'In the paper';
-    return `<p class="in-paper"><span class="in-paper-label">${label}</span> ${links.join('<span aria-hidden="true"> · </span>')}</p>`;
+  // The list of the numbered sections is the first item of the first section, so that it is at
+  // the top of the margin. On a narrow screen the style sheet puts it after the first paragraphs.
+  if (stops.length) {
+    const contents = `<nav class="contents side" aria-label="Contents"><p class="contents-title">Contents</p><ol>${stops.map(({ id, title }) => `<li><a href="#${id}">${title}</a></li>`).join('')}</ol></nav>\n`;
+    if (!/^\s*<section id="start"/.test(html)) throw new Error(`${name}: the first section must have id="start"`);
+    html = html.replace(/(<section id="start"[^>]*>\n?)/, `$1${contents}`);
+  }
+  html = html.replace(/\{\{in-paper:([^}]+)\}\}/g, (_, list) => {
+    const groups = [];
+    for (const item of list.split(';')) {
+      const [, key, text, page] = item.match(/^\s*(?:([\w-]+):)?\s*([^|]+?)\s*\|\s*(\d+)\s*$/) ?? [];
+      const paper = key ? meta.otherPapers?.[key] : meta.paper;
+      if (!paper || !text || Number(page) < 1 || Number(page) > paper.pages) throw new Error(`${name}: bad reference "${item.trim()}"`);
+      const group = groups.find((entry) => entry.paper === paper) ?? groups[groups.push({ paper, label: key ? paper.label : 'Paper', links: [] }) - 1];
+      group.links.push(`<a href="${prefix}${paper.file}#page=${page}">${text}, page ${page}</a>`);
+    }
+    // A separator stays on the line of the link before it.
+    const items = (links) => links.map((link, i) => `<span class="in-paper-item">${link}${i < links.length - 1 ? '<span aria-hidden="true"> ·</span>' : ''}</span>`).join(' ');
+    return `<p class="in-paper">${groups.map(({ label, links }) => `<span class="in-paper-group"><span class="in-paper-label">${label}</span> ${items(links)}</span>`).join(' ')}</p>`;
   });
   html = html.replace(/\{\{fig:([\w-]+)\}\}/g, (_, figure) => {
     if (!Object.hasOwn(figures, figure)) throw new Error(`${name}: unknown figure ${figure}`);
@@ -107,17 +118,14 @@ function expandDirectives(name, meta, body, prefix) {
 function frame({ meta, main, stops, prefix, usesDemos }) {
   const canonical = `${ROOT}${meta.slug ? `${meta.slug}/` : ''}`;
   const nav = (meta.nav ?? []).map(({ label, href }) => `<a href="${prefix}${href}">${escapeHtml(label)}</a>`).join('');
-  const contents = stops.length
-    ? `<aside id="contents" class="contents"><p class="contents-title">${escapeHtml(meta.contentsTitle ?? 'Contents')}</p><nav aria-label="${escapeHtml(meta.contentsLabel ?? 'Contents')}"><ol>${stops.map(({ id, title }) => `<li><a href="#${id}">${title}</a></li>`).join('')}</ol></nav></aside>\n`
-    : '';
-  const layout = stops.length ? 'reading-layout' : 'reading-layout reading-layout--plain';
+  const layout = stops.length ? 'tour' : 'tour tour--plain';
   const script = usesDemos ? `<script type="module" src="${prefix}assets/explorers.mjs?v=${VERSION.explorers}"></script>\n` : '';
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#fbfaf7"><title>${escapeHtml(meta.title)} · jehlp.net</title><meta name="description" content="${escapeHtml(meta.description)}"><meta property="og:type" content="article"><meta property="og:title" content="${escapeHtml(meta.title)}"><meta property="og:description" content="${escapeHtml(meta.description)}"><meta property="og:url" content="${canonical}"><meta property="og:site_name" content="jehlp.net"><link rel="canonical" href="${canonical}"><link rel="icon" href="${prefix}assets/favicon.png"><script src="${prefix}assets/theme/theme.js"></script><link rel="stylesheet" href="${prefix}assets/theme/base.css?v=${VERSION.base}"><link rel="stylesheet" href="${prefix}assets/theme/components.css?v=${VERSION.components}"><script src="${prefix}assets/theme/components.js?v=${VERSION.components}" defer></script><link rel="stylesheet" href="${prefix}assets/guide.css?v=${VERSION.guide}"></head>
 <body><a class="skip-link" href="#main">${escapeHtml(meta.skip ?? 'Skip to the text')}</a><header class="site-header site-header--identity"><div class="site-identity site-brand"><img class="site-mark" src="${prefix}assets/mark.png" alt="" width="32" height="32"><h1 class="site-title">${escapeHtml(meta.title)}</h1></div><nav aria-label="Main">${nav}<span class="site-utility-pair"><a class="site-home" aria-label="Home — jehlp.net" href="https://jehlp.net/"><span aria-hidden="true">Home</span></a><button type="button" data-theme-toggle="" class="theme-toggle" aria-label="Use dark theme"></button></span></nav></header>
-<div class="${layout}">${contents}<main id="main">
+<main id="main" class="${layout}">
 ${main.trim()}
-</main></div>
+</main>
 ${script}</body></html>
 `;
 }

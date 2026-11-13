@@ -2,124 +2,92 @@
 {
   "slug": "exact-maximums",
   "title": "Exact Maximums",
-  "description": "A guided tour of the largest number of cycles of a graph of large rank. The formulas of Horak and Kim are exact for every large rank.",
-  "skip": "Skip to the tour",
-  "contentsTitle": "Tour",
-  "contentsLabel": "Stops of the tour",
+  "description": "The largest number of cycles of a graph of large rank. A formula of Horak and Kim is exact for every large rank. The proof, step by step.",
+  "skip": "Skip to the text",
   "nav": [
     { "label": "All Tours", "href": "graph-theory/" },
     { "label": "Paper", "href": "papers/exact-maximum.pdf" }
   ],
-  "paper": { "file": "papers/exact-maximum.pdf", "pages": 36, "short": "The maximum number of cycles in a graph of large rank" },
+  "paper": { "file": "papers/exact-maximum.pdf", "pages": 36 },
   "otherPapers": {
-    "forest": { "file": "papers/forest.pdf", "pages": 12, "short": "The forest proportion of a random even subgraph" }
+    "forest": { "file": "papers/forest.pdf", "pages": 12, "label": "Forest paper" }
   }
 }
 -->
 <section id="start" class="tour-start">
-<p class="tour-lead">Let \(\psi(r)\) be the largest number of cycles of a graph of rank \(r\). For every large rank, a formula of Horak and Kim gives this number exactly. Its first term is \(2^{r-1}\), as Entringer and Slater conjectured in 1981.</p>
-<p>The tour has ten stops. Each stop gives one idea of the proof and a link to its place in the paper.</p>
-<p class="paper-line"><a href="~/papers/exact-maximum.pdf">The maximum number of cycles in a graph of large rank</a> <span class="paper-meta">PDF, 36 pages</span></p>
+<p>A <dfn>graph</dfn> is a set of dots, called vertices, joined by lines, called edges, and a <dfn>cycle</dfn> is a closed path in it. The <dfn>rank</dfn> of a graph is its number of edges, minus its number of vertices, plus its number of components. A graph of rank \(r\) has fewer than \(2^{r}\) cycles.</p>
+<p>Let \(\psi(r)\) be the largest number of cycles of a graph of rank \(r\). <a href="~/papers/exact-maximum.pdf">A formula of Horak and Kim gives \(\psi(r)\) exactly for every large \(r\)</a>. Its first term is \(2^{r-1}\).</p>
 </section>
 
-<section id="question" data-title="The largest number of cycles">
-<p class="stop-sentence">A graph of rank \(r\) has fewer than \(2^{r}\) cycles. The largest possible number is a little more than half of this bound.</p>
-<p>The <dfn>rank</dfn> of a graph is</p>
-\[ r = \text{edges} - \text{vertices} + \text{components}. \]
-<p>An <dfn>even subgraph</dfn> is a set of edges that meets every vertex an even number of times. A graph of rank \(r\) has exactly \(2^{r}\) even subgraphs. Each cycle is one of them, and the empty set is not a cycle.</p>
-<p>Entringer and Slater proved that \(2^{r-1} &lt; \psi(r) &lt; 2^{r}\) for \(r \ge 3\). They conjectured that the quotient \(\psi(r)/2^{r-1}\) has the limit 1.</p>
+<section id="formula" data-title="The formula">
+{{in-paper: Theorem 1.1 | 2}}
+<p>An <dfn>even subgraph</dfn> is a set of edges that meets every vertex an even number of times. A graph of rank \(r\) has exactly \(2^{r}\) even subgraphs, and each cycle is one of them. In 1981 Entringer and Slater proved that \(\psi(r)\) is between \(2^{r-1}\) and \(2^{r}\) for \(r \ge 3\). They conjectured that \(\psi(r)\) divided by \(2^{r-1}\) tends to 1.</p>
+<figure class="side">{{table:formula}}<figcaption>The first term \(2^{r-1}\) and the whole formula \(H(r)\).</figcaption></figure>
 <div class="statement">
-<p class="statement-title">Theorem 1.1 <span>the maximum number of cycles</span></p>
+<p class="statement-title">Theorem 1.1</p>
 <p>For every sufficiently large \(q\),</p>
 \[ \begin{aligned} \psi(2q+1) &amp;= 2^{2q} + \bigl(2q + \tfrac12\bigr)\,2^{q} - 3q,\\ \psi(2q+2) &amp;= 2^{2q+1} + \bigl(2q + \tfrac92\bigr)\,2^{q} - 3q - 4. \end{aligned} \]
 </div>
-<p>Write \(H(r)\) for the right sides of these two formulas.</p>
-{{in-paper: Theorem 1.1 | 2}}
+<p>Write \(H(r)\) for the right sides.</p>
 </section>
 
 <section id="rings" data-title="Rings of squares">
-<p class="stop-sentence">Horak and Kim found graphs with \(H(r)\) cycles. Each of them is a ring of squares.</p>
-<p>A <dfn>square</dfn> has two vertices on its left side, two vertices on its right side, and the four edges between the sides. For an odd rank \(r = 2q+1\), put \(q\) squares in a ring, and join each square to the next square by two edges. For an even rank, put a <dfn>single rung</dfn> between two of the squares: two vertices and the edge between them.</p>
-<div class="experiment">
-<h3>Count the cycles of a ring</h3>
-<div id="ring-demo"></div>
-<noscript><p>The ring of rank 9 has four squares and 380 cycles. The ring of rank 10 has four squares, one single rung and 696 cycles. The first terms of the formula are 256 and 512.</p></noscript></div>
-<p>A cycle around the ring takes one of the two edges between consecutive squares, and one of two paths through each square. So \(2^{r-1}\) cycles go around the ring. The cycles that do not go around the ring give the other terms of the formula.</p>
 {{in-paper: Figure 1 | 2 ; Proposition 6.1 | 18 ; Corollary 6.2 | 20}}
+<p>Horak and Kim found graphs with \(H(r)\) cycles. A <dfn>square</dfn> here has two vertices on its left side, two on its right side, and the four edges between the sides. For an odd rank \(r = 2q + 1\), put \(q\) squares in a ring, and join each square to the next by two edges. For an even rank, add a <dfn>single rung</dfn> between two squares: two vertices and the edge between them.</p>
+<aside class="side">
+<div id="ring-demo"></div>
+<noscript><p>The ring of rank 9 has four squares and 380 cycles. The ring of rank 10 has four squares, one single rung and 696 cycles.</p></noscript>
+</aside>
+<p>A cycle around the ring takes one of the two edges between each pair of neighbour tiles, and one of two paths through each square. This gives \(2^{r-1}\) cycles. The cycles that do not go around the ring give the other terms of the formula.</p>
+<p>For \(r = 9\) the formula has \(q = 4\). It gives \(256 + 136 - 12\), which is 380. The ring of four squares has exactly this number of cycles.</p>
 </section>
 
-<section id="cubic" data-title="Graphs of degree three">
-<p class="stop-sentence">It is sufficient to count the cycles of graphs in which every vertex has degree three.</p>
-<p>Remove a vertex of degree one, or replace a vertex of degree two by one edge. The rank and the number of cycles do not change. Replace a vertex of degree four or more by a path, and attach its edges along the path. The rank does not change, and no cycle is lost.</p>
-<p>So some connected graph of rank \(r\) in which every vertex has degree three has \(\psi(r)\) cycles. Such a graph is <dfn>cubic</dfn>. It can have loops and parallel edges.</p>
-{{in-paper: Lemma 3.1 | 7}}
+<section id="first" data-title="The first term">
+{{in-paper: Lemma 3.1 | 7 ; Corollary 3.3 | 7 ; forest: Theorem 1.1 | 2}}
+<p>The <dfn>degree</dfn> of a vertex is the number of edge ends at it, and in a <dfn>cubic</dfn> graph every vertex has degree three. For the upper limit it is enough to count the cycles of cubic graphs. Remove each vertex of degree one, and replace each vertex of degree two by one edge. Replace each vertex of degree four or more by a path. No step changes the rank, and no step loses a cycle.</p>
+<figure class="side">{{fig:ring-marked}}<figcaption>A set \(P\) of four vertices in a ring, and a cycle that meets \(P\). Without its dashed edges at \(P\), the cycle is a path.</figcaption></figure>
+<p>Mark a small connected set \(P\) of vertices in a cubic graph. For an even subgraph, the <dfn>outside part</dfn> is the set of its edges that have no end in \(P\). A <dfn>forest</dfn> is a set of edges that contains no cycle. If a cycle meets \(P\), its outside part is a forest, because it is a cycle without some of its edges.</p>
+<p>By the <a href="~/forest/">forest estimate</a>, at most a little more than half of all even subgraphs have an outside part that is a forest. Few cycles do not meet \(P\). So</p>
+\[ \psi(r) \le \Bigl(\frac12 + \frac{21}{\log\log\log r}\Bigr)\,2^{r}, \]
+<p>where \(\log\) is the logarithm to the base 2. This proves the conjecture of Entringer and Slater.</p>
 </section>
 
-<section id="half" data-title="Half of all even subgraphs">
-<p class="stop-sentence">In a large cubic graph, at most about half of the even subgraphs are cycles.</p>
-<p>Mark a small connected set \(P\) of vertices. The <dfn>outside part</dfn> of an even subgraph is the set of its edges that have no end in \(P\). A <dfn>forest</dfn> is a set of edges without a cycle. If a cycle meets \(P\), then its outside part is a forest, because it is a cycle without some of its edges.</p>
-<p>By the <a href="~/forest/">forest estimate</a>, the outside part is a forest for at most the proportion \(\frac12 + 20/\log\log\log r\) of the even subgraphs. Few cycles do not meet \(P\). So</p>
-\[ \psi(r) \le \Bigl(\frac12 + \frac{21}{\log\log\log r}\Bigr)\,2^{r}. \]
-<p>This proves the conjecture of Entringer and Slater. Here \(\log\) is the logarithm to the base two.</p>
-{{in-paper: Lemma 3.2 | 7 ; Corollary 3.3 | 7}}
-{{in-paper@forest: Theorem 1.1 | 2}}
-</section>
-
-<section id="cases" data-title="The second term and three cases">
-<p class="stop-sentence">The formula is larger than \(2^{r-1}\) by about \(r\,2^{r/2}\) only. So the proof must be exact to this order.</p>
-<p>The error term of the forest estimate is much too large for this. Let \(K\) be a suitable constant. The proof shows that a cubic graph of large rank \(r\) is a ring, or it has at most \(2^{r-1} + K\,2^{r/2}\) cycles. A <dfn>cyclic cut</dfn> is a set of edges whose removal leaves two parts that each contain a cycle. There are three cases.</p>
+<section id="cases" data-title="The second term">
+{{in-paper: Section 1.2 | 3 ; Figure 2 | 3}}
+<p>The formula is more than \(2^{r-1}\) by about \(r\,2^{r/2}\) only. For \(r = 27\) that is 217,049 cycles out of 67 million. The error term of the forest estimate is far larger than this. So the second term needs exact arguments. They show that a cubic graph of large rank is a ring, or has at most \(2^{r-1} + K\,2^{r/2}\) cycles. Here \(K\) is a fixed number.</p>
+<p>A <dfn>ring</dfn> here can have squares and single rungs in any order. A <dfn>cyclic cut</dfn> is a set of edges whose removal leaves two parts that each contain a cycle. There are three cases.</p>
 <ol class="case-list">
 <li><span class="case-if">The graph has a cyclic cut of at most three edges.</span> <span class="case-then">Then it has at most \(2^{r-1} + K\,2^{r/2}\) cycles.</span></li>
 <li><span class="case-if">It has no such cut, and it has a cycle of length four.</span> <span class="case-then">Then it is a ring, or it has fewer than \(2^{r-1}\) cycles.</span></li>
 <li><span class="case-if">It has no such cut and no cycle of length four.</span> <span class="case-then">Then it has fewer than \(2^{r-1}\) cycles.</span></li>
 </ol>
-<p>Here a <dfn>ring</dfn> can have squares and single rungs in each order.</p>
-{{in-paper: Section 1.2 | 3 ; Figure 2 | 3}}
 </section>
 
 <section id="paths" data-title="Paths in a part">
-<p class="stop-sentence">Take a part of the graph with more than half of the possible paths between two of its ends. Such a part is almost a ladder, and it has few cycles.</p>
-<p>A small cut divides the graph into two parts. A cycle that meets the two parts consists of paths in the parts. A part of rank \(b\) has at most \(2^{b}\) paths between two of its ends \(s\) and \(t\).</p>
-<figure class="static-diagram">{{fig:ladder}}<figcaption>A ladder of rank 6. It has all \(2^{6}\) possible paths from \(s\) to \(t\).</figcaption></figure>
-<p>Two facts on the number of these paths are the tools for the first two cases.</p>
-<ul>
-<li>Let \(\varepsilon &gt; 0\). If a part has at least \((\frac12 + \varepsilon)\,2^{b}\) paths from \(s\) to \(t\), then it has at most \(K_\varepsilon\,2^{b/2}\) cycles.</li>
-<li>A part has all \(2^{b}\) paths, or it has at most \((1-\gamma_0)\,2^{b}\) paths, where \(\gamma_0 &gt; 0\) is a constant. A part with all \(2^{b}\) paths is a ladder, or a row of ladders.</li>
-</ul>
-<p>The proof of the first fact uses the forest estimate. Add a shortest path from \(s\) to \(t\) to a second path from \(s\) to \(t\). The result is an even subgraph, and its edges away from the shortest path form a forest.</p>
-{{in-paper: Theorem 5.5 | 15 ; Lemma 5.6 | 16 ; Theorem 5.7 | 16}}
-</section>
-
-<section id="cuts" data-title="Small cuts and cycles of length four">
-<p class="stop-sentence">The two facts on paths give the first two cases. Only a ring keeps all possible paths.</p>
-<p>In the first case, a cut of at most three edges divides the graph into two parts with a cycle in each. If a part has many paths between its ends, then it has few cycles. A count of all combinations gives at most \(2^{r-1} + K\,2^{r/2}\) cycles.</p>
-<p>In the second case, remove a cycle of length four. The rest of the graph has four ends. If the graph has \(2^{r-1}\) cycles or more, then the rest has all possible paths between two pairs of its ends. So the rest is a chain of squares and single rungs, and the graph is a ring. A direct count shows that a ring of rank \(r\) has at most \(H(r)\) cycles.</p>
-{{in-paper: Proposition 6.3 | 20 ; Theorem 6.6 | 24 ; Corollary 6.2 | 20}}
+{{in-paper: Theorem 5.5 | 15 ; Theorem 5.7 | 16 ; Proposition 6.3 | 20 ; Theorem 6.6 | 24}}
+<p>The first two cases divide the graph into parts. A cycle that meets two parts consists of paths in the parts. So the proof counts the paths between two ends \(s\) and \(t\) of a part. A part of rank \(b\) has at most \(2^{b}\) such paths.</p>
+<figure class="side">{{fig:ladder}}<figcaption>A ladder of rank 6. It has all \(2^{6} = 64\) possible paths from \(s\) to \(t\).</figcaption></figure>
+<p>Two facts hold for every part. If it has more than half of the \(2^{b}\) paths, by a fixed margin, then it has at most a fixed number times \(2^{b/2}\) cycles. And if it does not have all \(2^{b}\) paths, then a fixed fraction of them is missing. A part with all \(2^{b}\) paths is a ladder as in the figure, or a row of ladders.</p>
+<p>The first fact uses the forest estimate. Add a shortest path from \(s\) to \(t\) to any other path from \(s\) to \(t\). The sum is an even subgraph, and its edges away from the shortest path form a forest.</p>
+<p>In the first case these facts give at most \(2^{r-1} + K\,2^{r/2}\) cycles. In the second case, remove a cycle of length four. If the graph has \(2^{r-1}\) cycles or more, the rest has all possible paths between two pairs of its ends. So the rest is a chain of squares and single rungs, and the graph is a ring. A direct count shows that a ring of rank \(r\) has at most \(H(r)\) cycles.</p>
 </section>
 
 <section id="girth" data-title="Girth five">
-<p class="stop-sentence">A graph without a small cut and without a short cycle contains two large pieces, and each piece removes a fixed proportion of the forests.</p>
-<p>In the third case the graph has no cycle with fewer than five edges. Here the bound must be below \(2^{r-1}\). The forest estimate cannot give this, because its error term is positive. Mark a set \(P\) of eight vertices. The claim is that the outside part is a forest for less than the proportion \(\frac25\) of the even subgraphs.</p>
-<figure class="static-diagram">{{fig:pieces}}<figcaption>Two disjoint pieces away from \(P\). Each piece is large, and few edges leave it.</figcaption></figure>
-<p>Suppose that the proportion is at least \(\frac25\). Then a second-moment argument finds two disjoint large pieces with small boundaries. In each piece, at most the proportion \(\frac35\) of the possible edge sets are forests, for each choice of the edges outside the piece. This is a contradiction, because \((\frac35)^{2} &lt; \frac25\).</p>
-<p>The condition on the cycles of length four is necessary. A long ladder has these cycles, and for a ladder this proportion can be 1.</p>
 {{in-paper: Theorem 7.1 | 25 ; Lemma 7.5 | 28 ; Proposition 7.8 | 31}}
+<p>In the third case the graph has no cycle with fewer than five edges. Here the count must end below \(2^{r-1}\), and the forest estimate cannot give that, because its error term is positive. Mark a connected set \(P\) of eight vertices. The claim is that the outside part is a forest for less than \(\frac25\) of the even subgraphs. Then the graph has fewer than \(\frac25\,2^{r} + 2^{r-5}\) cycles, which is less than \(2^{r-1}\).</p>
+<figure class="side">{{fig:pieces}}<figcaption>Two pieces away from \(P\). Each piece is large, and few edges leave it.</figcaption></figure>
+<p>Suppose that the fraction is \(\frac25\) or more. Then a second-moment argument finds two disjoint pieces of the graph away from \(P\), each large and with few edges that leave it. In each piece, at most \(\frac35\) of the possible edge sets are forests, whatever the edges outside the piece are. Two pieces give at most \(\frac35 \cdot \frac35 = \frac{9}{25}\), which is less than \(\frac25\).</p>
+<p>The condition on cycles of length four is necessary. A long ladder has such cycles, and for a ladder the fraction can be 1.</p>
 </section>
 
-<section id="end" data-title="The last step">
-<p class="stop-sentence">The second term of \(H(r)\) is of the order \(r\,2^{r/2}\). All graphs that are not rings have at most \(2^{r-1} + K\,2^{r/2}\) cycles.</p>
-<p>The formula gives \(H(r) \ge 2^{r-1} + (r-2)\,2^{r/2-1}\). For large \(r\) this is more than \(2^{r-1} + K\,2^{r/2}\). So a cubic graph of large rank with the largest number of cycles is a ring, and \(\psi(r) = H(r)\).</p>
-<p>The condition that \(r\) is large is necessary. A generalised Petersen graph of rank 27 has 67,959,973 cycles, and \(H(27)\) is 67,325,913. The proof gives no value for the rank from which the theorem holds.</p>
+<section id="end" data-title="Large rank">
 {{in-paper: Section 8 | 35 ; Fine print after Theorem 1.1 | 3}}
+<p>The formula gives</p>
+\[ H(r) \ge 2^{r-1} + (r-2)\,2^{r/2-1}. \]
+<p>For large \(r\) this is more than \(2^{r-1} + K\,2^{r/2}\). So a cubic graph of large rank with the largest number of cycles is a ring, and \(\psi(r) = H(r)\).</p>
+<p>The rank must be large. A generalised Petersen graph of rank 27 has 67,959,973 cycles, and \(H(27)\) is 67,325,913. The proof gives no value for the rank from which the formula holds.</p>
 </section>
 
-<section id="lean" data-title="The formal proof">
-<p class="stop-sentence">Lean is a computer program that checks each step of a proof. It has checked the theorem.</p>
-<p>The formal statement says that the largest number of cycles is \(H(r)\) for every rank from some number on.</p>
-<ul class="lean-names">
-<li><code>Erdos1016.ExactMaximum.exactMaximum_threeCases</code></li>
-</ul>
-<p>The formal proof has the three cases of this tour. Some of its steps are not the steps of the paper. So the check covers the theorem. It does not cover the text of the paper, and no referee has read the text.</p>
-<p>The paper states the part of each of its three authors. Two of them are language models. The Lean files are in the <a href="https://github.com/JWKNT/erdos1016">repository</a>.</p>
-{{in-paper: Section 1.4 | 4}}
+<section id="about">
+<p>KNT directed this work. The language models GPT-6 Astra and Claude Fable 5.2 found the parts of the proof, and Fable 5.2 wrote the paper. A <a href="https://github.com/JWKNT/erdos1016">formal copy</a> of the theorem passes Lean, a computer program that checks each step of a proof. Some of its steps are not the steps of the paper. No referee has read the paper.</p>
 </section>

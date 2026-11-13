@@ -15,8 +15,11 @@ Erdős problem 1016 is the page at the root, and the two other tours are below i
 jehlp.net has one entry for the three tours. It opens the list page, and each tour links the list
 page as "All Tours".
 
-Each tour is a list of numbered stops. A stop has one first sentence, a short text, at most one
-interactive example or figure, and a line with links to pages of the paper.
+Each tour is plain text in numbered sections, in the manner of the AI Math Results pages. On a
+wide screen the text is in one column, and the margin on its right has the list of sections, a
+reference to the pages of the paper for each section, and at most one figure, table or example
+for each section. On a narrow screen these items are in the text flow. Three interactive
+examples remain: the graph on six vertices, the binary shortcuts and the ring of squares.
 
 All addresses in the pages are relative. The canonical addresses in the page headers come from
 the constant `ROOT` in `site-src/build.mjs`.
@@ -25,8 +28,11 @@ the constant `ROOT` in `site-src/build.mjs`.
 
 - The sources are `site-src/pages/*.html`, and `index.html` is the root page. The header of
   `site-src/build.mjs` describes the format. Formulas are TeX between `\( \)` and `\[ \]`.
-- The figures and the computed table are in `site-src/figures.mjs`. The interactive examples are
-  in `assets/explorers.mjs`, and their mathematics is in `assets/math-core.mjs`.
+  An element with `class="side"` goes into the margin.
+- Write the text by `site-theme/docs/WRITING-STYLE.md`. One test counts the words: at most 25 in
+  a sentence, six sentences in a paragraph and 1,400 words on a page.
+- The margin figures and the computed tables are in `site-src/figures.mjs`. The interactive
+  examples are in `assets/explorers.mjs`, and their mathematics is in `assets/math-core.mjs`.
 - Build the pages with `node site-src/build.mjs`. The build needs Temml 0.14.0: run
   `npm install` in `site-src/`, or set the variable `TEMML` to the path of `dist/temml.mjs`.
   The built pages are committed, so the publication needs no build.
@@ -43,8 +49,7 @@ the constant `ROOT` in `site-src/build.mjs`.
   so the pages need no other server. Update them together. `base.css` also has the rule for
   justified text of site-theme `64eafa3`.
 - The local styles are in `assets/guide.css`. A statement of a paper has a blue rule on its left
-  side, and the first sentence of a stop has an ochre rule. These two forms follow the papers.
-  There are no cards, shadows, rounded corners or footers.
+  side, as in the papers. There are no cards, shadows, rounded corners or footers.
 - Formulas are native MathML from the build. The browser loads no typesetter. The math font is
   Latin Modern Math, unchanged and local. Its GUST Font License is in `assets/fonts/`.
 - All diagrams are local vector graphics. The pages have no analytics, no tracking and no font

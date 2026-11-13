@@ -2,8 +2,9 @@
 """Check the page numbers of the links from the tours to the papers.
 
 Each directive {{in-paper: Lemma 2.2 | 5}} in site-src/pages/ names a statement, a section or a
-figure and a page. This script reads that page of the PDF with pdftotext (poppler) and looks for
-the head of the statement, the section or the figure. Run it after a paper changes:
+figure and a page. An item "forest: Theorem 1.1 | 2" names a page of another paper. This script
+reads that page of the PDF with pdftotext (poppler) and looks for the head of the statement, the
+section or the figure. Run it after a paper changes:
 
     python3 site-src/check_pages.py
 
@@ -53,11 +54,14 @@ def main() -> int:
         if header is None:
             raise ValueError(f"{source.name} has no page header")
         meta = json.loads(header[1])
-        for key, items in re.findall(r"\{\{in-paper(?:@([\w-]+))?:([^}]+)\}\}", text):
-            paper = meta["otherPapers"][key] if key else meta["paper"]
-            pdf = SITE / paper["file"]
+        for items in re.findall(r"\{\{in-paper:([^}]+)\}\}", text):
             for item in items.split(";"):
-                label, page = (part.strip() for part in item.split("|"))
+                match = re.fullmatch(r"\s*(?:([\w-]+):)?\s*([^|]+?)\s*\|\s*(\d+)\s*", item)
+                if match is None:
+                    raise ValueError(f"{source.name}: bad reference {item.strip()!r}")
+                key, label, page = match.groups()
+                paper = meta["otherPapers"][key] if key else meta["paper"]
+                pdf = SITE / paper["file"]
                 count += 1
                 if not found(label, page_lines(pdf, int(page))):
                     errors += 1

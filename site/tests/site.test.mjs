@@ -4,7 +4,7 @@ import { readFile, access } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { ringGraph, forestDistribution, horakKim } from '../assets/math-core.mjs';
+import { ringGraph, forestDistribution, horakKim, logStar, secondMomentBound, enumerateEvenSets, edgeKey } from '../assets/math-core.mjs';
 
 const site = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const repo = resolve(site, '..');
@@ -12,18 +12,18 @@ const read = (path) => readFile(resolve(site, path), 'utf8');
 
 // The three tours, by their folder below the site root. The Erdős 1016 tour is the root page,
 // because other sites link the address jehlp.net/erdos1016. `paper` is the file in site/papers,
-// `source` is its place in the repository.
+// `source` is its place in the repository, and `sections` is the number of numbered sections.
 const TOURS = {
   '': {
-    title: 'Erdős 1016', stops: 10, demos: ['graph', 'binary', 'logstar', 'restriction', 'recurrence'],
+    title: 'Erdős 1016', sections: 6, demos: ['graph', 'binary'],
     paper: 'pancyclic.pdf', pages: 7, source: 'paper/minimal/pancyclic/pancyclic.pdf',
   },
   forest: {
-    title: 'Forest Estimate', stops: 11, demos: ['space', 'forest', 'cut', 'moment', 'walk'],
+    title: 'Forest Estimate', sections: 8, demos: [],
     paper: 'forest.pdf', pages: 12, source: 'paper/minimal/forest/forest.pdf',
   },
   'exact-maximums': {
-    title: 'Exact Maximums', stops: 10, demos: ['ring'],
+    title: 'Exact Maximums', sections: 7, demos: ['ring'],
     paper: 'exact-maximum.pdf', pages: 36, source: 'paper/minimal/exact-maximum/exact-maximum.pdf',
   },
 };
@@ -36,36 +36,41 @@ const html = Object.fromEntries(await Promise.all(slugs.map(async (slug) => [slu
 const LIST = { slug: 'graph-theory', title: 'Erdős 1016 & Graph Theory' };
 const list = await read(`${LIST.slug}/index.html`);
 const everyPage = [...slugs.map((slug) => [slug, html[slug]]), [LIST.slug, list]];
-const sections = (page) => [...page.matchAll(/<section id="([\w-]+)">([\s\S]*?)<\/section>/g)].map(([, id, body]) => ({ id, body }));
+const sections = (page) => [...page.matchAll(/<section id="([\w-]+)"[^>]*>([\s\S]*?)<\/section>/g)].map(([, id, body]) => ({ id, body }));
+const numbered = (page) => sections(page).filter(({ body }) => body.includes('class="chapter-number"'));
 const text = (fragment) => fragment.replace(/<[^>]+>/g, '');
+const number = (value) => value.toLocaleString('en-US');
 
-test('each tour has its numbered stops, unique IDs and working internal navigation', () => {
+test('each tour has its numbered sections, unique IDs and a list of the sections in the margin', () => {
   for (const slug of slugs) {
     const page = html[slug];
     const ids = [...page.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]);
     assert.equal(ids.length, new Set(ids).size, `${name(slug)}: repeated id`);
     const numbers = [...page.matchAll(/<h2><span class="chapter-number">(\d+)<\/span>/g)].map((m) => Number(m[1]));
-    assert.deepEqual(numbers, Array.from({ length: TOURS[slug].stops }, (_, i) => i + 1), name(slug));
-    const listed = [...page.match(/<aside id="contents"[\s\S]*?<\/aside>/)[0].matchAll(/href="#([\w-]+)"/g)].map((m) => m[1]);
-    assert.equal(listed.length, TOURS[slug].stops, `${name(slug)}: the contents list every stop`);
+    assert.deepEqual(numbers, Array.from({ length: TOURS[slug].sections }, (_, i) => i + 1), name(slug));
+    // The list is the first item of the first section, so it is at the top of the margin.
+    const first = sections(page)[0];
+    assert.equal(first.id, 'start', name(slug));
+    assert.match(first.body, /^\s*<nav class="contents side" aria-label="Contents">/, `${name(slug)}: the list of sections is in the first section`);
+    const listed = [...first.body.match(/<nav class="contents side"[\s\S]*?<\/nav>/)[0].matchAll(/href="#([\w-]+)"/g)].map((m) => m[1]);
+    assert.deepEqual(listed, numbered(page).map(({ id }) => id), `${name(slug)}: the list names every numbered section in order`);
     for (const [, id] of page.matchAll(/href="#([^"]+)"/g)) assert.ok(ids.includes(id), `${name(slug)}: unknown anchor ${id}`);
-    // The lead states the number of stops in words.
-    const words = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
-    assert.ok(page.includes(`The tour has ${words[TOURS[slug].stops]} stops.`), `${name(slug)}: number of stops in the lead`);
-    // A reference to a stop by number names a stop that exists.
-    for (const [, n] of text(page).matchAll(/\b[Ss]top (\d+)\b/g)) assert.ok(Number(n) >= 1 && Number(n) <= TOURS[slug].stops, `${name(slug)}: stop ${n}`);
+    assert.doesNotMatch(page, /<aside id="contents"|class="reading-layout"|class="stop-sentence"/, `${name(slug)}: no left column and no summary line`);
   }
 });
 
-test('each stop starts with one first sentence and ends with a link to its place in the paper', () => {
+test('each numbered section has its reference to the paper after the heading, and one margin item at most', () => {
   for (const slug of slugs) {
-    const stops = sections(html[slug]).filter(({ body }) => body.includes('class="chapter-number"'));
-    assert.equal(stops.length, TOURS[slug].stops, name(slug));
-    for (const { id, body } of stops) {
-      assert.equal((body.match(/class="stop-sentence"/g) || []).length, 1, `${name(slug)}#${id}: one first sentence`);
-      assert.match(body, /<\/h2>\s*<p class="stop-sentence">/, `${name(slug)}#${id}: the first sentence follows the heading`);
-      assert.match(body, /<p class="in-paper">[\s\S]*<\/p>\s*$/, `${name(slug)}#${id}: the stop ends with the link to the paper`);
+    for (const { id, body } of numbered(html[slug])) {
+      assert.match(body, /<\/h2>\s*<p class="in-paper"><span class="in-paper-group"><span class="in-paper-label">Paper<\/span> /, `${name(slug)}#${id}: the reference follows the heading`);
+      assert.equal((body.match(/class="in-paper"/g) || []).length, 1, `${name(slug)}#${id}: one reference line`);
       assert.ok(body.includes(`href="${prefix(slug)}papers/${TOURS[slug].paper}#page=`), `${name(slug)}#${id}: link to its own paper`);
+      assert.ok((body.match(/class="side"/g) || []).length <= 1, `${name(slug)}#${id}: one margin item at most`);
+    }
+    // A margin item is a figure with a caption, or the example of the rings.
+    for (const [, tag, inner] of html[slug].matchAll(/<(figure|aside) class="side">([\s\S]*?)<\/\1>/g)) {
+      if (tag === 'figure') assert.match(inner, /^(?:<svg viewBox="0 0 \d+ \d+" role="img" aria-label="[^"]{40,}">|<table class="values">)[\s\S]*<figcaption>[^]+<\/figcaption>$/, `${name(slug)}: a margin figure has an accessible name and a caption`);
+      else assert.match(inner, /<div id="ring-demo"><\/div>/, `${name(slug)}: the margin example`);
     }
   }
 });
@@ -79,11 +84,13 @@ test('every link to a paper names a file and a page that exist', async () => {
       if (pageNumber !== undefined) assert.ok(Number(pageNumber) >= 1 && Number(pageNumber) <= PAGE_COUNT[file], `${file} has no page ${pageNumber}`);
     }
   }
-  assert.ok(links >= 60, `only ${links} links to the papers`);
+  assert.ok(links >= 50, `only ${links} links to the papers`);
   for (const slug of slugs) {
     const header = html[slug].match(/<header\b[\s\S]*?<\/header>/)[0];
     assert.ok(header.includes(`href="${prefix(slug)}papers/${TOURS[slug].paper}">Paper</a>`), `${name(slug)}: the header links the paper`);
-    assert.ok(html[slug].includes(`PDF, ${TOURS[slug].pages} pages`), `${name(slug)}: the lead gives the length of the paper`);
+    // The paper is linked on the words that state the result, in the first section.
+    const first = sections(html[slug])[0].body.replace(/<nav[\s\S]*?<\/nav>/, '');
+    assert.ok(first.includes(`<a href="${prefix(slug)}papers/${TOURS[slug].paper}">`), `${name(slug)}: the first section links the paper`);
   }
 });
 
@@ -93,7 +100,7 @@ test('the published papers are the papers of the repository', async () => {
     assert.equal(pdf.subarray(0, 5).toString(), '%PDF-');
     assert.deepEqual(pdf, await readFile(resolve(repo, source)), `${paper} differs from ${source}`);
   }
-  // The first manuscript of September 2026 stays at its address.
+  // The first paper of September 2026 stays at its address.
   assert.ok(html[''].includes('href="paper.pdf"'));
   assert.deepEqual(await readFile(resolve(site, 'paper.pdf')), await readFile(resolve(repo, 'paper/erdos1016.pdf')));
 });
@@ -118,6 +125,7 @@ test('every page has the identity header, a canonical address under /erdos1016/ 
     assert.match(page, /^<!doctype html>\n<html lang="en">/, label);
     assert.match(page, /name="viewport"/, label);
     assert.match(page, /<a class="skip-link" href="#main">/, label);
+    assert.match(page, /<main id="main" class="tour(?: tour--plain)?">/, label);
     assert.ok(page.includes(`<link rel="canonical" href="https://jehlp.net/erdos1016/${slug ? `${slug}/` : ''}">`), `${label}: canonical`);
     const header = page.match(/<header class="site-header site-header--identity">[\s\S]*?<\/header>/)[0];
     assert.match(header, /<img class="site-mark" src="[^"]*assets\/mark\.png" alt="" width="32" height="32">/, label);
@@ -151,9 +159,9 @@ test('mathematics is native MathML from the build, with the local math font', as
     assert.doesNotMatch(page, /<script[^>]*(?:temml|katex|mathjax)/i, `${label}: no typesetter in the browser`);
   }
   for (const slug of slugs) {
-    assert.ok((html[slug].match(/<math[\s>]/g) || []).length >= 60, `${name(slug)}: inline formulas`);
+    assert.ok((html[slug].match(/<math[\s>]/g) || []).length >= 50, `${name(slug)}: inline formulas`);
     const displays = (html[slug].match(/<div class="equation" role="group" aria-label="Formula" tabindex="0"><math display="block"/g) || []).length;
-    assert.ok(displays >= 2, `${name(slug)}: ${displays} display formulas`);
+    assert.ok(displays >= 3, `${name(slug)}: ${displays} display formulas`);
     assert.equal(displays, (html[slug].match(/class="equation"/g) || []).length, `${name(slug)}: every display has the keyboard scroll region`);
   }
   assert.ok(html.forest.includes('<mfrac>') && html.forest.includes('<msup>') && html[''].includes('<msub>'));
@@ -173,9 +181,10 @@ test('every interactive example has its code and a text for readers without scri
     for (const id of ids) {
       used.add(`${id}-demo`);
       assert.ok(mounted.has(`${id}-demo`), `${name(slug)}: no code for ${id}-demo`);
-      assert.match(html[slug], new RegExp(`<div class="experiment">\\s*<h3>[^<]+</h3>\\s*<div id="${id}-demo"></div>\\s*<noscript><p>[^<]{40,}</p></noscript></div>`), `${name(slug)}: ${id}-demo`);
+      assert.match(html[slug], new RegExp(`<div id="${id}-demo"></div>\\s*<noscript><p>[^<]{40,}</p></noscript>`), `${name(slug)}: ${id}-demo`);
     }
-    assert.ok(new RegExp(`<script type="module" src="${prefix(slug).replace(/\./g, '\\.')}assets/explorers\\.mjs\\?v=[\\w-]+"></script>`).test(html[slug]), name(slug));
+    const script = new RegExp(`<script type="module" src="${prefix(slug).replace(/\./g, '\\.')}assets/explorers\\.mjs\\?v=[\\w-]+"></script>`);
+    assert.equal(script.test(html[slug]), ids.length > 0, `${name(slug)}: the script is on the page only if the page has an example`);
   }
   assert.deepEqual([...mounted].sort(), [...used].sort(), 'each example of the code is on one page');
   assert.doesNotMatch(list, /<script type="module"|-demo"/, 'the list page has no example');
@@ -185,45 +194,98 @@ test('the list page names the three tours in order, each with its address, its t
   const items = [...list.matchAll(/<li>\s*<h2><a href="([^"]*)">([^<]*)<\/a><\/h2>\s*<p>([\s\S]*?)<\/p>\s*<p class="paper-line"><a href="([^"]*)">[^<]+<\/a> <span class="paper-meta">PDF, (\d+) pages<\/span><\/p>\s*<\/li>/g)];
   assert.equal(items.length, slugs.length);
   slugs.forEach((slug, i) => {
-    const [, href, title, text, paper, pages] = items[i];
+    const [, href, title, body, paper, pages] = items[i];
     assert.equal(href, `../${slug ? `${slug}/` : ''}`, `address of ${title}`);
     assert.equal(title, TOURS[slug].title);
-    assert.ok(text.length > 120, `${title}: a text of one or more sentences`);
+    assert.ok(body.length > 120, `${title}: a text of one or more sentences`);
     assert.equal(paper, `../papers/${TOURS[slug].paper}`);
     assert.equal(Number(pages), TOURS[slug].pages);
   });
   assert.equal((list.match(/<li>/g) || []).length, slugs.length, 'no other item');
-  assert.doesNotMatch(list, /class="contents"|class="chapter-number"|class="stop-sentence"/, 'the list page is not a tour');
+  assert.doesNotMatch(list, /class="contents|class="chapter-number"|class="side"/, 'the list page is not a tour');
 });
 
-test('the numbers in the text are the numbers that the code computes', () => {
-  // Forest tour: the table of the rings with one marked square.
+test('the numbers in the text and in the margin tables are the numbers that the code computes', () => {
+  const row = (cells) => `<tr>${cells.map((cell) => `<td>${cell}</td>`).join('')}</tr>`;
+  // Forest tour: the rings with one marked square.
   for (const squares of [2, 3, 4, 5, 6]) {
     const ring = ringGraph(squares);
     const marked = new Set([...ring.tiles[0].left, ...ring.tiles[0].right]);
     const { favorable, total } = forestDistribution(ring.n, ring.edges, ring.edges.filter(([u, v]) => marked.has(u) || marked.has(v)));
     assert.equal(total, 2 ** ring.rank);
-    assert.ok(2 * favorable > total, 'more than half, as the lower bound says');
-    const row = `<tr><td>${squares}</td><td>${total.toLocaleString('en-US')}</td><td>${favorable.toLocaleString('en-US')}</td><td>${(favorable / total).toFixed(3)}</td></tr>`;
-    assert.ok(html.forest.includes(row), `row for ${squares} squares`);
+    assert.ok(2 * favorable > total, 'more than half, as the lower limit says');
+    assert.ok(html.forest.includes(row([squares, number(total), number(favorable), (favorable / total).toFixed(3)])), `row for ${squares} squares`);
   }
-  assert.ok(html.forest.includes('<td>30</td><td>0.938</td>') && html.forest.includes('<td>4,802</td><td>0.586</td>'));
-  // Exact maximums: the values of H in the text.
+  // Forest tour: two triangles joined by one edge, with P the left triangle. Two of the four outside parts are forests.
+  const bridge = [[0, 1], [1, 2], [2, 0], [3, 4], [4, 5], [5, 3], [2, 3]];
+  const atLeft = bridge.filter(([u, v]) => u < 3 || v < 3);
+  assert.deepEqual((({ favorable, total }) => [favorable, total])(forestDistribution(6, bridge, atLeft)), [2, 4]);
+  // Forest tour: two triangles joined by two edges. Each triangle is a component of two of the eight
+  // even subgraphs, and both are components of one.
+  const left = [[0, 1], [1, 2], [2, 0]], right = [[3, 4], [4, 5], [5, 3]];
+  const even = enumerateEvenSets(6, [...left, ...right, [1, 3], [2, 4]]).map((set) => new Set(set.map(edgeKey)));
+  const component = (triangle, set) => triangle.every((edge) => set.has(edgeKey(edge))) && !set.has('1-3') && !set.has('2-4');
+  assert.equal(even.length, 8);
+  assert.equal(even.filter((set) => component(left, set)).length, 2);
+  assert.equal(even.filter((set) => component(right, set)).length, 2);
+  assert.equal(even.filter((set) => component(left, set) && component(right, set)).length, 1);
+  assert.ok(text(html.forest).includes('The graph has rank 3 and eight even subgraphs.'));
+  // Forest tour: the two sides of the second-moment inequality, and the rank from which the error term is below one half.
+  for (const mu of [1, 10, 100]) assert.ok(html.forest.includes(row([mu, secondMomentBound(mu, 2).toFixed(3), (0.5 + 1 / (2 * mu)).toFixed(3)])), `row for the mean ${mu}`);
+  assert.equal(20 / 40, 0.5);
+  assert.match(html.forest, /<msup><mn>2<\/mn><msup><mn>2<\/mn><msup><mn>2<\/mn><mn[^>]*>40<\/mn><\/msup><\/msup><\/msup>/, 'the tower 2^(2^(2^40))');
+  // Erdős 1016: the iterated logarithm, the closing edges for 16 segments, and one million vertices.
+  for (const n of [2, 4, 16, 65536]) {
+    assert.equal(logStar(n + 1), logStar(n) + 1, `${n} is the largest number with its value`);
+    assert.ok(html[''].includes(row([number(n), logStar(n)])), `row for n = ${n}`);
+  }
+  for (const [segments, low, high] of [[16, 17, 2 ** 16 + 16], [4, 5, 20], [2, 3, 6]]) assert.ok(html[''].includes(row([segments, `${number(low)} to ${number(high)}`])), `row for ${segments} segments`);
+  assert.equal(Math.ceil(Math.log2(16)), 4);
+  assert.equal(Math.ceil(Math.log2(4)), 2);
+  assert.equal(logStar(16), 3);
+  assert.equal(logStar(1e6), 5);
+  assert.equal(Math.floor(Math.log2(1e6)) + logStar(1e6) + 1, 25);
+  assert.equal((Math.log2(1e6) + logStar(1e6)).toFixed(1), '24.9');
+  assert.ok(text(html['']).includes('So 25 edges above the million are enough'));
+  // Exact maximums: the values of the formula.
+  for (const r of [9, 10, 20, 27]) assert.ok(html['exact-maximums'].includes(row([r, number(2 ** (r - 1)), number(horakKim(r))])), `row for r = ${r}`);
   const exact = text(html['exact-maximums']);
+  assert.equal(256 + 136 - 12, horakKim(9));
   assert.ok(exact.includes(`The ring of rank 9 has four squares and ${horakKim(9)} cycles.`));
   assert.ok(exact.includes(`one single rung and ${horakKim(10)} cycles`));
-  assert.ok(exact.includes(`is ${horakKim(27).toLocaleString('en-US')}.`));
+  assert.ok(exact.includes(`is ${number(horakKim(27))}.`));
+  assert.ok(exact.includes(`that is ${number(horakKim(27) - 2 ** 26)} cycles out of 67 million`));
   assert.ok(exact.includes('67,959,973 cycles') && 67959973 > horakKim(27));
-  // Forest tour: the values of the second-moment bound in the text without scripts.
-  assert.ok(text(html.forest).includes('For the mean 1 the bound is 0.75. For the mean 10 it is about 0.545. For the mean 100 it is about 0.505.'));
+  assert.ok(9 / 25 < 2 / 5 && 2 / 5 * 2 ** 10 + 2 ** 5 < 2 ** 9, 'the two inequalities of the third case, for r = 10');
 });
 
-test('the tour styles keep the theme: thin rules, no shadow, no rounded corner', async () => {
+// A screening aid for the writing rules, not a full check: a formula counts as one word.
+test('the text is short: at most 25 words in a sentence, six sentences in a paragraph, 1,400 words on a page', () => {
+  for (const slug of slugs) {
+    const main = html[slug].match(/<main[\s\S]*<\/main>/)[0].replace(/<noscript>[\s\S]*?<\/noscript>/g, '').replace(/<nav[\s\S]*?<\/nav>/g, '').replace(/<svg[\s\S]*?<\/svg>/g, '').replace(/<table[\s\S]*?<\/table>/g, '');
+    const blocks = [...main.matchAll(/<(p|li|figcaption)\b[^>]*>([\s\S]*?)<\/\1>/g)].filter(([whole]) => !whole.includes('class="in-paper"')).map(([, , inner]) => text(inner.replace(/<div class="equation"[\s\S]*?<\/div>/g, ' ').replace(/<math[\s\S]*?<\/math>/g, 'X')).replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim());
+    let words = 0;
+    for (const block of blocks) {
+      assert.doesNotMatch(block, /;/, `${name(slug)}: a semicolon in "${block.slice(0, 60)}"`);
+      const sentences = block.split(/(?<=[.!?])\s+/).filter(Boolean);
+      assert.ok(sentences.length <= 6, `${name(slug)}: ${sentences.length} sentences in "${block.slice(0, 60)}"`);
+      for (const sentence of sentences) {
+        const count = sentence.split(' ').length;
+        words += count;
+        assert.ok(count <= 25, `${name(slug)}: ${count} words in "${sentence}"`);
+      }
+    }
+    assert.ok(words <= 1400, `${name(slug)}: ${words} words`);
+    assert.doesNotMatch(main, /The tour has|Each stop gives/, `${name(slug)}: no line about the page itself`);
+  }
+});
+
+test('the margin layout keeps the theme: thin rules, no shadow, no rounded corner', async () => {
   const css = await read('assets/guide.css');
   assert.doesNotMatch(css, /box-shadow|border-radius:(?!0)|linear-gradient|radial-gradient/);
-  assert.match(css, /\.stop-sentence \{[^}]*border-left:3px solid var\(--tone-ochre\)/);
+  // A margin item floats into the space on the right of the text column, on a wide screen only.
+  assert.match(css, /@media \(min-width:62rem\) \{\s*main > section \{ display:flow-root; padding-right:max\(calc\(var\(--side\) \+ var\(--side-gap\)\), calc\(100% - var\(--text\)\)\); \}\s*main > section > :is\(\.in-paper, \.side\) \{ float:right; clear:right; width:var\(--side\);/);
   assert.match(css, /\.statement \{[^}]*border-left:3px solid var\(--blue\); background:var\(--surface-blue\)/);
-  assert.match(css, /\.in-paper \{[^}]*border-top:1px solid var\(--line\)/);
   // Figure colours come from theme tokens, so both colour modes have them.
   for (const rule of css.match(/\.fig-[\w-]+ \{[^}]*\}/g)) assert.doesNotMatch(rule, /#[0-9a-f]{3,8}\b|rgb\(/i, rule);
 });
@@ -250,15 +312,15 @@ test('mathematics uses prose ink with neutral display shading', async () => {
 test('vendored theme includes the exact Home door and Wrenfold assets with math kept separate', async () => {
   const hash = async (path) => createHash('sha256').update(await readFile(resolve(site, path))).digest('hex');
   assert.equal(await hash('assets/theme/fonts/WrenfoldText-Regular.woff2'), '826f6c238521bfbf98d897a8f81810a78ed2d6571fec0ef86d0d51edba0212be');
-  for (const name of ['home-doorway.svg', 'home-folio-scroll.svg', 'home-compass.svg', 'home-emblem.svg', 'home.svg']) {
-    assert.equal(await hash(`assets/theme/icons/${name}`), '2baa87caf29834e155af108d7743c410e2a3b1775edf6c7671ec24918a7810db');
+  for (const icon of ['home-doorway.svg', 'home-folio-scroll.svg', 'home-compass.svg', 'home-emblem.svg', 'home.svg']) {
+    assert.equal(await hash(`assets/theme/icons/${icon}`), '2baa87caf29834e155af108d7743c410e2a3b1775edf6c7671ec24918a7810db');
   }
   const css = await read('assets/theme/base.css');
   assert.match(css, /--serif: Georgia, "Times New Roman", serif/);
   assert.match(css, /--reading: "Wrenfold Text"/);
   assert.match(css, /--display: "Palatino Linotype"/);
   assert.match(css, /icons\/home-doorway\.svg/);
-  for (const name of ['OFL-1.1.txt', 'Noto-Debian-copyright.txt', 'Wrenfold-README.txt']) await access(resolve(site, `assets/theme/fonts/${name}`));
+  for (const file of ['OFL-1.1.txt', 'Noto-Debian-copyright.txt', 'Wrenfold-README.txt']) await access(resolve(site, `assets/theme/fonts/${file}`));
   const guide = await read('assets/guide.css');
   assert.match(guide, /math \{ font-family:var\(--math-face\)/);
   assert.match(guide, /\.graph-label \{[^}]*font-family:var\(--sans\)/);
