@@ -91,6 +91,72 @@ export function enumerateSimpleCycles(n, inputEdges) {
   return cycles.sort((a, b) => a.length - b.length || a.join(',').localeCompare(b.join(',')));
 }
 
+/** The number of cycles of a simple graph, by the same search, without a list of the cycles. */
+export function countSimpleCycles(n, inputEdges) {
+  if (n > 26) throw new RangeError('The cycle count is bounded to 26 vertices.');
+  const edges = normalizeEdges(n, inputEdges);
+  const adjacency = Array.from({ length: n }, () => []);
+  edges.forEach(([u, v]) => { adjacency[u].push(v); adjacency[v].push(u); });
+  let total = 0;
+  for (let start = 0; start < n; start++) {
+    const used = new Uint8Array(n);
+    used[start] = 1;
+    // Each undirected cycle is counted once: its least vertex first, its second vertex less than its last.
+    function walk(vertex, length, second) {
+      for (const next of adjacency[vertex]) {
+        if (next === start) { if (length >= 3 && second < vertex) total++; }
+        else if (next > start && !used[next]) {
+          used[next] = 1;
+          walk(next, length + 1, length === 1 ? next : second);
+          used[next] = 0;
+        }
+      }
+    }
+    walk(start, 1, -1);
+  }
+  return total;
+}
+
+/** The number H(r) of Horak and Kim, for a rank r from 3 to 40. */
+export function horakKim(r) {
+  if (!Number.isInteger(r) || r < 3 || r > 40) throw new RangeError('Use a rank from 3 to 40.');
+  const q = Math.floor((r - 1) / 2);
+  return r % 2 === 1
+    ? 4 ** q + (4 * q + 1) * 2 ** (q - 1) - 3 * q
+    : 2 * 4 ** q + (4 * q + 9) * 2 ** (q - 1) - 3 * q - 4;
+}
+
+/** A ring of tiles. A square has a left pair and a right pair of vertices and the four edges
+ * between the pairs. A single rung is one edge, and its two vertices are both pairs. Two edges
+ * join the right pair of a tile to the left pair of the next tile. The squares come first. */
+export function ringGraph(squares, rungs = 0) {
+  if (!Number.isInteger(squares) || !Number.isInteger(rungs) || squares < 0 || rungs < 0 || rungs > 1) {
+    throw new RangeError('Use a whole number of squares and at most one single rung.');
+  }
+  const n = 4 * squares + 2 * rungs;
+  if (squares < 2 || n > 26) throw new RangeError('Use two or more squares and at most 26 vertices.');
+  const tiles = [];
+  const edges = [];
+  let next = 0;
+  for (let i = 0; i < squares; i++) {
+    const [a, b, c, d] = [next, next + 1, next + 2, next + 3];
+    next += 4;
+    edges.push([a, c], [a, d], [b, c], [b, d]);
+    tiles.push({ kind: 'square', left: [a, b], right: [c, d] });
+  }
+  for (let i = 0; i < rungs; i++) {
+    const [u, v] = [next, next + 1];
+    next += 2;
+    edges.push([u, v]);
+    tiles.push({ kind: 'rung', left: [u, v], right: [u, v] });
+  }
+  tiles.forEach((tile, i) => {
+    const after = tiles[(i + 1) % tiles.length];
+    edges.push([tile.right[0], after.left[0]], [tile.right[1], after.left[1]]);
+  });
+  return { n, edges, tiles, rank: 2 * squares + rungs + 1 };
+}
+
 export function cycleEdges(vertices) {
   if (vertices.length < 3) throw new RangeError('A simple cycle needs at least three vertices.');
   return vertices.map((v, i) => [v, vertices[(i + 1) % vertices.length]]);

@@ -1,8 +1,14 @@
-name: Publish interactive proof guide
+name: Publish the guided tours
 on:
   push:
     branches: [main]
-    paths: ['site/**', 'paper/erdos1016.pdf', '.github/workflows/site.yml']
+    paths:
+      - 'site/**'
+      - 'paper/erdos1016.pdf'
+      - 'paper/minimal/forest/forest.pdf'
+      - 'paper/minimal/pancyclic/pancyclic.pdf'
+      - 'paper/minimal/exact-maximum/exact-maximum.pdf'
+      - '.github/workflows/site.yml'
   workflow_dispatch:
 permissions:
   contents: read
@@ -22,8 +28,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Copy the current manuscript
-        run: cp paper/erdos1016.pdf site/paper.pdf
+      - name: Copy the current papers
+        run: |
+          cp paper/erdos1016.pdf site/paper.pdf
+          mkdir -p site/papers
+          cp paper/minimal/forest/forest.pdf site/papers/forest.pdf
+          cp paper/minimal/pancyclic/pancyclic.pdf site/papers/pancyclic.pdf
+          cp paper/minimal/exact-maximum/exact-maximum.pdf site/papers/exact-maximum.pdf
       - run: node --test site/tests/*.mjs
       - uses: actions/configure-pages@v5
         with:

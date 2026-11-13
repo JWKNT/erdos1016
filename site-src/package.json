@@ -1,0 +1,12 @@
+{
+  "name": "graphs-site-src",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "check": "node build.mjs --check"
+  },
+  "devDependencies": {
+    "temml": "0.14.0"
+  }
+}

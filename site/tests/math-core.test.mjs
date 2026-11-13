@@ -5,6 +5,7 @@ import {
   isSimpleCycle, enumerateSimpleCycles, cycleEdges, xorEdgeSets, cycleBasis,
   enumerateEvenSets, forestDistribution, binaryConstruction, logStar,
   logStarSteps, secondMomentBound, idealizedRecurrence, thetaCutDistribution, analyzeWalk,
+  countSimpleCycles, horakKim, ringGraph,
 } from '../assets/math-core.mjs';
 
 const allEdges = (n) => Array.from({ length: n }, (_, u) =>
@@ -267,4 +268,45 @@ test('XOR cancellation and restriction can leave an odd-degree forest', () => {
     assert.equal(isEvenEdgeSet(4, word), true);
     assert.equal(isForest(4, word.filter((edge) => !witness.has(edgeKey(edge)))), true);
   }
+});
+
+test('the cycle count agrees with the list of cycles for every simple graph on six vertices', () => {
+  for (let mask = 0; mask < 2 ** completeSix.length; mask += 7) {
+    const edges = fromMask(completeSix, mask);
+    assert.equal(countSimpleCycles(6, edges), enumerateSimpleCycles(6, edges).length, `mask ${mask}`);
+  }
+  assert.equal(countSimpleCycles(4, allEdges(4)), 7);
+  assert.throws(() => countSimpleCycles(27, []), RangeError);
+});
+
+test('a ring of squares is cubic, has the stated rank and exactly H(r) cycles', () => {
+  for (let r = 5; r <= 14; r++) {
+    const squares = Math.floor((r - 1) / 2), rungs = (r - 1) % 2;
+    const ring = ringGraph(squares, rungs);
+    assert.equal(ring.n, 2 * (r - 1));
+    assert.equal(ring.rank, r);
+    assert.equal(graphStats(ring.n, ring.edges).rank, r);
+    assert.equal(normalizeEdges(ring.n, ring.edges).length, ring.edges.length, 'no parallel edges');
+    assert.ok(edgeDegrees(ring.n, ring.edges).every((degree) => degree === 3));
+    assert.equal(countSimpleCycles(ring.n, ring.edges), horakKim(r), `rank ${r}`);
+    assert.ok(horakKim(r) > 2 ** (r - 1));
+  }
+  assert.throws(() => ringGraph(1, 0), RangeError);
+  assert.throws(() => ringGraph(3, 2), RangeError);
+});
+
+test('the formula of Horak and Kim gives the values that the page and the paper state', () => {
+  // The two printed forms: 2^(2q) + (2q + 1/2) 2^q - 3q and 2^(2q+1) + (2q + 9/2) 2^q - 3q - 4.
+  for (let q = 1; q <= 15; q++) {
+    assert.equal(horakKim(2 * q + 1), 2 ** (2 * q) + (2 * q + 1 / 2) * 2 ** q - 3 * q);
+    assert.equal(horakKim(2 * q + 2), 2 ** (2 * q + 1) + (2 * q + 9 / 2) * 2 ** q - 3 * q - 4);
+  }
+  assert.equal(horakKim(8), 199);
+  assert.equal(horakKim(9), 380);
+  assert.equal(horakKim(10), 696);
+  assert.equal(horakKim(27), 67325913);
+  assert.ok(67959973 > horakKim(27), 'the generalised Petersen graph of rank 27 has more cycles');
+  // The second term: H(r) - 2^(r-1) is at least (r - 2) 2^(r/2 - 1).
+  for (let r = 5; r <= 40; r++) assert.ok(horakKim(r) - 2 ** (r - 1) >= (r - 2) * 2 ** (r / 2 - 1), `rank ${r}`);
+  assert.throws(() => horakKim(2), RangeError);
 });
