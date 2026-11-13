@@ -1,16 +1,24 @@
 # The Lean library `Erdos1016`
 
 The library has the formal proofs for three texts of `paper/minimal/`. Each text has an entry
-module that imports its proof and nothing else, with a table of the statements in its header.
+module. It imports the proof of the theorems of the text, and its header has a table of the
+statements.
 
-| Text | Entry module | Endpoint theorems |
-|---|---|---|
-| The forest proportion of a random even subgraph (`paper/minimal/forest/`) | `Erdos1016/ForestEstimate.lean` | `Erdos1016.ShortProof.eventually_marked_forest_bound_logSquared`, `Erdos1016.ShortProof.fewComponentForestEstimate_logSquared` |
-| The minimum number of edges in a pancyclic graph (`paper/minimal/pancyclic/`) | `Erdos1016/Pancyclic.lean` | `Erdos1016.mainTheorem` |
-| The maximum number of cycles in a graph of large rank (`paper/minimal/exact-maximum/`) | `Erdos1016/MaximumCycles.lean` | `Erdos1016.ExactMaximum.exactMaximum_threeCases`, `Erdos1016.ExactMaximum.maxCycles_formula_threeCases`, `Erdos1016.cycleCountAsymptotic` |
+| Text | Entry module | Endpoint theorems | Modules imported / used |
+|---|---|---|---|
+| The forest proportion of a random even subgraph (`paper/minimal/forest/`) | `Erdos1016/ForestEstimate.lean` | `Erdos1016.ShortProof.eventually_marked_forest_bound_logSquared`, `Erdos1016.ShortProof.fewComponentForestEstimate_logSquared` | 246 / 190 |
+| The minimum number of edges in a pancyclic graph (`paper/minimal/pancyclic/`) | `Erdos1016/Pancyclic.lean` | `Erdos1016.mainTheorem` | 264 / 224 |
+| The maximum number of cycles in a graph of large rank (`paper/minimal/exact-maximum/`) | `Erdos1016/MaximumCycles.lean` | `Erdos1016.ExactMaximum.exactMaximum_threeCases`, `Erdos1016.ExactMaximum.maxCycles_formula_threeCases`, `Erdos1016.cycleCountAsymptotic` | 662 / 529 |
+
+"Imported" is the number of modules of this library in the import closure of the entry module.
+"Used" is the number of modules with a declaration that the endpoint theorems use (see below).
+The two numbers differ because a file is imported as a whole. The third entry module does not
+import `ExactMaximum/Main.lean` and `ExactMaximum/MainCaps.lean` (the proofs along five cases).
+It does import files of Astra with other proofs of the theorem, because the parts that the
+proof takes are in these files.
 
 The root file `Erdos1016.lean` imports the three entry modules, then the other proofs of the
-third theorem, and then modules that no endpoint theorem uses.
+third theorem, and then the other modules, so that all 685 other modules are in its import closure.
 
 ## Which folder is used by which theorem
 

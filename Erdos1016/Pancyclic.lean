@@ -14,6 +14,8 @@ pancyclic graph on `n` vertices.
 | The construction for the upper bound | `Erdos1016.Problem1016.upper_bound_integer` |
 | The forest estimate that the lower bound uses | `Erdos1016.ShortProof.fewComponentForestEstimate` |
 
-`Erdos1016/README.md` has the folders that the proof uses. In addition to the folders of the
-forest estimate these are mainly the modules of `Extremal/`.
+The import closure has 264 modules of the library, and the proof uses 224 of them;
+`Erdos1016/README.md` has the folders. In addition to the folders of the forest estimate these
+are mainly the modules of `Extremal/`. The file `Erdos1016/Main.lean` also has the theorems on
+the number of cycles that follow from the forest estimate, and two elementary theorems.
 -/

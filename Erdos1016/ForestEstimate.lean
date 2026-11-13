@@ -5,8 +5,9 @@ import Erdos1016.Probability.Avoidance.LogSquaredMarkedForest
 
 Text: "The forest proportion of a random even subgraph" (`paper/minimal/forest/`).
 
-This module imports the formal proof of the forest estimate and nothing else.
-`Erdos1016/README.md` has the folders that the proof uses.
+This module imports the file with the formal proof of the forest estimate. Its import closure
+has 246 modules of the library, and the proof uses 190 of them; `Erdos1016/README.md` has the
+folders.
 
 | Text | Declaration |
 |---|---|

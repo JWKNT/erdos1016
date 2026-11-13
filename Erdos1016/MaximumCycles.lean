@@ -6,8 +6,11 @@ import Erdos1016.ExactMaximum.MainThreeCases
 
 Text: "The maximum number of cycles in a graph of large rank" (`paper/minimal/exact-maximum/`).
 
-This module imports the formal proof of the main theorem along the three cases of the text, and
-nothing of the other proofs of the theorem.
+This module imports the formal proof of the main theorem along the three cases of the text. It
+does not import `Erdos1016/ExactMaximum/Main.lean` and `MainCaps.lean`, the proofs along the
+five cases of earlier texts. Its import closure has 662 of the 686 modules of the library, and
+the proof uses 529 of them (`Erdos1016/README.md`): the files of Astra with the parts are
+imported as a whole, and some of them contain other proofs of the theorem.
 
 | Text | Declaration |
 |---|---|
@@ -25,5 +28,5 @@ nothing of the other proofs of the theorem.
 `audits/ExactMaximumThreeCasesAudit.lean` checks which declarations the proof uses.
 `Erdos1016/ExactMaximum/Main.lean` and `MainCaps.lean` and the files `*ExactMaximum.lean` of
 `Erdos1016/ExactMaximumSupport/Shortening/` have other proofs of the theorem, along the five
-cases of earlier texts; this module does not import them.
+cases of earlier texts.
 -/

@@ -2763,3 +2763,72 @@ the chat). In order:
 Commits: 45bd19c (Lean), c70402c (papers, notes, tests). Not pushed.
 Not in a commit: paper/cycle-count (Astra), the other paper folders, the
 root README.md and docs/proof-map.md of the working copy (Astra's edits).
+
+UPDATE 70 — FABLE — 2026-11-13 00:40 UTC
+
+KNT asked on 12 November: no reference to the other two papers in the forest
+paper; a formal proof of Theorem 7.1 at girth five; the Lean files arranged
+by use; commit and push.
+
+1. Pushed on 12 November, d415f72..f30b346: the commits 45bd19c, c70402c,
+   331bac8, 0758477 and f30b346 (the forest paper without a reference to
+   the other two papers).
+2. THEOREM 7.1 AT GIRTH FIVE IS PROVED (commit b7f9fc9).
+   Erdos1016.ExactMaximum.girthForestStatement_five : GirthForestStatement 5,
+   axioms propext, Classical.choice, Quot.sound. New folder of mine
+   Erdos1016/ExactMaximum/GirthFive/ with eleven files and a README that has
+   the statements and the proofs in words. No file of Astra is changed.
+   - Pieces at girth five (Lemma 7.6 of the text):
+     GirthFive.exists_affine_bound_girth_five. The outer steps are those of
+     the text (thin layers by PoleMarker.exists_supported_demand_layer_bound,
+     windows of levels, a product over many windows). The inner step is new:
+     slabs along a shortest path from the base vertex; a pigeonhole step
+     gives a slab such that the word outside the slab has zero or two
+     terminals at the slab; with two terminals the slab is small
+     (two_terminal_region), because a path of seven vertices beside a
+     shortest path would give seven positions that the rail lemma excludes.
+     Lemmas 7.4 and 7.5 of the text are not used.
+   - Two blocks, a good row and the packing bound at girth five, for a
+     fixed d: GirthFive.exists_block_bound, exists_row_bound,
+     exists_base_finset_packing. They copy the proofs of
+     Shortening/ChainPackingBounds, ChainPackingGeometry and ChainPacking
+     with the new pieces theorem.
+   - The end: the first family of RegionPackingSequence at the scale D of
+     ChainPacking.exists_finset_cutoff is bounded at girth five; the later
+     families as before; GirthFive.shifted_size_bound gives the size bound
+     from the stage c on; these stages are a HighGirthPackingSequence at the
+     base scale 2^c D; the rest is the text of
+     ChainForestProbability.exists_cutoff.
+3. MainThreeCases.lean: Case 3 is now proved from girthForestStatement_five
+   (girthCaseStatement_five). exactMaximum_threeCases uses no
+   shortCycleStatement and no largeGirthStatement. exists_girthForestStatement
+   and exists_girthCaseStatement are removed.
+   audits/ExactMaximumThreeCasesAudit.lean has the assertions.
+4. Lean files by use. Entry modules Erdos1016/ForestEstimate.lean,
+   Pancyclic.lean, MaximumCycles.lean. audits/UsageMap.lean prints, from the
+   proof terms, the modules that each endpoint theorem uses (686 modules;
+   forest 190, pancyclic 224, three cases 529, five cases 546, caps 536).
+   Tables: Erdos1016/README.md (by folder), Erdos1016/ExactMaximum/README.md
+   (by file). The imports of Erdos1016.lean are in three groups. No module
+   is moved or renamed, because Astra's files import most modules of
+   Erdos1016/ExactMaximum/.
+5. Papers (commit b5668b9). Section 1.4 of the maximum-cycles paper cites
+   exactMaximum_threeCases at b7f9fc9. The text of Section 7 is not changed.
+   The new inner step of Lemma 7.6 is not in the text; it is not drafted
+   and not measured (Lemmas 7.4 and 7.5 have 69 typeset lines and a figure).
+6. Not in a commit, as before: paper/cycle-count (Astra, 1.6 GB, 4384
+   changed paths), paper/edge-half (107 MB), paper/generalized-petersen,
+   paper/pancyclic, tmp, FORMALIZATION-PRIORITY.txt, and the working-copy
+   edits of the root README.md, docs/proof-map.md, paper/erdos1016.pdf and
+   site/paper.pdf.
+7. Checks on 13 November 2026 (UTC): lake build Erdos1016 exit 0 (7339
+   jobs); scripts/verify.py exit 0 on the tree of b7f9fc9 (inventory of 686
+   modules with none outside the import closure, a rebuild of all modules,
+   the audit of the pancyclic theorem and the forest estimate; it does not
+   cover the exact maximum); the audits ExactMaximumThreeCasesAudit,
+   ExactMaximumCapsAudit, ExactMaximumEndpoints, ExactMaximumPublicAudit,
+   ExactMaximumSupportAudit and UsageMap exit 0. After verify.py I changed
+   the header comments of the three entry modules (no declaration); the
+   build and the two audits ThreeCases and UsageMap passed again.
+Commits: b7f9fc9 (Lean), b5668b9 (paper and notes), and the commit of this
+block with the comments of the entry modules.
