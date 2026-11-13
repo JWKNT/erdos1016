@@ -5,8 +5,8 @@ Static pages, published from this `site/` directory through GitHub Pages.
 | Address | Page | Paper |
 | --- | --- | --- |
 | `jehlp.net/erdos1016/` | Erdős 1016 | `papers/pancyclic.pdf`, from `paper/minimal/pancyclic/` |
-| `jehlp.net/erdos1016/forest/` | Forest estimate | `papers/forest.pdf`, from `paper/minimal/forest/` |
-| `jehlp.net/erdos1016/exact-maximums/` | Exact maximums | `papers/exact-maximum.pdf`, from `paper/minimal/exact-maximum/` |
+| `jehlp.net/erdos1016/forest/` | Forest Estimate | `papers/forest.pdf`, from `paper/minimal/forest/` |
+| `jehlp.net/erdos1016/exact-maximums/` | Exact Maximums | `papers/exact-maximum.pdf`, from `paper/minimal/exact-maximum/` |
 | `jehlp.net/erdos1016/paper.pdf` | First manuscript of September 2026 | `paper/erdos1016.pdf` |
 
 The address `jehlp.net/erdos1016/` does not change, because other sites link it. So the tour of

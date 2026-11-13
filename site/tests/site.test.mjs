@@ -19,11 +19,11 @@ const TOURS = {
     paper: 'pancyclic.pdf', pages: 7, source: 'paper/minimal/pancyclic/pancyclic.pdf',
   },
   forest: {
-    title: 'Forest estimate', stops: 11, demos: ['space', 'forest', 'cut', 'moment', 'walk'],
+    title: 'Forest Estimate', stops: 11, demos: ['space', 'forest', 'cut', 'moment', 'walk'],
     paper: 'forest.pdf', pages: 12, source: 'paper/minimal/forest/forest.pdf',
   },
   'exact-maximums': {
-    title: 'Exact maximums', stops: 10, demos: ['ring'],
+    title: 'Exact Maximums', stops: 10, demos: ['ring'],
     paper: 'exact-maximum.pdf', pages: 36, source: 'paper/minimal/exact-maximum/exact-maximum.pdf',
   },
 };
@@ -130,6 +130,8 @@ test('every page has the identity header, a canonical address under /erdos1016/ 
     const others = slugs.filter((other) => other !== slug).map((other) => `${prefix(slug)}${other ? `${other}/` : ''}`);
     assert.deepEqual(links, [...others, `${prefix(slug)}papers/${TOURS[slug].paper}`], `${label}: header links`);
   }
+  // Names on jehlp.net have a capital letter on each word, as the homepage list has them.
+  for (const { title } of Object.values(TOURS)) assert.match(title, /^(?:\p{Lu}[\p{L}]*|\d+)(?: (?:\p{Lu}[\p{L}]*|\d+))*$/u, title);
   // Other sites link the address jehlp.net/erdos1016. It stays the page on Erdős problem 1016.
   assert.equal(TOURS[''].title, 'Erdős 1016');
   assert.ok(html[''].includes('Erdős problem 1016 asks for the least number of edges'));
