@@ -1,0 +1,49 @@
+\begin{proof}
+Put $W=B(k+1)^{2}$, $\tau=60\,W$, $h=2W\tau+2$ and $F_0(k)=Wh\,(k+2^{Wh}+2)$. Suppose that some
+even set $T$ of boundary vertices has forest proportion at least $\frac35$. If $T$ is empty, then
+$N$ has no cycle and fewer than $2k$ vertices. In the other case fix a boundary vertex $o$, and
+define the layers as in the proof of Lemma~7.2. The step ``A marker'' of that proof
+uses no girth, and it shows that each layer has fewer than $W$ vertices. So $N$ has at least
+$h\,(k+2^{Wh}+2)$ layers. Divide the layers $1,2,\dots$ into groups of $h$ consecutive layers. At
+least $2^{Wh}$ groups contain no boundary vertex. In such a group let $M$ be a component of the
+subgraph induced by the group that has a vertex $v$ in the last layer of the group. A shortest
+path from $o$ to $v$ has one vertex in each layer of the group; let $\pi_j$ be its vertex in the
+$j$th of these layers. The path $\pi=\pi_1\cdots\pi_h$ lies in $M$. The vertices of $M$ have
+degree three in $N$, and an edge that leaves $M$ starts in the first or in the last layer of the
+group. So the boundary vertices of $M$ are in these two layers, there are fewer than $2W$ of
+them, and the rank of $M$ is less than $Wh$. We show that no even set of boundary vertices of
+$M$ is rigid (Figure~\ref{fig:slabs}).
+
+\step{Slabs.} For $1\le i\le2W$, the $i$th \emph{slab} consists of the layers
+$2+(i-1)\tau,\dots,1+i\tau$ of the group. Let $B_i$ be the vertex set of the component of the
+subgraph of $M$ induced by this slab that contains the $\tau$ vertices of $\pi$ in the slab. Let
+$s_ix_i$ be the edge of $\pi$ that enters $B_i$ and $y_it_i$ the edge that leaves it, with
+$x_i,y_i\in B_i$. The vertices of $B_i$ have degree three in $M$, and an edge of $M$ that leaves
+$B_i$ starts in the first or in the last layer of the slab. So $d(M[B_i])<4W\le|B_i|$. Hence
+$M[B_i]$ has a cycle, by~(7.1), and $x_i\ne y_i$ are boundary vertices of
+$M[B_i]$. Call a component of $M-B_i$ a \emph{side component} if it contains neither $s_i$ nor
+$t_i$. The vertices of $\pi$ outside $B_i$ are joined to $s_i$ or to $t_i$ in $\pi-B_i$. A set
+$B_j$ with $j\ne i$ is connected, avoids $B_i$ and contains a vertex of $\pi$. So a side
+component of $M-B_i$ meets no set $B_j$.
+
+\step{Side components.} Let $K$ be a side component of $M-B_i$, and let $j\ne i$. Some
+vertex of $K$ has a neighbour in $B_i$, because $M$ is connected. So $K\cup B_i$ is connected,
+avoids $B_j$ and contains a vertex of $\pi$. Hence it lies in the component of $s_j$ or of
+$t_j$ in $M-B_j$. So a vertex of $M$ is in a side component of $M-B_i$ for at most one~$i$.
+
+\step{No rigid set.} Let $U$ be an even set of boundary vertices of $M$. It has fewer than $2W$
+vertices, and none of them is in a slab. So there is an $i$ such that no vertex of $U$ is in a
+side component of $M-B_i$. Write $B$, $s$, $x$, $y$, $t$ for $B_i$, $s_i$, $x_i$, $y_i$, $t_i$,
+and let $K^{-}$ and $K^{+}$ be the components of $M-B$ that contain $s$ and $t$. Every vertex
+of $U$ is in one of them. Put $U^{-}=U\cap V(K^{-})$. Suppose first that $K^{-}=K^{+}$ or that
+$|U^{-}|$ is even. Then $M-B$ contains a $U$-join, and its union with a cycle of $M[B]$ is a
+$U$-join that is not a forest. Suppose now that $K^{-}\ne K^{+}$ and that $|U^{-}|$ is odd, and
+let $J$ be an $\{x,y\}$-join of $M[B]$. Add the edges $sx$ and $ty$, a join of $K^{-}$ for the
+set $U^{-}$ with $s$ added or removed, and a join of $K^{+}$ for the set $U\sm U^{-}$ with $t$
+added or removed. The result is a $U$-join of $M$. If $U$ is rigid, then $J$ is a forest, and hence a path. Then
+Lemma~7.4 gives $|B|<15\,d(M[B])<60\,W=\tau$, and this is false.
+
+So each even set of boundary vertices of $M$ has forest proportion at most $1-2^{-Wh}$. By
+Lemma~7.3, the forest proportion of $T$ is at most
+$(1-2^{-Wh})^{2^{Wh}}<\half$. This is a contradiction.
+\end{proof}

@@ -1,0 +1,35 @@
+\begin{figure}[ht]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+  \draw[draw=slate!70, fill=black!4, line width=0.6pt, rounded corners=6pt] (0,-1.25) rectangle (13.6,1.25);
+  \foreach \a in {1.5,4.2,6.9,9.6} \draw[region] (\a,-0.62) rectangle (\a+1.9,0.95);
+  % a branch from the slab B_j back to the first layer
+  \draw[edge] (5.0,-0.62) .. controls (4.8,-0.95) and (4.4,-1.0) .. (3.8,-1.0) -- (1.2,-1.0)
+    .. controls (0.75,-1.0) and (0.5,-0.85) .. (0.5,-0.55);
+  % the path pi
+  \draw[hot] (0.5,0) -- (13.1,0);
+  \draw[edge] (0.5,0) -- (0.5,0.55) (13.1,0) -- (13.1,0.55) (13.1,0) -- (13.1,-0.55);
+  \draw[edge] (7.45,0) -- (7.45,0.6) -- (8.25,0.6) -- (8.25,0);
+  \foreach \p in {(5.0,-0.62),(3.8,-1.0),(2.5,-1.0),(1.2,-1.0),(7.45,0.6),(8.25,0.6),(7.45,0),(7.85,0),(8.25,0)}
+    \node[vtx] at \p {};
+  \foreach \p in {(0.5,0),(13.1,0),(6.55,0),(7.15,0),(8.55,0),(9.15,0)} \node[vtx] at \p {};
+  \foreach \p in {(0.5,0.55),(0.5,-0.55),(13.1,0.55),(13.1,-0.55)} \node[port] at \p {};
+  \node[note, text=accent] at (7.85,1.5) {the set $B=B_i$};
+  \node[note, text=accent] at (5.15,1.5) {$B_j$};
+  \node[note, text=accent] at (6.5,-0.3) {$s$};
+  \node[note, text=accent] at (7.15,-0.3) {$x$};
+  \node[note, text=accent] at (8.55,-0.3) {$y$};
+  \node[note, text=accent] at (9.2,-0.3) {$t$};
+  \node[note, text=warm] at (3.0,0.28) {$\pi$};
+  \node[note, text=accent] at (0.22,-0.55) {$u$};
+  \node[note] at (3.3,-1.55) {the component $K^{-}$ of $M-B$};
+  \node[note] at (11.4,-1.55) {the component $K^{+}$ of $M-B$};
+\end{tikzpicture}
+\caption{The proof of Lemma~7.6. The part $M$ with the path $\pi$ (thick), four
+of its slabs, and the vertices of $U$ (circles) in the first and in the last layer. The vertex
+$u$ is in a side component of $M-B_j$; for the slab $B$ it is in $K^{-}$. If $K^{-}\ne K^{+}$
+and each of them contains an odd number of vertices of $U$, then a $U$-join of $M$ meets $M[B]$
+in an $\{x,y\}$-join.}
+\label{fig:slabs}
+\end{figure}
+

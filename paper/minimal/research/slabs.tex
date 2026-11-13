@@ -1,0 +1,191 @@
+\documentclass[11pt]{article}
+\input{../style/preamble}
+
+\renewcommand{\papertitle}{Slabs:\\ pieces at girth five without the lemma on rigid sets}
+\renewcommand{\papersubtitle}{A fifth research note on ``The maximum number of cycles in a graph of large rank''}
+\renewcommand{\paperrunning}{Slabs}
+\renewcommand{\paperauthors}{Fable~5.2, for KNT}
+\renewcommand{\paperdate}{Research note of 13 November 2026}
+\hypersetup{pdftitle={Slabs: pieces at girth five without the lemma on rigid sets},pdfauthor={Fable 5.2, for KNT}}
+
+\newcommand{\inP}[1]{[P,~#1]}
+
+\begin{document}
+\maketitleblock
+
+On 12 November 2026 I wrote a formal proof of \inP{Theorem~7.1} at girth five in Lean. Here [P]
+is the paper of 36~pages (commit \texttt{805e2ba}). The formal proof of \inP{Lemma~7.6} (pieces at
+girth five) has an inner step that is not in the paper. KNT asked for a draft of this step as
+text, and for a measurement. This note has the draft in two forms, with complete proofs, and the
+numbers. The manuscript is not changed.
+
+\fronthead{The result in five sentences}
+\begin{enumerate}[leftmargin=1.6em]
+\item In the proof of \inP{Lemma~7.6} a part $M$ of the piece is long and thin, and its boundary
+vertices are at its two ends. So $M$ has many disjoint slabs across a shortest path, and for one
+slab $B$ every vertex of a given set $U$ is on one of the two sides of~$B$.
+\item For this slab a $U$-join of $M$ meets $M[B]$ in an even subgraph or in a join of two
+vertices. So a rigid set $U$ gives a full pair in $M[B]$, and \inP{Lemma~7.4} applies. This
+replaces \inP{Lemma~7.5} (rigid sets) with its tree, its segments and its count.
+\item Form \emph{slabs}: \inP{Lemma~7.5} is removed and \inP{Lemma~7.4} stays. Measured in a copy:
+1288 typeset lines in the place of 1305, and 36 statements in the place of 37; 36 pages and 15
+figures as before.
+\item Form \emph{slabs and rails}: in addition \inP{Lemma~7.4} gets a proof without ladders, by a
+count beside a shortest path and a fact on seven integers. Section~7 then uses no result of
+Section~5 of the paper, and the text of Section~7.2 is the formal proof. Measured: 1308 lines,
+so three lines more than now.
+\item The formal proof in Lean has the second form, with other constants. The first form
+differs from it in one proof, that of \inP{Lemma~7.4}. I recommend the form \emph{slabs} if the
+aim is fewer steps, and the form \emph{slabs and rails} if the aim is a text that the formal
+proof follows. The gain is small in both forms.
+\end{enumerate}
+
+\section{The measurement}
+
+The script \texttt{research/apply\_slabs.py} changes a copy of the folder
+\texttt{exact-maximum}; with the argument \texttt{rails} it applies the second form. The copies
+are \texttt{research/trial-slabs.pdf} and \texttt{research/trial-slabs-rails.pdf}. Both build
+without an overfull box and without an undefined reference. A typeset line is a line of
+\texttt{pdftotext -layout} that is not empty and is not a running head.
+
+\begin{center}\small
+\begin{tabular}{lrrrrrr}
+\toprule
+ & pages & lines & Section 7 & Section 7.2 & statements & figures\\
+\midrule
+the paper now & 36 & 1305 & 378 & 121 & 37 & 15\\
+form \emph{slabs} & 36 & 1288 & 361 & 103 & 36 & 15\\
+form \emph{slabs and rails} & 36 & 1308 & 377 & 120 & 36 & 15\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+In both forms the figure of the tree through a rigid set is replaced by a figure of the slabs
+(Figure~\ref{fig:slabs}). The statements after \inP{Lemma~7.4} get a number that is smaller by
+one. No other section changes, with the exception of one sentence on the formal proof in
+\inP{Section~1.4}.
+
+What the two forms change in the proof, step by step:
+
+\begin{center}\small
+\begin{tabular}{p{0.3\textwidth}p{0.3\textwidth}p{0.3\textwidth}}
+\toprule
+the paper now & form \emph{slabs} & form \emph{slabs and rails}\\
+\midrule
+\inP{Lemma~7.4}: a full pair at girth five is small; by the reduction \inP{Lemma~5.2} and the
+ladders of \inP{Lemma~5.6} & the same & a rigid pair at girth five is small; by a shortest
+path, a forest beside it, and seven integers\\
+\addlinespace
+\inP{Lemma~7.5}: a thin multigraph with a rigid set is small; a smallest tree through the set,
+its segments, a far point, an exchange step, two cases, a count & no such lemma & no such
+lemma\\
+\addlinespace
+\inP{Lemma~7.6}: groups of layers, then \inP{Lemma~7.5} and the product & groups of layers,
+slabs, side components, the same two cases, the product & the same as in the form
+\emph{slabs}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{The new proof of Lemma 7.6}
+
+\begin{notation}{what the proof uses from the paper}
+\begin{itemize}[leftmargin=1.2em]
+\item $N$ is a connected subcubic multigraph. Its vertices of degree less than three are its
+boundary vertices, its deficit $d(N)$ is the sum of $3-\deg v$ over all vertices, and
+$|V(N)|=2\beta(N)-2+d(N)$; this is \inP{equation~(7.1)}.
+\item For an even set $T$ of boundary vertices, a $T$-join is a set of edges in which the
+vertices of $T$ have odd degree and all other vertices have even degree. The forest proportion
+of $T$ is the proportion of the $T$-joins that are forests, and $T$ is rigid if every $T$-join
+is a forest.
+\item \inP{Lemma~7.3} (product). Let pairwise disjoint connected sets of vertices of degree
+three, without a vertex of $T$, induce multigraphs in which every even set of boundary vertices
+has forest proportion at most $f_i$. Then the forest proportion of $T$ in $N$ is at most the
+product of the $f_i$.
+\item \inP{Lemma~7.4} (full pairs at girth five). Let $M$ be a connected subcubic multigraph of
+girth at least five, and let $x\ne y$ be vertices of degree at most two such that every
+$\{x,y\}$-join of $M$ is a path. Then $|V(M)|<15\,d(M)$.
+\item $B$ is the constant of \inP{Section~7.1}: in a piece with $k$ boundary vertices and a
+forest proportion of at least $\frac35$, every distance layer from a boundary vertex has fewer
+than $B(k+1)^{2}$ vertices. This is the step ``A marker'' in the proof of \inP{Lemma~7.2}.
+\end{itemize}
+\end{notation}
+
+\begin{lemma}[Pieces at girth five; this is {\inP{Lemma~7.6}}]\label{lem:pieces}
+For every integer $k\ge1$ there is a number $F_0(k)$ with the following property. Let $N$ be a
+connected subcubic multigraph of girth at least five with at most $k$ boundary vertices and at
+least $F_0(k)$ vertices. Then every set of boundary vertices of even size has forest proportion
+less than $\frac35$.
+\end{lemma}
+
+\input{slabs-figure}
+
+\input{slabs-proof}
+
+The proof begins and ends as the proof in the paper does. The steps ``Slabs'', ``Side
+components'' and ``No rigid set'' are in the place of the reference to \inP{Lemma~7.5}. The
+paper has $h=10^{4}W^{3}$; here $h=120\,W^{2}+2$.
+
+\section{A proof of Lemma 7.4 without ladders}
+
+An $\{x,y\}$-join that is a forest is a path. So the next lemma is \inP{Lemma~7.4} with the
+constant $133$ in the place of $15$. With it, the proof of Lemma~\ref{lem:pieces} takes
+$\tau=532\,W$, and its last case ends with $|B|<133\,d(M[B])<532\,W=\tau$.
+
+\begin{lemma}[Rigid pairs at girth five]\label{lem:rails}
+Let $M$ be a connected subcubic multigraph of girth at least five. Let $x\ne y$ be vertices of
+degree at most two such that every $\{x,y\}$-join of $M$ is a forest. Then $|V(M)|<133\,d(M)$.
+\end{lemma}
+
+\input{slabs-rails-proof}
+
+The bound of seven is the best one for this argument: the integers $5,2,4,1,3,0$ satisfy the
+three conditions on the positions. The script \texttt{checks/rail\_check.py} tests all
+sequences of steps (exit code~0).
+
+\section{The formal proof}
+
+The files are in \texttt{Erdos1016/ExactMaximum/GirthFive/} (commit \texttt{b7f9fc9}); the README
+of that folder has the same proofs in words.
+
+\begin{center}\small
+\begin{tabular}{p{0.34\textwidth}p{0.6\textwidth}}
+\toprule
+text of this note & Lean declaration\\
+\midrule
+the fact on seven integers & \lean{GirthFive.rail_bound}\\
+a vertex beside a shortest path has one neighbour on it; no path of seven plain vertices &
+\lean{GirthFive.attach_unique}, \lean{GirthFive.no_rail}\\
+Lemma~\ref{lem:rails} & \lean{GirthFive.two_terminal_card_le}, \lean{GirthFive.two_terminal_region},
+with the bound $400\,(|D|+2)$ for the set $D$ of boundary vertices\\
+the steps ``Side components'' and ``No rigid set'' & \lean{GirthFive.side_of_other_slab},
+\lean{GirthFive.exists_word_two_terminals}, \lean{GirthFive.region_not_rigid}\\
+the step ``Slabs'' & \lean{GirthFive.window_not_rigid}\\
+Lemma~\ref{lem:pieces} & \lean{GirthFive.exists_affine_bound_girth_five}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Two differences. The formal step ``No rigid set'' takes a slab without a side component that has
+an odd number of vertices of $U$; the text takes a slab without any vertex of $U$ in a side
+component, which the same count gives. The form \emph{slabs} uses \inP{Lemma~7.4} with its proof
+by ladders, and this proof has no formal counterpart; the formal proof has
+Lemma~\ref{lem:rails} in its place.
+
+\section{What I examined and did not use}
+
+\begin{itemize}[leftmargin=1.2em]
+\item A slab that consists of all vertices of $M$ in its layers. Then the graph outside the slab
+can have many components on each side, and a $U$-join meets the slab in a join of many
+vertices. The component of the path $\pi$ and the count of side components give two vertices.
+\item A proof without a lemma on two vertices. A ladder has girth four, and the two ends of one
+rail form a rigid set. So some statement on rigid pairs at girth five is necessary, and a
+statement of this kind needs a number such as seven: six positions exist.
+\item A shorter arithmetic argument for the seven integers, by residues or by a count of the
+positions in a window. I found none. The case distinction has three cases.
+\item The lemma on rigid pairs inside the slab, where the path $\pi$ is given and the layers
+bound the positions. The proof does not become shorter, because the condition on a shortest
+path is the one that the argument uses.
+\end{itemize}
+
+\end{document}

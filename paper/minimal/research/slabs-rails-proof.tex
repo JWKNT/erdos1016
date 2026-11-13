@@ -1,0 +1,43 @@
+\begin{proof}
+Put $d=d(M)$. Let $A=a_0a_1\cdots a_\ell$ be a shortest path from $x$ to $y$, and put
+$F=M-V(A)$. The edge set of $A$ is an $\{x,y\}$-join, and so is its union with a cycle of $F$. So
+$F$ is a forest. A vertex of $F$ has at most one neighbour on $A$: two neighbours $a_i$ and
+$a_j$ with $i<j$ give $j-i\le2$, because $A$ is a shortest path, and then a cycle with at most
+four edges. For the same reasons an inner vertex of $A$ of degree three has a neighbour in $F$.
+
+Call a vertex of $F$ \emph{plain} if it has degree three and a neighbour $a_p$ with $0<p<\ell$.
+A plain vertex has exactly two neighbours in $F$. A vertex of $F$ that is not plain is a
+boundary vertex, or it is adjacent to $x$ or $y$, or it has three neighbours in $F$. Let $n_0$,
+$n_1$ and $n_3$ be the numbers of these vertices. Then $n_0\le d-2$ and $n_1\le2$, because $x$
+and $y$ are boundary vertices. The forest $F$ has at most as many edges as vertices, so a count
+of edge ends gives $3n_3+2(|F|-n_0-n_3)\le2|F|$, and $n_3\le2n_0$. So fewer than $3d$ vertices
+of $F$ are not plain.
+
+\step{No path of seven plain vertices.} Suppose that $v_0v_1\cdots v_6$ is a path of plain
+vertices in $F$, and let $a_{p_k}$ be the neighbour of $v_k$ on $A$. Let $0\le k<l\le6$. Then
+$p_k\ne p_l$, because $a_{p_k}$ has three neighbours only. Also $|p_k-p_l|\le l-k+2$, because
+$A$ is a shortest path and $a_{p_k}v_k\cdots v_la_{p_l}$ is a path. And $|p_k-p_{k+1}|\ge2$,
+because $M$ has no cycle with four edges. Put $s_k=p_{k+1}-p_k$ for $0\le k\le5$. Then $|s_k|$
+is $2$ or~$3$, and $0<|s_k+s_{k+1}|\le4$. So two consecutive steps of the same sign are both
+$2$ or both $-2$, and of two consecutive steps of different signs one has absolute value $2$
+and the other has absolute value~$3$. No three consecutive steps have the same sign, because
+$|p_{k+3}-p_k|\le5$.
+
+If consecutive steps always have different signs, then $s_0=s_2=s_4$ and $s_1=s_3=s_5$. Then
+$p_5-p_0=3s_0+2s_1=0$ if $|s_0|=2$, and $p_6-p_1=2s_0+3s_1=0$ if $|s_0|=3$. In the other case
+let $s_k=s_{k+1}=2\varepsilon$ with $\varepsilon=\pm1$. Where these steps exist,
+$s_{k-1}=s_{k+2}=-3\varepsilon$ and $s_{k-2}=s_{k+3}=2\varepsilon$. Then $p_{k-1}=p_{k+4}$ and
+$p_{k-2}=p_{k+3}$, so in each of these two pairs one index is outside the range $0,\dots,6$.
+This leaves $k=0$ and $k=4$. Let $k=0$; the case $k=4$ is the same with the order reversed. The
+first four steps are $2\varepsilon,2\varepsilon,-3\varepsilon,2\varepsilon$. If
+$s_4=-3\varepsilon$, then $p_5=p_0$. If $s_4=2\varepsilon$, then $s_5=-3\varepsilon$ and
+$p_6=p_1$. So $F$ has no path of seven plain vertices.
+
+\step{The count.} Let $w$ be a vertex of $F$ such that all vertices at distance at most three
+from $w$ in $F$ are plain. Then $w$, its two neighbours in $F$, their other neighbours and the
+next two vertices form a path of seven plain vertices, because $F$ is a forest. So every vertex
+of $F$ is within distance three in $F$ of a vertex that is not plain, and $|F|<22\cdot3d$. An inner vertex of $A$ of
+degree three has a neighbour in $F$, and a vertex of $F$ has at most one neighbour on $A$. So
+$A$ has at most $|F|+d$ vertices, and $|V(M)|\le2|F|+d<133\,d$.
+\end{proof}
+
